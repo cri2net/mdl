@@ -1,0 +1,16 @@
+{
+    "name": "GIOC",
+    "version": "1.0.0",
+    "description": "",
+    "main": "gulpfile.js",
+    "dependencies": {},
+    "devDependencies": {
+        "gulp": "~3.6.2",
+        "gulp-connect": "~2.0.5",
+        "gulp-clean": "~0.2.4",
+        "gulp-less": "~1.2.3",
+        "gulp-util": "~2.2.14",
+        "gulp-uglify": "~0.2.1"
+        },
+    "scripts": {}
+}

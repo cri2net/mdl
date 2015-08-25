@@ -1,0 +1,289 @@
+<?php
+
+class PDO_DB
+{
+    private static $instance = null;
+    private static $pdo = null;
+
+    private function __construct()
+    {
+        $this->init();
+    }
+
+    /**
+     * Закрываем доступ к методу вне класса.
+     * Паттерн Singleton не допускает вызов этой функции вне класса
+     */
+    private function __clone()
+    {
+    }
+
+    private function init()
+    {
+        if (self::$pdo == null) {
+            self::$pdo = new PDO(
+                "mysql:host=". DB_HOST .";dbname=". DB_NAME .";charset=utf8",
+                DB_USER,
+                DB_PASSWORD,
+                array(
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+                )
+            );
+        }
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance == null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public static function getPDO()
+    {
+        $instance = self::getInstance();
+        return $instance::$pdo;
+    }
+
+    /**
+     * Preform SQL insert operation. 
+     * @param array $data - associated array of data, key name should be as field name in the DB table.
+     * @param string $table - name of the table, where data should be inserted.
+     */
+    public static function insert(array $data, $table)
+    {
+        if (!empty($data)) {
+            $pdo = self::getPDO();
+            $str = self::arrayToString($data);
+            $pdo->query("INSERT INTO `$table` SET $str");
+            return $pdo->lastInsertId();
+        }
+    }
+    
+    /**
+     * Preform SQL update operation. 
+     * @param array $data - associated array of data, key name should be as field name in the DB table.
+     * @param string $table - name of the table, where data should be inserted.
+     * @param string $idColumnName - name of the column for where clause.
+     * @param string $id - value of the idColumnName for where clause.
+     */
+    public static function update(array $data, $table, $id, $idColumnName = 'id')
+    {
+        if (!empty($data)) {
+            $pdo = self::getPDO();
+            $str = self::arrayToString($data);
+            $stm = $pdo->prepare("UPDATE `$table` SET $str WHERE `$idColumnName`=? LIMIT 1");
+            $stm->execute(array($id));
+        }
+    }
+    
+    /**
+     * Preform SQL update operation. 
+     * @param array $data - associated array of data, key name should be as field name in the DB table.
+     * @param string $table - name of the table, where data should be inserted.
+     * @param string $where - SQL where clause.
+     */
+    public static function updateWithWhere(array $data, $table, $where)
+    {
+        if (!empty($data)) {
+            $pdo = self::getPDO();
+            $str = self::arrayToString($data);
+            $pdo->query("UPDATE `$table` SET $str WHERE $where");
+        }
+    }
+    
+    /**
+     *  Return last inserted id.
+     */
+    public static function lastInsertID()
+    {
+        $pdo = self::getPDO();
+        return $pdo->lastInsertId();
+    }
+    
+    /**
+     *
+     * Return concatenateed string from given array. Method are using in the insert and updated methods.
+     * @param array $data - associated array of data.
+     * @return string
+     */
+    private static function arrayToString(array $data)
+    {
+        $pdo = self::getPDO();
+        $str = '';
+        foreach ($data as $key=>$value) {
+            $value = $pdo->quote($value);
+            $str .= "`$key` = $value, ";
+        }
+        return trim($str, ', ');
+    }
+
+    public static function table_list($table, $where = null, $order = null, $limit = null)
+    {
+        $pdo = self::getPDO();
+
+        $query = "SELECT * FROM `$table`";
+        if($where != null) {
+            $query .= " WHERE $where";
+        }
+        if($order != null) {
+            $query .= " ORDER BY $order";
+        }
+        if($limit != null) {
+            $query .= " LIMIT $limit";
+        }
+        
+        $stm = $pdo->query($query);
+        return $stm->fetchAll();
+    }
+    
+    public static function row_by_id($table, $id, $idColumnName = 'id')
+    {
+        $pdo = self::getPDO();
+
+        $stm = $pdo->prepare("SELECT * FROM `$table` WHERE `$idColumnName`=? LIMIT 1");
+        $stm->execute(array($id));
+        $record = $stm->fetch();
+        
+        if($record === false) {
+            return null;
+        }
+
+        return $record;
+    }
+    
+    public static function query($query)
+    {
+        $pdo = self::getPDO();
+        return $pdo->query($query);
+    }
+
+    public static function del_id($table, $id, $is_virtual = false, $del_column = 'is_del', $idColumnName = 'id')
+    {
+        $pdo = self::getPDO();
+        $query = $is_virtual
+            ? "UPDATE $table SET `$del_column`=1 WHERE `$idColumnName`=? LIMIT 1"
+            : "DELETE FROM $table WHERE `$idColumnName`=? LIMIT 1";
+        
+        $stm = $pdo->prepare($query);
+        $stm->execute(array($id));
+    }
+
+    public static function rebuild_pos($table, $where = null, $order = null)
+    {
+        $pdo = self::getPDO();
+        $qOrder = ($order == null) ? "pos ASC, id ASC":$order;
+        $qWhere = ($where == null) ? "":"WHERE $where";
+
+        $stm = $pdo->query("SELECT * FROM $table $qWhere ORDER BY $qOrder");
+        $arr = $stm->fetchAll();
+
+        $stm = $pdo->prepare("UPDATE $table SET `pos`=? WHERE `id`=? LIMIT 1");
+        for ($i=0; $i < count($arr); $i++) {
+            $stm->execute(array($i+1, $arr[$i]['id']));
+        }
+    }
+    
+    public static function change_pos_from_to($table, $where, $posFrom, $posTo, $order = null)
+    {
+        $pdo = self::getPDO();
+        $posFrom = (int)$posFrom;
+        $posTo = (int)$posTo;
+        if($posFrom == $posTo || $posFrom == 0 || $posTo == 0) {
+            return false;
+        }
+
+        $qW = ($where == null)? "" : "$where AND";
+        
+        $stm = $pdo->query("SELECT `id` FROM $table WHERE $qW `pos`=$posFrom LIMIT 1");
+        $row = $stm->fetch();
+        
+        if($row === false) {
+            return false;
+        }
+        
+        $id = $row['id'];
+        
+        if($posFrom > $posTo) {
+            $pdo->query("UPDATE $table SET `pos` = `pos` + 1 WHERE $qW `pos` >= $posTo AND `pos` < $posFrom");
+        } else {
+            $pdo->query("UPDATE $table SET `pos` = `pos` - 1 WHERE $qW `pos` > $posFrom AND `pos` <= $posTo");
+        }
+            
+        $pdo->query("UPDATE $table SET `pos`=$posTo WHERE `id`=$id LIMIT 1");
+        
+        return true;
+    }
+
+    public static function change_pos($table, $where, $id, $dir, $order = null)
+    {
+        $pdo = self::getPDO();
+
+        $id = (int)$id;
+        self::rebuild_pos($table, $where, $order);
+        $qWhere = ($where == null) ? '' : "AND $where";
+        
+        switch($dir) {
+            case 'dup':
+                $pdo->query("UPDATE `$table` SET `pos`=0 WHERE `id`='$id'");
+                break;
+
+            case 'ddown':
+                $pos = self::max_pos("$table", $where) + 1;
+                $pdo->query("UPDATE `$table` SET `pos`='$pos' WHERE `id`='$id'");
+                break;
+
+            case 'up':
+                $item1 = self::row_by_id("$table", $id);
+                $pos1 = $item1['pos'];
+                $pos2 = $pos1 - 1;
+                $stm = $pdo->query("SELECT * FROM `$table` WHERE `pos`='$pos2' $qWhere LIMIT 1");
+
+                $item2 = $stm->fetch();
+                
+                if($item2 !== false) {
+                    $pdo->query("UPDATE $table SET `pos`='$pos2' WHERE `id`='{$item1['id']}' LIMIT 1");
+                    $pdo->query("UPDATE $table SET `pos`='$pos1' WHERE `id`='{$item2['id']}' LIMIT 1");
+                }
+                break;
+            
+            case 'down':
+                $item1 = self::row_by_id("$table", $id);
+                
+                $pos1 = $item1['pos'];
+                $pos2 = $pos1 + 1;
+
+                $stm = $pdo->query("SELECT * FROM `$table` WHERE `pos`='$pos2' $qWhere LIMIT 1");
+                $item2 = $stm->fetch();
+                
+                if($item2 !== false) {
+                    $pdo->query("UPDATE $table SET `pos`='$pos2' WHERE `id`='{$item1['id']}' LIMIT 1");
+                    $pdo->query("UPDATE $table SET `pos`='$pos1' WHERE `id`='{$item2['id']}' LIMIT 1");
+                }
+                break;
+        }
+    }
+    
+    public static function max_pos($table, $where = null)
+    {
+        $pdo = self::getPDO();
+        $qWhere = ($where == null) ? '' : "WHERE $where";
+        $result = $pdo->query("SELECT MAX(`pos`) FROM $table $qWhere");
+        return (int)$result->fetchColumn();
+    }
+    
+    public static function reset_pos($table, $order = 'id ASC')
+    {
+        $pdo = self::getPDO();
+
+        $result = $pdo->query("SELECT * FROM `$table` ORDER BY $order");
+        $arr = $result->fetchAll();
+
+        for ($i=0; $i < count($arr); $i++) {
+            $pdo->query("UPDATE `$table` SET `pos`='".(++$c)."' WHERE `id`='{$arr[$i]['id']}' LIMIT 1");
+        }
+    }
+}
