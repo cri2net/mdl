@@ -4,7 +4,7 @@
 <link rel="icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
 <title>ГіОЦ</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 
 <link href="<?= BASE_URL; ?>/style/style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&amp;subset=latin,cyrillic">
