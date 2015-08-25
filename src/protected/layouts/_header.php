@@ -15,7 +15,7 @@
 <script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery.autocomplete_2.js"></script>
 <script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
 <script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
-<!-- <script type="text/javascript" src="http://localhost:35729/livereload.js"></script> -->
+<script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
 <?php require_once(ROOT . '/protected/scripts/google-analytics.php'); ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php'); ?>
 </head>
