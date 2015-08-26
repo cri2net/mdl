@@ -9,6 +9,10 @@
 				case 'about':
 					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Про ГіOЦ</span><?php
 					break;
+
+				case 'news':
+					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Новини</span><?php
+					break;
 			}
 		?>
 	</div>

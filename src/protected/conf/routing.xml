@@ -9,6 +9,8 @@
 		<route match="payments-notify" controller="_payments-notify" action="notify">
 			<route match="{paysystem}" controller="_payments-notify" action="notify" />
 		</route>
+		<route match="news" controller="page" action="news">
+		</route>
 		<route match="payment-status" controller="error" action="404">
 			<route match="{payment_id|num}" controller="page" action="payment-status" />
 		</route>
