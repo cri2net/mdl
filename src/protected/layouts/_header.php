@@ -5,7 +5,7 @@
 <link rel="shortcut icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
 <title>ГіОЦ</title>
 <meta charset="utf-8" />
-
+<!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 <link href="<?= BASE_URL; ?>/style/style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&amp;subset=latin,cyrillic">
 <script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
@@ -30,7 +30,7 @@
 				<a class="logo" href="<?= BASE_URL.'/'; ?>"></a>
 				<div class="phone-block">
 					<div class="number">
-						(044) 238-80-25
+						<a href="tel:+380442388025">(044) 238-80-25</a>
 						<div class="darr-border"></div>
 						<div class="darr"></div>
 					</div>

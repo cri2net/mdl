@@ -26,7 +26,7 @@
 							}
 						?>
 					</div>
-					<div id="header_down_1" class="down"></div>
+					<div id="header_down_<?= $main_menu[$i]['id']; ?>" class="down"></div>
 				</div>
 				<?php
 			}

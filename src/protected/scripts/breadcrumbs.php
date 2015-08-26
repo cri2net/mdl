@@ -1,4 +1,4 @@
-<div class="breadcrumbs">
+<breadcrumbs>
 	<div xmlns:v="http://rdf.data-vocabulary.org/#">
 		<?php
 			switch($__route_result['action']) {
@@ -16,4 +16,4 @@
 			}
 		?>
 	</div>
-</div>
+</breadcrumbs>

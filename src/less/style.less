@@ -71,6 +71,7 @@ header {
 				background-repeat:no-repeat;
 				background-image:data-uri("@{images}/h/__phone.png");
 				background-position:left center;
+				a { text-decoration:none; color:inherit; }
 				.number {
 					font-size:20px;
 					position:relative;
@@ -143,7 +144,7 @@ header {
 						background-position:left top;
 						background-repeat:no-repeat;
 					}
-					.down { position:absolute; height:4px; right:-10px; top:9px; width:6px; background-image:data-uri("@{images}/h/__down.png"); }
+					.down { display:none; position:absolute; height:4px; right:-10px; top:9px; width:6px; background-image:data-uri("@{images}/h/__down.png"); }
 					a {
 						color:#222;
 						font-weight:bold;
@@ -213,7 +214,7 @@ content {
 	.inner-global; display:inline-block; padding-bottom:@footer-height;
 	.inner {
 		width:@base-width - @sidebar-width; float:left; padding-bottom:50px;
-		.breadcrumbs {
+		breadcrumbs {
 			margin-top:18px; margin-bottom:15px;
 			color:#888;
 			font-size:12px;
