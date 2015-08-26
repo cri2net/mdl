@@ -60,15 +60,15 @@
 		<div class="btn green bold"><div class="icon-reload"></div>Показати ще</div>
 	</div>
 	<div class="ruler">
-		<a onclick="return false;" href="#" class="arrow">&lt;&lt;</a>
-		<a onclick="return false;" href="#" class="arrow">&lt;</a>
+		<a onclick="return false;" href="#" class="first"></a>
+		<a onclick="return false;" href="#" class="prev"></a>
 		<a onclick="return false;" href="#">1</a>
 		<a onclick="return false;" href="#">2</a>
 		<a onclick="return false;" href="#">...</a>
-		<a onclick="return false;" href="#" class="current">7</a>
+		<a onclick="return false;" class="current">7</a>
 		<a onclick="return false;" href="#">8</a>
 		<a onclick="return false;" href="#"></a>
-		<a onclick="return false;" href="#" class="arrow">&gt;</a>
-		<a onclick="return false;" href="#" class="arrow">&gt;&gt;</a>
+		<a onclick="return false;" href="#" class="next"></a>
+		<a onclick="return false;" href="#" class="last"></a>
 	</div>
 </div>

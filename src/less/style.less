@@ -350,9 +350,12 @@ content {
 		.ruler {
 			margin-top:48px;
 			a {
-				color:#00979c; font-size:16px; text-decoration:none; margin-left:5px; margin-right:5px;
-				&.current { display:inline-block; .border-radius(3); height:28px; line-height:28px; background-color:#00979c; padding-left:9px; padding-right:9px; font-weight:bold; color:#fff; }
-				&.arrow { margin-left:2px; margin-right:2px; }
+				color:#00979c; font-size:16px; text-decoration:none; margin-left:5px; margin-right:5px; background-position:center center; background-repeat:no-repeat;
+				&.current { display:inline-block; .border-radius(3); cursor:default; height:28px; line-height:28px; background-color:#00979c; padding-left:9px; padding-right:9px; font-weight:bold; color:#fff; }
+				&.first { display:inline-block; height:12px; width:14px; background-image:data-uri("@{images}/pagination/__first.png"); margin-left:2px; margin-right:2px; }
+				&.prev  { display:inline-block; height:12px; width:14px; background-image:data-uri("@{images}/pagination/__prev.png"); margin-left:2px; margin-right:2px; }
+				&.next  { display:inline-block; height:12px; width:14px; background-image:data-uri("@{images}/pagination/__next.png"); margin-left:2px; margin-right:2px; }
+				&.last  { display:inline-block; height:12px; width:14px; background-image:data-uri("@{images}/pagination/__last.png"); margin-left:2px; margin-right:2px; }
 			}
 
 		}

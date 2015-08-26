@@ -19,7 +19,6 @@
 	if (USER_REAL_IP == '127.0.0.1') {
 		?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php
 	}
-	// comment
 ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics.php'); ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php'); ?>
