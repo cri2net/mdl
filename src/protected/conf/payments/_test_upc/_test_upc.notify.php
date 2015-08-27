@@ -1,89 +1,87 @@
 <?php
-	header("Content-Type: text/plain; charset=UTF-8");
+    header("Content-Type: text/plain; charset=UTF-8");
 
-	$_test_sert = ROOT . UPC::UPC_FOLDER . '/test-server.crt';
-	$good_signature = UPC::check_signature($_POST, $_test_sert); // для рабочего мерчанта путь к сертификату передавать не нужно
-	$date = date('d-m-Y H:i:s');
+    $_test_sert = ROOT . UPC::UPC_FOLDER . '/test-server.crt';
+    $good_signature = UPC::check_signature($_POST, $_test_sert); // для рабочего мерчанта путь к сертификату передавать не нужно
+    $date = date('d-m-Y H:i:s');
    
-	$mess = $date."\r\n";
-	$mess .= "IP: ". USER_REAL_IP ."\r\n";
-	$mess .= ($good_signature) ? "Signature ok\r\n" : "Signature bad\r\n";
-	$mess .= "POST: ".var_export($_POST, true)."\r\n\r\n\r\n\r\n";
+    $mess = $date."\r\n";
+    $mess .= "IP: ". USER_REAL_IP ."\r\n";
+    $mess .= ($good_signature) ? "Signature ok\r\n" : "Signature bad\r\n";
+    $mess .= "POST: ".var_export($_POST, true)."\r\n\r\n\r\n\r\n";
    
-	$log_folder = ROOT . "/protected/logs"; if(!file_exists($log_folder)) mkdir($log_folder);
-	$log_folder .= "/paysystems";           if(!file_exists($log_folder)) mkdir($log_folder);
-	$log_folder .= "/$paysystem";           if(!file_exists($log_folder)) mkdir($log_folder);
+    $log_folder = ROOT . "/protected/logs"; if(!file_exists($log_folder)) mkdir($log_folder);
+    $log_folder .= "/paysystems";           if(!file_exists($log_folder)) mkdir($log_folder);
+    $log_folder .= "/$paysystem";           if(!file_exists($log_folder)) mkdir($log_folder);
 
-	$handle = fopen($log_folder . "/$paysystem.txt", 'a+');
-	fwrite($handle, $mess);
-	fclose($handle);
+    $handle = fopen($log_folder . "/$paysystem.txt", 'a+');
+    fwrite($handle, $mess);
+    fclose($handle);
 
-	if(!$good_signature)
-	{
-		throw new Exception("invalid Signature");
-		exit();
-	}
+    if (!$good_signature) {
+        throw new Exception("invalid Signature");
+        exit();
+    }
 
-	$_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_POST['OrderID']);
+    $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_POST['OrderID']);
 
-	if($_payment === null)
-	{
-		throw new Exception("Unknow OrderID {$_POST['OrderID']}");
-		exit();
-	}
+    if ($_payment === null) {
+        throw new Exception("Unknow OrderID {$_POST['OrderID']}");
+        exit();
+    }
 
-	$processing_data = (array)(@json_decode($_payment['processing_data']));
-	$processing_data['requests'] = (array)$processing_data['requests'];
-	$processing_data['dates'][] = $date;
-	$processing_data['requests'][$date] = $_POST;
+    $processing_data = (array)(@json_decode($_payment['processing_data']));
+    $processing_data['requests'] = (array)$processing_data['requests'];
+    $processing_data['dates'][] = $date;
+    $processing_data['requests'][$date] = $_POST;
 
 
-	$to_update = array('processing_data' => json_encode($processing_data));
+    $to_update = array('processing_data' => json_encode($processing_data));
 
-	switch ($_POST['TranCode'])
-	{
-		case '000': // all ok
-		case '410': // Заказ уже был успешно оплачен
-			$to_update['status'] = 'success';
-			break;
-		
-		case '601': // Транзакция не завершена
-			// do nothing
-			break;
-		
-		case '105': // Транзакция не разрешена банком-эмитентом
-		case '116': // Недостаточно средств
-		case '111': // Несуществующая карта
-		case '108': // Карта утеряна или украдена
-		case '101': // Неверный срок действия карты
-		case '130': // Превышен допустимый лимит расходов
-		case '290': // Банк-издатель недоступен
-		case '291': // Техническая или коммуникационная проблема
-		case '401': // Ошибки формата
-		case '402': // Ошибки в параметрах Acquirer/Merchant
-		case '403': // Ошибки при соединении с ресурсом платежной системы (DS)
-		case '404': // Ошибка аутентификации покупателя
-		case '405': // Ошибка подписи
-		case '406': // Превышена квота разрешенных транзакций
-		case '407': // Торговец отключен от шлюза
-		case '408': // Транзакция не найдена
-		case '409': // Несколько транзакций найдено
-		case '411': // Некорректное время в запросе
-		case '412': // Параметры заказа уже были получены ранее
-		case '420': // Превышен дневной лимит транзакций
-		case '421': // Превышена максимально разрешенная сумма транзакции
-		case '430': // Транзакция запрещена на уровне платежного шлюза
-		case '431': // Не разрешена транзакция без полной аутентификации по схеме 3-D Secure
-		case '501': // Транзакция отменена пользователем
-		case '502': // Сессия браузера устарела
-		case '503': // Транзакция отменена магазином
-		case '504': // Транзакция отменена шлюзом
-		default:
-			$to_update['status'] = 'error';
-	}
+    switch ($_POST['TranCode']) {
+        case '000': // all ok
+        case '410': // Заказ уже был успешно оплачен
+            $to_update['status'] = 'success';
+            break;
+        
+        case '601': // Транзакция не завершена
+            // do nothing
+            break;
+        
+        case '105': // Транзакция не разрешена банком-эмитентом
+        case '116': // Недостаточно средств
+        case '111': // Несуществующая карта
+        case '108': // Карта утеряна или украдена
+        case '101': // Неверный срок действия карты
+        case '130': // Превышен допустимый лимит расходов
+        case '290': // Банк-издатель недоступен
+        case '291': // Техническая или коммуникационная проблема
+        case '401': // Ошибки формата
+        case '402': // Ошибки в параметрах Acquirer/Merchant
+        case '403': // Ошибки при соединении с ресурсом платежной системы (DS)
+        case '404': // Ошибка аутентификации покупателя
+        case '405': // Ошибка подписи
+        case '406': // Превышена квота разрешенных транзакций
+        case '407': // Торговец отключен от шлюза
+        case '408': // Транзакция не найдена
+        case '409': // Несколько транзакций найдено
+        case '411': // Некорректное время в запросе
+        case '412': // Параметры заказа уже были получены ранее
+        case '420': // Превышен дневной лимит транзакций
+        case '421': // Превышена максимально разрешенная сумма транзакции
+        case '430': // Транзакция запрещена на уровне платежного шлюза
+        case '431': // Не разрешена транзакция без полной аутентификации по схеме 3-D Secure
+        case '501': // Транзакция отменена пользователем
+        case '502': // Сессия браузера устарела
+        case '503': // Транзакция отменена магазином
+        case '504': // Транзакция отменена шлюзом
+       
+        default:
+            $to_update['status'] = 'error';
+    }
 
-	PDO_DB::update($to_update, ShoppingCart::TABLE, $_payment['id']);
-	ShoppingCart::send_payment_status_to_reports($_payment['id']);
+    PDO_DB::update($to_update, ShoppingCart::TABLE, $_payment['id']);
+    ShoppingCart::send_payment_status_to_reports($_payment['id']);
 ?>
 MerchantID="<?= $_POST['MerchantID']; ?>"
 TerminalID="<?= $_POST['TerminalID']; ?>"
