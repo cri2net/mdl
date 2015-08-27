@@ -69,18 +69,20 @@ header {
 				top:16px;
 				left:390px;
 				padding-left:38px;
-				background-repeat:no-repeat;
-				background-image:data-uri("@{images}/h/__phone.png");
-				background-position:left center;
-				a { text-decoration:none; color:inherit; }
-				.number {
+                .phone-icon { display:block; left:0; top:5px; position:absolute; .size(27); z-index:9; background-image:data-uri("@{images}/h/__phone.png"); }
+				.tel {
+                    text-decoration:none;
+                    color:inherit;
 					font-size:20px;
-					position:relative;
-					.border-radius(4px);
-					height:26px;
 					font-weight: bold;
 					color:#000;
+                }
+                .number {
+                    position:relative;
+                    .border-radius(4px);
+                    height:26px;
 					padding:8px 43px 3px 9px;
+                    z-index:9;
 					.box-shadow(inset 0 0 4px 0 rgba(0, 0, 0, 0.2));
 					.darr-border {
 						.size(1, 37);
@@ -98,6 +100,40 @@ header {
 						top:16px;
 					}
 				}
+                &:hover {
+                    .number { .box-shadow(none); }
+                    .darr-border { display:none; }
+                    .full-phone-box { display:block; }
+                    .darr { background-image:data-uri("@{images}/h/__phone-darr-grey.png"); }
+                }
+                .full-phone-box {
+                    display:none;
+                    background-color:#fff;
+                    width:100%;
+                    padding-right:30px;
+                    position:absolute;
+                    top:-11px;
+                    padding-top:52px;
+                    padding-bottom:21px;
+                    left:-16px;
+                    .box-shadow(0 0 10px 0 rgba(0, 0, 0, 0.3));
+                    .border-radius(5);
+                    z-index:8;
+                    .tel { margin-left:63px; margin-bottom:15px; display:inline-block; }
+                    .work {
+                        border-top:1px dotted #ccc; padding-right:30px; width:100%;
+                        .work-content {
+                            padding-left:66px; margin-top:11px; background-position:16px 1px; background-repeat:no-repeat; background-image:data-uri("@{images}/h/__clock.png");
+                            .line {
+                                font-size:12px; display:block; min-height:15px; padding-left:13px; background-position:left center; background-repeat:no-repeat;
+                                &.green { background-image:data-uri("@{images}/h/__phone-green-circle.png"); }
+                                &.yellow { background-image:data-uri("@{images}/h/__phone-yellow-circle.png"); }
+                                .col { display:inline-block; float:left; width:73px; }
+                                .col-r { display:inline-block; clear:both; }
+                            }
+                        }
+                    }
+                }
 			}
 			.account-link {
 				padding-left:32px;

@@ -27,15 +27,39 @@
 	<header>
 		<div class="top-line">
 			<div class="inner">
-				<a class="logo" href="<?= BASE_URL.'/'; ?>"></a>
+				<a class="logo" href="<?= BASE_URL . '/'; ?>"></a>
 				<div class="phone-block">
+					<div class="phone-icon"></div>
 					<div class="number">
-						<a href="tel:+380442388025">(044) 238-80-25</a>
+						<a class="tel" href="tel:+380442388025">(044) 238-80-25</a>
 						<div class="darr-border"></div>
 						<div class="darr"></div>
 					</div>
+					<div class="full-phone-box">
+						<a class="tel" href="tel:+380442388027">(044) 238-80-27</a>
+						<div class="work">
+							<div class="work-content">
+								<div class="line green">
+									<div class="col">пн—чт</div>
+									<div class="col-r">8:30—17:30</div>
+								</div>
+								<div class="line green">
+									<div class="col">пт</div>
+									<div class="col-r">8:30—16:15</div>
+								</div>
+								<div class="line yellow">
+									<div class="col">пт</div>
+									<div class="col-r">12:30—13:15</div>
+								</div>
+								<div class="line">
+									<div class="col">&nbsp;</div>
+									<div class="col-r"><a href="#">Детальнiше</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<a class="account-link" href="<?= BASE_URL.'/infocenter/'; ?>"><span>Особистий кабiнет</span></a>
+				<a class="account-link" href="<?= BASE_URL . '/infocenter/'; ?>"><span>Особистий кабiнет</span></a>
 			</div>
 		</div>
 		<div class="menu-block">
