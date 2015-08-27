@@ -13,6 +13,7 @@
 			<route match="{action}" controller="post" action="" />
 		</route>
 		<route match="news" controller="page" action="news">
+			<route match="{title}_{news_id|num}" controller="page" action="news-item" />
 		</route>
 		<route match="payment-status" controller="error" action="404">
 			<route match="{payment_id|num}" controller="page" action="payment-status" />
