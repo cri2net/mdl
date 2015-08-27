@@ -1,19 +1,4 @@
 <?php
-	$months = array('1'=>'январь', '2'=>'февраль', '3'=>'март', '4'=>'апрель', '5'=>'май', '6'=>'июнь', '7'=>'июль', '8'=>'август', '9'=>'сентябрь', '10'=>'октябрь', '11'=>'ноябрь', '12'=>'декабрь');
-	
-	$years = array();
-	$days = array();
-	
-	for($i=1900; $i<=date("Y"); $i++)
-		$years[] = $i;
-
-	for($i=1; $i<=31; $i++)
-	{
-		if ($i < 10)
-			$days[] = "0".$i;
-		else
-			$days[] = $i;
-	}
 	
 	if (!empty($_POST['register']) && $_POST['register'] == 1)
 	{
@@ -49,7 +34,6 @@
 				$this->smarty->assign('error_msg', $e->getMessage().'<br><a style="color:#fff;" href="https://www.gerc.ua/restore/">Забыли пароль?</a>');
 		}
 	}
-
 
 	if(Authorization::isLogin())
 	{
@@ -96,25 +80,6 @@
 		<label for="reg-patronymic">Отчество:</label>
 		<input id="middle_name" type="text" name="middle_name" value="{*$smarty.post.middle_name*}"/>
 	</div>
-	<!-- Убрала ввод даты рождения -->
-	<!--<div class="select">
-		<label>Дата рождения:</label>
-		<select id="day" name="day" style="width:55px;">
-			{*foreach from=$days item=day*}
-				<option {*if $day==$smarty.post.day*} selected{*/if*}>{*$day*}</option>
-			{*/foreach*}
-		</select>
-		<select id="month" name="month" class="mes" style="width:100px;">
-			{*foreach from=$months key=key item=month*}
-				<option value="{*$key*}" {*if $smarty.post.month == $key*} selected{*/if*}>{*$month*}</option>
-			{*/foreach*}
-		</select>
-		<select id="year" name="year" style="width:75px;">
-			{*foreach from=$years item=years*}
-				<option {*if $smarty.post.year == $years*} selected {*elseif $years==1970*} selected{*/if*}>{*$years*}</option>
-			{*/foreach*}
-		</select>
-	</div>-->
 	<div class="clearr"></div>
 	<div class="input">
 		<label for="reg-E-Mail">Электронный адрес:</label>

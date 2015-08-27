@@ -8,11 +8,8 @@
         if (count($list) == 1) {
             $new_location = News::getNewsURL($list[0]['id']);
         }
-
     }
 
     if (isset($new_location) && $new_location) {
-        header("HTTP/1.1 301 Moved Permanently");
-        header("Location: $new_location");
-        exit();
+        Http::redirect($new_location);
     }

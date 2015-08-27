@@ -9,13 +9,18 @@
 		<route match="payments-notify" controller="_payments-notify" action="notify">
 			<route match="{paysystem}" controller="_payments-notify" action="notify" />
 		</route>
+		<route match="post" controller="post" action="">
+			<route match="{action}" controller="post" action="" />
+		</route>
 		<route match="news" controller="page" action="news">
 		</route>
 		<route match="payment-status" controller="error" action="404">
 			<route match="{payment_id|num}" controller="page" action="payment-status" />
 		</route>
 		<route match="about" controller="page" action="about" />
-		<route match="registration" controller="page" action="registration" />
+		<route match="cabinet" controller="page" action="cabinet">
+			<route match="{subpage}" controller="page" action="cabinet" />
+		</route>
 
 		<route match="komdebt" controller="page" action="komdebt">
 			<route match="{subpage}" controller="page" action="komdebt" />

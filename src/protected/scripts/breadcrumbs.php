@@ -1,17 +1,21 @@
 <breadcrumbs>
 	<div xmlns:v="http://rdf.data-vocabulary.org/#">
 		<?php
-			switch($__route_result['action']) {
-				case 'index':
+			switch($__route_result['controller'] . "/" . $__route_result['action']) {
+				case 'page/index':
 					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Головна</span><?php
 					break;
 
-				case 'about':
+				case 'page/about':
 					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Про ГіOЦ</span><?php
 					break;
 
-				case 'news':
+				case 'page/news':
 					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Новини</span><?php
+					break;
+
+				case 'error/404':
+					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Помилка 404</span><?php
 					break;
 			}
 		?>
