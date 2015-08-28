@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="uk">
 <head>
 <link rel="icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">

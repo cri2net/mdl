@@ -1,30 +1,47 @@
-<breadcrumbs>
-	<div xmlns:v="http://rdf.data-vocabulary.org/#">
-		<?php
-			switch($__route_result['controller'] . "/" . $__route_result['action']) {
-				case 'page/index':
-					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Головна</span><?php
-					break;
+<?php
+	$breadcrumbs = array(
+		array('title' => 'ГіОЦ', 'link' => '/')
+	);
 
-				case 'page/about':
-					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Про ГіOЦ</span><?php
-					break;
+	switch($__route_result['controller'] . "/" . $__route_result['action']) {
+		case 'page/index':
+			$breadcrumbs[] = array('title' => 'Головна');
+			break;
 
-				case 'page/contacts':
-					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Контакти</span><?php
-					break;
+		case 'page/about':
+			$breadcrumbs[] = array('title' => 'Про ГіOЦ');
+			break;
 
-				case 'page/news':
-					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Новини</span><?php
-					break;
-				case 'page/news-item':
-					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/news/">Новини</a></span>&nbsp;/&nbsp;<span class="current">14 червня 2015</span><?php
-					break;
+		case 'page/contacts':
+			$breadcrumbs[] = array('title' => 'Контакти');
+			break;
 
-				case 'error/404':
-					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Помилка 404</span><?php
-					break;
+		case 'page/news':
+			$breadcrumbs[] = array('title' => 'Новини');
+			break;
+		case 'page/news-item':
+			$breadcrumbs[] = array('title' => 'Новини', 'link' => '/news/');
+			$breadcrumbs[] = array('title' => '14 червня 2015');
+			break;
+
+		case 'error/404':
+			$breadcrumbs[] = array('title' => 'Помилка 404');
+			break;
+	}
+?>
+<breadcrumbs itemscope itemtype="http://schema.org/BreadcrumbList">
+	<?php
+		for ($i=0; $i < count($breadcrumbs); $i++) {
+			if ($i < count($breadcrumbs) - 1) {
+				?>
+				<span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+					<a itemprop="item" href="<?= BASE_URL . $breadcrumbs[$i]['link']; ?>"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
+					<meta itemprop="position" content="<?= $i + 1; ?>" />
+				</span>&nbsp;/&nbsp;
+				<?php
+			} else {
+				?><span class="current"><?= $breadcrumbs[$i]['title']; ?></span><?php
 			}
-		?>
-	</div>
+		}
+	?>
 </breadcrumbs>
