@@ -1,14 +1,14 @@
-var gulp = require('gulp');
-var less = require('gulp-less');
-var gutil = require('gulp-util');
-var connect = require('gulp-connect');
-var clean = require('gulp-clean');
-var uglify = require('gulp-uglify');
+var gulp       = require('gulp'),
+    less       = require('gulp-less'),
+    gutil      = require('gulp-util'),
+    connect    = require('gulp-connect'),
+    clean      = require('gulp-clean'),
+    uglify     = require('gulp-uglify'),
+    livereload = require('gulp-livereload');
 
 
 paths = {
     webpages : {
-
     }
 }
 
@@ -37,7 +37,6 @@ gulp.task('less', function () {
         .on('error', gutil.log)
         .on('error', gutil.beep))
         .pipe(gulp.dest('./public/style/'))
-        .pipe(connect.reload())
 });
 
 /* TASK: Create webserver for LiveReload */
@@ -45,8 +44,7 @@ gulp.task('connect', function () {
     connect.server({
         root: ['public'],
         host: 'gioc.dev',
-        port: 8009,
-        livereload: true
+        port: 8009
     });
 });
 
@@ -54,7 +52,6 @@ gulp.task('connect', function () {
 gulp.task('webpages', function(){
     gulp.src(WEBPAGES_MASK)
         .pipe(gulp.dest('./public/'))
-        .pipe(connect.reload());
 });
 
 /* TASK: Moving JS files to public/js directory */
@@ -62,7 +59,6 @@ gulp.task('js', function(){
     gulp.src(JS_MASK)
         .pipe(uglify())
         .pipe(gulp.dest('./public/'))
-        .pipe(connect.reload())
 });
 
 /* TASK: Moving CSS files to public directory */
@@ -70,30 +66,49 @@ gulp.task('css', function(){
     gulp.src(CSS_MASK)
         .pipe(uglify())
         .pipe(gulp.dest('./public/'))
-        .pipe(connect.reload())
 });
 
 /* TASK: Moving images (only external, not CSS-encoded) to public/pic directory */
 gulp.task('images', function(){
     gulp.src(IMAGES_MASK)
         .pipe(gulp.dest('./public/'))
-        .pipe(connect.reload())
 })
 
 /* TASK: Moving fonts to public directory */
 gulp.task('fonts', function(){
     gulp.src(FONTS_MASK)
         .pipe(gulp.dest('./public'))
-        .pipe(connect.reload())
 })
 
 /* TASK: Watching changes in all-source & images */
 gulp.task('watch', function(){
-    gulp.watch(['./src/**/*.less'], ['less'] );
-    gulp.watch(WEBPAGES_MASK, ['webpages'] );
-    gulp.watch(IMAGES_MASK, ['images'] );
-    gulp.watch(CSS_ENCODED_IMAGES_MASK, ['less'] );
-    gulp.watch('./src/**/*.js', ['js'] );
+    livereload.listen();
+
+    gulp.watch(['./src/**/*.less'], ['less']).on('change', stackReload);
+    gulp.watch(WEBPAGES_MASK, ['webpages']).on('change', stackReload);
+    gulp.watch(IMAGES_MASK, ['images']).on('change', stackReload);
+    gulp.watch(CSS_ENCODED_IMAGES_MASK, ['less'] ).on('change', stackReload);
+    gulp.watch('./src/**/*.js', ['js']).on('change', stackReload);
+
+
+    var timer = null; // a timeout variable
+
+    // actual reload function
+    function stackReload() {
+        var reload_args = arguments;
+
+        // Stop timeout function to run livereload if this function is ran within the last 250ms
+        if (timer) {
+            clearTimeout(timer);
+        }
+
+        // Check if any gulp task is still running
+        if (!gulp.isRunning) {
+            timer = setTimeout(function() {
+                livereload.changed.apply(null, reload_args);
+            }, 250);
+        }
+    }
 });
 
 gulp.task('cleanup', function(){
