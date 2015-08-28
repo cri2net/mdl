@@ -8,16 +8,27 @@
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 <link href="<?= BASE_URL; ?>/style/style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&amp;subset=latin,cyrillic">
-<script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="<?= BASE_URL; ?>/js/main.js"></script>
-<script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery.tools.min.js"></script>
-<script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery.popup.js"></script>
-<script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery.autocomplete_2.js"></script>
-<script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
-<script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/main.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.tools.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.popup.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.autocomplete_2.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
 <?php
 	if (USER_REAL_IP == '127.0.0.1') {
 		?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php
+	}
+
+	switch($__route_result['controller'] . "/" . $__route_result['action']) {
+		case 'page/contacts':
+			?>
+			<?php /* <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;language=ua&amp;libraries=drawing,geometry,places"></script>
+			<script>
+				google.maps.event.addDomListener(window, 'load', contacts_map_initialize);
+			</script> */ ?>
+			<?php
+			break;
 	}
 ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics.php'); ?>
@@ -48,12 +59,12 @@
 									<div class="col-r">8:30—16:15</div>
 								</div>
 								<div class="line yellow">
-									<div class="col">пт</div>
+									<div class="col">перерва</div>
 									<div class="col-r">12:30—13:15</div>
 								</div>
 								<div class="line">
 									<div class="col">&nbsp;</div>
-									<div class="col-r"><a href="#">Детальнiше</a></div>
+									<div class="col-r"><a href="<?= BASE_URL; ?>/contacts/#page-map-clock">Детальнiше</a></div>
 								</div>
 							</div>
 						</div>
@@ -73,5 +84,5 @@
 		</div>
 	</header>
 	<content>
-		<div class="inner">
+		<div class="inner <?= $__route_result['controller'] . '_' . $__route_result['action']; ?>">
 			<?php require_once(ROOT . '/protected/scripts/breadcrumbs.php'); ?>

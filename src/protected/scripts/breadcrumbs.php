@@ -10,6 +10,10 @@
 					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Про ГіOЦ</span><?php
 					break;
 
+				case 'page/contacts':
+					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Контакти</span><?php
+					break;
+
 				case 'page/news':
 					?><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="<?= BASE_URL; ?>/">ГіОЦ</a></span>&nbsp;/&nbsp;<span class="current">Новини</span><?php
 					break;

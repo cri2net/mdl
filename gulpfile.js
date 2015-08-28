@@ -106,7 +106,7 @@ gulp.task('watch', function(){
         if (!gulp.isRunning) {
             timer = setTimeout(function() {
                 livereload.changed.apply(null, reload_args);
-            }, 250);
+            }, 350);
         }
     }
 });
