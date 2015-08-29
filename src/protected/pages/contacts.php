@@ -76,3 +76,26 @@
 
 
 <h3 id="page-map-letter" class="page-subtitle border-top">Зворотнiй зв’язок</h3>
+<form class="feedback-form" action="<?= BASE_URL; ?>/post/contacts/" method="post">
+    <div class="field-group">
+        <label>
+            Iм’я <span class="star-required" title="Обов'язкове поле">*</span> <br>
+            <input type="text" name="name" class="txt" required="required">
+        </label>
+    </div>
+    <div class="field-group">
+        <label>
+            Електрона пошта <span class="star-required" title="Обов'язкове поле">*</span> <br>
+            <input type="email" name="email" class="txt" required="required">
+        </label>
+    </div>
+    <div class="field-group">
+        <label>
+            Текст повiдомлення <span class="star-required" title="Обов'язкове поле">*</span> <br>
+            <textarea required="required" name="text" class="txt"></textarea>
+        </label>
+    </div>
+    <div class="field-group">
+        <button class="btn green bold">Надiслати</button>
+    </div>
+</form>

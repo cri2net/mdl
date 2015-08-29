@@ -2,7 +2,7 @@
     if (isset($__route_result['values']['action'])) {
         $post_process_file = $__route_result['values']['action'];
     } else {
-        Http::redirect(BASE_URL, false);
+        Http::redirect(BASE_URL);
     }
     
     $file = ROOT . '/protected/controllers/post/' . $post_process_file . '.php';
@@ -11,4 +11,4 @@
     }
 
     $redirect_to = ($redirect_to) ? $redirect_to : BASE_URL . "/$post_process_file/";
-    Http::redirect($redirect_to, false);
+    Http::redirect($redirect_to);
