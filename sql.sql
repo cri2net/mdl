@@ -84,6 +84,40 @@ ALTER TABLE `gioc_hot_news` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- IN ONLINE
 
 
+-- 2015.08.29
+CREATE TABLE `gioc_pages`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `path` VARCHAR(250) NOT NULL,
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+  `h1` VARCHAR(500) NOT NULL,
+  `breadcrumb` VARCHAR(500),
+  `created_at` DOUBLE NOT NULL,
+  `updated_at` DOUBLE NOT NULL,
+  `views` INT(11) NOT NULL DEFAULT 0,
+  `announce` TEXT,
+  `text` MEDIUMTEXT,
+  `seo_title` VARCHAR(500),
+  `seo_description` VARCHAR(500),
+  `seo_keywords` VARCHAR(500),
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX (`path`),
+  INDEX (`is_active`),
+  INDEX (`created_at`),
+  INDEX (`updated_at`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
 
+ALTER TABLE `gioc_pages`
+  ADD COLUMN `idp` INT(11) DEFAULT 0  NOT NULL AFTER `id`,
+  ADD COLUMN `pos` INT(11) DEFAULT 0  NOT NULL AFTER `idp`, 
+  DROP INDEX `is_active`,
+  ADD  INDEX `is_active` (`is_active`, `idp`),
+  ADD INDEX (`idp`),
+  ADD INDEX (`pos`);
+
+
+ALTER TABLE `gioc_pages`
+  CHANGE `path` `key` VARCHAR(100) CHARSET utf8 COLLATE utf8_general_ci NOT NULL, 
+  DROP INDEX `path`,
+  ADD  UNIQUE INDEX `path` (`idp`, `key`);
 
 
