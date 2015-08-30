@@ -24,6 +24,14 @@
 			$breadcrumbs[] = array('title' => '14 червня 2015');
 			break;
 
+		case 'static_page/index':
+			$link = '/';
+			for ($i=0; $i < count($__static_pages_array); $i++) {
+				$link .= $__static_pages_array[$i]['key'] . '/';
+				$breadcrumbs[] = array('title' => $__static_pages_array[$i]['breadcrumb'], 'link' => $link);
+			}
+			break;
+
 		case 'error/404':
 			$breadcrumbs[] = array('title' => 'Помилка 404');
 			break;

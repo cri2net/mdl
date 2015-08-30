@@ -20,6 +20,7 @@ return array(
     'Routing' => $baseDir . '/protected/classes/Routing.php',
     'SMTP' => $vendorDir . '/phpmailer/phpmailer/class.smtp.php',
     'ShoppingCart' => $baseDir . '/protected/classes/ShoppingCart.php',
+    'StaticPage' => $baseDir . '/protected/classes/StaticPage.php',
     'Street' => $baseDir . '/protected/classes/Street.php',
     'UPC' => $baseDir . '/protected/classes/UPC.php',
     'User' => $baseDir . '/protected/classes/User.php',
