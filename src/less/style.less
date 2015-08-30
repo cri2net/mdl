@@ -6,6 +6,8 @@
 @main-menu-width: 934px;
 @footer-height: 182px;
 @sidebar-width: 266px;
+@header-height: 79px;
+@menu-height: 55px;
 
 
 .text-shadow(@param)
@@ -78,7 +80,7 @@ header {
 	background-color:#fff;
 	.top-line {
 		& > .inner {
-			.inner-global; height:79px;
+			.inner-global; height:@header-height;
 			.logo { .size(328,62); position:absolute; top:5px; left:0; background-image:url("@{images}/logo-header.png"); }
 			.phone-block {
 				display:block;
@@ -170,7 +172,7 @@ header {
 	.menu-block {
 		background-color: #eee;
 		& > .inner {
-			.inner-global; height:55px; position:relative;
+			.inner-global; height:@menu-height; position:relative;
 			.menu {
 				position:relative;
 				width:@main-menu-width;
@@ -449,8 +451,12 @@ content {
 		}
 	}
 
-	.sidebar {
-		position:relative; padding-bottom:10px; margin-left:@base-width - @sidebar-width; width:@sidebar-width - 24; padding-left:24px; background-repeat:repeat-y; background-image:data-uri("@{images}/sidebar/__shadow.png"); background-position:left top;
+    .sidebar {
+        padding-bottom: 10px;
+        margin-left: @base-width - @sidebar-width;
+        width: @sidebar-width - 24;
+        padding-left: 24px;
+
 		.search {
 			padding-top:22px;
 			input[type=text] { 
@@ -490,7 +496,22 @@ content {
 		}
 	}
 }
-
+.divider-conteiner {
+    .inner-global;
+    position: absolute;
+    top: @header-height + @menu-height;
+    bottom: @footer-height;
+    .divider {
+        background-repeat: repeat-y;
+        background-image: data-uri("@{images}/sidebar/__shadow.png");
+        position: absolute;
+        margin-left: @base-width - @sidebar-width;
+        top: 0;
+        bottom: 0;
+        display:block;
+        width:20px;
+    }
+}
 footer{
 	.size(100%, @footer-height); position:absolute; bottom:0px; background-color:#eee; font-size:12px; line-height:15px;
 	& > .inner {

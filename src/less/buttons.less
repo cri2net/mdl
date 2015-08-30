@@ -5,7 +5,7 @@
 
 .btn-normal-state(@btn-color)
 {
-	.background-image(linear-gradient(to top, lighten(@btn-color, 5%) 0%, darken(@btn-color, 5%) 100%));
+	.background-image(linear-gradient(to top, darken(@btn-color, 5%) 0%, lighten(@btn-color, 5%) 100%));
 	background-color:@btn-color;
 	.box-shadow(0 7px 0 0 darken(@btn-color, 20%));
 }
@@ -13,7 +13,7 @@
 .btn-color-params(@btn-color)
 {
 	.btn-normal-state(@btn-color);
-	&:hover {  background-color:lighten(@btn-color, 10%); .background-image(linear-gradient(to top, lighten(@btn-color, 20%) 0%, darken(@btn-color, 10%) 100%)); color:#fff; }
+	&:hover {  background-color:lighten(@btn-color, 10%); .background-image(linear-gradient(to top, darken(@btn-color, 10%) 0%, lighten(@btn-color, 20%) 100%)); color:#fff; }
 	&:active { .box-shadow(0 1px 0 0 darken(@btn-color, 20%)); top:4px;  outline: none; color:#fff;}
 	&:visited, &:focus { color:#fff; outline: none; }
 }

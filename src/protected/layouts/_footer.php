@@ -3,6 +3,7 @@
 		<?php require_once(ROOT . '/protected/scripts/sidebar.php'); ?>
 	</div>
 </content>
+<div class="divider-conteiner"><div class="divider"></div></div>
 <footer>
 	<div class="inner">
 		<div class="left">
