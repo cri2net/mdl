@@ -14,6 +14,8 @@
 
     @ini_set('error_log', ROOT . '/protected/logs/php-errors.log');
 
+
+
     require_once(ROOT . "/protected/conf/db.conf.php");
     require_once(ROOT . "/protected/conf/errors.php");
     require_once(ROOT . "/protected/lib/func.lib.php");
@@ -26,8 +28,17 @@
             break;
         
         default:
-            define('COOKIE_DOMAIN', '.splata.gioc.kiev.ua');
-            define('BASE_URL', 'http://splata.gioc.kiev.ua');
+            switch ($_SERVER['HTTP_HOST']) {
+                case 's1.mailing.com.ua':
+                    $_SERVER['REQUEST_URI'] = str_replace('/clients/gioc/', '/', $_SERVER['REQUEST_URI']);
+                    define('COOKIE_DOMAIN', '.' . $_SERVER['HTTP_HOST']);
+                    define('BASE_URL', "http://{$_SERVER['HTTP_HOST']}/clients/gioc");
+                    break;
+
+                default:
+                    define('COOKIE_DOMAIN', '.splata.gioc.kiev.ua');
+                    define('BASE_URL', 'http://splata.gioc.kiev.ua');
+            }
     }
 
     define('EMAIL_FROM', 'info@splata.gioc.kiev.ua');

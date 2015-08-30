@@ -11,12 +11,21 @@
             break;
         
         default:
-            define('DB_HOST', 'localhost');
-            define('DB_NAME', 'gioc_site');
-            define('DB_USER', 'root');
-            define('DB_PASSWORD', 'kykyev');
-            
-            define('API_URL', 'http://10.12.2.201:8888');
+            if (strcasecmp($_SERVER['HTTP_HOST'], 's1.mailing.com.ua') == 0) {
+                define('DB_HOST', 'localhost');
+                define('DB_NAME', 'gioc_site');
+                define('DB_USER', 'gioc_site');
+                define('DB_PASSWORD', 'XcKeWfZtHJWFYUKs');
+
+                define('API_URL', 'https://193.200.205.201');
+            } else {
+                define('DB_HOST', 'localhost');
+                define('DB_NAME', 'gioc_site');
+                define('DB_USER', 'root');
+                define('DB_PASSWORD', 'kykyev');
+                
+                define('API_URL', 'http://10.12.2.201:8888');
+            }
     }
     
     define('TABLE_PREFIX', 'gioc_');
