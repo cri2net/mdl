@@ -3,9 +3,9 @@
 @ui-images: "../../images/cupertino-ui-images";
 @fonts: "./fonts";
 @base-width: 1200px;
-@main-menu-width: 934px;
+@main-menu-width: 901px;
 @footer-height: 182px;
-@sidebar-width: 266px;
+@sidebar-width: 347px;
 @header-height: 79px;
 @menu-height: 55px;
 
@@ -38,7 +38,7 @@ sup { top: -0.5em; }
 sub { bottom: -0.25em; }
 
 html { width:100%; height:100%; }
-body { position:relative; .size(100%, auto); background:white; min-width:1200px; min-height:100%; font-family:"Ubuntu", Arial; }
+body { padding:14px 0 90px; position:relative; .size(100%, auto); background:white; min-width:@base-width; min-height:100%; font-family:"Ubuntu", Arial; }
 a {
     color:#00979c;
     &:hover { text-decoration:none; color:#00979c; }
@@ -76,17 +76,22 @@ input.txt { height:27px; }
     .title { font-weight:bold; font-size:20px; margin-bottom:5px; margin-top:21px; }
 }
 
+.main-conteiner {
+    .inner-global;
+    .box-shadow(0 0 10px 0 rgba(0, 0, 0, 0.3));
+}
+
 header {
 	background-color:#fff;
 	.top-line {
 		& > .inner {
 			.inner-global; height:@header-height;
-			.logo { .size(328,62); position:absolute; top:5px; left:0; background-image:url("@{images}/logo-header.png"); }
+			.logo { .size(328,62); position:absolute; top:5px; left:33px; background-image:url("@{images}/logo-header.png"); }
 			.phone-block {
 				display:block;
 				position:absolute;
 				top:16px;
-				left:390px;
+				left:423px;
 				padding-left:38px;
                 .phone-icon { display:block; left:0; top:5px; position:absolute; .size(27); z-index:9; background-image:data-uri("@{images}/h/__phone.png"); }
 				.tel {
@@ -154,7 +159,7 @@ header {
 				position:absolute;
 				display:inline-block;
 				text-decoration:none;
-				right:0;
+				right:33px;
 				height:31px;
 				font-size:16px;
 				top:21px;
@@ -175,7 +180,8 @@ header {
 			.inner-global; height:@menu-height; position:relative;
 			.menu {
 				position:relative;
-				width:@main-menu-width;
+                padding-left:33px;
+				width:@main-menu-width - 33;
 				float:left;
 				.item {
                     position:relative; margin-top:15px; display:inline-block; margin-right:27px;
@@ -237,7 +243,7 @@ header {
 				text-align:center;
 				cursor:pointer;
 				position:absolute;
-				right:0;
+				right:32px;
 				top:0;
 				padding: 18px 36px 15px 69px;
 				width:161px;
@@ -263,7 +269,7 @@ header {
 content {
 	.inner-global; display:inline-block; padding-bottom:@footer-height;
 	.inner {
-		width:@base-width - @sidebar-width; float:left; padding-bottom:50px;
+        width:@base-width - @sidebar-width - 33; float:left; padding-bottom:50px; padding-left:33px;
 		breadcrumbs {
 			margin-top:18px; margin-bottom:15px;
 			color:#888;
@@ -283,10 +289,10 @@ content {
 				.size(37, 61);
 				cursor:pointer;
 				&.next-btn { background-image:data-uri("@{images}/slider/__next.png"); right:21px; }
-				&.prev-btn { background-image:data-uri("@{images}/slider/__prev.png"); left:0; }
+				&.prev-btn { background-image:data-uri("@{images}/slider/__prev.png"); left:-1px; }
 			}
 			
-			.slide{ height: 422px; color:#fff; display: inline-block; width: @base-width - @sidebar-width; position: relative;
+			.slide{ height: 422px; color:#fff; display: inline-block; width: @base-width - @sidebar-width - 33; position: relative;
 				.slide_img{
 					position: absolute;
 					top: 50px;
@@ -295,7 +301,7 @@ content {
 				}
 			}
 
-			img { margin-left:-21px; }
+			img { margin-left:-21px; max-width:800px; }
 			.bullets {
 				text-align:center;
 				display:inline-block;
@@ -340,7 +346,7 @@ content {
 			.features {
 				margin-bottom:29px;
 				.feature {
-					font-size:16px; color:#fff; padding:28px; .size(384, 274); display:inline-block;
+					font-size:16px; color:#fff; padding:28px; .size(328, 274); display:inline-block;
 					.title { font-size:20px; font-weight:bold; margin-bottom:22px; line-height:26px; }
 					&.left { background-color:#01b671; float:left; margin-right:32px; }
 					&.right { background-color:#eee; float:none; color:#444; margin-right:19px; }
@@ -403,9 +409,9 @@ content {
         }
 
 		.news-list {
-			display:block;
+			display:inline-block;
 			.news-item {
-				width:432px; display:inline-block; padding-right:35px;
+				width:375px; display:inline-block; padding-right:35px;
 				&.first { float:left; }
 				h2.title { color:#000; margin-bottom:8px; }
 				.date { color:#00979c; font-size:12px; margin-bottom:16px; }
@@ -465,7 +471,7 @@ content {
 				font-size:16px;
 				.box-shadow(inset 0 0 4px 0 rgba(0, 0, 0, 0.2));
 				.border-radius(4px);
-				width:213px;
+				width:238px;
 				padding:4px 14px 3px 14px;
 				height:30px;
 				border:0 none;
@@ -479,6 +485,8 @@ content {
 			background-color:#eee;
 			color: #444;
 			padding:20px 20px 0 20px;
+            margin-right:26px;
+            width:226px;
 			.title {
 				font-size:16px; font-weight:bold; margin-top:4px; margin-bottom:14px;
 			}
@@ -501,6 +509,7 @@ content {
     position: absolute;
     top: @header-height + @menu-height;
     bottom: @footer-height;
+    width:0;
     .divider {
         background-repeat: repeat-y;
         background-image: data-uri("@{images}/sidebar/__shadow.png");
@@ -515,7 +524,7 @@ content {
 footer{
 	.size(100%, @footer-height); position:absolute; bottom:0px; background-color:#eee; font-size:12px; line-height:15px;
 	& > .inner {
-		.inner-global; padding-top:49px; height:78px;
+		.inner-global; padding:49px 33px 0; height:78px;
 		color:#fff;
 		.left {
 			width:240px;
