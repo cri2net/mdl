@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&amp;subset=latin,cyrillic">
 <script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/main.js"></script>
-<script src="<?= BASE_URL; ?>/js/jquery.autocomplete_2.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
 <?php
