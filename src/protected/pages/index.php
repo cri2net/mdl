@@ -27,7 +27,7 @@
 				<script type="text/javascript">
 					var slide_count = <?= count($slides); ?>;
 
-					$('.bullets').everyTime(4000, 'bullets_svg', function() {
+					$('.bullets').everyTime(4000, 'slider_bullets', function() {
 						next_slide_rotate_index();
 					});
 				</script>
@@ -48,8 +48,8 @@
 		<div class="feature right">
 			<div class="title">Де сплатити послуги ЖКГ?</div>
 			<ul>
-				<li class="bank">Банки
-				<li class="terminal">Термiнали самооблуговування
+				<li class="bank"><a href="<?= BASE_URL; ?>/banks/">Банки</a>
+				<li class="terminal"><a href="<?= BASE_URL; ?>/terminals/">Термiнали самооблуговування</a>
 			</ul>
 		</div>
 	</div>

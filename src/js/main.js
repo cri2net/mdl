@@ -465,8 +465,8 @@ function prev_slide_rotate_index()
 	if (current_slide < 0) {
 		current_slide = slide_count - 1;
 	}
-	$('.bullets').stopTime('bullets_svg');
-	$('.bullets').everyTime(4000, 'bullets_svg', function() {
+	$('.bullets').stopTime('slider_bullets');
+	$('.bullets').everyTime(4000, 'slider_bullets', function() {
 		next_slide_rotate_index();
 	});
 };
@@ -488,30 +488,8 @@ function jump_to_slide(next)
 		current_slide = 0;
 	}
 
-	$('.bullets').stopTime('bullets_svg');
-	$('.bullets').everyTime(4000, 'bullets_svg', function() {
+	$('.bullets').stopTime('slider_bullets');
+	$('.bullets').everyTime(4000, 'slider_bullets', function() {
 		next_slide_rotate_index();
 	});
 };
-
-// function contacts_map_initialize()
-// {
-// 	var point = new google.maps.LatLng(50.465441, 30.622652);
-// 	var mapOptions = {
-// 		zoom: 14,
-// 		center: point
-// 	};
-// 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-// 	var infowindow = new google.maps.InfoWindow({
-// 		content: '<div class="map-info-window" style="line-height:1.6em;">вул. Космічна, 12-а<br />м. Київ, 02192, Україна<br />+38 (044) +38 (044) 238-80-05, <br /> +38 (044) +38 (044) 238-80-27</div>'
-// 	});
-// 	var marker = new google.maps.Marker({
-// 		position: point,
-// 		map: map,
-// 		title: 'Натисніть для додаткової інформації'
-// 	});
-	
-// 	google.maps.event.addListener(marker, 'click', function() {
-// 		infowindow.open(map, marker);
-// 	});
-// };

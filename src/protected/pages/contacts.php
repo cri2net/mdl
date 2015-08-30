@@ -69,7 +69,6 @@
 <h3 id="page-map-marker" class="page-subtitle border-top">Адреса</h3>
 <h4 class="title">Поштова адреса</h4>
 02192, Україна, м. Київ, вул. Космічна, 12-а
-<!-- <div class="map-block" id="map-canvas" style="height:274px; width: 100%;"></div> -->
 <div class="map-block" style="height:274px; width: 100%;">
     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d634.9232534968156!2d30.622652!3d50.465441!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0000000000000000%3A0x37f7d3eaa6d2faa4!2z0JrQvtC80YPQvdCw0LvRjNC90LUg0L_RltC00L_RgNC40ZTQvNGB0YLQstC-ICLQk9C-0LvQvtCy0L3QuNC5INGW0L3RhNC-0YDQvNCw0YbRltC50L3QviAtINC-0LHRh9C40YHQu9GO0LLQsNC70YzQvdC40Lkg0YbQtdC90YLRgCI!5e0!3m2!1sru!2sua!4v1440763298928" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
 </div>

@@ -19,17 +19,6 @@
 	if (USER_REAL_IP == '127.0.0.1') {
 		?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php
 	}
-
-	switch($__route_result['controller'] . "/" . $__route_result['action']) {
-		case 'page/contacts':
-			?>
-			<?php /* <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;language=ua&amp;libraries=drawing,geometry,places"></script>
-			<script>
-				google.maps.event.addDomListener(window, 'load', contacts_map_initialize);
-			</script> */ ?>
-			<?php
-			break;
-	}
 ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics.php'); ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php'); ?>
