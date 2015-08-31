@@ -118,9 +118,23 @@ ALTER TABLE `gioc_pages`
 
 
 
+-- 2015.08.31
+CREATE TABLE `gioc_page_views`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` DOUBLE NOT NULL,
+  `page_type` ENUM('static_page','news','article','other') NOT NULL,
+  `page_id` VARCHAR(200) NOT NULL COMMENT 'id or path',
+  `user_id` INT(11) NOT NULL DEFAULT 0,
+  `ip` VARCHAR(100),
+  `user_agent_string` VARCHAR(350),
+  PRIMARY KEY (`id`),
+  INDEX (`timestamp`),
+  INDEX (`user_id`),
+  INDEX (`page_type`, `page_id`),
+  INDEX (`page_type`, `page_id`, `timestamp`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
 
 -- IN ONLINE
-
-
-
 

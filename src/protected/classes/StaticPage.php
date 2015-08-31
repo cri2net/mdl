@@ -3,6 +3,7 @@
 class StaticPage
 {   
     const TABLE = DB_TBL_PAGES;
+    const TABLE_VIEWS = DB_TBL_PAGE_VIEWS;
 
     public static function getByURI($uri = null, &$results = null)
     {
@@ -81,6 +82,49 @@ class StaticPage
         }
 
         return $path;
+    }
+
+    /**
+     * Сохраняем в БД посещение страницы.
+     * Метод может логировать посещения не только статических страниц, но и любых других.
+     * 
+     * @param  string | integer  $page_id   ID посещённой страницы. Может быть строкой, например, 'contacts'
+     * @param  string            $page_type Тип посещйнной страницы. OPTIONAL
+     * @param  integer           $user_id   ID пользователя, который просматривает страницы. Значение 0 для "гостей". OPTIONAL
+     * @return void
+     */
+    public static function logView($page_id, $page_type = 'static_page', $user_id = null)
+    {
+        if (preg_match('/robot|spider|crawler|curl|^$/i', HTTP_USER_AGENT)) {
+            // не логируем действия ботов
+            return;
+        }
+
+        if ($user_id === null) {
+            $user_id = Authorization::getLoggedUserId();
+            if (!$user_id) {
+                $user_id = 0;
+            }
+        }
+
+        $arr = array(
+            'timestamp' => microtime(true),
+            'page_type' => $page_type,
+            'page_id' => $page_id,
+            'user_id' => $user_id,
+            'ip' => USER_REAL_IP,
+            'user_agent_string' => HTTP_USER_AGENT,
+        );
+        
+        PDO_DB::insert($arr, self::TABLE_VIEWS);
+    }
+
+    public static function incrementViews($id)
+    {
+        $id = (int)$id;
+        $table = self::TABLE;
+        PDO_DB::query("UPDATE $table SET views = views + 1 WHERE id='$id' LIMIT 1");
+        self::logView($id);
     }
 
     public static function getChildren($id)
