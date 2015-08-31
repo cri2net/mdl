@@ -12,7 +12,6 @@
     if (count($children) > 0) {
         ?> <div class="page-subtitle">Пiдроздiли</div> <?php
 
-
         foreach ($children as $child) {
             ?>
             <div class="subtitle-item <?= $child['key']; ?>">

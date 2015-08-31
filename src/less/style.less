@@ -247,20 +247,53 @@ header {
 				top:0;
 				padding: 18px 36px 15px 69px;
 				width:161px;
-				background-image:data-uri("@{images}/h/__calc-icon.png");
-				background-repeat:no-repeat;
-				background-position: 24px center;
-				color:#fff;
-				font-size:16px;
-				height:22px;
-				.darr {
-					.size(6, 4);
-					position:absolute;
-					top:28px;
-					right:18px;
-					display:block;
-					background-image:data-uri("@{images}/menu/__calc-darr.png");
-				}
+                color:#fff;
+                font-size:16px;
+                height:22px;
+                z-index:4;
+                &:hover {
+                    .title { color:#444; }
+                    z-index:55;
+                    
+                    .icon { background-image:data-uri("@{images}/h/__calc-icon-hover.png"); z-index:6; }
+                    .calc-open { display:block; .box-shadow(0 0 7px 0 rgba(0, 0, 0, 0.3)); }
+                    .darr { display:none; }
+                }
+                .title { z-index:55; position:relative; display:inline-block; }
+                .icon {
+                    position:absolute;
+                    left:24px;
+                    top:11px;
+                    background-image:data-uri("@{images}/h/__calc-icon.png");
+                    display:block; .size(33);
+                }
+                
+                .darr {
+                    .size(6, 4);
+                    position:absolute;
+                    top:28px;
+                    right:18px;
+                    display:block;
+                    background-image:data-uri("@{images}/menu/__calc-darr.png");
+                }
+
+                .calc-open {
+                    display: none;
+                    cursor:default;
+                    position:absolute;
+                    background-color: #fff;
+                    padding:74px 20px 20px 35px;
+                    top:-13px;
+                    left:-11px;
+                    text-align:left;
+                    right:-10px;
+                    .item {
+                        margin-bottom:12px;
+                        a {
+                            font-size:12px; line-height:15px;
+                        }
+                    }
+                }
 			}
 		}
 	}

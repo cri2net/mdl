@@ -64,8 +64,17 @@
 				<div class="inner">
 					<?php require_once(ROOT . '/protected/scripts/menu.php'); ?>
 					<div class="calc-btn">
-						Онлайн-калькулятор
+						<span class="title">Онлайн-калькулятор</span>
+						<div class="icon"></div>
 						<div class="darr"></div>
+						<div class="calc-open">
+							<div class="item">
+								<a href="#">Орієнтовний On-line розрахунок субсидій</a>
+							</div>
+							<div class="item">
+								<a href="#">Розрахунок за показаннями квартирних приладів обліку</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

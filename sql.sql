@@ -65,7 +65,6 @@ ALTER TABLE `gioc_payment`
 
 
 
-
 -- 2015.08.26
 
 CREATE TABLE `gioc_hot_news` (
@@ -79,9 +78,6 @@ CREATE TABLE `gioc_hot_news` (
 
 ALTER TABLE `gioc_hot_news` ADD PRIMARY KEY (`id`);
 ALTER TABLE `gioc_hot_news` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-
--- IN ONLINE
 
 
 -- 2015.08.29
@@ -119,5 +115,12 @@ ALTER TABLE `gioc_pages`
   CHANGE `path` `key` VARCHAR(100) CHARSET utf8 COLLATE utf8_general_ci NOT NULL, 
   DROP INDEX `path`,
   ADD  UNIQUE INDEX `path` (`idp`, `key`);
+
+
+
+
+-- IN ONLINE
+
+
 
 
