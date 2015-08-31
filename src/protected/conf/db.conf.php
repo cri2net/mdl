@@ -37,6 +37,7 @@
     define('DB_TBL_NEWS_IMAGES', 'gioc_news_images');
     define('DB_TBL_PAGE_VIEWS', 'gioc_page_views');
     define('DB_TBL_PAGES', 'gioc_pages');
+    define('DB_TBL_PAGES_LINKS', 'gioc_pages_links');
     define('DB_TBL_PAYMENT', 'gioc_payment');
     define('DB_TBL_PAYMENT_SERVICES', 'gioc_payment_services');
     define('DB_TBL_STREETS', 'gioc_streets');

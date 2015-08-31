@@ -45,9 +45,7 @@
 		return;
 	}
 ?>
-<div class="mini_info_block">
-	<h2 class="reg">Регистрация пользователя</h2>
-</div>
+<h1 class="reg">Регистрация пользователя</h1>
 <?php
 	if($error)
 	{

@@ -4,6 +4,7 @@ class StaticPage
 {   
     const TABLE = DB_TBL_PAGES;
     const TABLE_VIEWS = DB_TBL_PAGE_VIEWS;
+    const TABLE_LINKS = DB_TBL_PAGES_LINKS;
 
     public static function getByURI($uri = null, &$results = null)
     {
@@ -115,7 +116,7 @@ class StaticPage
             'ip' => USER_REAL_IP,
             'user_agent_string' => HTTP_USER_AGENT,
         );
-        
+
         PDO_DB::insert($arr, self::TABLE_VIEWS);
     }
 

@@ -139,5 +139,28 @@ ALTER TABLE `gioc_pages`
 
 
 
+ALTER TABLE `gioc_news_links`
+  CHANGE `news_id` `page_type` ENUM('static_page','news','article') NOT NULL,
+  ADD COLUMN `page_id` INT(11) NOT NULL AFTER `page_type`,
+  CHANGE `type` `type` ENUM('see_also','source') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'see_also' NOT NULL,
+  ADD COLUMN `icon` VARCHAR(200) NULL AFTER `is_active`, 
+  DROP INDEX `news_id`,
+  DROP INDEX `news_id_2`,
+  DROP INDEX `news_id_3`,
+  DROP INDEX `pos`,
+  DROP PRIMARY KEY,
+  ADD PRIMARY KEY (`id`),
+  ADD INDEX (`page_type`, `page_id`, `is_active`),
+  ADD INDEX (`pos`),
+  ADD INDEX (`page_type`, `page_id`, `type`, `is_active`),
+  DROP FOREIGN KEY `gioc_news_links_ibfk_1`;
+
+RENAME TABLE `gioc_news_links` TO `gioc_pages_links`;
+
 -- IN ONLINE
+
+ALTER TABLE `gioc_pages_links`
+  DROP COLUMN `icon`;
+
+
 
