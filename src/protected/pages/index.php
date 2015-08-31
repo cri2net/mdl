@@ -44,6 +44,9 @@
 				<li class="account">Всі об'єкти під одним аккаунтом
 				<li class="email">Отримуй email-повідомлення про оновлення рахунків
 			</ul>
+			<span class="cabinet-link align-right">
+				<a href="<?= BASE_URL; ?>/cabinet/">Особистий кабiнет</a>
+			</span>
 		</div>
 		<div class="feature right">
 			<div class="title">Де сплатити послуги ЖКГ?</div>

@@ -48,6 +48,8 @@ a {
     }
     &.no-decoration { text-decoration:none; }
 }
+.align-left { text-align:left; }
+.align-right { text-align:right; }
 .align-center { text-align:center; }
 .clear { clear:both; }
 ul > li { padding-left:15px; list-style-type:square; line-height:1.5em; }
@@ -398,7 +400,11 @@ content {
 							&.bank { background-image:data-uri("@{images}/home/__bank.png"); background-position:2px 2px; }
 							&.terminal { background-image:data-uri("@{images}/home/__terminal.png"); background-position:6px 2px; }
 						}
-					}
+                    }
+                    .cabinet-link {
+                        display:block; margin-top:10px;
+                        a { color:#fff; }
+                    }
 				}
 			}
 		}

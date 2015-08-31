@@ -31,7 +31,7 @@
 		<route match="paybill"  controller="page" action="paybill" />
 		<route match="contacts" controller="page" action="contacts" />
 
-		<route match="infocenter" controller="page" action="infocenter">
+		<route match="cabinet" controller="page" action="cabinet">
 			<route match="bill" controller="page" action="infocenter">
 				<route match="{md5_hash}" controller="page" action="bill">
 				</route>

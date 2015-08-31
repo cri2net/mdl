@@ -57,7 +57,7 @@
 							</div>
 						</div>
 					</div>
-					<a class="account-link" href="<?= BASE_URL . '/infocenter/'; ?>"><span>Особистий кабiнет</span></a>
+					<a class="account-link" href="<?= BASE_URL . '/cabinet/'; ?>"><span>Особистий кабiнет</span></a>
 				</div>
 			</div>
 			<div class="menu-block">

@@ -18,7 +18,7 @@
                 <div class="desc"><?= $child['announce']; ?></div>
             </div>
             <div class="clear"></div>
-            <?php            
+            <?php
         }
     }
 ?>
