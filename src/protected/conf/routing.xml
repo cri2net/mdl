@@ -18,7 +18,6 @@
 		<route match="payment-status" controller="error" action="404">
 			<route match="{payment_id|num}" controller="page" action="payment-status" />
 		</route>
-		<route match="about" controller="page" action="about" />
 		<route match="cabinet" controller="page" action="cabinet">
 			<route match="{subpage}" controller="page" action="cabinet" />
 		</route>

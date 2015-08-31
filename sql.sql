@@ -134,6 +134,9 @@ CREATE TABLE `gioc_page_views`(
   INDEX (`page_type`, `page_id`, `timestamp`)
 ) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
 
+ALTER TABLE `gioc_pages`
+  ADD COLUMN `icon` VARCHAR(200) NULL AFTER `is_active`;
+
 
 
 -- IN ONLINE
