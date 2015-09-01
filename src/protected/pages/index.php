@@ -57,7 +57,7 @@
 		</div>
 	</div>
 
-	<h1 class="big-title">Останнi новини</h1>
+	<h2 class="big-subtitle">Останнi новини</h1>
 	<div class="news-list">
 		<div class="news-item first">
 			<h2 class="title">Про внесення змiн до норм споживання</h2>
@@ -76,7 +76,7 @@
 			<div class="details"><a href="#">детальнiше...</a></div>
 		</div>
 	</div>
-	<h1 class="big-title green">Останнi матерiали для споживачiв</h1>
+	<h2 class="big-subtitle green">Останнi матерiали для споживачiв</h1>
 	<div class="news-list">
 		<div class="news-item first">
 			<h2 class="title">Про внесення змiн до норм споживання</h2>
