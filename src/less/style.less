@@ -23,6 +23,8 @@
 @import "lib/reset";
 @import "lib/lesshat";
 @import "buttons";
+//Pages
+@import "pages/foruser";
 
 
 breadcrumbs, slider, slide, submenu, heading, info, sidebar, menu, header, footer, news, content { display:block; }
@@ -256,8 +258,8 @@ header {
                             white-space: nowrap;
                             font-weight:normal;
                             line-height:16px;
-                            font-size:12px;
-                            padding:5px 10px 5px 25px;
+                            font-size:14px;
+                            padding:5px 15px 5px 15px;
                             min-height:16px;
                             &:hover { color:#fff; background-color:#01b671; background-color:#01b671; }
                         }
@@ -379,7 +381,13 @@ content {
 		}
 		
 		h1.big-title {
-			display:inline-block; font-weight:bold; font-size:24px; color:#fff; padding:15px 30px 15px 33px; margin-left:-33px; margin-top:50px; background-color:#00979c;
+			display:inline-block; font-weight:bold; font-size:40px; color:#fff; padding:15px 30px 15px 33px; margin-left:-33px; margin-top:30px; background-color:#00979c;
+            &.green { background-color:#01b671; }
+			&.normal-margin { margin-top:26px; }
+		}
+		
+		h2.big-subtitle {
+			display:inline-block; font-weight:bold; font-size:24px; color:#fff; padding:10px 30px 10px 33px; margin-left:-33px; margin-top:30px; background-color:#00979c;
             &.green { background-color:#01b671; }
 			&.normal-margin { margin-top:26px; }
 		}
@@ -548,6 +556,7 @@ content {
 			}
 		}
 		.payonline { position:relative; margin-bottom:20px; margin-top:1px; display:inline-block; }
+		.personal-account { position:relative; margin-top:1px; display:inline-block; }
 		.partners {
 			background-color:#eee;
 			color: #444;
