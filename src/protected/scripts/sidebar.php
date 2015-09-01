@@ -4,7 +4,7 @@
 <a class="payonline" href="<?= BASE_URL; ?>/infocenter/">
 	<img src="<?= BASE_URL; ?>/pic/sidebar/payonline.png" alt="">
 </a>
-<a class="payonline" href="https://www.personal-account.kiev.ua/" target="_blank">
+<a class="personal-account" href="https://www.personal-account.kiev.ua/" target="_blank">
 	<img src="<?= BASE_URL; ?>/pic/sidebar/personal-account.png" alt="">
 </a>
 <div class="partners">
