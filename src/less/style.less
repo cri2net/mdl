@@ -23,6 +23,8 @@
 @import "lib/reset";
 @import "lib/lesshat";
 @import "buttons";
+//Pages
+@import "pages/foruser";
 
 
 breadcrumbs, slider, slide, submenu, heading, info, sidebar, menu, header, footer, news, content { display:block; }
@@ -380,6 +382,12 @@ content {
 		
 		h1.big-title {
 			display:inline-block; font-weight:bold; font-size:40px; color:#fff; padding:15px 30px 15px 33px; margin-left:-33px; margin-top:30px; background-color:#00979c;
+            &.green { background-color:#01b671; }
+			&.normal-margin { margin-top:26px; }
+		}
+		
+		h2.big-subtitle {
+			display:inline-block; font-weight:bold; font-size:24px; color:#fff; padding:10px 30px 10px 33px; margin-left:-33px; margin-top:30px; background-color:#00979c;
             &.green { background-color:#01b671; }
 			&.normal-margin { margin-top:26px; }
 		}

@@ -12,6 +12,10 @@
 			$breadcrumbs[] = array('title' => 'Про ГіOЦ');
 			break;
 
+		case 'page/foruser':
+			$breadcrumbs[] = array('title' => 'Споживачу');
+			break;
+
 		case 'page/contacts':
 			$breadcrumbs[] = array('title' => 'Контакти');
 			break;

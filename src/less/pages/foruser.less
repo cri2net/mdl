@@ -1,0 +1,132 @@
+/**
+* Набор стилей для страницы "Потребителю" (Cпоживачу)
+*
+* @package gioc
+* @section foruser
+* @link http://gioc.dev/foruser
+* @author Sergey Nalomenko <nalomenko@gmail.com>
+*/
+
+content .inner .foruser {
+	padding-top:20px;
+	& > .block{
+		margin-left:-33px; display: block;
+		& > * { display:inline-block; vertical-align: top;}
+		& > .subblock-left {
+			.size(434, 235);
+			& > h2 { 
+				position:relative; top:22px;
+				padding:25px 0 25px 33px;
+			}
+		}
+
+		& > .subblock-right {
+			width:400px;
+			position:relative; left:-0.2em;
+			min-height:235px;
+			background-image:data-uri("@{images}/pages/foruser/__block-right-shadow.png");
+			background-repeat:repeat-y;
+			& > .in {
+				padding: 22px 32px 10px 32px;
+				ul {
+					list-style: none;
+					margin:0;
+					li {
+						//display:block;
+						& > * { display:inline-block; vertical-align:middle; }
+
+						img { margin-right: 10px;}
+						margin:0 0 3px 0; padding:0;
+						&.or { font-size:12px; color:#444; padding-left:40px; }
+						&.li-small > a { font-size: 12px;}
+					}
+				}
+			}
+
+			& > .more {
+				
+				text-align:right;
+				a {
+					background-color: #00979c;
+					display:inline-block;
+					color:#fff;
+					text-decoration: none;
+					font-size:12px;
+					padding:5px 10px 7px 20px;
+					&:hover { background-color:#01b671; }
+				}
+			}
+		}
+
+		/**
+		* Персонализированные стили различных блоков
+		*/
+
+		//Личный кабинет (особистий кабiнет)
+		&.block--personal-cabinet {
+			& > .subblock-left {
+				background-image:url("@{images}/pages/foruser/personal-cabinet/bg.jpg"); 
+				& > h2 { background-color:rgba(1, 182, 113, 0.8); color:#fff; font-size:32px; }
+			}
+			& > .subblock-right {
+				background-color:#eee;
+			}
+		}
+
+		//Терминалы (для оплати послуг ЖКГ)
+		&.block--terminals {
+			& > .subblock-left {
+				background-image:url("@{images}/pages/foruser/terminals/bg.jpg"); 
+			}
+			& > .subblock-right {
+				ul > li { padding-left:35px; margin-bottom:20px; }
+			}
+		}
+
+		//Банки (банки i фiнансовi установи)
+		&.block--banks {
+			& > .subblock-left {
+				background-image:url("@{images}/pages/foruser/banks/bg.jpg"); 
+				& > h2 { background-color:rgba(0, 151, 156, 0.8); color:#fff;  }
+			}
+			& > .subblock-right {
+				background-color:#eee;
+				ul > li { margin-bottom:20px; }
+			}
+		}
+
+		//Онлайн-калькуляторы
+		&.block--calculators {
+			& > .subblock-left {
+				background-image:url("@{images}/pages/foruser/calculators/bg.jpg"); 
+				& > h2 { font-size:32px; }
+			}
+			& > .subblock-right {
+				ul > li { margin-bottom:20px; }
+			}
+		}
+
+		//Полезные ссылки
+		&.block--links {
+			border-bottom: solid 1px #cccccc;
+			& > .subblock-left {
+				& > h2 { font-size:32px; }
+			}
+			& > .subblock-right {
+				ul {
+					margin-top:20px; margin-left: 15px;
+					font-size:12px;
+					list-style-type:disc;
+					list-style-image: data-uri("@{images}/pages/foruser/links/__icon-1-1.png");
+					li { 
+						&, & > * { vertical-align: top; }
+						margin-left:20px; margin-bottom:5px;
+
+					}
+				}
+			}
+		}
+
+
+	}
+}

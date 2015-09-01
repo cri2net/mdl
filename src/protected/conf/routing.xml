@@ -30,6 +30,7 @@
 		<route match="checkout" controller="page" action="checkout" />
 		<route match="paybill"  controller="page" action="paybill" />
 		<route match="contacts" controller="page" action="contacts" />
+		<route match="foruser" controller="page" action="foruser" />
 
 		<route match="cabinet" controller="page" action="cabinet">
 			<route match="bill" controller="page" action="infocenter">
