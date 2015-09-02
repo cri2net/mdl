@@ -14,6 +14,13 @@
             require_once($file);
             $page_id_to_log = "{$__route_result['action']}/$subpage";
         }
+    } else {
+        $file = ROOT . "/protected/pages/{$__route_result['action']}/index.php";
+        
+        if (file_exists($file)) {
+            require_once($file);
+            $page_id_to_log = "{$__route_result['action']}/index";
+        }
     }
     
     switch ($__route_result['action']) {

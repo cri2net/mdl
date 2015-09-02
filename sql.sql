@@ -157,10 +157,10 @@ ALTER TABLE `gioc_news_links`
 
 RENAME TABLE `gioc_news_links` TO `gioc_pages_links`;
 
--- IN ONLINE
 
 ALTER TABLE `gioc_pages_links`
   DROP COLUMN `icon`;
 
+-- IN ONLINE
 
 

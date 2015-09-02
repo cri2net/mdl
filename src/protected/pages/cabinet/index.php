@@ -1,7 +1,16 @@
-<div class="mini_info_block">
-    <h2 class="infocenter">Персональний інформаційно-фінансовий центр</h2>
-</div>
+
+
+
+
+
+
+
 <?php
+    
+    return;
+
+
+
     if (!Authorization::isLogin()) {
         return require_once(ROOT . '/protected/layouts/need_login.php');
     }

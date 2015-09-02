@@ -10,6 +10,20 @@
         }
     }
 
+    // switch (trim($_SERVER['REQUEST_URI'], array('/'))) {
+    //     case 'main':
+    //         $new_location = BASE_URL . '/about/';
+    //         break;
+
+    //     case 'main/history':
+    //         $new_location = BASE_URL . '/about/history/';
+    //         break;
+
+    //     case 'main/about/workschedule':
+    //         $new_location = BASE_URL . '/contacts/#page-map-clock';
+    //         break;
+    // }
+
     if (isset($new_location) && $new_location) {
         Http::redirect($new_location);
     }

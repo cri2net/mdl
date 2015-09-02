@@ -84,12 +84,16 @@ gulp.task('fonts', function(){
 gulp.task('watch', function(){
     livereload.listen();
 
-    watch(['./src/**/*.less'], ['less']).on('change', stackReload);
-    watch(WEBPAGES_MASK, ['webpages']).on('change', stackReload);
-    watch(IMAGES_MASK, ['images']).on('change', stackReload);
-    watch(CSS_ENCODED_IMAGES_MASK, ['less'] ).on('change', stackReload);
-    watch('./src/**/*.js', ['js']).on('change', stackReload);
-
+    // watch(['./src/**/*.less'], ['less']).on('change', stackReload);
+    // watch(WEBPAGES_MASK, ['webpages']).on('change', stackReload);
+    // watch(IMAGES_MASK, ['images']).on('change', stackReload);
+    // watch(CSS_ENCODED_IMAGES_MASK, ['less'] ).on('change', stackReload);
+    // watch('./src/**/*.js', ['js']).on('change', stackReload);
+    gulp.watch(['./src/**/*.less'], ['less']).on('change', stackReload);
+    gulp.watch(WEBPAGES_MASK, ['webpages']).on('change', stackReload);
+    gulp.watch(IMAGES_MASK, ['images']).on('change', stackReload);
+    gulp.watch(CSS_ENCODED_IMAGES_MASK, ['less'] ).on('change', stackReload);
+    gulp.watch('./src/**/*.js', ['js']).on('change', stackReload);
 
     var timer = null; // a timeout variable
 

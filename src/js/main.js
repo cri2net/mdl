@@ -398,13 +398,13 @@ function show_header_submenu(submenu_id)
 	$('.open-submenu').removeClass('open-submenu');
 	$(item).addClass('open-submenu');
 	
-	$(submenu).oneTime(1200, 'header_submenu_'+submenu_id, function(){
+	$(submenu).oneTime(700, 'header_submenu_'+submenu_id, function(){
 		$(submenu).fadeOut(200);
 		$(down).css('display', '');
 	});
 	
 	$(submenu).mouseout(function(){
-		$(submenu).everyTime(1200, 'header_submenu_'+submenu_id, function(){
+		$(submenu).everyTime(700, 'header_submenu_'+submenu_id, function(){
 			$(submenu).fadeOut(200);
 			$(down).css('display', '');
 		});
@@ -416,7 +416,7 @@ function show_header_submenu(submenu_id)
 	
 	$(item).mouseout(function(){
 		$(submenu).stopTime('header_submenu_'+submenu_id);
-		$(submenu).everyTime(1200, 'header_submenu_'+submenu_id, function(){
+		$(submenu).everyTime(700, 'header_submenu_'+submenu_id, function(){
 			$(submenu).fadeOut(200);
 			$(down).css('display', '');
 			$(item).removeClass('open-submenu');
