@@ -44,12 +44,12 @@
     if (isset($error_matches[1])) {
         $error = PDO_DB::row_by_id(TABLE_PREFIX . 'text_errors', (int)$error_matches[1]);
         if ($error != null) {
-            $search_text = json_decode(stripslashes($error['raw_data']));
-            $search_text = htmlspecialchars($search_text->c_sel, ENT_QUOTES);
+            $search_text = json_decode($error['raw_data']);
+            $search_text = json_encode($search_text->c_sel);
             ?>
             <script type="text/javascript">
                 $(document).ready(function(){
-                    $('body').highlight('<?= $search_text; ?>');
+                    $('body').highlight(<?= $search_text; ?>);
                 });
             </script>
             <?
