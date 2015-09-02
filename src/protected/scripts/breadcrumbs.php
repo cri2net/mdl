@@ -16,6 +16,19 @@
 			$breadcrumbs[] = array('title' => 'Споживачу');
 			break;
 
+
+		case 'page/cabinet':
+			$breadcrumbs[] = array('title' => 'Особистий кабiнет', 'link' => '/cabinet/');
+
+			switch ($__route_result['values']['subpage']) {
+				// case 'value':
+				// 	# code...
+				// 	break;
+			}
+
+			break;
+
+
 		case 'page/contacts':
 			$breadcrumbs[] = array('title' => 'Контакти');
 			break;

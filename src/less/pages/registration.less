@@ -1,0 +1,30 @@
+content .inner.page_cabinet {
+    .h1-line {
+        display:block; position:relative;
+        /*h1 {}*/
+        .already-have { font-size:16px; color:#02989d; position:absolute; right:18px; top:17px; font-weight:bold; }
+    }
+    .registration {
+        .form-block {
+            width:50%; float:left; display:inline-block; margin-top:27px;
+            .input {
+                display:block;
+                label { font-size:16px; }
+                input { margin-top:12px; margin-bottom:18px; }
+                .hint { color:#888; font-size:12px; }
+            }
+        }
+        .info-block {
+            width:50%; display:inline-block; background-color:#01b671; color:#fff;
+            .block-inner {
+                padding:26px 25px 0 27px;
+                .title { font-weight:bold; font-size:24px; font-family:Arial; }
+                .item {
+                    font-family:Arial; font-family:16px; line-height:19px; padding-left:31px; background-repeat:no-repeat; background-position:left top;
+                    /*&.email { background-image:data-uri("@{images}/pages/cabinet/registration/__email.png"); }*/
+                    &.quick { background-image:data-uri("@{images}/pages/cabinet/registration/__quick.png"); }
+                }
+            }
+        }
+    }
+}

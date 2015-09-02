@@ -51,3 +51,32 @@
     require_once(ROOT . "/protected/headers/location.php");
     require_once(ROOT . "/protected/headers/x-frame-options.php");
     // require_once(ROOT."/protected/headers/content-security-policy.php");
+
+
+
+    // $news = PDO_DB::table_list('gioc_news', "old_site_id IN (84, 85, 92, 98, 100, 270, 101, 102, 104, 109, 110, 113, 141, 165, 166, 170)");
+    // $pos = 0;
+
+    // foreach ($news as $item) {
+    //     $pos++;
+    //     $insert = array(
+    //         'idp' => 20,
+    //         'pos' => $pos,
+    //         'key' => trim(composeUrlKey('bank-' . $item['title']), '-'),
+    //         'h1' => $item['title'],
+    //         'breadcrumb' => $item['title'],
+    //         'created_at' => $item['created_at'],
+    //         'updated_at' => $item['updated_at'],
+    //         'announce' => $item['announce'],
+    //         'text' => $item['text'],
+    //         'seo_title' => $item['seo_title']
+    //     );
+
+    //     // PDO_DB::insert($insert, 'gioc_pages');
+    // }
+
+    // die('ok');
+
+
+
+

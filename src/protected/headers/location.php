@@ -10,7 +10,7 @@
         }
     }
 
-    // switch (trim($_SERVER['REQUEST_URI'], array('/'))) {
+    // switch (trim($_SERVER['REQUEST_URI'], '/')) {
     //     case 'main':
     //         $new_location = BASE_URL . '/about/';
     //         break;

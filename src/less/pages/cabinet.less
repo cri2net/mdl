@@ -1,0 +1,46 @@
+content .inner {
+    &.page_cabinet {
+        .btn.btn-login {
+            margin: 89px 0 31px 32px; font-size:32px; .size(237, 88); padding:0; padding-left:35px; line-height:88px; display:block;
+            .icon-login {
+                background-image:data-uri("@{images}/__login-btn-icon.png");
+                background-repeat: no-repeat;
+                display:block;
+                .size(26, 32);
+                position:absolute;
+                top:28px;
+                left:60px;
+                z-index:4;
+            }
+        }
+        .block {
+            margin-left:-33px; display: block;
+            & > * { display:inline-block; vertical-align: top;}
+
+
+            /* Сплачуйте житлово-комунальні послуги */
+            &.block--personal-cabinet {
+                margin-top:40px; height:340px;
+                & > .subblock-left {
+                    background-image:url("@{images}/pages/cabinet/no-auth/pay-block-bg.jpg"); 
+                    & > h2 { top:0; color:#fff; font-size:32px; line-height:40px; }
+                    .list {
+                        margin-top: 20px; margin-left:33px;
+                        .item {
+                            color:#fff; font-style:italic; font-size:20px; margin-bottom:22px; position:relative; padding-left:38px;
+                            .icon {
+                                display:block; .size(27, 24); float:left; position:absolute; left:0; top:0;
+                                &.time { background-image:data-uri("@{images}/pages/cabinet/no-auth/__time.png"); .size(27); }
+                                &.hand { background-image:data-uri("@{images}/pages/cabinet/no-auth/__hand.png"); }
+                                &.secure { background-image:data-uri("@{images}/pages/cabinet/no-auth/__secure.png"); .size(22, 27); }
+                                &.easy { background-image:data-uri("@{images}/pages/cabinet/no-auth/__easy.png"); }
+                            }
+                        }
+                    }
+                }
+                & > .subblock-left { height:340px; }
+                & > .subblock-right { background-color:#eee; height:340px; text-align:center; }
+            }
+        }
+    }
+}

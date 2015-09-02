@@ -1,51 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-	<system>
-		<route match="index" controller="page" action="index" />
-		<route match="forbidden" controller="error" action="403" />
-		<route match="not_found" controller="error" action="404" />
-	</system>
-	<routes>
-		<route match="payments-notify" controller="_payments-notify" action="notify">
-			<route match="{paysystem}" controller="_payments-notify" action="notify" />
-		</route>
-		<route match="post" controller="post" action="">
-			<route match="{action}" controller="post" action="" />
-		</route>
-		<route match="news" controller="page" action="news">
-			<route match="{title}_{news_id|num}" controller="page" action="news-item" />
-		</route>
-		<route match="payment-status" controller="error" action="404">
-			<route match="{payment_id|num}" controller="page" action="payment-status" />
-		</route>
-		<route match="cabinet" controller="page" action="cabinet">
-			<route match="{subpage}" controller="page" action="cabinet" />
-		</route>
+    <system>
+        <route match="index" controller="page" action="index" />
+        <route match="forbidden" controller="error" action="403" />
+        <route match="not_found" controller="error" action="404" />
+    </system>
+    <routes>
+        <route match="payments-notify" controller="_payments-notify" action="notify">
+            <route match="{paysystem}" controller="_payments-notify" action="notify" />
+        </route>
+        <!-- Плохая реализация. Надо что-то придумать -->
+        <route match="post" controller="post" action="">
+            <route match="{action}" controller="post" action="">
+                <route match="{second}" controller="post" action="">
+                    <route match="{deep}" controller="post" action="">
+                        <route match="{deeper}" controller="post" action="" />
+                    </route>
+                </route>
+            </route>
+        </route>
+        <route match="news" controller="page" action="news">
+            <route match="{title}_{news_id|num}" controller="page" action="news-item" />
+        </route>
+        <route match="payment-status" controller="error" action="404">
+            <route match="{payment_id|num}" controller="page" action="payment-status" />
+        </route>
 
-		<route match="komdebt" controller="page" action="komdebt">
-			<route match="{subpage}" controller="page" action="komdebt" />
-			<route match="{subpage}-{payment_id|num}" controller="page" action="komdebt" />
-		</route>
+        <route match="komdebt" controller="page" action="komdebt">
+            <route match="{subpage}" controller="page" action="komdebt" />
+            <route match="{subpage}-{payment_id|num}" controller="page" action="komdebt" />
+        </route>
 
-		<route match="checkout" controller="page" action="checkout" />
-		<route match="paybill"  controller="page" action="paybill" />
-		<route match="contacts" controller="page" action="contacts" />
-		<route match="foruser" controller="page" action="foruser" />
+        <route match="checkout" controller="page" action="checkout" />
+        <route match="paybill"  controller="page" action="paybill" />
+        <route match="contacts" controller="page" action="contacts" />
+        <route match="foruser" controller="page" action="foruser" />
 
-		<route match="cabinet" controller="page" action="cabinet">
-			<route match="bill" controller="page" action="infocenter">
-				<route match="{md5_hash}" controller="page" action="bill">
-				</route>
-			</route>
-		</route>
-		
-		<route match="ajax" controller="error" action="403">
-			<route match="json" controller="error" action="403">
-				<route match="{action}" controller="ajax" action="json" />
-			</route>
-			<route match="xml" controller="error" action="403">
-				<route match="{action}" controller="ajax" action="xml" />
-			</route>
-		</route>
-	</routes>
+        <route match="cabinet" controller="page" action="cabinet">
+            <route match="{subpage}" controller="page" action="cabinet" />
+
+            
+            <!-- <route match="bill" controller="page" action="infocenter">
+                <route match="{md5_hash}" controller="page" action="bill">
+                </route>
+            </route> -->
+        </route>
+        
+        <route match="ajax" controller="error" action="403">
+            <route match="json" controller="error" action="403">
+                <route match="{action}" controller="ajax" action="json" />
+            </route>
+            <route match="xml" controller="error" action="403">
+                <route match="{action}" controller="ajax" action="xml" />
+            </route>
+        </route>
+    </routes>
 </root>
