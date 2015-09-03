@@ -3,11 +3,8 @@
     <a href="<?= BASE_URL; ?>/cabinet/login/" class="already-have">У мене вже є аккаунт</a>
 </div>
 <?php
-    if(Authorization::isLogin())
-    {
-        ?>
-        <h2 class="reg">Вы уже зарегестрированы</h2>
-        <?php
+    if (Authorization::isLogin()) {
+        ?><h2 class="big-success-message">Ви вже зареєстровані</h2> <?php
         return;
     }
 ?>
@@ -63,9 +60,8 @@
     </div>
 </div>
 
-<!--<script type="text/javascript" src="<?= BASE_URL; ?>/js/jquery.maskedinput-1.2.2.min.js"></script>
 <script type="text/javascript">
-jQuery(function($){
-   $("#reg-phone").mask("(999)999-99-99");
+$(function($){
+    $("#reg-phone").mask("(999)999-99-99");
 });
-</script>-->
+</script>
