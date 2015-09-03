@@ -41,7 +41,7 @@ var send = function (obj, user_comm) {
 	};
 	$.ajax({
 		type: "POST",
-		url: "/ajax/json/error_report",
+		url: BASE_URL + "/ajax/json/error_report",
 		data: data
 	});
 };
