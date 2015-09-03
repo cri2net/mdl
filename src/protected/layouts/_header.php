@@ -14,6 +14,7 @@
 <script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery_extends.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.maskedinput-1.4.1.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.prettyPhoto.js"></script>
 <?php
 	if (USER_REAL_IP == '127.0.0.1') {
 		?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php

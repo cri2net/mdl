@@ -56,6 +56,20 @@
         }
     }
 ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("a[rel^='prettyPhoto']").prettyPhoto({
+            showTitle: false,
+            deeplinking: false,
+            slideshow: false,
+            animation_speed: 0,
+            theme: 'dark_rounded',
+            show_title:false,
+            overlay_gallery:false,
+            social_tools: ''
+        });
+    });
+</script>
 <?php require_once(ROOT . '/protected/scripts/yandex-metrika.php'); ?>
 <?php require_once(ROOT . '/protected/scripts/yandex-metrika-for-kiev.gerc.ua.php'); ?>
 </body>
