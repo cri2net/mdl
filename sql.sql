@@ -161,6 +161,11 @@ RENAME TABLE `gioc_news_links` TO `gioc_pages_links`;
 ALTER TABLE `gioc_pages_links`
   DROP COLUMN `icon`;
 
--- IN ONLINE
 
+
+ALTER TABLE `gioc_pages_links`
+  ADD COLUMN `idp` INT(11) NOT NULL AFTER `id`,
+  ADD INDEX (`idp`, `type`);
+
+-- IN ONLINE
 

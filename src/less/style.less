@@ -93,7 +93,7 @@ th, td { padding:5px; font-size:12px; font-family:"Ubuntu", Arial; }
 }
 
 .spoiler-box {
-    padding:17px 20px 30px; margin-right:18px; margin-bottom:10px; position:relative; font-family:"Ubuntu", Arial;
+    padding:17px 20px 0; margin-right:18px; position:relative; font-family:"Ubuntu", Arial; margin-bottom:10px;
     &.open {
         background-color:#eee;
     }
@@ -110,7 +110,7 @@ th, td { padding:5px; font-size:12px; font-family:"Ubuntu", Arial; }
         }
     }
     .spoiler-text {
-        display:none; font-size:14px;
+        display:none; font-size:14px; padding-bottom:25px;
         .spoiler-close { cursor:pointer; position:absolute; top:20px; right:20px; display:block; .size(14); background-image:data-uri("@{images}/pages/__spoiler-close.png"); }
     }
 }
