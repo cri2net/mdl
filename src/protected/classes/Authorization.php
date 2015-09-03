@@ -26,7 +26,7 @@ class Authorization
     {
         if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
             $column = 'email';
-        } elseif (strlen($phone) > 7) {
+        } else {
             $column = 'mob_phone';
         }
 
@@ -133,7 +133,5 @@ class Authorization
         unset($_SESSION['auth'], $_SESSION['auth_data']);
         session_destroy();
         setcookie(REMEMBER_COOKIE_NAME, '', time(), "/", COOKIE_DOMAIN);
-        header("Location: " . BASE_URL . "/");
-        exit();
     }
 }
