@@ -63,7 +63,7 @@
             deeplinking: false,
             slideshow: false,
             animation_speed: 0,
-            theme: 'dark_rounded',
+            theme: 'facebook',
             show_title:false,
             overlay_gallery:false,
             social_tools: ''
