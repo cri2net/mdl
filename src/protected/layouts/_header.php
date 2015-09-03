@@ -75,7 +75,7 @@
 										<div class="username"><?= htmlspecialchars($__userData['name']) . '&nbsp;' . htmlspecialchars($__userData['lastname']); ?></div>
 									</div>
 									<div class="item objects">
-										<a href="#">Об'єкти</a>
+										<a href="<?= BASE_URL; ?>/cabinet/objects/">Об'єкти</a>
 									</div>
 									<div class="item bank">
 										<a href="#">Мої платежі</a>
@@ -84,10 +84,10 @@
 										<a href="#">Миттєві платежі</a>
 									</div>
 									<div class="item settings with-border">
-										<a href="#">Настройки профілю</a>
+										<a href="<?= BASE_URL; ?>/cabinet/settings/">Настройки профілю</a>
 									</div>
 									<div class="item faq with-border">
-										<a href="#">Он-лайн довідка</a>
+										<a href="<?= BASE_URL; ?>/cabhelp/">Он-лайн довідка</a>
 									</div>
 									<div class="item logout with-border">
 										<a href="<?= BASE_URL; ?>/post/cabinet/logout/">Вихiд</a>

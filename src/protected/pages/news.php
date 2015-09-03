@@ -1,3 +1,4 @@
+<?php require_once(ROOT . '/protected/scripts/slider.php'); ?>
 <h1 class="big-title green">Новини</h1>
 <div class="news-list">
 	<div class="news-item first">
