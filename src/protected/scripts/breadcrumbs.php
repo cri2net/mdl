@@ -21,8 +21,13 @@
 			$breadcrumbs[] = array('title' => 'Особистий кабiнет', 'link' => '/cabinet/');
 
 			switch ($__route_result['values']['subpage']) {
+
 				case 'registration':
 					$breadcrumbs[] = array('title' => 'Реєстрація');
+					break;
+
+				case 'login':
+					$breadcrumbs[] = array('title' => 'Вхід');
 					break;
 			}
 
