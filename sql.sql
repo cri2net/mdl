@@ -169,3 +169,11 @@ ALTER TABLE `gioc_pages_links`
 
 -- IN ONLINE
 
+
+-- 2015.09.04
+
+ALTER TABLE `gioc_pages_links`
+  ADD COLUMN `idp_type` ENUM('static_page','news','article') DEFAULT 'static_page' NOT NULL AFTER `idp`, 
+  DROP INDEX `idp`,
+  ADD  INDEX `idp` (`idp`, `idp_type`, `type`);
+
