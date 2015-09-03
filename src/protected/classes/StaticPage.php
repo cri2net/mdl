@@ -133,4 +133,10 @@ class StaticPage
         $id = (int)$id;
         return PDO_DB::table_list(self::TABLE, "is_active=1 AND idp=$id", 'pos ASC');
     }
+
+    public static function getSeeAlso($id)
+    {
+        $id = (int)$id;
+        return PDO_DB::table_list(self::TABLE_LINKS, "is_active=1 AND idp=$id AND type='see_also'", 'pos ASC');
+    }
 }

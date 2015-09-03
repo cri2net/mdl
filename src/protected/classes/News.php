@@ -21,10 +21,21 @@ class News
         return $url;
     }
 
+    public static function getNewsTitle($news_id)
+    {
+        $pdo = PDO_DB::getPDO();
+        $news_id = (int)$news_id;
+        $stm = $pdo->query("SELECT title FROM " . self::TABLE . " WHERE id=$news_id LIMIT 1");
+        $title = $stm->fetchColumn();
+
+        if ($title === false) {
+            return null;
+        }
+        return $title;
+    }
+
     public static function logView($news_id)
     {
-        // тут надо залогировать просмотр новости
-
         self::incrementViews($news_id);
     }
 
