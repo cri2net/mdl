@@ -60,7 +60,45 @@
 							</div>
 						</div>
 					</div>
-					<a class="account-link" href="<?= BASE_URL . '/cabinet/'; ?>"><span>Особистий кабiнет</span></a>
+					<?php
+						if (Authorization::isLogin()) {
+							?>
+							<div class="account-link">
+								<span class="border-bot">Особистий кабiнет</span>
+
+								<div class="account-open">
+									<div class="head-line">
+										<div class="avatar">
+											<div class="default-avatar"></div>
+											<!-- <img src="http://placehold.it/34x34" alt=""> -->
+										</div>
+										<div class="username"><?= htmlspecialchars($__userData['name']) . '&nbsp;' . htmlspecialchars($__userData['lastname']); ?></div>
+									</div>
+									<div class="item objects">
+										<a href="#">Об'єкти</a>
+									</div>
+									<div class="item bank">
+										<a href="#">Мої платежі</a>
+									</div>
+									<div class="item flash">
+										<a href="#">Миттєві платежі</a>
+									</div>
+									<div class="item settings with-border">
+										<a href="#">Настройки профілю</a>
+									</div>
+									<div class="item faq with-border">
+										<a href="#">Он-лайн довідка</a>
+									</div>
+									<div class="item logout with-border">
+										<a href="<?= BASE_URL; ?>/post/cabinet/logout/">Вихiд</a>
+									</div>
+								</div>
+							</div>
+							<?php
+						} else {
+							?><a href="<?= BASE_URL; ?>/cabinet/" class="account-link"><span class="border-bot">Особистий кабiнет</span></a> <?php
+						}
+					?>
 				</div>
 			</div>
 			<div class="menu-block">

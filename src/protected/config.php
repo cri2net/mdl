@@ -47,6 +47,9 @@
     define('REMEMBER_COOKIE_NAME', '__giocudata');
 
     Authorization::check_login();
+    if (Authorization::isLogin()) {
+        $__userData = User::getUserById(Authorization::getLoggedUserId());
+    }
 
     require_once(ROOT . "/protected/headers/location.php");
     require_once(ROOT . "/protected/headers/x-frame-options.php");
