@@ -92,7 +92,7 @@
 				<td width="74%" nowrap="nowrap">&nbsp;</td>
 				<td width="15%" nowrap="nowrap">&nbsp;</td>
 				<td width="15%" nowrap="nowrap">
-					<input type="submit" value="Оплатить" onclick="MakePayment();" >
+					<input type="submit" value="Оплатить">
 				</td>
 			</tr>
 		</table>

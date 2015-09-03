@@ -38,7 +38,7 @@ h1 { font-size:30px; font-weight:bold; margin-bottom:20px; }
 h2 { font-size:24px; font-weight:bold; margin-bottom:20px; line-height:30px; } 
 h3 { font-size:22px; font-weight:bold; margin-bottom:20px; line-height:28px; } 
 h4.title { font-size:20px; font-weight:bold; margin-bottom:8px; margin-top:28px; }
-p { font-size:14px; margin-bottom:30px; }
+p { font-size:14px; text-indent:15px; margin-bottom:30px; padding-right:10px; font-family:"Ubuntu", Arial; }
 sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
 sup { top: -0.5em; }
 sub { bottom: -0.25em; }
@@ -67,11 +67,13 @@ ul > li, ol > li { padding-left:15px; line-height:1.5em; font-size:inherit; font
 
 .highlight { color: #f42; font-weight: 900; }
 h2.big-success-message { font-size:24px; background-color:rgba(1, 182, 113, 0.8); color:#fff; padding:20px; margin-top:40px; display:inline-block; }
+h2.big-error-message { font-size:24px; background-color:rgba(182, 1, 13, 0.8); color:#fff; padding:20px; margin-top:40px; display:inline-block; }
+.error-desription { font-size:18px; color:#900; font-weight:bold; padding:10px; padding-left:0px; margin-bottom:20px; }
 .star-required { position:relative; top:-3px; cursor:help; color:#00979c; }
 
 
 table, tbody, thead, th, tr, td { border-collapse:collapse; border:1px solid #444; }
-th, td { padding:5px; }
+th, td { padding:5px; font-size:12px; font-family:"Ubuntu", Arial; }
 
 .work-content {
     .line {
@@ -90,7 +92,7 @@ th, td { padding:5px; }
 }
 
 .spoiler-box {
-    padding:17px 20px 30px; margin-right:18px; position:relative;
+    padding:17px 20px 30px; margin-right:18px; margin-bottom:10px; position:relative; font-family:"Ubuntu", Arial;
     &.open {
         background-color:#eee;
     }
@@ -107,7 +109,7 @@ th, td { padding:5px; }
         }
     }
     .spoiler-text {
-        display:none;
+        display:none; font-size:14px;
         .spoiler-close { cursor:pointer; position:absolute; top:20px; right:20px; display:block; .size(14); background-image:data-uri("@{images}/pages/__spoiler-close.png"); }
     }
 }
@@ -463,6 +465,7 @@ content {
 			}
 			.desc {
 				color:#000; font-size: 12px; line-height:15px;
+                p { text-indent:0; }
 			}
 		}
 

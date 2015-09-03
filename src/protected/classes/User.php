@@ -16,6 +16,18 @@ class User
         return $column;
     }
 
+    public static function getUserIdByPhone($phone)
+    {
+        $pdo = PDO_DB::getPDO();
+        $stm = $pdo->prepare("SELECT id FROM ". DB_TBL_USERS ." WHERE mob_phone=? AND `deleted`=0 LIMIT 1");
+        $stm->execute(array($phone));
+        $column = $stm->fetchColumn();
+        if ($column === false) {
+            return null;
+        }
+        return $column;
+    }
+
     /**
      * Удаляем пользователя из системы
      * @param  string  $comment - примечание пользователя. OPTIONAL
@@ -63,6 +75,26 @@ class User
         return $user;
     }
 
+    public static function registration($data)
+    {
+        $password_key = generateCode();
+
+        $data = array(
+            'email' => $data['email'],
+            'password' => Authorization::generate_db_password($data['password'], $password_key),
+            'password_key' => $password_key,
+            'lastname' => $data['lastname'],
+            'name' => $data['name'],
+            'fathername' => $data['fathername'],
+            'reg_time' => microtime(true),
+            'mob_phone' => $data['phone']
+        );
+
+        $user_id = PDO_DB::insert($data, self::TABLE);
+        self::sendRegLetter($user_id, $password, 'registration');
+        return $user_id;
+    }
+
     public static function registerFromPayment($email, $lastname, $name, $fathername)
     {
         $password_key = generateCode();
@@ -81,11 +113,11 @@ class User
         );
 
         $user_id = PDO_DB::insert($data, self::TABLE);
-        self::sendRegLetter($user_id, $password);
+        self::sendRegLetter($user_id, $password, 'auto_reg_letter');
         return $user_id;
     }
 
-    public static function sendRegLetter($user_id, $password)
+    public static function sendRegLetter($user_id, $password, $template)
     {
         $user_id = (int)$user_id;
         $user = PDO_DB::row_by_id(self::TABLE, $user_id);
@@ -94,7 +126,7 @@ class User
             return;
         }
 
-        $subject = 'Регистрация на ' . strtoupper(SITE_DOMAIN);
+        $subject = 'Реєстрація на ' . strtoupper(SITE_DOMAIN);
 
         PDO_DB::query("UPDATE " . self::TABLE . " SET send_reg_letter=1 WHERE id='$user_id' LIMIT 1");
         $email = new Email();
@@ -103,7 +135,7 @@ class User
             array($user['email'], "{$user['name']} {$user['fathername']}"),
             $subject,
             '',
-            'auto_reg_letter',
+            $template,
             array(
                 'username' => htmlspecialchars("{$user['name']} {$user['fathername']}"),
                 'email' => $user['email'],

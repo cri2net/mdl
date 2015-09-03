@@ -133,7 +133,7 @@
 <div class="clearr"></div>
 <div class="addnewhouse">
     <div class="title">Управление объектами недвижимости</div>
-    <div class="button-green-add" onclick="popUpHouse();"></div>
+    <!-- <div class="button-green-add" onclick="popUpHouse();"></div> -->
 </div>
 
 

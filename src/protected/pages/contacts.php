@@ -37,7 +37,7 @@
         <div class="col-r">14<sup>00</sup>—17<sup>00</sup></div>
     </div>
     <div class="line comment">
-        за попереднім записом в секретаріаті: тел. <a href="tel:+380442388005">+380 (44) 238-80-05</a>
+        за попереднім записом в секретаріаті: тел. +380 (44) 238-80-05
     </div>
 </div>
 
@@ -45,20 +45,20 @@
 <h4 class="title" style="margin-top:43px;">Контакт-центр</h4>
 <div style="phone-line">
     <span style="width:49px; display:inline-block; line-height:24px;">тел.:</span>
-    <a class="no-decoration" href="tel:+380442388025">+38 (044) 238 80 25</a>,
-    <a class="no-decoration" href="tel:+380442388027">+38 (044) 238 80 27</a>
+    +38 (044) 238 80 25,
+    +38 (044) 238 80 27
 </div>
 <h4 class="title">Приймальня</h4>
 <div style="phone-line">
     <span style="width:49px; display:inline-block; line-height:24px;">тел.:</span>
-    <a class="no-decoration" href="tel:+380445135252">+38 (044) 513-52-52</a>,
-    <a class="no-decoration" href="tel:+380442388055">+38 (044) 238-80-55</a>,
-    <a class="no-decoration" href="tel:+380442388005">+38 (044) 238-80-05</a>
+    +38 (044) 513-52-52,
+    +38 (044) 238-80-55,
+    +38 (044) 238-80-05
 </div>
 <div style="phone-line">
     <span style="width:49px; display:inline-block; line-height:24px;">факс:</span>
-    <a class="no-decoration" href="tel:+380442388038">+38 (044) 238-80-38</a>,
-    <a class="no-decoration" href="tel:+380442388050">+38 (044) 238-80-50</a>
+    +38 (044) 238-80-38,
+    +38 (044) 238-80-50
 </div>
 <h4 class="title">Електронна пошта</h4>
 <div style="phone-line">

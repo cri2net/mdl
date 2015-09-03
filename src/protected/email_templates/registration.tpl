@@ -6,7 +6,7 @@
 <body style="margin:0; padding:0; min-width:700px; width:100%; font-family:Arial; font-size:12px;">
 	<font size="2" face="Arial">Добрий день, {{username}}!<br><br>
 		Ви зареєструвалися на сайті <a href="{{base_url}}">{{site_domain}}</a> для миттєвої оплати комунальних послуг.<br>
-		Реєстрацію було здійснено у рамкам послуги оплати комунальних нарахувань.<br>
+		Ваші дані для авторизації в системі:<br>
 		<br>
 		Логін: {{email}}<br>
 		Пароль: {{password}}<br>

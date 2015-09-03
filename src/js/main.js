@@ -1,15 +1,19 @@
-function is_int(input){
+function is_int(input) {
 	return typeof(input)=='number'&&parseInt(input)==input;
-}
+};
 
-function toFloat(val){
+function removeSpaces(string) {
+	if((string === undefined) || (string.length == 0))
+		return '';
+	return string.replace(/	+/g, "").replace(/ +/g, "");
+};
+
+function toFloat(val) {
 	return Math.round(val * 100) / 100;
-}
+};
 
 var add_ok_message_seconds = 0;
-
-function add_ok_message_timeout()
-{
+function add_ok_message_timeout() {
 	add_ok_message_seconds++;
 	if(add_ok_message_seconds == 4)
 		add_ok_message_seconds = 0;
@@ -18,9 +22,9 @@ function add_ok_message_timeout()
 		message += '.';
 	$('#add_ok_message_h4').html(message);
 	setTimeout(function(){add_ok_message_timeout();}, 600);
-}
+};
 
-function addNewHouse(){
+function addNewHouse() {
 	$('#add_house_button').attr('disabled', 'disabled');
 	var data = {};
 	data.obj = 'Flat';
@@ -48,9 +52,9 @@ function addNewHouse(){
 			}
 		}
 	});
-}
+};
 
-function deleteHouse(flat_hash_id){
+function deleteHouse(flat_hash_id) {
 	var data = {};
 	data.obj = 'Flat';
 	data.ac = 'removeUserFlat';
@@ -69,9 +73,9 @@ function deleteHouse(flat_hash_id){
 	$('#house_count').html(count.toString());
 	
 	return false;
-}
+};
 
-function recalc2(){
+function recalc2() {
 	var total = 0;
 	$('input:text').each(function(i){
 		var name = $(this).attr('name');
@@ -98,9 +102,9 @@ function recalc2(){
 	if(sub.length < 2)
 		totalStr = totalStr + '0';
 	$('#total_debt').html(totalStr);
-}
+};
 
-function recalc(){
+function recalc() {
 	var total = 0;
 	$('input:text').each(function(i){
 		var name = $(this).attr('name');
@@ -134,17 +138,9 @@ function recalc(){
 	if(sub.length < 2)
 		totalStr = totalStr + '0';
 	$('#total_debt').html(totalStr);
-}
+};
 
-function popUpHouse(){
-	if(document.body.clientHeight < 400)
-		$('#overlay_dom_new').css('top', '0px');
-	fade('#overlay_dom_new');
-	fade('#divId');
-	return false;
-}
-
-function checkAllServices(checkbox){
+function checkAllServices(checkbox) {
 	var totalFlag = 0;
 	var total = 0;
 	if (checkbox.checked == true) {
@@ -184,9 +180,9 @@ function checkAllServices(checkbox){
 	strTotal = strTotal.replace('.', ',');
 	
 	$('#total_debt').html(strTotal);
-}
+};
 
-function selectService(chechbox, inputId){
+function selectService(chechbox, inputId) {
 	var total = $('#total_debt').html().replace(',', '.');
 	total = parseFloat(total);
 	var currVal = $('#'+inputId).val().replace(',', '.');
@@ -214,9 +210,9 @@ function selectService(chechbox, inputId){
 	
 
 	$('#total_debt').html(strTotal);
-}
+};
 
-function getShoppingCartTotal(total, persentSum, cctype){
+function getShoppingCartTotal(total, persentSum, cctype) {
 	var fTotal = parseFloat(total.replace(',', '.'));
 	var fPersent = parseFloat(persentSum.replace(',', '.'));
 	var total = fTotal + fPersent;
@@ -246,7 +242,7 @@ function getShoppingCartTotal(total, persentSum, cctype){
 	$('#totalBillSum').html(totalStr + ' грн');
 	$('#comission_sum').html(PersentStr + ' грн');
 	$('#cctype').val(cctype);
-}
+};
 
 // function sendInvoice(){
 // 	document.send_invoice.submit();
@@ -256,7 +252,7 @@ function checkForInt(evt) {
 	var charCode = ( evt.which != null ) ? evt.which : event.keyCode
 	// charCodes < 32 include tab, delete, arrow keys, etc
 	return (charCode < 32 || (charCode >= 48 && charCode <= 57))
-}
+};
 
 // function ImeksPayment (cart_id){
 // 	var tData = {};
@@ -312,9 +308,9 @@ function checkForInt(evt) {
 // }
 
 
-function MakePayment() {
-	setTimeout('ShowButton();', 4000);
-}
+// function MakePayment() {
+// 	setTimeout('ShowButton();', 4000);
+// };
 
 // function ShowButton(){
 // 	document.getElementById('check_status').className = 'visible';
@@ -323,7 +319,7 @@ function MakePayment() {
 function imeksPaymentNext() {
 	var cart_id=document.getElementById('O_ID').value;
 	ImeksPayment (cart_id);
-}
+};
 
 function recount_counter_summ(key, old_value, tarif, counter_no) {
 	var old_value = old_value.split(',').join('.');
@@ -373,12 +369,11 @@ function recount_counter_summ(key, old_value, tarif, counter_no) {
 	$('#inp_'+key).val(summ);
 	recalc2();
 	$('#newval_counter_'+key + '_' + counter_no).html(new_value+'&nbsp;м<sup>3</sup>');
-}
+};
 
 
 
-function show_header_submenu(submenu_id)
-{
+function show_header_submenu(submenu_id) {
 	for (var i=0; i < have_main_submenu_item.length; i++) {
 		if (have_main_submenu_item[i] != submenu_id) {
 			$('#header_submenu_'+have_main_submenu_item[i]).css('display', '');
@@ -429,8 +424,7 @@ function show_header_submenu(submenu_id)
 };
 
 var current_slide = 0;
-function next_slide_rotate_index()
-{
+function next_slide_rotate_index() {
 	var next = current_slide + 1;
 	if (next >= slide_count) {
 		next = 0;
@@ -448,8 +442,7 @@ function next_slide_rotate_index()
 	}
 };
 
-function prev_slide_rotate_index()
-{
+function prev_slide_rotate_index() {
 	var prev = current_slide - 1;
 	if (prev < 0) {
 		prev = slide_count - 1;
@@ -471,8 +464,7 @@ function prev_slide_rotate_index()
 	});
 };
 
-function jump_to_slide(next)
-{
+function jump_to_slide(next) {
 	if (current_slide == next) {
 		return;
 	}
@@ -492,6 +484,51 @@ function jump_to_slide(next)
 	$('.bullets').everyTime(4000, 'slider_bullets', function() {
 		next_slide_rotate_index();
 	});
+};
+
+function registration_show_password() {
+	var element = $('#reg-password');
+	var replica = $('#reg-password-replica');
+	if ($(element).is(':visible')) {
+		var val = $(element).val();
+		$(element).css('display', 'none');
+		$(replica).val(val).css('display', 'block');
+	} else {
+		var val = $(replica).val();
+		$(replica).css('display', 'none');
+		$(element).val(val).css('display', 'block');
+	}
+};
+
+function registration_form_submit() {
+	// меняем пароль на правильное место
+	var element = $('#reg-password');
+	var replica = $('#reg-password-replica');
+	
+	if ($(replica).is(':visible')) {
+		var val = $(replica).val();
+		$(element).val(val);
+	}
+
+	return true;
+};
+
+function registration_ckeck_empty_fileld_password(element) {
+	var val = removeSpaces($(element).val());
+	if (val.length == 0) {
+		$(element).parent().parent().parent().find('.error-text').css('display', 'block');
+	} else {
+		$(element).parent().parent().parent().find('.error-text').css('display', 'none');
+	}
+};
+
+function registration_ckeck_empty_fileld(element) {
+	var val = removeSpaces($(element).val());
+	if (val.length == 0 || (val == '+___(__)___-__-__')) {
+		$(element).parent().parent().find('.error-text').css('display', 'block');
+	} else {
+		$(element).parent().parent().find('.error-text').css('display', 'none');
+	}
 };
 
 
