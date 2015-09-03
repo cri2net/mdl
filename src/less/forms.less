@@ -13,3 +13,9 @@ content .inner .registration {
         &.pass { width:236px; }
     }
 }
+
+form .field-group .error-text,
+form .input .error-text {
+    position:relative; padding-left:15px; margin:-10px 0 31px 14px; font-family:Arial; color:#f00; font-size:12px;
+    .error-icon { position:absolute; top:-14px; left:0; display:block; .size(10, 21); background-image:data-uri("@{images}/pages/cabinet/registration/__error-icon.png"); }
+}
