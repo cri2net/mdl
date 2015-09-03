@@ -24,8 +24,13 @@ class Authorization
 
     public static function login($login, $password, $is_hash=false, $remember=false)
     {
+        if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            $column = 'email';
+        } elseif (strlen($phone) > 7) {
+            $column = 'mob_phone';
+        }
+
         $pdo = PDO_DB::getPDO();
-        // $password_temp = $password;
         $login = $pdo->quote($login);
 
         if (!$is_hash) {
@@ -35,7 +40,7 @@ class Authorization
             $password = $pdo->quote($password);
         }
 
-        $result = $pdo->query("SELECT * FROM ".DB_TBL_USERS." WHERE `deleted`=0 AND `email`=$login AND `password` = $password LIMIT 1");
+        $result = $pdo->query("SELECT * FROM ".DB_TBL_USERS." WHERE deleted=0 AND $column=$login AND `password` = $password LIMIT 1");
         $arr = $result->fetch();
     
         if (empty($arr)) {

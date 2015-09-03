@@ -6,8 +6,9 @@
     define("ERROR_INCORRECT_EMAIL_ERROR_MSG", "Адреса електронної пошти невірна.");
     define("ERROR_FIELD_MIN_ERROR_MSG", " не може бути менше, ніж ");
     define("ERROR_FIELD_MAX_ERROR_MSG", " не може бути більше, ніж ");
-    define("ERROR_LOGIN_ERROR_MSG", "Невірний логін.");
     define("ERROR_LOGIN_ALREADY_EXIST", "Такий логін вже існує.");
+    define("ERROR_LOGIN_FIELDS_EMPTY", "Данi для авторизації не вказано.");
+    define("ERROR_LOGIN_ERROR_MSG", "Данi для авторизації невірні.");
     define("ERROR_SECURITY_CODE", "Невірний перевірочний код.");
     define("ERROR_EMAIL_DOESNOT_EXIST", "Користувач з такою адресою електронної пошти не існує.");
     define("ERROR_EMAIL_ALREADY_EXIST", "Користувач з такою адресою електронної вже існує.");

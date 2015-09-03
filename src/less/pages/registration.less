@@ -27,6 +27,26 @@ content .inner.page_cabinet {
                     position:relative; padding-left:15px; margin:-10px 0 31px 14px; font-family:Arial; color:#f00; font-size:12px;
                     .error-icon { position:absolute; top:-14px; left:0; display:block; .size(10, 21); background-image:data-uri("@{images}/pages/cabinet/registration/__error-icon.png"); }
                 }
+
+                // тут стили для страницы авторизации
+                &.login-form-email {
+                    margin-bottom:32px;
+                    .bracket {
+                        font-family:Arial;
+                        display:block;
+                        color:#444;
+                        font-size:12px;
+                        text-align:center;
+                        padding:51px 0;
+                        position:absolute;
+                        right:-41px;
+                        top:48px;
+                        .size(36, 20);
+                        background-repeat:no-repeat;
+                        background-position:left center;
+                        background-image:data-uri("@{images}/pages/cabinet/registration/__login-bracket.png");
+                    }
+                }
             }
         }
         .info-block {
