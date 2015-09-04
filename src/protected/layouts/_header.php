@@ -17,6 +17,7 @@
 <script src="<?= BASE_URL; ?>/js/jquery_extends.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.maskedinput-1.4.1.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.prettyPhoto.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.easydropdown.min.js"></script>
 <script>
 	var BASE_URL = '<?= BASE_URL ?>';
 </script>
@@ -115,10 +116,10 @@
 						<div class="darr"></div>
 						<div class="calc-open">
 							<div class="item">
-								<a href="#">Орієнтовний On-line розрахунок субсидій</a>
+								<a href="<?= BASE_URL ?>/calc-subsidies/">Орієнтовний On-line розрахунок субсидій</a>
 							</div>
 							<div class="item">
-								<a href="#">Розрахунок за показаннями квартирних приладів обліку</a>
+								<a href="<?= BASE_URL ?>/calc-devices/">Розрахунок за показаннями квартирних приладів обліку</a>
 							</div>
 						</div>
 					</div>
