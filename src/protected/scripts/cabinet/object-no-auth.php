@@ -48,7 +48,6 @@
             },
             select: function(event, ui){
                 $('#add_obj_flat').html('<option>-- виберіть --</option>').attr('disabled', true);
-                // $('#debtdata').slideUp(200);
                 _selected_street_id = ui.item.id;
 
                 $.ajax({
@@ -77,26 +76,8 @@
                     for (var i = 0; i < data.length; i++)
                         select_options += '<option value="'+ data[i].id +'">'+ data[i].label +'</option>';
                     $('#add_obj_flat').html(select_options).attr('disabled', false);
-                    update_komdebt_data();
                 },
             });
         });
-
-        // $("#add_obj_flat").change(function(){
-        //     update_komdebt_data();
-        // });
     });
-    
-    // function update_komdebt_data()
-    // {
-    //     $.ajax({
-    //         url: '<?= BASE_URL; ?>/ajax/json/komdebt',
-    //         type: "GET",
-    //         data: {object_id: $("#add_obj_flat").val()},
-    //         dataType: "json",
-    //         success: function(data) {
-    //             $('#debtdata').html('').slideDown(200);
-    //         },
-    //     });
-    // }
 </script>

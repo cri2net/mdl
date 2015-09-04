@@ -24,6 +24,11 @@
 	if (USER_REAL_IP == '127.0.0.1') {
 		?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php
 	}
+
+    $tmp = PDO_DB::table_list(TABLE_PREFIX . 'text', "variable IN ('HEADER_PHONE', 'HEADER_PHONE_SECOND', 'HEADER_WORK')");
+    for ($i=0; $i < count($tmp); $i++) { 
+        $_tmp[$tmp[$i]['variable']] = $tmp[$i]['text'];
+    }
 ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics.php'); ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php'); ?>
@@ -37,26 +42,15 @@
 					<div class="phone-block">
 						<div class="phone-icon"></div>
 						<div class="number">
-							<a class="tel" href="tel:+380442388025">(044) 238-80-25</a>
+							<?= $_tmp['HEADER_PHONE']; ?>
 							<div class="darr-border"></div>
 							<div class="darr"></div>
 						</div>
 						<div class="full-phone-box">
-							<a class="tel" href="tel:+380442388027">(044) 238-80-27</a>
+							<?= $_tmp['HEADER_PHONE_SECOND']; ?>
 							<div class="work">
 								<div class="work-content">
-									<div class="line green">
-										<div class="col">пн—чт</div>
-										<div class="col-r">8:30—17:30</div>
-									</div>
-									<div class="line green">
-										<div class="col">пт</div>
-										<div class="col-r">8:30—16:15</div>
-									</div>
-									<div class="line yellow">
-										<div class="col">перерва</div>
-										<div class="col-r">12:30—13:15</div>
-									</div>
+									<?= $_tmp['HEADER_WORK']; ?>
 									<div class="line">
 										<div class="col">&nbsp;</div>
 										<div class="col-r"><a href="<?= BASE_URL; ?>/contacts/#page-map-clock">Детальнiше</a></div>

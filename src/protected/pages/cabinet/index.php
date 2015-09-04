@@ -1,6 +1,6 @@
 <?php
     if (Authorization::isLogin()) {
-        require_once(__DIR__ . '/index_authorized.php');
+        require_once(ROOT . '/protected/scripts/cabinet/index_authorized.php');
     } else {
-        require_once(__DIR__ . '/index_unauthorized.php');
+        require_once(ROOT . '/protected/scripts/cabinet/index_unauthorized.php');
     }

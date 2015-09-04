@@ -1,12 +1,4 @@
 <?php
-    // Проверяем на всякий случай, вдруг кто найдёт способ попасть на эту страницу по ссылке /cabinet/{subpage}/
-    if (!Authorization::isLogin()) {
-        return require_once(ROOT . '/protected/layouts/need_login.php');
-    }
-
-
-
-
 
     return;
 
@@ -130,12 +122,6 @@
         }
     ?>
 </div>
-<div class="clearr"></div>
-<div class="addnewhouse">
-    <div class="title">Управление объектами недвижимости</div>
-    <!-- <div class="button-green-add" onclick="popUpHouse();"></div> -->
-</div>
-
 
 <div class="overlay" id="overlay_dom_new" style="display:none">
     <div class="bgr">
@@ -172,58 +158,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .ui-autocomplete { z-index:100; }
-</style>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#street").autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: '<?= BASE_URL; ?>/ajax/json/streets',
-                    type: "GET",
-                    data: {request: request.term},
-                    dataType: "json",
-                    success: function(data) {
-                        response(data);
-                    },
-                });
-            },
-            select: function(event, ui){
-                $('#flat').html('<option>-- выбрать --</option>').attr('disabled', true);
-                $('#debtdata').slideUp(200);
-                _selected_street_id = ui.item.id;
-
-                $.ajax({
-                    url: '<?= BASE_URL; ?>/ajax/json/houses',
-                    type: "GET",
-                    data: {street_id: _selected_street_id},
-                    dataType: "json",
-                    success: function(data) {
-                        var select_options = '';
-                        for (var i = 0; i < data.length; i++)
-                            select_options += '<option value="'+ data[i].id +'">'+ data[i].label +'</option>';
-                        $('#house').html(select_options).attr('disabled', false).change();
-                    },
-                });
-            },
-        });
-
-        $("#house").change(function(){
-            $.ajax({
-                url: '<?= BASE_URL; ?>/ajax/json/flats',
-                type: "GET",
-                data: {street_id: _selected_street_id, house_id: $("#house").val()},
-                dataType: "json",
-                success: function(data) {
-                    var select_options = '';
-                    for (var i = 0; i < data.length; i++)
-                        select_options += '<option value="'+ data[i].id +'">'+ data[i].label +'</option>';
-                    $('#flat').html(select_options).attr('disabled', false);
-                },
-            });
-        });
-    });
-</script>

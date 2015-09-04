@@ -45,7 +45,7 @@ class User
         }
 
         PDO_DB::update(
-            ['deleted' => 1, 'deleted_message' => $comment, 'deleted_timestamp' => microtime(true)],
+            array('deleted' => 1, 'deleted_message' => $comment, 'deleted_timestamp' => microtime(true)),
             self::TABLE,
             $user_id
         );
