@@ -1,6 +1,6 @@
 <div class="h1-line">
     <h1>Вхід</h1>
-    <a href="<?= BASE_URL; ?>/cabinet/login/" class="already-have">Зареєструватися</a>
+    <a href="<?= BASE_URL; ?>/cabinet/registration/" class="already-have">Зареєструватися</a>
 </div>
 <?php
     if (isset($_SESSION['login']['status']) && !$_SESSION['login']['status']) {
