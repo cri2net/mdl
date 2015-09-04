@@ -222,99 +222,35 @@ function getShoppingCartTotal(total, persentSum, cctype) {
 	var totalStr = new String(total);
 	totalStr = totalStr.replace('.', ',')
 	var indx = totalStr.lastIndexOf(',');
-	if(indx != -1){
+	if (indx != -1) {
 		var sub = totalStr.substring(indx+1, totalStr.length);
-		if(sub.length < 2)
+		if (sub.length < 2) {
 			totalStr = totalStr + '0';
-	}
-	else
+		}
+	} else {
 		totalStr = totalStr + ',00';
+	}
 	var PersentStr = new String(fPersent);
 	PersentStr = PersentStr.replace('.', ',')
 	var indx = PersentStr.lastIndexOf(',');
-	if(indx != -1){
+	if (indx != -1){
 		var sub = PersentStr.substring(indx+1, PersentStr.length);
-		if(sub.length < 2)
+		if (sub.length < 2){
 			PersentStr = PersentStr + '0';
-	}
-	else
+		}
+	} else {
 		PersentStr = PersentStr + ',00';
+	}
 	$('#totalBillSum').html(totalStr + ' грн');
 	$('#comission_sum').html(PersentStr + ' грн');
 	$('#cctype').val(cctype);
 };
-
-// function sendInvoice(){
-// 	document.send_invoice.submit();
-// }
 
 function checkForInt(evt) {
 	var charCode = ( evt.which != null ) ? evt.which : event.keyCode
 	// charCodes < 32 include tab, delete, arrow keys, etc
 	return (charCode < 32 || (charCode >= 48 && charCode <= 57))
 };
-
-// function ImeksPayment (cart_id){
-// 	var tData = {};
-// 	tData.obj = 'ImeksProcess';
-// 	tData.ac = 'ImeksPayment';
-// 	tData.cart_id = cart_id;
-
-// 	jQuery.ajax({
-// 		dataType: 'json',
-// 		data: tData,
-// 		type: 'POST',
-// 		url : './service/',
-
-// 		success : function(data, textStatus){
-// 			var res = eval(data);
-// 			if (res.success == true){
-// 				//alert(res.record.status);
-// 				var id = res.record.cart_id;
-// 				if (res.record.status == 0) {
-// 					//document.getElementById('waiting').innerHTML = '<center><font size=8pt>идет обработка платежа....<font><center>';
-// 					alert('Payment in process');			
-// 				}
-// 				else if (res.record.status == 2) {
-// 					alert('Payment error');
-// 					//document.getElementById('waiting').innerHTML = '<center><font size=8pt color=red>ошибка! платеж не принят<font><center>';				
-// 					document.payment.submit();
-// 				}
-// 				else if (res.record.status == 1) {
-// 					alert('Payment success!');
-// 					//document.getElementById('waiting').innerHTML = '<center><font size=8pt>платеж успешно завершен<font><center>';	
-// 					//document.getElementById('check_status').className = 'visible';
-// 					document.payment.submit();
-// 				}
-// 				//document.getElementById('cart_status').value = res.record.status;
-// 				//setTimeout('ProcessPayment();', 4000);
-// 			} else{
-// 				alert(res.record.msg);
-// 			}
-// 		}
-// 	});
-// }
-
-// function ExecutePayment() {
-// 	ProcessPayment();
-// }
-
-// function ProcessPayment() {
-// 	var cart_id=document.getElementById('O_ID').value;
-
-// 	if (document.getElementById('cart_status').value == 1 || document.getElementById('cart_status').value == 2 )
-// 		return false;
-// 	ImeksPayment(cart_id);
-// }
-
-
-// function MakePayment() {
-// 	setTimeout('ShowButton();', 4000);
-// };
-
-// function ShowButton(){
-// 	document.getElementById('check_status').className = 'visible';
-// }
 
 function imeksPaymentNext() {
 	var cart_id=document.getElementById('O_ID').value;

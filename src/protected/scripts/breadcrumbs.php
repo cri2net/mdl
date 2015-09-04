@@ -29,6 +29,10 @@
 				case 'login':
 					$breadcrumbs[] = array('title' => 'Вхід');
 					break;
+
+				case 'objects':
+					$breadcrumbs[] = array('title' => 'Об\'єкти');
+					break;
 			}
 
 			break;

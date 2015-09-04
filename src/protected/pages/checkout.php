@@ -1,17 +1,19 @@
 <?php
-	if(!Authorization::isLogin())
+	if (!Authorization::isLogin()) {
 		return require_once(ROOT . '/protected/layouts/need_login.php');
+	}
 
-	try
-	{
+	try {
 		$pay_system = $_POST['cctype'];
 		$user_id = Authorization::getLoggedUserId();
-		if(!in_array($pay_system, ShoppingCart::getActivePaySystems()))
+		if (!in_array($pay_system, ShoppingCart::getActivePaySystems())){
 			throw new Exception("UNKNOW PAY SYSTEM $pay_system");
+		}
 
 		$_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_SESSION['payment_id']);
-		if($_payment == null)
+		if ($_payment == null) {
 			throw new Exception("UNKNOW PAYMENT ID {$_SESSION['payment_id']}");
+		}
 
 		$_debp_sum = $_payment['summ_plat'];
 		$percent = ShoppingCart::getPercent($_debp_sum);
@@ -21,8 +23,9 @@
 
 		$commissionSum = ShoppingCart::getPercentSum($_debp_sum, $pay_system);
 		$file = ROOT . "/protected/conf/payments/$pay_system/$pay_system";
-		if(file_exists($file . ".conf.php"))
+		if (file_exists($file . ".conf.php")) {
 			require_once($file . ".conf.php");
+		}
 
 		$totalAmount = $_debp_sum + $commissionSum;
 		
@@ -40,8 +43,9 @@
 		$sd = session_id();
 		$totalAmountKop = $totalAmount * 100;
 		
-		if(file_exists($file . ".process.php"))
+		if (file_exists($file . ".process.php")) {
 			require_once($file . ".process.php");
+		}
 		
 		$debt_sum = str_replace(".", ",", $_debp_sum);
 		$commissionSum = str_replace(".", ",", $commissionSum);
@@ -49,9 +53,7 @@
 		unset($_SESSION['payment_id']);
 
 		ShoppingCart::send_payment_to_reports($_payment['id']);
-	}
-	catch(Exception $e)
-	{
+	} catch(Exception $e) {
 		$error = $e->getMessage();
 	}
 ?>
@@ -103,8 +105,7 @@
 	</form>
 </div>
 <?php
-	if($pay_system == 'imeks')
-	{
+	if ($pay_system == 'imeks') {
 		?>
 		<input type="hidden" name="cart_status" id="cart_status" size="2" value="0">
 		<input type="hidden" id="O_ID" value="<?= $payment_id; ?>">
@@ -120,9 +121,7 @@
 		</form>
 		</div>
 		<?php
-	}
-	elseif($pay_system == 'imeks')
-	{
+	} elseif ($pay_system == 'imeks') {
 		?>
 		<script type="text/javascript">
 			function MarfinPayment()

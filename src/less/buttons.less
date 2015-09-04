@@ -19,8 +19,8 @@
 }
 .btn
 {
-	@btn-color: @default-btn-color;
-	color:#fff;	border:none; padding:10px; position:relative; cursor:pointer; text-decoration:none; top:0; text-align:center;
+	@btn-color: @default-btn-color; .noselect;
+	color:#fff; font-family:"Ubuntu", Arial; border:none; padding:10px; position:relative; cursor:pointer; text-decoration:none; top:0; text-align:center;
 	.display(inline-block); .border-radius(5px);
 	.transition(top 0.1s ease, box-shadow 0.1s ease, linear-gradient 0.1s ease,);
 	.btn-color-params(@btn-color);

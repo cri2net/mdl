@@ -16,9 +16,9 @@
     define("ERROR_SET_NEWPASSWORD", "Неможливо задати новий пароль.");
     define("ERROR_SENDING_MAIL", "Неможливо відправити повідомлення.");
     define("ERROR_DATE", "Помилка дати.");
-    define("ERROR_GET_STREET", "Помилка у виведенні списку вулиць.");
-    define("ERROR_GET_HOUSE", "Помилка у виведенні списку будинків.");
-    define("ERROR_GET_FLAT", "Помилка у виведенні списку квартир.");
+    // define("ERROR_GET_STREET", "Помилка у виведенні списку вулиць.");
+    // define("ERROR_GET_HOUSE", "Помилка у виведенні списку будинків.");
+    define("ERROR_GET_FLAT", "Помилка при отриманні квартири.");
     define("ERROR_GETTING_DEBT", "Немає платежів за вибраний місяць.");
     define("ERROR_ADDRESS_ALREADY_EXIST", "Квартира вже додана.");
     define("ERROR_TRANSACTION_NOT_SUCCESS", 'Транзакція не оплачена.');

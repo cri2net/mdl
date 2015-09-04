@@ -51,7 +51,7 @@
             </div>
         </form>
     </div>
-    <?php require_once (ROOT . '/protected/pages/cabinet/info-block.php'); ?>
+    <?php require_once(ROOT . '/protected/scripts/cabinet/info-block.php'); ?>
 </div>
 
 <script type="text/javascript">

@@ -13,6 +13,12 @@
         <div class="error-desription"><?= $_SESSION['registration']['error']['text']; ?></div>
         <?php
         unset($_SESSION['registration']['status']);
+    } elseif (isset($_SESSION['registration']['show_message'])) {
+        ?>
+        <h2 class="big-<?= $_SESSION['registration']['show_message']['type']; ?>-message"><?= $_SESSION['registration']['show_message']['text']; ?></h2>
+        <?php
+        // наверно надо каждый раз это показывать
+        // unset($_SESSION['registration']['show_message']);
     }
 
     if (Authorization::isLogin()) {
@@ -80,7 +86,7 @@
             </div>
         </form>
     </div>
-    <?php require_once (ROOT . '/protected/pages/cabinet/info-block.php'); ?>
+    <?php require_once(ROOT . '/protected/scripts/cabinet/info-block.php'); ?>
 </div>
 
 <script type="text/javascript">

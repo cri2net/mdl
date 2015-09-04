@@ -51,6 +51,16 @@
         $user_id = User::registration($_SESSION['registration']);
         Authorization::login($_SESSION['registration']['email'], $_SESSION['registration']['password']);
 
+        // Добавляем в профиль объект, если пользователь захотел этого ещё до регистрации
+        if (isset($_SESSION['after_register']['add_object'])) {
+            Flat::addFlat(
+                $_SESSION['after_register']['add_object']['object_id'],
+                $_SESSION['after_register']['add_object']['city_id']
+            );
+            unset($_SESSION['after_register']['add_object']);
+        }
+
+
         $_SESSION['registration']['status'] = true;
     } catch (Exception $e) {
         $_SESSION['registration']['status'] = false;
