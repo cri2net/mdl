@@ -18,6 +18,7 @@
 
     require_once(ROOT . "/protected/conf/db.conf.php");
     require_once(ROOT . "/protected/conf/errors.php");
+    require_once(ROOT . "/protected/conf/lang.php");
     require_once(ROOT . "/protected/lib/func.lib.php");
     require_once(ROOT . "/protected/vendor/autoload.php");
 
@@ -50,6 +51,12 @@
     if (Authorization::isLogin()) {
         $__userData = User::getUserById(Authorization::getLoggedUserId());
     }
+
+    $router = new Routing(ROOT . '/protected/conf/routing.xml', true);
+    $route_path = (strpos($_SERVER['REQUEST_URI'], '?') !== false)
+        ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
+        : $_SERVER['REQUEST_URI'];
+    $__route_result = $router->get($route_path);
 
     require_once(ROOT . "/protected/headers/location.php");
     require_once(ROOT . "/protected/headers/x-frame-options.php");

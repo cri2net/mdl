@@ -34,11 +34,6 @@ class News
         return $title;
     }
 
-    public static function logView($news_id)
-    {
-        self::incrementViews($news_id);
-    }
-
     public static function incrementViews($news_id)
     {
         $pdo = PDO_DB::getPDO();

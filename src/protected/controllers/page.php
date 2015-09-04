@@ -25,9 +25,8 @@
     
     switch ($__route_result['action']) {
         case 'news-item':
-            // когда сделаем новости, тут надо будет поменять
-            // и инкрементить views в таблице в новостями
-            // StaticPage::logView($news_id, 'news');
+            StaticPage::logView($__news_item['id'], 'news');
+            News::incrementViews($__news_item['id']);
             break;
         
         default:

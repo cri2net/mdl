@@ -43,7 +43,11 @@
 			break;
 		case 'page/news-item':
 			$breadcrumbs[] = array('title' => 'Новини', 'link' => '/news/');
-			$breadcrumbs[] = array('title' => '14 червня 2015');
+			$breadcrumbs[] = array(
+				'title' => date('d ', $__news_item['created_at'])
+						   . $MONTHS[date('n', $__news_item['created_at'])]['ua']
+						   . date(' Y', $__news_item['created_at'])
+			);
 			break;
 
 		case 'static_page/index':

@@ -140,6 +140,24 @@ class StaticPage
         $table = self::TABLE_LINKS;
         $stm = $pdo->prepare("SELECT * FROM $table WHERE is_active=1 AND idp=? AND idp_type=? AND type='see_also' ORDER BY pos ASC");
         $stm->execute(array($id, $type));
+
+        return $stm->fetchAll();
+    }
+
+    /**
+     * Метод отдаёт массим любых связанных страниц определённого типа
+     * 
+     * @param  integer $idp       id страницы, к которой привязаны страницы возвращаемого массива
+     * @param  string  $idp_type  тип родительской страницы, нужно для уникальности пары idp + idp_type
+     * @param  string  $link_type тип страниц, которые нужно вернуть
+     * @return array              массив страниц
+     */
+    public static function getAnyLinks($idp, $idp_type, $link_type)
+    {
+        $pdo = PDO_DB::getPDO();
+        $table = self::TABLE_LINKS;
+        $stm = $pdo->prepare("SELECT * FROM $table WHERE is_active=1 AND idp=? AND idp_type=? AND type=? ORDER BY pos ASC");
+        $stm->execute(array($idp, $idp_type, $link_type));
         
         return $stm->fetchAll();
     }

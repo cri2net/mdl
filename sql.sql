@@ -177,3 +177,7 @@ ALTER TABLE `gioc_pages_links`
   DROP INDEX `idp`,
   ADD  INDEX `idp` (`idp`, `idp_type`, `type`);
 
+-- alien будет использоваться для, например, ссылки "источник", ведущей на другой сайт
+ALTER TABLE `gioc_pages_links`
+  CHANGE `page_type` `page_type` ENUM('static_page','news','alien') CHARSET utf8 COLLATE utf8_general_ci NOT NULL;
+
