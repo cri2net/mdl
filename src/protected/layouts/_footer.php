@@ -37,7 +37,17 @@
         </div>
     </footer>
 </div>
-<script src="<?= BASE_URL; ?>/js/orphus.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/main.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery_extends.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.maskedinput-1.4.1.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.prettyPhoto.js"></script>
+<script src="<?= BASE_URL; ?>/js/orphus.js" defer></script>
+<script>
+    var BASE_URL = '<?= BASE_URL ?>';
+</script>
 <?php
     preg_match('/\?error_id=([0-9]+)$/', $_SERVER['REQUEST_URI'], $error_matches);
     

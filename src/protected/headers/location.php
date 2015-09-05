@@ -3,10 +3,70 @@
     // перекидываем заходы по ссылкам старого сайта на новые URL:
     
     if (preg_match('/\/main\/document\/([1-9][0-9]{0,15})\//i', $_SERVER['REQUEST_URI'], $matches)) {
-        $list = PDO_DB::table_list(News::TABLE, 'old_site_id=' . ((int)$matches[1]), null, '1');
-        
-        if (count($list) == 1) {
-            $new_location = News::getNewsURL($list[0]['id']);
+
+        $static_page_arr = array(
+         
+            // это "Перелік розробок"
+            '12' => 155, '23' => 156, '32' => 157, '33' => 158, '34' => 159, '35' => 160, '36' => 161, '37' => 162, '28' => 163, '27' => 164, '25' => 165, '30' => 166, '26' => 167, '29' => 168, '216' => 169, '19' => 170, '20' => 171, '21' => 172, '22' => 173, '10' => 174, '17' => 175, '18' => 176, '15' => 177, '14' => 178, '215' => 179, '214' => 180,
+
+            // Про ОСББ
+            '250' => '/law/osbb/',
+            '182' => '/law/osbb/',
+            '183' => '/law/osbb/',
+            '184' => '/law/osbb/',
+            '185' => '/law/osbb/',
+            '186' => '/law/osbb/',
+            '187' => '/law/osbb/',
+            '189' => '/law/osbb/',
+
+            // Корисні посилання
+            '50'  => '/foruser/helplinks/links/',
+            '48'  => '/foruser/helplinks/links/',
+            '65'  => '/foruser/helplinks/links/',
+            '49'  => '/foruser/helplinks/links/',
+            '51'  => '/foruser/helplinks/links/',
+            '52'  => '/foruser/helplinks/links/',
+            '53'  => '/foruser/helplinks/links/',
+            '54'  => '/foruser/helplinks/links/',
+
+            '42'  => '/about/media/textmedia/',
+            '64'  => '/about/service/',
+            '358' => '/about/managment/perspectives/',
+            '312' => '/about/procurements/',
+            '239' => '/about/procurements/',
+
+            '258' => '/law/compensation/',
+            '259' => '/law/compensation/',
+            '160' => '/law/badfacilities/',
+            '135' => '/law/badfacilities/',
+            '364' => '/law/etc/',
+            '354' => '/law/etc/',
+            '263' => '/law/etc/',
+            '47'  => '/law/etc/',
+            '43'  => '/law/etc/',
+            '77'  => '/law/kmda/',
+            '74'  => '/law/kmda/',
+            '73'  => '/law/kmda/',
+            '72'  => '/law/kmda/',
+            '71'  => '/law/kmda/',
+            '116' => '/law/kmda/',
+            '130' => '/law/kmu/',
+            '131' => '/law/kmu/',
+        );
+
+        if (isset($static_page_arr[$matches[1]])) {
+            if (is_int($static_page_arr[$matches[1]])) {
+                $new_location = BASE_URL . StaticPage::getPath($static_page_arr[$matches[1]]);
+            } else {
+                $new_location = BASE_URL . $static_page_arr[$matches[1]];
+            }
+        } else {
+            // ищем по новостям
+            $list = PDO_DB::table_list(News::TABLE, 'old_site_id=' . ((int)$matches[1]), null, '1');
+            
+            if (count($list) == 1) {
+                $new_location = News::getNewsURL($list[0]['id']);
+            }
         }
     }
     
@@ -26,19 +86,32 @@
             break;
     }
 
-    // switch (trim($_SERVER['REQUEST_URI'], '/')) {
-    //     case 'main':
-    //         $new_location = BASE_URL . '/about/';
-    //         break;
-
-    //     case 'main/history':
-    //         $new_location = BASE_URL . '/about/history/';
-    //         break;
-
-    //     case 'main/about/workschedule':
-    //         $new_location = BASE_URL . '/contacts/#page-map-clock';
-    //         break;
-    // }
+    $uri_assoc_arr = array(
+        'main'                      => '/about/',
+        'main/history'              => '/about/history/',
+        'main/about/workschedule'   => '/contacts/#page-map-clock',
+        'main/contact'              => '/contacts/',
+        'main/contact/map'          => '/contacts/#page-map-marker',
+        'main/about/chief'          => '/about/chief/',
+        'main/about/program'        => '/about/program/',
+        'main/about/service'        => '/about/service/',
+        'main/managment'            => '/about/managment/',
+        'main/procurements'         => '/about/procurements/',
+        'main/history/achievements' => '/about/strides/',
+        'main/media'                => '/about/media/video/',
+        'main/banks'                => '/foruser/banks/',
+        'main/terminals'            => '/foruser/terminals/',
+        'main/law'                  => '/law/',
+        'main/law/codex'            => '/law/codex/',
+        'main/compensation'         => '/law/compensation/',
+        'main/law/priveleges'       => '/law/priveleges/',
+        'main/law/badfacilities'    => '/law/badfacilities/',
+        'main/compensation'         => '/law/compensation/',
+    );
+    
+    if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {
+        $new_location = BASE_URL . $uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')];
+    }
 
     if (isset($new_location) && $new_location) {
         Http::redirect($new_location);

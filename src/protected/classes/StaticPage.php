@@ -78,7 +78,7 @@ class StaticPage
         }
 
         $path = '/';
-        for ($i=count($keys) -1; $i >= 0; $i--) {
+        for ($i = count($keys) - 1; $i >= 0; $i--) {
             $path .= $keys[$i] . '/';
         }
 
@@ -131,7 +131,7 @@ class StaticPage
     public static function getChildren($id)
     {
         $id = (int)$id;
-        return PDO_DB::table_list(self::TABLE, "is_active=1 AND idp=$id", 'pos ASC');
+        return PDO_DB::table_list(self::TABLE, "is_active=1 AND show_as_child=1 AND idp=$id", 'pos ASC');
     }
 
     public static function getSeeAlso($id, $type = 'static_page')

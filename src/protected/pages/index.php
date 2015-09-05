@@ -53,24 +53,36 @@
 			</div>
 			<?php
 		}
+
+		$pages = PDO_DB::table_list(StaticPage::TABLE, "is_active=1", "created_at DESC", "2");
+		if (count($pages) > 0) {
+			?>
+			<h2 class="big-subtitle green">Останнi матерiали</h1>
+			<div class="news-list">
+				<?php
+					for ($i=0; $i < count($pages); $i++) {
+
+						$date = date('d ', $pages[$i]['created_at']) . $MONTHS[date('n', $pages[$i]['created_at'])]['ua'];
+						if (date('Y') != date('Y', $pages[$i]['created_at'])) {
+							$date .= date(' Y', $pages[$i]['created_at']);
+						}
+
+						if (mb_strlen($pages[$i]['h1'], 'UTF-8') > 50) {
+							$pages[$i]['h1'] = mb_substr($pages[$i]['h1'], 0, 50, 'UTF-8') . '...';
+						}
+
+						?>
+						<div class="news-item <?= ($i == 0) ? 'first' : ''; ?>">
+							<h2 class="title"><?= htmlspecialchars($pages[$i]['h1']); ?></h2>
+							<div class="date"><?= $date; ?></div>
+							<div class="announce"><?= ($pages[$i]['announce']); ?></div>
+							<div class="details"><a href="<?= BASE_URL . StaticPage::getPath($pages[$i]['id']); ?>">детальнiше...</a></div>
+						</div>
+						<?php
+					}
+				?>
+			</div>
+			<?php
+		}
 	?>
-	<h2 class="big-subtitle green">Останнi матерiали для споживачiв</h1>
-	<div class="news-list">
-		<div class="news-item first">
-			<h2 class="title">Про внесення змiн до норм споживання</h2>
-			<div class="date">15 травня</div>
-			<div class="announce">
-				Кабінет Міністрів України постановив про внесення змін до норм споживання природного газу населенням у разі відсутності газових лічильників. Постанова КМУ від 29.04.2015 № 237
-			</div>
-			<div class="details"><a href="#">детальнiше...</a></div>
-		</div>
-		<div class="news-item">
-			<h2 class="title">Куди звертатися для отримання субсидій?</h2>
-			<div class="date">12 квiтня</div>
-			<div class="announce">
-				Процедура отримання субсидій здійснюється в районних управліннях праці та соціального захисту. На дошках оголошень під'їздах житлових будинків розміщено про адреси управлінь та їх контактні телефони.
-			</div>
-			<div class="details"><a href="#">детальнiше...</a></div>
-		</div>
-	</div>
 </div>

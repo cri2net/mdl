@@ -4,22 +4,13 @@
 <link rel="icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
 <meta charset="utf-8" />
+<base href="<?= BASE_URL; ?>">
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 <link href="<?= BASE_URL; ?>/style/style.css" rel="stylesheet" type="text/css" />
 <title><?php require_once(ROOT . "/protected/scripts/seo/title.php"); ?></title>
 <meta name="keywords" content="<?php require_once(ROOT . "/protected/scripts/seo/keywords.php"); ?>" />
 <meta name="description" content="<?php require_once(ROOT . "/protected/scripts/seo/description.php"); ?>" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&amp;subset=latin,cyrillic">
-<script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
-<script src="<?= BASE_URL; ?>/js/main.js"></script>
-<script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
-<script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
-<script src="<?= BASE_URL; ?>/js/jquery_extends.js"></script>
-<script src="<?= BASE_URL; ?>/js/jquery.maskedinput-1.4.1.js"></script>
-<script src="<?= BASE_URL; ?>/js/jquery.prettyPhoto.js"></script>
-<script>
-	var BASE_URL = '<?= BASE_URL ?>';
-</script>
 <?php
 	if (USER_REAL_IP == '127.0.0.1') {
 		?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php

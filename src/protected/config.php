@@ -64,26 +64,72 @@
 
 
 
-    // $news = PDO_DB::table_list('gioc_news', "old_site_id IN (84, 85, 92, 98, 100, 270, 101, 102, 104, 109, 110, 113, 141, 165, 166, 170)");
+    // $static_page_arr = array(
+    //     // это "Перелік розробок"
+    //     '12' => 155, '23' => 156, '32' => 157, '33' => 158, '34' => 159, '35' => 160, '36' => 161, '37' => 162, '28' => 163, '27' => 164, '25' => 165, '30' => 166, '26' => 167, '29' => 168, '216' => 169, '19' => 170, '20' => 171, '21' => 172, '22' => 173, '10' => 174, '17' => 175, '18' => 176, '15' => 177, '14' => 178, '215' => 179, '214' => 180,
+    // );
+    //     $text = file_get_contents('C:\www\gioc\a.txt');
+
+    //     foreach ($static_page_arr as $key => $value) {
+    //         $text = str_replace("http://gioc.kiev.ua/main/document/$key/", StaticPage::getPath($value), $text);
+    //     }
+
+    //     die($text);
+
+
+
+
+
+
+
+
+
+
+
+
+    // $arr = array(12, 23, 32, 33, 34, 35, 36, 37, 28, 27, 25, 30, 26, 29, 216, 11, 19, 20, 21, 22, 10, 17, 18, 15, 14, 16, 215, 214 );
     // $pos = 0;
+    // $result = array();
 
-    // foreach ($news as $item) {
-    //     $pos++;
-    //     $insert = array(
-    //         'idp' => 20,
-    //         'pos' => $pos,
-    //         'key' => trim(composeUrlKey('bank-' . $item['title']), '-'),
-    //         'h1' => $item['title'],
-    //         'breadcrumb' => $item['title'],
-    //         'created_at' => $item['created_at'],
-    //         'updated_at' => $item['updated_at'],
-    //         'announce' => $item['announce'],
-    //         'text' => $item['text'],
-    //         'seo_title' => $item['seo_title']
-    //     );
+    // $ok = false; 
+    // for ($i=0; $i < count($arr); $i++) { 
+    //     $news = PDO_DB::table_list('gioc_news', "old_site_id = {$arr[$i]}", null, "1");
+    //     if (count($news) == 0) {
+    //         continue;
+    //     }
 
-    //     // PDO_DB::insert($insert, 'gioc_pages');
+    //     foreach ($news as $item) {
+    //         $_key = trim(composeUrlKey($item['title']), '-');
+            
+    //         if ($_key == 'programniy-kompleks-oblik-zarobitnoyi-plati') {
+    //             if ($ok) {
+    //                 $_key = 'education-programniy-kompleks-oblik-zarobitnoyi-plati';
+    //             } else {
+    //                 $ok = true;
+    //             }
+    //         }
+            
+    //         $pos++;
+    //         $insert = array(
+    //             'idp' => 13,
+    //             'pos' => $pos,
+    //             'key' => $_key,
+    //             'h1' => $item['title'],
+    //             'breadcrumb' => $item['title'],
+    //             'created_at' => $item['created_at'],
+    //             'updated_at' => $item['updated_at'],
+    //             'announce' => $item['announce'],
+    //             'text' => $item['text'],
+    //             'seo_title' => $item['seo_title']
+    //         );
+
+    //         // $_id = PDO_DB::insert($insert, 'gioc_pages');
+
+    //         $result['main_'.$arr[$i]] = $_id;
+    //     }
     // }
+
+    // print_r($result);
 
     // die('ok');
 

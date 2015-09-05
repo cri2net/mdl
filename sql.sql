@@ -201,3 +201,11 @@ INSERT INTO `gioc_text` (`id`, `variable`, `text`) VALUES
 -- IN ONLINE
 
 
+
+ALTER TABLE `gioc_pages`
+  ADD COLUMN `show_as_child` TINYINT(1) DEFAULT 1  NOT NULL AFTER `is_active`, 
+  DROP INDEX `is_active`,
+  ADD  INDEX `is_active` (`is_active`, `show_as_child`, `idp`);
+
+
+
