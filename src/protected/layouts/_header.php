@@ -100,10 +100,10 @@
 						<div class="darr"></div>
 						<div class="calc-open">
 							<div class="item">
-								<a href="#">Орієнтовний On-line розрахунок субсидій</a>
+								<a href="<?= BASE_URL ?>/calc-subsidies/">Орієнтовний On-line розрахунок субсидій</a>
 							</div>
 							<div class="item">
-								<a href="#">Розрахунок за показаннями квартирних приладів обліку</a>
+								<a href="<?= BASE_URL ?>/calc-devices/">Розрахунок за показаннями квартирних приладів обліку</a>
 							</div>
 						</div>
 					</div>

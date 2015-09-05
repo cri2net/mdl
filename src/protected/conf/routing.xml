@@ -35,6 +35,8 @@
         <route match="paybill"  controller="page" action="paybill" />
         <route match="contacts" controller="page" action="contacts" />
         <route match="foruser" controller="page" action="foruser" />
+        <route match="calc-devices" controller="page" action="calc-devices" />
+        <route match="calc-subsidies" controller="page" action="calc-subsidies" />
 
         <route match="cabinet" controller="page" action="cabinet">
             <route match="{subpage}" controller="page" action="cabinet" />

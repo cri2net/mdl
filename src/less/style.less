@@ -23,10 +23,13 @@
 @import "lib/reset";
 @import "lib/lesshat";
 @import "buttons";
+//Plugins
+@import "plugins/easydropdown-gioc";
 //Pages
 @import "pages/foruser";
 @import "pages/cabinet";
 @import "pages/objects";
+@import "pages/calculator"; 
 @import "pages/registration";
 @import "pages/home";
 @import "forms";
@@ -38,7 +41,7 @@
 breadcrumbs, slider, slide, submenu, heading, info, sidebar, menu, header, footer, news, content { display:block; }
 b, strong { font-weight:bold; }
 i { font-style:italic; }
-h1 { font-size:30px; font-weight:bold; margin-bottom:20px; } 
+h1 { font-size:32px; font-weight:bold; margin-bottom:20px; line-height:40px; } 
 h2 { font-size:24px; font-weight:bold; margin-bottom:20px; line-height:30px; } 
 h3 { font-size:22px; font-weight:bold; margin-bottom:20px; line-height:28px; } 
 h4.title { font-size:20px; font-weight:bold; margin-bottom:8px; margin-top:28px; }
@@ -122,7 +125,9 @@ th p, td p { padding:0px; font-size:12px; text-indent:0; }
 .error-iframe {
     background:#fff; z-index:10001; padding:20px; font-size: 12px; .border-radius(10); .box-shadow(0 0 8px 0 rgba(0, 0, 0, 0.4));
     .title { font-weight:bold; padding-bottom:10px; }
-    input.txt { margin:10px 0; }
+    input.txt { 
+        margin:10px 0; 
+    }
 }
 
 header {
@@ -661,6 +666,31 @@ content {
                     .img {
                         display:block; float:left; .size(54); overflow:hidden; .border-radius(27); margin-right:15px;
                     }
+                }
+            }
+        }
+        .links {
+            margin-top:20px;
+            width:266px;
+            a {
+                display:block;
+                font-size:12px;
+                .border-radius(2);
+                background-image:data-uri("@{images}/sidebar/__link-blue.png");
+                background-repeat:no-repeat;
+                background-position: 22px 15px;
+                padding:34px 22px 20px 22px;
+                text-decoration:none;
+                &:hover { color:#01b671; background-image:data-uri("@{images}/sidebar/__link-green.png");}
+                &:nth-child(odd) {
+                    background-color:#00979c;
+                    color:#fff;
+                    background-image:data-uri("@{images}/sidebar/__link-white.png");
+                    &:hover { background-color:#01b671; }
+                }
+                &:nth-child(even)
+                {
+                    margin-top:10px; margin-bottom:10px;
                 }
             }
         }

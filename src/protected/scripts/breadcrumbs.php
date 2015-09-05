@@ -16,6 +16,13 @@
 			$breadcrumbs[] = array('title' => 'Споживачу');
 			break;
 
+		case 'page/calc-devices':
+			$breadcrumbs[] = array('title' => 'Розрахунок за показаннями квартирних приладів обліку');
+			break;
+		case 'page/calc-subsidies':
+			$breadcrumbs[] = array('title' => 'Орієнтовний On-line розрахунок субсидій');
+			break;
+
 
 		case 'page/cabinet':
 			$breadcrumbs[] = array('title' => 'Особистий кабiнет', 'link' => '/cabinet/');
