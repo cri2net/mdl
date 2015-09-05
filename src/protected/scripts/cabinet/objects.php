@@ -3,6 +3,14 @@
     <div class="secure">особистий кабiнет</div>
 </div>
 <?php
+    if (isset($_SESSION['objects-auth']['status']) && !$_SESSION['objects-auth']['status']) {
+        ?>
+        <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
+        <div class="error-desription"><?= $_SESSION['objects-auth']['error']['text']; ?></div>
+        <?php
+        unset($_SESSION['objects-auth']['status']);
+    }
+
     try {
         $user_id = Authorization::getLoggedUserId();
         $houses = Flat::getUserFlats($user_id);

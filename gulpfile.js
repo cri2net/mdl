@@ -5,7 +5,7 @@ var gulp       = require('gulp'),
     clean      = require('gulp-clean'),
     uglify     = require('gulp-uglify'),
     livereload = require('gulp-livereload');
-    watch      = require('gulp-watch');
+    // watch      = require('gulp-watch');
 
 paths = {
     webpages : {
