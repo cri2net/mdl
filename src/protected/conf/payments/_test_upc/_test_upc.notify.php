@@ -10,9 +10,10 @@
     $mess .= ($good_signature) ? "Signature ok\r\n" : "Signature bad\r\n";
     $mess .= "POST: ".var_export($_POST, true)."\r\n\r\n\r\n\r\n";
    
-    $log_folder = ROOT . "/protected/logs"; if(!file_exists($log_folder)) mkdir($log_folder);
-    $log_folder .= "/paysystems";           if(!file_exists($log_folder)) mkdir($log_folder);
-    $log_folder .= "/$paysystem";           if(!file_exists($log_folder)) mkdir($log_folder);
+    $log_folder = ROOT . "/protected/logs/paysystems/$paysystem";
+    if (!file_exists($log_folder)) {
+        mkdir($log_folder, 0755, true);
+    }
 
     $handle = fopen($log_folder . "/$paysystem.txt", 'a+');
     fwrite($handle, $mess);

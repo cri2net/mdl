@@ -30,7 +30,7 @@
     <div class="form-block">
         <form onsubmit="registration_form_submit();" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
             <div class="input login-form-email">
-                <div class="bracket">abo</div>
+                <div class="bracket">або</div>
                 <label>Електронна пошта <br>
                     <input class="txt form-txt-input" type="email" name="email" value="<?= $_email; ?>">
                 </label>

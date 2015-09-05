@@ -130,5 +130,55 @@ content .inner {
                 .btn { line-height:34px !important; }
             }
         }
+
+        .cabinet-settings {
+            .page-tabs {
+                display: inline-block; height:56px; width:100%; margin-top:-5px; margin-bottom:19px;
+                .tab {
+                    width:267px; float:left; display:block; background-color:#eee; color:#00979c; font-size:16px; text-align:center; line-height:20px; padding:18px 0;
+                    &.current { background-color:#00979c; color:#fff; }
+                    &.last { width:268px; }
+                }
+            }
+
+            .form-cabinet-settings {
+                .input {
+                    &.with-btn { margin-top:20px; }
+                    input.txt { width:280px; }
+                }
+                .left {
+                    width:50%; float:left; display:inline-block;
+                }
+                .right {
+                    width:50%; display:inline-block;
+                }
+
+                .check-box-line {
+                    font-size:16px; color:#000; line-height:20px; margin-bottom:7px; position: relative;
+                    label {
+                        display: inline-block; margin-left:35px;
+                        .hint { color:#888; font-size: 12px; }
+                    }
+                    .niceCheck {
+                        position: absolute;
+                        left:0;
+                        top:-1px;
+                    }
+
+                }
+                .all-objects-checkbox {
+                    margin-top:13px; margin-bottom:39px;
+                    .checkboxes {
+                        margin-left:10px; margin-top:-19px; border-left:1px dotted #cdcdcd; display: inline-block;
+                        .check-box-line { top:39px; }
+                        .niceCheck {
+                            left:24px;
+                            .dotted-line { position:absolute; .size(20, 1); border-bottom:1px dotted #cdcdcd; left:-24px; top:9px; }
+                        }
+                        label { margin-left:56px; }
+                    }
+                }
+            }
+        }
     }
 }

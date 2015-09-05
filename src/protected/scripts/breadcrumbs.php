@@ -43,12 +43,12 @@
 
 				case 'settings':
 					$breadcrumbs[] = array('title' => 'Налаштування профілю', 'link' => '/cabinet/settings/');
-					$section = array(
+					$sections = array(
 						'info' => 'Персональні дані',
 						'notifications' => 'Налаштування повідомлень',
 						'rule' => 'Управління профілем',
 					);
-					$breadcrumbs[] = array('title' => $section[$__route_result['values']['section']]);
+					$breadcrumbs[] = array('title' => $sections[$__route_result['values']['section']]);
 					break;
 			}
 

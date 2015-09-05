@@ -198,14 +198,17 @@ INSERT INTO `gioc_text` (`id`, `variable`, `text`) VALUES
 (6, 'HEADER_WORK', '<div class="line green">\r\n  <div class="col">пн—чт</div>\r\n  <div class="col-r">8:30—17:30</div>\r\n</div>\r\n<div class="line green">\r\n <div class="col">пт</div>\r\n <div class="col-r">8:30—16:15</div>\r\n</div>\r\n<div class="line yellow">\r\n  <div class="col">перерва</div>\r\n  <div class="col-r">12:30—13:15</div>\r\n</div>');
 
 
--- IN ONLINE
-
-
-
+-- 2015.09.05
 ALTER TABLE `gioc_pages`
   ADD COLUMN `show_as_child` TINYINT(1) DEFAULT 1  NOT NULL AFTER `is_active`, 
   DROP INDEX `is_active`,
   ADD  INDEX `is_active` (`is_active`, `show_as_child`, `idp`);
 
 
+
+-- IN ONLINE
+
+ALTER TABLE `gioc_user_flats`
+  ADD COLUMN `notify` TINYINT(1) DEFAULT 1  NOT NULL AFTER `timestamp`, 
+  ADD INDEX (`notify`);
 
