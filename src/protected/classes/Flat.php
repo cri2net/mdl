@@ -61,12 +61,12 @@ class Flat
     
     /**
      * Удаление объекта из профиля пользователя
-     * @param  string $flat_hash_id — двойной md5 ID
+     * @param  string $flat_id
      * @param  integer $user_id. OPTIONAL
      * 
      * @return void
      */
-    public static function removeUserFlat($flat_hash_id, $user_id = null)
+    public static function removeUserFlat($flat_id, $user_id = null)
     {
         if ($user_id == null) {
             $user_id = Authorization::getLoggedUserId();
@@ -77,8 +77,8 @@ class Flat
         }
 
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("DELETE FROM ". self::USER_FLATS_TABLE ." WHERE MD5(MD5(id)) = ? AND user_id=? LIMIT 1");
-        $stm->execute(array($flat_hash_id, $user_id));
+        $stm = $pdo->prepare("DELETE FROM ". self::USER_FLATS_TABLE ." WHERE id = ? AND user_id=? LIMIT 1");
+        $stm->execute(array($flat_id, $user_id));
     }
 
     /**

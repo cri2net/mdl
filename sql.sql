@@ -205,10 +205,14 @@ ALTER TABLE `gioc_pages`
   ADD  INDEX `is_active` (`is_active`, `show_as_child`, `idp`);
 
 
-
--- IN ONLINE
-
 ALTER TABLE `gioc_user_flats`
   ADD COLUMN `notify` TINYINT(1) DEFAULT 1  NOT NULL AFTER `timestamp`, 
   ADD INDEX (`notify`);
 
+
+-- 2015.09.06
+ALTER TABLE `gioc_users`
+  ADD COLUMN `notify_email` TINYINT(1) DEFAULT 1  NOT NULL AFTER `send_reg_letter`, 
+  ADD INDEX (`notify_email`, `deleted`);
+
+-- IN ONLINE
