@@ -39,7 +39,9 @@
         <route match="calc-subsidies" controller="page" action="calc-subsidies" />
 
         <route match="cabinet" controller="page" action="cabinet">
-            <route match="{subpage}" controller="page" action="cabinet" />
+            <route match="{subpage}" controller="page" action="cabinet">
+                <route match="{section}" controller="page" action="cabinet" />
+            </route>
 
             
             <!-- <route match="bill" controller="page" action="infocenter">

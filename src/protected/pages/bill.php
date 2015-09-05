@@ -1,16 +1,18 @@
 <?php
-	if(!Authorization::isLogin())
-		return require_once(ROOT . '/protected/layouts/need_login.php');
+	if (!Authorization::isLogin()) {
+        define('SHOW_NEED_AUTH_MESSAGE', true);
+        return require_once(ROOT . '/protected/pages/cabinet/login.php');
+    }
 
 	$monthsShort = array('01'=>'янв', '02'=>'фев', '03'=>'мар', '04'=>'апр', '05'=>'май', '06'=>'июнь', '07'=>'июль', '08'=>'авг', '09'=>'сен', '10'=>'окт', '11'=>'ноя', '12'=>'дек');
 	$flat_hash_id = $__route_result['values']['md5_hash'];
 	
-	try
-	{
+	try {
 		$flatData = Flat::getUserFlatByHash($flat_hash_id);
 
-		if($flatData == null)
+		if($flatData == null) {
 			throw new Exception(ERROR_NOT_FIND_FLAT);
+		}
 			
 
 		$debt = new KomDebt();
@@ -23,23 +25,18 @@
 		
 		$debtMonth = date("n", strtotime($debtData['dbegin']));
 
-		if($debtMonth == 1)
-		{
+		if ($debtMonth == 1) {
 			$previousMonth = 12;
 			$previousYear = date("Y") - 1;
 			$dateBegin = "1.".$previousMonth.".".$previousYear;
-		}
-		else
-		{
+		} else {
 			$previousMonth = $debtMonth - 1;
 			$previousYear = date("Y");
 			$dateBegin = "1.".$previousMonth.".".$previousYear;
 		}
 		
 		$dateEnd = $debtData['dbegin'];
-	}
-	catch(Exception $e)
-	{
+	} catch(Exception $e) {
 		$error = $e->getMessage();
 	}
 ?>
@@ -47,8 +44,7 @@
 	<h2 class="gerc_obj">Начисления и платежи <br /> за коммунальные услуги</h2>
 </div>
 <?php
-	if($error)
-	{
+	if ($error) {
 		?>
 		<div class="gerc-fees">
 			<div id="error_get_bill"><?= $error; ?></div>

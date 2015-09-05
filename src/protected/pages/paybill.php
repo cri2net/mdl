@@ -1,6 +1,8 @@
 <?php
-	if(!Authorization::isLogin())
-		return require_once(ROOT . '/protected/layouts/need_login.php');
+	if (!Authorization::isLogin()) {
+        define('SHOW_NEED_AUTH_MESSAGE', true);
+        return require_once(ROOT . '/protected/pages/cabinet/login.php');
+    }
 
 	$nextButton = (isset($_SESSION['bill']) && $_SESSION['bill'] == 1) ? '' : 'display: none;';
 	

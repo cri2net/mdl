@@ -46,7 +46,7 @@ content .inner {
         .h1-line-cabinet {
             display:inline-block; width: 100%; margin:30px 0 20px;
             h1 {
-                display:inline-block; margin:0; float:left;
+                display:inline-block; margin-top:0; float:left;
             }
             .secure {
                 background-image:data-uri("@{images}/pages/cabinet/__secure.png");
@@ -71,10 +71,16 @@ content .inner {
                     width:336px;
                     float:left;
                     padding:31px 22px 24px;
+                    position:relative;
                     margin-right:20px;
                     background-color:#eee;
                     .border-radius(6);
                     .box-shadow(0 3px 3px 0 rgba(0, 0, 0, 0.17));
+
+                    .payed-icon { position:absolute; top:0; left:0; .size(91); display:none; z-index:2; background-image:data-uri("@{images}/pages/cabinet/objects/__payed.png"); }
+                    &.payed {
+                        .payed-icon { display:block; }
+                    }
 
                     .title {
                         font-size:24px; font-weight:bold; color:#000; margin-left:80px; position:relative;

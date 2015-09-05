@@ -91,6 +91,8 @@
             case 'page/cabinet':
                 if (!isset($__route_result['values']['subpage']) && Authorization::isLogin()) {
                     $new_location = BASE_URL . '/cabinet/objects/';
+                } elseif (($__route_result['values']['subpage'] == 'settings') && !isset($__route_result['values']['section'])) {
+                    $new_location = BASE_URL . '/cabinet/settings/info/';
                 }
                 break;
         }

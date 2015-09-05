@@ -40,6 +40,16 @@
 				case 'objects':
 					$breadcrumbs[] = array('title' => 'Об\'єкти');
 					break;
+
+				case 'settings':
+					$breadcrumbs[] = array('title' => 'Налаштування профілю', 'link' => '/cabinet/settings/');
+					$section = array(
+						'info' => 'Персональні дані',
+						'notifications' => 'Налаштування повідомлень',
+						'rule' => 'Управління профілем',
+					);
+					$breadcrumbs[] = array('title' => $section[$__route_result['values']['section']]);
+					break;
 			}
 
 			break;

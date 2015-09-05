@@ -1,7 +1,8 @@
 <?php
 	if (!Authorization::isLogin()) {
-		return require_once(ROOT . '/protected/layouts/need_login.php');
-	}
+        define('SHOW_NEED_AUTH_MESSAGE', true);
+        return require_once(ROOT . '/protected/pages/cabinet/login.php');
+    }
 
 	try {
 		$pay_system = $_POST['cctype'];

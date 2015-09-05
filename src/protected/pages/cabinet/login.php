@@ -3,6 +3,10 @@
     <a href="<?= BASE_URL; ?>/cabinet/registration/" class="already-have">Зареєструватися</a>
 </div>
 <?php
+    if (defined('SHOW_NEED_AUTH_MESSAGE') && SHOW_NEED_AUTH_MESSAGE) {
+        ?><h2 class="big-error-message">Для доступу до сторінки необхідно увійти до системи</h2> <?php
+    }
+
     if (isset($_SESSION['login']['status']) && !$_SESSION['login']['status']) {
         ?>
         <h2 class="big-error-message">При авторизації виникли помилки:</h2>

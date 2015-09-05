@@ -79,7 +79,7 @@
 
                 if ($house['error']) {
                     ?>
-                    <div id="bbox_house_<?= $house['hash_id']; ?>" class="house_item <?= $house['payed']; ?> <?= $house['icon']; ?>">
+                    <div id="bbox_house_<?= $house['hash_id']; ?>" class="house_item <?= $house['icon']; ?>">
                         <div class="title">
                             <div class="icon"></div>
                             <?php
@@ -106,6 +106,7 @@
                 }
                 ?>
                 <div id="bbox_house_<?= $house['hash_id']; ?>" class="house_item <?= $house['payed']; ?> <?= $house['icon']; ?>">
+                    <div class="payed-icon"></div>
                     <div class="title">
                         <div class="icon"></div>
                         <?php
