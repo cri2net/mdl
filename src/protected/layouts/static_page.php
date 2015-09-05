@@ -1,6 +1,6 @@
 <h1 class="big-title"><?= htmlspecialchars($static_page['h1']); ?></h1>
 <div class="main-page-text">
-    <?= $static_page['text']; ?>
+    <?= (trim($static_page['text'])) ? $static_page['text'] : '<b>Сторінка в стадії наповнення</b>'; ?>
 </div>
 <?php
     if (count($children) > 0) {

@@ -26,6 +26,7 @@
         case '127.0.0.1':
             define('COOKIE_DOMAIN', '.gioc.dev');
             define('BASE_URL', 'http://gioc.dev');
+            define('HAVE_ACCESS_TO_API', false);
             break;
         
         default:
@@ -34,11 +35,13 @@
                     $_SERVER['REQUEST_URI'] = str_replace('/clients/gioc/', '/', $_SERVER['REQUEST_URI']);
                     define('COOKIE_DOMAIN', '.' . $_SERVER['HTTP_HOST']);
                     define('BASE_URL', "http://{$_SERVER['HTTP_HOST']}/clients/gioc");
+                    define('HAVE_ACCESS_TO_API', false);
                     break;
 
                 default:
                     define('COOKIE_DOMAIN', '.splata.gioc.kiev.ua');
                     define('BASE_URL', 'http://splata.gioc.kiev.ua');
+                    define('HAVE_ACCESS_TO_API', true);
             }
     }
 
@@ -65,13 +68,23 @@
 
 
     // $static_page_arr = array(
-    //     // это "Перелік розробок"
-    //     '12' => 155, '23' => 156, '32' => 157, '33' => 158, '34' => 159, '35' => 160, '36' => 161, '37' => 162, '28' => 163, '27' => 164, '25' => 165, '30' => 166, '26' => 167, '29' => 168, '216' => 169, '19' => 170, '20' => 171, '21' => 172, '22' => 173, '10' => 174, '17' => 175, '18' => 176, '15' => 177, '14' => 178, '215' => 179, '214' => 180,
+    //     '252' => 181,
+    //     '159' => 182,
+    //     '128' => 183,
+    //     '157' => 184,
+    //     '156' => 185,
+    //     '127' => 186,
+    //     '126' => 187,
+    //     '125' => 188,
+    //     '124' => 189,
+    //     '123' => 190,
+    //     '122' => 191,
     // );
     //     $text = file_get_contents('C:\www\gioc\a.txt');
 
     //     foreach ($static_page_arr as $key => $value) {
-    //         $text = str_replace("http://gioc.kiev.ua/main/document/$key/", StaticPage::getPath($value), $text);
+    //         $item = PDO_DB::row_by_id(StaticPage::TABLE, $value);
+    //         $text = str_replace("http://gioc.kiev.ua/main/document/$key/list/", $item['key'] . '/', $text);
     //     }
 
     //     die($text);
@@ -87,7 +100,7 @@
 
 
 
-    // $arr = array(12, 23, 32, 33, 34, 35, 36, 37, 28, 27, 25, 30, 26, 29, 216, 11, 19, 20, 21, 22, 10, 17, 18, 15, 14, 16, 215, 214 );
+    // $arr = array(252, 159, 128, 157, 156, 127, 126, 125, 124, 123, 122);
     // $pos = 0;
     // $result = array();
 
@@ -111,9 +124,10 @@
             
     //         $pos++;
     //         $insert = array(
-    //             'idp' => 13,
+    //             'idp' => 70,
     //             'pos' => $pos,
     //             'key' => $_key,
+    //             'show_as_child' => 0,
     //             'h1' => $item['title'],
     //             'breadcrumb' => $item['title'],
     //             'created_at' => $item['created_at'],
@@ -123,7 +137,7 @@
     //             'seo_title' => $item['seo_title']
     //         );
 
-    //         // $_id = PDO_DB::insert($insert, 'gioc_pages');
+    //         $_id = PDO_DB::insert($insert, 'gioc_pages');
 
     //         $result['main_'.$arr[$i]] = $_id;
     //     }

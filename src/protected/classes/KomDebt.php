@@ -1,17 +1,34 @@
 <?php
 
 class KomDebt
-{   
+{
     const DEBTURL = '/reports/rwservlet?report=/home/oracle/reports/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
     const KOMPLATURL = '/reports/rwservlet?report=/home/oracle/reports/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+    const ANSWERS_PATH = '/protected/conf/testing/';
     
+    public  $testing = false;
+
     private $months = array('1'=>'янв', '2'=>'фев', '3'=>'мар', '4'=>'апр', '5'=>'май', '6'=>'июнь', '7'=>'июль', '8'=>'авг', '9'=>'сен', '10'=>'окт', '11'=>'ноя', '12'=>'дек');
     private $monthsFullName = array('01'=>'Январь', '02'=>'Февраль', '03'=>'Март', '04'=>'Апрель', '05'=>'Май', '06'=>'Июнь', '07'=>'Июль', '08'=>'Август', '09'=>'Сентябрь', '10'=>'Октябрь', '11'=>'Ноябрь', '12'=>'Декабрь');
     private $beginDate;
     private $endDate;
+
+    public function __construct()
+    {
+        $this->testing = !HAVE_ACCESS_TO_API;
+    }
     
     private function getXML($url, $obj_id, $dateBegin=null)
     {
+        if ($this->testing) {
+            // в режиме тестирования мы не можем обращаться к API (скорее всего), так что берём шаблоны ответов
+            if ($url == self::DEBTURL) {
+                return file_get_contents(ROOT . self::ANSWERS_PATH . 'DEBTURL.xml');
+            } else {
+                return file_get_contents(ROOT . self::ANSWERS_PATH . 'KOMPLATURL.xml');
+            }
+        }
+
         $dateData = $this->getDatePeriod($dateBegin);
         $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
         return Http::httpGet($url);
@@ -88,7 +105,7 @@ class KomDebt
     {
         $temp_array = array();
       
-        while(count($array)>0) {
+        while (count($array)>0) {
             $lowest_id = 0;
             $index=0;
             
@@ -140,8 +157,9 @@ class KomDebt
         $data['PL_POL'] = $xml->ROW[0]->PL_POL;
         
         $fullDept = 0;
-        foreach($xml->xpath("//ROW") as $row) {
+        foreach ($xml->xpath("//ROW") as $row) {
             $list = array();
+           
             $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
             $list['name_plat'] = (string)$row->NAME_PLAT;
             $list['CODE_FIRME'] = (string)$row->CODE_FIRME;
@@ -170,7 +188,7 @@ class KomDebt
                 $list['counterData']['KOL_LGOT'] = (string)$row->KOL_LGOT;
                 $list['counterData']['PEOPLE'] = (int)$row->PEOPLE;
 
-                foreach($row->COUNTERS->COUNTERS_ITEM as $counter) {
+                foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
                     $list['counterData']['counters'][] = array(
                         'COUNTER_NO' => (int)$counter->COUNTER_NO,
                         'OLD_VALUE' => (int)$counter->OLD_VALUE,
@@ -186,12 +204,12 @@ class KomDebt
                 $list['over_pay'] = str_replace(".", ",", $list['over_pay']);
                 $list['to_pay'] = "0,00";
                 $list['debt'] = "-";
-            } elseif((int)$row->SUMM_DOLG == 0) {
+            } elseif ((int)$row->SUMM_DOLG == 0) {
                 $list['over_pay'] = "-";
                 $list['to_pay'] = "0,00";
                 $list['debt'] = "-";
             } else {
-                if(!$row->COUNTERS->COUNTERS_ITEM) {
+                if (!$row->COUNTERS->COUNTERS_ITEM) {
                     $fullDept += (int)$row->SUMM_DOLG;
                 }
                 $list['over_pay'] = "-";
@@ -215,7 +233,7 @@ class KomDebt
         $data['list'] = $this->msort($data['list'], 'counter', true);
         $data['full_dept'] = sprintf('%.2f',((float)$fullDept)/100);
         
-        if((count($data['list']) == 0) && ($dateBegin == null)) {
+        if ((count($data['list']) == 0) && ($dateBegin == null)) {
             // maybe no data for this month
             $new_month = strftime('%m', strtotime('first day of previous month'));
             $new_year = ($new_month == '12')?(string)((int)date("Y") - 1):date("Y");
@@ -230,7 +248,7 @@ class KomDebt
 
     private static function getPreviosMonth(&$previousMonth, &$previousYear, $month = null)
     {
-        if($month == null) {
+        if ($month == null) {
             $month = date("n");
         }
         
@@ -256,7 +274,7 @@ class KomDebt
         
         $data = array();
         
-        foreach($xml->xpath("//ROW") as $row) {
+        foreach ($xml->xpath("//ROW") as $row) {
             $data['bank'][(string)$row->PUNKT_ID]['NAMEOKP'] = (string)$row->NAMEOKP;
             $data['bank'][(string)$row->PUNKT_ID]['KASSA'] = (string)$row->KASSA;
             
@@ -294,7 +312,7 @@ class KomDebt
         }
         
         $summ = 0.0;
-        foreach($xml->xpath("//ROW") as $row) {
+        foreach ($xml->xpath("//ROW") as $row) {
             $summ += (float)($row->SUMM)/100;
         }
         
@@ -353,7 +371,7 @@ class KomDebt
         
         $data['firm'] = array();
         
-        foreach($xml->xpath("//ROW") as $row) {
+        foreach ($xml->xpath("//ROW") as $row) {
             if (!array_key_exists((string)$row->CODE_FIRME, $data['firm'])) {
                 $data['firm'][(string)$row->CODE_FIRME]['name'] = (string)$row->NAME_FIRME;
             }
@@ -366,7 +384,7 @@ class KomDebt
     {
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, null);
         $xml = new SimpleXMLElement($xmlString);
-        foreach($xml->xpath("//ROW") as $row) {
+        foreach ($xml->xpath("//ROW") as $row) {
             return true;
         }
         return false;
@@ -420,7 +438,7 @@ class KomDebt
             
         $data['TLF'] = $xml->ROW[0]->TLF;
 
-        foreach($xml->xpath("//ROW") as $row) {
+        foreach ($xml->xpath("//ROW") as $row) {
             if ($firmName && (string)$row->CODE_FIRME != $firmName) {
                 continue;
             }
@@ -433,7 +451,7 @@ class KomDebt
             }
             if ($row->COUNTERS->COUNTERS_ITEM) {
                 $data['counter'] = 1;
-                foreach($row->COUNTERS->COUNTERS_ITEM as $counter) {
+                foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
                     $data['firm'][(string)$row->CODE_FIRME]['counter'][] = array('COUNTER_NO'=>(string)$counter->COUNTER_NO, 'OLD_VALUE'=>(string)$counter->OLD_VALUE, 'TARIF'=>str_replace(".",",",sprintf('%.2f',((float)$row->TARIF)/100)), 'NAME_PLAT'=>(string)$row->NAME_PLAT);
                 }
             }
@@ -486,7 +504,7 @@ class KomDebt
         $data['PL_OB'] = $xml->ROW[0]->PL_OB;
         $data['PL_POL'] = $xml->ROW[0]->PL_POL;
         
-        foreach($xml->xpath("//ROW") as $row) {
+        foreach ($xml->xpath("//ROW") as $row) {
             if ($firmName && (string)$row->CODE_FIRME != $firmName) {
                 continue;
             }
@@ -509,7 +527,7 @@ class KomDebt
             
             if ($row->COUNTERS->COUNTERS_ITEM) {
                 $data['counter'] = 1;
-                foreach($row->COUNTERS->COUNTERS_ITEM as $counter) {
+                foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
                     $data['firm'][(string)$row->CODE_FIRME][(string)$row->NAME_PLAT]['counter'][] = array(
                         'COUNTER_NO' => (string)$counter->COUNTER_NO,
                         'OLD_VALUE'  => (string)$counter->OLD_VALUE,

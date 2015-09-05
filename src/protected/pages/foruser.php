@@ -54,8 +54,8 @@
 		<div class="subblock-right">
 			<div class="in">
 				<ul>
-					<li><a href="#"><div><img src="<?= BASE_URL ?>/pic/pages/foruser/calculators/icon-1-1.png" alt="" /></div><div><b>Орієнтовний розрахунок субсидій</b></a></div></li>
-					<li><a href="#"><div><img src="<?= BASE_URL ?>/pic/pages/foruser/calculators/icon-1-1.png" alt="" /></div><div><b>Розрахунок за показаннями<br/>квартирних приладів обліку </b></a></div></li>
+					<li><a href="<?= BASE_URL ?>/calc-subsidies/"><div><img src="<?= BASE_URL ?>/pic/pages/foruser/calculators/icon-1-1.png" alt="" /></div><div><b>Орієнтовний розрахунок субсидій</b></a></div></li>
+					<li><a href="<?= BASE_URL ?>/calc-devices/"><div><img src="<?= BASE_URL ?>/pic/pages/foruser/calculators/icon-1-1.png" alt="" /></div><div><b>Розрахунок за показаннями<br/>квартирних приладів обліку </b></a></div></li>
 				</ul>
 			</div>
 		</div>

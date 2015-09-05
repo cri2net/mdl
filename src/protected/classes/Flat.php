@@ -156,14 +156,13 @@ class Flat
             try {
                 $arr[$i]['debt_sum'] = $debt->getDebtSum($arr[$i]['flat_id']);
                 $arr[$i]['error'] = 0;
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 $arr[$i]['error'] = 1;
             }
             
-            if($arr[$i]['street_name'] !== $arr[$i]['street_name_full']) {
+            if ($arr[$i]['street_name'] !== $arr[$i]['street_name_full']) {
                 $arr[$i]['street_name'] .= " ...";
             }
-            $arr[$i]['position'] = ($i % 2 == 0) ? 1 : 2;
             $arr[$i]['hash_id'] = md5(md5($arr[$i]['id']));
             $arr[$i]['address'] = self::getAddressString($arr[$i]['flat_id']);
         }
@@ -197,11 +196,11 @@ class Flat
     
         try {
             $arr['debt_sum'] = $debt->getDebtSum($arr['flat_id']);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $arr['error'] = 1;
         }
         
-        if($arr['street_name'] !== $arr['street_name_full']) {
+        if ($arr['street_name'] !== $arr['street_name_full']) {
             $arr['street_name'] .= " ...";
         }
         $arr['position'] = ($i % 2 == 0) ? 1 : 2;

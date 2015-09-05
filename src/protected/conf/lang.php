@@ -14,6 +14,21 @@
         12 => array('ru' => 'декабря',  'en' => 'December',  'ua' => 'грудня'),
     );
 
+    $MONTHS_WHEN = array(
+         1 => array('ru' => 'января',   'en' => 'January',   'ua' => 'січні'),
+         2 => array('ru' => 'февраля',  'en' => 'February',  'ua' => 'лютому'),
+         3 => array('ru' => 'марта',    'en' => 'March',     'ua' => 'березні'),
+         4 => array('ru' => 'апреля',   'en' => 'April',     'ua' => 'квiтні'),
+         5 => array('ru' => 'мая',      'en' => 'May',       'ua' => 'травні'),
+         6 => array('ru' => 'июня',     'en' => 'June',      'ua' => 'червені'),
+         7 => array('ru' => 'июля',     'en' => 'July',      'ua' => 'липні'),
+         8 => array('ru' => 'августа',  'en' => 'August',    'ua' => 'серпені'),
+         9 => array('ru' => 'сентября', 'en' => 'September', 'ua' => 'вересні'),
+        10 => array('ru' => 'октября',  'en' => 'October',   'ua' => 'жовтні'),
+        11 => array('ru' => 'ноября',   'en' => 'November',  'ua' => 'листопаді'),
+        12 => array('ru' => 'декабря',  'en' => 'December',  'ua' => 'грудні'),
+    );
+
     $DAYS_OF_WEEK = array(
         'ua' => array(
             0 => array('short' => 'нд', 'full' => 'Неділя',     'is_holiday' => true),

@@ -4,7 +4,6 @@
 <link rel="icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
 <meta charset="utf-8" />
-<base href="<?= BASE_URL; ?>">
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 <link href="<?= BASE_URL; ?>/style/style.css" rel="stylesheet" type="text/css" />
 <title><?php require_once(ROOT . "/protected/scripts/seo/title.php"); ?></title>
@@ -21,6 +20,7 @@
         $_tmp[$tmp[$i]['variable']] = $tmp[$i]['text'];
     }
 ?>
+<script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
 <?php require_once(ROOT . '/protected/scripts/google-analytics.php'); ?>
 <?php require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php'); ?>
 </head>

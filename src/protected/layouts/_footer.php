@@ -37,7 +37,6 @@
         </div>
     </footer>
 </div>
-<script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/main.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
@@ -78,6 +77,16 @@
             overlay_gallery:false,
             social_tools: ''
         });
+    });
+    $('a').each(function() {
+        var a = new RegExp('/' + window.location.host + '/');
+        if(!a.test(this.href)) {
+            $(this).click(function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                window.open(this.href, '_blank');
+           });
+       }
     });
 </script>
 <?php require_once(ROOT . '/protected/scripts/yandex-metrika.php'); ?>

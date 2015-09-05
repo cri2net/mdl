@@ -42,5 +42,86 @@ content .inner {
                 & > .subblock-right { background-color:#eee; height:340px; text-align:center; }
             }
         }
+
+        .h1-line-cabinet {
+            display:inline-block; width: 100%; margin:30px 0 20px;
+            h1 {
+                display:inline-block; margin:0; float:left;
+            }
+            .secure {
+                background-image:data-uri("@{images}/pages/cabinet/__secure.png");
+                background-repeat:no-repeat;
+                padding-left:25px;
+
+                font-size:16px;
+                color:#aaa;
+                display: inline-block;
+                margin-left:20px;
+                margin-top:21px;
+                height:22px;
+                background-position:left center;
+            }
+        }
+
+        .cabinet-objects {
+            .houses_line {
+                margin-bottom:27px; display: inline-block;
+                .house_item {
+                    width:336px;
+                    float:left;
+                    padding:31px 22px 24px;
+                    margin-right:20px;
+                    background-color:#eee;
+                    .border-radius(6);
+                    .box-shadow(0 3px 3px 0 rgba(0, 0, 0, 0.17));
+
+                    .title {
+                        font-size:24px; font-weight:bold; color:#000; margin-left:80px; position:relative;
+                        .icon { display:block; position:absolute; top:-9px; left:-80px; .size(54, 48); background-image:url("@{images}/pages/cabinet/objects/house.png"); }
+                        .address { margin-top:6px; font-weight:normal; color: #00979c; font-size:12px; }
+                        .bydate { margin-top:11px; padding-left: 25px; line-height:18px; height:18px; font-weight:normal; color: #444; font-size:12px; background-position:left center; background-repeat:no-repeat; background-image:data-uri("@{images}/pages/cabinet/objects/__calendar.png"); }
+                    }
+                    &.flat {
+                        .title {
+                            .icon { height:44px; background-image:url("@{images}/pages/cabinet/objects/flat.png"); }
+                        }
+                    }
+
+                    .values {
+                        display:inline-block; width:100%; margin-bottom:22px; margin-top:28px;
+                        .value-line {
+                            color:#444; font-size:12px; width:100%; display:inline-block; position:relative; border-bottom:2px solid #aaa;
+                            .value-title { padding-bottom:2px; padding-right:2px; background-color:#eee; z-index:2; position:relative; bottom:-2px; display:inline-block; }
+                            .align-right {
+                                display: inline-block; position:absolute; right:0; bottom:0px;
+                                .value {
+                                    padding-left:2px; padding-bottom:2px; background-color:#eee; z-index:2; position:relative; bottom:-3px; display:inline-block; color:#000; font-size:20px; font-weight:bold;
+                                    .small { font-size:12px; }
+                                }
+                            }
+
+                            &.small-line {
+                                border-bottom-width:1px; margin-top:16px;
+                                .value-title { padding-bottom:1px; bottom:-1px; }
+                                .align-right {
+                                    bottom:-1px;
+                                    .value { font-size:12px; color:#444; padding-bottom:1px; bottom:-1px; }
+                                }
+                            }
+                        }
+                    }
+
+                    .btn { display: inline-block; padding-left:32px; padding-right:32px; }
+                }
+            }
+            .btn.add-new {
+                display:inline-block; font-style:20px; margin-top:32px; padding:22px 33px 21px 65px;
+                .icon-objects { top:14px; left:28px; }
+            }
+            .add-object-form {
+                margin-top:50px;
+                .btn { line-height:34px !important; }
+            }
+        }
     }
 }
