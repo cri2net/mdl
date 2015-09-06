@@ -8,28 +8,22 @@ class Authorization
 
     public static function check_login()
     {
-        if (isset($_POST['login']) && $_POST['login']) {
-            $remember = isset($_POST['remember-me']);
-            $_SESSION['auth_data'] = array(
-                'login' => stripslashes($_POST['email_login']),
-                'password' => stripslashes($_POST['password'])
-            );
-            self::login($_SESSION['auth_data']['login'], $_SESSION['auth_data']['password'], false, $remember);
-        } elseif (isset($_SESSION['auth_data'])) {
-            self::login($_SESSION['auth_data']['login'], $_SESSION['auth_data']['password'], false, -1);
+        if (isset($_SESSION['auth_data'])) {
+            self::login($_SESSION['auth_data']['login'], $_SESSION['auth_data']['password'], $_SESSION['auth_data']['is_hash'], -1);
         } else {
             self::check_cookie();
         }
     }
 
-    public static function login($login, $password, $is_hash=false, $remember=false)
+    public static function login($login, $password, $is_hash = false, $remember = false)
     {
-        if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
-            $column = 'email';
-        } else {
-            $column = 'mob_phone';
-        }
+        $_SESSION['auth_data'] = array(
+            'login' => $login,
+            'password' => $password,
+            'is_hash' => $is_hash
+        );
 
+        $column = (filter_var($login, FILTER_VALIDATE_EMAIL)) ? 'email' : 'mob_phone';
         $pdo = PDO_DB::getPDO();
         $login = $pdo->quote($login);
 
@@ -42,7 +36,7 @@ class Authorization
 
         $result = $pdo->query("SELECT * FROM ".DB_TBL_USERS." WHERE deleted=0 AND $column=$login AND `password` = $password LIMIT 1");
         $arr = $result->fetch();
-    
+
         if (empty($arr)) {
             setcookie(REMEMBER_COOKIE_NAME, '', time(), "/", COOKIE_DOMAIN);
             unset($_SESSION['auth'], $_SESSION['auth_data']);
@@ -52,14 +46,12 @@ class Authorization
             // чтоб не сбивать работу куки при "логине" в рамке работы сессии
             if ($remember !== -1) {
                 if ($remember) {
-                    setcookie(REMEMBER_COOKIE_NAME, md5(md5($arr['id']) . self::COOKIE_SALT), time() + 60 * 60 * 24 * 60, "/", COOKIE_DOMAIN);
+                    setcookie(REMEMBER_COOKIE_NAME, md5(md5($arr['id']) . $arr['password'] . self::COOKIE_SALT), time() + 86400 * 60, "/", COOKIE_DOMAIN);
                 } else {
                     setcookie(REMEMBER_COOKIE_NAME, '', time(), "/", COOKIE_DOMAIN);
                 }
             }
         }
-
-        return;
     }
 
     public static function generate_db_password($password, $password_key)
@@ -95,7 +87,7 @@ class Authorization
             $pdo = PDO_DB::getPDO();
             $cookie = $pdo->quote($_COOKIE[REMEMBER_COOKIE_NAME]);
             $salt = $pdo->quote(self::COOKIE_SALT);
-            $result = PDO_DB::query("SELECT * FROM ".DB_TBL_USERS." WHERE MD5(CONCAT(MD5(`id`), $salt)) = $cookie LIMIT 1");
+            $result = PDO_DB::query("SELECT * FROM ".DB_TBL_USERS." WHERE MD5(CONCAT(CONCAT(MD5(`id`), `password`), $salt)) = $cookie LIMIT 1");
             $user = $result->fetch();
 
             if ($user !== false) {

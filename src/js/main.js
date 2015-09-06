@@ -527,3 +527,7 @@ function close_feedback_msg()
     $('body').removeClass('popup-open');
 }
 
+function check_delete_profile()
+{
+    return ($('#confirm_delete_profile input').is(':checked'));
+};

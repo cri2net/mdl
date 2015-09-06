@@ -51,6 +51,11 @@
     ?>
 
     <form class="form-cabinet-settings form-cabinet-settings-<?= $current_section; ?>" method="post" action="<?= BASE_URL; ?>/post/cabinet/settings/<?= $current_section; ?>/">
-        <?php require_once(ROOT . "/protected/scripts/cabinet/settings/$current_section.php"); ?>
+        <?php
+            $file = ROOT . "/protected/scripts/cabinet/settings/$current_section.php";
+            if (file_exists($file)) {
+                require_once($file);
+            }
+        ?>
     </form>
 </div>

@@ -10,6 +10,7 @@
     define("ERROR_LOGIN_FIELDS_EMPTY", "Данi для авторизації не вказано.");
     define("ERROR_LOGIN_ERROR_MSG", "Данi для авторизації невірні.");
     define("ERROR_SECURITY_CODE", "Невірний перевірочний код.");
+    define("ERROR_CURRENT_PASSWORD", "Дiйсний пароль невірний.");
     define("ERROR_EMAIL_DOESNOT_EXIST", "Користувач з такою адресою електронної пошти не існує.");
     define("ERROR_EMAIL_ALREADY_EXIST", "Користувач з такою адресою електронної вже існує.");
     define("ERROR_PHONE_ALREADY_EXIST", "Користувач з таким номером мобільного телефону вже існує.");

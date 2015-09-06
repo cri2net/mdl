@@ -194,6 +194,9 @@ content .inner {
                 .input {
                     &.with-btn { margin-top:20px; }
                     input.txt { width:280px; }
+                    &.pass-logn {
+                        .eye { right:-35px; }
+                    }
                 }
                 .left {
                     width:50%; float:left; display:inline-block;
@@ -225,6 +228,27 @@ content .inner {
                             .dotted-line { position:absolute; .size(20, 1); border-bottom:1px dotted #cdcdcd; left:-24px; top:9px; }
                         }
                         label { margin-left:56px; }
+                    }
+                }
+
+                .form-subtitle { color:#000204; font-weight:bold; font-size:24px; margin-top:4px; margin-bottom:19px; }
+
+                &.form-cabinet-settings-rule {
+                    .check-box-line { margin-top:4px; margin-bottom:0; }
+                    .form-subtitle.delete-profile { margin-top:30px; }
+                    .with-btn { margin-top:47px; }
+                }
+                &.form-cabinet-settings-delete_profile {
+                    .form-block {
+                        width:100%;
+                        .input {
+                            width:600px;
+                            textarea.txt { width:580px; height:170px; margin-top:8px; }
+                        }
+                        .buttons-here {
+                            margin-top:15px;
+                            .btn { margin-right:20px; }
+                        }
                     }
                 }
             }
