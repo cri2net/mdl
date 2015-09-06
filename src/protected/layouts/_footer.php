@@ -13,7 +13,7 @@
             <div class="center">
                 <div class="links">
                     <a href="<?= BASE_URL; ?>/help/offers/">Угода користувача</a>
-                    <a href="<?= BASE_URL; ?>/help/offers/">Угода щодо конфиденційності</a>
+                    <a href="<?= BASE_URL; ?>/help/offers/">Угода про конфіденційність інформації</a>
                 </div>
                 <div class="mistakes">
                     Якщо Ви побачили граматичну або синтаксичну <br>

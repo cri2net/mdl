@@ -513,3 +513,14 @@ function changeCheck(element, group_class)
         }
     }
 };
+
+function open_feedback_msg(chief_id)
+{
+    $('body').append('<div id="global-owerlay"><div id="popup-box" class="popup-box"></div></div>');
+};
+
+function close_feedback_msg()
+{
+    $('#global-owerlay').remove();
+}
+

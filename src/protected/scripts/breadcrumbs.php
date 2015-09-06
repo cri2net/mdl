@@ -16,6 +16,10 @@
 			$breadcrumbs[] = array('title' => 'Споживачу');
 			break;
 
+		case 'page/chief':
+			$breadcrumbs[] = array('title' => 'Керівництво');
+			break;
+
 		case 'page/calc-devices':
 			$breadcrumbs[] = array('title' => 'Розрахунок за показаннями квартирних приладів обліку');
 			break;

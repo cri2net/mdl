@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<link rel="icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
-<link rel="shortcut icon" href="http://kiev.gerc.ua/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="57x57" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="<?= BASE_URL; ?>/pic/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_URL; ?>/pic/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="<?= BASE_URL; ?>/pic/favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="<?= BASE_URL; ?>/pic/favicon/favicon-16x16.png">
+<link rel="manifest" href="<?= BASE_URL; ?>/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="<?= BASE_URL; ?>/pic/favicon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
 <meta charset="utf-8" />
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 <link href="<?= BASE_URL; ?>/style/style.css" rel="stylesheet" type="text/css" />

@@ -14,6 +14,8 @@ paths = {
 
 var WEBPAGES_MASK = [
     './src/**/.htaccess',
+    './src/manifest.json',
+    './src/browserconfig.xml',
     './src/robots.txt',
     './src/**/{*.php,*.html}',
      './src/{script,config,lib,auth,splash,protected}/**/*.*',

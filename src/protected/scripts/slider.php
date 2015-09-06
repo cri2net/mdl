@@ -26,9 +26,10 @@ if ($slides) {
         </div>
         <script type="text/javascript">
             var slide_count = <?= count($slides); ?>;
-
-            $('.bullets').everyTime(4000, 'slider_bullets', function() {
-                next_slide_rotate_index();
+            $(document).ready(function(){
+                $('.bullets').everyTime(4000, 'slider_bullets', function() {
+                    next_slide_rotate_index();
+                });
             });
         </script>
     </slider>

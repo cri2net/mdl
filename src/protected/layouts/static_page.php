@@ -8,12 +8,14 @@
 
         foreach ($children as $child) {
             $bg = '';
+            $class = '';
             if ($child['icon']) {
                 $bg = BASE_URL . "/db_pic/page_icons/{$child['icon']}";
                 $bg = 'style="background-image:url(' . $bg . ');"';
+                $class = ' with-icon';
             }
             ?>
-            <div class="subtitle-item" <?= $bg; ?>>
+            <div class="subtitle-item<?= $class; ?>" <?= $bg; ?>>
                 <a href="<?= BASE_URL . $link . $child['key'] . '/'; ?>" class="title"><?= htmlspecialchars($child['h1']); ?></a>
                 <div class="desc"><?= $child['announce']; ?></div>
             </div>
