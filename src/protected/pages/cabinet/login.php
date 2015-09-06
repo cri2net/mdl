@@ -9,7 +9,7 @@
 
     if (isset($_SESSION['login']['status']) && !$_SESSION['login']['status']) {
         ?>
-        <h2 class="big-error-message">При авторизації виникли помилки:</h2>
+        <h2 class="big-error-message">Під час авторизації виникла помилка:</h2>
         <div class="error-desription"><?= $_SESSION['login']['error']['text']; ?></div>
         <?php
         unset($_SESSION['login']['status']);

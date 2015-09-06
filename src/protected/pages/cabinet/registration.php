@@ -9,7 +9,7 @@
         return;
     } elseif (isset($_SESSION['registration']['status'])) {
         ?>
-        <h2 class="big-error-message">При реєстрації виникли помилки:</h2>
+        <h2 class="big-error-message">Під час реєстрації виникла помилка:</h2>
         <div class="error-desription"><?= $_SESSION['registration']['error']['text']; ?></div>
         <?php
         unset($_SESSION['registration']['status']);

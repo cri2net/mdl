@@ -16,7 +16,7 @@
         unset($_SESSION['chief']);
     } elseif (isset($_SESSION['chief']['status'])) {
         ?>
-        <h2 class="big-error-message">При надсиланні повідомлення виникли помилки:</h2>
+        <h2 class="big-error-message">Під час надсилання повідомлення виникла помилка:</h2>
         <div class="error-desription"><?= $_SESSION['chief']['error']['text']; ?></div>
         <?php
         unset($_SESSION['chief']['status']);
