@@ -215,4 +215,30 @@ ALTER TABLE `gioc_users`
   ADD COLUMN `notify_email` TINYINT(1) DEFAULT 1  NOT NULL AFTER `send_reg_letter`, 
   ADD INDEX (`notify_email`, `deleted`);
 
+
+CREATE TABLE `gioc_chief`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `pos` INT(11) NOT NULL DEFAULT 0,
+  `is_active` INT(1) NOT NULL DEFAULT 1,
+  `icon` VARCHAR(150) NOT NULL,
+  `email` VARCHAR(500),
+  `name` VARCHAR(200) NOT NULL,
+  `fathername` VARCHAR(200) NOT NULL,
+  `lastname` VARCHAR(200) NOT NULL,
+  `role` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX (`is_active`),
+  INDEX (`pos`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- тестовые данные, но всё же
+INSERT INTO `gioc_chief` (`id`, `pos`, `is_active`, `icon`, `email`, `name`, `fathername`, `lastname`, `role`) VALUES
+(1, 1, 1, 'chief_[1441505467.7375].png', 'test1@example.com', 'Валерій', 'Іванович', 'Місань', 'Директор'),
+(2, 2, 1, 'chief_[1441504103.1964].png', 'test2@example.com', 'Андрій', 'Анатолійович', 'Щербина', 'Перший заступник директора'),
+(3, 3, 0, 'chief_[1441504134.7582].png', 'test3@example.com', 'Ірина', 'Андріївна', 'Юрченко', 'Заступник директора з виробництва та збуту'),
+(4, 4, 0, 'chief_[1441504168.8432].png', 'test4@example.com', 'Олександр', 'Анатолійович', 'Клименко', 'Заступник директора з інформаційних технологій'),
+(5, 5, 1, 'chief_[1441504218.163].png', 'test5@example.com', 'Михайло', 'Юрійович', 'Балясніков', 'Головний інженер');
+
+
 -- IN ONLINE
+
