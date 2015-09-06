@@ -41,6 +41,55 @@ content .inner {
                 & > .subblock-left { height:340px; }
                 & > .subblock-right { background-color:#eee; height:340px; text-align:center; }
             }
+
+            &.block--quick-pays {
+                margin-left:0; 
+                margin-top:60px;
+                h2 { font-size: 32px; display:block; margin-bottom:40px; }
+                
+                font-size:0;
+
+                a {
+                    display:inline-block;
+                    width:400px;
+                    font-size:20px;
+                    padding-top:145px;
+                    height:85px;
+                    text-decoration:none; text-align:center; color:#000;
+                    background-repeat:no-repeat;
+                    background-position: top 50px center;
+                    .transition(all 0.2s ease);
+
+                    &:hover { background-color:#eee; }
+
+                    &.police {
+                        background-color:#00979c; color:#fff;
+                        background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-police.png");
+                        &:hover { background-color:darken(#00979c, 5%); }
+                    }
+                    
+                    &.baby {
+                        background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-baby.png");
+                    }
+
+                    &.cards {
+                        background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-cards.png");
+                    }
+
+                    &.phone {
+                        background-color:#01b671; color:#fff;
+                        background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-phone.png");
+                        &:hover { background-color:darken(#01b671, 5%); }
+                    }
+                }
+            }
+
+            &.block--conclusion {
+                margin-left:0;
+                margin-top:50px;
+                h2 {font-size:20px; }
+                p { font-size:12px; line-height:20px; }
+            }
         }
 
         .h1-line-cabinet {
