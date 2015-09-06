@@ -187,7 +187,7 @@ CREATE TABLE `gioc_text` (
   `variable` varchar(500) NOT NULL,
   `text` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `gioc_text` (`id`, `variable`, `text`) VALUES
 (1, 'CONTACTS_BLOCK_CLOCK', '<h3 id="page-map-clock" class="page-subtitle border-top">Графiк роботи</h3>\r\n\r\n<div class="work-content">\r\n    <div class="line green">\r\n        <div class="col">Понеділок—Четвер</div>\r\n        <div class="col-r">8<sup>30</sup>—17<sup>30</sup></div>\r\n    </div>\r\n    <div class="line green">\r\n        <div class="col">П''ятниця</div>\r\n        <div class="col-r">8<sup>30</sup>—16<sup>15</sup></div>\r\n    </div>\r\n    <div class="line yellow">\r\n        <div class="col">Обідня перерва</div>\r\n        <div class="col-r">12<sup>30</sup>—13<sup>15</sup></div>\r\n    </div>\r\n    \r\n    <h4 class="title">Прийом "Відділом Звернень"</h4>\r\n    <div class="line green">\r\n        <div class="col">Понеділок—Четвер</div>\r\n        <div class="col-r">9<sup>00</sup>—17<sup>00</sup></div>\r\n    </div>\r\n    <div class="line green">\r\n        <div class="col">П''ятниця</div>\r\n        <div class="col-r">9<sup>00</sup>—16<sup>00</sup></div>\r\n    </div>\r\n   \r\n    <h4 class="title">Прийом керівництвом</h4>\r\n    <div class="line green">\r\n        <div class="col">Вівторок</div>\r\n        <div class="col-r">14<sup>00</sup>—17<sup>00</sup></div>\r\n    </div>\r\n    <div class="line comment">\r\n        за попереднім записом в секретаріаті: тел. +380 (44) 238-80-05\r\n    </div>\r\n</div>'),
@@ -241,9 +241,32 @@ INSERT INTO `gioc_chief` (`id`, `pos`, `is_active`, `icon`, `email`, `name`, `fa
 
 
 
-
 ALTER TABLE `gioc_feedback`
   ADD COLUMN `to` INT(11) DEFAULT 0  NOT NULL AFTER `id`;
 
 
+CREATE TABLE `gioc_useful_links` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `link` varchar(2000) NOT NULL,
+  `title` varchar(2000) DEFAULT NULL,
+  `target` enum('_self','_blank') NOT NULL DEFAULT '_blank',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `pos` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_active` (`is_active`),
+  KEY `is_active_2` (`is_active`,`pos`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `gioc_useful_links` (`id`, `link`, `title`, `target`, `is_active`, `pos`) VALUES
+(1, '#', 'Номери екстрених, аварійних та довідково-інформаційних служб', '_self', 1, 1),
+(2, '#', 'Районні в місті Києві державні адміністрації', '_self', 1, 2),
+(3, '#', 'Департамент житлово-комунальної інфраструктури', '_self', 1, 3),
+(4, '#', 'Департамент соціальної політики', '_self', 1, 4);
+
 -- IN ONLINE
+
+
+
+
+

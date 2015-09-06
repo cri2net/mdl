@@ -28,9 +28,21 @@
 		</a>
 	</div>
 </div>
-<div class="links">
-	<a href="#">Номери екстрених, аварійних та довідково-інформаційних служб</a>
-	<a href="#">Районні в місті Києві державні адміністрації</a>
-	<a href="#">Департамент житлово-комунальної інфраструктури</a>
-	<a href="#">Департамент соціальної політики</a>
-</div>
+<?php
+	$links = PDO_DB::table_list(TABLE_PREFIX . 'useful_links', 'is_active=1', 'pos', '8');
+	if (count($links) > 0) {
+		?>
+		<div class="links">
+			<?php
+				foreach ($links as $link) {
+					$href = str_ireplace('{site_url}', BASE_URL, $link['link']);
+					if ($href == '') {
+						$href = '#';
+					}
+					?><a target="<?= $link['target']; ?>" href="<?= $href; ?>"><?= htmlspecialchars($link['title']); ?></a> <?php
+				}
+			?>
+		</div>
+		<?php
+	}
+?>
