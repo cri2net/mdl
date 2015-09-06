@@ -27,6 +27,7 @@
         </route>
         <route match="about" controller="error" action="404">
             <route match="chief" controller="page" action="chief" />
+             <route match="media" controller="page" action="media" />
         </route>
 
         <route match="komdebt" controller="page" action="komdebt">

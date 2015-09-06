@@ -11,6 +11,9 @@
 		case 'page/about':
 			$breadcrumbs[] = array('title' => 'Про ГіOЦ');
 			break;
+		case 'page/media':
+			$breadcrumbs[] = array('title' => 'Медiа');
+			break;
 
 		case 'page/foruser':
 			$breadcrumbs[] = array('title' => 'Споживачу');
