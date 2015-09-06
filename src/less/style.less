@@ -79,13 +79,13 @@ ul > li, ol > li { padding-left:15px; line-height:1.5em; font-size:inherit; font
 .highlight { color: #f42; font-weight: 900; }
 h2.big-success-message { font-size:24px; background-color:rgba(1, 182, 113, 0.8); color:#fff; padding:20px; margin-top:40px; display:inline-block; }
 h2.big-error-message { font-size:24px; background-color:rgba(182, 1, 13, 0.8); color:#fff; padding:20px; margin-top:40px; display:inline-block; }
-.error-desription { font-size:18px; color:#900; font-weight:bold; padding:10px; padding-left:0px; margin-bottom:20px; }
+.error-desription { font-size:18px; color:#900; font-weight:bold; padding:10px; padding-left:0; margin-bottom:20px; }
 .star-required { position:relative; top:-3px; cursor:help; color:#00979c; }
 
 
 table, tbody, thead, th, tr, td { border-collapse:collapse; border:1px solid #444; }
 th, td { padding:5px; font-size:12px; font-family:"Ubuntu", Arial; }
-th p, td p { padding:0px; font-size:12px; text-indent:0; }
+th p, td p { padding:0; font-size:12px; text-indent:0; }
 
 #global-owerlay {
     z-index:95;
@@ -265,57 +265,70 @@ header {
                 }
                 &:hover {
                     .border-bot { border-bottom-color:transparent; }
-                    .account-open { display:inline-block; }
                 }
 
-                
-                .account-open {
-                    color:#222;
-                    display:none;
-                    z-index:5;
-                    position:absolute;
-                    top:-13px;
-                    right:-12px;
-                    background-color:#fff;
-                    padding-top:12px;
-                    .border-radius(5);
-                    .box-shadow(0 0 7px 0 rgba(0, 0, 0, 0.3));
-                    
-                    .head-line {
-                        font-style:12px;
-                        font-weight:bold;
-                        background-repeat:no-repeat;
-                        background-image:data-uri("@{images}/h/__account-open.png");
-                        background-position:right center;
-                        margin-right:24px;
-                        margin-bottom:15px;
-                        min-height:22px;
-                        padding:12px 45px 5px 68px;
-                        position:relative;
+                &.logged-in {
+                    .account-open {
+                        color:#222;
+                        display:inline-block;
+                        z-index:5;
+                        position:absolute;
+                        padding-top:2px;
+                        top:-3px;
+                        right:-12px;
+                        background-color:#fff;
+                        .border-radius(5);
+                        .box-shadow(inset 0 0 3px 0 rgba(0, 0, 0, 0.3));
+                        height:41px;
+                        overflow:hidden;
                         
-                        .avatar {
-                            display:block;
-                            .size(34);
-                            position:absolute;
-                            left:14px;
-                            top:3px;
-                           
-                            img { .border-radius(4); }
-                            .default-avatar { .border-radius(4); .size(34); display:block; background-position:center center; background-repeat:no-repeat; }
+                        .head-line {
+                            font-style:12px;
+                            font-weight:bold;
+                            background-repeat:no-repeat;
+                            background-image:data-uri("@{images}/h/__account-open.png");
+                            background-position:right center;
+                            margin-right:24px;
+                            margin-bottom:15px;
+                            min-height:22px;
+                            padding:12px 45px 5px 68px;
+                            position:relative;
+                            
+                            .avatar {
+                                display:block;
+                                .size(34);
+                                position:absolute;
+                                left:14px;
+                                top:3px;
+                               
+                                img { .border-radius(4); }
+                                .default-avatar { .border-radius(4); .size(34); display:block; background-position:center center; background-repeat:no-repeat; }
+                            }
+                        }
+
+                        .item {
+                            padding:5px 5px 5px 43px; background-repeat:no-repeat; background-position:15px center; min-height:12px; margin-bottom:2px;
+                            &.with-border { border-top:1px dotted #ccc; padding-bottom:9px; padding-top:8px; }
+                            a { text-decoration:none; }
+
+                            &.settings { background-image:data-uri("@{images}/h/account/__settings.png"); }
+                            &.faq { background-image:data-uri("@{images}/h/account/__faq.png"); }
+                            &.flash { background-image:data-uri("@{images}/h/account/__flash.png"); }
+                            &.objects { background-image:data-uri("@{images}/h/account/__objects.png"); }
+                            &.bank { background-image:data-uri("@{images}/h/account/__bank.png"); }
+                            &.logout { background-image:data-uri("@{images}/h/account/__logout.png"); }
                         }
                     }
 
-                    .item {
-                        padding:5px 5px 5px 43px; background-repeat:no-repeat; background-position:15px center; min-height:12px; margin-bottom:2px;
-                        &.with-border { border-top:1px dotted #ccc; padding-bottom:9px; padding-top:8px; }
-                        a { text-decoration:none; }
 
-                        &.settings { background-image:data-uri("@{images}/h/account/__settings.png"); }
-                        &.faq { background-image:data-uri("@{images}/h/account/__faq.png"); }
-                        &.flash { background-image:data-uri("@{images}/h/account/__flash.png"); }
-                        &.objects { background-image:data-uri("@{images}/h/account/__objects.png"); }
-                        &.bank { background-image:data-uri("@{images}/h/account/__bank.png"); }
-                        &.logout { background-image:data-uri("@{images}/h/account/__logout.png"); }
+                    &:hover {
+                        .account-open {
+                            .box-shadow(0 0 7px 0 rgba(0, 0, 0, 0.3));
+                            padding-top:12px;
+                            top:-13px;
+                            height:auto;
+                            overflow:visible;
+                        }
                     }
                 }
             }
@@ -347,7 +360,7 @@ header {
                         font-weight:bold;
                         display:inline-block;
                         font-size:16px;
-                        outline:0px none;
+                        outline:0 none;
                         text-decoration: none;
                         padding-bottom:3px;
                         border-bottom:1px solid #00b770;
@@ -525,7 +538,7 @@ content {
                     position: absolute;
                     top: 50px;
                     left: (@base-width - @sidebar-width) / 2px-125px;
-                    img{ margin: 0px; }
+                    img{ margin:0; }
                 }
             }
 
@@ -757,7 +770,7 @@ content {
     }
 }
 footer{
-    .size(100%, @footer-height); position:absolute; bottom:0px; background-color:#eee; font-size:12px; line-height:15px;
+    .size(100%, @footer-height); position:absolute; bottom:0; background-color:#eee; font-size:12px; line-height:15px;
     & > .inner {
         .inner-global; padding:49px 33px 0; height:78px;
         color:#fff;

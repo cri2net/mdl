@@ -68,9 +68,7 @@
 					<?php
 						if (Authorization::isLogin()) {
 							?>
-							<div class="account-link">
-								<span class="border-bot">Особистий кабiнет</span>
-
+							<div class="account-link logged-in">
 								<div class="account-open">
 									<div class="head-line">
 										<div class="avatar">
