@@ -40,39 +40,33 @@
 		$error = $e->getMessage();
 	}
 ?>
-<div class="mini_info_block">
-	<h2 class="gerc_obj">Начисления и платежи <br /> за коммунальные услуги</h2>
-</div>
+<h1 class="big-title">Нарахування та платежі за комунальні послуги</h1>
 <?php
 	if ($error) {
-		?>
-		<div class="gerc-fees">
-			<div id="error_get_bill"><?= $error; ?></div>
-		</div>
-		<?php
+		?><h2 class="big-error-message"><?= $error; ?></h2><?php
 		return;
 	}
 ?>
 <div class="gerc-fees">
 	<p class="gerc_adress">
 		<span><?= $flatData['address']; ?></span><br />
-		Общая площадь: <b><?= $debtData['PL_OB']; ?> м.кв.</b>, отапливаемая: <b><?= $debtData['PL_POL']; ?> м.кв.</b>, <b><?= $debtData['PEOPLE']; ?></b> проживающих
+		Загальна площа: <b><?= $debtData['PL_OB']; ?> м.кв.</b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м.кв.</b>, <b><?= $debtData['PEOPLE']; ?></b> проживаючих
 	</p>
 	<form class="gerc-fees-form" action="<?= BASE_URL; ?>/paybill/" method="post" name="bill">
 		<div class="gerc-bill-tabs">
-			<div class="gerc-bill-tab current"><a href="#bill-1" onclick="return false;">Счет на <?= $debtData['date']; ?></a></div>
-			<div class="gerc-bill-tab"><a href="<?= BASE_URL; ?>/infocenter/detailbill/<?= $flat_hash_id; ?>">История начислений</a></div>
-			<div class="gerc-bill-tab"><a href="<?= BASE_URL; ?>/infocenter/historybill/<?= $flat_hash_id; ?>">Справка о платежах</a></div>
+			<div class="gerc-bill-tab current"><a href="#bill-1" onclick="return false;">Рахунок на <?= $debtData['date']; ?></a></div>
+			<div class="gerc-bill-tab"><a href="<?= BASE_URL; ?>/cabinet/detailbill/<?= $flat_hash_id; ?>">Історія нарахувань</a></div>
+			<div class="gerc-bill-tab"><a href="<?= BASE_URL; ?>/cabinet/historybill/<?= $flat_hash_id; ?>">Довідка про платежі</a></div>
 		</div>
 		<div id="bill-1" class="bill-1">
 			<table>
 				<thead>
 					<tr>
 						<th><input type="checkbox" name="" onclick="checkAllServices(this);" checked="checked"/></th>
-						<th class="th-service">Название услуги</th>
-						<th>Сумма долга, грн</th>
+						<th class="th-service">Назва послуги</th>
+						<th>Сума боргу, грн</th>
 						<th>Переплата, грн</th>
-						<th>К оплате, грн</th>
+						<th>До сплати, грн</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -97,13 +91,13 @@
 													if($item['counterData']['NAIM_LG'])
 													{
 														?>
-														<span class="small">(л.с.<?= $item['ABCOUNT']; ?>)</span> 
+														<span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> 
 														<br>
-														<span class="small">Льготы: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (количество льготников: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
+														<span class="small">Льготы: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
 														<?php
 													}
 												?>
-												<span class="small">(л.с.<?= $item['ABCOUNT']; ?>)</span> 
+												<span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> 
 												</td>
 											<td class="td-dept"><?= ($item['debt'] == '-') ? '<span class="empty">' . $item['debt'] . '</span>' : $item['debt']; ?></td>
 											<td class="td-over"><?= ($item['over_pay'] == '-') ? '<span class="empty">' . $item['over_pay'] . '</span>' : $item['over_pay']; ?></td>
@@ -128,22 +122,22 @@
 													{
 														?>
 														<br>
-														<span class="small">Льготы: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (количество льготников: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
+														<span class="small">Пільги: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
 														<?php
 													}
 
 													foreach ($item['counterData']['counters'] as $counter)
 													{
 														?>
-														<span class="small">(л.с.<?= $item['ABCOUNT']; ?>)</span><br> 
-														<span class="small">Предыдущие показания счетчика №<?= $counter['COUNTER_NO']; ?> : <span id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span></span><br>
-														<span class="small">Текущие показания счетчика №<?= $counter['COUNTER_NO']; ?>:</span>
+														<span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span><br> 
+														<span class="small">Попередні показання лічильника №<?= $counter['COUNTER_NO']; ?> : <span id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span></span><br>
+														<span class="small">Поточні показання лічильника №<?= $counter['COUNTER_NO']; ?>:</span>
 														<input class="text inp_<?= $key; ?>_new_count" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" size="20" maxlength="6" value="" style="width: 50px; text-align: right;padding-right:2px;" onkeypress="return checkForInt(event);" onkeyup="recount_counter_summ('<?= $key; ?>', '<?= $counter['OLD_VALUE']; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');" /><br>
 														<input type="hidden" name="inp_<?= $key; ?>_old_count[]" value="<?= $counter['OLD_VALUE']; ?>">
 														<input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
 														<input type="hidden" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
-														<span class="small">( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">новое&nbsp;значение</div>&nbsp;-&nbsp;<?= $counter['OLD_VALUE']; ?> <?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?> )&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;<?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?></span>
-														<span class="small"><br>Внимание! Сумму к оплате можно изменить, введя новое значение</span>
+														<span class="small">( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<?= $counter['OLD_VALUE']; ?> <?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?> )&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;<?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?></span>
+														<span class="small"><br>Увага! Суму до сплати можна змінити, ввівши нове значення</span>
 														<?php
 													}
 												?>
@@ -178,18 +172,15 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td class="total" colspan="4">Итого, грн:</td>
+						<td class="total" colspan="4">Усьго, грн:</td>
 						<td class="total-sum" id="total_debt"><?= $debtData['full_dept']; ?></td>
 						<input type="hidden" name="dbegin" value="<?= $dateBegin; ?>">
 						<input type="hidden" name="dend" value="<?= $dateEnd; ?>">
 					</tr>
 				</tfoot>
 			</table>
-			<p class="footnote">Подробную информацию о начислениях Вы можете получить<br />
-				в разделе <a href="<?= BASE_URL; ?>/infocenter/detailbill/<?= $flat_hash_id; ?>">&quot;История начислений&quot;</a>.
-			</p>
 			<div class="submit">
-				<input class="submit-button" id="pay_button" type="submit" value="Оплатить"/>
+				<input class="submit-button" id="pay_button" type="submit" value="Сплатити"/>
 				<input type="hidden" name="pay" value="1">
 			</div>
 		</div>
