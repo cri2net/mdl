@@ -516,11 +516,14 @@ function changeCheck(element, group_class)
 
 function open_feedback_msg(chief_id)
 {
-    $('body').append('<div id="global-owerlay"><div id="popup-box" class="popup-box"></div></div>');
+    $('body').addClass('popup-open').append('<div id="global-owerlay"><div id="popup-box" class="popup-box"><div class="popup-content"></div></div></div>');
+    $('#popup-box .popup-content').html(chief_empty_form);
+    $('#chief_id').val(chief_id);
 };
 
 function close_feedback_msg()
 {
     $('#global-owerlay').remove();
+    $('body').removeClass('popup-open');
 }
 

@@ -20,7 +20,7 @@
 <meta name="theme-color" content="#ffffff">
 <meta charset="utf-8" />
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
-<link href="<?= BASE_URL; ?>/style/style.css" rel="stylesheet" type="text/css" />
+<link href="<?= BASE_URL; ?>/style/style.css?m=<?= (is_readable(ROOT . "/style/style.css")) ? filemtime(ROOT . "/style/style.css") : ''; ?>" rel="stylesheet" type="text/css" />
 <title><?php require_once(ROOT . "/protected/scripts/seo/title.php"); ?></title>
 <meta name="keywords" content="<?php require_once(ROOT . "/protected/scripts/seo/keywords.php"); ?>" />
 <meta name="description" content="<?php require_once(ROOT . "/protected/scripts/seo/description.php"); ?>" />

@@ -37,7 +37,7 @@
         </div>
     </footer>
 </div>
-<script src="<?= BASE_URL; ?>/js/main.js"></script>
+<script src="<?= BASE_URL; ?>/js/main.js?m=<?= (is_readable(ROOT . "/js/main.js")) ? filemtime(ROOT . "/js/main.js") : ''; ?>"></script>
 <script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery_extends.js"></script>

@@ -53,6 +53,7 @@ sub { bottom: -0.25em; }
 
 html { width:100%; height:100%; }
 body { padding:14px 0 90px; position:relative; .size(100%, auto); background:white; min-width:@base-width; min-height:100%; font-family:"Ubuntu", Arial; }
+body.popup-open { overflow:hidden; }
 a {
     color:#00979c;
     &:hover { text-decoration:none; color:#00979c; }
@@ -84,6 +85,44 @@ h2.big-error-message { font-size:24px; background-color:rgba(182, 1, 13, 0.8); c
 table, tbody, thead, th, tr, td { border-collapse:collapse; border:1px solid #444; }
 th, td { padding:5px; font-size:12px; font-family:"Ubuntu", Arial; }
 th p, td p { padding:0px; font-size:12px; text-indent:0; }
+
+#global-owerlay {
+    z-index:95;
+    position:fixed;
+    display:block;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background-color:rgba(0, 0, 0, 0.45);
+    .popup-box {
+        .inner-global;
+        width:@base-width - 500;
+        margin-left:-(@base-width - 500) / 2;
+        top:55px;
+        text-align: center;
+        background-color:#fff;
+        .border-radius(10);
+        min-height:300px;
+        .popup-content {
+            margin:25px 15px 30px;
+            display: inline-block;
+            .field-group {
+                display: inline-block; text-align:left; width:600px;
+                .txt { width:558px; margin-bottom:10px; }
+                textarea.txt { height:150px; }
+            }
+            .buttons-here {
+                position:relative; height:40px; margin-top:15px;
+                .btn {
+                    margin:0; display: inline-block;
+                    &.cancel-btn { position:absolute; left:0; }
+                    &.success-btn { position:absolute; right:0; }
+                }
+            }
+        }
+    }
+}
 
 .work-content {
     .line {

@@ -240,5 +240,10 @@ INSERT INTO `gioc_chief` (`id`, `pos`, `is_active`, `icon`, `email`, `name`, `fa
 (5, 5, 1, 'chief_[1441504218.163].png', 'test5@example.com', 'Михайло', 'Юрійович', 'Балясніков', 'Головний інженер');
 
 
--- IN ONLINE
 
+
+ALTER TABLE `gioc_feedback`
+  ADD COLUMN `to` INT(11) DEFAULT 0  NOT NULL AFTER `id`;
+
+
+-- IN ONLINE
