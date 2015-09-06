@@ -54,7 +54,24 @@
 			<?php
 		}
 
-		$pages = PDO_DB::table_list(StaticPage::TABLE, "is_active=1", "created_at DESC", "2");
+
+		// статьи со всех подразделов Правові документи
+		// Реализация жестяковая, конечно.
+		
+		$law = StaticPage::getByKey('law', 0);
+		if ($law) {
+			$arr_ids = array($law['id']);
+			$pages = StaticPage::getChildren($law['id']);
+
+			for ($i=0; $i < count($pages); $i++) {
+				$arr_ids[] = $pages[$i]['id'];
+			}
+
+			$in_query = trim(implode($arr_ids, ','), ',');
+
+			$pages = PDO_DB::table_list(StaticPage::TABLE, "is_active=1 AND idp IN ($in_query)", "created_at DESC", "2");
+		}
+
 		if (count($pages) > 0) {
 			?>
 			<h2 class="big-subtitle green">Останнi матерiали</h1>

@@ -714,14 +714,15 @@ content {
                 font-size:16px; font-weight:bold; margin-top:4px; margin-bottom:14px;
             }
             .item {
-                display:inline-block; margin-bottom:14px;
+                display:inline-block; margin-bottom:14px; min-height:54px; position: relative;
                 a {
                     font-size:12px;
                     line-height:15px;
                     display:inline-block;
-                    .img {
-                        display:block; float:left; .size(54); overflow:hidden; .border-radius(27); margin-right:15px;
-                    }
+                    margin-left:69px;
+                }
+                .img {
+                    display:block; left:0; position:absolute; float:left; .size(54); overflow:hidden; .border-radius(27);
                 }
             }
         }

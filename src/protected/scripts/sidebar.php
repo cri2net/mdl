@@ -10,22 +10,16 @@
 <div class="partners">
 	<div class="title">Нашi партнери</div>
 	<div class="item">
-		<a href="#">
-			<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/1.png');"></span>
-			Сайт Київської міської державної адміністрації
-		</a>
+		<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/1.png');"></span>
+		<a href="#">Сайт Київської міської державної адміністрації</a>
 	</div>
 	<div class="item">
-		<a href="#">
-			<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/2.png');"></span>
-			«Картка киянина»
-		</a>
+		<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/2.png');"></span>
+		<br><a href="#">«Картка киянина»</a>
 	</div>
 	<div class="item">
-		<a href="#">
-			<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/3.png');"></span>
-			«Ваш будинок»
-		</a>
+		<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/3.png');"></span>
+		<br><a href="#">«Ваш будинок»</a>
 	</div>
 </div>
 <?php
