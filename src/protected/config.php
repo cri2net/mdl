@@ -47,6 +47,8 @@
 
     define('EMAIL_FROM', 'info@splata.gioc.kiev.ua');
     define('EMAIL_FROM_NAME', 'КП «ГіОЦ»');
+    define('SITE_NAME', 'КП «ГіОЦ»'); // for rss, etc
+    define('SITE_DESCRIPTION', 'Головний iнформацiйно-обчислювальний центр'); // for rss, etc
     define('SITE_DOMAIN', 'splata.gioc.kiev.ua');
     define('REMEMBER_COOKIE_NAME', '__giocudata');
 

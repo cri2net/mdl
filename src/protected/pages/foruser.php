@@ -41,8 +41,8 @@
 		<div class="subblock-right">
 			<div class="in">
 				<ul>
-					<li><img src="<?= BASE_URL ?>/pic/pages/foruser/banks/icon-1-1.png" alt="" /><a href="#"><b>Приймають платежі за ЖКП</b></a></li>
-					<li><img src="<?= BASE_URL ?>/pic/pages/foruser/banks/icon-1-1.png" alt="" /><a href="#"><b>Приймають платежі за ЦО </b></a></li>
+					<li><img src="<?= BASE_URL ?>/pic/pages/foruser/banks/icon-1-1.png" alt="" /><a href="<?= BASE_URL; ?>/foruser/banks/#service-komdebt"><b>Приймають платежі за ЖКП</b></a></li>
+					<li><img src="<?= BASE_URL ?>/pic/pages/foruser/banks/icon-1-1.png" alt="" /><a href="<?= BASE_URL; ?>/foruser/banks/#service-heating"><b>Приймають платежі за ЦО </b></a></li>
 				</ul>
 			</div>
 		</div>

@@ -31,6 +31,7 @@
             <route match="{subpage}-{payment_id|num}" controller="page" action="komdebt" />
         </route>
 
+        <route match="feed" controller="rss" action="rss" />
         <route match="checkout" controller="page" action="checkout" />
         <route match="paybill"  controller="page" action="paybill" />
         <route match="contacts" controller="page" action="contacts" />
@@ -39,6 +40,7 @@
         <route match="calc-subsidies" controller="page" action="calc-subsidies" />
 
         <route match="cabinet" controller="page" action="cabinet">
+            <route match="help" controller="error" action="404" />
             <route match="{subpage}" controller="page" action="cabinet">
                 <route match="{section}" controller="page" action="cabinet" />
             </route>
