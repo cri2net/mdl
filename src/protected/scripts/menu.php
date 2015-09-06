@@ -43,7 +43,7 @@
     </script>
     <?php
         if ($use_cabinet_menu) {
-            ?><div class="item item-right"><a href="<?= BASE_URL; ?>/">Перейти до ГіОЦ</a></div> <?php
+            ?><div class="item item-right goback"><a href="<?= BASE_URL; ?>/">Перейти до ГіОЦ</a></div> <?php
         } else {
             ?><div class="item item-right forum"><a href="<?= BASE_URL; ?>/forum/">Форум</a></div> <?php
         }
