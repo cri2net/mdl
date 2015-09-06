@@ -42,6 +42,26 @@
         );
         PDO_DB::insert($data, TABLE_PREFIX . 'feedback');
 
+        ////////////////
+        // send email //
+        ////////////////
+        
+        
+        $email = new Email();
+        $email->AddReplyTo($_SESSION['contacts']['email'], $_SESSION['contacts']['name']);
+        
+        $email->send(
+            'secretary@gioc-kmda.kiev.ua',
+            'КП «ГіОЦ». Нове повiдомлення з сайта',
+            '',
+            'contacts_feedback',
+            array(
+                'username' => htmlspecialchars($_SESSION['contacts']['name']),
+                'email' => $_SESSION['contacts']['email'],
+                'text' => htmlspecialchars($_SESSION['contacts']['text'])
+            )
+        );
+
         $_SESSION['contacts']['status'] = true;
     } catch (Exception $e) {
         $_SESSION['contacts']['status'] = false;
