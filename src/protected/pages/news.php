@@ -1,75 +1,142 @@
 <?php require_once(ROOT . '/protected/scripts/slider.php'); ?>
 <h1 class="big-title green">Новини</h1>
-<div class="news-list">
-	<div class="news-item first">
-		<h2 class="title">Про внесення змiн до норм споживання</h2>
-		<div class="date">15 травня</div>
-		<div class="announce">
-			Кабінет Міністрів України постановив про внесення змін до норм споживання природного газу населенням у разі відсутності газових лічильників. Постанова КМУ від 29.04.2015 № 237
-		</div>
-		<div class="details"><a href="<?= BASE_URL; ?>/news/test_1/">детальнiше...</a></div>
-	</div>
-	<div class="news-item">
-		<h2 class="title">Куди звертатися для отримання субсидій?</h2>
-		<div class="date">12 квiтня</div>
-		<div class="announce">
-			Процедура отримання субсидій здійснюється в районних управліннях праці та соціального захисту. На дошках оголошень під'їздах житлових будинків розміщено про адреси управлінь та їх контактні телефони.
-		</div>
-		<div class="details"><a href="<?= BASE_URL; ?>/news/test_1/">детальнiше...</a></div>
-	</div>
-</div>
+<?php
+    
+    $items_on_page = 10;
 
-<div class="news-list">
-	<div class="news-item first">
-		<h2 class="title">Централізований збір показань квартирних приладів обліку</h2>
-		<div class="date">1 квiтня</div>
-		<div class="announce">
-			Шановні споживачі!  Для комфорту співпраці з Виконавцями послуг пропонуємо централізований збір показань даних квартирних приладів обліку холодної та гарячої води.  Починаючи з рахунків за серпень 2015 року, Ви маєте можливість отримувати рахунок з повним розрахунком суми до сплати (в т.ч. з урахуванням пільг та субсидій, в разі їх наявності).
-		</div>
-		<div class="details"><a href="<?= BASE_URL; ?>/news/test_1/">детальнiше...</a></div>
-	</div>
-	<div class="news-item">
-		<h2 class="title">Фальсифікація платіжних документів</h2>
-		<div class="date">28 березня</div>
-		<div class="announce">
-			Шановні споживачі! Звертаємо Вашу увагу, що у  Шевченківському районі міста Києва було виявлено факт підробки  рахунків на сплату за житлово-комунальні та інші послуги за червень 2015 р., які друкуються КП ГІОЦ на замовлення виконавців житлово-комунальних послуг.
-		</div>
-		<div class="details"><a href="<?= BASE_URL; ?>/news/test_1/">детальнiше...</a></div>
-	</div>
-</div>
-<div class="news-list">
-	<div class="news-item first">
-		<h2 class="title">Опубліковані нові тарифи з 01.05.2015 року</h2>
-		<div class="date">20 березня</div>
-		<div class="announce">
-			Національною комісією, що здійснює державне регулювання у сферах енергетики та комунальних послуг затверджені нові тарифи для населення з 01.05.2015 на холодне, гаряче водопостачання, водовідведення та центральне опалення.
-		</div>
-		<div class="details"><a href="<?= BASE_URL; ?>/news/test_1/">детальнiше...</a></div>
-	</div>
-	<div class="news-item">
-		<h2 class="title">Про внесення змін до норм споживання</h2>
-		<div class="date">12 квiтня</div>
-		<div class="announce">
-			Кабінет Міністрів України постановив про внесення змін до норм споживання природного газу населенням у разі відсутності газових лічильників. Постанова КМУ від 29.04.2015 № 237
-		</div>
-		<div class="details"><a href="<?= BASE_URL; ?>/news/test_1/">детальнiше...</a></div>
-	</div>
-</div>
-<div class="clear"></div>
-<div class="align-center">
-	<div class="btn-more">
-		<div class="btn green bold"><div class="icon-reload"></div>Показати ще</div>
-	</div>
-	<div class="ruler">
-		<a onclick="return false;" href="#" class="first"></a>
-		<a onclick="return false;" href="#" class="prev"></a>
-		<a onclick="return false;" href="#">1</a>
-		<a onclick="return false;" href="#">2</a>
-		<a onclick="return false;" href="#">...</a>
-		<a onclick="return false;" class="current">7</a>
-		<a onclick="return false;" href="#">8</a>
-		<a onclick="return false;" href="#"></a>
-		<a onclick="return false;" href="#" class="next"></a>
-		<a onclick="return false;" href="#" class="last"></a>
-	</div>
-</div>
+    if (isset($__route_result['values']['page'])) {
+        $currentPage = abs((int)$__route_result['values']['page']);
+    }
+    else {
+        $currentPage = 1;
+    }
+
+    $stm = PDO_DB::query("SELECT COUNT(*) FROM ". News::TABLE ." WHERE is_actual=1");
+    $pagesCount = (int)ceil($stm->fetchColumn() / $items_on_page);
+    $from = ($currentPage * $items_on_page) - $items_on_page;
+    $currentPage = min($currentPage, $pagesCount);
+    $url_for_paging = BASE_URL . '/news/';
+
+    $pages = array();
+    
+    if ($pagesCount > 10) {
+        if ($currentPage > 4) {
+            $pages = array(0, 1, 'points');
+            $start_page = ($pagesCount - $currentPage >= 3)?$currentPage-1:$pagesCount-5;
+            
+            for ($i = $start_page; $i < $start_page + 3; $i++) {
+                $pages[] = $i;
+            }
+            
+            $last_page = $pages[count($pages) - 1];
+            
+            if ($last_page < $pagesCount - 3) {
+                $pages[] = 'points';
+            }
+            
+            for ($i=$pagesCount-2; $i<$pagesCount; $i++) {
+                if ($i > $last_page) {
+                    $pages[] = $i;
+                }
+            }
+        } else {
+            for ($i = 0; $i < $currentPage + 2; $i++) {
+                $pages[] = $i;
+            }
+            $pages[] = 'points';
+            for($i = $pagesCount - 2; $i < $pagesCount; $i++) {
+                $pages[] = $i;
+            }
+        }
+    } else {
+        for ($i=0; $i<$pagesCount; $i++) {
+            $pages[] = $i;
+        }
+    }
+
+
+    $news = PDO_DB::table_list(News::TABLE, "`is_actual`=1", "created_at DESC", "$from, $items_on_page");
+
+    if (count($news) > 0) {
+        ?>
+        <div class="news-list">
+            <?php
+                for ($i=0; $i < count($news); $i++) {
+                    if (($i > 0) && ($i % 2 == 0)) {
+                        ?></div><div class="news-list"><?php
+                    }
+                    
+                    $date = date('d ', $news[$i]['created_at']) . $MONTHS[date('n', $news[$i]['created_at'])]['ua'];
+                    if (date('Y') != date('Y', $news[$i]['created_at'])) {
+                        $date .= date(' Y', $news[$i]['created_at']);
+                    }
+
+                    if (mb_strlen($news[$i]['title'], 'UTF-8') > 50) {
+                        $news[$i]['title'] = mb_substr($news[$i]['title'], 0, 50, 'UTF-8') . '...';
+                    }
+
+                    if (!$news[$i]['announce']) {
+                        $news[$i]['announce'] = strip_tags($news[$i]['text']);
+                        if (mb_strlen($news[$i]['announce'], 'UTF-8') > 200) {
+                            $news[$i]['announce'] = mb_substr($news[$i]['announce'], 0, 200, 'UTF-8') . '...';
+                        }
+                    }
+
+                    ?>
+                    <div class="news-item <?= ($i % 2 == 0) ? 'first' : ''; ?>">
+                        <h2 class="title"><?= htmlspecialchars($news[$i]['title']); ?></h2>
+                        <div class="date"><?= $date; ?></div>
+                        <div class="announce"><?= ($news[$i]['announce']); ?></div>
+                        <div class="details"><a href="<?= BASE_URL; ?>/news/<?= composeURLKey($news[$i]['title']); ?>_<?= $news[$i]['id']; ?>/">детальнiше...</a></div>
+                    </div>
+                    <?php
+                }
+            ?>
+        </div>
+        <div class="clear"></div>
+        <?php
+
+        $currentPage--;
+
+        if ($pagesCount > 1) {
+            ?>
+            <div class="align-center">
+                <div class="btn-more">
+                    <div class="btn green bold"><div class="icon-reload"></div>Показати ще</div>
+                </div>
+                <div class="ruler">
+                    <a href="<?= $url_for_paging; ?>" class="first"></a>
+                    <?php
+                        $url_for_prev_page = ($currentPage == 0)
+                            ? '#" onclick="return false;"'
+                            : $url_for_paging . ($currentPage - 1) . '/';
+
+                        if ($currentPage - 1 == 0) {
+                            $url_for_prev_page = $url_for_paging;
+                        }
+
+                        $url_for_next_page = ($currentPage == $pagesCount - 1)
+                            ? '#" onclick="return false;"'
+                            : $url_for_paging . ($currentPage + 1) . '/';
+                    ?>
+                    <a href="<?= $url_for_prev_page; ?>" class="prev"></a>
+                    <?php
+                        for ($i=0; $i<count($pages); $i++) {
+                            if (($pages[$i] !== 'points') && ($currentPage == $pages[$i])) {
+                                ?><a class="current" href="<?= $url_for_prev_page; ?>"><?= $pages[$i] + 1; ?></a><?php
+                            } elseif ($pages[$i] === 0) {
+                                ?><a href="<?= $url_for_paging; ?>">1</a><?php
+                            } elseif ($pages[$i] !== 'points') {
+                                ?><a href="<?= $url_for_paging; ?><?= $pages[$i] + 1; ?>/"><?= $pages[$i] + 1; ?></a><?php
+                            } else {
+                                ?><a onclick="return false;" href="#">...</a><?php
+                            }
+                        }
+                    ?>
+                    <a href="<?= $url_for_next_page; ?>" class="next"></a>
+                    <a href="<?= $url_for_paging; ?><?= $pagesCount; ?>/" class="last"></a>
+                </div>
+            </div>
+            <?php
+        }
+    }
