@@ -1,4 +1,4 @@
-<h1 class="big-title green h1-media">Медiа</h1>
+<h1 class="big-title green h1-media">Відеоматеріали</h1>
 <div class="media">
 	<div class="thumbnail">
 		<div class="thumb-date">12 листопада</div>

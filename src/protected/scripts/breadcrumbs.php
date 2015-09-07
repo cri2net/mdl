@@ -12,7 +12,9 @@
             $breadcrumbs[] = array('title' => 'Про ГіOЦ');
             break;
         case 'page/media':
-            $breadcrumbs[] = array('title' => 'Медiа');
+            $breadcrumbs[] = array('title' => 'Про ГіОЦ', 'link' => '/about/');
+            $breadcrumbs[] = array('title' => 'Медiа', 'link' => '/about/media/');
+            $breadcrumbs[] = array('title' => 'Відеоматеріали');
             break;
 
         case 'page/foruser':

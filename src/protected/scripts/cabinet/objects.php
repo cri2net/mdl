@@ -62,90 +62,92 @@
         ?><h2 class="big-error-message"><?= $e->getMessage(); ?></h2> <?php
         return;
     }
-
-    if (count($houses) == 0) {
-        return;
-    }
 ?>
 <div class="cabinet-objects">
-    <div class="houses_line">
-        <?php
-            for ($i=0; $i < count($houses); $i++) {
-                $house = $houses[$i];
-
-                if (($i % 2 == 0) && ($i > 0)) {
-                    ?></div><div class="houses_line"><?php
-                }
-
-                if ($house['error']) {
-                    ?>
-                    <div id="bbox_house_<?= $house['hash_id']; ?>" class="house_item <?= $house['icon']; ?>">
-                        <div class="title">
-                            <div class="icon"></div>
-                            <?php
-                                if ($house['title']) {
-                                    echo htmlspecialchars($house['title']);
-                                    ?>
-                                    <div class="address">$house['address']; ?></div>
-                                    <?php
-                                } else {
-                                    echo $house['address'];
-                                }
-                            ?>
-                        </div>
-                    
-                        <div class="values align-center">
-                            <b style="color:#900;">Виникла тимчасова помилка</b>
-                        </div>
-                        <div class="align-center">
-                            <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об'єкту</a>
-                        </div>
-                    </div>
-                    <?php
-                    continue;
-                }
-                ?>
-                <div id="bbox_house_<?= $house['hash_id']; ?>" class="house_item <?= $house['payed']; ?> <?= $house['icon']; ?>">
-                    <div class="payed-icon"></div>
-                    <div class="title">
-                        <div class="icon"></div>
-                        <?php
-                            if ($house['title']) {
-                                echo htmlspecialchars($house['title']);
-                                ?>
-                                <div class="address"><?= $house['street_name'] . ' ' .$house['address']; ?></div>
-                                <?php
-                            } else {
-                                echo $house['address'];
-                            }
-                        ?>
-                        <div class="bydate">рахунок на <?= $house['date']; ?> року</div>
-                    </div>
-    
-                    <div class="values">
-                        <div class="value-line">
-                            <div class="value-title">Сума до сплати</div>
-                            <div class="align-right">
-                                <div class="value-border"></div>
-                                <div class="value"><?= $house['debt_sum_str']; ?></div>
-                            </div>
-                        </div>
-                        <div class="value-line small-line">
-                            <div class="value-title">Сплачено у <?= $house['in_this_month']; ?></div>
-                            <div class="align-right">
-                                <div class="value-border"></div>
-                                <div class="value"><?= $house['oplat_this_month_str']; ?></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="align-center">
-                        <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об'єкту</a>
-                    </div>
-                </div>
+    <?php
+        if (count($houses) == 0) {
+            ?>
+            <div class="houses_line">
                 <?php
-            }
-        ?>
-    </div>
+                    for ($i=0; $i < count($houses); $i++) {
+                        $house = $houses[$i];
+
+                        if (($i % 2 == 0) && ($i > 0)) {
+                            ?></div><div class="houses_line"><?php
+                        }
+
+                        if ($house['error']) {
+                            ?>
+                            <div id="bbox_house_<?= $house['hash_id']; ?>" class="house_item <?= $house['icon']; ?>">
+                                <div class="title">
+                                    <div class="icon"></div>
+                                    <?php
+                                        if ($house['title']) {
+                                            echo htmlspecialchars($house['title']);
+                                            ?>
+                                            <div class="address">$house['address']; ?></div>
+                                            <?php
+                                        } else {
+                                            echo $house['address'];
+                                        }
+                                    ?>
+                                </div>
+                            
+                                <div class="values align-center">
+                                    <b style="color:#900;">Виникла тимчасова помилка</b>
+                                </div>
+                                <div class="align-center">
+                                    <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об'єкту</a>
+                                </div>
+                            </div>
+                            <?php
+                            continue;
+                        }
+                        ?>
+                        <div id="bbox_house_<?= $house['hash_id']; ?>" class="house_item <?= $house['payed']; ?> <?= $house['icon']; ?>">
+                            <div class="payed-icon"></div>
+                            <div class="title">
+                                <div class="icon"></div>
+                                <?php
+                                    if ($house['title']) {
+                                        echo htmlspecialchars($house['title']);
+                                        ?>
+                                        <div class="address"><?= $house['street_name'] . ' ' .$house['address']; ?></div>
+                                        <?php
+                                    } else {
+                                        echo $house['address'];
+                                    }
+                                ?>
+                                <div class="bydate">рахунок на <?= $house['date']; ?> року</div>
+                            </div>
+            
+                            <div class="values">
+                                <div class="value-line">
+                                    <div class="value-title">Сума до сплати</div>
+                                    <div class="align-right">
+                                        <div class="value-border"></div>
+                                        <div class="value"><?= $house['debt_sum_str']; ?></div>
+                                    </div>
+                                </div>
+                                <div class="value-line small-line">
+                                    <div class="value-title">Сплачено у <?= $house['in_this_month']; ?></div>
+                                    <div class="align-right">
+                                        <div class="value-border"></div>
+                                        <div class="value"><?= $house['oplat_this_month_str']; ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-center">
+                                <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об'єкту</a>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                ?>
+            </div>
+            <?php
+        }
+    ?>
 
     <div class="btn green bold big add-new" onclick="$('#add-object-form').slideToggle(300);"><div class="icon-objects"></div>Додати новий будинок або квартиру</div>
 
