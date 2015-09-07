@@ -1,3 +1,5 @@
+AddDefaultCharset UTF-8
+
 SetEnvIfNoCase User-Agent "^MJ12bot" bad_bot
 SetEnvIfNoCase User-Agent "^meanpathbot" bad_bot
 SetEnvIfNoCase User-Agent "^archive.org_bot" bad_bot
