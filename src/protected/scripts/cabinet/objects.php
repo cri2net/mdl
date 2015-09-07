@@ -65,7 +65,7 @@
 ?>
 <div class="cabinet-objects">
     <?php
-        if (count($houses) == 0) {
+        if (count($houses) > 0) {
             ?>
             <div class="houses_line">
                 <?php
