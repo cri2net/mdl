@@ -13,28 +13,28 @@
 </div>
 <div class="cabinet-settings">
     <div class="page-tabs">
-    <?php
-        $sections = array(
-            'info' => 'Персональні дані',
-            'notifications' => 'Налаштування повідомлень',
-            'rule' => 'Управління профілем',
-        );
-        $i = 0;
-        
-        foreach ($sections as $key => $value) {
-            $i++;
-            $current = ($current_section == $key);
-            $class = 'tab';
-            $class .= ($current) ? ' current' : '';
-            $class .= ($i == count($sections)) ? ' last' : '';
+        <?php
+            $sections = array(
+                'info' => 'Персональні дані',
+                'notifications' => 'Налаштування повідомлень',
+                'rule' => 'Управління профілем',
+            );
+            $i = 0;
+            
+            foreach ($sections as $key => $value) {
+                $i++;
+                $current = ($current_section == $key);
+                $class = 'tab';
+                $class .= ($current) ? ' current' : '';
+                $class .= ($i == count($sections)) ? ' last' : '';
 
-            if ($current) {
-                ?><div class="<?= $class; ?>"><?= $value; ?></div><?php
-            } else {
-                ?><a class="<?= $class; ?>" href="<?= BASE_URL; ?>/cabinet/settings/<?= $key; ?>/"><?= $value; ?></a><?php
+                if ($current) {
+                    ?><div class="<?= $class; ?>"><?= $value; ?></div><?php
+                } else {
+                    ?><a class="<?= $class; ?>" href="<?= BASE_URL; ?>/cabinet/settings/<?= $key; ?>/"><?= $value; ?></a><?php
+                }
             }
-        }
-    ?>
+        ?>
     </div>
     
     <?php

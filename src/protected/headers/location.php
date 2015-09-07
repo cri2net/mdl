@@ -93,6 +93,12 @@
                     $new_location = BASE_URL . '/cabinet/objects/';
                 } elseif (($__route_result['values']['subpage'] == 'settings') && !isset($__route_result['values']['section'])) {
                     $new_location = BASE_URL . '/cabinet/settings/info/';
+                } elseif (
+                    ($__route_result['values']['subpage'] == 'objects')
+                    && isset($__route_result['values']['id'])
+                    && !isset($__route_result['values']['section'])
+                ) {
+                    $new_location = BASE_URL . "/cabinet/objects/{$__route_result['values']['id']}/bill/";
                 }
                 break;
         }

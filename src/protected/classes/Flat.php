@@ -170,21 +170,22 @@ class Flat
         return $arr;
     }
     
-    public static function getUserFlatByHash($hash_id)
+    public static function getUserFlatById($id)
     {
         $user_id = (int)$user_id;
         $table = self::USER_FLATS_TABLE;
         $streets_table = Street::TABLE;
         $pdo = PDO_DB::getPDO();
 
-        $stm = $pdo->prepare("SELECT c.*, s.name_ua AS street_name_full, SUBSTRING(s.name_ua, 1, 14) AS street_name
-                              FROM $table c
-                              LEFT OUTER JOIN $streets_table s ON c.street_id=s.street_id
-                              WHERE MD5(MD5(c.id)) = ?
-                              LIMIT 1"
+        $stm = $pdo->prepare(
+            "SELECT c.*, s.name_ua AS street_name_full, SUBSTRING(s.name_ua, 1, 14) AS street_name
+             FROM $table c
+             LEFT OUTER JOIN $streets_table s ON c.street_id=s.street_id
+             WHERE c.id = ?
+             LIMIT 1"
         );
 
-        $stm->execute(array($hash_id));
+        $stm->execute(array($id));
         $arr = $stm->fetch();
 
         if ($arr === false) {
