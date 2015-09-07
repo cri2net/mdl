@@ -22,7 +22,7 @@ var WEBPAGES_MASK = [
     '!./src/protected/**/{*.css,*.js}'
 ];
 
-var IMAGES_MASK = ['./src/{pic,images}/**/{*.png,*.jpg,*.gif,*.ico}', '!./src/pic/**/__*.*'];
+var IMAGES_MASK = ['./src/{pic,images}/**/{*.png,*.jpg,*.jpeg,*.gif,*.ico}', '!./src/pic/**/__*.*'];
 var CSS_ENCODED_IMAGES_MASK = ['./src/{pic,images}/__*.*'];
 var FONTS_MASK = ['./src/**/{*.ttf,*.eot,*.svg,*.woff}'];
 var PUBLIC_CLEANUP_MASK = ['./public/**/{*.*,.*,*}'];
