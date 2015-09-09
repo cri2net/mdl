@@ -41,7 +41,7 @@
                     <span id="checkbox_persent_visa" class="niceCheck radio checked"><input value="<?= $percent['visa']['percent']; ?>" type="radio" name="percent" checked="checked" data-paysystem-sum="<?= $visaSum; ?>" data-paysystem-key="visa"></span>
                     <label onclick="$('#checkbox_persent_visa').click();">
                         <img alt="visa" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
-                        <span style="display:inline-block; margin-top:10px;">Карта Visa, Visa Electron</span>
+                        <span class="text-label">Карта Visa, Visa Electron</span>
                     </label>
                 </div>
                 <?php
@@ -53,7 +53,7 @@
                     <span id="checkbox_persent_mastercard" class="niceCheck radio"><input value="<?= $percent['mastercard']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
                     <label onclick="$('#checkbox_persent_mastercard').click();">
                         <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
-                        <span style="display:inline-block; margin-top:10px;">Карта MasterCard, Maestro</span>
+                        <span class="text-label">Карта MasterCard, Maestro</span>
                     </label>
                 </div>
                 <?php
@@ -65,7 +65,7 @@
                     <span id="checkbox_persent__test_upc" class="niceCheck radio"><input value="<?= $percent['_test_upc']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="_test_upc"></span>
                     <label onclick="$('#checkbox_persent__test_upc').click();">
                         <img alt="" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
-                        <span style="color:#f00; display:inline-block; margin-top:10px;"><b>Тестовий мерчант UPC</b></span>
+                        <span style="color:#f00;" class="text-label"><b>Тестовий мерчант UPC</b></span>
                     </label>
                 </div>
                 <?php
@@ -77,7 +77,7 @@
                     <span id="checkbox_persent_private" class="niceCheck radio"><input value="<?= $percent['private']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $privateSum; ?>" data-paysystem-key="private"></span>
                     <label onclick="$('#checkbox_persent_private').click();">
                         <img alt="privatbank" src="<?= BASE_URL; ?>/images/paysystems/pb-logo.png" />
-                        <span style="display:inline-block; margin-top:10px;">Карта банка "Приватбанк"</span>
+                        <span class="text-label">Карта банка "Приватбанк"</span>
                     </label>
                 </div>
                 <?php
@@ -89,7 +89,7 @@
                     <span id="checkbox_persent_webmoney" class="niceCheck radio"><input value="<?= $percent['webmoney']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $webmoneySum; ?>" data-paysystem-key="webmoney"></span>
                     <label onclick="$('#checkbox_persent_webmoney').click();">
                         <img alt="Webmoney" src="<?= BASE_URL; ?>/images/paysystems/wm-logo.png" />
-                        <span style="display:inline-block; margin-top:10px;">Webmoney</span>
+                        <span class="text-label">Webmoney</span>
                     </label>
                 </div>
                 <?php

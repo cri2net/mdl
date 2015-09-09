@@ -275,4 +275,11 @@ ALTER TABLE `gioc_payment`
   ADD INDEX (`user_id`, `type`, `city_id`, `flat_id`);
 
 
+
+-- 2015.09.10
+ALTER TABLE `gioc_news`
+  DROP COLUMN `old_site_url`;
+
+
 -- IN ONLINE
+
