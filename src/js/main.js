@@ -54,12 +54,12 @@ function addNewHouse() {
     });
 };
 
-function deleteHouse(flat_hash_id) {
+function deleteHouse(flat_id) {
     var data = {};
     data.obj = 'Flat';
     data.ac = 'removeUserFlat';
     data.params = {};
-    data.params.flat_hash_id = flat_hash_id;
+    data.params.flat_id = flat_id;
     
     jQuery.ajax({
         dataType: 'json',
@@ -68,7 +68,7 @@ function deleteHouse(flat_hash_id) {
         url : '/ajax/json/_engine',
     });
     
-    $('#bbox_house_' + flat_hash_id).remove();
+    $('#bbox_house_' + flat_id).remove();
     var count = parseInt($('#house_count').html()) - 1;
     $('#house_count').html(count.toString());
     
@@ -489,6 +489,27 @@ function changeCheck(element, group_class)
 {
     var element = element,
         input = element.find("input").eq(0);
+    
+    if ($(element).hasClass('radio')) {
+       
+        $(element).removeClass("checked");
+        input.attr("checked", false);
+
+        var radio_name = $(input).attr('name');
+        var elems = $('input[name=' + radio_name +']:checked');
+        if (elems.length) {
+            $(elems[0]).attr("checked", false).parent().removeClass('checked');
+        }
+
+        $(element).addClass("checked");
+        input.attr("checked", true);
+
+        $(input).change();
+
+        return;
+    }
+
+
     if (!input.attr("checked")) {
         $(element).addClass("checked");
         input.attr("checked", true)
@@ -497,9 +518,9 @@ function changeCheck(element, group_class)
         input.attr("checked", false)
     }
     
+
     if ($(element).hasClass(group_class)) {
         var elems = $('.'+ group_class +'.checked');
-        console.log(elems);
         if (elems.length) {
             $('.'+ group_class +'-rule').addClass('checked').find("input").attr("checked", true);
         } else {

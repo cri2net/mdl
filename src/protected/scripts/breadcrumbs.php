@@ -60,7 +60,7 @@
                                 : Flat::getAddressString($object['flat_id'], $object['city_id']);
                            
                             $breadcrumbs[] = array(
-                                'title' => htmlspecialchars($object_title),
+                                'title' => trim(htmlspecialchars($object_title)),
                                 'link' => '/cabinet/objects/'. $object['id'] .'/'
                             );
 
@@ -70,6 +70,7 @@
                                     'detailbill' => 'Історія нарахувань',
                                     'historybill' => 'Довідка про платежі',
                                     'edit' => 'Редагувати об\'єкт',
+                                    'paybill' => 'Спосіб сплати',
                                 );
                                 $breadcrumbs[] = array('title' => $sections[$__route_result['values']['section']]);
                             }

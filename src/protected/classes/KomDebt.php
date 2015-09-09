@@ -31,7 +31,7 @@ class KomDebt
 
         $dateData = $this->getDatePeriod($dateBegin);
         $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
-        return Http::httpGet($url);
+        return Http::fgets($url);
     }
     
     public function getDebtSum($obj_id, $dateBegin=null)

@@ -83,13 +83,13 @@ class Flat
 
     /**
      * Переименовывание объекта, чтобы вместо адреса было заданное пользователем название
-     * @param  string  $flat_hash_id — двойной md5 ID
-     * @param  string  $title. OPTIONAL
-     * @param  integer $user_id. OPTIONAL
+     * @param  string | integer  $flat_id — ID объекта
+     * @param  string            $title. OPTIONAL
+     * @param  integer           $user_id. OPTIONAL
      * 
      * @return void
      */
-    public static function renameUserFlat($flat_hash_id, $title, $user_id = null)
+    public static function renameUserFlat($flat_id, $title, $user_id = null)
     {
         if ($user_id == null) {
             $user_id = Authorization::getLoggedUserId();
@@ -101,7 +101,7 @@ class Flat
 
         $pdo = PDO_DB::getPDO();
         $stm = $pdo->prepare("UPDATE ". self::USER_FLATS_TABLE ." SET title=? WHERE MD5(MD5(id)) = ? AND user_id=? LIMIT 1");
-        $stm->execute(array($title, $flat_hash_id, $user_id));
+        $stm->execute(array($title, $flat_id, $user_id));
     }
     
     public static function getFlatById($object_id, $city_id = Street::KIEV_ID)
@@ -231,7 +231,7 @@ class Flat
         }
 
         $result = array();
-        $data = Http::httpGet(API_URL . self::FLAT_URL . $house_id);
+        $data = Http::fgets(API_URL . self::FLAT_URL . $house_id);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);
@@ -269,7 +269,7 @@ class Flat
         $stm->execute(array(Street::KIEV_ID));
 
         while ($row = $stm->fetch()) {
-            $data = Http::httpGet(API_URL . self::FLAT_URL . $row['house_id']);
+            $data = Http::fgets(API_URL . self::FLAT_URL . $row['house_id']);
             $data = iconv('CP1251', 'UTF-8', $data);
             $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
             $xml = @simplexml_load_string($data);

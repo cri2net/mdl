@@ -90,7 +90,7 @@
 										<a href="<?= BASE_URL; ?>/cabinet/settings/">Настройки профілю</a>
 									</div>
 									<div class="item faq with-border">
-										<a href="<?= BASE_URL; ?>/cabhelp/">Он-лайн довідка</a>
+										<a href="<?= BASE_URL; ?>/cabhelp/">Онлайн довідка</a>
 									</div>
 									<div class="item logout with-border">
 										<a href="<?= BASE_URL; ?>/post/cabinet/logout/">Вихiд</a>

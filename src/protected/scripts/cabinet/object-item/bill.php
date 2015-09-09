@@ -4,10 +4,10 @@
         return require_once(ROOT . '/protected/pages/cabinet/login.php');
     }
 
-    $flat_hash_id = $__route_result['values']['id'];
+    $flat_id = $__route_result['values']['id'];
     
     try {
-        $flatData = Flat::getUserFlatById($flat_hash_id);
+        $flatData = Flat::getUserFlatById($flat_id);
 
         if($flatData == null) {
             throw new Exception(ERROR_NOT_FIND_FLAT);
@@ -24,7 +24,6 @@
         
         // $debtData['date'] = '1 '.$monthsShort[$this_month].' '.$this_year;
         $_SESSION['debt_date'] = $debtData['date'];
-        $_SESSION['bill'] = 1;
         
         $debtMonth = date("n", strtotime($debtData['dbegin']));
 
@@ -48,7 +47,7 @@
         <span><?= $flatData['address']; ?></span><br>
         Загальна площа: <b><?= $debtData['PL_OB']; ?> м.кв.</b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м.кв.</b>, <b><?= $debtData['PEOPLE']; ?></b> проживаючих
     </p>
-    <form class="gerc-fees-form" action="<?= BASE_URL; ?>/paybill/" method="post">
+    <form class="gerc-fees-form" action="<?= BASE_URL; ?>/post/paybill/" method="post">
         <div>Рахунок на <?= $debtData['date']; ?></div><br>
         <table>
             <thead>
@@ -65,7 +64,7 @@
                     if (count($debtData['list']) > 0) {
                         foreach ($debtData['list'] as $key => $item) {
                             ?>
-                            <tr class="<?= (is_int($key/2)) ? '' : 'grey'; ?>">
+                            <tr class="<?= (is_int($key / 2)) ? '' : 'grey'; ?>">
                                 <?php
                                     if ($item['counter'] == 0) {
                                         ?>
@@ -166,7 +165,8 @@
         <div class="submit">
             <input type="hidden" name="dbegin" value="<?= $dateBegin; ?>">
             <input type="hidden" name="dend" value="<?= $dateEnd; ?>">
-            <input disabled class="submit-button" id="pay_button" type="submit" value="Сплатити"/>
+            <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
+            <input class="submit-button" id="pay_button" type="submit" value="Сплатити"/>
         </div>
     </form>
     <div class="clearr"></div>

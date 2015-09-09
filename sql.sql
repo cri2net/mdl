@@ -264,9 +264,15 @@ INSERT INTO `gioc_useful_links` (`id`, `link`, `title`, `target`, `is_active`, `
 (3, '#', 'Департамент житлово-комунальної інфраструктури', '_self', 1, 3),
 (4, '#', 'Департамент соціальної політики', '_self', 1, 4);
 
+
+
+-- 2015.09.09
+-- добавляем поля для связки платежа с объектом.
+-- Используем связку city_id + flat_id, чтоб данные об оплате сохранились даже если человек удалит объект из профиля, а потом добавит.
+ALTER TABLE `gioc_payment`
+  ADD COLUMN `city_id` INT(11) NULL  COMMENT 'for komdebt' AFTER `type`,
+  ADD COLUMN `flat_id` INT(11) NULL  COMMENT 'for komdebt' AFTER `city_id`, 
+  ADD INDEX (`user_id`, `type`, `city_id`, `flat_id`);
+
+
 -- IN ONLINE
-
-
-
-
-

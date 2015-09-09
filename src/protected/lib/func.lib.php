@@ -97,7 +97,7 @@
 			}
 		}
 		
-		return $result;
+		return trim($result, '-');
 	}
 
 	function getMenu($type)

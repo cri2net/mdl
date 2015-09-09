@@ -12,6 +12,13 @@
             // Правові документи / Інформація для споживача щодо неякісно наданих послуг
             '252' => 181, '159' => 182, '128' => 183, '157' => 184, '156' => 185, '127' => 186, '126' => 187, '125' => 188, '124' => 189, '123' => 190, '122' => 191,
             
+            '60'  => '/about/history/',
+            '40'  => '/law/priveleges/',
+            '134' => '/law/salary/',
+            '119' => '/foruser/terminals/',
+            '146' => '/foruser/terminals/',
+            '353' => '/law/tariff/',
+
             // Про ОСББ
             '250' => '/law/osbb/',
             '182' => '/law/osbb/',
@@ -119,7 +126,7 @@
             'main/banks'                => '/foruser/banks/',
             'main/terminals'            => '/foruser/terminals/',
             'main/compensation'         => '/law/compensation/',
-            'main/compensation'         => '/law/compensation/',
+            'main/law/tariff'           => '/law/compensation/',
         );
 
         if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {

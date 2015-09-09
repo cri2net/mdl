@@ -2,7 +2,7 @@
 	<?php require_once(ROOT . '/protected/scripts/slider.php'); ?>
 	<div class="features">
 		<div class="feature left">
-			<div class="title">Сплачуйте за послуги ЖКГ он-лайн</div>
+			<div class="title">Сплачуйте за послуги ЖКГ онлайн</div>
 			<ul>
 				<li class="visa">Зручним способом
 				<li class="cabinet">Контролюй сплати у особистому кабінеті

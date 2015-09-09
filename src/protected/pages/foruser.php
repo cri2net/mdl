@@ -49,7 +49,7 @@
 	</div>
 	<div class="block block--calculators">
 		<div class="subblock-left">
-			<h2>Он-лайн<br/>калькулятори</h2>
+			<h2>Онлайн<br/>калькулятори</h2>
 		</div>
 		<div class="subblock-right">
 			<div class="in">
