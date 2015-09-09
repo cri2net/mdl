@@ -15,7 +15,7 @@ class Http
         }
     }
 
-    public static function httpGet($url)
+    public static function httpGet($url, $checkStatus = true)
     {
         $ch = curl_init();
         $options = array(
@@ -27,7 +27,12 @@ class Http
 
         curl_setopt_array($ch, $options);
         $response = curl_exec($ch);
-        self::getStatus($ch, $response);
+
+        if ($checkStatus) {
+            self::getStatus($ch, $response);
+        } else {
+            curl_close($ch);
+        }
         
         return $response;
     }
@@ -74,4 +79,24 @@ class Http
             throw new Exception($errorMsg->record->msg);
         }
     }
+
+    public static function fgets($url, $method = 'GET', $data = array())
+    {
+        $data = http_build_query($data);
+
+        $context = stream_context_create(array('http'=>
+            array(
+                'method' => $method,
+                'header' => array(
+                    // "Content-type: application/x-www-form-urlencoded",
+                    "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0",
+                ),
+                'timeout' => 15,
+                'content' => $data
+            )
+        ));
+
+        return file_get_contents($url, false, $context);
+    }
+
 }

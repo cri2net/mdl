@@ -4,7 +4,7 @@ class Flat
 {
     const TABLE = DB_TBL_FLATS;
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
-    const FLAT_URL = '/reports/rwservlet?report=/home/oracle/reports/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
+    const FLAT_URL = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
 
     /**
      * Добавление квартиры/дома в профиль пользоваетеля

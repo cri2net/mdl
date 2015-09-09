@@ -3,7 +3,7 @@
 class House
 {   
     const TABLE = DB_TBL_HOUSES;
-    const HOUSE_URL = '/reports/rwservlet?report=/home/oracle/reports/site/dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
+    const HOUSE_URL = '/reports/rwservlet?report=/site/dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
     
     /**
      * Получение номера дома по его id и id города
@@ -47,7 +47,7 @@ class House
         $stm_insert = $pdo->prepare("INSERT INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, house_number=?");
         
         for ($i=0; $i < count($streets); $i++) {
-            $data = Http::httpGet(API_URL . self::HOUSE_URL . $streets[$i]['street_id']);
+            $data = Http::fgets(API_URL . self::HOUSE_URL . $streets[$i]['street_id']);
             $data = iconv('CP1251', 'UTF-8', $data);
             $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
             $xml = @simplexml_load_string($data);

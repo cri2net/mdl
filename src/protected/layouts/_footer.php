@@ -37,6 +37,7 @@
         </div>
     </footer>
 </div>
+<div id="back-top-wrapper"><span id="back-top"><a href="#top"></a></span></div>
 <script src="<?= BASE_URL; ?>/js/main.js?m=<?= (is_readable(ROOT . "/js/main.js")) ? filemtime(ROOT . "/js/main.js") : ''; ?>"></script>
 <script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
@@ -77,6 +78,25 @@
             overlay_gallery:false,
             social_tools: ''
         });
+
+        // fade in #back-top
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-top').fadeIn();
+            } else {
+                $('#back-top').fadeOut();
+            }
+        });
+
+        // scroll body to 0px on click
+        $('#back-top a').click(function () {
+            $('body,html').stop(false, false).animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+        
+        $(window).scroll();
     });
     $('a').each(function() {
         var a = new RegExp('/' + window.location.host + '/');

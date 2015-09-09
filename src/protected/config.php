@@ -26,7 +26,7 @@
         case '127.0.0.1':
             define('COOKIE_DOMAIN', '.gioc.dev');
             define('BASE_URL', 'http://gioc.dev');
-            define('HAVE_ACCESS_TO_API', false);
+            define('HAVE_ACCESS_TO_API', true);
             break;
         
         default:
@@ -39,17 +39,17 @@
                     break;
 
                 default:
-                    define('COOKIE_DOMAIN', '.splata.gioc.kiev.ua');
-                    define('BASE_URL', 'http://splata.gioc.kiev.ua');
+                    define('COOKIE_DOMAIN', 'kiev.gerc.ua');
+                    define('BASE_URL', 'http://kiev.gerc.ua');
                     define('HAVE_ACCESS_TO_API', true);
             }
     }
 
-    define('EMAIL_FROM', 'info@splata.gioc.kiev.ua');
+    define('EMAIL_FROM', 'info@gioc.kiev.ua');
     define('EMAIL_FROM_NAME', 'КП «ГіОЦ»');
     define('SITE_NAME', 'КП «ГіОЦ»'); // for rss, etc
     define('SITE_DESCRIPTION', 'Головний iнформацiйно-обчислювальний центр'); // for rss, etc
-    define('SITE_DOMAIN', 'splata.gioc.kiev.ua');
+    define('SITE_DOMAIN', 'gioc.kiev.ua');
     define('REMEMBER_COOKIE_NAME', '__giocudata');
 
     Authorization::check_login();
@@ -66,7 +66,6 @@
     require_once(ROOT . "/protected/headers/location.php");
     require_once(ROOT . "/protected/headers/x-frame-options.php");
     // require_once(ROOT."/protected/headers/content-security-policy.php");
-
 
 
     // $static_page_arr = array(

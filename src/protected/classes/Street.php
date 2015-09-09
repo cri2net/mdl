@@ -4,7 +4,7 @@ class Street
 {   
     const TABLE = DB_TBL_STREETS;
     const KIEV_ID = 100;
-    const STREET_URL = '/reports/rwservlet?report=/home/oracle/reports/site/dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
+    const STREET_URL = '/reports/rwservlet?report=/site/dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
     
     public static function getStreetName($street_id, $city_id = self::KIEV_ID)
     {
@@ -35,7 +35,7 @@ class Street
 
     public static function rebuild()
     {
-        $data = Http::httpGet(API_URL . self::STREET_URL);
+        $data = Http::fgets(API_URL . self::STREET_URL);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);

@@ -54,13 +54,6 @@
                 </route>
                 <route match="{section|str}" controller="page" action="cabinet" />
             </route>
-
-            
-            <!-- упраздняем это md5_hash, будет нормальный id. 
-            <route match="bill" controller="page" action="infocenter">
-                <route match="{md5_hash}" controller="page" action="bill">
-                </route>
-            </route> -->
         </route>
         
         <route match="ajax" controller="error" action="403">

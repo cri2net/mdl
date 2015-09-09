@@ -125,6 +125,30 @@ th p, td p { padding:0; font-size:12px; text-indent:0; }
     }
 }
 
+#back-top-wrapper {
+    width:100%;
+    position:absolute;
+    overflow:hidden;
+    
+    #back-top {
+        position: fixed;
+        bottom: 45px;
+        left:50%;
+        margin-left:570px;
+        display:none;
+        a {
+            display:block;
+            width:60px;
+            height:60px;
+            background:data-uri("@{images}/__to-top.gif") no-repeat 0 0 #d3d6ce;
+            border-radius:30px;
+            box-shadow:0 1px 1px rgba(255,255,255,.5), 0 1px 1px #c3c9b7 inset;
+            z-index:9999;
+            &:hover { background-color:#eee; }
+        }
+    }
+}
+
 .work-content {
     .line {
         font-size:12px; display:block; min-height:15px; padding-left:13px; background-position:left center; background-repeat:no-repeat;

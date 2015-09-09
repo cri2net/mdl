@@ -2,13 +2,13 @@
 
 class KomDebt
 {
-    const DEBTURL = '/reports/rwservlet?report=/home/oracle/reports/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-    const KOMPLATURL = '/reports/rwservlet?report=/home/oracle/reports/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+    const DEBTURL = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+    const KOMPLATURL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
     const ANSWERS_PATH = '/protected/conf/testing/';
     
     public  $testing = false;
 
-    private $months = array('1'=>'січня', '2'=>'лютого', '3'=>'березня', '4'=>'квiтня', '5'=>'травня', '6'=>'червеня', '7'=>'липня', '8'=>'серпеня', '9'=>'вересня', '10'=>'жовтня', '11'=>'листопада', '12'=>'грудня');
+    private $months = array('1'=>'січня', '2'=>'лютого', '3'=>'березня', '4'=>'квiтня', '5'=>'травня', '6'=>'червня', '7'=>'липня', '8'=>'серпня', '9'=>'вересня', '10'=>'жовтня', '11'=>'листопада', '12'=>'грудня');
     private $monthsFullName = array('01'=>'Січень', '02'=>'Лютий', '03'=>'Березень', '04'=>'Квітень', '05'=>'Травень', '06'=>'Червень', '07'=>'Липень', '08'=>'Серпень', '09'=>'Вересень', '10'=>'Жовтень', '11'=>'Листопад', '12'=>'Грудень');
     private $beginDate;
     private $endDate;

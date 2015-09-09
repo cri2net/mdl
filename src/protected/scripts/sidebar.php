@@ -1,7 +1,7 @@
 <form onsubmit="return searchSubmit();" id="main-search" method="get" action="<?= BASE_URL; ?>/search/" class="search">
 	<input type="text" placeholder="Пошук по сайту" value="" name="q" id="search">
 </form>
-<a class="payonline" href="<?= BASE_URL; ?>/infocenter/">
+<a class="payonline" href="<?= BASE_URL; ?>/cabinet/">
 	<img src="<?= BASE_URL; ?>/pic/sidebar/payonline.png" alt="">
 </a>
 <a class="personal-account" href="https://www.personal-account.kiev.ua/" target="_blank">
@@ -11,15 +11,15 @@
 	<div class="title">Нашi партнери</div>
 	<div class="item">
 		<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/1.png');"></span>
-		<a href="#">Сайт Київської міської державної адміністрації</a>
+		<a target="_blank" href="http://kievcity.gov.ua/">Сайт Київської міської державної адміністрації</a>
 	</div>
 	<div class="item">
 		<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/2.png');"></span>
-		<br><a href="#">«Картка киянина»</a>
+		<br><a target="_blank" href="http://info.kyivcard.com.ua/main/">«Картка киянина»</a>
 	</div>
 	<div class="item">
 		<span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/3.png');"></span>
-		<br><a href="#">«Ваш будинок»</a>
+		<br><a target="_blank" href="http://www.municipal.kiev.ua:8080/municipal/">«Ваш будинок»</a>
 	</div>
 </div>
 <?php
