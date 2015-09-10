@@ -81,16 +81,16 @@
 										<a href="<?= BASE_URL; ?>/cabinet/objects/">Об'єкти</a>
 									</div>
 									<div class="item bank">
-										<a href="#">Мої платежі</a>
+										<a href="<?= BASE_URL; ?>/cabinet/payments/">Мої платежі</a>
 									</div>
 									<div class="item flash">
-										<a href="#">Миттєві платежі</a>
+										<a href="<?= BASE_URL; ?>/cabinet/instant-payments/">Миттєві платежі</a>
 									</div>
 									<div class="item settings with-border">
 										<a href="<?= BASE_URL; ?>/cabinet/settings/">Настройки профілю</a>
 									</div>
 									<div class="item faq with-border">
-										<a href="<?= BASE_URL; ?>/cabhelp/">Онлайн довідка</a>
+										<a href="<?= BASE_URL; ?>/cabinet/help/">Онлайн довідка</a>
 									</div>
 									<div class="item logout with-border">
 										<a href="<?= BASE_URL; ?>/post/cabinet/logout/">Вихiд</a>

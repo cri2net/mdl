@@ -20,17 +20,17 @@
     <div class="page-tabs page-tabs-4">
         <?php
             $sections = [
-                'bill' => 'Рахунок до сплати',
-                'detailbill' => 'Історія нарахувань',
+                'bill'        => 'Рахунок до сплати',
+                'detailbill'  => 'Історія нарахувань',
                 'historybill' => 'Довідка про платежі',
-                'edit' => 'Редагувати об\'єкт',
+                'edit'        => 'Редагувати об\'єкт',
             ];
             
             $subsections = [
-                'bill' => ['paybill', 'checkout'],
-                'detailbill' => [],
+                'bill'        => ['paybill', 'checkout'],
+                'detailbill'  => [],
                 'historybill' => [],
-                'edit' => [],
+                'edit'        => [],
             ];
 
             $i = 0;

@@ -1,53 +1,53 @@
 <?php
-    $breadcrumbs = array(
-        array('title' => 'ГіОЦ', 'link' => '/')
-    );
+    $breadcrumbs = [
+        ['title' => 'ГіОЦ', 'link' => '/']
+    ];
 
     switch($__route_result['controller'] . "/" . $__route_result['action']) {
         case 'page/index':
-            $breadcrumbs[] = array('title' => 'Головна');
+            $breadcrumbs[] = ['title' => 'Головна'];
             break;
 
         case 'page/about':
-            $breadcrumbs[] = array('title' => 'Про ГіOЦ');
+            $breadcrumbs[] = ['title' => 'Про ГіOЦ'];
             break;
         case 'page/media':
-            $breadcrumbs[] = array('title' => 'Про ГіОЦ', 'link' => '/about/');
-            $breadcrumbs[] = array('title' => 'Медiа', 'link' => '/about/media/');
-            $breadcrumbs[] = array('title' => 'Відеоматеріали');
+            $breadcrumbs[] = ['title' => 'Про ГіОЦ', 'link' => '/about/'];
+            $breadcrumbs[] = ['title' => 'Медiа', 'link' => '/about/media/'];
+            $breadcrumbs[] = ['title' => 'Відеоматеріали'];
             break;
 
         case 'page/foruser':
-            $breadcrumbs[] = array('title' => 'Споживачу');
+            $breadcrumbs[] = ['title' => 'Споживачу'];
             break;
 
         case 'page/chief':
-            $breadcrumbs[] = array('title' => 'Керівництво');
+            $breadcrumbs[] = ['title' => 'Керівництво'];
             break;
 
         case 'page/calc-devices':
-            $breadcrumbs[] = array('title' => 'Розрахунок за показаннями квартирних приладів обліку');
+            $breadcrumbs[] = ['title' => 'Розрахунок за показаннями квартирних приладів обліку'];
             break;
         case 'page/calc-subsidies':
-            $breadcrumbs[] = array('title' => 'Орієнтовний онлайн розрахунок субсидій');
+            $breadcrumbs[] = ['title' => 'Орієнтовний онлайн розрахунок субсидій'];
             break;
 
 
         case 'page/cabinet':
-            $breadcrumbs[] = array('title' => 'Особистий кабiнет', 'link' => '/cabinet/');
+            $breadcrumbs[] = ['title' => 'Особистий кабiнет', 'link' => '/cabinet/'];
 
             switch ($__route_result['values']['subpage']) {
 
                 case 'registration':
-                    $breadcrumbs[] = array('title' => 'Реєстрація');
+                    $breadcrumbs[] = ['title' => 'Реєстрація'];
                     break;
 
                 case 'login':
-                    $breadcrumbs[] = array('title' => 'Вхід');
+                    $breadcrumbs[] = ['title' => 'Вхід'];
                     break;
 
                 case 'objects':
-                    $breadcrumbs[] = array('title' => 'Об\'єкти', 'link' => '/cabinet/objects/');
+                    $breadcrumbs[] = ['title' => 'Об\'єкти', 'link' => '/cabinet/objects/'];
 
                     if (Authorization::isLogin() && isset($__route_result['values']['id'])) {
 
@@ -59,34 +59,48 @@
                                 ? $object['title']
                                 : Flat::getAddressString($object['flat_id'], $object['city_id']);
                            
-                            $breadcrumbs[] = array(
+                            $breadcrumbs[] = [
                                 'title' => trim(htmlspecialchars($object_title)),
                                 'link' => '/cabinet/objects/'. $object['id'] .'/'
-                            );
+                            ];
 
                             if (isset($__route_result['values']['section'])) {
-                                $sections = array(
+                                $sections = [
                                     'bill'        => 'Рахунок до сплати',
                                     'detailbill'  => 'Історія нарахувань',
                                     'historybill' => 'Довідка про платежі',
                                     'edit'        => 'Редагувати об\'єкт',
                                     'paybill'     => 'Спосіб сплати',
                                     'checkout'    => 'Перенаправлення',
-                                );
-                                $breadcrumbs[] = array('title' => $sections[$__route_result['values']['section']]);
+                                ];
+                                $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                             }
                         }
                     }
                     break;
 
+                case 'payments':
+                    $breadcrumbs[] = ['title' => 'Мої платежі', 'link' => '/cabinet/payments/'];
+
+                    if (isset($__route_result['values']['section'])) {
+                        $sections = [
+                            'new'     => 'Новий платiж',
+                            'komdebt' => 'ЖКХ платежi',
+                            'instant' => 'Миттєві платежі',
+                            'history' => 'Iсторiя платежiв',
+                        ];
+                        $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
+                    }
+                    break;
+
                 case 'settings':
-                    $breadcrumbs[] = array('title' => 'Налаштування профілю', 'link' => '/cabinet/settings/');
-                    $sections = array(
+                    $breadcrumbs[] = ['title' => 'Налаштування профілю', 'link' => '/cabinet/settings/'];
+                    $sections = [
                         'info' => 'Персональні дані',
                         'notifications' => 'Налаштування повідомлень',
                         'rule' => 'Управління профілем',
-                    );
-                    $breadcrumbs[] = array('title' => $sections[$__route_result['values']['section']]);
+                    ];
+                    $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                     break;
             }
 
@@ -94,31 +108,31 @@
 
 
         case 'page/contacts':
-            $breadcrumbs[] = array('title' => 'Контакти');
+            $breadcrumbs[] = ['title' => 'Контакти'];
             break;
 
         case 'page/news':
-            $breadcrumbs[] = array('title' => 'Новини');
+            $breadcrumbs[] = ['title' => 'Новини'];
             break;
         case 'page/news-item':
-            $breadcrumbs[] = array('title' => 'Новини', 'link' => '/news/');
-            $breadcrumbs[] = array(
+            $breadcrumbs[] = ['title' => 'Новини', 'link' => '/news/'];
+            $breadcrumbs[] = [
                 'title' => date('d ', $__news_item['created_at'])
                            . $MONTHS[date('n', $__news_item['created_at'])]['ua']
                            . date(' Y', $__news_item['created_at'])
-            );
+            ];
             break;
 
         case 'static_page/index':
             $link = '/';
             for ($i=0; $i < count($__static_pages_array); $i++) {
                 $link .= $__static_pages_array[$i]['key'] . '/';
-                $breadcrumbs[] = array('title' => $__static_pages_array[$i]['breadcrumb'], 'link' => $link);
+                $breadcrumbs[] = ['title' => $__static_pages_array[$i]['breadcrumb'], 'link' => $link];
             }
             break;
 
         case 'error/404':
-            $breadcrumbs[] = array('title' => 'Помилка 404');
+            $breadcrumbs[] = ['title' => 'Помилка 404'];
             break;
     }
 ?>

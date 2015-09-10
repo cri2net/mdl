@@ -4,7 +4,7 @@
     
     if (preg_match('/^\/main\/document\/([1-9][0-9]{0,15})\//i', $_SERVER['REQUEST_URI'], $matches)) {
 
-        $static_page_arr = array(
+        $static_page_arr = [
          
             // это "Перелік розробок"
             '12' => 155, '23' => 156, '32' => 157, '33' => 158, '34' => 159, '35' => 160, '36' => 161, '37' => 162, '28' => 163, '27' => 164, '25' => 165, '30' => 166, '26' => 167, '29' => 168, '216' => 169, '19' => 170, '20' => 171, '21' => 172, '22' => 173, '10' => 174, '17' => 175, '18' => 176, '15' => 177, '14' => 178, '215' => 179, '214' => 180,
@@ -62,7 +62,7 @@
             '116' => '/law/kmda/',
             '130' => '/law/kmu/',
             '131' => '/law/kmu/',
-        );
+        ];
 
         if (isset($static_page_arr[$matches[1]])) {
             if (is_int($static_page_arr[$matches[1]])) {
@@ -100,6 +100,8 @@
                     $new_location = BASE_URL . '/cabinet/objects/';
                 } elseif (($__route_result['values']['subpage'] == 'settings') && !isset($__route_result['values']['section'])) {
                     $new_location = BASE_URL . '/cabinet/settings/info/';
+                } elseif (($__route_result['values']['subpage'] == 'payments') && !isset($__route_result['values']['section'])) {
+                    $new_location = BASE_URL . '/cabinet/payments/new/';
                 } elseif (
                     ($__route_result['values']['subpage'] == 'objects')
                     && isset($__route_result['values']['id'])
@@ -110,7 +112,7 @@
                 break;
         }
 
-        $uri_assoc_arr = array(
+        $uri_assoc_arr = [
             'main'                      => '/about/',
             'main/history'              => '/about/history/',
             'main/about/workschedule'   => '/contacts/#page-map-clock',
@@ -129,7 +131,7 @@
             'main/law/tariff'           => '/law/compensation/',
             'calcss'                    => '/calc-subsidies/',
             'calc'                      => '/calc-devices/',
-        );
+        ];
 
         if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {
             $new_location = BASE_URL . $uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')];

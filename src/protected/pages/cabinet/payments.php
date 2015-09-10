@@ -8,16 +8,17 @@
     $__userData = User::getUserById(Authorization::getLoggedUserId());
 ?>
 <div class="h1-line-cabinet">
-    <h1 class="big-title">Налаштування профілю</h1>
+    <h1 class="big-title">Мої платежі</h1>
     <div class="secure">особистий кабiнет</div>
 </div>
-<div class="cabinet-settings">
-    <div class="page-tabs">
+<div class="cabinet-settings cabinet-payments">
+    <div class="page-tabs page-tabs-4">
         <?php
             $sections = [
-                'info' => 'Персональні дані',
-                'notifications' => 'Налаштування повідомлень',
-                'rule' => 'Управління профілем',
+                'new'     => 'Новий платiж',
+                'komdebt' => 'ЖКХ платежi',
+                'instant' => 'Миттєві платежі',
+                'history' => 'Iсторiя платежiв',
             ];
             $i = 0;
             
@@ -31,7 +32,7 @@
                 if ($current) {
                     ?><div class="<?= $class; ?>"><?= $value; ?></div><?php
                 } else {
-                    ?><a class="<?= $class; ?>" href="<?= BASE_URL; ?>/cabinet/settings/<?= $key; ?>/"><?= $value; ?></a><?php
+                    ?><a class="<?= $class; ?>" href="<?= BASE_URL; ?>/cabinet/payments/<?= $key; ?>/"><?= $value; ?></a><?php
                 }
             }
         ?>
@@ -48,14 +49,10 @@
             ?><h2 class="big-success-message"><?= $_SESSION['cabinet-settings']['text']; ?></h2> <?php
             unset($_SESSION['cabinet-settings']);
         }
-    ?>
 
-    <form class="form-cabinet-settings form-cabinet-settings-<?= $current_section; ?>" method="post" action="<?= BASE_URL; ?>/post/cabinet/settings/<?= $current_section; ?>/">
-        <?php
-            $file = ROOT . "/protected/scripts/cabinet/settings/$current_section.php";
-            if (file_exists($file)) {
-                require_once($file);
-            }
-        ?>
-    </form>
+        $file = ROOT . "/protected/scripts/cabinet/payments/$current_section.php";
+        if (file_exists($file)) {
+            require_once($file);
+        }
+    ?>
 </div>
