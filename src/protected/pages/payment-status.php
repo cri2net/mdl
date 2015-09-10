@@ -22,35 +22,38 @@
         $error = $e->getMessage();
         $success = false;
     }
-
-
+?>
+<h1 class="big-title">Статус транзакції</h1> <br>
+<?php
     if ($success) {
         ?>
-        <div class="mini_info_block">
-            <h2 class="success-pay">Транзакція пройшла успішно.</h2>
+        <h2 class="big-success-message">Транзакція пройшла успішно.</h2>
+        <div class="main-page-text">
+            <?php
+                if ($_payment['type'] == 'komdebt') {
+                    ?><div>Дякуємо за сплату комунальних послуг!</div> <?php
+                }
+            ?>
+            <div>
+                На Вашу електронну скриньку також було надіслано лист з підтвердженням оплати.<br>
+                Повторно підтвердження платежу можна завантажити в особистому кабінеті
+            </div>
+            <div>
+                Гроші будуть зараховані постачальникам послуг на наступний банківський день. <br>
+                Якщо у Вас виникнуть які-небудь питання звертайтеся <a href="<?= BASE_URL; ?>/contacts/">в службу підтримки</a>.
+            </div>
         </div>
-        <p class="p-ch" style="margin-top:-10px; color:#101207; font-size:16px;">Дякуємо за сплату комунальних послуг!</p>
-        <p class="p-ch" style="font-size:16px;">
-            На Вашу електронну скриньку також було надіслано лист з підтвердженням оплати.<br>
-            Повторно підтвердження платежу можна завантажити в особистому кабінеті
-        </p>
-        <p class="p-ch" style="font-size:16px;">
-            Гроші будуть зараховані постачальникам послуг на наступний банківський день. <br>
-            Якщо у Вас виникнуть які-небудь питання звертайтеся <a href="<?= BASE_URL; ?>/contacts/">в службу підтримки</a>.
-        </p>
         <?php
     } else {
         ?>
-        <div class="mini_info_block">
-            <h2 class="error-pay">Помилка транзакції.</h2>
-        </div>
+        <h2 class="big-error-message">Помилка транзакції.</h2>
         <?php
             if ($error) {
-                ?><div id="error_center_red"><?= $error; ?></div> <?php
+                ?><div class="error-desription"><?= $error; ?></div> <?php
             }
         ?>
-        <p class="p-ch">
+        <div>
             Транзакція не була здійснена. Перевірте правильність введення даних або зверніться <a href="<?= BASE_URL; ?>/contacts/">в службу підтримки</a>.
-        </p>
+        </div>
         <?php
     }

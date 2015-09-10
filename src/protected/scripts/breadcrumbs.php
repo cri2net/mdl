@@ -114,6 +114,9 @@
         case 'page/news':
             $breadcrumbs[] = ['title' => 'Новини'];
             break;
+        case 'page/payment-status':
+            $breadcrumbs[] = ['title' => 'Статус транзакції'];
+            break;
         case 'page/news-item':
             $breadcrumbs[] = ['title' => 'Новини', 'link' => '/news/'];
             $breadcrumbs[] = [
