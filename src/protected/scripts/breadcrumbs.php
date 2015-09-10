@@ -29,7 +29,7 @@
             $breadcrumbs[] = array('title' => 'Розрахунок за показаннями квартирних приладів обліку');
             break;
         case 'page/calc-subsidies':
-            $breadcrumbs[] = array('title' => 'Орієнтовний On-line розрахунок субсидій');
+            $breadcrumbs[] = array('title' => 'Орієнтовний онлайн розрахунок субсидій');
             break;
 
 
@@ -66,11 +66,12 @@
 
                             if (isset($__route_result['values']['section'])) {
                                 $sections = array(
-                                    'bill' => 'Рахунок до сплати',
-                                    'detailbill' => 'Історія нарахувань',
+                                    'bill'        => 'Рахунок до сплати',
+                                    'detailbill'  => 'Історія нарахувань',
                                     'historybill' => 'Довідка про платежі',
-                                    'edit' => 'Редагувати об\'єкт',
-                                    'paybill' => 'Спосіб сплати',
+                                    'edit'        => 'Редагувати об\'єкт',
+                                    'paybill'     => 'Спосіб сплати',
+                                    'checkout'    => 'Перенаправлення',
                                 );
                                 $breadcrumbs[] = array('title' => $sections[$__route_result['values']['section']]);
                             }

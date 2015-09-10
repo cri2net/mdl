@@ -1,6 +1,6 @@
 <?php
     try {
-        $_SESSION['objects-auth'] = array();
+        $_SESSION['objects-auth'] = [];
 
         if (!isset($_POST['flat']) || !$_POST['flat']) {
             throw new Exception(ERROR_GET_FLAT);

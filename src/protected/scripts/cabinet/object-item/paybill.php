@@ -2,7 +2,7 @@
     
     // проверка, что мы пришли сюда после post запроса на оплату
     if (!isset($_SESSION['paybill-post-flag'])) {
-        $error = 'Ваш сеанс застарів, будь ласка, повторіть ваш запит';
+        $error = ERROR_OLD_REQUEST;
         unset($_SESSION['paybill']);
     } else {
         // Данные из сессии по этой странице не обнуляем.
@@ -10,11 +10,12 @@
         // Обнулим потом, на странице checkout
     }
 
+    $flat_id = $__route_result['values']['id'];
+
     $payment_id = $_SESSION['paybill']['payment_id'];
     $total_sum = $_SESSION['paybill']['total_sum'];
     $totalBillSum = $_SESSION['paybill']['totalBillSum'];
     $pay_systems = ShoppingCart::getActivePaySystems();
-
 
     $visaSum = ShoppingCart::getPercentSum($total_sum, 'visa');
     $mastercardSum = ShoppingCart::getPercentSum($total_sum, 'mastercard');
@@ -28,11 +29,8 @@
         return;
     }
 ?>
-
-
 <div class="form-subtitle subtitle-bg-green">Оберіть, будь ласка, спосіб сплати:</div>
-<form class="form-block full-width" action="<?= BASE_URL; ?>/post/checkout/" method="post">
-    
+<form class="form-block full-width" action="<?= BASE_URL; ?>/post/cabinet/object-item/checkout/" method="post">
     <div class="paysystems">
         <?php
             if (in_array('visa', $pay_systems)) {
@@ -118,10 +116,10 @@
             <button class="btn green bold">Продовжити</button>
         </div>
         <input type="hidden" name="cctype" id="cctype" value="<?= $pay_systems[0]; ?>">
+        <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
         <input type="hidden" value="1" name="checkout_submited">
     </div>
 </form>
-
 <script type="text/javascript">
     $(document).ready(function(){
         getShoppingCartTotal('<?= $total_sum; ?>', '<?= $visaSum; ?>', '1');

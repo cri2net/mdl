@@ -4,10 +4,10 @@
         $email = stripslashes($_POST['email']);
         $password = stripslashes($_POST['password']);
 
-        $_SESSION['login'] = array(
+        $_SESSION['login'] = [
             'email' => $email,
             'phone' => $phone,
-        );
+        ];
         
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $login = $email;

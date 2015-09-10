@@ -19,17 +19,26 @@
 <div class="cabinet-settings object-item object-item-<?= $current_section; ?>">
     <div class="page-tabs page-tabs-4">
         <?php
-            $sections = array(
+            $sections = [
                 'bill' => 'Рахунок до сплати',
                 'detailbill' => 'Історія нарахувань',
                 'historybill' => 'Довідка про платежі',
                 'edit' => 'Редагувати об\'єкт',
-            );
+            ];
+            
+            $subsections = [
+                'bill' => ['paybill', 'checkout'],
+                'detailbill' => [],
+                'historybill' => [],
+                'edit' => [],
+            ];
+
             $i = 0;
             
             foreach ($sections as $key => $value) {
                 $i++;
-                $current = ($current_section == $key);
+                $current = (
+                    ($current_section == $key) || in_array($current_section, $subsections[$key]));
                 $class = 'tab';
                 $class .= ($current) ? ' current' : '';
                 $class .= ($i == count($sections)) ? ' last' : '';

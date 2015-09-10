@@ -127,6 +127,8 @@
             'main/terminals'            => '/foruser/terminals/',
             'main/compensation'         => '/law/compensation/',
             'main/law/tariff'           => '/law/compensation/',
+            'calcss'                    => '/calc-subsidies/',
+            'calc'                      => '/calc-devices/',
         );
 
         if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {

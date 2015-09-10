@@ -1,6 +1,6 @@
 <?php
     try {
-        $_SESSION['cabinet-settings'] = array();
+        $_SESSION['cabinet-settings'] = [];
         $_POST['mob_phone'] = '+' . preg_replace('/[^0-9]/', '', $_POST['mob_phone']);
         $fields = array('name' => 'Ім\'я', 'fathername' => 'По-батьковi', 'lastname' => 'Прiзвище', 'email' => 'Електронна пошта', 'mob_phone' => 'Телефон');
         
@@ -10,7 +10,7 @@
             throw new Exception(ERROR_USER_NOT_LOGGED_IN);
         }
 
-        $update = array();
+        $update = [];
         // переганяем данные в сессию, чтобы можно было их подставить обратно на форму
         foreach ($fields as $key => $value) {
             $update[$key] = trim(stripslashes($_POST[$key]));

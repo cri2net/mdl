@@ -1,8 +1,8 @@
 <?php
     try {
-        $_SESSION['registration'] = array();
+        $_SESSION['registration'] = [];
         $_POST['phone'] = '+' . preg_replace('/[^0-9]/', '', $_POST['phone']);
-        $fields = array('name' => 'Ім\'я', 'fathername' => 'По-батьковi', 'lastname' => 'Прiзвище', 'email' => 'Електронна пошта', 'phone' => 'Телефон', 'password' => 'Пароль');
+        $fields = ['name' => 'Ім\'я', 'fathername' => 'По-батьковi', 'lastname' => 'Прiзвище', 'email' => 'Електронна пошта', 'phone' => 'Телефон', 'password' => 'Пароль'];
         
 
         // переганяем данные в сессию, чтобы можно было их подставить обратно на форму

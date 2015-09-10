@@ -252,11 +252,6 @@ function checkForInt(evt) {
     return (charCode < 32 || (charCode >= 48 && charCode <= 57))
 };
 
-function imeksPaymentNext() {
-    var cart_id=document.getElementById('O_ID').value;
-    ImeksPayment (cart_id);
-};
-
 function recount_counter_summ(key, old_value, tarif, counter_no) {
     var old_value = old_value.split(',').join('.');
     old_value = parseFloat(old_value);
@@ -552,3 +547,16 @@ function check_delete_profile()
 {
     return ($('#confirm_delete_profile input').is(':checked'));
 };
+
+function wait_ok_message_timeout(message, elem, counter, interval) {
+    var original_message = message;
+    counter++;
+    if (counter == 4) {
+        counter = 0;
+    }
+    for (var i = 0; i < counter; i++) {
+        message += '.';
+    }
+    $(elem).html(message);
+    setTimeout(function(){wait_ok_message_timeout(original_message, elem, counter, interval);}, interval);
+}

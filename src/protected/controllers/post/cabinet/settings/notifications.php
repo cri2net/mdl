@@ -1,13 +1,13 @@
 <?php
     try {
-        $_SESSION['cabinet-settings'] = array();
+        $_SESSION['cabinet-settings'] = [];
         $__userData = User::getUserById(Authorization::getLoggedUserId());
 
         if (!$__userData) {
             throw new Exception(ERROR_USER_NOT_LOGGED_IN);
         }
 
-        $update = array('notify_email' => (int)isset($_POST['notify_email']));
+        $update = ['notify_email' => (int)isset($_POST['notify_email'])];
         PDO_DB::update($update, User::TABLE, $__userData['id']);
 
         $houses = Flat::getUserFlats($__userData['id']);

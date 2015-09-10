@@ -1,6 +1,6 @@
 <?php
     try {
-        $_SESSION['cabinet-settings'] = array();
+        $_SESSION['cabinet-settings'] = [];
         $__userData = User::getUserById(Authorization::getLoggedUserId());
 
         if (!$__userData) {
@@ -26,10 +26,10 @@
             // при смене пароля заодно обновляем парольную фразу
             $password_key = generateCode();
 
-            $update = array(
+            $update = [
                 'password' => Authorization::generate_db_password($new_password, $password_key),
                 'password_key' => $password_key
-            );
+            ];
             PDO_DB::update($update, User::TABLE, $__userData['id']);
 
             // перезаменим данные в сессии, чтобы не было проблем в дальшейшем

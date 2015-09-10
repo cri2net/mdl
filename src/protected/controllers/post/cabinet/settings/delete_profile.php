@@ -1,6 +1,6 @@
 <?php
     try {
-        $_SESSION['cabinet-settings'] = array();
+        $_SESSION['cabinet-settings'] = [];
         $__userData = User::getUserById(Authorization::getLoggedUserId());
 
         if (!$__userData) {

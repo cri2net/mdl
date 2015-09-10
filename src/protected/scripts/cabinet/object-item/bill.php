@@ -47,7 +47,7 @@
         <span><?= $flatData['address']; ?></span><br>
         Загальна площа: <b><?= $debtData['PL_OB']; ?> м.кв.</b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м.кв.</b>, <b><?= $debtData['PEOPLE']; ?></b> проживаючих
     </p>
-    <form class="gerc-fees-form" action="<?= BASE_URL; ?>/post/paybill/" method="post">
+    <form class="gerc-fees-form" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
         <div>Рахунок на <?= $debtData['date']; ?></div><br>
         <table>
             <thead>

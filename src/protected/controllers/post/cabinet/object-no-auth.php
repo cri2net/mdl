@@ -1,6 +1,6 @@
 <?php
     try {
-        $_SESSION['objects'] = array();
+        $_SESSION['objects'] = [];
 
         // country - проверочное поле, оно должно быть пустым
         if ($_POST['country']) {
