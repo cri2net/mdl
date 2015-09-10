@@ -52,7 +52,7 @@
                 <route match="{id|num}" controller="page" action="cabinet">
                     <route match="{section|str}" controller="page" action="cabinet" />
                 </route>
-                <route match="{section|str}" controller="page" action="cabinet" />
+                <route match="{section}" controller="page" action="cabinet" />
             </route>
         </route>
         

@@ -3,11 +3,7 @@
     <a href="<?= BASE_URL; ?>/cabinet/login/" class="already-have">У мене вже є аккаунт</a>
 </div>
 <?php
-    if (isset($_SESSION['registration']['status']) && $_SESSION['registration']['status']) {
-        ?><h2 class="big-success-message">Реєстрація успішно виконана</h2> <?php
-        unset($_SESSION['registration']);
-        return;
-    } elseif (isset($_SESSION['registration']['status'])) {
+    if (isset($_SESSION['registration']['status'])) {
         ?>
         <h2 class="big-error-message">Під час реєстрації виникла помилка:</h2>
         <div class="error-desription"><?= $_SESSION['registration']['error']['text']; ?></div>

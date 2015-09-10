@@ -60,8 +60,9 @@
             unset($_SESSION['after_register']['add_object']);
         }
 
+        // это успех, господа!
+        return BASE_URL . '/cabinet/objects/';
 
-        $_SESSION['registration']['status'] = true;
     } catch (Exception $e) {
         $_SESSION['registration']['status'] = false;
         $_SESSION['registration']['error']['text'] = $e->getMessage();
