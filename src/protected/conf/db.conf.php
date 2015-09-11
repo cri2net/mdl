@@ -22,9 +22,11 @@
                 define('DB_HOST', 'localhost');
                 define('DB_NAME', 'gioc_site');
                 define('DB_USER', 'root');
-                define('DB_PASSWORD', 'kykyev');
+                define('DB_PASSWORD', 'root');
+                // define('DB_PASSWORD', 'kykyev');
                 
-                define('API_URL', 'http://10.12.2.201:8888');
+                // define('API_URL', 'http://10.12.2.201:8888');
+                define('API_URL', 'https://bank.gioc.kiev.ua');
             }
     }
     
