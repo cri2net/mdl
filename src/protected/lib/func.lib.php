@@ -123,71 +123,71 @@
 
     function insertPagination($pagesCount, $currentPage, $url_for_paging, $item_on_page = 50)
     {
-        if ($pagesCount > 0) {
-            $pages = array();
+        if ($pagesCount == 0) {
+            return;
+        }
+        $pages = array();
 
-            if ($pagesCount > 20) {
-                if ($currentPage > 6) {
-                    $pages = array(0, 1, 2, 3, 'points');
-                    $start_page = ($pagesCount - $currentPage > 7)?$currentPage-3:$pagesCount-11;
-                    
-                    for ($i=$start_page; $i<$start_page+10; $i++) {
-                        $pages[] = $i;
-                    }
-                    
-                    $last_page = $pages[count($pages)-1];
-                    
-                    if ($last_page < $pagesCount-5) {
-                        $pages[] = 'points';
-                    }
-                    
-                    for ($i=$pagesCount-4; $i<$pagesCount; $i++) {
-                        if ($i > $last_page) {
-                            $pages[] = $i;
-                        }
-                    }
-                } else {
-                    for ($i=0; $i<$currentPage+8; $i++) {
-                        $pages[] = $i;
-                    }
-                    
+        if ($pagesCount > 20) {
+            if ($currentPage > 6) {
+                $pages = array(0, 1, 2, 3, 'points');
+                $start_page = ($pagesCount - $currentPage > 7)?$currentPage-3:$pagesCount-11;
+                
+                for ($i=$start_page; $i<$start_page+10; $i++) {
+                    $pages[] = $i;
+                }
+                
+                $last_page = $pages[count($pages)-1];
+                
+                if ($last_page < $pagesCount-5) {
                     $pages[] = 'points';
-                    
-                    for ($i=$pagesCount-4; $i<$pagesCount; $i++) {
+                }
+                
+                for ($i=$pagesCount-4; $i<$pagesCount; $i++) {
+                    if ($i > $last_page) {
                         $pages[] = $i;
                     }
                 }
             } else {
-                for ($i=0; $i<$pagesCount; $i++) {
+                for ($i=0; $i<$currentPage+8; $i++) {
+                    $pages[] = $i;
+                }
+                
+                $pages[] = 'points';
+                
+                for ($i=$pagesCount-4; $i<$pagesCount; $i++) {
                     $pages[] = $i;
                 }
             }
-            $have_prev = ($currentPage > 0);
-            $have_next = ($currentPage < $pagesCount - 1);
-            
-            if ($pagesCount > 1) {
-                ?>
-                <a class="first <?= $have_prev ? '' : 'disabled'; ?>" <?= $have_prev ? "href=\"$url_for_paging\"" : ''; ?>></a>
-                <a class="prev  <?= $have_prev ? '' : 'disabled'; ?>" <?= $have_prev ? 'href="'.($url_for_paging . ($currentPage)).'/"' : ''; ?>></a>
-                <?php
-                    for ($i=0; $i<count($pages); $i++) {
-                        if (($pages[$i] !== 'points') && ($currentPage == $pages[$i])) {
-                            ?> <a class="current"><?= $pages[$i] + 1; ?></a><?php
+        } else {
+            for ($i=0; $i<$pagesCount; $i++) {
+                $pages[] = $i;
+            }
+        }
+        $have_prev = ($currentPage > 0);
+        $have_next = ($currentPage < $pagesCount - 1);
+        
+        if ($pagesCount > 1) {
+            ?>
+            <a class="first <?= $have_prev ? '' : 'disabled'; ?>" <?= $have_prev ? "href=\"$url_for_paging\"" : ''; ?>></a>
+            <a class="prev  <?= $have_prev ? '' : 'disabled'; ?>" <?= $have_prev ? 'href="'.($url_for_paging . ($currentPage)).'/"' : ''; ?>></a>
+            <?php
+                for ($i=0; $i<count($pages); $i++) {
+                    if (($pages[$i] !== 'points') && ($currentPage == $pages[$i])) {
+                        ?> <a class="current"><?= $pages[$i] + 1; ?></a><?php
+                    } else {
+                        if ($pages[$i] === 0) {
+                            ?> <a href="<?= $url_for_paging; ?>">1</a><?php
+                        } elseif ($pages[$i] !== 'points') {
+                            ?> <a href="<?= $url_for_paging . ($pages[$i] + 1); ?>/"><?= $pages[$i]+1; ?></a><?php
                         } else {
-                            if ($pages[$i] === 0) {
-                                ?> <a href="<?= $url_for_paging; ?>">1</a><?php
-                            } elseif ($pages[$i] !== 'points') {
-                                ?> <a href="<?= $url_for_paging . ($pages[$i] + 1); ?>/"><?= $pages[$i]+1; ?></a><?php
-                            } else {
-                                ?> <a class="points" onclick="return false;">...</a> <?php
-                            }
+                            ?> <a class="points" onclick="return false;">...</a> <?php
                         }
                     }
-                ?>
-                <a class="next <?= $have_next ? '' : 'disabled'; ?>" <?= $have_next ? "href=\"$url_for_paging" . ($currentPage + 2) . '/"' : ''; ?>></a>
-                <a class="last <?= $have_next ? '' : 'disabled'; ?>" <?= $have_next ? 'href="'.$url_for_paging . $pagesCount . '/"' : ''; ?>></a>
-                <?php
-            }
-
+                }
+            ?>
+            <a class="next <?= $have_next ? '' : 'disabled'; ?>" <?= $have_next ? "href=\"$url_for_paging" . ($currentPage + 2) . '/"' : ''; ?>></a>
+            <a class="last <?= $have_next ? '' : 'disabled'; ?>" <?= $have_next ? 'href="'.$url_for_paging . $pagesCount . '/"' : ''; ?>></a>
+            <?php
         }
     }
