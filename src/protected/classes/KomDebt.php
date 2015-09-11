@@ -95,7 +95,28 @@ class KomDebt
             $month = date("n", strtotime($dateBegin));
             $year = date("Y", strtotime($dateBegin));
             $month2 = date("m", strtotime($dateBegin));
-            $this->endDate = $endDate = cal_days_in_month(CAL_GREGORIAN, $month, $year).".".$month2.".".$year;
+           
+            if (function_exists('cal_days_in_month')) {
+                $this->endDate = $endDate = cal_days_in_month(CAL_GREGORIAN, $month, $year) . "." . $month2 . "." . $year;
+            } else {
+                switch ((int)$month2) {
+                    case 4:
+                    case 6:
+                    case 9:
+                    case 10:
+                        $days_count = "30";
+                        break;
+
+                    case 2:
+                        $days_count = ($year % 4 == 0) ? '29' : '28';
+                        break;
+                    
+                    default:
+                        $days_count = "31";
+                }
+
+                $this->endDate = $endDate = $days_count . "." . $month2 . "." . $year;
+            }
         }
         
         return array('begin'=>$beginDate, 'end'=>$endDate);

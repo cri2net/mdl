@@ -37,6 +37,10 @@
             <route match="{subpage}" controller="page" action="komdebt" />
             <route match="{subpage}-{payment_id|num}" controller="page" action="komdebt" />
         </route>
+        <route match="static" controller="error" action="404">
+            <route match="{path}" controller="static" action="">
+            </route>
+        </route>
 
         <route match="feed" controller="rss" action="rss" />
         <route match="checkout" controller="page" action="checkout" />
