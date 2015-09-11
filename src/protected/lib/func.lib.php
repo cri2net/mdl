@@ -162,34 +162,30 @@
                     $pages[] = $i;
                 }
             }
+            $have_prev = ($currentPage > 0);
+            $have_next = ($currentPage < $pagesCount - 1);
             
             if ($pagesCount > 1) {
                 ?>
-                <ul class="pagination">
-                    <li class="<?= ($currentPage == 0) ? 'disabled':''; ?>"><a <?= ($currentPage == 0) ? '' : 'href="'.($url_for_paging . ($currentPage - 1) * $item_on_page).'/"'; ?>>«</a></li>
-                    <?php
-                        
-                        for ($i=0; $i<count($pages); $i++) {
-
-                            if (($pages[$i] !== 'points') && ($currentPage == $pages[$i])) {
-                                ?> <li class="active"><a><?= $pages[$i] + 1; ?></a></li><?php
-                            } elseif (!isset($_q)) {
-                                if ($pages[$i] === 0) {
-                                    ?> <li><a href="<?= $url_for_paging; ?>">1</a></li><?php
-                                } elseif ($pages[$i] !== 'points') {
-                                    ?> <li><a href="<?= $url_for_paging . $pages[$i] * $item_on_page; ?>/"><?= $pages[$i]+1; ?></a><?php
-                                } else {
-                                    ?> <li><a class="points">...</a> <?php
-                                }
+                <a class="first <?= $have_prev ? '' : 'disabled'; ?>" <?= $have_prev ? "href=\"$url_for_paging\"" : ''; ?>></a>
+                <a class="prev  <?= $have_prev ? '' : 'disabled'; ?>" <?= $have_prev ? 'href="'.($url_for_paging . ($currentPage)).'/"' : ''; ?>></a>
+                <?php
+                    for ($i=0; $i<count($pages); $i++) {
+                        if (($pages[$i] !== 'points') && ($currentPage == $pages[$i])) {
+                            ?> <a class="current"><?= $pages[$i] + 1; ?></a><?php
+                        } else {
+                            if ($pages[$i] === 0) {
+                                ?> <a href="<?= $url_for_paging; ?>">1</a><?php
                             } elseif ($pages[$i] !== 'points') {
-                                ?> <li><a href="<?= $url_for_paging . $pages[$i] * $item_on_page; ?>/"><?= $pages[$i]+1; ?></a></li><?php
+                                ?> <a href="<?= $url_for_paging . ($pages[$i] + 1); ?>/"><?= $pages[$i]+1; ?></a><?php
                             } else {
-                                ?> <li><a class="points">...</a></li>  <?php
+                                ?> <a class="points" onclick="return false;">...</a> <?php
                             }
                         }
-                    ?>
-                    <li class="<?= ($currentPage == $pagesCount - 1) ? 'disabled':''; ?>"><a <?= ($currentPage == $pagesCount - 1) ? '' : 'href='.($url_for_paging . ($currentPage + 1) * $item_on_page).'/"'; ?>>»</a></li>
-                </ul>
+                    }
+                ?>
+                <a class="next <?= $have_next ? '' : 'disabled'; ?>" <?= $have_next ? "href=\"$url_for_paging" . ($currentPage + 2) . '/"' : ''; ?>></a>
+                <a class="last <?= $have_next ? '' : 'disabled'; ?>" <?= $have_next ? 'href="'.$url_for_paging . $pagesCount . '/"' : ''; ?>></a>
                 <?php
             }
 

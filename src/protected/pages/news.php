@@ -95,48 +95,18 @@
         </div>
         <div class="clear"></div>
         <?php
-
-        $currentPage--;
-
-        if ($pagesCount > 1) {
-            ?>
-            <div class="align-center">
-                <div class="btn-more">
-                    <div class="btn green bold"><div class="icon-reload"></div>Показати ще</div>
+            if ($pagesCount > 1) {
+                ?>
+                <div class="align-center">
+                    <div class="btn-more">
+                        <div class="btn green bold"><div class="icon-reload"></div>Показати ще</div>
+                    </div>
+                    <div class="ruler">
+                        <?php
+                            insertPagination($pagesCount, $currentPage - 1, $url_for_paging, $items_on_page);
+                        ?>
+                    </div>
                 </div>
-                <div class="ruler">
-                    <a href="<?= $url_for_paging; ?>" class="first"></a>
-                    <?php
-                        $url_for_prev_page = ($currentPage == 0)
-                            ? '#" onclick="return false;"'
-                            : $url_for_paging . ($currentPage - 1) . '/';
-
-                        if ($currentPage - 1 == 0) {
-                            $url_for_prev_page = $url_for_paging;
-                        }
-
-                        $url_for_next_page = ($currentPage == $pagesCount - 1)
-                            ? '#" onclick="return false;"'
-                            : $url_for_paging . ($currentPage + 1) . '/';
-                    ?>
-                    <a href="<?= $url_for_prev_page; ?>" class="prev"></a>
-                    <?php
-                        for ($i=0; $i<count($pages); $i++) {
-                            if (($pages[$i] !== 'points') && ($currentPage == $pages[$i])) {
-                                ?><a class="current" href="<?= $url_for_prev_page; ?>"><?= $pages[$i] + 1; ?></a><?php
-                            } elseif ($pages[$i] === 0) {
-                                ?><a href="<?= $url_for_paging; ?>">1</a><?php
-                            } elseif ($pages[$i] !== 'points') {
-                                ?><a href="<?= $url_for_paging; ?><?= $pages[$i] + 1; ?>/"><?= $pages[$i] + 1; ?></a><?php
-                            } else {
-                                ?><a onclick="return false;" href="#">...</a><?php
-                            }
-                        }
-                    ?>
-                    <a href="<?= $url_for_next_page; ?>" class="next"></a>
-                    <a href="<?= $url_for_paging; ?><?= $pagesCount; ?>/" class="last"></a>
-                </div>
-            </div>
-            <?php
-        }
+                <?php
+            }
     }
