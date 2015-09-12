@@ -283,5 +283,47 @@ content .inner {
                 }
             }
         }
+
+        .filters-form {
+            .dotted-select-box {
+                padding:3px 14px 3px 3px;
+                display: inline-block;
+                background-image:data-uri("@{images}/pages/cabinet/objects/__appearance.png");
+                background-repeat: no-repeat;
+                background-position: right 18px;
+                margin-right:20px;
+                position: relative;
+                &.with-icon { margin-left:41px; }
+
+                .icon {
+                    display: block;
+                    .size(27);
+                    position:absolute;
+                    left:-39px; top:6px;
+                    &.calendar { background-image:data-uri("@{images}/pages/cabinet/objects/__calendar-blue.png"); }
+                    &.services { background-image:data-uri("@{images}/pages/cabinet/objects/__services.png"); }
+                }
+
+                select.dotted-select {
+                    padding-right:0;
+                    display: inline-block;
+                    .box-shadow(none);
+                    border:0 none;
+                    border-bottom:1px dotted #00979c;
+                    color:#00979c;
+                    font-size:16px;
+                    font-weight:bold;
+                    .appearance(none);
+                    option {
+                        padding:3px 5px;
+                        border-right: 1px solid #222;
+                        font-weight: normal;
+                    }
+                }
+            }
+            .btn {
+                width:187px; padding-left:0; padding-right:0; position: relative; top:-2px;
+            }
+        }
     }
 }

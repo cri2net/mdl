@@ -26,7 +26,7 @@
         case '127.0.0.1':
             define('COOKIE_DOMAIN', '.gioc.dev');
             define('BASE_URL', 'http://gioc.dev');
-            define('HAVE_ACCESS_TO_API', true);
+            define('HAVE_ACCESS_TO_API', false);
             break;
         
         default:

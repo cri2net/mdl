@@ -45,6 +45,7 @@
 <script src="<?= BASE_URL; ?>/static/jquery.maskedinput-1.4.1.js"></script>
 <script src="<?= BASE_URL; ?>/static/jquery.prettyPhoto.js"></script>
 <script src="<?= BASE_URL; ?>/static/orphus.js" defer></script>
+<script src="<?= BASE_URL; ?>/static/jquery.easydropdown.min.js"></script>
 <script>
     var BASE_URL = '<?= BASE_URL ?>';
 </script>

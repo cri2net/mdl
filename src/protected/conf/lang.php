@@ -1,4 +1,19 @@
 <?php
+    $MONTHS_NAME = array(
+         1 => array('ua' => 'січень'),
+         2 => array('ua' => 'лютий'),
+         3 => array('ua' => 'березень'),
+         4 => array('ua' => 'квiтень'),
+         5 => array('ua' => 'травень'),
+         6 => array('ua' => 'червень'),
+         7 => array('ua' => 'липень'),
+         8 => array('ua' => 'серпень'),
+         9 => array('ua' => 'вересень'),
+        10 => array('ua' => 'жовтень'),
+        11 => array('ua' => 'листопад'),
+        12 => array('ua' => 'грудень'),
+    );
+
     $MONTHS = array(
          1 => array('ru' => 'января',   'en' => 'January',   'ua' => 'січня'),
          2 => array('ru' => 'февраля',  'en' => 'February',  'ua' => 'лютого'),

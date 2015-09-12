@@ -1,7 +1,6 @@
 <?php require_once(ROOT . '/protected/scripts/slider.php'); ?>
 <h1 class="big-title green">Новини</h1>
 <?php
-    
     $items_on_page = 10;
 
     if (isset($__route_result['values']['page'])) {
@@ -16,44 +15,6 @@
     $from = ($currentPage * $items_on_page) - $items_on_page;
     $currentPage = min($currentPage, $pagesCount);
     $url_for_paging = BASE_URL . '/news/';
-
-    $pages = array();
-    
-    if ($pagesCount > 10) {
-        if ($currentPage > 4) {
-            $pages = array(0, 1, 'points');
-            $start_page = ($pagesCount - $currentPage >= 3)?$currentPage-1:$pagesCount-5;
-            
-            for ($i = $start_page; $i < $start_page + 3; $i++) {
-                $pages[] = $i;
-            }
-            
-            $last_page = $pages[count($pages) - 1];
-            
-            if ($last_page < $pagesCount - 3) {
-                $pages[] = 'points';
-            }
-            
-            for ($i=$pagesCount-2; $i<$pagesCount; $i++) {
-                if ($i > $last_page) {
-                    $pages[] = $i;
-                }
-            }
-        } else {
-            for ($i = 0; $i < $currentPage + 2; $i++) {
-                $pages[] = $i;
-            }
-            $pages[] = 'points';
-            for($i = $pagesCount - 2; $i < $pagesCount; $i++) {
-                $pages[] = $i;
-            }
-        }
-    } else {
-        for ($i=0; $i<$pagesCount; $i++) {
-            $pages[] = $i;
-        }
-    }
-
 
     $news = PDO_DB::table_list(News::TABLE, "`is_actual`=1", "created_at DESC", "$from, $items_on_page");
 

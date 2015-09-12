@@ -26,7 +26,7 @@
 		$news = PDO_DB::table_list(News::TABLE, "is_actual=1", "created_at DESC", "2");
 		if (count($news) > 0) {
 			?>
-			<h2 class="big-subtitle">Останнi новини</h1>
+			<h2 class="big-subtitle">Останнi новини</h2>
 			<div class="news-list">
 				<?php
 					for ($i=0; $i < count($news); $i++) {
@@ -74,7 +74,7 @@
 
 		if (count($pages) > 0) {
 			?>
-			<h2 class="big-subtitle green">Останнi матерiали</h1>
+			<h2 class="big-subtitle green">Останнi матерiали</h2>
 			<div class="news-list">
 				<?php
 					for ($i=0; $i < count($pages); $i++) {
