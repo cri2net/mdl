@@ -4,14 +4,15 @@ var _5="<!!!>";
 var _6 = 60;
 var max_length = 1024;
 var interface_messages={
-	alt:        "Якщо Ви побачили граматичну або синтаксичну помилку, будь ласка, виділіть її мишкою та натисніть Ctrl + Enter",
-	badbrowser: "Ваш браузер не підтримує можливість перехоплення виділеного тексту.",
-	toobig:     "Виділений фрагмент занадто великий.",
-	docmsg:     "Документ:",
-	intextmsg:  "Орфографічна помилка в тексті:",
-	send:       "Відправити",
-	cancel:     "Скасувати",
-	entercmnt:  "Коментар для автора (необов'язково):"
+	alt:             "Якщо Ви побачили граматичну або синтаксичну помилку, будь ласка, виділіть її мишкою та натисніть Ctrl + Enter",
+	badbrowser:      "Ваш браузер не підтримує можливість перехоплення виділеного тексту.",
+	toobig:          "Виділений фрагмент занадто великий.",
+	docmsg:          "Документ:",
+	intextmsg:       "Орфографічна помилка в тексті:",
+	send:            "Відправити",
+	cancel:          "Скасувати",
+	entercmnt:       "Коментар для автора (необов'язково):",
+	after_send_html: 'Дякуємо за уважність!'
 };
 var _a = 0;
 var _f = null;
@@ -122,16 +123,19 @@ _10.css = function (_36, _37) {
 	                   + "<div style=\"padding: 0 0 1em 1em\">" + _36.replace(_4, "<u style=\"color:red\">").replace(_5, "</u>") + "</div>"
 	                   + "<div style=\"padding: 0 0 1em 0\"></div>"
 	                   + "<form>"
-	                       + "<div>" + interface_messages.entercmnt + "</div>"
-	                       + "<input type=\"text\" style=\"width:"+ (w - 40) +"px;\" class=\"txt\" />"
-	                       + "<div>"
-		                       + "<div style=\"width:50%; float:right;\" class=\"align-right\">"
-			                       + "<input type=\"submit\" value=\"" + interface_messages.send + "\" style=\"width:9em;\" class=\"btn green small bold\">"
-			                   + "</div>"
-		                       + "<div style=\"width:50%;\">"
-			                       + "<input type=\"button\" value=\"" + interface_messages.cancel + "\" style=\"width:9em\" class=\"btn small bold\">"
+		                  + "<div id=\"before_send_html\">"
+		                       + "<div>" + interface_messages.entercmnt + "</div>"
+		                       + "<input type=\"text\" style=\"width:"+ (w - 40) +"px;\" class=\"txt\" />"
+		                       + "<div>"
+			                       + "<div style=\"width:50%; float:right;\" class=\"align-right\">"
+				                       + "<input type=\"submit\" onclick=\"$('#before_send_html').remove(); $('#after_send_html').css('display', 'block');\" value=\"" + interface_messages.send + "\" style=\"width:9em;\" class=\"btn green small bold\">"
+				                   + "</div>"
+			                       + "<div style=\"width:50%;\">"
+				                       + "<input type=\"button\" value=\"" + interface_messages.cancel + "\" style=\"width:9em\" class=\"btn small bold\">"
+				                   + "</div>"
 			                   + "</div>"
 		                   + "</div>"
+		                   + '<div id="after_send_html" style="display:none; color:#01b671; font-weight:bold; font-size:16px;"><div>' + interface_messages.after_send_html + '</div><div><div style="width:100%; padding-top:58px; display:inline-block;" class="align-right"><input type="submit" value="Закрити" style="width:9em;" class="btn green small bold" onclick="$(\'.error-iframe\').parent().remove(); return false;" /></div><div></div>'
 		               + "</form>"
 		           + "</div>";
 	_1b(div);

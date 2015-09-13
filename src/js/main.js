@@ -2,9 +2,40 @@ function is_int(input) {
     return typeof(input)=='number'&&parseInt(input)==input;
 };
 
+function htmlspecialchars (string, reverse) {
+    var specialChars = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }, x;
+
+    if (typeof(reverse) != "undefined") {
+        reverse = [];
+        for (x in specialChars) {
+            reverse.push(x);
+        }
+        reverse.reverse();
+
+        for (x = 0; x < reverse.length; x++) {
+            string = string.replace(new RegExp(specialChars[reverse[x]], "g"), reverse[x]);
+        }
+
+        return string;
+    }
+    
+    for (x in specialChars) {
+        string = string.replace(new RegExp(x, "g"), specialChars[x]);
+    }
+
+    return string;
+};
+
 function removeSpaces(string) {
-    if((string === undefined) || (string.length == 0))
+    if((string === undefined) || (string.length == 0)) {
         return '';
+    }
     return string.replace(/ +/g, "").replace(/ +/g, "");
 };
 
@@ -15,11 +46,13 @@ function toFloat(val) {
 var add_ok_message_seconds = 0;
 function add_ok_message_timeout() {
     add_ok_message_seconds++;
-    if(add_ok_message_seconds == 4)
+    if (add_ok_message_seconds == 4) {
         add_ok_message_seconds = 0;
+    }
     var message = 'Идёт добавление объекта';
-    for (var i = 0; i < add_ok_message_seconds; i++)
+    for (var i = 0; i < add_ok_message_seconds; i++) {
         message += '.';
+    }
     $('#add_ok_message_h4').html(message);
     setTimeout(function(){add_ok_message_timeout();}, 600);
 };
@@ -38,14 +71,11 @@ function addNewHouse() {
         type: 'POST',
         url : '/ajax/json/_engine',
         success : function(res, textStatus){
-            if (res.success == true)
-            {
+            if (res.success == true) {
                 $('#overlay_dom_new .bgr').append('<div class="add_ok_message"><h4 id="add_ok_message_h4">Идёт добавление объекта</h4></div>');
                 setTimeout(function(){add_ok_message_timeout();}, 600);
                 top.location.href = top.location.href;
-            }
-            else if (res.success == false)
-            {
+            } else if (res.success == false) {
                 $('#add_house_button').removeAttr('disabled');
                 $('#error_house').removeAttr('style');
                 $('#error_msg').html(res.record.msg);
@@ -79,12 +109,13 @@ function recalc2() {
     var total = 0;
     $('input:text').each(function(i){
         var name = $(this).attr('name');
-        if(!$(this).attr('disabled') && name.indexOf('sum') != -1){
-            if ($(this).val() == '')
+        if (!$(this).attr('disabled') && name.indexOf('sum') != -1) {
+            if ($(this).val() == '') {
                 $(this).val('0,00');
+            }
             var val = $(this).val().replace(',', '.');
             
-            if(isNaN(val)){
+            if (isNaN(val)){
                 $(this).val('0,00');
                 val = '0.00';
             }
@@ -93,14 +124,16 @@ function recalc2() {
         }
     });
     total = toFloat(total);
-    if (is_int(total))
+    if (is_int(total)) {
         total = total+',00';
+    }
     var str = new String(total);
     totalStr = str.replace('.', ',');
     var indx = totalStr.lastIndexOf(',');
     var sub = totalStr.substring(indx+1, totalStr.length);
-    if(sub.length < 2)
+    if (sub.length < 2) {
         totalStr = totalStr + '0';
+    }
     $('#total_debt').html(totalStr);
 };
 
@@ -108,12 +141,13 @@ function recalc() {
     var total = 0;
     $('input:text').each(function(i){
         var name = $(this).attr('name');
-        if(!$(this).attr('disabled') && name.indexOf('sum') != -1){
-            if ($(this).val() == '')
+        if (!$(this).attr('disabled') && name.indexOf('sum') != -1){
+            if ($(this).val() == '') {
                 $(this).val('0,00');
+            }
             var val = $(this).val().replace(',', '.');
             
-            if(isNaN(val)){
+            if (isNaN(val)){
                 $(this).val('0,00');
                 val = '0.00';
             }
@@ -135,8 +169,9 @@ function recalc() {
     totalStr = str.replace('.', ',');
     var indx = totalStr.lastIndexOf(',');
     var sub = totalStr.substring(indx+1, totalStr.length);
-    if(sub.length < 2)
+    if (sub.length < 2) {
         totalStr = totalStr + '0';
+    }
     $('#total_debt').html(totalStr);
 };
 
@@ -157,8 +192,9 @@ function checkAllServices(checkbox) {
         $('#pay_button').removeAttr('disabled');
     } else {
         $('input:checkbox').each(function(i){
-            if (i > 0)
+            if (i > 0) {
                 $(this).removeAttr('checked');
+            }
         });
         $('input:text').each(function(i){
             $(this).attr('disabled', 'disabled');
@@ -167,9 +203,9 @@ function checkAllServices(checkbox) {
         $('#pay_button').attr('disabled', 'disabled');
     }
     
-    if (totalFlag == 0)
+    if (totalFlag == 0) {
         total = '0,00';
-    else if (totalFlag == 1){
+    } else if (totalFlag == 1) {
         $('input:text').each(function(i){
             var val = $(this).val().replace(',', '.');
             total += parseFloat(val);
@@ -203,8 +239,9 @@ function selectService(chechbox, inputId) {
     }
     totalDebt = toFloat(totalDebt);
     
-    if (is_int(totalDebt))
+    if (is_int(totalDebt)) {
         totalDebt = totalDebt + ',00';
+    }
     var strTotal = new String(totalDebt);
     strTotal = strTotal.replace('.', ',');
     
@@ -260,24 +297,23 @@ function recount_counter_summ(key, old_value, tarif, counter_no) {
     new_value = parseFloat(new_value);
     var other_counters = $('.inp_'+ key +'_new_count');
     var add_cost = 0;
-    if(other_counters.length > 1)
-    {
+    if (other_counters.length > 1) {
         $(other_counters).each(function(i, elem) {
-            if ($(elem).attr('id') != 'inp_'+ key +'_new_count_' + counter_no)
-            {
+            if ($(elem).attr('id') != 'inp_'+ key +'_new_count_' + counter_no) {
                 var other_summ = $(elem).val();
                 other_summ = other_summ.split(',').join('.');
                 other_summ = parseFloat(other_summ);
                 var other_old_summ = $('#old_' + $(elem).attr('id')).html();
                 other_old_summ = other_old_summ.split(',').join('.');
                 other_old_summ = parseFloat(other_old_summ);
-                if(!isNaN(other_summ) && !isNaN(other_old_summ) && (other_summ >= other_old_summ))
+                if (!isNaN(other_summ) && !isNaN(other_old_summ) && (other_summ >= other_old_summ)) {
                     add_cost += (other_summ - other_old_summ) * tarif;
+                }
             }
         });
     }
-    if(isNaN(tarif) || isNaN(new_value))
-    {
+    
+    if (isNaN(tarif) || isNaN(new_value)) {
         $('#newval_counter_' + key + '_' + counter_no).html('новое&nbsp;значение');
         add_cost = add_cost.toFixed(2);
         add_cost += '';
@@ -285,11 +321,13 @@ function recount_counter_summ(key, old_value, tarif, counter_no) {
         $('#inp_'+key).val(add_cost);
         return;
     }
-    if(old_value > new_value) {
+
+    if (old_value > new_value) {
         var add_val = '1';
         var old_value_str = old_value + '';
-        for (var i = 0; i < old_value_str.length; i++)
+        for (var i = 0; i < old_value_str.length; i++) {
             add_val += '0';
+        }
         new_value += parseInt(add_val, 10);
     }
     var summ = (new_value - old_value) * tarif;

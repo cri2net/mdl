@@ -18,12 +18,14 @@
             $_POST['year'] = date('Y');
         }
 
-        // это месяц из фильтра, надо обработать его
-        // $month = !empty($_POST['month'])?$_POST['month'] : $previousMonth;
+        // это услуга из фильтра, надо обработать
+        // $_SESSION['object-item-detailbill']['service']
         $_need_month = $previousMonth;
+        $_need_month = ($_SESSION['object-item-detailbill']['month']) ? $_SESSION['object-item-detailbill']['month'] : $_need_month;
 
-        $year = !empty($_POST['year'])?$_POST['year']:$previousYear;
-        $dateBegin = "1.".$_need_month.".".$year;
+        $_need_year = ($_SESSION['object-item-detailbill']['year']) ? $_SESSION['object-item-detailbill']['year'] : $previousYear;
+        
+        $dateBegin = "1.".$_need_month.".".$_need_year;
         $debtData = $debt->getHistoryBillData($object['plat_code'], $dateBegin);
         $generalData = $debt->getGenerealData($object['plat_code']);
         $billOnDate = $generalData['date'];

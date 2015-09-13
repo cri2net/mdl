@@ -6,7 +6,8 @@ class KomDebt
     const KOMPLATURL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
     const ANSWERS_PATH = '/protected/conf/testing/';
     
-    public  $testing = false;
+    public $testing = false;
+    protected $cache = array();
 
     private $months = array('1'=>'січня', '2'=>'лютого', '3'=>'березня', '4'=>'квiтня', '5'=>'травня', '6'=>'червня', '7'=>'липня', '8'=>'серпня', '9'=>'вересня', '10'=>'жовтня', '11'=>'листопада', '12'=>'грудня');
     private $monthsFullName = array('01'=>'Січень', '02'=>'Лютий', '03'=>'Березень', '04'=>'Квітень', '05'=>'Травень', '06'=>'Червень', '07'=>'Липень', '08'=>'Серпень', '09'=>'Вересень', '10'=>'Жовтень', '11'=>'Листопад', '12'=>'Грудень');
@@ -18,7 +19,7 @@ class KomDebt
         $this->testing = !HAVE_ACCESS_TO_API;
     }
     
-    private function getXML($url, $obj_id, $dateBegin=null)
+    private function getXML($url, $obj_id, $dateBegin = null)
     {
         if ($this->testing) {
             // в режиме тестирования мы не можем обращаться к API (скорее всего), так что берём шаблоны ответов
@@ -31,10 +32,19 @@ class KomDebt
 
         $dateData = $this->getDatePeriod($dateBegin);
         $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
-        return Http::fgets($url);
+
+        if (!isset($this->cache[md5($url)])) {
+            $this->cache[md5($url)] = Http::fgets($url);
+        }
+        return $this->cache[md5($url)];
     }
     
-    public function getDebtSum($obj_id, $dateBegin=null)
+    public function clearCache()
+    {
+        $this->cache = array();
+    }
+
+    public function getDebtSum($obj_id, $dateBegin = null)
     {
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
@@ -369,7 +379,7 @@ class KomDebt
         return $data;
     }
     
-    public function getUniqueFirmName($obj_id, $dateBegin=null)
+    public function getUniqueFirmName($obj_id, $dateBegin = null)
     {
         $data = array();
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
@@ -411,7 +421,7 @@ class KomDebt
         return false;
     }
     
-    public function getUniqueFirm($obj_id, $firmName=null, $dateBegin=null, $is_filter=false)
+    public function getUniqueFirm($obj_id, $firmName = null, $dateBegin = null, $is_filter = false)
     {
         $data = array();
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
@@ -493,6 +503,7 @@ class KomDebt
 
             $data['data'][(string)$row->CODE_FIRME][] = $firmData;
         }
+
         return $data;
     }
     
