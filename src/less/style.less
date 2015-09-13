@@ -83,7 +83,7 @@ h2.big-error-message { font-size:24px; background-color:rgba(182, 1, 13, 0.8); c
 .star-required { position:relative; top:-3px; cursor:help; color:#00979c; }
 
 
-table, tbody, thead, th, tr, td { border-collapse:collapse; border:1px solid #444; }
+table, tbody, thead, th, tr, td { border-collapse:collapse; border:1px solid #444; vertical-align:middle; }
 th, td { padding:5px; font-size:12px; font-family:"Ubuntu", Arial; }
 th p, td p { padding:0; font-size:12px; text-indent:0; }
 
@@ -91,6 +91,9 @@ table.no-border {
     border:0px none;
     tbody, thead, th, tr, td { border:0px none; }
 }
+
+td.tbl-check-yes { height:35px; background-image:url("@{images}/pages/tbl-check-yes.png?v1"); background-position:center center; background-repeat:no-repeat; }
+td.tbl-check-no { height:35px; background-image:url("@{images}/pages/tbl-check-no.png?v1"); background-position:center center; background-repeat:no-repeat; }
 
 
 #global-owerlay {
