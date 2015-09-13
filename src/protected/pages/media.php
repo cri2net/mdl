@@ -23,7 +23,7 @@
 	
 	<div class="align-center">
 		<div class="btn-more">
-			<div class="btn green bold"><div class="icon-reload"></div>Показати ще</div>
+			<div class="btn green bold"><img class="icon-reload" src="<?= BASE_URL; ?>/pic/reload-btn-icon.png" alt="" />Показати ще</div>
 		</div>
 		<div class="ruler">
 			<a onclick="return false;" href="#" class="first"></a>

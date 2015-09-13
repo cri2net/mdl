@@ -579,14 +579,15 @@ function close_feedback_msg()
 {
     $('#global-owerlay').remove();
     $('body').removeClass('popup-open');
-}
+};
 
 function check_delete_profile()
 {
     return ($('#confirm_delete_profile input').is(':checked'));
 };
 
-function wait_ok_message_timeout(message, elem, counter, interval) {
+function wait_ok_message_timeout(message, elem, counter, interval)
+{
     var original_message = message;
     counter++;
     if (counter == 4) {
@@ -597,4 +598,28 @@ function wait_ok_message_timeout(message, elem, counter, interval) {
     }
     $(elem).html(message);
     setTimeout(function(){wait_ok_message_timeout(original_message, elem, counter, interval);}, interval);
-}
+};
+
+function show_more_news(loader_icon_id)
+{
+    var img = $('#' + loader_icon_id);
+    var elem = img.parent();
+    if ($(elem).hasClass('rotation')) {
+        return;
+    }
+
+    $(elem).addClass('rotation');
+    image_rotation($(elem).find('img'), 'rotation');
+};
+
+function image_rotation(elem, need_class)
+{
+    if ($(elem).parent().hasClass(need_class)) {
+        $(elem).rotate({
+            angle: 0,
+            animateTo: 360,
+            duration: 1500,
+            callback: function(){ image_rotation(elem, need_class); }
+        });
+    }
+};
