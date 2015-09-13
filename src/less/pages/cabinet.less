@@ -1,4 +1,8 @@
 content .inner {
+    
+    .full-width-table {
+    }
+
     &.page_cabinet {
         .btn.btn-login {
             margin: 89px 0 31px 32px; font-size:32px; .size(237, 88); padding:0; padding-left:35px; line-height:88px; display:block;
@@ -285,6 +289,7 @@ content .inner {
         }
 
         .filters-form {
+            margin-bottom:25px;
             .dotted-select-box {
                 padding:3px 14px 3px 3px;
                 display: inline-block;
@@ -323,6 +328,37 @@ content .inner {
             }
             .btn {
                 width:187px; padding-left:0; padding-right:0; margin-top:-2px;
+            }
+        }
+
+        .datailbill-table {
+            margin-top:22px; width: 100%;
+            thead tr {
+                background-color: #01b671;
+                th {
+                    text-align:left; color:#fff; font-family:"Ubuntu", Arial; font-size:16px; line-height:19px; padding-top:10px; padding-bottom:8px;
+                }
+            }
+            th.first, td.first { padding-left:35px; }
+            tr.bank-name {
+                background-color:#eee; color:#00979c;
+                td { padding-top:0; padding-bottom:0; height:59px; vertical-align:middle; }
+            }
+            tr.item-row {
+                color:#000; border-bottom:1px solid #ccf0e3; font-size:12px; line-height:16px;
+                &.even { border-bottom-width:2px; }
+                &.last-item { border-bottom-width:0; }
+                td {
+                    padding-bottom:13px; padding-top:10px;
+                    .name-plat { font-weight:bold; font-size:16px; line-height:22px; }
+                    .name-firme { }
+                    .abcount { color:#888; }
+                    .address { color:#01b671; padding-left:10px; display: inline-block; padding-top:4px; min-height:12px; background-image:data-uri("@{images}/pages/cabinet/objects/__map.png"); background-repeat:no-repeat; background-position:left 4px; }
+                    .item-summ {
+                        font-size:20px; font-weight:bold;
+                        .small { font-size:12px; font-weight:normal; }
+                    }
+                }
             }
         }
     }

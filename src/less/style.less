@@ -87,6 +87,12 @@ table, tbody, thead, th, tr, td { border-collapse:collapse; border:1px solid #44
 th, td { padding:5px; font-size:12px; font-family:"Ubuntu", Arial; }
 th p, td p { padding:0; font-size:12px; text-indent:0; }
 
+table.no-border {
+    border:0px none;
+    tbody, thead, th, tr, td { border:0px none; }
+}
+
+
 #global-owerlay {
     z-index:95;
     position:fixed;
@@ -501,7 +507,6 @@ content {
             }
         }
 
-
         .block {
             & > .subblock-left {
                 .size(434, 235);
@@ -550,7 +555,6 @@ content {
             }
         }
 
-
         slider {
             text-align:center; height:211px; position: relative; margin-bottom:33px;
             .slider-btn {
@@ -590,6 +594,8 @@ content {
             margin-top:20px;
             margin-bottom:0;
         }
+
+        .real-full-width-block { display:inline-block; position:relative; width:853px; margin-left:-33px; margin-right:-33px; }
         
         h1.big-title {
             display:inline-block; font-weight:bold; font-size:40px; color:#fff; padding:15px 30px 15px 33px; margin-left:-33px; margin-top:30px; background-color:#00979c;

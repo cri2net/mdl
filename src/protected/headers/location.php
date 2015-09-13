@@ -95,6 +95,44 @@
                 }
                 break;
             
+            case 'error/404':
+                $uri_assoc_arr = [
+                    'main'                      => '/',
+                    'main/history'              => '/about/history/',
+                    'main/about/workschedule'   => '/contacts/#page-map-clock',
+                    'main/contact'              => '/contacts/',
+                    'main/contact/map'          => '/contacts/#page-map-marker',
+                    'main/about/chief'          => '/about/chief/',
+                    'main/about/program'        => '/about/program/',
+                    'main/about/service'        => '/about/service/',
+                    'main/managment'            => '/about/managment/',
+                    'main/procurements'         => '/about/procurements/',
+                    'main/history/achievements' => '/about/strides/',
+                    'main/media'                => '/about/media/video/',
+                    'main/banks'                => '/foruser/banks/',
+                    'main/terminals'            => '/foruser/terminals/',
+                    'main/compensation'         => '/law/compensation/',
+                    'main/law/tariff'           => '/law/compensation/',
+                    'calcss'                    => '/calc-subsidies/',
+                    'calc'                      => '/calc-devices/',
+                    
+
+                    // сахар для URI (типа как синтаксический)
+                    'gai'                       => '/cabinet/instant-payments/dai/',
+                    'dai'                       => '/cabinet/instant-payments/dai/',
+                    'kindergarten'              => '/cabinet/instant-payments/kindergarten/',
+                    'phone'                     => '/cabinet/instant-payments/phone/',
+                    'cards'                     => '/cabinet/instant-payments/cards/',
+                ];
+
+                if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {
+                    $new_location = BASE_URL . $uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')];
+                } elseif (preg_match('/^\/main\/law\//i', $_SERVER['REQUEST_URI'], $matches)) {
+                    $new_location = BASE_URL . str_replace('/main/law/', '/law/', $_SERVER['REQUEST_URI']);
+                }
+
+            break;
+
             case 'page/cabinet':
                 if (!isset($__route_result['values']['subpage']) && Authorization::isLogin()) {
                     $new_location = BASE_URL . '/cabinet/objects/';
@@ -110,33 +148,7 @@
                     $new_location = BASE_URL . "/cabinet/objects/{$__route_result['values']['id']}/bill/";
                 }
                 break;
-        }
 
-        $uri_assoc_arr = [
-            'main'                      => '/about/',
-            'main/history'              => '/about/history/',
-            'main/about/workschedule'   => '/contacts/#page-map-clock',
-            'main/contact'              => '/contacts/',
-            'main/contact/map'          => '/contacts/#page-map-marker',
-            'main/about/chief'          => '/about/chief/',
-            'main/about/program'        => '/about/program/',
-            'main/about/service'        => '/about/service/',
-            'main/managment'            => '/about/managment/',
-            'main/procurements'         => '/about/procurements/',
-            'main/history/achievements' => '/about/strides/',
-            'main/media'                => '/about/media/video/',
-            'main/banks'                => '/foruser/banks/',
-            'main/terminals'            => '/foruser/terminals/',
-            'main/compensation'         => '/law/compensation/',
-            'main/law/tariff'           => '/law/compensation/',
-            'calcss'                    => '/calc-subsidies/',
-            'calc'                      => '/calc-devices/',
-        ];
-
-        if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {
-            $new_location = BASE_URL . $uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')];
-        } elseif (preg_match('/^\/main\/law\//i', $_SERVER['REQUEST_URI'], $matches)) {
-            $new_location = BASE_URL . str_replace('/main/law/', '/law/', $_SERVER['REQUEST_URI']);
         }
     }
 

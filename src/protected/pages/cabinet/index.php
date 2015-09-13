@@ -18,13 +18,7 @@
         </div>
     </div>
 </div>
-<div class="block block--quick-pays">
-    <h2>Миттєвi платежi</h2>
-    <a href="#" class="police" >Cплачуйте штрафи ДАІ</a>
-    <a href="#" class="baby" >Оплата за дитячий садок</a>
-    <a href="#" class="cards" >Переводи з карти на карту</a>
-    <a href="#" class="phone" >Поповнення рахунку<br/>на мобільному</a>
-</div>
+<?php require_once(ROOT . '/protected/scripts/cabinet/quick-pays.php'); ?>
 <div class="block block--conclusion" >
     <h2>Користючись нашим сервісом<br/>
     ви завжди отримуєте більше</h2>

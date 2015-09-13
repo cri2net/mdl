@@ -79,6 +79,21 @@
                     }
                     break;
 
+
+                case 'instant-payments':
+                    $breadcrumbs[] = ['title' => 'Миттєвi платежi', 'link' => '/cabinet/instant-payments/'];
+
+                    if (isset($__route_result['values']['section'])) {
+                        $sections = [
+                            'dai'          => 'Штрафи ДАІ',
+                            'kindergarten' => 'Дитячий садок',
+                            'cards'        => 'Переводи з карти на карту',
+                            'phone'        => 'Поповнення рахунку на мобільному'
+                        ];
+                        $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
+                    }
+                    break;
+
                 case 'payments':
                     $breadcrumbs[] = ['title' => 'Мої платежі', 'link' => '/cabinet/payments/'];
 
