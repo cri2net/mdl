@@ -84,27 +84,6 @@ function addNewHouse() {
     });
 };
 
-function deleteHouse(flat_id) {
-    var data = {};
-    data.obj = 'Flat';
-    data.ac = 'removeUserFlat';
-    data.params = {};
-    data.params.flat_id = flat_id;
-    
-    $.ajax({
-        dataType: 'json',
-        data: data,
-        type: 'POST',
-        url : '/ajax/json/_engine',
-    });
-    
-    $('#bbox_house_' + flat_id).remove();
-    var count = parseInt($('#house_count').html()) - 1;
-    $('#house_count').html(count.toString());
-    
-    return false;
-};
-
 function recalc2() {
     var total = 0;
     $('input:text').each(function(i){

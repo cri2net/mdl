@@ -12,7 +12,7 @@ class Flat
      * @param  integer $flat_id
      * @param  integer $city_id. OPTIONAL
      * @param  integer $user_id. OPTIONAL
-     * @return string — Двойной md5 id новой записи
+     * @return string — id новой записи
      */
     public static function addFlat($flat_id, $city_id = Street::KIEV_ID, $user_id = null)
     {
@@ -46,17 +46,17 @@ class Flat
             return false;
         }
 
-        $data = array(
+        $data = [
             'user_id' => $user_id,
             'city_id' => $city_id,
             'street_id' => $flat['street_id'],
             'house_id' => $flat['house_id'],
             'flat_id' => $flat_id,
             'timestamp' => microtime(true)
-        );
+        ];
         $record_id = PDO_DB::insert($data, self::USER_FLATS_TABLE);
         
-        return md5(md5($record_id));
+        return $record_id;
     }
     
     /**
@@ -100,7 +100,7 @@ class Flat
         }
 
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("UPDATE ". self::USER_FLATS_TABLE ." SET title=? WHERE MD5(MD5(id)) = ? AND user_id=? LIMIT 1");
+        $stm = $pdo->prepare("UPDATE ". self::USER_FLATS_TABLE ." SET title=? WHERE id = ? AND user_id=? LIMIT 1");
         $stm->execute(array($title, $flat_id, $user_id));
     }
     
@@ -163,16 +163,18 @@ class Flat
             if ($arr[$i]['street_name'] !== $arr[$i]['street_name_full']) {
                 $arr[$i]['street_name'] .= " ...";
             }
-            $arr[$i]['hash_id'] = md5(md5($arr[$i]['id']));
             $arr[$i]['address'] = self::getAddressString($arr[$i]['flat_id']);
         }
         
         return $arr;
     }
     
-    public static function getUserFlatById($id)
+    public static function getUserFlatById($id, $user_id = null)
     {
-        $user_id = (int)$user_id;
+        if ($user_id == null) {
+            $user_id = Authorization::getLoggedUserId();
+        }
+        
         $table = self::USER_FLATS_TABLE;
         $streets_table = Street::TABLE;
         $pdo = PDO_DB::getPDO();
@@ -181,17 +183,17 @@ class Flat
             "SELECT c.*, s.name_ua AS street_name_full, SUBSTRING(s.name_ua, 1, 14) AS street_name
              FROM $table c
              LEFT OUTER JOIN $streets_table s ON c.street_id=s.street_id
-             WHERE c.id = ?
+             WHERE c.id = ? AND c.user_id=?
              LIMIT 1"
         );
 
-        $stm->execute(array($id));
+        $stm->execute([$id, $user_id]);
         $arr = $stm->fetch();
 
         if ($arr === false) {
             return null;
         }
-        
+
         $debt = new KomDebt();
         $arr['error'] = 0;
     
@@ -205,7 +207,6 @@ class Flat
             $arr['street_name'] .= " ...";
         }
         $arr['position'] = ($i % 2 == 0) ? 1 : 2;
-        $arr['hash_id'] = md5(md5($arr['id']));
         $arr['address'] = self::getAddressString($arr['flat_id']);
         
         return $arr;
@@ -230,7 +231,7 @@ class Flat
             return PDO_DB::table_list(self::TABLE, "city_id='$city_id' AND street_id='$street_id' AND house_id='$house_id'", 'flat_number ASC');
         }
 
-        $result = array();
+        $result = [];
         $data = Http::fgets(API_URL . self::FLAT_URL . $house_id);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
@@ -238,13 +239,13 @@ class Flat
 
         if ($xml !== false) {
             for ($i=0; $i<count($xml->ROW); $i++) {
-                $result[] = array(
+                $result[] = [
                     'city_id' => $city_id,
                     'street_id' => $street_id,
                     'house_id' => $house_id,
                     'object_id' => $xml->ROW[$i]->ID_OBJ,
                     'flat_number' => $xml->ROW[$i]->NKW
-                );
+                ];
             }
         } else {
             return PDO_DB::table_list(self::TABLE, "city_id='$city_id' AND street_id='$street_id' AND house_id='$house_id'", 'flat_number ASC');
@@ -266,7 +267,7 @@ class Flat
         $stm_insert = $pdo->prepare("INSERT INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, object_id=?, flat_number=?");
         
         $stm = $pdo->prepare("SELECT * FROM ". House::TABLE ." WHERE city_id=?");
-        $stm->execute(array(Street::KIEV_ID));
+        $stm->execute([Street::KIEV_ID]);
 
         while ($row = $stm->fetch()) {
             $data = Http::fgets(API_URL . self::FLAT_URL . $row['house_id']);
@@ -275,7 +276,7 @@ class Flat
             $xml = @simplexml_load_string($data);
 
             if ($xml !== false) {
-                $stm_del->execute(array(Street::KIEV_ID, $row['house_id']));
+                $stm_del->execute([Street::KIEV_ID, $row['house_id']]);
                 for ($i=0; $i<count($xml->ROW); $i++) {
                     $stm_insert->execute(array(Street::KIEV_ID, $row['street_id'], $row['house_id'], $xml->ROW[$i]->ID_OBJ, $xml->ROW[$i]->NKW));
                 }
@@ -295,7 +296,7 @@ class Flat
     {
         $pdo = PDO_DB::getPDO();
         $stm = $pdo->prepare("SELECT COUNT(*) FROM ". self::USER_FLATS_TABLE . " WHERE user_id=?");
-        $stm->execute(array($user_id));
+        $stm->execute([$user_id]);
         return ((int)$stm->fetchColumn());
     }
 }
