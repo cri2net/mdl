@@ -345,6 +345,7 @@ content .inner {
             tr.bank-name {
                 background-color:#eee; color:#00979c;
                 td { padding-top:0; padding-bottom:0; height:59px; vertical-align:middle; }
+                &.title td { font-size:18px; }
             }
             tr {
                 &.item-row {
@@ -354,6 +355,10 @@ content .inner {
                     td {
                         padding-bottom:13px; padding-top:10px;
                     }
+                }
+                &.total-summ-tr {
+                    border-top:3px solid #ccf0e3;
+                    td { font-size:18px; font-weight:bold; padding-bottom:15px; }
                 }
                 td {
                     .name-plat { font-weight:bold; font-size:16px; line-height:22px; }
@@ -366,6 +371,13 @@ content .inner {
                     }
                     .date-day {  }
                     .date-time { color:#888; }
+                    .check-box-line {
+                        position:relative;
+                        .niceCheck { display: inline-block; position: absolute; top:0; left:0; }
+                        label { display: inline-block; margin-left:30px; }
+                    }
+                    input.txt.num-short { width:100px; }
+                    .btn { width:150px; }
                 }
             }
         }

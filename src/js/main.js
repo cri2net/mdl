@@ -218,13 +218,15 @@ function checkAllServices(checkbox) {
     $('#total_debt').html(strTotal);
 };
 
-function selectService(chechbox, inputId) {
+function selectService(chechboxId, inputId)
+{
     var total = $('#total_debt').html().replace(',', '.');
+    var chechbox = $('#'+chechboxId);
     total = parseFloat(total);
     var currVal = $('#'+inputId).val().replace(',', '.');
     var totalDebt = 0;
     
-    if (chechbox.checked == true){
+    if ($(chechbox).attr('checked')) {
         totalDebt = toFloat(total) + toFloat(currVal);
         $('#'+inputId).removeAttr('disabled');
         $('#recalc_button').removeAttr('disabled');
@@ -237,19 +239,21 @@ function selectService(chechbox, inputId) {
             $('#pay_button').attr('disabled', 'disabled');
         }
     }
+   
     totalDebt = toFloat(totalDebt);
     
     if (is_int(totalDebt)) {
         totalDebt = totalDebt + ',00';
     }
+   
     var strTotal = new String(totalDebt);
-    strTotal = strTotal.replace('.', ',');
-    
+    strTotal = strTotal.replace('.', ','); 
 
     $('#total_debt').html(strTotal);
 };
 
-function getShoppingCartTotal(total, persentSum, cctype) {
+function getShoppingCartTotal(total, persentSum, cctype)
+{
     var fTotal = parseFloat(total.replace(',', '.'));
     var fPersent = parseFloat(persentSum.replace(',', '.'));
     var total = fTotal + fPersent;
@@ -259,6 +263,7 @@ function getShoppingCartTotal(total, persentSum, cctype) {
     var totalStr = new String(total);
     totalStr = totalStr.replace('.', ',')
     var indx = totalStr.lastIndexOf(',');
+
     if (indx != -1) {
         var sub = totalStr.substring(indx+1, totalStr.length);
         if (sub.length < 2) {
@@ -267,9 +272,11 @@ function getShoppingCartTotal(total, persentSum, cctype) {
     } else {
         totalStr = totalStr + ',00';
     }
+
     var PersentStr = new String(fPersent);
     PersentStr = PersentStr.replace('.', ',')
     var indx = PersentStr.lastIndexOf(',');
+
     if (indx != -1){
         var sub = PersentStr.substring(indx+1, PersentStr.length);
         if (sub.length < 2){
@@ -278,12 +285,14 @@ function getShoppingCartTotal(total, persentSum, cctype) {
     } else {
         PersentStr = PersentStr + ',00';
     }
+
     $('#totalBillSum').html(totalStr + ' грн');
     $('#comission_sum').html(PersentStr + ' грн');
     $('#cctype').val(cctype);
 };
 
-function checkForInt(evt) {
+function checkForInt(evt)
+{
     var charCode = ( evt.which != null ) ? evt.which : event.keyCode
     // charCodes < 32 include tab, delete, arrow keys, etc
     return (charCode < 32 || (charCode >= 48 && charCode <= 57))
@@ -354,7 +363,7 @@ function close_all_header_submenu(submenu_id)
 function show_header_submenu(submenu_id)
 {
     close_all_header_submenu(submenu_id);
-    
+
     var submenu = $('#header_submenu_'+submenu_id);
     var down = $('#header_down_'+submenu_id);
     var visible = $(submenu).is(':visible');
