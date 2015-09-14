@@ -65,7 +65,7 @@ function addNewHouse() {
     data.params = {};
     data.params.flat_id = $('#flat').val();
     
-    jQuery.ajax({
+    $.ajax({
         dataType: 'json',
         data: data,
         type: 'POST',
@@ -91,7 +91,7 @@ function deleteHouse(flat_id) {
     data.params = {};
     data.params.flat_id = flat_id;
     
-    jQuery.ajax({
+    $.ajax({
         dataType: 'json',
         data: data,
         type: 'POST',
@@ -610,6 +610,31 @@ function show_more_news(loader_icon_id)
 
     $(elem).addClass('rotation');
     image_rotation($(elem).find('img'), 'rotation');
+
+    var data = {
+        action: 'load_more',
+        news_on_page: news_on_page,
+        news_current_page: news_current_page
+    };
+
+    $.ajax({
+        dataType: 'json',
+        data: data,
+        type: 'POST',
+        url : '/ajax/json/news',
+        success : function(response){
+            $(elem).removeClass('rotation');
+            if (response.status) {
+                $('<div class="news-list-slidedown" style="display:none;">' + response.html + '</div>').insertBefore('#mews-insert-before');
+                news_current_page++;
+                if (news_pages_cont == news_current_page) {
+                    $('#btn-more-block').fadeOut(400).remove();
+                }
+                $('.news-list-slidedown').slideDown(400).removeClass('news-list-slidedown');
+                var pages = $('.ruler a.current + a:last').addClass('current');
+            }
+        }
+    });
 };
 
 function image_rotation(elem, need_class)

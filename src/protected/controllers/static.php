@@ -5,7 +5,7 @@
         case 'css':
             $filename = ROOT . '/style/' . $__route_result['values']['path'];
             if (file_exists($filename)) {
-                header("Content-Type: text/css, charset=utf-8");
+                header("Content-Type: text/css; charset=utf-8");
                 echo file_get_contents($filename);
                 exit();
             } else {
@@ -17,7 +17,7 @@
         case 'js':
             $filename = ROOT . '/js/' . $__route_result['values']['path'];
             if (file_exists($filename)) {
-                header("Content-Type: application/javascript, charset=utf-8");
+                header("Content-Type: application/javascript; charset=utf-8");
                 echo file_get_contents($filename);
                 exit();
             } else {

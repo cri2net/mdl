@@ -761,6 +761,8 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
 
         //Check that a quoted printable encode and decode results in the same as went in
         $t = file_get_contents(__FILE__); //Use this file as test content
+        //Force line breaks to UNIX-style
+        $t = str_replace(array("\r\n", "\r"), "\n", $t);
         $this->assertEquals(
             $t,
             quoted_printable_decode($this->Mail->encodeQP($t)),
@@ -770,6 +772,13 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
             $this->Mail->encodeQP($t),
             $this->Mail->encodeQPphp($t),
             'Quoted-Printable BC wrapper failed'
+        );
+        //Force line breaks to Windows-style
+        $t = str_replace("\n", "\r\n", $t);
+        $this->assertEquals(
+            $t,
+            quoted_printable_decode($this->Mail->encodeQP($t)),
+            'Quoted-Printable encoding round-trip failed (Windows line breaks)'
         );
     }
 
@@ -961,6 +970,31 @@ EOT;
 
         //Make sure that trying to attach a nonexistent file fails
         $this->assertFalse($this->Mail->addAttachment(__FILE__ . md5(microtime()), 'nonexistent_file.txt'));
+
+        $this->buildBody();
+        $this->assertTrue($this->Mail->send(), $this->Mail->ErrorInfo);
+    }
+
+    /**
+     * Test embedded image without a name
+     */
+    public function testHTMLStringEmbedNoName()
+    {
+        $this->Mail->Body = 'This is the <strong>HTML</strong> part of the email.';
+        $this->Mail->Subject .= ': HTML + unnamed embedded image';
+        $this->Mail->isHTML(true);
+
+        if (!$this->Mail->addStringEmbeddedImage(
+            file_get_contents('../examples/images/phpmailer_mini.png'),
+            md5('phpmailer_mini.png').'@phpmailer.0',
+            '', //intentionally empty name
+            'base64',
+            'image/png',
+            'inline')
+        ) {
+            $this->assertTrue(false, $this->Mail->ErrorInfo);
+            return;
+        }
 
         $this->buildBody();
         $this->assertTrue($this->Mail->send(), $this->Mail->ErrorInfo);
@@ -1362,6 +1396,90 @@ EOT;
         $this->Mail->clearCCs();
         $this->Mail->clearBCCs();
         $this->Mail->clearReplyTos();
+    }
+
+    /**
+     * Test RFC822 address splitting.
+     */
+    public function testAddressSplitting()
+    {
+        //Test built-in address parser
+        $this->assertCount(
+            2,
+            $this->Mail->parseAddresses(
+                'Joe User <joe@example.com>, Jill User <jill@example.net>'
+            ),
+            'Failed to recognise address list (IMAP parser)'
+        );
+        //Test simple address parser
+        $this->assertCount(
+            2,
+            $this->Mail->parseAddresses(
+                'Joe User <joe@example.com>, Jill User <jill@example.net>',
+                false
+            ),
+            'Failed to recognise address list'
+        );
+        //Test single address
+        $this->assertNotEmpty(
+            $this->Mail->parseAddresses(
+                'Joe User <joe@example.com>',
+                false
+            ),
+            'Failed to recognise single address'
+        );
+        //Test quoted name IMAP
+        $this->assertNotEmpty(
+            $this->Mail->parseAddresses(
+                'Tim "The Book" O\'Reilly <foo@example.com>'
+            ),
+            'Failed to recognise quoted name (IMAP)'
+        );
+        //Test quoted name
+        $this->assertNotEmpty(
+            $this->Mail->parseAddresses(
+                'Tim "The Book" O\'Reilly <foo@example.com>',
+                false
+            ),
+            'Failed to recognise quoted name'
+        );
+        //Test single address IMAP
+        $this->assertNotEmpty(
+            $this->Mail->parseAddresses(
+                'Joe User <joe@example.com>'
+            ),
+            'Failed to recognise single address (IMAP)'
+        );
+        //Test unnamed address
+        $this->assertNotEmpty(
+            $this->Mail->parseAddresses(
+                'joe@example.com',
+                false
+            ),
+            'Failed to recognise unnamed address'
+        );
+        //Test unnamed address IMAP
+        $this->assertNotEmpty(
+            $this->Mail->parseAddresses(
+                'joe@example.com'
+            ),
+            'Failed to recognise unnamed address (IMAP)'
+        );
+        //Test invalid addresses
+        $this->assertEmpty(
+            $this->Mail->parseAddresses(
+                'Joe User <joe@example.com.>, Jill User <jill.@example.net>'
+            ),
+            'Failed to recognise invalid addresses (IMAP)'
+        );
+        //Test invalid addresses
+        $this->assertEmpty(
+            $this->Mail->parseAddresses(
+                'Joe User <joe@example.com.>, Jill User <jill.@example.net>',
+                false
+            ),
+            'Failed to recognise invalid addresses'
+        );
     }
 
     /**

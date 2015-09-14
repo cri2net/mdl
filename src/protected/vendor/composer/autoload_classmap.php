@@ -16,6 +16,8 @@ return array(
     'News' => $baseDir . '/protected/classes/News.php',
     'PDO_DB' => $baseDir . '/protected/classes/PDO_DB.php',
     'PHPMailer' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
+    'PHPMailerOAuth' => $vendorDir . '/phpmailer/phpmailer/class.phpmaileroauth.php',
+    'PHPMailerOAuthGoogle' => $vendorDir . '/phpmailer/phpmailer/class.phpmaileroauthgoogle.php',
     'POP3' => $vendorDir . '/phpmailer/phpmailer/class.pop3.php',
     'Routing' => $baseDir . '/protected/classes/Routing.php',
     'SMTP' => $vendorDir . '/phpmailer/phpmailer/class.smtp.php',
