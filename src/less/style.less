@@ -379,7 +379,7 @@ header {
                 .item {
                     position:relative; margin-top:15px; display:inline-block; margin-right:27px;
                     &.item-right { position:absolute; right:0; top:0; margin-left:2px; }
-                    &.open-submenu > a { z-index:6; position: relative; border-bottom-color: transparent; }
+                    &.open-submenu > a { position: relative; border-bottom-color: transparent; }
                     &.forum {
                         display:inline-block;
                         padding-left:25px;
@@ -404,6 +404,8 @@ header {
                         text-decoration: none;
                         padding-bottom:3px;
                         border-bottom:1px solid #00b770;
+                        z-index:6;
+                        position: relative;
                     }
                     a:hover { border-bottom-color: transparent; }
                     .submenu {

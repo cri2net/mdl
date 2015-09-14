@@ -19,11 +19,11 @@
             }
             
             if (!$have_submenu) {
-                ?> <div class="item"><a href="<?= $item_url; ?>"><?= htmlspecialchars($main_menu[$i]['title']); ?></a></div> <?php
+                ?> <div class="item"><a onmouseover="close_all_header_submenu(-1);" href="<?= $item_url; ?>"><?= htmlspecialchars($main_menu[$i]['title']); ?></a></div> <?php
             } else {
                 $have_main_submenu[] = $main_menu[$i]['id'];
                 ?>
-                <div class="item with-sub-menu" id="header_top_item_<?= $main_menu[$i]['id']; ?>"><a href="<?= $item_url; ?>" onmouseover="show_header_submenu('<?= $main_menu[$i]['id']; ?>'); return false;"><?= htmlspecialchars($main_menu[$i]['title']); ?></a>
+                <div class="item with-sub-menu" id="header_top_item_<?= $main_menu[$i]['id']; ?>"><a href="<?= $item_url; ?>" onmouseover="show_header_submenu('<?= $main_menu[$i]['id']; ?>');"><?= htmlspecialchars($main_menu[$i]['title']); ?></a>
                     <div class="submenu" id="header_submenu_<?= $main_menu[$i]['id']; ?>">
                         <?php
                             for ($j=0; $j<count($main_menu[$i]['submenu']); $j++) {

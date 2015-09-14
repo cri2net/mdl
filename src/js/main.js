@@ -340,9 +340,8 @@ function recount_counter_summ(key, old_value, tarif, counter_no) {
     $('#newval_counter_'+key + '_' + counter_no).html(new_value+'&nbsp;м<sup>3</sup>');
 };
 
-
-
-function show_header_submenu(submenu_id) {
+function close_all_header_submenu(submenu_id)
+{
     for (var i=0; i < have_main_submenu_item.length; i++) {
         if (have_main_submenu_item[i] != submenu_id) {
             $('#header_submenu_'+have_main_submenu_item[i]).css('display', '');
@@ -350,7 +349,12 @@ function show_header_submenu(submenu_id) {
             $('#header_submenu_'+have_main_submenu_item[i]).stopTime('header_submenu_'+have_main_submenu_item[i]);
         }
     }
+}
 
+function show_header_submenu(submenu_id)
+{
+    close_all_header_submenu(submenu_id);
+    
     var submenu = $('#header_submenu_'+submenu_id);
     var down = $('#header_down_'+submenu_id);
     var visible = $(submenu).is(':visible');
