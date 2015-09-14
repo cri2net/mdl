@@ -7,11 +7,11 @@
             throw new Exception(ERROR_USER_NOT_LOGGED_IN);
         }
 
-        $update = array(
+        $update = [
             'deleted' => 1,
             'deleted_message' => stripslashes($_POST['comment']),
             'deleted_timestamp' => microtime(true)
-        );
+        ];
 
         PDO_DB::update($update, User::TABLE, $__userData['id']);
         Authorization::logout();

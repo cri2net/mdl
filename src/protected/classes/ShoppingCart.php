@@ -14,8 +14,8 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? array('_test_upc', 'aval', 'other', 'imeks', 'webmoney', 'visa', 'mastercard', 'private', 'mtb', 'w1')
-            : array('_test_upc', 'aval', 'other', 'imeks', 'webmoney', 'visa', 'mastercard', 'private', 'mtb', 'w1');
+            ? ['_test_upc', 'aval', 'other', 'imeks', 'webmoney', 'visa', 'mastercard', 'private', 'mtb', 'w1']
+            : ['_test_upc', 'aval', 'other', 'imeks', 'webmoney', 'visa', 'mastercard', 'private', 'mtb', 'w1'];
     }
     
     public static function get_id_kass()
@@ -29,18 +29,18 @@ class ShoppingCart
 
     public static function getPercentRule($pay_system = null)
     {
-        $rules = array(
-            '_test_upc'  => array('percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5),
-            'aval'       => array('percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5),
-            'other'      => array('percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5),
-            'imeks'      => array('percent' => 2, 'min' => 2),
-            'webmoney'   => array('percent' => 2, 'min' => 2),
-            'visa'       => array('percent' => 2, 'min' => 2),
-            'mastercard' => array('percent' => 2, 'min' => 2),
-            'private'    => array('percent' => 2, 'min' => 2),
-            'mtb'        => array('percent' => 2, 'min' => 2),
-            'w1'         => array('percent' => 4, 'min' => 2),
-        );
+        $rules = [
+            '_test_upc'  => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
+            'aval'       => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
+            'other'      => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
+            'imeks'      => ['percent' => 2, 'min' => 2],
+            'webmoney'   => ['percent' => 2, 'min' => 2],
+            'visa'       => ['percent' => 2, 'min' => 2],
+            'mastercard' => ['percent' => 2, 'min' => 2],
+            'private'    => ['percent' => 2, 'min' => 2],
+            'mtb'        => ['percent' => 2, 'min' => 2],
+            'w1'         => ['percent' => 4, 'min' => 2],
+        ];
 
         if ($pay_system) {
             $rules = $rules[$pay_system];
@@ -92,7 +92,7 @@ class ShoppingCart
     public static function add($data, $user_id)
     {
         $summ_plat = 0;
-        $real_servises = array();
+        $real_servises = [];
         
         if (count($data['items']) > 0) {
             foreach($data['items'] as $item) {
@@ -111,7 +111,7 @@ class ShoppingCart
 
         $timestamp = microtime(true);
 
-        $payment_data = array(
+        $payment_data = [
             'user_id' => $user_id,
             'acq' => '',
             'timestamp' => $timestamp,
@@ -125,14 +125,14 @@ class ShoppingCart
             'summ_total' => '',
             'ip' => USER_REAL_IP,
             'user_agent_string' => HTTP_USER_AGENT
-        );
+        ];
 
         $payment_id = PDO_DB::insert($payment_data, self::TABLE);
         
         foreach ($real_servises as $item) {
             $servicePostSum = str_replace(",", ".", $data[$item."_sum"]);
             
-            $counter_data = array();
+            $counter_data = [];
             if (!empty($data[$item.'_new_count'])) {
                 foreach($data[$item.'_new_count'] as $key => $counter) {
                     if (empty($data[$item.'_new_count'][$key])) {
@@ -146,19 +146,19 @@ class ShoppingCart
                     if ($used_value < 0)
                         $used_value -= pow(10, strlen(floor($old_value)));
                     
-                    $counter_data[] = array(
+                    $counter_data[] = [
                         'counter_num' => $data[$item.'_count_number'][$key],
                         'abcounter'   => $data[$item.'_abcounter'][$key],
                         'old_value'   => $old_value,
                         'new_value'   => $new_value,
                         'pcount'      => $used_value,
-                    );
+                    ];
                 }
             }
 
             $serviceDataTmp = explode("_", $data[$item."_data"]);
 
-            $kombebt_data = array(
+            $kombebt_data = [
                 'kode_firme' => $serviceDataTmp[0],
                 'kode_plat'  => $serviceDataTmp[1],
                 'abcount'    => $serviceDataTmp[2],
@@ -170,16 +170,16 @@ class ShoppingCart
                 'fio'        => $serviceDataTmp[8],
                 'date_d'     => $data[$item."_date_d"],
                 'id_pat'     => $data[$item."_id_pat"],
-            );
+            ];
             
-            $serviceData = array(
+            $serviceData = [
                 'sum'          => $servicePostSum,
                 'payment_id'   => $payment_id,
                 'user_id'      => $user_id,
                 'timestamp'    => $timestamp,
                 'data'         => json_encode($kombebt_data),
                 'counter_data' => json_encode($counter_data)
-            );
+            ];
             
             $serviceId = PDO_DB::insert($serviceData, self::SERVICE_TABLE);
         }
@@ -227,7 +227,7 @@ class ShoppingCart
 
                         $url = API_URL . self::REPORT_BASE_URL;
                         
-                        $post_data = array(
+                        $post_data = [
                             'report'       => ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep',
                             'destype'      => 'Cache',
                             'Desformat'    => 'xml',
@@ -247,7 +247,7 @@ class ShoppingCart
                             'p12'          => $actual_upc_data['TranCode'],
                             'p13'          => $actual_upc_data['Signature'],
                             'p14'          => 0,  // delay
-                        );
+                        ];
 
                         break;
 
@@ -269,7 +269,7 @@ class ShoppingCart
         $xml_string = iconv('CP1251', 'UTF-8', $res);
         $reports_data = (array)(@json_decode($payment['reports_data']));
         if (!$reports_data) {
-            $reports_data = array();
+            $reports_data = [];
         }
         
         $reports_data[$date] = array(
@@ -278,7 +278,7 @@ class ShoppingCart
             'send_data' => $post_data,
             'answer' => $xml_string,
         );
-        $to_update = array('reports_data' => json_encode($reports_data));
+        $to_update = ['reports_data' => json_encode($reports_data)];
 
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = simplexml_load_string($xml_string);
@@ -329,7 +329,7 @@ class ShoppingCart
         );
 
         if ($success) {
-            PDO_DB::update(array('send_first_pdf' => 1), self::TABLE, $payment['id']);
+            PDO_DB::update(['send_first_pdf' => 1], self::TABLE, $payment['id']);
         }
 
         return $success;
@@ -396,29 +396,29 @@ class ShoppingCart
 
         $xml = iconv('UTF-8', 'WINDOWS-1251', $xml);
         $url = API_URL . self::REPORT_BASE_URL;
-        $post_data = array(
+        $post_data = [
             'report' => 'pnew_gkom.rep',
             'destype' => 'Cache',
             'Desformat' => 'xml',
             'cmdkey' => 'rep',
             'in_xml' => $xml
-        );
+        ];
         $res = Http::HttpPost($url, $post_data);
 
         $date = date('Y-m-d H:i:s');
         $xml_string = iconv('CP1251', 'UTF-8', $res);
         $reports_data = (array)(@json_decode($payment['reports_data']));
         if (!$reports_data) {
-            $reports_data = array();
+            $reports_data = [];
         }
         
-        $reports_data[$date] = array(
+        $reports_data[$date] = [
             'timestamp' => microtime(true),
             'reports_url' => $url,
             'send_data' => $post_data,
             'answer' => $xml_string,
-        );
-        $to_update = array('reports_data' => json_encode($reports_data));
+        ];
+        $to_update = ['reports_data' => json_encode($reports_data)];
 
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = simplexml_load_string($xml_string);
@@ -479,7 +479,7 @@ class ShoppingCart
         }
 
         $payment['processing_data'] = (array)(@json_decode($payment['processing_data']));
-        $to_update = array();
+        $to_update = [];
 
         switch($payment['processing']) {
             case '_test_upc':
@@ -487,25 +487,25 @@ class ShoppingCart
 
                 $url = UPC::ACTION;
                 
-                $postdata = array(
+                $postdata = [
                     'MerchantID'   => $payment['processing_data']['first']->upc_merchantid,
                     'TerminalID'   => $payment['processing_data']['first']->upc_terminalid,
                     'OrderID'      => $payment['processing_data']['first']->upc_orderid,
                     'Currency'     => $payment['processing_data']['first']->upc_currency,
                     'TotalAmount'  => $payment['processing_data']['first']->upc_totalamount,
                     'PurchaseTime' => $payment['processing_data']['first']->upc_purchasetime
-                );
+                ];
 
                 $result = Http::HttpPost($url, $postdata);
 
                 if (!isset($payment['processing_data']['cron_check_status'])) {
-                    $payment['processing_data']['cron_check_status'] = array();
+                    $payment['processing_data']['cron_check_status'] = [];
                 }
                 
-                $payment['processing_data']['cron_check_status'][] = array(
+                $payment['processing_data']['cron_check_status'][] = [
                     'timestamp' => microtime(true),
                     'raw_data' => $result
-                );
+                ];
                 
                 $to_update['processing_data'] = json_encode($payment['processing_data']);
 
@@ -514,7 +514,7 @@ class ShoppingCart
                     $decline = (time() - $payment['timestamp'] >= 1800);
                 } else {
                     $lines = explode("\n", $result);
-                    $params = array();
+                    $params = [];
                     
                     for ($i=0; $i < count($lines); $i++) {
                         $vars = explode('=', $lines[$i]);
@@ -525,11 +525,11 @@ class ShoppingCart
                         }
                     }
 
-                    if (in_array($params['TranCode'], array('000', '410'))) {
+                    if (in_array($params['TranCode'], ['000', '410'])) {
                         $to_update['status'] = 'success';
-                    } elseif (in_array($params['TranCode'], array('105', '116', '111', '108', '101', '130', '290', '291', '401', '402', '403', '404', '405', '406', '407', '411', '412', '420', '421', '430', '431', '501', '502', '503', '504'))) {
+                    } elseif (in_array($params['TranCode'], ['105', '116', '111', '108', '101', '130', '290', '291', '401', '402', '403', '404', '405', '406', '407', '411', '412', '420', '421', '430', '431', '501', '502', '503', '504'])) {
                         $decline = true;
-                    } elseif (in_array($params['TranCode'], array('408', '409'))) {
+                    } elseif (in_array($params['TranCode'], ['408', '409'])) {
                         $decline = (time() - $payment['timestamp'] >= 900);
                     }
 

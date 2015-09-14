@@ -139,7 +139,7 @@
                 } elseif (($__route_result['values']['subpage'] == 'settings') && !isset($__route_result['values']['section'])) {
                     $new_location = BASE_URL . '/cabinet/settings/info/';
                 } elseif (($__route_result['values']['subpage'] == 'payments') && !isset($__route_result['values']['section'])) {
-                    $new_location = BASE_URL . '/cabinet/payments/new/';
+                    $new_location = BASE_URL . '/cabinet/payments/history/';
                 } elseif (
                     ($__route_result['values']['subpage'] == 'objects')
                     && isset($__route_result['values']['id'])

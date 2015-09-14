@@ -1,4 +1,4 @@
-<?php    
+<?php
     try {
         $currMonth = date("n");
         $years = array();
@@ -32,13 +32,28 @@
             $_need_year = (int)$_GET['year'];
         }
 
-        // // пока не обрабатываем
-        // $_POST['service'];
-
         $dateBegin = "1.".$_need_month.".".$_need_year;
-        $debtData = $debt->getHistoryBillData($object['flat_id'], $dateBegin);
-        // $generalData = $debt->getGenerealData($object['flat_id']);
-        // $billOnDate = $generalData['date'];
+
+        $_need_firm = !empty($_GET['service']) ? intval($_GET['service']) : 0;
+        $filter = ($_need_firm > 0);
+        
+        $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
+        $firmData = $debt->getUniqueFirmName($object['flat_id'], $dateBegin);
+        
+        if (empty($firmData) && empty($_GET['month'])) {
+            $new_month = strftime('%m', strtotime('first day of previous month'));
+            $new_year = ($new_month == '12') ? (string)((int)date("Y") - 1) : date("Y");
+            $dateBegin = '1.' . $new_month . '.' . $new_year;
+            $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
+            $firmData = $debt->getUniqueFirmName($object['flat_id'], $dateBegin);
+            $debtData['curr_month'] = $new_month;
+            $debtData['curr_year'] = $new_year;
+            $debtData['date'] = str_replace(' ', '&nbsp;', '01 ' . $MONTHS[(int)$new_month] . ' ' . $new_year);
+        }
+
+        if (empty($debtData['data'])) {
+            throw new Exception(ERROR_EMPTY_BILL);
+        }
         $have_error = false;
 
     } catch(Exception $e) {
@@ -69,8 +84,15 @@
         </div>
         <div class="dotted-select-box with-icon">
             <div class="icon services"></div>
-            <select class="dotted-select" name="service">
-                <option value="">послуга</option>
+            <select class="dotted-select service-select" name="service">
+                <option value="">пiдприємство</option>
+                <?php
+                    if (!empty($firmData)) {
+                        foreach ($firmData as $key => $firm) {
+                            ?><option value="<?= $key; ?>" <?= ($_need_firm == $key) ? 'selected' : ''; ?>><?= $firm['name']; ?></option> <?php
+                        }
+                    }
+                ?>
             </select>
         </div>
         <button class="btn green bold">Фільтрувати</button>
@@ -81,64 +103,92 @@
         ?><h2 class="big-error-message"><?= $error; ?></h2> <?php
         return;
     }
-    if (count($debtData['bank']) == 0) {
-        return;
-    }
 ?>
 <div class="real-full-width-block">
     <table class="full-width-table datailbill-table no-border">
         <thead>
             <tr>
                 <th class="first">Послуга, <br> комунальне пiдприємство</th>
-                <th>Дата cплати</th>
-                <th class="td-sum">Сумма, грн</th>
-                <th class="td-last">Перiод сплати</th>
+                <th class="td-sum">Боргу на <?= $debtData['previous_date']; ?></th>
+                <th class="td-sum">Сплачено на <?= $debtData['previous_month']; ?></th>
+                <th>Субс.</th>
+                <th>Тариф, грн</th>
+                <th>Нараховано за <?= $debtData['previous_month']; ?></th>
+                <th>Боргу на <?= $debtData['dbegin']; ?></th>
             </tr>
         </thead>
         <tbody>
             <?php
-                foreach ($debtData['bank'] as $key => $bank) {
+                $firm_counter = 0;
+
+                foreach ($debtData['data'] as $key => $firm) {
+                    $firm_counter++;
+
                     ?>
                     <tr class="bank-name">
-                        <td colspan="4" class="first">
-                            <b>БАНК: </b><?= $bank['NAMEOKP']; ?>, <b>КАССА: </b> <?= $bank['KASSA']; ?>
+                        <td colspan="7" class="first">
+                            <span class="name-plat">
+                                <?= $debtData['firm'][$key]['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>
+                            </span>
+                            <span class="abcount">(р/с: <?= $debtData['firm'][$key]['ABCOUNT']; ?>)</span>
+                            <?php
+                                if (trim($debtData['firm'][$key]['TLF']) != "") {
+                                    ?> (Телефон: <?= $debtData['firm'][$key]['TLF']; ?>) <?php
+                                }
+                            ?>
+                            <br>
+                            <?php
+                                if ($debtData['firm'][$key]['lgoti']) {
+                                    ?>
+                                    Льготы: <?= $debtData['firm'][$key]['lgoti']['NAIM_LG']; ?>,
+                                    <?= $debtData['firm'][$key]['lgoti']['PROC_LG']; ?>%
+                                    (количество льготников: <?= $debtData['firm'][$key]['lgoti']['KOL_LGOT']; ?>)
+                                    <br>
+                                    <?php
+                                }
+                            ?>
+                            <div class="address"><?= $object['address']; ?></div>
                         </td>
                     </tr>
                     <?php
                         $counter = 0;
                         
-                        foreach ($bank['data'] as $item) {
+                        foreach ($firm as $item) {
                             $counter++;
+
+                            $no_border = (($counter == count($firm)) && ($firm_counter < count($debtData['data'])));
+                            $pdate = DateTime::createFromFormat('d.m.y H:i:s', $item['PDATE']);
                             ?>
-                            <tr class="item-row <?= ($counter == count($bank['data'])) ? 'last-item' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                            <tr class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
                                 <td class="first">
-                                    <span class="name-plat"><?= $item['NAME_PLAT']; ?></span> <br>
-                                    <span class="name-firme"><?= $item['NAME_FIRME']; ?></span>
-                                    <span class="abcount">р/с: <?= $item['ABCOUNT']; ?></span> <br>
-                                    <div class="address"><?= $object['address']; ?></div>
+                                    <span class="name-firme"><?= $item['NAME_PLAT']; ?></span> <br>
                                 </td>
                                 <td>
-                                    <?= $item['PDATE']; ?><br>
-                                </td>
-                                <td class="align-right">
                                     <?php
-                                        $summ = explode(',', $item['SUMM']);
+                                        $summ = floatval(str_replace(",", ".", $item['ISXDOLG']));
+                                        $class = ($summ < 0) ? 'overpay' : (($summ > 0) ? 'dept' : '');
+                                        $summ = explode(',', $item['ISXDOLG']);
                                     ?>
-                                    <span class="item-summ">
-                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                    </span>
+                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                 </td>
-                                <td class="align-center">
+                                <td><?= $item['OPLAT']; ?></td>
+                                <td><?= $item['SUBS']; ?></td>
+                                <td><?= $item['TARIF']; ?></td>
+                                <td>
                                     <?php
-                                        if (!$item['DBEGIN'] || !$item['DEND']) {
-                                            echo '—';
-                                        } else {
-                                            ?>
-                                            з <?= $item['DBEGIN']; ?><br>
-                                            по <?= $item['DEND']; ?>
-                                            <?php
-                                        }
+                                        $summ = floatval(str_replace(",", ".", $item['SUMM_MONTH']));
+                                        $class = ($summ > 0) ? 'dept' : '';
+                                        $summ = explode(',', $item['SUMM_MONTH']);
                                     ?>
+                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                </td>
+                                <td>
+                                    <?php
+                                        $summ = floatval(str_replace(",", ".", $item['SUMM_DOLG']));
+                                        $class = ($summ < 0) ? 'overpay' : (($summ > 0) ? 'dept' : '');
+                                        $summ = explode(',', $item['SUMM_DOLG']);
+                                    ?>
+                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                 </td>
                             </tr>
                             <?php
@@ -147,4 +197,64 @@
             ?>
         </tbody>
     </table>
+    <?php
+        if ($debtData['counter']) {
+            ?>
+            <table class="full-width-table datailbill-table no-border">
+                <thead>
+                    <tr>
+                        <th class="counters-th" colspan="8">ПОКАЗАННЯ ЛІЧИЛЬНИКІВ</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" class="first">Послуга</th>
+                        <th>№ ліч.</th>
+                        <th>Поп. пок., м&sup3;/КвтЧ</th>
+                        <th>Пот. пок., м&sup3;/КвтЧ</th>
+                        <th>Розхід, м&sup3;/КвтЧ</th>
+                        <th>Тариф, грн</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $firm_counter = 0;
+                        
+                        foreach ($debtData['firm'] as $key => $firm) {
+                            
+                            if ($firm['counter']) {
+                                $firm_counter++;
+
+                                ?>
+                                <tr class="bank-name">
+                                    <td colspan="8" class="first">
+                                        <span><?= $firm['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>. (р/с: <?= $debtData['firm'][$key]['ABCOUNT']; ?>)</span>
+                                    </td>
+                                </tr>
+                                <?php
+                                    $counter = 0;
+
+                                    foreach ($firm['counter'] as $counter) {
+                                        $counter++;
+
+                                        $no_border = (($counter == count($firm['counter'])) && ($firm_counter < count($debtData['firm'])));
+                                        $pdate = DateTime::createFromFormat('d.m.y H:i:s', $item['PDATE']);
+                                        ?>
+                                        <tr class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                                            <td class="first" colspan="3"><?= $counter['NAME_PLAT']; ?></td>
+                                            <td><?= $counter['COUNTER_NO']; ?></td>
+                                            <td><?= $counter['OLD_VALUE']; ?></td>
+                                            <td>&mdash;</td>
+                                            <td>&mdash;</td>
+                                            <td class="last"><?= $counter['TARIF']; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                            }
+
+                        }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+        }
+    ?>
 </div>

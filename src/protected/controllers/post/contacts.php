@@ -1,7 +1,7 @@
 <?php
     try {
-        $_SESSION['contacts'] = array();
-        $fields = array('name' => 'Ім\'я', 'email' => 'Електронна пошта', 'text' => 'Текст повiдомлення');
+        $_SESSION['contacts'] = [];
+        $fields = ['name' => 'Ім\'я', 'email' => 'Електронна пошта', 'text' => 'Текст повiдомлення'];
 
         // переганяем данные в сессию, чтобы можно было их подставить обратно на форму
         foreach ($fields as $key => $value) {
@@ -28,7 +28,7 @@
             throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
         }
 
-        $data = array(
+        $data = [
             'email' => $_SESSION['contacts']['email'],
             'phone' => '',
             'user_id' => (int)Authorization::getLoggedUserId(),
@@ -39,7 +39,7 @@
             'ip' => USER_REAL_IP,
             'subject' => '',
             'text' => $_SESSION['contacts']['text']
-        );
+        ];
         PDO_DB::insert($data, TABLE_PREFIX . 'feedback');
 
         ////////////////
@@ -55,11 +55,11 @@
             'КП «ГіОЦ». Нове повiдомлення з сайта',
             '',
             'contacts_feedback',
-            array(
+            [
                 'username' => htmlspecialchars($_SESSION['contacts']['name']),
                 'email' => $_SESSION['contacts']['email'],
                 'text' => htmlspecialchars($_SESSION['contacts']['text'])
-            )
+            ]
         );
 
         $_SESSION['contacts']['status'] = true;

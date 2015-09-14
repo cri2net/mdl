@@ -18,10 +18,10 @@
         }
 
         $_SESSION['after_register']['add_object'] = $flat;
-        $_SESSION['registration']['show_message'] = array(
+        $_SESSION['registration']['show_message'] = [
             'type' => 'success',
             'text' => 'Об\'єкт буде у вашому аккаунті після реєстрації',
-        );
+        ];
         
         return BASE_URL . '/cabinet/registration/';
         

@@ -1,7 +1,7 @@
 <?php
     try {
-        $_SESSION['chief'] = array();
-        $fields = array('name' => 'Ім\'я', 'email' => 'Електронна пошта', 'text' => 'Текст повiдомлення');
+        $_SESSION['chief'] = [];
+        $fields = ['name' => 'Ім\'я', 'email' => 'Електронна пошта', 'text' => 'Текст повiдомлення'];
 
         // переганяем данные в сессию, чтобы можно было их подставить обратно на форму
         foreach ($fields as $key => $value) {
@@ -28,7 +28,7 @@
             throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
         }
 
-        $data = array(
+        $data = [
             'email' => $_SESSION['chief']['email'],
             'phone' => '',
             'to' => (int)$_POST['chief_id'],
@@ -40,7 +40,7 @@
             'ip' => USER_REAL_IP,
             'subject' => '',
             'text' => $_SESSION['chief']['text']
-        );
+        ];
         PDO_DB::insert($data, TABLE_PREFIX . 'feedback');
 
         ////////////////
@@ -55,15 +55,15 @@
             $email->AddReplyTo($_SESSION['chief']['email'], $_SESSION['chief']['name']);
             
             $email->send(
-                array($chief['email'], "{$chief['name']} {$chief['fathername']}"),
+                [$chief['email'], "{$chief['name']} {$chief['fathername']}"],
                 'КП «ГіОЦ». Нове повiдомлення з сайта',
                 '',
                 'chief_feedback',
-                array(
+                [
                     'username' => htmlspecialchars($_SESSION['chief']['name']),
                     'email' => $_SESSION['chief']['email'],
                     'text' => htmlspecialchars($_SESSION['chief']['text'])
-                )
+                ]
             );
         }
 

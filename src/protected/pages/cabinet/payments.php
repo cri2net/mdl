@@ -12,13 +12,12 @@
     <div class="secure">особистий кабiнет</div>
 </div>
 <div class="cabinet-settings cabinet-payments">
-    <div class="page-tabs page-tabs-4">
+    <div class="page-tabs">
         <?php
             $sections = [
-                'new'     => 'Новий платiж',
+                'history' => 'Iсторiя платежiв',
                 'komdebt' => 'ЖКХ платежi',
                 'instant' => 'Миттєві платежі',
-                'history' => 'Iсторiя платежiв',
             ];
             $i = 0;
             

@@ -99,10 +99,9 @@
 
                     if (isset($__route_result['values']['section'])) {
                         $sections = [
-                            'new'     => 'Новий платiж',
+                            'history' => 'Iсторiя платежiв',
                             'komdebt' => 'ЖКХ платежi',
                             'instant' => 'Миттєві платежі',
-                            'history' => 'Iсторiя платежiв',
                         ];
                         $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                     }

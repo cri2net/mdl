@@ -1,9 +1,9 @@
 <?php
-    $insert = array(
+    $insert = [
         'url' => stripslashes($_POST['url']),
         'raw_data' => json_encode($_POST),
         'timestamp' => microtime(true)
-    );
+    ];
 
     $error_id = PDO_DB::insert($insert, TABLE_PREFIX . 'text_errors');
     
@@ -24,9 +24,9 @@
         'Звiт про помилку',
         '',
         'mistakes',
-        array(
+        [
             'context' => $context,
             'comment' => htmlspecialchars($raw_data->comment),
             'link' => htmlspecialchars($url)
-        )
+        ]
     );

@@ -459,9 +459,9 @@ class KomDebt
         $debtBeginMonth = date("n", strtotime($this->beginDate));
         self::getPreviosMonth($previousMonth, $previousYear, $debtBeginMonth);
         
-        $data['previous_date'] = "01.".date("m", strtotime("01-".$previousMonth2."-".date("Y"))).".".$previousYear2;
+        $data['previous_date'] = "01.".date("m", strtotime("01-".$previousMonth."-".date("Y"))).".".$previousYear;
         $data['begin_month'] = $this->monthsFullName[date("m", strtotime($this->beginDate))];
-        $data['previous_month'] = $this->monthsFullName[date("m", strtotime("01-".$previousMonth2."-".$previousYear2))];
+        $data['previous_month'] = $this->monthsFullName[date("m", strtotime("01-".$previousMonth."-".$previousYear))];
         $data['counter'] = 0;
         $data['PEOPLE'] = $xml->ROW[0]->PEOPLE;
         $data['PL_OB'] = $xml->ROW[0]->PL_OB;

@@ -1,6 +1,6 @@
 <?php
     try {
-        $_SESSION['paybill'] = array();
+        $_SESSION['paybill'] = [];
         if (!Authorization::isLogin()) {
             throw new Exception(ERROR_USER_NOT_LOGGED_IN);
         }

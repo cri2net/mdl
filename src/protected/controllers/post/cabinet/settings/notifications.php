@@ -13,9 +13,9 @@
         $houses = Flat::getUserFlats($__userData['id']);
         
         for ($i=0; $i < count($houses); $i++) {
-            $update = array(
+            $update = [
                 'notify' => (int)isset($_POST['notify_object_' . $houses[$i]['id']])
-            );
+            ];
             PDO_DB::update($update, Flat::USER_FLATS_TABLE, $houses[$i]['id']);
         }
 

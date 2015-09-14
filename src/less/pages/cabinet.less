@@ -319,6 +319,7 @@ content .inner {
                     font-size:16px;
                     font-weight:bold;
                     .appearance(none);
+                    &.service-select { max-width: 160px; }
                     option {
                         padding:3px 5px;
                         border-right: 1px solid #222;
@@ -337,6 +338,7 @@ content .inner {
                 background-color: #01b671;
                 th {
                     vertical-align:top; text-align:left; color:#fff; font-family:"Ubuntu", Arial; font-size:16px; line-height:19px; padding-top:10px; padding-bottom:8px;
+                    &.counters-th { text-align:center; border-bottom:2px solid #fff; }
                 }
             }
             th.first, td.first { padding-left:35px; }
@@ -344,12 +346,16 @@ content .inner {
                 background-color:#eee; color:#00979c;
                 td { padding-top:0; padding-bottom:0; height:59px; vertical-align:middle; }
             }
-            tr.item-row {
-                color:#000; border-bottom:1px solid #ccf0e3; font-size:12px; line-height:16px;
-                &.even { border-bottom-width:2px; }
-                &.last-item { border-bottom-width:0; }
+            tr {
+                &.item-row {
+                    color:#000; border-bottom:1px solid #ccf0e3; font-size:12px; line-height:16px;
+                    &.even { border-bottom-width:2px; }
+                    &.no-border { border-bottom-width:0; }
+                    td {
+                        padding-bottom:13px; padding-top:10px;
+                    }
+                }
                 td {
-                    padding-bottom:13px; padding-top:10px;
                     .name-plat { font-weight:bold; font-size:16px; line-height:22px; }
                     .name-firme { }
                     .abcount { color:#888; }
@@ -358,6 +364,8 @@ content .inner {
                         font-size:20px; font-weight:bold;
                         .small { font-size:12px; font-weight:normal; }
                     }
+                    .date-day {  }
+                    .date-time { color:#888; }
                 }
             }
         }
