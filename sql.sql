@@ -294,18 +294,23 @@ INSERT INTO `gioc_text` (`id`, `variable`, `text`) VALUES
 
 
 
--- IN ONLINE
-
-
 -- 2015.09.15
 ALTER TABLE `gioc_hot_news`
   DROP COLUMN `type`;
-
 
 ALTER TABLE `gioc_hot_news`
   ADD COLUMN `type` ENUM('index_slide','sidebar_banner') DEFAULT 'index_slide' NOT NULL AFTER `id`, 
   ADD INDEX (`type`, `is_active`),
   ADD INDEX (`pos`);
+
+INSERT INTO `gioc_hot_news` (`type`, `img_filename`, `link`, `pos`, `is_active`) VALUES
+('sidebar_banner', 'slide_[1442274354.1293].png', '{SITE_URL}/cabinet/', 2, 1),
+('sidebar_banner', 'slide_[1442274796.0566].png', 'https://www.personal-account.kiev.ua/', 3, 1),
+('sidebar_banner', 'slide_[1442275487.4562].png', '', 1, 1);
+
+
+
+-- IN ONLINE
 
 
 
