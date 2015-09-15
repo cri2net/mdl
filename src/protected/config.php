@@ -38,6 +38,12 @@
                     define('HAVE_ACCESS_TO_API', false);
                     break;
 
+                case 'kiev.gerc.ua':
+                    define('COOKIE_DOMAIN', '.' . $_SERVER['HTTP_HOST']);
+                    define('BASE_URL', "http://{$_SERVER['HTTP_HOST']}");
+                    define('HAVE_ACCESS_TO_API', true);
+                    break;
+
                 default:
                     define('COOKIE_DOMAIN', 'kiev.gerc.ua');
                     // define('BASE_URL', 'http://kiev.gerc.ua');
