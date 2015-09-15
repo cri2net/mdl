@@ -660,3 +660,8 @@ function isNumberKeyPlusDot(evt)
     }
     return false;
 };
+
+function subscribe_by_email()
+{
+    var email = $('#subscribe_by_email').val();
+};

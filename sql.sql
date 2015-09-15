@@ -325,3 +325,21 @@ INSERT INTO `gioc_hot_news` (`type`, `img_filename`, `link`, `pos`, `is_active`,
 
 
 
+CREATE TABLE `gioc_video`(  
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `is_active` TINYINT(1) NOT NULL DEFAULT 0,
+  `pos` INT(11) NOT NULL DEFAULT 0,
+  `type` ENUM('youtube','vimeo') NOT NULL DEFAULT 'youtube',
+  `url` VARCHAR(500) NOT NULL,
+  `date` DOUBLE NOT NULL,
+  `title` VARCHAR(500) NOT NULL,
+  `description` VARCHAR(500),
+  `img_filename` VARCHAR(150),
+  PRIMARY KEY (`id`),
+  INDEX (`is_active`),
+  INDEX (`is_active`, `pos`),
+  INDEX (`type`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+
