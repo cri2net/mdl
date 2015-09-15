@@ -1,6 +1,6 @@
 <?php
 
-$slides = PDO_DB::table_list(TABLE_PREFIX . 'hot_news', 'is_active=1 AND LENGTH(img_filename) > 3', 'pos ASC');
+$slides = PDO_DB::table_list(TABLE_PREFIX . 'hot_news', "`type`='index_slide' AND is_active=1 AND LENGTH(img_filename) > 3", 'pos ASC');
 
 if ($slides) {
     ?>
