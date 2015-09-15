@@ -70,3 +70,7 @@
         </div>
         <?php
     }
+?>
+<div class="qr-code-box">
+    <img style="max-width:290px;" src="<?= BASE_URL; ?>/pic/sidebar/qr-code-resized.png" alt="">
+</div>
