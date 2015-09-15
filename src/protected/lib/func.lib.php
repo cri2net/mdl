@@ -191,3 +191,17 @@
             <?php
         }
     }
+
+    function getTextVariableValueByName($name)
+    {
+        $pdo = PDO_DB::getPDO();
+        $stm = $pdo->prepare("SELECT `text` FROM `".TABLE_PREFIX."text` WHERE `variable`=? LIMIT 1");
+        $stm->execute([$name]);
+        $record = $stm->fetchColumn();
+
+        if ($record === false) {
+            return null;
+        }
+
+        return $record;
+    }

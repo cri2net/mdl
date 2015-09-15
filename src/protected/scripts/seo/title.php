@@ -1,60 +1,66 @@
 <?php
-    $seo_title = "КП ГіОЦ";
+    $seo_str = 'КП ГіОЦ';
+    $_lSEO = 'TITLES';
 
-    switch($__route_result['controller'] . "/" . $__route_result['action']) {
+    $list = array(
+        'index' => 'Головна сторінка',
+        'news' => 'Новини',
+        'calc-devices' => 'Розрахунок за показаннями приладів',
+        'calc-subsidies' => 'Розрахунок субсидій',
+        'chief' => 'Керівництво',
+        'foruser' => 'Користувачу',
+        'contacts' => 'Контакти',
+        'media' => 'Відео-матеріали',
+        'news_item' => 'Конкретна новина' . $makros,
+        'cabinet' => 'Особистий кабiнет',
+        'registration' => 'Реєстрація',
+    );
+
+
+    switch ($__route_result['controller'] . "/" . $__route_result['action']) {
         case 'page/index':
-            $seo_title = "КП ГіОЦ — Головна";
-            break;
-
-        case 'page/about':
-            $seo_title = "КП ГіОЦ — про нас";
-            break;
-        case 'page/media':
-            $seo_title = "КП ГіОЦ — Медiа";
-            break;
-
-        case 'page/foruser':
-            $seo_title = "КП ГіОЦ — Споживачу";
-            break;
-
-        case 'page/chief':
-            $seo_title = "КП ГіОЦ — Керівництво";
-            break;
-
+        case 'page/news':
         case 'page/calc-devices':
-            $seo_title = "КП ГіОЦ — Розрахунок за показаннями квартирних приладів обліку";
-            break;
         case 'page/calc-subsidies':
-            $seo_title = "КП ГіОЦ — Орієнтовний онлайн розрахунок субсидій";
+        case 'page/chief':
+        case 'page/foruser':
+        case 'page/contacts':
+        case 'page/media':
+            $seo_str = getTextVariableValueByName($_lSEO . '_' . strtoupper($__route_result['action']));
             break;
 
         case 'page/cabinet':
-            $seo_title = "КП ГіОЦ — Особистий кабiнет";
-            break;
+            switch ($__route_result['values']['subpage']) {
+                case 'registration':
+                    $seo_str = getTextVariableValueByName($_lSEO . '_REGISTRATION');
+                    break;
 
-        case 'page/contacts':
-            $seo_title = "КП ГіОЦ — Контакти";
-            break;
-
-        case 'page/news':
-            $seo_title = "КП ГіОЦ — Новини";
+                default:
+                    $seo_str = getTextVariableValueByName($_lSEO . '_CABINET');
+            }
             break;
 
         case 'page/news-item':
             if ($__news_item['seo_title']) {
-                $seo_title = $__news_item['seo_title'];
+                $seo_str = $__news_item['seo_title'];
             } else {
-                $seo_title = "КП ГіОЦ — " . $__news_item['title'];
+                $seo_str = getTextVariableValueByName($_lSEO."_NEWS_ITEM");
+                $seo_str = str_ireplace('{TITLE}', $__news_item['title'], $seo_str);
             }
             break;
 
         case 'static_page/index':
-            $seo_title = "КП ГіОЦ — " . $__static_pages_array[count($__static_pages_array) - 1]['h1'];
+            $page_item = $__static_pages_array[count($__static_pages_array) - 1];
+            if ($page_item['seo_title']) {
+                $seo_str = $page_item['seo_title'];
+            } else {
+                $seo_str = $page_item['h1'];
+            }
             break;
 
         case 'error/404':
-            $seo_title = "КП ГіОЦ — Помилка 404";
+            $seo_str = "КП ГіОЦ — Помилка 404";
             break;
     }
 
-    echo htmlspecialchars($seo_title, ENT_QUOTES);
+    echo htmlspecialchars($seo_str, ENT_QUOTES);
