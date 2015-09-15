@@ -640,3 +640,23 @@ function image_rotation(elem, need_class)
         });
     }
 };
+
+function isNumberKey(evt)
+{
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+
+    return true;
+};
+
+function isNumberKeyPlusDot(evt)
+{
+    var e = window.event || evt; // for trans-browser compatibility
+    var charCode = e.which || e.keyCode;
+    if ((charCode > 45 && charCode < 58) || charCode == 8) {
+        return true;
+    }
+    return false;
+};
