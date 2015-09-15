@@ -747,19 +747,22 @@ content {
         .partners {
             background-color:#eee;
             color: #444;
-            padding:20px 20px 0 20px;
+            padding:20px 20px 14px 20px;
             margin-right:26px;
             width:226px;
             .title {
                 font-size:16px; font-weight:bold; margin-top:4px; margin-bottom:14px;
             }
             .item {
-                display:inline-block; margin-bottom:14px; min-height:54px; position: relative;
+                display:block; margin-bottom:14px; min-height:54px; height:54px; position: relative;
                 a {
+                    display:inline-block;
                     font-size:12px;
                     line-height:15px;
-                    display:inline-block;
                     margin-left:69px;
+                    margin-top: -15px;
+                    position: absolute;
+                    top: 50%;
                 }
                 .img {
                     display:block; left:0; position:absolute; float:left; .size(54); overflow:hidden; .border-radius(27);

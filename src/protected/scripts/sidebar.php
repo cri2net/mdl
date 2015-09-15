@@ -2,7 +2,19 @@
     <input type="text" placeholder="Пошук по сайту" value="" name="q" id="search">
 </form>
 <?php
-    $banners = PDO_DB::table_list(TABLE_PREFIX . 'hot_news', "`type`='sidebar_banner' AND is_active=1 AND LENGTH(img_filename) > 3", 'pos ASC');
+    // зато один запрос к БД, а не два
+    $sidebar_banners = PDO_DB::table_list(TABLE_PREFIX . 'hot_news', "`type` IN ('sidebar_banner', 'partners') AND is_active=1 AND LENGTH(img_filename) > 3", 'pos ASC');
+
+    $banners = [];
+    $partners = [];
+    
+    for ($i=0; $i < count($sidebar_banners); $i++) { 
+        if ($sidebar_banners[$i]['type'] == 'sidebar_banner') {
+            $banners[] = $sidebar_banners[$i];
+        } else {
+            $partners[] = $sidebar_banners[$i];
+        }
+    }
 
     if ($banners) {
         ?>
@@ -21,23 +33,27 @@
         </div>
         <?php
     }
-?>
-<div class="partners">
-    <div class="title">Нашi партнери</div>
-    <div class="item">
-        <span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/1.png');"></span>
-        <a target="_blank" href="http://kievcity.gov.ua/">Сайт Київської міської державної адміністрації</a>
-    </div>
-    <div class="item">
-        <span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/2.png');"></span>
-        <br><a target="_blank" href="http://info.kyivcard.com.ua/main/">«Картка киянина»</a>
-    </div>
-    <div class="item">
-        <span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/3.png');"></span>
-        <br><a target="_blank" href="http://www.municipal.kiev.ua:8080/municipal/">«Ваш будинок»</a>
-    </div>
-</div>
-<?php
+
+    if ($partners) {
+        ?>
+        <div class="partners">
+            <div class="title">Нашi партнери</div>
+            <?php
+                foreach ($partners as $partner) {
+                    $href = str_ireplace('{SITE_URL}', BASE_URL, $partner['link']);
+                    $onclick = ($href == '') ? 'onclick="return false;"' : '';
+                    ?>
+                    <div class="item">
+                        <span class="img" style="background-image:url('<?= BASE_URL; ?>/db_pic/hot_news/<?= $partner['img_filename']; ?>');"></span>
+                        <a <?= $onclick; ?> href="<?= htmlspecialchars($href, ENT_QUOTES); ?>"><?= htmlspecialchars($partner['title']); ?></a>
+                    </div>
+                    <?php
+                }
+            ?>
+        </div>
+        <?php
+    }
+
     $links = PDO_DB::table_list(TABLE_PREFIX . 'useful_links', 'is_active=1', 'pos', '8');
     if (count($links) > 0) {
         ?>
@@ -54,4 +70,3 @@
         </div>
         <?php
     }
-?>

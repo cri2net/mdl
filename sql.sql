@@ -309,6 +309,17 @@ INSERT INTO `gioc_hot_news` (`type`, `img_filename`, `link`, `pos`, `is_active`)
 ('sidebar_banner', 'slide_[1442275487.4562].png', '', 1, 1);
 
 
+ALTER TABLE `gioc_hot_news`
+  CHANGE `type` `type` ENUM('index_slide','partners','sidebar_banner') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'index_slide' NOT NULL;
+
+ALTER TABLE `gioc_hot_news`
+  ADD COLUMN `title` VARCHAR(500) NULL AFTER `is_active`;
+
+INSERT INTO `gioc_hot_news` (`type`, `img_filename`, `link`, `pos`, `is_active`, `title`) VALUES
+('partners', 'slide_[1442278341.5554].png', 'http://kievcity.gov.ua/', 1, 1, 'Сайт Київської міської державної адміністрації'),
+('partners', 'slide_[1442278320.9032].png', 'http://info.kyivcard.com.ua/main/', 2, 1, '«Картка киянина»'),
+('partners', 'slide_[1442278350.7679].png', 'http://www.municipal.kiev.ua:8080/municipal/', 3, 1, '«Ваш будинок»');
+
 
 -- IN ONLINE
 
