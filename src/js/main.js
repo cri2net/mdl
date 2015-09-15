@@ -69,7 +69,7 @@ function addNewHouse() {
         dataType: 'json',
         data: data,
         type: 'POST',
-        url : '/ajax/json/_engine',
+        url : BASE_URL + '/ajax/json/_engine',
         success : function(res, textStatus){
             if (res.success == true) {
                 $('#overlay_dom_new .bgr').append('<div class="add_ok_message"><h4 id="add_ok_message_h4">Идёт добавление объекта</h4></div>');
@@ -613,7 +613,7 @@ function show_more_news(loader_icon_id)
         dataType: 'json',
         data: data,
         type: 'POST',
-        url : '/ajax/json/news',
+        url : BASE_URL + '/ajax/json/news',
         success : function(response){
             $(elem).removeClass('rotation');
             if (response.status) {
@@ -673,7 +673,7 @@ function subscribe_by_email()
         dataType: 'json',
         data: {email: email},
         type: 'POST',
-        url : '/ajax/json/subscribe',
+        url : BASE_URL + '/ajax/json/subscribe',
         success : function(response){
             if (response.status) {
                 $('#subscribe_by_email').css('color', "#090").css('cursor', "").attr('title', '');

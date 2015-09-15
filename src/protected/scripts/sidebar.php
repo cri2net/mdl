@@ -57,6 +57,7 @@
     $links = PDO_DB::table_list(TABLE_PREFIX . 'useful_links', 'is_active=1', 'pos', '8');
     if (count($links) > 0) {
         ?>
+        <div class="title links-title">Корисні посилання</div>
         <div class="links">
             <?php
                 foreach ($links as $link) {

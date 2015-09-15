@@ -351,6 +351,12 @@ CREATE TABLE `gioc_subscribers`(
 
 
 
+INSERT INTO `gioc_social` (`key`, `link`, `title`, `target`, `is_active`, `pos`) VALUES
+('twitter', '#', '', '_blank', 1, 5),
+('linkedin', '#', '', '_blank', 1, 6);
+
+
+
 
 -- IN ONLINE
 
