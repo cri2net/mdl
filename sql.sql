@@ -321,11 +321,7 @@ INSERT INTO `gioc_hot_news` (`type`, `img_filename`, `link`, `pos`, `is_active`,
 ('partners', 'slide_[1442278350.7679].png', 'http://www.municipal.kiev.ua:8080/municipal/', 3, 1, '«Ваш будинок»');
 
 
--- IN ONLINE
-
-
-
-CREATE TABLE `gioc_video`(  
+CREATE TABLE `gioc_video`(
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `is_active` TINYINT(1) NOT NULL DEFAULT 0,
   `pos` INT(11) NOT NULL DEFAULT 0,
@@ -342,4 +338,19 @@ CREATE TABLE `gioc_video`(
 ) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
+CREATE TABLE `gioc_subscribers`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(250) NOT NULL,
+  `created_at` DOUBLE NOT NULL,
+  `updated_at` DOUBLE NOT NULL,
+  `subscribe` TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX (`email`),
+  INDEX (`subscribe`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+
+
+-- IN ONLINE
 

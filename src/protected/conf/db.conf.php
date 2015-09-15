@@ -22,11 +22,11 @@
                 define('DB_HOST', 'localhost');
                 define('DB_NAME', 'gioc_site');
                 define('DB_USER', 'root');
-                define('DB_PASSWORD', 'root');
-                // define('DB_PASSWORD', 'kykyev');
+                // define('DB_PASSWORD', 'root');
+                define('DB_PASSWORD', 'kykyev');
                 
-                // define('API_URL', 'http://10.12.2.201:8888');
-                define('API_URL', 'https://bank.gioc.kiev.ua');
+                define('API_URL', 'http://10.12.2.201:8888');
+                // define('API_URL', 'https://bank.gioc.kiev.ua');
             }
     }
     
@@ -44,6 +44,7 @@
     define('DB_TBL_PAYMENT', 'gioc_payment');
     define('DB_TBL_PAYMENT_SERVICES', 'gioc_payment_services');
     define('DB_TBL_STREETS', 'gioc_streets');
+    define('DB_TBL_SUBSCRIBES', 'gioc_subscribers');
     define('DB_TBL_USER_FLATS', 'gioc_user_flats');
     define('DB_TBL_USERS', 'gioc_users');
     define('DB_TBL_MENUS', 'gioc_menus');

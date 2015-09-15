@@ -3,6 +3,7 @@
 class User
 {
     const TABLE = DB_TBL_USERS;
+    const SUBSCRIBE_TABLE = DB_TBL_SUBSCRIBES;
 
     public static function getUserIdByEmail($email)
     {
@@ -142,6 +143,31 @@ class User
                 'password' => htmlspecialchars($password)
             )
         );
+    }
+
+    /**
+     * Осуществляем подписку по email. Сознательно не делаем никакой связи с таблицей пользователей.
+     * @param  string $email
+     * @return integer        id записи.
+     */
+    public static function subscribeByEmail($email)
+    {
+        $pdo = PDO_DB::getPDO();
+        $_email = $pdo->quote($email);
+        $subscriber = PDO_DB::table_list(self::SUBSCRIBE_TABLE, "email=$_email", null, '1');
+        $time = microtime(true);
+
+        if (empty($subscriber)) {
+            $insert = [
+                'email' => $email,
+                'created_at' => $time,
+                'updated_at' => $time
+            ];
+            return PDO_DB::insert($insert, self::SUBSCRIBE_TABLE);
+        }
+
+        PDO_DB::update(['updated_at' => $time, 'subscribe' => 1], self::SUBSCRIBE_TABLE, $subscriber[0]['id']);
+        return $subscriber[0]['id'];
     }
 
 }

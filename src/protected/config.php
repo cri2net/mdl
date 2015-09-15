@@ -40,7 +40,8 @@
 
                 default:
                     define('COOKIE_DOMAIN', 'kiev.gerc.ua');
-                    define('BASE_URL', 'http://kiev.gerc.ua');
+                    // define('BASE_URL', 'http://kiev.gerc.ua');
+                    define('BASE_URL', 'http://splata.gioc.kiev.ua');
                     define('HAVE_ACCESS_TO_API', true);
             }
     }

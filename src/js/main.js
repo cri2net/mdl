@@ -664,4 +664,24 @@ function isNumberKeyPlusDot(evt)
 function subscribe_by_email()
 {
     var email = $('#subscribe_by_email').val();
+    
+    if (!email.length) {
+        return;
+    }
+
+    $.ajax({
+        dataType: 'json',
+        data: {email: email},
+        type: 'POST',
+        url : '/ajax/json/subscribe',
+        success : function(response){
+            if (response.status) {
+                $('#subscribe_by_email').css('color', "#090").css('cursor', "").attr('title', '');
+                setTimeout(function(){ $('#subscribe_by_email').val('').css('color', ""); }, 600);
+            } else {
+                $('#subscribe_by_email').css('color', "#e00").css('cursor', "help").attr('title', response.text);
+                setTimeout(function(){ $('#subscribe_by_email').css('color', "").css('cursor', ""); }, 1200);
+            }
+        }
+    });
 };
