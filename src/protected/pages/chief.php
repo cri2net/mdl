@@ -72,7 +72,7 @@
         </div>
         <div class="field-group">
             <label>
-                Електрона пошта <span class="star-required" title="Обов'язкове поле">*</span> <br><br>
+                Електронна пошта <span class="star-required" title="Обов'язкове поле">*</span> <br><br>
                 <input value="<?= $_contacts_email; ?>" type="email" name="email" class="txt" required="required">
             </label>
         </div>

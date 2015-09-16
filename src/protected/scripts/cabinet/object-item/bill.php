@@ -68,8 +68,8 @@
             <tr class="bank-name title">
                 <td class="first">
                     <div class="check-box-line">
-                        <span id="check_all_services" class="niceCheck check-group-rule checked"><input type="checkbox" checked="checked"></span>
-                        <label onclick="$('#check_all_services').click(); checkAllServices($('#check_all_services'));">
+                        <span id="check_all_services" class="niceCheck check-group-rule checked"><input id="check_all_services-elem" type="checkbox" checked="checked"></span>
+                        <label onclick="$('#check_all_services').click(); checkAllServices($('#check_all_services-elem'));">
                             Назва послуги
                         </label>
                     </div>
@@ -90,11 +90,10 @@
                                 ?>
                                 <td class="first">
                                     <div class="check-box-line">
-                                        <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>">
-                                            <span class="dotted-line"></span>
-                                            <input checked type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
+                                        <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>" onclick="setTimeout(function(){ selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>'); }, 60);">
+                                            <input checked="checked" type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
                                         </span>
-                                        <label onclick="$('#bill_item_<?= $key; ?>').click(); selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');">
+                                        <label onclick="$('#bill_item_<?= $key; ?>').click();">
                                             <span><?= $item['name_plat']; ?></span>
                                             <br>
                                             <?= $item['firm_name']; ?>

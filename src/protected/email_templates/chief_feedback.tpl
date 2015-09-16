@@ -9,7 +9,7 @@
         Автор:<br>
         <br>
         Iм’я: {{username}}<br>
-        Електрона пошта: {{email}}<br>
+        Електронна пошта: {{email}}<br>
         Текст повiдомлення: <br>
         <blockquote>{{text}}</blockquote>
         <br>

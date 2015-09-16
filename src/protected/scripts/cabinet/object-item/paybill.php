@@ -101,15 +101,13 @@
         <span class="total-sum"><?= $total_sum; ?> грн</span>
     </div>
     <div class="input">
-        <div class="pay-item">Послуги порталу</div>
+        <div class="pay-item">Комісія</div>
         <span class="total-sum"><span id="comission_sum"></span></span>
     </div>
     <div class="input">
         <div class="pay-item">Разом до оплати:</div>
         <div class="total-sum" id="totalBillSum"><?= $totalBillSum; ?> грн</div>
     </div>
-
-
 
     <div class="input align-center">
         <div class="btn-box">

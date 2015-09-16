@@ -157,7 +157,7 @@ function recalc() {
 function checkAllServices(checkbox) {
     var totalFlag = 0;
     var total = 0;
-    if (checkbox.checked == true) {
+    if ($(checkbox).is(':checked')) {
         totalFlag = 1;
         $('input:checkbox').each(function(i){
             if (i > 0){
@@ -200,8 +200,8 @@ function checkAllServices(checkbox) {
 function selectService(chechboxId, inputId)
 {
     var total = $('#total_debt').html().replace(',', '.');
-    var chechbox = $('#'+chechboxId);
     total = parseFloat(total);
+    var chechbox = $('#'+chechboxId);
     var currVal = $('#'+inputId).val().replace(',', '.');
     var totalDebt = 0;
     
