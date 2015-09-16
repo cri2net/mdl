@@ -20,15 +20,6 @@
             throw new Exception(ERROR_EMPTY_BILL);
         }
 
-        // $this_year = substr($debtData['list'][0]['DBEGIN_XML'], 0, 4);
-        // $this_month = (int)substr($debtData['list'][0]['DBEGIN_XML'], 5, 2);
-
-        // $this_year = substr($debtData['dbegin'], strlen($debtData['dbegin'])-4);
-        // $this_month = substr($debtData['dbegin'], strlen($debtData['dbegin'])-7, 2);
-        
-        // $debtData['date'] = '1 '.$monthsShort[$this_month].' '.$this_year;
-        $_SESSION['debt_date'] = $debtData['date'];
-        
         $debtMonth = date("n", strtotime($debtData['dbegin']));
 
         if ($debtMonth == 1) {
@@ -60,7 +51,7 @@
             <tr>
                 <th class="first align-center" colspan="4">
                     <span><?= $object['address']; ?></span><br>
-                    Загальна площа: <b><?= $debtData['PL_OB']; ?> м.кв.</b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м.кв.</b>, <b><?= $debtData['PEOPLE']; ?></b> проживаючих
+                    Загальна площа: <b><?= $debtData['PL_OB']; ?> м.кв.</b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м.кв.</b>, проживаючих: <b><?= $debtData['PEOPLE']; ?></b>
                 </th>
             </tr>
         </thead>
@@ -68,8 +59,8 @@
             <tr class="bank-name title">
                 <td class="first">
                     <div class="check-box-line">
-                        <span id="check_all_services" class="niceCheck check-group-rule checked"><input id="check_all_services-elem" type="checkbox" checked="checked"></span>
-                        <label onclick="$('#check_all_services').click(); checkAllServices($('#check_all_services-elem'));">
+                        <span id="check_all_services" onclick="" class="niceCheck check-group-rule checked"><input onchange="checkAllServices($('#check_all_services-elem'));" id="check_all_services-elem" type="checkbox" checked="checked"></span>
+                        <label onclick="$('#check_all_services').click();">
                             Назва послуги
                         </label>
                     </div>
@@ -138,7 +129,7 @@
                                     ?>
                                 </td>
                                 <td>
-                                    <input class="txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>"/>
+                                    <input class="bill-summ-input txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>"/>
                                     <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $item['CODE_FIRME']; ?>_<?= $item['CODE_PLAT']; ?>_<?= $item['ABCOUNT']; ?>_<?= $item['PLAT_CODE']; ?>_<?= $item['NAME_BANKS']; ?>_<?= $item['BANK_CODE']; ?>_<?= $item['DBEGIN_XML']; ?>_<?= $item['DEND_XML']; ?>_<?= $item['FIO']; ?>" />
                                     <input type="hidden" name="inp_<?= $key; ?>_date_d" value="<?= htmlspecialchars($item['DATE_D'], ENT_QUOTES); ?>" />
                                     <input type="hidden" name="inp_<?= $key; ?>_id_pat" value="<?= htmlspecialchars($item['ID_PLAT'], ENT_QUOTES); ?>" />
@@ -169,7 +160,7 @@
                                             <input type="hidden" name="inp_<?= $key; ?>_old_count[]" value="<?= $counter['OLD_VALUE']; ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
-                                            <span class="small">( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<?= $counter['OLD_VALUE']; ?> <?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?> )&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;<?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?></span>
+                                            <span class="small">( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<?= $counter['OLD_VALUE']; ?> <?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?> )&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;м<sup>3</sup></span>
                                             <span class="small"><br>Увага! Суму до сплати можна змінити, ввівши нове значення</span>
                                             <?php
                                         }

@@ -160,7 +160,7 @@ class KomDebt
     public function getData($obj_id, $dateBegin = null)
     {
         $data = array();
-        $data['date'] = "01"." ".$this->months[date("n")]." ".date("Y");
+        $data['date'] = '1 ' . $this->months[date("n")]." ".date("Y");
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
         $error = (string)$xml->ROW[0]->KOM_ERROR;
@@ -168,13 +168,12 @@ class KomDebt
         if (!empty($error)) {
             self::getPreviosMonth($previousMonth, $previousYear);
             $month2 = date("m", strtotime("01-".$previousMonth."-".$previousYear));
-            $data['date'] = "01"." ".$this->months[$previousMonth]." ".$previousYear;
             $dateBegin = "01.".$month2.".".$previousYear;
             $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
             $xml = new SimpleXMLElement($xmlString);
             $error = (string)$xml->ROW[0]->KOM_ERROR;
             
-            $data['date'] = "01"." ".$this->months[$previousMonth]." ".$previousYear;
+            $data['date'] = '1 ' . $this->months[$previousMonth]." ".$previousYear;
         }
         
         if (!empty($error)) {

@@ -43,47 +43,6 @@ function toFloat(val) {
     return Math.round(val * 100) / 100;
 };
 
-var add_ok_message_seconds = 0;
-function add_ok_message_timeout() {
-    add_ok_message_seconds++;
-    if (add_ok_message_seconds == 4) {
-        add_ok_message_seconds = 0;
-    }
-    var message = 'Идёт добавление объекта';
-    for (var i = 0; i < add_ok_message_seconds; i++) {
-        message += '.';
-    }
-    $('#add_ok_message_h4').html(message);
-    setTimeout(function(){add_ok_message_timeout();}, 600);
-};
-
-function addNewHouse() {
-    $('#add_house_button').attr('disabled', 'disabled');
-    var data = {};
-    data.obj = 'Flat';
-    data.ac = 'addFlat';
-    data.params = {};
-    data.params.flat_id = $('#flat').val();
-    
-    $.ajax({
-        dataType: 'json',
-        data: data,
-        type: 'POST',
-        url : BASE_URL + '/ajax/json/_engine',
-        success : function(res, textStatus){
-            if (res.success == true) {
-                $('#overlay_dom_new .bgr').append('<div class="add_ok_message"><h4 id="add_ok_message_h4">Идёт добавление объекта</h4></div>');
-                setTimeout(function(){add_ok_message_timeout();}, 600);
-                top.location.href = top.location.href;
-            } else if (res.success == false) {
-                $('#add_house_button').removeAttr('disabled');
-                $('#error_house').removeAttr('style');
-                $('#error_msg').html(res.record.msg);
-            }
-        }
-    });
-};
-
 function recalc2() {
     var total = 0;
     $('input:text').each(function(i){
@@ -135,10 +94,8 @@ function recalc() {
     });
     total = toFloat(total);
     if (total <= 0) {
-        $('#recalc_button').attr('disabled', 'disabled');
         $('#pay_button').attr('disabled', 'disabled');
     } else {
-        $('#recalc_button').removeAttr('disabled');
         $('#pay_button').removeAttr('disabled');
     }
     if (is_int(total)) {
@@ -164,10 +121,9 @@ function checkAllServices(checkbox) {
                 $(this).attr('checked', 'checked');
             }
         });
-        $('input:text').each(function(i){
+        $('input.bill-summ-input').each(function(i){
             $(this).removeAttr('disabled');
         });
-        $('#recalc_button').removeAttr('disabled');
         $('#pay_button').removeAttr('disabled');
     } else {
         $('input:checkbox').each(function(i){
@@ -175,19 +131,21 @@ function checkAllServices(checkbox) {
                 $(this).removeAttr('checked');
             }
         });
-        $('input:text').each(function(i){
+        $('input.bill-summ-input').each(function(i){
             $(this).attr('disabled', 'disabled');
         });
-        $('#recalc_button').attr('disabled', 'disabled');
         $('#pay_button').attr('disabled', 'disabled');
     }
     
     if (totalFlag == 0) {
         total = '0,00';
     } else if (totalFlag == 1) {
-        $('input:text').each(function(i){
+        $('input.bill-summ-input').each(function(i){
             var val = $(this).val().replace(',', '.');
-            total += parseFloat(val);
+            val = parseFloat(val);
+            if (!isNaN(val)) {
+                total += val;
+            }
         });
         total = toFloat(total);
     }
@@ -208,13 +166,11 @@ function selectService(chechboxId, inputId)
     if ($(chechbox).attr('checked')) {
         totalDebt = toFloat(total) + toFloat(currVal);
         $('#'+inputId).removeAttr('disabled');
-        $('#recalc_button').removeAttr('disabled');
         $('#pay_button').removeAttr('disabled');
     } else {
         totalDebt = toFloat(total) - toFloat(currVal);
         $('#'+inputId).attr('disabled', 'disabled');
         if (toFloat(totalDebt) <= 0) {
-            $('#recalc_button').attr('disabled', 'disabled');
             $('#pay_button').attr('disabled', 'disabled');
         }
     }

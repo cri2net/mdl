@@ -1,5 +1,4 @@
 <?php
-    $seo_str = 'КП ГіОЦ';
     $_lSEO = 'TITLES';
 
     $list = array(
@@ -61,6 +60,10 @@
         case 'error/404':
             $seo_str = "КП ГіОЦ — Помилка 404";
             break;
+    }
+
+    if ($seo_str == '') {
+        $seo_str = 'КП ГіОЦ';
     }
 
     echo htmlspecialchars($seo_str, ENT_QUOTES);
