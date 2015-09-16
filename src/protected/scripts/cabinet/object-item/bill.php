@@ -59,7 +59,7 @@
             <tr class="bank-name title">
                 <td class="first">
                     <div class="check-box-line">
-                        <span id="check_all_services" onclick="" class="niceCheck check-group-rule checked"><input onchange="checkAllServices($('#check_all_services-elem'));" id="check_all_services-elem" type="checkbox" checked="checked"></span>
+                        <span id="check_all_services" class="niceCheck check-group-rule checked"><input onchange="checkAllServices($('#check_all_services-elem'));" id="check_all_services-elem" type="checkbox" checked="checked"></span>
                         <label onclick="$('#check_all_services').click();">
                             Назва послуги
                         </label>
@@ -81,8 +81,8 @@
                                 ?>
                                 <td class="first">
                                     <div class="check-box-line">
-                                        <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>" onclick="setTimeout(function(){ selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>'); }, 60);">
-                                            <input checked="checked" type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
+                                        <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>">
+                                            <input checked="checked" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
                                         </span>
                                         <label onclick="$('#bill_item_<?= $key; ?>').click();">
                                             <span><?= $item['name_plat']; ?></span>

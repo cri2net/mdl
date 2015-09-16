@@ -137,54 +137,52 @@ function checkAllServices(checkbox) {
         $('#pay_button').attr('disabled', 'disabled');
     }
     
-    if (totalFlag == 0) {
-        total = '0,00';
-    } else if (totalFlag == 1) {
-        $('input.bill-summ-input').each(function(i){
+    billPageUpdateTotalSumm();
+};
+
+function billPageUpdateTotalSumm()
+{
+    var total = 0;
+    $('input.bill-summ-input').each(function(i){
+        if (!$(this).is(':disabled')) {
             var val = $(this).val().replace(',', '.');
             val = parseFloat(val);
             if (!isNaN(val)) {
                 total += val;
             }
-        });
-        total = toFloat(total);
+        }
+    });
+    total = toFloat(total);
+
+    if (total <= 0) {
+        $('#pay_button').attr('disabled', 'disabled');
+    } else {
+        $('#pay_button').removeAttr('disabled');
     }
+
+    if (is_int(total)) {
+        total += ',00';
+    }
+
     var strTotal = new String(total);
     strTotal = strTotal.replace('.', ',');
     
     $('#total_debt').html(strTotal);
-};
+
+}
 
 function selectService(chechboxId, inputId)
 {
-    var total = $('#total_debt').html().replace(',', '.');
-    total = parseFloat(total);
     var chechbox = $('#'+chechboxId);
     var currVal = $('#'+inputId).val().replace(',', '.');
-    var totalDebt = 0;
-    
-    if ($(chechbox).attr('checked')) {
-        totalDebt = toFloat(total) + toFloat(currVal);
-        $('#'+inputId).removeAttr('disabled');
-        $('#pay_button').removeAttr('disabled');
-    } else {
-        totalDebt = toFloat(total) - toFloat(currVal);
-        $('#'+inputId).attr('disabled', 'disabled');
-        if (toFloat(totalDebt) <= 0) {
-            $('#pay_button').attr('disabled', 'disabled');
-        }
-    }
-   
-    totalDebt = toFloat(totalDebt);
-    
-    if (is_int(totalDebt)) {
-        totalDebt = totalDebt + ',00';
-    }
-   
-    var strTotal = new String(totalDebt);
-    strTotal = strTotal.replace('.', ','); 
 
-    $('#total_debt').html(strTotal);
+    if ($(chechbox).attr('checked')) {
+        $('#'+inputId).removeAttr('disabled');
+    } else {
+        $('#'+inputId).attr('disabled', 'disabled');
+    }
+
+    billPageUpdateTotalSumm();
 };
 
 function getShoppingCartTotal(total, persentSum, cctype)
@@ -493,10 +491,10 @@ function changeCheck(element, group_class)
 
     if (!input.attr("checked")) {
         $(element).addClass("checked");
-        input.attr("checked", true)
+        $(input).attr("checked", true).change();
     } else {
         $(element).removeClass("checked");
-        input.attr("checked", false)
+        $(input).attr("checked", false).change();
     }
     
 
@@ -509,9 +507,9 @@ function changeCheck(element, group_class)
         }
     } else if ($(element).hasClass(group_class +'-rule')) {
         if ($(element).hasClass('checked')) {
-            $('.' + group_class).addClass('checked').find("input").attr("checked", true);
+            $('.' + group_class).addClass('checked').find("input").attr("checked", true).change();
         } else {
-            $('.' + group_class).removeClass('checked').find("input").attr("checked", false);
+            $('.' + group_class).removeClass('checked').find("input").attr("checked", false).change();
         }
     }
 };
