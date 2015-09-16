@@ -76,119 +76,93 @@
                     $counter++;
                     ?>
                     <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
-                        <?php
-                            if ($item['counter'] == 0) {
-                                ?>
-                                <td class="first">
-                                    <div class="check-box-line">
-                                        <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>">
-                                            <input checked="checked" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
-                                        </span>
-                                        <label onclick="$('#bill_item_<?= $key; ?>').click();">
-                                            <span><?= $item['name_plat']; ?></span>
-                                            <br>
-                                            <?= $item['firm_name']; ?>
-                                            <?php
-                                                if ($item['counterData']['NAIM_LG']) {
-                                                    ?>
-                                                    <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> <br>
-                                                    <span class="small">Льготы: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
-                                                    <?php
-                                                }
-                                            ?>
-                                            <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> 
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <?php
-                                        if ($item['debt'] == '-') {
-                                            echo '—';
-                                        } else {
-                                            $summ = explode(',', $item['debt']);
-                                            ?>
-                                            <span class="item-summ">
-                                                <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                            </span>
-                                            <?php
-                                        }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                        if ($item['over_pay'] == '-') {
-                                            echo '—';
-                                        } else {
-                                            $summ = explode(',', $item['over_pay']);
-                                            ?>
-                                            <span class="item-summ">
-                                                <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                            </span>
-                                            <?php
-                                        }
-                                    ?>
-                                </td>
-                                <td>
-                                    <input class="bill-summ-input txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>"/>
-                                    <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $item['CODE_FIRME']; ?>_<?= $item['CODE_PLAT']; ?>_<?= $item['ABCOUNT']; ?>_<?= $item['PLAT_CODE']; ?>_<?= $item['NAME_BANKS']; ?>_<?= $item['BANK_CODE']; ?>_<?= $item['DBEGIN_XML']; ?>_<?= $item['DEND_XML']; ?>_<?= $item['FIO']; ?>" />
-                                    <input type="hidden" name="inp_<?= $key; ?>_date_d" value="<?= htmlspecialchars($item['DATE_D'], ENT_QUOTES); ?>" />
-                                    <input type="hidden" name="inp_<?= $key; ?>_id_pat" value="<?= htmlspecialchars($item['ID_PLAT'], ENT_QUOTES); ?>" />
-                                </td>
-                                <?php
-                            } else {
-                                ?>
-                                <td class="first">
-                                    <input type="checkbox" name="items[]" value="inp_<?= $key; ?>" checked="checked" onclick="selectService(this, 'inp_<?= $key; ?>', '<?= $key; ?>');"/>
-                                </td>
-                                <td class="td-service">
-                                    <span><?= $item['name_plat']; ?></span><br>
+                        <td class="first">
+                            <div class="check-box-line">
+                                <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>">
+                                    <input checked="checked" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
+                                </span>
+                                <label onclick="$('#bill_item_<?= $key; ?>').click();">
+                                    <span><?= $item['name_plat']; ?></span>
+                                    <br>
                                     <?= $item['firm_name']; ?>
                                     <?php
                                         if ($item['counterData']['NAIM_LG']) {
                                             ?>
-                                            <br>
-                                            <span class="small">Пільги: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
+                                            <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> <br>
+                                            <span class="small">Льготы: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
                                             <?php
                                         }
+                                    ?>
+                                    <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> 
+                                </label>
+                            </div>
+                            <?php
+                                if ($item['counter'] != 0) {
+                                    $item['to_pay'] = '0,00';
 
-                                        foreach ($item['counterData']['counters'] as $counter) {
-                                            ?>
-                                            <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span><br> 
-                                            <span class="small">Попередні показання лічильника №<?= $counter['COUNTER_NO']; ?> : <span id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span></span><br>
-                                            <span class="small">Поточні показання лічильника №<?= $counter['COUNTER_NO']; ?>:</span>
-                                            <input class="text inp_<?= $key; ?>_new_count" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" size="20" maxlength="6" value="" style="width: 50px; text-align: right;padding-right:2px;" onkeypress="return checkForInt(event);" onkeyup="recount_counter_summ('<?= $key; ?>', '<?= $counter['OLD_VALUE']; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');" /><br>
-                                            <input type="hidden" name="inp_<?= $key; ?>_old_count[]" value="<?= $counter['OLD_VALUE']; ?>">
-                                            <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
-                                            <input type="hidden" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
-                                            <span class="small">( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<?= $counter['OLD_VALUE']; ?> <?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?> )&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;м<sup>3</sup></span>
-                                            <span class="small"><br>Увага! Суму до сплати можна змінити, ввівши нове значення</span>
-                                            <?php
-                                        }
+                                    foreach ($item['counterData']['counters'] as $counter) {
+                                        ?>
+                                        <span class="small">Попередні показання лічильника №<?= $counter['COUNTER_NO']; ?> : <span id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span></span><br>
+                                        <span class="small">Поточні показання лічильника №<?= $counter['COUNTER_NO']; ?>:</span>
+                                        <input class="text inp_<?= $key; ?>_new_count" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" size="20" maxlength="6" value="" style="width: 50px; text-align: right;padding-right:2px;" onkeypress="return checkForInt(event);" onkeyup="recount_counter_summ('<?= $key; ?>', '<?= $counter['OLD_VALUE']; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');"><br>
+                                        <input type="hidden" name="inp_<?= $key; ?>_old_count[]" value="<?= $counter['OLD_VALUE']; ?>">
+                                        <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
+                                        <input type="hidden" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
+                                        <span class="small">( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<?= $counter['OLD_VALUE']; ?> <?= ($item['counterData']['CODE_FIRME'] == '6070') ? 'кВт/ч' : 'м<sup>3</sup>'; ?> )&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;м<sup>3</sup></span>
+                                        <span class="small"><br>Увага! Суму до сплати можна змінити, ввівши нове значення</span>
+                                        <?php
+                                    }
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                if ($item['debt'] == '-') {
+                                    echo '—';
+                                } else {
+                                    $summ = explode(',', $item['debt']);
                                     ?>
-                                    </td>
-                                <td><?= ($item['debt'] == '-') ? '<span class="empty">' . $item['debt'] . '</span>' : $item['debt']; ?></td>
-                                <td><?= ($item['over_pay'] == '-') ? '<span class="empty">' . $item['over_pay'] . '</span>' : $item['over_pay']; ?></td>
-                                <td>
-                                    <input class="text" type="text" name="inp_<?= $key; ?>_sum" size="20" value="0,00" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>"/>
+                                    <span class="item-summ">
+                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                    </span>
                                     <?php
-                                        // htmlspecialchars не делаем, так как эти данные уже должны быть обработаны
-                                        $tmp_value  =      $item['CODE_FIRME'];
-                                        $tmp_value .= '_'. $item['CODE_PLAT'];
-                                        $tmp_value .= '_'. $item['ABCOUNT'];
-                                        $tmp_value .= '_'. $item['PLAT_CODE'];
-                                        $tmp_value .= '_'. $item['NAME_BANKS'];
-                                        $tmp_value .= '_'. $item['BANK_CODE'];
-                                        $tmp_value .= '_'. $item['DBEGIN_XML'];
-                                        $tmp_value .= '_'. $item['DEND_XML'];
-                                        $tmp_value .= '_'. $item['FIO'];
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                if ($item['over_pay'] == '-') {
+                                    echo '—';
+                                } else {
+                                    $summ = explode(',', $item['over_pay']);
                                     ?>
-                                    <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $tmp_value; ?>" />
-                                    <input type="hidden" name="inp_<?= $key; ?>_date_d" value="<?= htmlspecialchars($item['DATE_D'], ENT_QUOTES); ?>" />
-                                    <input type="hidden" name="inp_<?= $key; ?>_id_pat" value="<?= htmlspecialchars($item['ID_PLAT'], ENT_QUOTES); ?>" />
-                                </td>
-                                <?php
-                            }
-                        ?>
+                                    <span class="item-summ">
+                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                    </span>
+                                    <?php
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <input class="bill-summ-input txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>">
+                            <?php
+                                // htmlspecialchars не делаем, так как эти данные уже должны быть обработаны
+                                $tmp_value  =      $item['CODE_FIRME'];
+                                $tmp_value .= '_'. $item['CODE_PLAT'];
+                                $tmp_value .= '_'. $item['ABCOUNT'];
+                                $tmp_value .= '_'. $item['PLAT_CODE'];
+                                $tmp_value .= '_'. $item['NAME_BANKS'];
+                                $tmp_value .= '_'. $item['BANK_CODE'];
+                                $tmp_value .= '_'. $item['DBEGIN_XML'];
+                                $tmp_value .= '_'. $item['DEND_XML'];
+                                $tmp_value .= '_'. $item['FIO'];
+                            ?>
+                            <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $tmp_value; ?>">
+                            <input type="hidden" name="inp_<?= $key; ?>_name_plat" value="<?= htmlspecialchars($item['name_plat'], ENT_QUOTES); ?>">
+                            <input type="hidden" name="inp_<?= $key; ?>_firm_name" value="<?= htmlspecialchars($item['firm_name'], ENT_QUOTES); ?>">
+                            <input type="hidden" name="inp_<?= $key; ?>_date_d" value="<?= htmlspecialchars($item['DATE_D'], ENT_QUOTES); ?>">
+                            <input type="hidden" name="inp_<?= $key; ?>_id_pat" value="<?= htmlspecialchars($item['ID_PLAT'], ENT_QUOTES); ?>">
+                        </td>
                     </tr>
                     <?php
                 }

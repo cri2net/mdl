@@ -93,9 +93,10 @@ class ShoppingCart
     {
         $summ_plat = 0;
         $real_servises = [];
+        $timestamp = microtime(true);
         
         if (count($data['items']) > 0) {
-            foreach($data['items'] as $item) {
+            foreach ($data['items'] as $item) {
                 $tmp_sum = (float)str_replace(",", ".", $data[$item."_sum"]);
                 if ($tmp_sum > 0) {
                     $summ_plat += $tmp_sum;
@@ -108,8 +109,6 @@ class ShoppingCart
             throw new Exception(ERROR_EMPTY_KOMDEBT_PAYMENT);
             return false;
         }
-
-        $timestamp = microtime(true);
 
         $payment_data = [
             'user_id' => $user_id,
@@ -168,8 +167,10 @@ class ShoppingCart
                 'dbegin'     => $serviceDataTmp[6],
                 'dend'       => $serviceDataTmp[7],
                 'fio'        => $serviceDataTmp[8],
-                'date_d'     => $data[$item."_date_d"],
-                'id_pat'     => $data[$item."_id_pat"],
+                'date_d'     => $data[$item.'_date_d'],
+                'id_pat'     => $data[$item.'_id_pat'],
+                'name_plat'  => $data[$item.'_name_plat'],
+                'firm_name'  => $data[$item.'_firm_name'],
             ];
             
             $serviceData = [

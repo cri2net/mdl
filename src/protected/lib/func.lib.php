@@ -206,7 +206,7 @@
         return $record;
     }
 
-    function getUkraineDate($format, $timestam)
+    function getUkraineDate($format, $timestamp)
     {
         global $MONTHS;
         $month = $MONTHS[date('n', $timestamp)]['ua'];
