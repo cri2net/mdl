@@ -355,7 +355,11 @@ INSERT INTO `gioc_social` (`key`, `link`, `title`, `target`, `is_active`, `pos`)
 ('twitter', '#', '', '_blank', 1, 5),
 ('linkedin', '#', '', '_blank', 1, 6);
 
-
+-- 2015.09.16
+ALTER TABLE `gioc_payment`
+  ADD INDEX (`user_id`, `type`),
+  ADD  INDEX `for_cron_1` (`status`, `send_payment_status_to_reports`),
+  ADD  INDEX `for_cron_2` (`status`, `go_to_payment_time`);
 
 
 -- IN ONLINE

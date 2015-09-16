@@ -136,7 +136,7 @@ class KomDebt
     {
         $temp_array = array();
       
-        while (count($array)>0) {
+        while (count($array) > 0) {
             $lowest_id = 0;
             $index=0;
             

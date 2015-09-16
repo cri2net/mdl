@@ -6,9 +6,9 @@ class ShoppingCart
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
     const USE_TEST_KASS = true;
     const TEST_KASS_ID = '998';
-    const REPORT_BASE_URL = '/reports/rwservlet';
-    const PDF_FIRST_URL =     '/reports/rwservlet?report=kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-    const PDF_TODAY_URL =     '/reports/rwservlet?report=kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const REPORT_BASE_URL   = '/reports/rwservlet';
+    const PDF_FIRST_URL     = '/reports/rwservlet?report=kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+    const PDF_TODAY_URL     = '/reports/rwservlet?report=kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
     const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
@@ -272,12 +272,12 @@ class ShoppingCart
             $reports_data = [];
         }
         
-        $reports_data[$date] = array(
+        $reports_data[$date] = [
             'timestamp' => microtime(true),
             'reports_url' => $url,
             'send_data' => $post_data,
             'answer' => $xml_string,
-        );
+        ];
         $to_update = ['reports_data' => json_encode($reports_data)];
 
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
@@ -324,7 +324,7 @@ class ShoppingCart
         $email = new Email();
         $email->addStringAttachment($pdf, "Receipt-{$payment['id']}.pdf");
         $success = $email->send(
-            array($user['email'], "{$user['name']} {$user['fathername']}"),
+            [$user['email'], "{$user['name']} {$user['fathername']}"],
             'Квитанція про сплату'
         );
 
@@ -455,19 +455,19 @@ class ShoppingCart
             case '0':
                 return '';
             
-            case '1' : return 'День закрыт';
-            case '2' : return 'Cостояние фиксации (блокирования) платежа. Вносить изменения нельзя.';
-            case '4' : return 'Нет платежа';
-            case '5' : return 'Нет реквизита';
-            case '6' : return 'Сумма платежа равна 0';
-            case '7' : return 'Платеж с таким id_plat_klient уже был проведен';
-            case '8' : return 'Обязательные реквизиты платежа не заполнены';
-            case '9' : return 'Статус платежа не 20';
-            case '10': return 'Ошибка XML формата';
+            case '1' : return 'Касовий день закритий';
+            case '2' : return 'Стан фіксації (блокування) платежу. Вносити зміни не можна.';
+            case '4' : return 'Немає платежу';
+            case '5' : return 'Немає реквізиту';
+            case '6' : return 'Сума платежа дорівнює 0';
+            case '7' : return 'Платіж з таким id_plat_klient вже був проведений';
+            case '8' : return 'Обов\'язкові реквізити платежу не заповнені';
+            case '9' : return 'Статус платежу не 20';
+            case '10': return 'Помилка XML формату';
             
             case '100':
             default:
-                return 'Неизвестная ошибка ' . $error_code;
+                return 'Невідома помилка ' . $error_code;
         }
     }
 
@@ -553,12 +553,12 @@ class ShoppingCart
     public static function get_payments_to_check_status()
     {
         $time = time() - 300;
-        return PDO_DB::table_list(self::TABLE, "status='new' AND `timestamp`<$time", "id ASC");
+        return PDO_DB::table_list(self::TABLE, "status='new' AND go_to_payment_time<$time AND go_to_payment_time IS NOT NULL", "id ASC");
     }
 
     public static function cron()
     {
-        $arr = PDO_DB::table_list(self::TABLE, "`status`<>'new' AND send_payment_status_to_reports=0", "id ASC");
+        $arr = PDO_DB::table_list(self::TABLE, "status<>'new' AND send_payment_status_to_reports=0", "id ASC");
         
         for ($i=0; $i < count($arr); $i++) {
             self::send_payment_status_to_reports($arr[$i]['id']);

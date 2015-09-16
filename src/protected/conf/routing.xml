@@ -54,9 +54,13 @@
             <route match="help" controller="error" action="404" />
             <route match="{subpage}" controller="page" action="cabinet">
                 <route match="{id|num}" controller="page" action="cabinet">
+                    <!-- for example, /cabinet/objects/115/bill/ -->
                     <route match="{section|str}" controller="page" action="cabinet" />
                 </route>
-                <route match="{section}" controller="page" action="cabinet" />
+                <route match="{section}" controller="page" action="cabinet">
+                    <!-- for example, /cabinet/payments/details/115/ -->
+                    <route match="{id|num}" controller="page" action="cabinet" />
+                </route>
             </route>
         </route>
         

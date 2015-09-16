@@ -1,8 +1,10 @@
-function is_int(input) {
+function is_int(input)
+{
     return typeof(input)=='number'&&parseInt(input)==input;
 };
 
-function htmlspecialchars (string, reverse) {
+function htmlspecialchars (string, reverse)
+{
     var specialChars = {
             "&": "&amp;",
             "<": "&lt;",
@@ -32,18 +34,21 @@ function htmlspecialchars (string, reverse) {
     return string;
 };
 
-function removeSpaces(string) {
+function removeSpaces(string)
+{
     if((string === undefined) || (string.length == 0)) {
         return '';
     }
     return string.replace(/ +/g, "").replace(/ +/g, "");
 };
 
-function toFloat(val) {
+function toFloat(val)
+{
     return Math.round(val * 100) / 100;
 };
 
-function recalc2() {
+function recalc2()
+{
     var total = 0;
     $('input:text').each(function(i){
         var name = $(this).attr('name');
@@ -75,7 +80,8 @@ function recalc2() {
     $('#total_debt').html(totalStr);
 };
 
-function recalc() {
+function recalc()
+{
     var total = 0;
     $('input:text').each(function(i){
         var name = $(this).attr('name');
@@ -85,7 +91,7 @@ function recalc() {
             }
             var val = $(this).val().replace(',', '.');
             
-            if (isNaN(val)){
+            if (isNaN(val)) {
                 $(this).val('0,00');
                 val = '0.00';
             }
@@ -111,7 +117,8 @@ function recalc() {
     $('#total_debt').html(totalStr);
 };
 
-function checkAllServices(checkbox) {
+function checkAllServices(checkbox)
+{
     var totalFlag = 0;
     var total = 0;
     if ($(checkbox).is(':checked')) {
@@ -168,8 +175,7 @@ function billPageUpdateTotalSumm()
     strTotal = strTotal.replace('.', ',');
     
     $('#total_debt').html(strTotal);
-
-}
+};
 
 function selectService(chechboxId, inputId)
 {
@@ -291,7 +297,7 @@ function close_all_header_submenu(submenu_id)
             $('#header_submenu_'+have_main_submenu_item[i]).stopTime('header_submenu_'+have_main_submenu_item[i]);
         }
     }
-}
+};
 
 function show_header_submenu(submenu_id)
 {
@@ -339,7 +345,8 @@ function show_header_submenu(submenu_id)
 };
 
 var current_slide = 0;
-function next_slide_rotate_index() {
+function next_slide_rotate_index()
+{
     var next = current_slide + 1;
     if (next >= slide_count) {
         next = 0;
@@ -357,7 +364,8 @@ function next_slide_rotate_index() {
     }
 };
 
-function prev_slide_rotate_index() {
+function prev_slide_rotate_index()
+{
     var prev = current_slide - 1;
     if (prev < 0) {
         prev = slide_count - 1;
@@ -379,7 +387,8 @@ function prev_slide_rotate_index() {
     });
 };
 
-function jump_to_slide(next) {
+function jump_to_slide(next)
+{
     if (current_slide == next) {
         return;
     }
@@ -401,7 +410,8 @@ function jump_to_slide(next) {
     });
 };
 
-function registration_show_password() {
+function registration_show_password()
+{
     var element = $('#reg-password');
     var replica = $('#reg-password-replica');
     if ($(element).is(':visible')) {
@@ -428,7 +438,8 @@ function registration_form_submit() {
     return true;
 };
 
-function registration_ckeck_empty_fileld_password(element) {
+function registration_ckeck_empty_fileld_password(element)
+{
     var val = removeSpaces($(element).val());
     if (val.length == 0) {
         $(element).parent().parent().parent().find('.error-text').css('display', 'block');
@@ -437,7 +448,8 @@ function registration_ckeck_empty_fileld_password(element) {
     }
 };
 
-function registration_ckeck_empty_fileld(element) {
+function registration_ckeck_empty_fileld(element)
+{
     var val = removeSpaces($(element).val());
     if (val.length == 0 || (val == '+___(__)___-__-__')) {
         $(element).parent().parent().find('.error-text').css('display', 'block');
@@ -445,24 +457,6 @@ function registration_ckeck_empty_fileld(element) {
         $(element).parent().parent().find('.error-text').css('display', 'none');
     }
 };
-
-
-$(document).ready(function(){
-    (function(){
-        $('.spoiler-title').click(function(){
-            var par = $(this).parent();
-            var btn = $(par).find('.spoiler-title');
-            if ($(par).hasClass('open')) {
-                $(par).removeClass('open').find('.spoiler-text').slideUp(400);
-            } else {
-                $(par).addClass('open').find('.spoiler-text').slideDown(400);
-            }
-        });
-        $('.spoiler-close').click(function(){
-            $(this).parent().parent().find('.spoiler-title').click();
-        });
-    })();
-});
 
 function changeCheck(element, group_class)
 {
@@ -488,7 +482,6 @@ function changeCheck(element, group_class)
         return;
     }
 
-
     if (!input.attr("checked")) {
         $(element).addClass("checked");
         $(input).attr("checked", true).change();
@@ -496,7 +489,6 @@ function changeCheck(element, group_class)
         $(element).removeClass("checked");
         $(input).attr("checked", false).change();
     }
-    
 
     if ($(element).hasClass(group_class)) {
         var elems = $('.'+ group_class +'.checked');
@@ -639,3 +631,22 @@ function subscribe_by_email()
         }
     });
 };
+
+
+
+$(document).ready(function(){
+    (function(){
+        $('.spoiler-title').click(function(){
+            var par = $(this).parent();
+            var btn = $(par).find('.spoiler-title');
+            if ($(par).hasClass('open')) {
+                $(par).removeClass('open').find('.spoiler-text').slideUp(400);
+            } else {
+                $(par).addClass('open').find('.spoiler-text').slideDown(400);
+            }
+        });
+        $('.spoiler-close').click(function(){
+            $(this).parent().parent().find('.spoiler-title').click();
+        });
+    })();
+});

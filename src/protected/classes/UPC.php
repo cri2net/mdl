@@ -48,13 +48,19 @@ class UPC
     public static function get_error($code)
     {
         switch ($code) {
-            case '1': return 'День закрыт';
-            case '2': return 'Состояние фиксации (блокирования) платежа. Вносить изменения нельзя.';
-            case '4': return 'Нет платежа';
-            case '5': return 'Нет реквизита';
-            case '6': return 'Сумма платежа равна 0';
-            case '7': return 'Платеж с таким id_plat_idklient уже был проведен';
-            case '8': return 'Обязательные реквизиты платежа не заполнены';
+            case '':
+            case '0':
+                return '';
+            
+            case '1' : return 'Касовий день закритий';
+            case '2' : return 'Стан фіксації (блокування) платежу. Вносити зміни не можна.';
+            case '4' : return 'Немає платежу';
+            case '5' : return 'Немає реквізиту';
+            case '6' : return 'Сума платежа дорівнює 0';
+            case '7' : return 'Платіж з таким id_plat_klient вже був проведений';
+            case '8' : return 'Обов\'язкові реквізити платежу не заповнені';
+            case '9' : return 'Статус платежу не 20';
+            case '10': return 'Помилка XML формату';
             
             case '100':
             default: return 'Произошла неизвестная ошибка '.$code;

@@ -205,3 +205,11 @@
 
         return $record;
     }
+
+    function getUkraineDate($format, $timestam)
+    {
+        global $MONTHS;
+        $month = $MONTHS[date('n', $timestamp)]['ua'];
+        $format = str_replace(['n', 'm'], [$month, $month], $format);
+        return date($format, $timestamp);
+    }

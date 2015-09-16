@@ -146,6 +146,12 @@
                     && !isset($__route_result['values']['section'])
                 ) {
                     $new_location = BASE_URL . "/cabinet/objects/{$__route_result['values']['id']}/bill/";
+                } elseif (
+                       ($__route_result['values']['subpage'] == 'payments')
+                    && ($__route_result['values']['section'] == 'details')
+                    && !isset($__route_result['values']['id'])
+                ) {
+                    $new_location = BASE_URL . "/cabinet/payments/";
                 }
                 break;
 

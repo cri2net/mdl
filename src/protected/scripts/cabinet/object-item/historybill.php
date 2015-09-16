@@ -85,7 +85,7 @@
             <tr>
                 <th class="first">Послуга, <br> комунальне пiдприємство</th>
                 <th>Дата cплати</th>
-                <th class="td-sum">Сумма, грн</th>
+                <th class="td-sum">Сума, грн</th>
                 <th class="td-last">Перiод сплати</th>
             </tr>
         </thead>

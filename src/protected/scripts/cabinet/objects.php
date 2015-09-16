@@ -85,7 +85,7 @@
                                         if ($house['title']) {
                                             echo htmlspecialchars($house['title']);
                                             ?>
-                                            <div class="address">$house['address']; ?></div>
+                                            <div class="address"><?= $house['address']; ?></div>
                                             <?php
                                         } else {
                                             echo $house['address'];
@@ -112,7 +112,7 @@
                                     if ($house['title']) {
                                         echo htmlspecialchars($house['title']);
                                         ?>
-                                        <div class="address"><?= $house['street_name'] . ' ' .$house['address']; ?></div>
+                                        <div class="address"><?= $house['address']; ?></div>
                                         <?php
                                     } else {
                                         echo $house['address'];

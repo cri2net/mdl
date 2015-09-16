@@ -104,7 +104,7 @@
     }
 
 ?>
-<h1 class="big-title">Нарахування та платежі за комунальні послуги</h1>
+<h1 class="big-title">Сплата за комунальні послуги</h1>
 <?php
     if ($error) {
         ?><h2 class="big-error-message"><?= $error; ?></h2><?php

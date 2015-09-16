@@ -12,30 +12,36 @@
     <div class="secure">особистий кабiнет</div>
 </div>
 <div class="cabinet-settings cabinet-payments">
-    <div class="page-tabs">
-        <?php
-            $sections = [
-                'history' => 'Iсторiя платежiв',
-                'komdebt' => 'ЖКХ платежi',
-                'instant' => 'Миттєві платежі',
-            ];
-            $i = 0;
-            
-            foreach ($sections as $key => $value) {
-                $i++;
-                $current = ($current_section == $key);
-                $class = 'tab';
-                $class .= ($current) ? ' current' : '';
-                $class .= ($i == count($sections)) ? ' last' : '';
+    <?php
+        if ($current_section != 'details') {
+            ?>
+            <div class="page-tabs">
+                <?php
+                    $sections = [
+                        'history' => 'Iсторiя платежiв',
+                        'komdebt' => 'ЖКХ платежi',
+                        'instant' => 'Миттєві платежі',
+                    ];
+                    $i = 0;
+                    
+                    foreach ($sections as $key => $value) {
+                        $i++;
+                        $current = ($current_section == $key);
+                        $class = 'tab';
+                        $class .= ($current) ? ' current' : '';
+                        $class .= ($i == count($sections)) ? ' last' : '';
 
-                if ($current) {
-                    ?><div class="<?= $class; ?>"><?= $value; ?></div><?php
-                } else {
-                    ?><a class="<?= $class; ?>" href="<?= BASE_URL; ?>/cabinet/payments/<?= $key; ?>/"><?= $value; ?></a><?php
-                }
-            }
-        ?>
-    </div>
+                        if ($current) {
+                            ?><div class="<?= $class; ?>"><?= $value; ?></div><?php
+                        } else {
+                            ?><a class="<?= $class; ?>" href="<?= BASE_URL; ?>/cabinet/payments/<?= $key; ?>/"><?= $value; ?></a><?php
+                        }
+                    }
+                ?>
+            </div>
+            <?php
+        }
+    ?>
     
     <?php
         if (isset($_SESSION['cabinet-settings']['status']) && !$_SESSION['cabinet-settings']['status']) {

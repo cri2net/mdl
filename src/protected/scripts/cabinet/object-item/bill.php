@@ -12,7 +12,7 @@
         if($flatData == null) {
             throw new Exception(ERROR_NOT_FIND_FLAT);
         }
-            
+        
         $debt = new KomDebt();
         $debtData = $debt->getData($flatData['flat_id']);
         

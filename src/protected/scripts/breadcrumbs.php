@@ -102,7 +102,13 @@
                             'history' => 'Iсторiя платежiв',
                             'komdebt' => 'ЖКХ платежi',
                             'instant' => 'Миттєві платежі',
+                            'details' => 'Деталі платежа № ',
                         ];
+
+                        if ($__route_result['values']['section'] == 'details') {
+                            $sections['details'] .= $__route_result['values']['id'];
+                        }
+
                         $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                     }
                     break;
