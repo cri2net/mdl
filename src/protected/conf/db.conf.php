@@ -31,7 +31,8 @@
                 define('DB_USER', 'root');
                 define('DB_PASSWORD', 'kykyev');
                 
-                define('API_URL', 'http://10.12.2.201:8888');
+                define('API_URL', 'https://bank.gioc.kiev.ua');
+                // define('API_URL', 'http://10.12.2.201:8888');
             }
     }
     
