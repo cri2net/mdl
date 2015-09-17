@@ -9,7 +9,7 @@
         </div>
         <div class="input edit-object-title">
             <label>Назва об'єкту: <br>
-                <input class="txt" type="text" name="object-title" value="<?= htmlspecialchars($object['title'], ENT_QUOTES); ?>">
+                <input autofocus class="txt" type="text" name="object-title" value="<?= htmlspecialchars($object['title'], ENT_QUOTES); ?>">
             </label>
         </div>
         <div class="form-subtitle delete-object">Видалення об'єкта</div>

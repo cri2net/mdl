@@ -4,6 +4,7 @@ class Flat
 {
     const TABLE = DB_TBL_FLATS;
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
+    const MAX_USER_FLATS = 4;
     const FLAT_URL = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
 
     /**
@@ -34,7 +35,7 @@ class Flat
             return false;
         }
         
-        if (self::getFlatCount($user_id) >= 4) {
+        if (self::getFlatCount($user_id) >= self::MAX_USER_FLATS) {
             throw new Exception(ERROR_TOO_MANY_FLATS);
             return false;
         }
@@ -118,7 +119,7 @@ class Flat
         return $flat;
     }
 
-    public static function getAddressString($flat_id, $city_id = Street::KIEV_ID)
+    public static function getAddressString($flat_id, $city_id = Street::KIEV_ID, &$explode = [])
     {
         $flat = self::getFlatById($flat_id, $city_id);
         if ($flat == null){
@@ -126,13 +127,17 @@ class Flat
         }
 
         $address = '';
+
         if ($city_id == Street::KIEV_ID) {
             $address .= 'Київ, ';
+            $explode['city'] = 'Київ';
         }
-        $address .= Street::getStreetName($flat['street_id'], $city_id) . ' ';
-        $address .= House::getHouseName($flat['house_id'], $city_id);
-        $address .= ', кв. ' . $flat['flat_number'];
+
+        $explode['street'] = Street::getStreetName($flat['street_id'], $city_id);
+        $explode['house'] = House::getHouseName($flat['house_id'], $city_id);
+        $explode['flat'] = $flat['flat_number'];
         
+        $address .= "{$explode['street']} {$explode['house']}, кв. {$flat['flat_number']}";
         return $address;
     }
 
@@ -161,9 +166,9 @@ class Flat
             }
             
             if ($arr[$i]['street_name'] !== $arr[$i]['street_name_full']) {
-                $arr[$i]['street_name'] .= " ...";
+                $arr[$i]['street_name'] .= "...";
             }
-            $arr[$i]['address'] = self::getAddressString($arr[$i]['flat_id']);
+            $arr[$i]['address'] = self::getAddressString($arr[$i]['flat_id'], $arr[$i]['city_id'], $arr[$i]['detail_address']);
         }
         
         return $arr;
@@ -292,8 +297,11 @@ class Flat
      * @param  integer $user_id
      * @return integer
      */
-    public static function getFlatCount($user_id)
+    public static function getFlatCount($user_id = null)
     {
+        if ($user_id == null) {
+            $user_id = Authorization::getLoggedUserId();
+        }
         $pdo = PDO_DB::getPDO();
         $stm = $pdo->prepare("SELECT COUNT(*) FROM ". self::USER_FLATS_TABLE . " WHERE user_id=?");
         $stm->execute([$user_id]);

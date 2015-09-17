@@ -21,6 +21,7 @@ define('ERROR_EMPTY_BILL', 'Нарахування на даний місяць 
 define('ERROR_OLD_REQUEST', 'Ваш сеанс застарів, будь ласка, повторіть ваш запит');
 define('ERROR_GET_FLAT', 'Помилка при отриманні квартири.');
 define('ERROR_GET_PAYMENT', 'Помилка при отриманні платежу.');
+define('ERROR_GET_PAYMENT_PDF', 'Помилка при отриманні квитанції.');
 define('ERROR_SHOW_PAYMENT', 'Неможливо показати деталі платежу');
 define('ERROR_GETTING_DEBT', 'Немає платежів за вибраний місяць.');
 define('ERROR_ADDRESS_ALREADY_EXIST', 'Квартира вже додана.');

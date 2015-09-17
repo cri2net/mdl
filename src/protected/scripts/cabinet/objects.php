@@ -6,7 +6,7 @@
     if (isset($_SESSION['objects-auth']['status']) && !$_SESSION['objects-auth']['status']) {
         ?>
         <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
-        <div class="error-desription"><?= $_SESSION['objects-auth']['error']['text']; ?></div>
+        <div class="error-description"><?= $_SESSION['objects-auth']['error']['text']; ?></div>
         <?php
         unset($_SESSION['objects-auth']['status']);
     }
@@ -76,33 +76,6 @@
                             ?></div><div class="houses_line"><?php
                         }
 
-                        if ($house['error']) {
-                            ?>
-                            <div class="house_item <?= $house['icon']; ?>">
-                                <div class="title">
-                                    <div class="icon"></div>
-                                    <?php
-                                        if ($house['title']) {
-                                            echo htmlspecialchars($house['title']);
-                                            ?>
-                                            <div class="address"><?= $house['address']; ?></div>
-                                            <?php
-                                        } else {
-                                            echo $house['address'];
-                                        }
-                                    ?>
-                                </div>
-                            
-                                <div class="values align-center">
-                                    <b style="color:#900;">Виникла тимчасова помилка</b>
-                                </div>
-                                <div class="align-center">
-                                    <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об'єкту</a>
-                                </div>
-                            </div>
-                            <?php
-                            continue;
-                        }
                         ?>
                         <div class="house_item <?= $house['payed']; ?> <?= $house['icon']; ?>">
                             <div class="payed-icon"></div>
@@ -115,28 +88,49 @@
                                         <div class="address"><?= $house['address']; ?></div>
                                         <?php
                                     } else {
-                                        echo $house['address'];
+                                        $street_name = ($house['street_name'] !== $house['street_name_full'])
+                                            ? $street_name = '<span title="'. $house['street_name_full'] .'">' . $house['street_name'] . '</span>'
+                                            : $house['street_name'];
+                                        ?>
+                                        Київ, <br> <?= $street_name; ?> <br> кв. <?= $house['detail_address']['flat']; ?>
+                                        <?php
+                                    }
+
+                                    if (!$house['error']) {
+                                        ?>
+                                        <div class="bydate">рахунок на <?= $house['date']; ?> року</div>
+                                        <?php
                                     }
                                 ?>
-                                <div class="bydate">рахунок на <?= $house['date']; ?> року</div>
                             </div>
-            
-                            <div class="values">
-                                <div class="value-line">
-                                    <div class="value-title">Сума до сплати</div>
-                                    <div class="align-right">
-                                        <div class="value-border"></div>
-                                        <div class="value"><?= $house['debt_sum_str']; ?></div>
+                            <?php
+                                if ($house['error']) {
+                                    ?>
+                                    <div class="values align-center">
+                                        <b style="color:#900;">Виникла тимчасова помилка</b>
                                     </div>
-                                </div>
-                                <div class="value-line small-line">
-                                    <div class="value-title">Сплачено у <?= $house['in_this_month']; ?></div>
-                                    <div class="align-right">
-                                        <div class="value-border"></div>
-                                        <div class="value"><?= $house['oplat_this_month_str']; ?></div>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <div class="values">
+                                        <div class="value-line">
+                                            <div class="value-title">Сума до сплати</div>
+                                            <div class="align-right">
+                                                <div class="value-border"></div>
+                                                <div class="value"><?= $house['debt_sum_str']; ?></div>
+                                            </div>
+                                        </div>
+                                        <div class="value-line small-line">
+                                            <div class="value-title">Сплачено у <?= $house['in_this_month']; ?></div>
+                                            <div class="align-right">
+                                                <div class="value-border"></div>
+                                                <div class="value"><?= $house['oplat_this_month_str']; ?></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                    <?php
+                                }
+                            ?>
                             <div class="align-center">
                                 <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об'єкту</a>
                             </div>

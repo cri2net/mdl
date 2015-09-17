@@ -5,7 +5,7 @@
     } elseif (isset($_SESSION['contacts']['status'])) {
         ?>
         <h2 class="big-error-message">Під час надсилання повідомлення виникла помилка:</h2>
-        <div class="error-desription"><?= $_SESSION['contacts']['error']['text']; ?></div>
+        <div class="error-description"><?= $_SESSION['contacts']['error']['text']; ?></div>
         <?php
         unset($_SESSION['contacts']['status']);
     }

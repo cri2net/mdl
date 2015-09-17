@@ -41,7 +41,7 @@
         if (isset($_SESSION['cabinet-settings']['status']) && !$_SESSION['cabinet-settings']['status']) {
             ?>
             <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
-            <div class="error-desription"><?= $_SESSION['cabinet-settings']['error']['text']; ?></div>
+            <div class="error-description"><?= $_SESSION['cabinet-settings']['error']['text']; ?></div>
             <?php
             unset($_SESSION['cabinet-settings']['status']);
         } elseif (isset($_SESSION['cabinet-settings']['status'])) {

@@ -196,14 +196,14 @@ class ShoppingCart
         }
 
         if ($first) {
-            return Http::HttpGet(API_URL . self::PDF_FIRST_URL . $payment['reports_id_pack']);
+            return Http::fgets(API_URL . self::PDF_FIRST_URL . $payment['reports_id_pack']);
         }
         
         $pdf1_url = API_URL . self::PDF_TODAY_URL . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
         $pdf2_url = API_URL . self::PDF_NOT_TODAY_URL . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
 
-        $pdf1 = Http::HttpGet($pdf1_url);
-        $pdf2 = Http::HttpGet($pdf2_url);
+        $pdf1 = Http::fgets($pdf1_url);
+        $pdf2 = Http::fgets($pdf2_url);
 
         return (strlen($pdf1) > strlen($pdf2)) ? $pdf1 : $pdf2;
     }

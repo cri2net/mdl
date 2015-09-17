@@ -46,6 +46,7 @@
                     <span class="item-summ">
                         <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
                     </span>
+                    грн
                 </td>
             </tr>
             <tr class="item-row even">
@@ -57,6 +58,7 @@
                     <span class="item-summ">
                         <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
                     </span>
+                    грн
                 </td>
             </tr>
             <tr class="item-row odd">
@@ -68,6 +70,7 @@
                     <span class="item-summ">
                         <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
                     </span>
+                    грн
                 </td>
             </tr>
         </tbody>
@@ -119,3 +122,13 @@
         </tbody>
     </table>
 </div>
+<div class="clear"></div>
+<br>
+<br>
+<?php
+    if ($payment['status'] == 'success') {
+        ?>
+        <a class="btn green big" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/GIOC-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
+        <?php
+    }
+?>

@@ -49,7 +49,7 @@
         <h2 class="big-error-message">Помилка транзакції.</h2>
         <?php
             if ($error) {
-                ?><div class="error-desription"><?= $error; ?></div> <?php
+                ?><div class="error-description"><?= $error; ?></div> <?php
             }
         ?>
         <div>

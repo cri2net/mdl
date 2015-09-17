@@ -6,7 +6,7 @@
     if (isset($_SESSION['registration']['status'])) {
         ?>
         <h2 class="big-error-message">Під час реєстрації виникла помилка:</h2>
-        <div class="error-desription"><?= $_SESSION['registration']['error']['text']; ?></div>
+        <div class="error-description"><?= $_SESSION['registration']['error']['text']; ?></div>
         <?php
         unset($_SESSION['registration']['status']);
     } elseif (isset($_SESSION['registration']['show_message'])) {

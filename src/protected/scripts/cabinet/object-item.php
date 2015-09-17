@@ -55,7 +55,7 @@
         if (isset($_SESSION['object-item']['status']) && !$_SESSION['object-item']['status']) {
             ?>
             <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
-            <div class="error-desription"><?= $_SESSION['object-item']['error']['text']; ?></div>
+            <div class="error-description"><?= $_SESSION['object-item']['error']['text']; ?></div>
             <?php
             unset($_SESSION['object-item']['status']);
         } elseif (isset($_SESSION['object-item']['status'])) {

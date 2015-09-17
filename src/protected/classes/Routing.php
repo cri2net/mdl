@@ -188,6 +188,9 @@ class Routing
                     $params['match'] = str_replace("{" . $varible[1] . "}", '(.+)', $params['match']);
                     $params['match'] = str_replace("{" . $varible[1] . "|num}", '(\d*)', $params['match']);
                     $params['match'] = str_replace("{" . $varible[1] . "|str}", '([а-яёa-z1-9]*)', $params['match']);
+                    // слеши оно не понимает. Может быть вернуться к этому, чтоб можно было по anything перенаправлять любую глубину урла
+                    // $params['match'] = str_replace("{" . $varible[1] . "|anything}", '(.*?)', $params['match']);
+                    $params['match'] = str_replace("{" . $varible[1] . "|filename}", '([а-яёa-z1-9_\.\-]*)', $params['match']);
                     $params['values'][($key+1)] = $varible[1];
                 }
                 $params['match'] = '/^' . $params['match'] .'$/iu';

@@ -20,9 +20,21 @@
         </select>
     </label>
 </div>
+<?php
+    $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::MAX_USER_FLATS));
+?>
 <div class="input">
-    <button class="btn green bold"><div class="icon-objects"></div>Додати об'єкт</button>
+    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn green bold"><div class="icon-objects"></div>Додати об'єкт</button>
 </div>
+<?php
+    if ($disabled) {
+        ?>
+        <div class="error-description">
+           <br> <?= ERROR_TOO_MANY_FLATS; ?>
+        </div>
+        <?php
+    }
+?>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#add_obj_street").autocomplete({
