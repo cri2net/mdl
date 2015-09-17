@@ -519,6 +519,11 @@ function close_feedback_msg()
     $('body').removeClass('popup-open');
 };
 
+function open_video_frame(element, youtube_id)
+{
+    $(element).parent().html('<iframe width="340" height="220" src="https://www.youtube.com/embed/'+ youtube_id +'?feature=oembed&autoplay=1&fullscreen=1&hd=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>');
+};
+
 function check_delete_profile()
 {
     return ($('#confirm_delete_profile input').is(':checked'));

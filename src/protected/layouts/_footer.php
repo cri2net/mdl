@@ -114,13 +114,15 @@
     });
     $('a').each(function() {
         var a = new RegExp('/' + window.location.host + '/');
-        if(!a.test(this.href)) {
-            $(this).click(function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                window.open(this.href, '_blank');
-           });
-       }
+        if (!a.test(this.href)) {
+            if ($(this).attr('rel') !== 'prettyPhoto') {
+                $(this).click(function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    window.open(this.href, '_blank');
+                });
+            }
+        }
     });
 </script>
 <?php require_once(ROOT . '/protected/scripts/yandex-metrika.php'); ?>

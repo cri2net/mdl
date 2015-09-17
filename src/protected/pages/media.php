@@ -1,23 +1,45 @@
 <h1 class="big-title green h1-media">Відеоматеріали</h1>
 <div class="media">
-    <div class="thumbnail">
-        <div class="thumb-date">12 листопада</div>
-        <div class="thumb-container" style="background-image:url('http://img.youtube.com/vi/m-vCTrm_8dY/hqdefault.jpg')"><a href="#"></a></div>
-        <div class="thumb-title"><b>У центрі уваги.</b> Нові платіжки мають надійти киянам до 13 листопада</div>
-    </div>
-    <div class="thumbnail">
-        <div class="thumb-date">10 жовтня</div>
-        <div class="thumb-container" style="background-image:url('http://img.youtube.com/vi/Img9pczIklE/hqdefault.jpg')"><a href="#"></a></div>
-        <div class="thumb-title"><b>У центрі уваги.</b> Чи отримають кияни вчасно квитанції за комунальні послуги?</div>
-    </div>
-    <div class="thumbnail">
-        <div class="thumb-date">29 вересня</div>
-        <div class="thumb-container" style="background-image:url('http://img.youtube.com/vi/jLB4kBHNyNQ/hqdefault.jpg')"><a href="#"></a></div>
-        <div class="thumb-title"><b>Громадська приймальня.</b> Як заповнити платіжку нового виду</div>
-    </div>
-    <div class="thumbnail">
-        <div class="thumb-date">19 квiтня</div>
-        <div class="thumb-container" style="background-image:url('http://img.youtube.com/vi/zoC5bjZC3mI/hqdefault.jpg')"><a href="#"></a></div>
-        <div class="thumb-title"><b>24-й телеканал.</b> Оплата комфорту</div>
-    </div>
+    <?php
+        $list = PDO_DB::table_list(TABLE_PREFIX . 'video', "is_active=1 AND url like '%youtube.com%'", 'pos ASC');
+        if (count($list) > 0) {
+            foreach ($list as $item) {
+                
+                $parts = parse_url($item['url']);
+                parse_str($parts['query'], $query);
+                
+                if (!$query['v']) {
+                    continue;
+                }
+
+                if (!$item['title'] || !$item['img_filename']) {
+                    $youtube_data = Http::HttpGet('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v='. $query['v'] .'&format=json');
+                    $youtube_data = @json_decode($youtube_data);
+
+                    if ($youtube_data === null) {
+                        continue;
+                    }
+
+                    $item['img_filename'] = ($item['img_filename']) ? $item['img_filename'] : $youtube_data->thumbnail_url;
+                    $item['title'] = ($item['title']) ? $item['title'] : $youtube_data->title;
+                }
+
+                $date = '';
+                if ($item['date']) {
+                    $date = getUkraineDate('j m', $item['date']);
+                    if (date('Y', $item['date']) != date('Y')) {
+                        $date .= date(' Y', $item['date']);
+                    }
+                }
+
+                ?>
+                <div class="thumbnail">
+                    <div class="thumb-date"><?= $date; ?>&nbsp;</div>
+                    <div class="thumb-container" style="background-image:url('<?= $item['img_filename']; ?>')"><a onclick="open_video_frame(this, '<?= $query['v']; ?>');"></a></div>
+                    <div class="thumb-title"><b><?= htmlspecialchars($item['title']); ?></b> <?= htmlspecialchars($item['description']); ?></div>
+                </div>
+                <?php
+            }
+        }
+    ?>
 </div>

@@ -363,4 +363,27 @@ ALTER TABLE `gioc_payment`
 
 
 -- IN ONLINE
+-- осталось выложить на сплату
+
+-- 2015.09.17
+ALTER TABLE `gioc_video`
+  CHANGE `date` `date` DOUBLE NULL;
+
+ALTER TABLE `gioc_users`
+  ADD COLUMN `verified_email` TINYINT(1) DEFAULT 0  NOT NULL AFTER `notify_email`,
+  ADD COLUMN `verified_phone` TINYINT(1) DEFAULT 0  NOT NULL AFTER `verified_email`,
+  ADD COLUMN `broken_email` TINYINT(1) DEFAULT 0  NOT NULL AFTER `verified_phone`;
+
+
+INSERT INTO `gioc_video` (`id`, `is_active`, `pos`, `type`, `url`, `date`, `title`, `description`, `img_filename`) VALUES
+(1, 1, 1, 'youtube', 'https://www.youtube.com/watch?v=m-vCTrm_8dY', 1415311200, 'У центрі уваги.', 'Нові платіжки мають надійти киянам до 13 листопада', ''),
+(2, 1, 2, 'youtube', 'https://www.youtube.com/watch?v=Img9pczIklE', 1412888400, 'У центрі уваги.', 'Чи отримають кияни вчасно квитанції за комунальні послуги?', ''),
+(3, 1, 3, 'youtube', 'https://www.youtube.com/watch?v=jLB4kBHNyNQ', 1411938000, 'Громадська приймальня.', 'Як заповнити платіжку нового виду', ''),
+(4, 1, 4, 'youtube', 'https://www.youtube.com/watch?v=sd1IccmSpJM', 1408395600, 'У центрі уваги.', 'За якими тарифами сплачувати комунальні послуги', ''),
+(5, 1, 5, 'youtube', 'https://www.youtube.com/watch?v=zoC5bjZC3mI', 1366318800, '24-й телеканал.', 'Оплата комфорту', ''),
+(6, 1, 6, 'youtube', 'https://www.youtube.com/watch?v=6mKib_R44UI', 1363125600, 'Київське віче', '', ''),
+(7, 1, 7, 'youtube', 'https://www.youtube.com/watch?v=7MoeVTcT4AU', NULL, 'Телеканал «Київ»', 'Кияни - сумлінні платники за комунальні послуги', ''),
+(8, 1, 8, 'youtube', 'https://www.youtube.com/watch?v=coERKQLcNuI', NULL, 'Телеканал «СТН»', 'Про картку киянина', ''),
+(9, 1, 9, 'youtube', 'https://www.youtube.com/watch?v=BihTyWMX5pM', NULL, 'Картка киянин', '', '');
+
 
