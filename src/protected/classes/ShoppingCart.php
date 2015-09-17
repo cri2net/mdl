@@ -7,9 +7,9 @@ class ShoppingCart
     const USE_TEST_KASS = true;
     const TEST_KASS_ID = '998';
     const REPORT_BASE_URL   = '/reports/rwservlet';
-    const PDF_FIRST_URL     = '/reports/rwservlet?report=kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-    const PDF_TODAY_URL     = '/reports/rwservlet?report=kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_FIRST_URL     = '/reports/rwservlet?report=ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+    const PDF_TODAY_URL     = '/reports/rwservlet?report=ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
