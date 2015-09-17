@@ -1,4 +1,5 @@
 node_modules/
 public/
-gioc.sublime-project
-gioc.sublime-workspace
+src/protected/conf/db.conf.local.php
+*.sublime-project
+*.sublime-workspace
