@@ -30,19 +30,22 @@
         }
 
         // email
-        if (
-            (strcmp($__userData['email'], $update['email']) !== 0)
-            && (User::getUserIdByEmail($update['email']) != null)
-        ) {
-            throw new Exception(ERROR_EMAIL_ALREADY_EXIST);
+        if (strcmp($__userData['email'], $update['email']) !== 0) {
+            if (User::getUserIdByEmail($update['email']) != null) {
+                throw new Exception(ERROR_EMAIL_ALREADY_EXIST);
+            } else {
+                $update['broken_email'] = 0;
+                $update['verified_email'] = 0;
+            }
         }
 
         // уникальность телефона
-        if (
-            (strcmp($__userData['mob_phone'], $update['mob_phone']) !== 0)
-            && (User::getUserIdByPhone($update['mob_phone']) != null)
-        ) {
-            throw new Exception(ERROR_PHONE_ALREADY_EXIST);
+        if (strcmp($__userData['mob_phone'], $update['mob_phone']) !== 0) {
+            if (User::getUserIdByPhone($update['mob_phone']) != null) {
+                throw new Exception(ERROR_PHONE_ALREADY_EXIST);
+            } else {
+                $update['verified_phone'] = 0;
+            }
         }
 
         PDO_DB::update($update, User::TABLE, $__userData['id']);

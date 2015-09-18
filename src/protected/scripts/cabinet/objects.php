@@ -92,7 +92,7 @@
                                             ? $street_name = '<span title="'. $house['street_name_full'] .'">' . $house['street_name'] . '</span>'
                                             : $house['street_name'];
                                         ?>
-                                        Київ, <br> <?= $street_name; ?> <br> кв. <?= $house['detail_address']['flat']; ?>
+                                        Київ, <br> <?= $street_name; ?> <br> <?= $house['detail_address']['house']; ?> кв. <?= $house['detail_address']['flat']; ?>
                                         <?php
                                     }
 

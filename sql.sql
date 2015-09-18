@@ -362,8 +362,6 @@ ALTER TABLE `gioc_payment`
   ADD  INDEX `for_cron_2` (`status`, `go_to_payment_time`);
 
 
--- IN ONLINE
--- осталось выложить на сплату
 
 -- 2015.09.17
 ALTER TABLE `gioc_video`
@@ -387,3 +385,4 @@ INSERT INTO `gioc_video` (`id`, `is_active`, `pos`, `type`, `url`, `date`, `titl
 (9, 1, 9, 'youtube', 'https://www.youtube.com/watch?v=BihTyWMX5pM', NULL, 'Картка киянин', '', '');
 
 
+-- IN ONLINE

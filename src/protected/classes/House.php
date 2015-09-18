@@ -19,11 +19,11 @@ class House
         $stm->execute(array($city_id, $house_id));
         $name = $stm->fetchColumn();
         
-        if($name === false) {
+        if ($name === false) {
             return '';
         }
         
-        return $name;
+        return 'буд. ' . $name;
     }
 
     public static function get($street_id, $city_id = Street::KIEV_ID)
@@ -52,7 +52,7 @@ class House
             $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
             $xml = @simplexml_load_string($data);
 
-            if($xml !== false) {
+            if ($xml !== false) {
                 $stm_del->execute(array(Street::KIEV_ID, $streets[$i]['street_id']));
                 for ($j=0; $j<count($xml->ROW); $j++) {
                     $stm_insert->execute(array(Street::KIEV_ID, $streets[$i]['street_id'], $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM));

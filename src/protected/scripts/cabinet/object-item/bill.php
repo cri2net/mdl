@@ -94,7 +94,7 @@
                                             <?php
                                         }
                                     ?>
-                                    <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> 
+                                    <span class="small"><br><?= htmlspecialchars($item['FIO']); ?> (о.р.<?= $item['ABCOUNT']; ?>)</span> 
                                 </label>
                             </div>
                             <?php

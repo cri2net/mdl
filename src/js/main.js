@@ -627,8 +627,7 @@ function subscribe_by_email()
         url : BASE_URL + '/ajax/json/subscribe',
         success : function(response){
             if (response.status) {
-                $('#subscribe_by_email').css('color', "#090").css('cursor', "").attr('title', '');
-                setTimeout(function(){ $('#subscribe_by_email').val('').css('color', ""); }, 600);
+                $('#subscribe_by_email').parent().html('<span class="thx">Дякуємо за підписку!</span>');
             } else {
                 $('#subscribe_by_email').css('color', "#e00").css('cursor', "help").attr('title', response.text);
                 setTimeout(function(){ $('#subscribe_by_email').css('color', "").css('cursor', ""); }, 1200);
