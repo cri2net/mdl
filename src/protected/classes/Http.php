@@ -15,6 +15,48 @@ class Http
         }
     }
 
+    /**
+     * Enable GZIP
+     * 
+     * @param  string  $data           content for compression
+     * @param  boolean $echo           need echo. OPTIONAL
+     * @param  string  $content_type   Content-type for header. OPTIONAL
+     * @param  string  $charset        charset of $data. OPTIONAL
+     * @param  integer $offset         offset for expire header. OPTIONAL
+     * 
+     * @return void | string
+     */
+    public static function gzip($data, $echo = true, $content_type = 'text/html', $charset = 'UTF-8', $offset = 1209600)
+    {
+        $supportsGzip = (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) && function_exists('gzencode');
+        $expire = "expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
+        
+        if (!$supportsGzip) {
+            if (!$echo) {
+                return $data;
+            }
+            $content = $data;
+        } else {
+            $content = gzencode(trim(preg_replace('/\s+/', ' ', $data)), 9);
+        }
+
+        if (!$echo) {
+            return $content;
+        }
+
+        if ($supportsGzip) {
+            header('Content-Encoding: gzip');
+            header('Vary: Accept-Encoding');
+        }
+        
+        header("Content-type: $content_type; charset: $charset");
+        header("cache-control: must-revalidate");
+        header($expire);
+        header('Content-Length: ' . strlen($content));
+
+        echo $content;
+    }
+
     public static function httpGet($url, $checkStatus = true)
     {
         $ch = curl_init();
@@ -61,7 +103,7 @@ class Http
         
         return $response;
     }
-    
+
     private static function getStatus($ch, $response)
     {
         if (!$response) {

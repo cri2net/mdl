@@ -9,7 +9,7 @@ try {
                 $filename = ROOT . '/style/' . $__route_result['values']['path'];
                 if (file_exists($filename)) {
                     header("Content-Type: text/css; charset=utf-8");
-                    echo file_get_contents($filename);
+                    Http::gzip(file_get_contents($filename), true, 'text/css');
                     exit();
                 } else {
                     header("HTTP/1.1 404 Not Found");
@@ -20,8 +20,7 @@ try {
             case 'js':
                 $filename = ROOT . '/js/' . $__route_result['values']['path'];
                 if (file_exists($filename)) {
-                    header("Content-Type: application/javascript; charset=utf-8");
-                    echo file_get_contents($filename);
+                    Http::gzip(file_get_contents($filename), true, 'application/javascript');
                     exit();
                 } else {
                     header("HTTP/1.1 404 Not Found");
