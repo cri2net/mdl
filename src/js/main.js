@@ -521,7 +521,16 @@ function close_feedback_msg()
 
 function open_video_frame(element, youtube_id)
 {
-    $(element).parent().html('<iframe width="340" height="220" src="https://www.youtube.com/embed/'+ youtube_id +'?feature=oembed&autoplay=1&fullscreen=1&hd=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>');
+    current_youtube_id = 'ytplayer-' + youtube_id;
+    $('body').addClass('popup-open').append('<div id="global-owerlay" onclick="close_feedback_msg();" class="youtube"><div id="popup-box" class="popup-box"><div class="popup-content"></div></div></div>');
+    $('#popup-box .popup-content').html('<div id="'+ current_youtube_id +'"></div>');
+
+    player = new YT.Player(current_youtube_id, {
+        playerVars: { 'autoplay': 1, 'controls': 1, 'autohide':1, 'wmode':'opaque'},
+        videoId: youtube_id,
+        width: '460',
+        height: '344',
+    });
 };
 
 function check_delete_profile()

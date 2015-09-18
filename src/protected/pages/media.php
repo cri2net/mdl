@@ -1,3 +1,4 @@
+<script src="https://www.youtube.com/iframe_api"></script>
 <h1 class="big-title green h1-media">Відеоматеріали</h1>
 <div class="media">
     <?php
@@ -35,7 +36,7 @@
                 ?>
                 <div class="thumbnail">
                     <div class="thumb-date"><?= $date; ?>&nbsp;</div>
-                    <div class="thumb-container" style="background-image:url('<?= $item['img_filename']; ?>')"><a onclick="open_video_frame(this, '<?= $query['v']; ?>');"></a></div>
+                    <div class="thumb-container" style="background-image:url('<?= $item['img_filename']; ?>')"><div class="btn-play" onclick="open_video_frame(this, '<?= $query['v']; ?>'); return false;"></div></div>
                     <div class="thumb-title"><b><?= htmlspecialchars($item['title']); ?></b> <?= htmlspecialchars($item['description']); ?></div>
                 </div>
                 <?php
@@ -43,3 +44,4 @@
         }
     ?>
 </div>
+<button class="btn" onclick="playFullscreen();" id="sdfsdfsf">sdfsdfsf</button>

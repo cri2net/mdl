@@ -37,6 +37,10 @@
                 $update['broken_email'] = 0;
                 $update['verified_email'] = 0;
             }
+
+            if (filter_var($_SESSION['auth_data']['login'], FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['auth_data']['login'] = $update['email'];
+            }
         }
 
         // уникальность телефона
@@ -45,6 +49,10 @@
                 throw new Exception(ERROR_PHONE_ALREADY_EXIST);
             } else {
                 $update['verified_phone'] = 0;
+            }
+
+            if (!filter_var($_SESSION['auth_data']['login'], FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['auth_data']['login'] = $update['mob_phone'];
             }
         }
 
