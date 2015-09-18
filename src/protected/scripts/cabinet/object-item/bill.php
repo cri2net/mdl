@@ -44,12 +44,12 @@
     <table class="full-width-table datailbill-table no-border">
         <thead>
             <tr>
-                <th class="first align-center counters-th" colspan="4">
+                <th class="first align-center counters-th" colspan="5">
                     Рахунок на <?= $debtData['date']; ?>
                 </th>
             </tr>
             <tr>
-                <th class="first align-center" colspan="4">
+                <th class="first align-center" colspan="5">
                     <span><?= $object['address']; ?></span><br>
                     Загальна площа: <b><?= $debtData['PL_OB']; ?> м.кв.</b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м.кв.</b>, проживаючих: <b><?= $debtData['PEOPLE']; ?></b>
                 </th>
@@ -65,6 +65,7 @@
                         </label>
                     </div>
                 </td>
+                <td style="white-space:nowrap;">Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']; ?>, грн</td>
                 <td style="white-space:nowrap;">Сума боргу,<br>грн</td>
                 <td style="white-space:nowrap;">Переплата,<br>грн</td>
                 <td style="white-space:nowrap;">До сплати,<br>грн</td>
@@ -112,6 +113,20 @@
                                         <span class="small"><br>Увага! Суму до сплати можна змінити, ввівши нове значення</span>
                                         <?php
                                     }
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                if ($item['SUMM_MONTH'] == '-') {
+                                    echo '—';
+                                } else {
+                                    $summ = explode(',', $item['SUMM_MONTH']);
+                                    ?>
+                                    <span class="item-summ">
+                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                    </span>
+                                    <?php
                                 }
                             ?>
                         </td>
@@ -168,11 +183,11 @@
                 }
             ?>
             <tr class="total-summ-tr">
-                <td class="first align-right" colspan="3">Усьго, грн:</td>
+                <td class="first align-right" colspan="4">Усьго, грн:</td>
                 <td class="total-sum" id="total_debt"><?= $debtData['full_dept']; ?></td>
             </tr>
             <tr>
-                <td class="align-center" colspan="4">
+                <td class="align-center" colspan="5">
                     <input type="hidden" name="dbegin" value="<?= $dateBegin; ?>">
                     <input type="hidden" name="dend" value="<?= $dateEnd; ?>">
                     <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">

@@ -206,6 +206,14 @@ class KomDebt
             $list['TLF'] = (string)$row->TLF;
             $list['R_COUNT'] = (string)$row->R_COUNT;
 
+            $SUMM_MONTH = ((float)$row->SUMM_MONTH)/100;
+            if ($SUMM_MONTH <= 0) {
+                $list['SUMM_MONTH'] = '-';
+            } else {
+                $list['SUMM_MONTH'] = sprintf('%.2f', $SUMM_MONTH);
+                $list['SUMM_MONTH'] = str_replace(".", ",", $list['SUMM_MONTH']);
+            }
+
             if ($row->COUNTERS->COUNTERS_ITEM) {
                 $list['counterData']['FIRM_NAME'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
                 $list['counterData']['CODE_FIRME'] = (int)$row->CODE_FIRME;
