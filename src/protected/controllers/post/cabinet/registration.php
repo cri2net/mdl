@@ -12,7 +12,7 @@
            
         // все ли поля заполнены
         foreach ($fields as $key => $title) {
-            if (!$_SESSION['registration'][$key]) {
+            if (!$_SESSION['registration'][$key] && ($key != 'fathername')) {
                 $error = str_replace('{FIELD}', $title, ERROR_FIELD_EMPTY_ERROR_MSG);
                 $_SESSION['registration']['error']['field'] = $key;
                 throw new Exception($error);

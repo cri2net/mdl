@@ -18,7 +18,7 @@
            
         // все ли поля заполнены
         foreach ($fields as $key => $title) {
-            if (!$update[$key]) {
+            if (!$update[$key] && ($key != 'fathername')) {
                 $error = str_replace('{FIELD}', $title, ERROR_FIELD_EMPTY_ERROR_MSG);
                 throw new Exception($error);
             }

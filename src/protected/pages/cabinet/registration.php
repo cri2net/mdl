@@ -1,6 +1,9 @@
 <div class="h1-line">
     <h1>Реєстрація</h1>
-    <a href="<?= BASE_URL; ?>/cabinet/login/" class="already-have">У мене вже є аккаунт</a>
+    <div class="already-have">
+        <a href="<?= BASE_URL; ?>/cabinet/login/">У мене вже є аккаунт</a>
+        <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a>
+    </div>
 </div>
 <?php
     if (isset($_SESSION['registration']['status'])) {
@@ -38,37 +41,36 @@
         <form onsubmit="registration_form_submit();" method="post" action="<?= BASE_URL; ?>/post/cabinet/registration/">
             <input type="text" name="country" value="" style="display:none;">
             <div class="input">
-                <label>Ім'я: <br>
+                <label>Прiзвище <span class="star-required" title="обов'язкове поле">*</span><br>
+                    <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="lastname" id="reg-lastname" value="<?= $_reg_lastname; ?>">
+                </label>
+                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+            </div>
+            <div class="input">
+                <label>Ім'я: <span class="star-required" title="обов'язкове поле">*</span><br>
                     <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="name" id="reg-name" value="<?= $_reg_name; ?>">
                 </label>
                 <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
             </div>
             <div class="input">
                 <label>По-батьковi <br>
-                    <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="fathername" id="reg-fathername" value="<?= $_reg_fathername; ?>">
+                    <input class="txt form-txt-input" type="text" name="fathername" id="reg-fathername" value="<?= $_reg_fathername; ?>">
                 </label>
-                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
             </div>
             <div class="input">
-                <label>Прiзвище <br>
-                    <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="lastname" id="reg-lastname" value="<?= $_reg_lastname; ?>">
-                </label>
-                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
-            </div>
-            <div class="input">
-                <label>Електронна пошта <br>
+                <label>Електронна пошта <span class="star-required" title="обов'язкове поле">*</span><br>
                     <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="email" name="email" id="reg-email" value="<?= $_reg_email; ?>">
                 </label>
                 <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
             </div>
             <div class="input">
-                <label>Телефон <br>
+                <label>Телефон <span class="star-required" title="обов'язкове поле">*</span><br>
                     <input onblur="setTimeout(function(){registration_ckeck_empty_fileld($('#reg-phone'))}, 200);" required="required" class="txt form-txt-input" placeholder="+380" type="text" name="phone" id="reg-phone" value="<?= $_reg_phone; ?>">
                 </label>
                 <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
             </div>
             <div class="input pass">
-                <label>Пароль <span class="hint">(не менше 6 символiв)</span> <br>
+                <label>Пароль <span class="star-required" title="обов'язкове поле">*</span> <span class="hint">(не менше 6 символiв)</span><br>
                     <span class="eye" onclick="registration_show_password();"></span>
                     <span id="registration-password-box">
                         <input style="display:block;" onblur="registration_ckeck_empty_fileld_password(this);" required="required" class="txt form-txt-input" id="reg-password" type="password" name="password">
