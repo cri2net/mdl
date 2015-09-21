@@ -9,7 +9,7 @@
             'phone' => $phone,
         ];
         
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) || (strlen($email) >= 3)) {
             $login = $email;
         } elseif (strlen($phone) > 7) {
             $login = $phone;

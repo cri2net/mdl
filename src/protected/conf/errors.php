@@ -14,6 +14,7 @@ define('ERROR_CURRENT_PASSWORD', 'Дiйсний пароль невірний.')
 define('ERROR_EMAIL_DOESNOT_EXIST', 'Користувач з такою адресою електронної пошти не існує.');
 define('ERROR_EMAIL_ALREADY_EXIST', 'Користувач з такою адресою електронної вже існує.');
 define('ERROR_PHONE_ALREADY_EXIST', 'Користувач з таким номером мобільного телефону вже існує.');
+define('ERROR_LOGIN_ALREADY_EXIST', 'Користувач з таким логіном вже існує.');
 define('ERROR_SET_NEWPASSWORD', 'Неможливо задати новий пароль.');
 define('ERROR_SENDING_MAIL', 'Неможливо відправити повідомлення.');
 define('ERROR_DATE', 'Помилка дати.');
@@ -30,6 +31,8 @@ define('ERROR_TOO_MANY_FLATS', 'Занадто багато доданих об\
 define('ERROR_TRANSACTION_NEW', 'Транзакція має статус «нова» (ще не оплачена).');
 define('ERROR_PASSWORD_NOT_CONCUR', ' Поля «пароль» і «повторити пароль» не збігаються.');
 define('ERROR_PASSWORD_TOO_SHORT', 'Пароль повинен бути не менше 6 символів.');
+define('ERROR_LOGIN_TOO_SHORT', 'Логін повинен бути не менше 3 символів.');
+define('ERROR_LOGIN_NOT_VALID_FORMAT', 'Логін користувача повинен містити лише латинські літери, цифри та символи «-» і «_»');
 define('ERROR_INVALID_ACCOUNT', 'Невірний номер свого особового рахунку.');
 define('ERROR_TRANSACTION_FOUND', 'Транзакція не знайдена.');
 define('ERROR_INCORRECT_PHONE_FORMAT_ERROR_MSG', 'Неправильний формат телефону.');

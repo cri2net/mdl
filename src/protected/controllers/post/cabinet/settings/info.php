@@ -38,7 +38,7 @@
                 $update['verified_email'] = 0;
             }
 
-            if (filter_var($_SESSION['auth_data']['login'], FILTER_VALIDATE_EMAIL)) {
+            if ($_SESSION['auth_data']['column'] == 'email') {
                 $_SESSION['auth_data']['login'] = $update['email'];
             }
         }
@@ -51,7 +51,7 @@
                 $update['verified_phone'] = 0;
             }
 
-            if (!filter_var($_SESSION['auth_data']['login'], FILTER_VALIDATE_EMAIL)) {
+            if ($_SESSION['auth_data']['column'] == 'mob_phone') {
                 $_SESSION['auth_data']['login'] = $update['mob_phone'];
             }
         }

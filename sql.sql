@@ -385,4 +385,19 @@ INSERT INTO `gioc_video` (`id`, `is_active`, `pos`, `type`, `url`, `date`, `titl
 (9, 1, 9, 'youtube', 'https://www.youtube.com/watch?v=BihTyWMX5pM', NULL, 'Картка киянин', '', '');
 
 
+-- 2015.09.21
+ 
+ALTER TABLE `gioc_users`
+  ADD COLUMN `login` VARCHAR(150) NOT NULL AFTER `password_key`, 
+  ADD INDEX (`deleted`, `login`);
+
+ALTER TABLE `gioc_users`
+  DROP INDEX `deleted_2`,
+  ADD  INDEX `deleted_2` (`mob_phone`, `deleted`),
+  DROP INDEX `deleted_3`,
+  ADD  INDEX `deleted_3` (`login`, `deleted`);
+
+
 -- IN ONLINE
+
+

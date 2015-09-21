@@ -15,15 +15,28 @@ class Authorization
         }
     }
 
+    public static function getLoginColumn($login)
+    {
+        if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            return 'email';
+        }
+        if (strpos($login, '+') === 0) {
+            return 'mob_phone';
+        }
+        return 'login';
+    }
+
     public static function login($login, $password, $is_hash = false, $remember = false)
     {
-        $_SESSION['auth_data'] = array(
+        $column = self::getLoginColumn($login);
+
+        $_SESSION['auth_data'] = [
             'login' => $login,
             'password' => $password,
-            'is_hash' => $is_hash
-        );
+            'is_hash' => $is_hash,
+            'column' => $column
+        ];
 
-        $column = (filter_var($login, FILTER_VALIDATE_EMAIL)) ? 'email' : 'mob_phone';
         $pdo = PDO_DB::getPDO();
         $login = $pdo->quote($login);
 

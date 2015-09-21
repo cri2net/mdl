@@ -1,4 +1,10 @@
 <div class="form-block">
+    <div class="form-subtitle">Змiна логiну</div>
+    <div class="input">
+        <label>Логiн: <br>
+            <input class="txt form-txt-input" type="text" name="login" value="<?= htmlspecialchars($__userData['login'], ENT_QUOTES); ?>">
+        </label>
+    </div>
     <div class="form-subtitle">Змiна паролю</div>
     <div class="input">
         <label>Дiйсний пароль <br>

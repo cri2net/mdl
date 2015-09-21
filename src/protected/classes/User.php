@@ -8,8 +8,8 @@ class User
     public static function getUserIdByEmail($email)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT id FROM ". DB_TBL_USERS ." WHERE email=? AND `deleted`=0 LIMIT 1");
-        $stm->execute(array($email));
+        $stm = $pdo->prepare("SELECT id FROM ". DB_TBL_USERS ." WHERE email=? AND deleted=0 LIMIT 1");
+        $stm->execute([$email]);
         $column = $stm->fetchColumn();
         if ($column === false) {
             return null;
@@ -20,8 +20,8 @@ class User
     public static function getUserIdByPhone($phone)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT id FROM ". DB_TBL_USERS ." WHERE mob_phone=? AND `deleted`=0 LIMIT 1");
-        $stm->execute(array($phone));
+        $stm = $pdo->prepare("SELECT id FROM ". DB_TBL_USERS ." WHERE mob_phone=? AND deleted=0 LIMIT 1");
+        $stm->execute([$phone]);
         $column = $stm->fetchColumn();
         if ($column === false) {
             return null;
@@ -46,7 +46,7 @@ class User
         }
 
         PDO_DB::update(
-            array('deleted' => 1, 'deleted_message' => $comment, 'deleted_timestamp' => microtime(true)),
+            ['deleted' => 1, 'deleted_message' => $comment, 'deleted_timestamp' => microtime(true)],
             self::TABLE,
             $user_id
         );
@@ -55,8 +55,20 @@ class User
     public static function getUserByEmail($email)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE email=? AND `deleted`=0 LIMIT 1");
-        $stm->execute(array($email));
+        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE email=? AND deleted=0 LIMIT 1");
+        $stm->execute([$email]);
+        $user = $stm->fetch();
+        if ($user === false) {
+            return null;
+        }
+        return $user;
+    }
+
+    public static function getUserByLogin($login)
+    {
+        $pdo = PDO_DB::getPDO();
+        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE login=? AND deleted=0 LIMIT 1");
+        $stm->execute([$login]);
         $user = $stm->fetch();
         if ($user === false) {
             return null;
@@ -67,8 +79,8 @@ class User
     public static function getUserById($user_id)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE id=? AND `deleted`=0 LIMIT 1");
-        $stm->execute(array($user_id));
+        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE id=? AND deleted=0 LIMIT 1");
+        $stm->execute([$user_id]);
         $user = $stm->fetch();
         if ($user === false) {
             return null;
@@ -80,16 +92,17 @@ class User
     {
         $password_key = generateCode();
 
-        $data = array(
-            'email' => $data['email'],
-            'password' => Authorization::generate_db_password($data['password'], $password_key),
+        $data = [
+            'email'        => $data['email'],
+            'password'     => Authorization::generate_db_password($data['password'], $password_key),
             'password_key' => $password_key,
-            'lastname' => $data['lastname'],
-            'name' => $data['name'],
-            'fathername' => $data['fathername'],
-            'reg_time' => microtime(true),
-            'mob_phone' => $data['phone']
-        );
+            'login'        => '',
+            'lastname'     => $data['lastname'],
+            'name'         => $data['name'],
+            'fathername'   => $data['fathername'],
+            'reg_time'     => microtime(true),
+            'mob_phone'    => $data['phone']
+        ];
 
         $user_id = PDO_DB::insert($data, self::TABLE);
         self::sendRegLetter($user_id, $password, 'registration');
@@ -101,17 +114,18 @@ class User
         $password_key = generateCode();
         $password = generateCode();
 
-        $data = array(
-            'email' => $email,
-            'password' => Authorization::generate_db_password($password, $password_key),
+        $data = [
+            'email'        => $email,
+            'password'     => Authorization::generate_db_password($password, $password_key),
             'password_key' => $password_key,
-            'lastname' => $lastname,
-            'name' => $name,
-            'fathername' => $fathername,
-            'reg_time' => microtime(true),
-            'mob_phone' => '',
-            'auto_reg' => 1,
-        );
+            'login'        => '',
+            'lastname'     => $lastname,
+            'name'         => $name,
+            'fathername'   => $fathername,
+            'reg_time'     => microtime(true),
+            'mob_phone'    => '',
+            'auto_reg'     => 1,
+        ];
 
         $user_id = PDO_DB::insert($data, self::TABLE);
         self::sendRegLetter($user_id, $password, 'auto_reg_letter');
@@ -133,15 +147,15 @@ class User
         $email = new Email();
 
         return $email->send(
-            array($user['email'], "{$user['name']} {$user['fathername']}"),
+            [$user['email'], "{$user['name']} {$user['fathername']}"],
             $subject,
             '',
             $template,
-            array(
+            [
                 'username' => htmlspecialchars("{$user['name']} {$user['fathername']}"),
                 'email' => $user['email'],
                 'password' => htmlspecialchars($password)
-            )
+            ]
         );
     }
 

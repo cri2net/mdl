@@ -9,6 +9,22 @@
 
         $password = stripslashes($_POST['password']);
         $new_password = stripslashes($_POST['new_password']);
+        $login = strtolower(stripslashes($_POST['login']));
+
+        if (strcasecmp($login, $__userData['login']) !== 0) {
+            if (strlen($login) < 3) {
+                throw new Exception(ERROR_LOGIN_TOO_SHORT);
+            } elseif (!preg_match("/^[a-z]{1}([a-z0-9._-]+)$/i", $login)) {
+                throw new Exception(ERROR_LOGIN_NOT_VALID_FORMAT);
+            } elseif (User::getUserByLogin($login) !== null) {
+                throw new Exception(ERROR_LOGIN_ALREADY_EXIST);
+            }
+
+            PDO_DB::update(['login' => $login], User::TABLE, $__userData['id']);
+            if ($_SESSION['auth_data']['column'] == 'login') {
+                $_SESSION['auth_data']['login'] = $login;
+            }
+        }
 
         if (strlen($new_password) > 0) {
             
