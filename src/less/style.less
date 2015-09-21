@@ -391,7 +391,7 @@ header {
                 width:@main-menu-width - 33;
                 float:left;
                 .item {
-                    position:relative; margin-top:15px; display:inline-block; margin-right:27px;
+                    position:relative; display:inline-block;
                     &.item-right { position:absolute; right:0; top:0; margin-left:2px; }
                     &.open-submenu > a { position: relative; border-bottom-color: transparent; }
                     &.forum {
@@ -408,8 +408,9 @@ header {
                         background-position:left 2px;
                         background-repeat:no-repeat;
                     }
-                    .down { display:none; position:absolute; height:4px; right:-10px; top:9px; width:6px; background-image:data-uri("@{images}/h/__down.png"); }
+                    .down { display:none; position:absolute; height:4px; right:3px; top:27px; width:6px; background-image:data-uri("@{images}/h/__down.png"); }
                     a {
+                        text-decoration:none;
                         color:#222;
                         font-weight:bold;
                         display:inline-block;
@@ -417,24 +418,35 @@ header {
                         outline:0 none;
                         text-decoration: none;
                         padding-bottom:3px;
-                        border-bottom:1px solid #00b770;
-                        z-index:6;
                         position: relative;
+                        .for-border { border-bottom:1px solid #00b770; }
+                        &:hover {
+                            a .for-border { border-bottom-color: transparent; }
+                        }
+                        &.a-element-box {
+                            display:inline-block;
+                            z-index:2;
+                            line-height:55px;
+                            height:55px;
+                            padding:0 13px 0 14px;
+                            &:hover, &.open {
+                                background-color:#fff;
+                                .for-border { border-bottom-width:0; }
+                            }
+                        }
                     }
-                    a:hover { border-bottom-color: transparent; }
                     .submenu {
                         display:none;
                         padding:0 0 20px;
                         position:absolute;
-                        top:-17px;
-                        padding-top:51px;
-                        left:-14px;
+                        top:55px;
+                        padding-top:14px;
+                        left:0;
                         background-color:#fff;
-                        .box-shadow(0 0 10px 0 rgba(0, 0, 0, 0.3));
+                        .box-shadow(0 7px 10px 0 rgba(0, 0, 0, 0.3));
                         z-index:5;
                         a {
                             text-decoration:none;
-                            border-bottom-width:0;
                             display:block;
                             color:#00979c;
                             white-space: nowrap;
@@ -444,10 +456,11 @@ header {
                             padding:5px 15px 5px 15px;
                             min-height:16px;
                             &:hover { color:#fff; background-color:#01b671; background-color:#01b671; }
+                            .for-border { border-bottom-width:0; }
                         }
                     }
                     &.with-sub-menu {
-                        a { border-bottom-style: dotted; }
+                        a .for-border { border-bottom-style: dotted; }
                     }
                 }
             }

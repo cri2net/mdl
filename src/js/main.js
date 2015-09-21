@@ -297,6 +297,9 @@ function close_all_header_submenu(submenu_id)
             $('#header_submenu_'+have_main_submenu_item[i]).stopTime('header_submenu_'+have_main_submenu_item[i]);
         }
     }
+    // может быть избыточный код
+    $('.open-submenu').removeClass('open-submenu');
+    $('.a-element-box.open').removeClass('open');
 };
 
 function show_header_submenu(submenu_id)
@@ -312,7 +315,8 @@ function show_header_submenu(submenu_id)
     $(down).css('display', 'block');
     $(submenu).stopTime('header_submenu_'+submenu_id);
     $('.open-submenu').removeClass('open-submenu');
-    $(item).addClass('open-submenu');
+    $('.a-element-box.open').removeClass('open');
+    $(item).addClass('open-submenu').find('.a-element-box').addClass('open');
     
     $(submenu).oneTime(700, 'header_submenu_'+submenu_id, function(){
         $(submenu).fadeOut(200);
@@ -335,7 +339,7 @@ function show_header_submenu(submenu_id)
         $(submenu).everyTime(700, 'header_submenu_'+submenu_id, function(){
             $(submenu).fadeOut(200);
             $(down).css('display', '');
-            $(item).removeClass('open-submenu');
+            $(item).removeClass('open-submenu').find('.a-element-box').removeClass('open');;
         });
     });
     
