@@ -60,7 +60,7 @@
 		
 		$law = StaticPage::getByKey('law', 0);
 		if ($law) {
-			$arr_ids = array($law['id']);
+			$arr_ids = [$law['id']];
 			$pages = StaticPage::getChildren($law['id']);
 
 			for ($i=0; $i < count($pages); $i++) {

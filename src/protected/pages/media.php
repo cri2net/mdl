@@ -44,4 +44,3 @@
         }
     ?>
 </div>
-<button class="btn" onclick="playFullscreen();" id="sdfsdfsf">sdfsdfsf</button>

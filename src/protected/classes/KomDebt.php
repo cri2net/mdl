@@ -7,10 +7,10 @@ class KomDebt
     const ANSWERS_PATH = '/protected/conf/testing/';
     
     public $testing = false;
-    protected $cache = array();
+    protected $cache = [];
 
-    private $months = array('1'=>'січня', '2'=>'лютого', '3'=>'березня', '4'=>'квiтня', '5'=>'травня', '6'=>'червня', '7'=>'липня', '8'=>'серпня', '9'=>'вересня', '10'=>'жовтня', '11'=>'листопада', '12'=>'грудня');
-    private $monthsFullName = array('01'=>'Січень', '02'=>'Лютий', '03'=>'Березень', '04'=>'Квітень', '05'=>'Травень', '06'=>'Червень', '07'=>'Липень', '08'=>'Серпень', '09'=>'Вересень', '10'=>'Жовтень', '11'=>'Листопад', '12'=>'Грудень');
+    private $months = ['1'=>'січня', '2'=>'лютого', '3'=>'березня', '4'=>'квiтня', '5'=>'травня', '6'=>'червня', '7'=>'липня', '8'=>'серпня', '9'=>'вересня', '10'=>'жовтня', '11'=>'листопада', '12'=>'грудня'];
+    private $monthsFullName = ['01'=>'Січень', '02'=>'Лютий', '03'=>'Березень', '04'=>'Квітень', '05'=>'Травень', '06'=>'Червень', '07'=>'Липень', '08'=>'Серпень', '09'=>'Вересень', '10'=>'Жовтень', '11'=>'Листопад', '12'=>'Грудень'];
     private $beginDate;
     private $endDate;
 
@@ -41,7 +41,7 @@ class KomDebt
     
     public function clearCache()
     {
-        $this->cache = array();
+        $this->cache = [];
     }
 
     public function getDebtSum($obj_id, $dateBegin = null)
@@ -134,7 +134,7 @@ class KomDebt
     
     private static function msort($array, $id = "counter", $sort_ascending = true)
     {
-        $temp_array = array();
+        $temp_array = [];
       
         while (count($array) > 0) {
             $lowest_id = 0;
@@ -159,7 +159,7 @@ class KomDebt
     
     public function getData($obj_id, $dateBegin = null)
     {
-        $data = array();
+        $data = [];
         $data['date'] = '1 ' . $this->months[date("n")]." ".date("Y");
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
@@ -188,7 +188,7 @@ class KomDebt
         
         $fullDept = 0;
         foreach ($xml->xpath("//ROW") as $row) {
-            $list = array();
+            $list = [];
            
             $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
             $list['name_plat'] = (string)$row->NAME_PLAT;
@@ -227,11 +227,11 @@ class KomDebt
                 $list['counterData']['PEOPLE'] = (int)$row->PEOPLE;
 
                 foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
-                    $list['counterData']['counters'][] = array(
+                    $list['counterData']['counters'][] = [
                         'COUNTER_NO' => (int)$counter->COUNTER_NO,
                         'OLD_VALUE' => (int)$counter->OLD_VALUE,
                         'ABCOUNTER' => (string)$counter->ABCOUNTER,
-                    );
+                    ];
                 }
             }
             
@@ -310,21 +310,21 @@ class KomDebt
             throw new Exception(ERROR_GETTING_DEBT);
         }
         
-        $data = array();
+        $data = [];
         
         foreach ($xml->xpath("//ROW") as $row) {
             $data['bank'][(string)$row->PUNKT_ID]['NAMEOKP'] = (string)$row->NAMEOKP;
             $data['bank'][(string)$row->PUNKT_ID]['KASSA'] = (string)$row->KASSA;
             
-            $dataArray = array(
-                'NAME_FIRME'=>(string)$row->NAME_FIRME,
-                'NAME_PLAT'=>(string)$row->NAME_PLAT,
-                'SUMM'=>str_replace(".",",",sprintf('%.2f',((float)$row->SUMM)/100)),
-                'PDATE'=>date("d.m.y H:i:s", strtotime((string)$row->PDATE)),
-                'ABCOUNT'=>(string)$row->ABCOUNT,
-                'DBEGIN'=>(string)$row->DBEGIN1,
-                'DEND'=>(string)$row->DEND1
-            );
+            $dataArray = [
+                'NAME_FIRME' => (string)$row->NAME_FIRME,
+                'NAME_PLAT'  => (string)$row->NAME_PLAT,
+                'SUMM'       => str_replace(".",",",sprintf('%.2f',((float)$row->SUMM)/100)),
+                'PDATE'      => date("d.m.y H:i:s", strtotime((string)$row->PDATE)),
+                'ABCOUNT'    => (string)$row->ABCOUNT,
+                'DBEGIN'     => (string)$row->DBEGIN1,
+                'DEND'       => (string)$row->DEND1
+            ];
 
             if ($row->CNTR->CNTR_ITEM) {
                 $dataArray['counter'] = 1;
@@ -359,7 +359,7 @@ class KomDebt
     
     public function getGenerealData($obj_id)
     {
-        $data = array();
+        $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id);
         $xml = new SimpleXMLElement($xmlString);
         $error = (string)$xml->ROW[0]->KOM_ERROR;
@@ -388,7 +388,7 @@ class KomDebt
     
     public function getUniqueFirmName($obj_id, $dateBegin = null)
     {
-        $data = array();
+        $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
         $error = (string)$xml->ROW[0]->KOM_ERROR;
@@ -407,7 +407,7 @@ class KomDebt
             throw new Exception(ERROR_GETTING_DEBT);
         }
         
-        $data['firm'] = array();
+        $data['firm'] = [];
         
         foreach ($xml->xpath("//ROW") as $row) {
             if (!array_key_exists((string)$row->CODE_FIRME, $data['firm'])) {
@@ -430,7 +430,7 @@ class KomDebt
     
     public function getUniqueFirm($obj_id, $firmName = null, $dateBegin = null, $is_filter = false)
     {
-        $data = array();
+        $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
         $error = (string)$xml->ROW[0]->KOM_ERROR;
@@ -459,7 +459,7 @@ class KomDebt
             throw new Exception(ERROR_GETTING_DEBT);
         }
         
-        $data['firm'] = array();
+        $data['firm'] = [];
         $data['dbegin'] = date("d.m.y", strtotime($this->beginDate));
         $data['dend'] = date("d.m.y", strtotime($this->endDate));
         
@@ -485,12 +485,21 @@ class KomDebt
                 $data['firm'][(string)$row->CODE_FIRME]['name'] = (string)$row->NAME_FIRME;
             }
             if ($row->NAIM_LG) {
-                $data['firm'][(string)$row->CODE_FIRME]['lgoti'] = array('NAIM_LG'=>(string)$row->NAIM_LG, 'PROC_LG'=>(string)$row->PROC_LG, 'KOL_LGOT'=>(string)$row->KOL_LGOT); 
+                $data['firm'][(string)$row->CODE_FIRME]['lgoti'] = [
+                    'NAIM_LG'  => (string)$row->NAIM_LG,
+                    'PROC_LG'  => (string)$row->PROC_LG,
+                    'KOL_LGOT' => (string)$row->KOL_LGOT
+                ]; 
             }
             if ($row->COUNTERS->COUNTERS_ITEM) {
                 $data['counter'] = 1;
                 foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
-                    $data['firm'][(string)$row->CODE_FIRME]['counter'][] = array('COUNTER_NO'=>(string)$counter->COUNTER_NO, 'OLD_VALUE'=>(string)$counter->OLD_VALUE, 'TARIF'=>str_replace(".",",",sprintf('%.2f',((float)$row->TARIF)/100)), 'NAME_PLAT'=>(string)$row->NAME_PLAT);
+                    $data['firm'][(string)$row->CODE_FIRME]['counter'][] = [
+                        'COUNTER_NO' => (string)$counter->COUNTER_NO,
+                        'OLD_VALUE'  => (string)$counter->OLD_VALUE,
+                        'TARIF'      => str_replace(".", ",", sprintf('%.2f', ((float)$row->TARIF)/100)),
+                        'NAME_PLAT'  => (string)$row->NAME_PLAT
+                    ];
                 }
             }
             
@@ -516,7 +525,7 @@ class KomDebt
     
     public function getUniqueFirmPrint($obj_id, $firmName = null, $dateBegin = null)
     {
-        $data = array();
+        $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
         $error = (string)$xml->ROW[0]->KOM_ERROR;
@@ -525,7 +534,7 @@ class KomDebt
             throw new Exception(ERROR_GETTING_DEBT);
         }
         
-        $data['firm'] = array();
+        $data['firm'] = [];
         $data['date'] = "01"." ".$this->months[date("n")]." ".date("Y");
         $data['dbegin'] = date("d.m.y", strtotime($this->beginDate));
         $data['dend'] = date("d.m.y", strtotime($this->endDate));
@@ -557,22 +566,22 @@ class KomDebt
             }
             
             if ($row->NAIM_LG) {
-                $data['firm'][(string)$row->CODE_FIRME]['lgoti'] = array(
+                $data['firm'][(string)$row->CODE_FIRME]['lgoti'] = [
                     'NAIM_LG'=>(string)$row->NAIM_LG,
                     'PROC_LG'=>(string)$row->PROC_LG,
                     'KOL_LGOT'=>(string)$row->KOL_LGOT
-                ); 
+                ];
             }
             
             if ($row->COUNTERS->COUNTERS_ITEM) {
                 $data['counter'] = 1;
                 foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
-                    $data['firm'][(string)$row->CODE_FIRME][(string)$row->NAME_PLAT]['counter'][] = array(
+                    $data['firm'][(string)$row->CODE_FIRME][(string)$row->NAME_PLAT]['counter'][] = [
                         'COUNTER_NO' => (string)$counter->COUNTER_NO,
                         'OLD_VALUE'  => (string)$counter->OLD_VALUE,
                         'TARIF'      => str_replace(".",",",sprintf('%.2f',((float)$row->TARIF)/100)),
                         'NAME_PLAT'  => (string)$row->NAME_PLAT
-                    );
+                    ];
                 }
             }
             

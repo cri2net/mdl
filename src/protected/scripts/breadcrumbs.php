@@ -46,6 +46,10 @@
                     $breadcrumbs[] = ['title' => 'Вхід'];
                     break;
 
+                case 'restore':
+                    $breadcrumbs[] = ['title' => 'Відновлення доступу'];
+                    break;
+
                 case 'objects':
                     $breadcrumbs[] = ['title' => 'Об\'єкти', 'link' => '/cabinet/objects/'];
 

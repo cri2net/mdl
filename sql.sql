@@ -398,6 +398,36 @@ ALTER TABLE `gioc_users`
   ADD  INDEX `deleted_3` (`login`, `deleted`);
 
 
+CREATE TABLE `gioc_user_restore`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `hash` VARCHAR(100) NOT NULL,
+  `created_at` DOUBLE NOT NULL,
+  `expires_at` DOUBLE NOT NULL,
+  `is_active` INT(1) NOT NULL DEFAULT 1,
+  `created_by_ip` VARCHAR(50) NOT NULL,
+  `created_by_user_agent_string` VARCHAR(700) NOT NULL,
+  `used_at` DOUBLE,
+  `used_at_ip` VARCHAR(50),
+  `used_at_user_agent_string` VARCHAR(700),
+  PRIMARY KEY (`id`),
+  INDEX (`user_id`, `is_active`, `hash`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+ALTER TABLE `gioc_user_restore`
+  CHANGE `hash` `code` VARCHAR(100) CHARSET utf8 COLLATE utf8_general_ci NOT NULL;
+
+
+ALTER TABLE `gioc_user_restore`
+  ADD INDEX (`user_id`, `is_active`);
+
+ALTER TABLE `gioc_user_restore`
+  DROP INDEX `user_id`,
+  ADD INDEX (`code`),
+  ADD INDEX (`is_active`, `expires_at`);
+
+ALTER TABLE `gioc_user_restore`
+  ADD COLUMN `email` VARCHAR(300) NOT NULL AFTER `code`;
+
 -- IN ONLINE
-
-

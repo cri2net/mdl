@@ -5,7 +5,7 @@
 
 
 
-    $err = array();
+    $err = [];
     $first_step_breadcrumbs = '<div class="crumb current">Реквизиты</div><span>&nbsp;&rarr;&nbsp;</span><div class="crumb next">Квитанция</div><span>&nbsp;&rarr;&nbsp;</span><div class="crumb next">Оплата</div>';
     $second_step_breadcrumbs = '<div class="crumb prev">Реквизиты</div><span>&nbsp;&rarr;&nbsp;</span><div class="crumb current">Квитанция</div><span>&nbsp;&rarr;&nbsp;</span><div class="crumb next">Оплата</div>';
     $third_step_breadcrumbs = '<div class="crumb prev">Реквизиты</div><span>&nbsp;&rarr;&nbsp;</span><div class="crumb prev">Квитанция</div><span>&nbsp;&rarr;&nbsp;</span><div class="crumb current">Оплата</div>';

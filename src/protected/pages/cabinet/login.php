@@ -1,6 +1,9 @@
 <div class="h1-line">
     <h1>Вхід</h1>
-    <a href="<?= BASE_URL; ?>/cabinet/registration/" class="already-have">Зареєструватися</a>
+    <div class="already-have">
+        <a href="<?= BASE_URL; ?>/cabinet/registration/">Зареєструватися</a> <br>
+        <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a>
+    </div>
 </div>
 <?php
     if (defined('SHOW_NEED_AUTH_MESSAGE') && SHOW_NEED_AUTH_MESSAGE) {
@@ -39,7 +42,6 @@
                 <label>Телефон <br>
                     <input class="txt form-txt-input" placeholder="+380" type="text" name="phone" id="login-phone" value="<?= $_phone; ?>">
                 </label>
-                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
             </div>
             <div class="input pass">
                 <label>Пароль <span class="hint">(не менше 6 символiв)</span> <br>

@@ -1,7 +1,7 @@
 <?php
     try {
         $currMonth = date("n");
-        $years = array();
+        $years = [];
         $debt = new KomDebt();
         
         for ($i=date("Y"); $i>=date("Y")-3; $i--) {

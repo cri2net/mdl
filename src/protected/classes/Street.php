@@ -47,11 +47,11 @@ class Street
         PDO_DB::query("DELETE FROM ". self::TABLE ." WHERE city_id=" . self::KIEV_ID);
 
         for ($i=0; $i<count($xml->ROW); $i++) {
-            $street = array(
+            $street = [
                 'city_id' => self::KIEV_ID,
                 'street_id' => $xml->ROW[$i]->STREET_ID,
                 'name_ua' => $xml->ROW[$i]->NAME_STREET
-            );
+            ];
             PDO_DB::insert($street, self::TABLE);
         }
     }

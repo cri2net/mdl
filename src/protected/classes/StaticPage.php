@@ -14,7 +14,7 @@ class StaticPage
         $uri = (strpos($uri, '?') !== false) ? substr($uri, 0, strrpos($uri, '?')) : $uri;
 
         $levels = explode('/', $uri);
-        $results = array();
+        $results = [];
         $idp = 0;
 
         for ($i=0; $i < count($levels); $i++) {
@@ -41,7 +41,7 @@ class StaticPage
 
         // поле is_active пока игнорируем
         $stm = $pdo->prepare("SELECT * FROM " . self::TABLE . " WHERE idp=? AND `key`=? LIMIT 1");
-        $stm->execute(array($idp, $key));
+        $stm->execute([$idp, $key]);
         $record = $stm->fetch();
         
         if ($record === false) {
@@ -60,18 +60,18 @@ class StaticPage
     {
         $pdo = PDO_DB::getPDO();
         $stm = $pdo->prepare("SELECT id, idp, `key` FROM " . self::TABLE . " WHERE id=? LIMIT 1");
-        $stm->execute(array($id));
+        $stm->execute([$id]);
         $item = $stm->fetch();
 
         if (!$item) {
             return '/';
         }
 
-        $keys = array($item['key']);
+        $keys = [$item['key']];
         $idp = $item['idp'];
 
         while ($idp != 0) {
-            $stm->execute(array($idp));
+            $stm->execute([$idp]);
             $tmp = $stm->fetch();
             $idp = $tmp['idp'];
             $keys[] = $tmp['key'];
@@ -108,14 +108,14 @@ class StaticPage
             }
         }
 
-        $arr = array(
+        $arr = [
             'timestamp' => microtime(true),
             'page_type' => $page_type,
             'page_id' => $page_id,
             'user_id' => $user_id,
             'ip' => USER_REAL_IP,
             'user_agent_string' => HTTP_USER_AGENT,
-        );
+        ];
 
         PDO_DB::insert($arr, self::TABLE_VIEWS);
     }
@@ -139,7 +139,7 @@ class StaticPage
         $pdo = PDO_DB::getPDO();
         $table = self::TABLE_LINKS;
         $stm = $pdo->prepare("SELECT * FROM $table WHERE is_active=1 AND idp=? AND idp_type=? AND type='see_also' ORDER BY pos ASC");
-        $stm->execute(array($id, $type));
+        $stm->execute([$id, $type]);
 
         return $stm->fetchAll();
     }
@@ -157,7 +157,7 @@ class StaticPage
         $pdo = PDO_DB::getPDO();
         $table = self::TABLE_LINKS;
         $stm = $pdo->prepare("SELECT * FROM $table WHERE is_active=1 AND idp=? AND idp_type=? AND type=? ORDER BY pos ASC");
-        $stm->execute(array($idp, $idp_type, $link_type));
+        $stm->execute([$idp, $idp_type, $link_type]);
         
         return $stm->fetchAll();
     }

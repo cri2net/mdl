@@ -7,7 +7,7 @@
         );
         $main_menu = ($use_cabinet_menu) ? getMenu('cabinet') : getMenu('main');
 
-        $have_main_submenu = array();
+        $have_main_submenu = [];
     
         for ($i=0; $i<count($main_menu); $i++) {
             

@@ -2,7 +2,7 @@
     $seo_str = '';
     $_lSEO = 'DESCRIPTIONS';
 
-    $list = array(
+    $list = [
         'index' => 'Головна сторінка',
         'news' => 'Новини',
         'calc-devices' => 'Розрахунок за показаннями приладів',
@@ -14,7 +14,7 @@
         'news_item' => 'Конкретна новина' . $makros,
         'cabinet' => 'Особистий кабiнет',
         'registration' => 'Реєстрація',
-    );
+    ];
 
 
     switch ($__route_result['controller'] . "/" . $__route_result['action']) {
