@@ -8,7 +8,6 @@ try {
             case 'css':
                 $filename = ROOT . '/style/' . $__route_result['values']['path'];
                 if (file_exists($filename)) {
-                    header("Content-Type: text/css; charset=utf-8");
                     Http::gzip(file_get_contents($filename), true, 'text/css');
                     exit();
                 } else {

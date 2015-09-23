@@ -78,7 +78,7 @@
             'ы'=>'yi','ь'=>'','э'=>'e','ю'=>'yu','я'=>'ya'
         );
         return strtr($str, $tr);
-    }   
+    }
     
     function composeUrlKey($str)
     {
