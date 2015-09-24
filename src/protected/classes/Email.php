@@ -29,12 +29,12 @@ class Email
 
     public function __call($name, $arguments)
     {
-        if (is_callable('$this->PHPMailer->' . $name)) {
-            call_user_func_array(array($this->PHPMailer, $name), $arguments);
+        if (is_callable([$this->PHPMailer, $name])) {
+            return call_user_func_array([$this->PHPMailer, $name], $arguments);
         }
     }
 
-    public function send($to, $subject, $message, $template = '', $data = array())
+    public function send($to, $subject, $message, $template = '', $data = [])
     {
         $message = (strlen($template) > 0) ? (self::getTemplate($template)) : $message;
         $message = self::fetch($message, $data);
@@ -43,7 +43,7 @@ class Email
         $this->Body    = $message;
         
         if (is_array($to)) {
-            call_user_func_array(array($this->PHPMailer, 'AddAddress'), $to);
+            call_user_func_array([$this->PHPMailer, 'AddAddress'], $to);
         } else {
             $this->PHPMailer->AddAddress($to);
         }
@@ -63,7 +63,7 @@ class Email
         return '';
     }
 
-    public static function fetch($template_text, $data = array())
+    public static function fetch($template_text, $data = [])
     {
         self::replaceDefaults($data);
         $re1 = '.*?'; // Non-greedy match on filler

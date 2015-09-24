@@ -326,7 +326,7 @@ class ShoppingCart
         $email->addStringAttachment($pdf, "Receipt-{$payment['id']}.pdf");
         $success = $email->send(
             [$user['email'], "{$user['name']} {$user['fathername']}"],
-            'Квитанція про сплату'
+            'Квитанція про сплату №' . $payment['id']
         );
 
         if ($success) {
