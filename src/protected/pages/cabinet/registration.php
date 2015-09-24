@@ -1,7 +1,7 @@
 <div class="h1-line">
     <h1>Реєстрація</h1>
     <div class="already-have">
-        <a href="<?= BASE_URL; ?>/cabinet/login/">У мене вже є аккаунт</a>
+        <a href="<?= BASE_URL; ?>/cabinet/login/">У мене вже є аккаунт</a> <br>
         <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a>
     </div>
 </div>
