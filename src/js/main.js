@@ -238,6 +238,7 @@ function checkForInt(evt)
 };
 
 function recount_counter_summ(key, old_value, tarif, counter_no) {
+    var summ;
     var old_value = old_value.split(',').join('.');
     old_value = parseFloat(old_value);
     var new_value = $('#inp_'+ key +'_new_count_' + counter_no).val();
@@ -245,6 +246,7 @@ function recount_counter_summ(key, old_value, tarif, counter_no) {
     new_value = parseFloat(new_value);
     var other_counters = $('.inp_'+ key +'_new_count');
     var add_cost = 0;
+    
     if (other_counters.length > 1) {
         $(other_counters).each(function(i, elem) {
             if ($(elem).attr('id') != 'inp_'+ key +'_new_count_' + counter_no) {
@@ -262,7 +264,7 @@ function recount_counter_summ(key, old_value, tarif, counter_no) {
     }
     
     if (isNaN(tarif) || isNaN(new_value)) {
-        $('#newval_counter_' + key + '_' + counter_no).html('новое&nbsp;значение');
+        $('#newval_counter_' + key + '_' + counter_no).html('нове&nbsp;значення');
         add_cost = add_cost.toFixed(2);
         add_cost += '';
         add_cost = add_cost.split('.').join(',');
@@ -271,21 +273,18 @@ function recount_counter_summ(key, old_value, tarif, counter_no) {
     }
 
     if (old_value > new_value) {
-        var add_val = '1';
-        var old_value_str = old_value + '';
-        for (var i = 0; i < old_value_str.length; i++) {
-            add_val += '0';
-        }
-        new_value += parseInt(add_val, 10);
+        // насколько я понял, в реальной жизни не может быть ситуации, когда значения счётчика перескочили с девяточек на нолики.
+        // так что новое значение не должно быть меньше старого
+        new_value = old_value;
     }
-    var summ = (new_value - old_value) * tarif;
+    summ = (new_value - old_value) * tarif;
     summ += add_cost;
     summ = summ.toFixed(2);
     summ += '';
     summ = summ.split('.').join(',');
     $('#inp_'+key).val(summ);
     recalc2();
-    $('#newval_counter_'+key + '_' + counter_no).html(new_value+'&nbsp;м<sup>3</sup>');
+    $('#newval_counter_'+key + '_' + counter_no).html(new_value);
 };
 
 function close_all_header_submenu(submenu_id)
