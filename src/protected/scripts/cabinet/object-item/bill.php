@@ -87,7 +87,7 @@
                                     <br>
                                     <?= $item['firm_name']; ?>
                                     <?php
-                                        if ($item['counterData']['NAIM_LG']) {
+                                        if (!empty($item['counterData']['NAIM_LG'])) {
                                             ?>
                                             <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> <br>
                                             <span class="small">Льготы: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>

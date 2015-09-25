@@ -342,14 +342,13 @@ class KomDebt
         $xmlString = $this->getXML(self::KOMPLATURL, $obj_id, $dateBegin);
         $xmlString = str_replace("&nbsp;", "", $xmlString);
         $xml = new SimpleXMLElement($xmlString);
-        $error = (string)$xml->ROW[0]->KOM_ERROR;
         
-        if (!empty($error)) {
+        if (!empty($xml->ROW[0]->KOM_ERROR)) {
             throw new Exception(ERROR_GETTING_DEBT);
             return false;
         }
         
-        $summ = 0.0;
+        $summ = .0;
         foreach ($xml->xpath("//ROW") as $row) {
             $summ += (float)($row->SUMM)/100;
         }

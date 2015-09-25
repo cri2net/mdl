@@ -169,6 +169,7 @@ class Flat
                 $arr[$i]['street_name'] .= "...";
             }
             $arr[$i]['address'] = self::getAddressString($arr[$i]['flat_id'], $arr[$i]['city_id'], $arr[$i]['detail_address']);
+            $arr[$i]['kvartira'] = 1; // пока не знаю как получить признак, что это частный дом
         }
         
         return $arr;
@@ -211,7 +212,6 @@ class Flat
         if ($arr['street_name'] !== $arr['street_name_full']) {
             $arr['street_name'] .= " ...";
         }
-        $arr['position'] = ($i % 2 == 0) ? 1 : 2;
         $arr['address'] = self::getAddressString($arr['flat_id']);
         
         return $arr;

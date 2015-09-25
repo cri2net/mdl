@@ -1,21 +1,6 @@
 <?php
     $_lSEO = 'TITLES';
 
-    $list = [
-        'index' => 'Головна сторінка',
-        'news' => 'Новини',
-        'calc-devices' => 'Розрахунок за показаннями приладів',
-        'calc-subsidies' => 'Розрахунок субсидій',
-        'chief' => 'Керівництво',
-        'foruser' => 'Користувачу',
-        'contacts' => 'Контакти',
-        'media' => 'Відео-матеріали',
-        'news_item' => 'Конкретна новина' . $makros,
-        'cabinet' => 'Особистий кабiнет',
-        'registration' => 'Реєстрація',
-    ];
-
-
     switch ($__route_result['controller'] . "/" . $__route_result['action']) {
         case 'page/index':
         case 'page/news':

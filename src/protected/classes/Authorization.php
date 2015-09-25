@@ -138,7 +138,6 @@ class Authorization
 
     public static function isLogin()
     {
-        session_start();
         return (!empty($_SESSION['auth']['id']));
     }
     
