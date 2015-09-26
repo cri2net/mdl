@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    'Browser\\' => array($vendorDir . '/sinergi/browser-detector/src/Browser'),
+    'Sinergi\\BrowserDetector\\' => array($baseDir . '/src', $vendorDir . '/sinergi/browser-detector/src'),
 );

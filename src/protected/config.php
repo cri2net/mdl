@@ -21,7 +21,8 @@
     require_once(ROOT . "/protected/conf/lang.php");
     require_once(ROOT . "/protected/lib/func.lib.php");
     require_once(ROOT . "/protected/vendor/autoload.php");
-
+    require_once(ROOT . "/protected/conf/browser.php");
+    
     switch (USER_REAL_IP) {
         case '127.0.0.1':
             define('COOKIE_DOMAIN', '.gioc.dev');

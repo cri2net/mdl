@@ -19,7 +19,15 @@ content {
                         width:236px;
                     }
                 }
-                .eye { display:block; .size(27, 16); position:absolute; right:8px; top:41px; cursor:pointer; background-image:data-uri("@{images}/pages/cabinet/registration/__eye.png"); }
+                .eye { 
+                    display:block; .size(27, 16); position:absolute; right:8px; top:41px; 
+                    cursor:pointer; background-image:data-uri("@{images}/pages/cabinet/registration/__eye.png"); 
+                    &:hover { background-position:0 -16px; }
+                    &.stroked {
+                        background-position:0 -32px;
+                        &:hover { background-position:0 -48px; }
+                    }
+                }
                 .hint { color:#888; font-size:12px; }
                 .btn {
                     font-size: 24px; line-height:41px; margin-top:8px; width:100%;

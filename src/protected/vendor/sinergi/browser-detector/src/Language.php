@@ -1,6 +1,6 @@
 <?php
 
-namespace Browser;
+namespace Sinergi\BrowserDetector;
 
 /**
  * Language Detection.
@@ -20,7 +20,7 @@ class Language
     /**
      * @param null|string|AcceptLanguage $acceptLanguage
      *
-     * @throws \Browser\InvalidArgumentException
+     * @throws \Sinergi\BrowserDetector\InvalidArgumentException
      */
     public function __construct($acceptLanguage = null)
     {
@@ -97,7 +97,7 @@ class Language
         }
 
         if (!empty($locale)) {
-            return $userLanguage.$separator.strtoupper($locale);
+            return $userLanguage . $separator . strtoupper($locale);
         } else {
             return $userLanguage;
         }

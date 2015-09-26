@@ -66,7 +66,7 @@ gulp.task('js', function(){
 /* TASK: Moving CSS files to public directory */
 gulp.task('css', function(){
     gulp.src(CSS_MASK)
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest('./public/'))
 });
 

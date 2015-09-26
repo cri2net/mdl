@@ -1,6 +1,6 @@
 <?php
 
-namespace Browser;
+namespace Sinergi\BrowserDetector;
 
 /**
  * Browser Detection.
@@ -8,6 +8,7 @@ namespace Browser;
 class Browser
 {
     const UNKNOWN = 'unknown';
+    const VIVALDI = 'Vivaldi';
     const OPERA = 'Opera';
     const OPERA_MINI = 'Opera Mini';
     const WEBTV = 'WebTV';
@@ -73,7 +74,7 @@ class Browser
     /**
      * @param null|string|UserAgent $userAgent
      *
-     * @throws \Browser\InvalidArgumentException
+     * @throws \Sinergi\BrowserDetector\InvalidArgumentException
      */
     public function __construct($userAgent = null)
     {
@@ -163,7 +164,7 @@ class Browser
      */
     public function setIsRobot($isRobot)
     {
-        $this->isRobot = (bool) $isRobot;
+        $this->isRobot = (bool)$isRobot;
 
         return $this;
     }
@@ -197,7 +198,7 @@ class Browser
      */
     public function setIsChromeFrame($isChromeFrame)
     {
-        $this->isChromeFrame = (bool) $isChromeFrame;
+        $this->isChromeFrame = (bool)$isChromeFrame;
 
         return $this;
     }

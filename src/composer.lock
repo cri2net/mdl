@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "603892570e5f495e453a9e0e745f20d4",
+    "hash": "5231b5603c214a98b2f96865b739b589",
+    "content-hash": "d3763be94a21811b91dc04d15650243e",
     "packages": [
         {
             "name": "phpmailer/phpmailer",
@@ -68,16 +69,16 @@
         },
         {
             "name": "sinergi/browser-detector",
-            "version": "4.0.1",
+            "version": "5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinergi/php-browser-detector.git",
-                "reference": "c67352470fbf9bf590d9e7b130a6b00f662b05d1"
+                "reference": "ebd8025a837c353fe98e926b50985b4f2d50edbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sinergi/php-browser-detector/zipball/c67352470fbf9bf590d9e7b130a6b00f662b05d1",
-                "reference": "c67352470fbf9bf590d9e7b130a6b00f662b05d1",
+                "url": "https://api.github.com/repos/sinergi/php-browser-detector/zipball/ebd8025a837c353fe98e926b50985b4f2d50edbc",
+                "reference": "ebd8025a837c353fe98e926b50985b4f2d50edbc",
                 "shasum": ""
             },
             "require": {
@@ -89,12 +90,12 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "4.1-dev"
+                    "dev-develop": "5.0-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Browser\\": "src/Browser"
+                    "Sinergi\\BrowserDetector\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -120,7 +121,7 @@
                 "operating system",
                 "os"
             ],
-            "time": "2015-09-08 02:38:52"
+            "time": "2015-09-16 14:11:48"
         }
     ],
     "packages-dev": [],

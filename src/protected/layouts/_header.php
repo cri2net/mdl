@@ -42,6 +42,7 @@
 <?php require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php'); ?>
 </head>
 <body>
+	<?php require_once(ROOT . '/protected/scripts/browser-warning.php'); ?>
 	<div class="main-conteiner">
 		<header>
 			<div class="top-line">

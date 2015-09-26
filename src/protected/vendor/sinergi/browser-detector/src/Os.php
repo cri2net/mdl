@@ -1,6 +1,6 @@
 <?php
 
-namespace Browser;
+namespace Sinergi\BrowserDetector;
 
 /**
  * OS Detection.
@@ -49,7 +49,7 @@ class Os
     /**
      * @param null|string|UserAgent $userAgent
      *
-     * @throws \Browser\InvalidArgumentException
+     * @throws \Sinergi\BrowserDetector\InvalidArgumentException
      */
     public function __construct($userAgent = null)
     {
@@ -149,7 +149,7 @@ class Os
      */
     public function setIsMobile($isMobile = true)
     {
-        $this->isMobile = (bool) $isMobile;
+        $this->isMobile = (bool)$isMobile;
     }
 
     /**
