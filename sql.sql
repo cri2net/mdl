@@ -430,4 +430,10 @@ ALTER TABLE `gioc_user_restore`
 ALTER TABLE `gioc_user_restore`
   ADD COLUMN `email` VARCHAR(300) NOT NULL AFTER `code`;
 
+
+-- 2015.09.26
+ALTER TABLE `gioc_users`
+  ADD COLUMN `activated` TINYINT(1) DEFAULT 0  NOT NULL AFTER `send_reg_letter`;
+
+
 -- IN ONLINE
