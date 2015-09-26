@@ -74,7 +74,7 @@
                     <span class="eye" onclick="registration_show_password();"></span>
                     <span id="registration-password-box">
                         <input style="display:block;" onblur="registration_ckeck_empty_fileld_password(this);" required="required" class="txt form-txt-input" id="reg-password" type="password" name="password">
-                        <input style="display:none;" onblur="registration_ckeck_empty_fileld_password(this);" class="txt form-txt-input" id="reg-password-replica" type="text">
+                        <input style="display:none;" onblur="registration_ckeck_empty_fileld_password(this);" class="txt form-txt-input" id="reg-password-replica" type="text" autocomplete="off">
                     </span>
                 </label>
                 <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>

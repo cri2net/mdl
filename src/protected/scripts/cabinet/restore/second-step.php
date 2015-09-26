@@ -34,7 +34,7 @@
                     <span class="eye" onclick="registration_show_password();"></span>
                     <span id="registration-password-box">
                         <input style="display:block;" class="txt form-txt-input" id="reg-password" type="password" name="new_password">
-                        <input style="display:none;" class="txt form-txt-input" id="reg-password-replica" type="text">
+                        <input style="display:none;" class="txt form-txt-input" id="reg-password-replica" type="text" autocomplete="off">
                     </span>
                 </label>
             </div>
