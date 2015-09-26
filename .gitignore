@@ -3,3 +3,5 @@ public/
 src/protected/conf/db.conf.local.php
 *.sublime-project
 *.sublime-workspace
+src/protected/vendor/
+src/protected/conf/*.conf.local.php
