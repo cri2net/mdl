@@ -45,7 +45,7 @@
             <div class="title"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-cold-water.png" alt="" />Холодне водопостачання та водовідведення</div>
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-abacus.png" alt="" /></div>
-                <div class="col-label">Норма споживання на одну особу</div>
+                <div class="col-label">Норма споживання на одну особу <span class="q tooltip" title="• за наявності централізованого постачання гарячої води – 2,4 м3<br>• за відсутності централізованого постачання гарячої води – 4,0 м3<br><br>(<i>Норми діють з 01.10.2014 року</i>)"></span></div>
                 <div class="col-input">
                         <select class="dropdown" name="N_HW" onchange="if (this.selectedIndex == 2) { document.getElementById('F_GW').value = '0'; document.getElementById('N_GW').selectedIndex=0; }">
                             <option value="m3">Оберiть м³</option>
@@ -71,7 +71,7 @@
 
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-money.png" alt="" /></div>
-                <div class="col-label">Тариф за 1 м³ холодної води та<br/>водовідведення, грн</div>
+                <div class="col-label">Тариф за 1 м³ холодної води та<br/>водовідведення, грн <span class="q tooltip" title="Можна вносити інше значення тарифу"></span></div>
                 <div class="col-input">
                     <input type="text" class="txt num-short green bold s24 form-txt-input" name="T_HW" value="<?= (!isset($T_HW) || ($T_HW == '') || ($T_HW == 0)) ? "10.24" : "$T_HW"; ?>" maxlength="7" />
                 </div>
@@ -89,7 +89,7 @@
             <div class="title"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-hot-water.png" alt="" />Гаряче водопостачання</div>
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-abacus.png" alt="" /></div>
-                <div class="col-label">Норма споживання на одну особу</div>
+                <div class="col-label">Норма споживання на одну особу <span class="q tooltip" title="• за наявності централізованого постачання гарячої води – 1,6 м3<br><br>(<i>Норми діють з 01.10.2014 року</i>)"></span></div>
                 <div class="col-input">
                     <select class="dropdown" id="N_GW" name="N_GW">
                         <option value="m3">Оберiть м³</option>
@@ -122,7 +122,7 @@
             <div class="title"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-hot-water-out.png" alt="" />Водовідведення гарячої води</div>
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-money.png" alt="" /></div>
-                <div class="col-label">Тариф за 1 м³ водовідведення гарячої води, грн</div>
+                <div class="col-label">Тариф за 1 м³ водовідведення гарячої води, грн <span class="q tooltip" title="• за умови підключення рушникосушильників<br>  до систем гарячого водопостачання<br>  і виконавцем послуг є ПАТ «АК «Київенерго» - 40,92<br>• за умови відсутності підключення<br>  рушникосушильників до систем гарячого водопостачання<br>  і виконавцем послуг є ПАТ «АК «Київенерго» - 37,91<br>• за умови підключення рушникосушильників<br>  до систем гарячого водопостачання<br>  і виконавцем послуг є ТОВ «ЄВРО-РЕКОНСТРУКЦІЯ» - 39,89<br>• за умови відсутності підключення рушникосушильників<br>  до систем гарячого водопостачання<br>  і виконавцем послуг є ТОВ «ЄВРО-РЕКОНСТРУКЦІЯ» - 36,97<br><br>• за умови підключення рушникосушильників<br>  до систем гарячого водопостачання<br>  і виконавцем послуг є ТОВ «Теплопостачасервіс» - 35,87<br>• за умови відсутності підключення рушникосушильників<br>  до систем гарячого водопостачання<br>  і виконавцем послуг є ТОВ «Теплопостачасервіс» - 33,30" ></span></div>
                 <div class="col-input">
                     <input type="text" class="txt num-short green bold s24 form-txt-input" name="T_ST" value="<?= (!isset($T_ST) || ($T_ST == '') || ($T_ST == 0)) ? '4.82' : $T_ST; ?>" maxlength="7" />
                 </div>

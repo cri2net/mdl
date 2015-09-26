@@ -31,6 +31,9 @@
                                 ?><a class="icon <?= $icons[$i]['key']; ?> <?= ($i == 0) ? 'first' : ''; ?> <?= ($i == count($icons) - 1) ? 'last' : ''; ?>" target="<?= $icons[$i]['target']; ?>" href="<?= htmlspecialchars($icons[$i]['link'], ENT_QUOTES); ?>" title="<?= htmlspecialchars($icons[$i]['title'], ENT_QUOTES); ?>"></a> <?php
                             }
                         ?>
+                        <div class="rss-container" >
+                            <a class="icon rss" href="<?= BASE_URL ?>/feed/" ></a>— наш <a href="<?= BASE_URL ?>/feed/" >RSS канал</a>
+                        </div>
                     </div>
                 </div>
                 <div class="subscribe">
@@ -59,6 +62,7 @@
 <script src="<?= BASE_URL; ?>/static/orphus.js" defer></script>
 <script src="<?= BASE_URL; ?>/static/jqueryrotate.2.1.js" defer></script>
 <script src="<?= BASE_URL; ?>/static/jquery.easydropdown.min.js"></script>
+<script src="<?= BASE_URL; ?>/static/jquery.tooltipster.min.js"></script>
 <script>
     var BASE_URL = '<?= BASE_URL ?>';
 </script>
@@ -76,7 +80,7 @@
                     $('body').highlight(<?= $search_text; ?>);
                 });
             </script>
-            <?
+            <?php
         }
     }
 ?>
@@ -111,6 +115,11 @@
         });
         
         $(window).scroll();
+
+        $('.tooltip').tooltipster({
+            contentAsHTML: true
+
+        });
     });
     $('a').each(function() {
         var a = new RegExp('/' + window.location.host + '/');

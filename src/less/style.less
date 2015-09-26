@@ -28,6 +28,7 @@
 @import "plugins/prettyPhoto";
 @import "plugins/jquery-ui-1.8.7.custom.less";
 @import "plugins/jquery.autocomplete_2.less";
+@import "plugins/tooltipster";
 //Pages
 @import "pages/foruser";
 @import "pages/media";
@@ -53,7 +54,7 @@ sup { top: -0.5em; }
 sub { bottom: -0.25em; }
 
 html { width:100%; height:100%; }
-body { padding:14px 0 90px; position:relative; .size(100%, auto); background:white; min-width:@base-width; min-height:100%; font-family:"Ubuntu", Arial; }
+body { padding:0 0 90px; position:relative; .size(100%, auto); background:white; min-width:@base-width; min-height:100%; font-family:"Ubuntu", Arial; }
 body.popup-open { overflow:hidden; }
 a {
     color:#00979c;
@@ -183,7 +184,47 @@ td.tbl-check-no { height:35px; background-image:url("@{images}/pages/tbl-check-n
     .title { font-weight:bold; font-size:20px; margin-bottom:5px; margin-top:21px; }
 }
 
+.old-browsers-warning {
+    background-color:#ffffaa;
+    .inner {
+        .inner-global;
+        padding-left: 30px; padding-top: 20px; padding-bottom:20px;
+        line-height: 24px;
+        font-size:14px;
+        color:#888822;
+        background-image:data-uri("@{images}/extra/old-browsers/__icon-warning.png");
+        background-repeat: no-repeat;
+        background-position: 0 27px;
+        a.browser {
+            margin-left:10px;
+            display: inline-block;
+            background-color: #aaaa44; padding:2px 5px;
+            color:#fff; background-repeat:no-repeat; background-position:center left 5px;
+            .border-radius(3);
+            text-decoration:none;
+            
+            &:hover {
+                background-color:#888822;
+            }
+
+            &.firefox {
+                padding-left:25px;
+                background-image:data-uri("@{images}/extra/old-browsers/__icon-browser-firefox.png");
+            }
+            &.chrome {
+                padding-left:25px;
+                background-image:data-uri("@{images}/extra/old-browsers/__icon-browser-chrome.png");
+            }
+            &.opera {
+                padding-left:25px;
+                background-image:data-uri("@{images}/extra/old-browsers/__icon-browser-opera.png");
+            }
+        }
+    }
+}
+
 .main-conteiner {
+    margin-top: 14px;
     .inner-global;
     .box-shadow(0 0 10px 0 rgba(0, 0, 0, 0.3));
 }
@@ -224,12 +265,12 @@ header {
     .top-line {
         & > .inner {
             .inner-global; height:@header-height;
-            .logo { .size(328,62); position:absolute; top:5px; left:33px; background-image:url("@{images}/logo-header.png"); }
+            .logo { .size(353,65); position:absolute; top:5px; left:33px; background-image:url("@{images}/logo-header.png"); }
             .phone-block {
                 display:block;
                 position:absolute;
                 top:16px;
-                left:423px;
+                left:500px;
                 padding-left:38px;
                 .phone-icon { display:block; left:0; top:5px; position:absolute; .size(27); z-index:9; background-image:data-uri("@{images}/h/__phone.png"); }
                 .tel {
@@ -835,8 +876,17 @@ content {
             }
         }
         .qr-code-box {
-            display: inline-block; margin-top:15px; margin-bottom:10px;
-            img { .noselect; }
+            .box-shadow(0 0 3px 0 rgba(0, 0, 0, 0.3));
+            .border-radius(5); 
+            margin-top:15px; margin-bottom:10px;
+            width:266px;
+            .inner {
+                padding:20px; text-align:center;
+                font-size:16px;
+                color:#00979c;
+                img { .noselect; vertical-align:middle; }
+            }
+            
         }
     }
 }
@@ -890,7 +940,7 @@ footer{
                 color:#222;
                 .icons {
                     display:block;
-                    height:27px;
+                    //height:27px;
                     margin-top:19px;
                     .icon {
                         margin-right: 13px;
@@ -904,8 +954,19 @@ footer{
                         &.youtube { background-image:data-uri("@{images}/f/social/__youtube.png"); }
                         &.twitter { background-image:data-uri("@{images}/f/social/__twitter.png"); }
                         &.linkedin { background-image:data-uri("@{images}/f/social/__linkedin.png"); }
+                        &.rss { background-image:data-uri("@{images}/f/social/__rss.png"); }
 
                         &.last { margin-right:0; }
+
+
+                    }
+
+                    .rss-container {
+                        font-size:14px; color:#888;
+                        display:block;
+                        padding-top:10px;
+                        clear:both;
+                        & > * { display:inline-block; float:none; vertical-align:middle; }
                     }
                 }
             }

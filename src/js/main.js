@@ -417,14 +417,18 @@ function registration_show_password()
 {
     var element = $('#reg-password');
     var replica = $('#reg-password-replica');
+    var eyeIcon = $('.eye');
+
     if ($(element).is(':visible')) {
         var val = $(element).val();
         $(element).css('display', 'none');
         $(replica).val(val).css('display', 'block');
+        eyeIcon.addClass('stroked');
     } else {
         var val = $(replica).val();
         $(replica).css('display', 'none');
         $(element).val(val).css('display', 'block');
+        eyeIcon.removeClass('stroked');
     }
 };
 
