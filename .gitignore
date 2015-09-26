@@ -1,7 +1,6 @@
 node_modules/
 public/
-src/protected/conf/db.conf.local.php
 *.sublime-project
 *.sublime-workspace
 src/protected/vendor/
-src/protected/conf/*.conf.local.php
+src/protected/conf/db.conf.php
