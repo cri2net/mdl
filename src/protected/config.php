@@ -14,7 +14,9 @@
 
     @ini_set('error_log', ROOT . '/protected/logs/php-errors.log');
 
-
+    if (!file_exists(ROOT . "/protected/conf/db.conf.php")) {
+        die('Please create file /protected/conf/db.conf.php as copy of /protected/conf/db.conf.sample.php');
+    }
 
     require_once(ROOT . "/protected/conf/db.conf.php");
     require_once(ROOT . "/protected/conf/errors.php");
