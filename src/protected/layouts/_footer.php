@@ -63,6 +63,7 @@
 <script src="<?= BASE_URL; ?>/static/jqueryrotate.2.1.js" defer></script>
 <script src="<?= BASE_URL; ?>/static/jquery.easydropdown.min.js"></script>
 <script src="<?= BASE_URL; ?>/static/jquery.tooltipster.min.js"></script>
+<script src="<?= BASE_URL; ?>/static/zxcvbn.js"></script>
 <script>
     var BASE_URL = '<?= BASE_URL ?>';
 </script>
