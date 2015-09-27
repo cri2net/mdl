@@ -672,14 +672,14 @@ $(document).ready(function(){
             function clearGauge() { 
                 gauge.removeClass('weak');
                 gauge.removeClass('medium');
-                gauge.removeClass('strong');                
-                gauge.removeClass('secure');                
+                gauge.removeClass('strong');
+                gauge.removeClass('secure');
             }
 
             var gauge = $('#password-strength-container .gauge');
             var title = $('#password-strength-container .title');
- //           var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).*$", "g");
- //           var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+            // var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).*$", "g");
+            // var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
             var enoughRegex = new RegExp("(?=.{6,}).*", "g");
             var pwd = $(this).val();
 
@@ -694,12 +694,12 @@ $(document).ready(function(){
                 title.html('');
             } else if (false == enoughRegex.test(pwd)) {
                 gauge.hide();
-                title.html('Введiть не менше 6 символiв');
+                title.html('Введіть не менше 6 символів');
             } else if (score == 4) {
                 clearGauge();
                 gauge.addClass('secure');
                 gauge.show();
-                title.html('Вiдмiнний пароль');
+                title.html('Відмінний пароль');
             } else if (score == 3) {
                 clearGauge();
                 gauge.addClass('strong');
@@ -709,17 +709,15 @@ $(document).ready(function(){
                 clearGauge();
                 gauge.addClass('medium');
                 gauge.show();
-                title.html('Пароль середньоi небезпечностi');
+                title.html('Пароль середньої безпечності');
             } else {
                 clearGauge();
                 gauge.addClass('weak');
                 gauge.show();
                 title.html('Поганий пароль');
             }
-            
 
             return true;
-                        
         });
 
     })();
