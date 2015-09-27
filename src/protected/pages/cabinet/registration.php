@@ -78,6 +78,10 @@
                     </span>
                 </label>
                 <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+                <div id="password-strength-container" >
+                    <div class="gauge" ></div>
+                    <div class="title" ></div>
+                </div>
             </div>
             <div class="input">
                 <button class="btn green bold">Зареєструватися</button>

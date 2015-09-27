@@ -5,6 +5,45 @@ content {
             .already-have { text-align:right; line-height:22px; font-size:16px; color:#02989d; position:absolute; right:18px; top:17px; font-weight:bold; }
         }
     }
+
+    #password-strength-container {
+        display:block;
+        height:50px;
+        margin-top:-10px;
+
+        .gauge { 
+            display:none;
+            height:10px;
+            width:0;
+            background: transparent;
+            margin-bottom:10px;
+            .transition(all 0.2s ease);
+            &.weak {
+                width:25%;
+                background:#c04141;
+            }
+
+            &.medium {
+                width:50%;
+                background-color:#e1c230;
+            }
+
+            &.strong {
+                width:75%;
+                background-color:#9fb601;
+            }
+
+            &.secure {
+                width:100%;
+                background-color:#01b671;
+            }
+        }
+
+        .title {
+            font-size:12px; color:#888;
+        }
+    } 
+
     .registration, .cabinet-objects, .cabinet-settings {
         .form-block {
             width:50%; float:left; display:inline-block; margin-top:27px;

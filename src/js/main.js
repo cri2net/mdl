@@ -653,7 +653,6 @@ function subscribe_by_email()
 };
 
 
-
 $(document).ready(function(){
     (function(){
         $('.spoiler-title').click(function(){
@@ -668,5 +667,60 @@ $(document).ready(function(){
         $('.spoiler-close').click(function(){
             $(this).parent().parent().find('.spoiler-title').click();
         });
+
+        $('#reg-password, #reg-password-replica').keyup(function(){
+            function clearGauge() { 
+                gauge.removeClass('weak');
+                gauge.removeClass('medium');
+                gauge.removeClass('strong');                
+                gauge.removeClass('secure');                
+            }
+
+            var gauge = $('#password-strength-container .gauge');
+            var title = $('#password-strength-container .title');
+ //           var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).*$", "g");
+ //           var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+            var enoughRegex = new RegExp("(?=.{6,}).*", "g");
+            var pwd = $(this).val();
+
+            var score = zxcvbn(pwd).score;
+            console.log(score);
+            
+
+            $('#password-strength-container').width($(this).outerWidth());
+
+            if (pwd.length==0) {
+                gauge.hide();
+                title.html('');
+            } else if (false == enoughRegex.test(pwd)) {
+                gauge.hide();
+                title.html('Введiть не менше 6 символiв');
+            } else if (score == 4) {
+                clearGauge();
+                gauge.addClass('secure');
+                gauge.show();
+                title.html('Вiдмiнний пароль');
+            } else if (score == 3) {
+                clearGauge();
+                gauge.addClass('strong');
+                gauge.show();
+                title.html('Гарний пароль');
+            } else if (score == 2) {
+                clearGauge();
+                gauge.addClass('medium');
+                gauge.show();
+                title.html('Пароль середньоi небезпечностi');
+            } else {
+                clearGauge();
+                gauge.addClass('weak');
+                gauge.show();
+                title.html('Поганий пароль');
+            }
+            
+
+            return true;
+                        
+        });
+
     })();
 });
