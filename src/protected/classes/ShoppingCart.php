@@ -133,7 +133,7 @@ class ShoppingCart
             
             $counter_data = [];
             if (!empty($data[$item.'_new_count'])) {
-                foreach($data[$item.'_new_count'] as $key => $counter) {
+                foreach ($data[$item.'_new_count'] as $key => $counter) {
                     if (empty($data[$item.'_new_count'][$key])) {
                         continue;
                     }
@@ -142,8 +142,9 @@ class ShoppingCart
                     $new_value = $data[$item.'_new_count'][$key];
                     $used_value = $new_value - $old_value;
 
-                    if ($used_value < 0)
+                    if ($used_value < 0) {
                         $used_value -= pow(10, strlen(floor($old_value)));
+                    }
                     
                     $counter_data[] = [
                         'counter_num' => $data[$item.'_count_number'][$key],
