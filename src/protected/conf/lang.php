@@ -1,17 +1,17 @@
 <?php
     $MONTHS_NAME = [
-         1 => ['en' => 'January',   'ua' => 'січень'],
-         2 => ['en' => 'February',  'ua' => 'лютий'],
-         3 => ['en' => 'March',     'ua' => 'березень'],
-         4 => ['en' => 'April',     'ua' => 'квiтень'],
-         5 => ['en' => 'May',       'ua' => 'травень'],
-         6 => ['en' => 'June',      'ua' => 'червень'],
-         7 => ['en' => 'July',      'ua' => 'липень'],
-         8 => ['en' => 'August',    'ua' => 'серпень'],
-         9 => ['en' => 'September', 'ua' => 'вересень'],
-        10 => ['en' => 'October',   'ua' => 'жовтень'],
-        11 => ['en' => 'November',  'ua' => 'листопад'],
-        12 => ['en' => 'December',  'ua' => 'грудень'],
+         1 => ['en' => 'January',   'ua' => 'січень',   'ru' => 'январь'],
+         2 => ['en' => 'February',  'ua' => 'лютий',    'ru' => 'февраль'],
+         3 => ['en' => 'March',     'ua' => 'березень', 'ru' => 'март'],
+         4 => ['en' => 'April',     'ua' => 'квiтень',  'ru' => 'апрель'],
+         5 => ['en' => 'May',       'ua' => 'травень',  'ru' => 'май'],
+         6 => ['en' => 'June',      'ua' => 'червень',  'ru' => 'июнь'],
+         7 => ['en' => 'July',      'ua' => 'липень',   'ru' => 'июль'],
+         8 => ['en' => 'August',    'ua' => 'серпень',  'ru' => 'август'],
+         9 => ['en' => 'September', 'ua' => 'вересень', 'ru' => 'сентябрь'],
+        10 => ['en' => 'October',   'ua' => 'жовтень',  'ru' => 'октябрь'],
+        11 => ['en' => 'November',  'ua' => 'листопад', 'ru' => 'ноябрь'],
+        12 => ['en' => 'December',  'ua' => 'грудень',  'ru' => 'декабрь'],
     ];
 
     $MONTHS = [
@@ -53,6 +53,15 @@
             4 => ['short' => 'чт', 'full' => 'Четвер',    'is_holiday' => false],
             5 => ['short' => 'пт', 'full' => 'П\'ятниця', 'is_holiday' => false],
             6 => ['short' => 'сб', 'full' => 'Субота',    'is_holiday' => true],
+        ],
+        'ru' => [
+            0 => ['short' => 'вс', 'full' => 'Воскресенье', 'is_holiday' => true],
+            1 => ['short' => 'пн', 'full' => 'Понедельник', 'is_holiday' => false],
+            2 => ['short' => 'вт', 'full' => 'Вторник',     'is_holiday' => false],
+            3 => ['short' => 'ср', 'full' => 'Среда',       'is_holiday' => false],
+            4 => ['short' => 'чт', 'full' => 'Четверг',     'is_holiday' => false],
+            5 => ['short' => 'пт', 'full' => 'Пятниця',     'is_holiday' => false],
+            6 => ['short' => 'сб', 'full' => 'Суббота',     'is_holiday' => true],
         ],
         'en' => [
             0 => ['short' => 'su', 'full' => 'Sunday',    'is_holiday' => true],

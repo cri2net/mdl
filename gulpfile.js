@@ -7,11 +7,6 @@ var gulp       = require('gulp'),
     livereload = require('gulp-livereload');
     // watch      = require('gulp-watch');
 
-paths = {
-    webpages : {
-    }
-}
-
 var WEBPAGES_MASK = [
     './src/**/.htaccess',
     './src/manifest.json',
