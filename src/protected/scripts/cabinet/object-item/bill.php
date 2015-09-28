@@ -105,13 +105,21 @@
                                         ?>
                                         <div class="counter-data">
                                             <br>
-                                            Попередні показання лічильника №<?= $counter['COUNTER_NO']; ?> : <span id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span><br>
-                                            Поточні показання лічильника №<?= $counter['COUNTER_NO']; ?>:
-                                            <input min="<?= (int)$counter['OLD_VALUE']; ?>" class="text inp_<?= $key; ?>_new_count" type="number" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="6" value="" style="width: 50px;" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ('<?= $key; ?>', '<?= $counter['OLD_VALUE']; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');"><br>
+                                            Показання лічильника №<?= $counter['COUNTER_NO']; ?> : <br>
+                                            
+                                            <div style="margin-top:5px; margin-bottom:5px;">
+                                                <label for="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Попередні:</label>
+                                                <input style="width:50px;" value="<?= $counter['OLD_VALUE']; ?>" id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" type="number" min="0" maxlength="6" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
+                                            </div>
+                                            <div style="margin-bottom:5px;">
+                                                <label for="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Поточні:</label>
+                                                <input min="<?= (int)$counter['OLD_VALUE']; ?>" class="text inp_<?= $key; ?>_new_count" type="number" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="6" value="" style="width: 50px;" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
+                                            </div>
+                                            
                                             <input type="hidden" name="inp_<?= $key; ?>_old_count[]" value="<?= $counter['OLD_VALUE']; ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
-                                            До сплати: ( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<?= $counter['OLD_VALUE']; ?>)&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;грн
+                                            До сплати: ( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span>)&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;грн
                                         </div>
                                         <?php
                                     }

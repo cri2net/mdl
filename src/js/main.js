@@ -237,10 +237,12 @@ function checkForInt(evt)
     return (charCode < 32 || (charCode >= 48 && charCode <= 57))
 };
 
-function recount_counter_summ(key, old_value, tarif, counter_no) {
+function recount_counter_summ(key, tarif, counter_no) {
     var summ;
-    var old_value = old_value.split(',').join('.');
+    var old_value = $('#old_inp_'+ key +'_new_count_' + counter_no).val();
+    old_value = old_value.split(',').join('.');
     old_value = parseFloat(old_value);
+
     var new_value = $('#inp_'+ key +'_new_count_' + counter_no).val();
     new_value = new_value.split(',').join('.');
     new_value = parseFloat(new_value);
@@ -263,6 +265,13 @@ function recount_counter_summ(key, old_value, tarif, counter_no) {
         });
     }
     
+    if (isNaN(tarif) || isNaN(old_value)) {
+        $('#oldval_counter_' + key + '_' + counter_no).html('0');
+    } else {
+        $('#oldval_counter_'+key + '_' + counter_no).html(old_value);
+        $('#inp_'+ key +'_new_count_' + counter_no).attr('min', old_value);
+    }
+
     if (isNaN(tarif) || isNaN(new_value)) {
         $('#newval_counter_' + key + '_' + counter_no).html('нове&nbsp;значення');
         add_cost = add_cost.toFixed(2);
