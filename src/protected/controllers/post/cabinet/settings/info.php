@@ -4,8 +4,6 @@
         $_POST['mob_phone'] = '+' . preg_replace('/[^0-9]/', '', $_POST['mob_phone']);
         $fields = ['name' => 'Ім\'я', 'fathername' => 'По-батьковi', 'lastname' => 'Прiзвище', 'email' => 'Електронна пошта', 'mob_phone' => 'Телефон'];
         
-        $__userData = User::getUserById(Authorization::getLoggedUserId());
-
         if (!$__userData) {
             throw new Exception(ERROR_USER_NOT_LOGGED_IN);
         }

@@ -5,7 +5,6 @@
     }
 
     $current_section = $__route_result['values']['section'];
-    $__userData = User::getUserById(Authorization::getLoggedUserId());
 ?>
 <div class="h1-line-cabinet">
     <h1 class="big-title">Налаштування профілю</h1>

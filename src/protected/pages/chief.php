@@ -5,12 +5,10 @@
     $_contacts_text = '';
 
     if (Authorization::isLogin()) {
-        $__userData = User::getUserById(Authorization::getLoggedUserId());
         $_contacts_name = "{$__userData['lastname']} {$__userData['name']} {$__userData['fathername']}";
         $_contacts_email = $__userData['email'];
     }
     
-
     if (isset($_SESSION['chief']['status']) && $_SESSION['chief']['status']) {
         ?><h2 class="big-success-message">Ваше повідомлення отримано. Дякуємо за звернення</h2> <?php
         unset($_SESSION['chief']);

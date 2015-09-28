@@ -1,7 +1,6 @@
 <?php
     try {
         $_SESSION['cabinet-settings'] = [];
-        $__userData = User::getUserById(Authorization::getLoggedUserId());
 
         if (!$__userData) {
             throw new Exception(ERROR_USER_NOT_LOGGED_IN);
