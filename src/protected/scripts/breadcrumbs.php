@@ -3,11 +3,14 @@
         ['title' => 'ГіОЦ', 'link' => '/']
     ];
 
-    switch($__route_result['controller'] . "/" . $__route_result['action']) {
+    switch ($__route_result['controller'] . "/" . $__route_result['action']) {
         case 'page/index':
             $breadcrumbs[] = ['title' => 'Головна'];
             break;
 
+        case 'page/tender':
+            $breadcrumbs[] = ['title' => 'Державні закупівлі'];
+            break;
         case 'page/about':
             $breadcrumbs[] = ['title' => 'Про ГіOЦ'];
             break;

@@ -1,9 +1,19 @@
         </div>
-        <div class="sidebar">
-            <?php require_once(ROOT . '/protected/scripts/sidebar.php'); ?>
-        </div>
+        <?php
+            if (!defined('HAVE_SIDEBAR') || HAVE_SIDEBAR) {
+                ?>
+                <div class="sidebar">
+                    <?php require_once(ROOT . '/protected/scripts/sidebar.php'); ?>
+                </div>
+                <?php
+            }
+        ?>
     </content>
-    <div class="divider-conteiner"><div class="divider"></div></div>
+    <?php
+        if (!defined('HAVE_SIDEBAR') || HAVE_SIDEBAR) {
+            ?><div class="divider-conteiner"><div class="divider"></div></div> <?php
+        }
+    ?>
     <footer>
         <div class="inner">
             <div class="left">
@@ -135,7 +145,11 @@
         }
     });
 </script>
-<?php require_once(ROOT . '/protected/scripts/yandex-metrika.php'); ?>
-<?php require_once(ROOT . '/protected/scripts/yandex-metrika-for-kiev.gerc.ua.php'); ?>
+<?php
+    if (USER_REAL_IP !== '127.0.0.1') {
+        require_once(ROOT . '/protected/scripts/yandex-metrika.php');
+        require_once(ROOT . '/protected/scripts/yandex-metrika-for-kiev.gerc.ua.php');
+    }
+?>
 </body>
 </html>

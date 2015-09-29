@@ -28,18 +28,24 @@
 <meta name="description" content="<?php require_once(ROOT . "/protected/scripts/seo/description.php"); ?>" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&amp;subset=latin,cyrillic">
 <?php
-	if (USER_REAL_IP == '127.0.0.1') {
+	if (USER_REAL_IP === '127.0.0.1') {
 		?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php
+	} else {
+		require_once(ROOT . '/protected/scripts/google-analytics.php');
+		require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php');
 	}
 
     $tmp = PDO_DB::table_list(TABLE_PREFIX . 'text', "variable IN ('HEADER_PHONE', 'HEADER_PHONE_SECOND', 'HEADER_WORK')");
     for ($i=0; $i < count($tmp); $i++) { 
         $_tmp[$tmp[$i]['variable']] = $tmp[$i]['text'];
     }
+
+    switch ($__route_result['controller'] . "/" . $__route_result['action']) {
+        case 'page/tender':
+            define('HAVE_SIDEBAR', false);
+    }
 ?>
 <script src="<?= BASE_URL; ?>/static/jquery-1.7.2.min.js"></script>
-<?php require_once(ROOT . '/protected/scripts/google-analytics.php'); ?>
-<?php require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php'); ?>
 </head>
 <body>
 	<?php require_once(ROOT . '/protected/scripts/browser-warning.php'); ?>
@@ -127,9 +133,9 @@
 			</div>
 		</header>
 		<content>
-			<div class="inner <?= $__route_result['controller'] . '_' . $__route_result['action']; ?>">
+			<div class="inner <?= (defined('HAVE_SIDEBAR') && !HAVE_SIDEBAR) ? 'wo-sidebar' : ''; ?> <?= $__route_result['controller'] . '_' . $__route_result['action']; ?>">
 				<?php
-					switch($__route_result['controller'] . "/" . $__route_result['action']) {
+					switch ($__route_result['controller'] . "/" . $__route_result['action']) {
 						case 'page/news':
 						case 'page/news-item':
 							require_once(ROOT . '/protected/scripts/slider.php');
