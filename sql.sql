@@ -435,9 +435,17 @@ ALTER TABLE `gioc_user_restore`
 ALTER TABLE `gioc_users`
   ADD COLUMN `activated` TINYINT(1) DEFAULT 0  NOT NULL AFTER `send_reg_letter`;
 
+
+-- 2015.09.29
 ALTER TABLE `gioc_users`
   DROP INDEX `notify_email`,
   ADD  INDEX `notify_email` (`notify_email`, `broken_email`, `deleted`);
+
+ALTER TABLE `gioc_text`
+  DROP COLUMN `id`,
+  CHANGE `variable` `variable` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci NOT NULL,
+  DROP PRIMARY KEY,
+  ADD PRIMARY KEY (`variable`);
 
 
 -- IN ONLINE
