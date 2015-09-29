@@ -435,5 +435,9 @@ ALTER TABLE `gioc_user_restore`
 ALTER TABLE `gioc_users`
   ADD COLUMN `activated` TINYINT(1) DEFAULT 0  NOT NULL AFTER `send_reg_letter`;
 
+ALTER TABLE `gioc_users`
+  DROP INDEX `notify_email`,
+  ADD  INDEX `notify_email` (`notify_email`, `broken_email`, `deleted`);
+
 
 -- IN ONLINE
