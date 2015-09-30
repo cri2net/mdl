@@ -331,8 +331,18 @@ header {
             }
 
             .account-link,
-            .account-link .account-open .head-line .avatar .default-avatar { background-image:data-uri("@{images}/h/__account.png"); }
-            
+            .account-link .account-open .head-line {
+                .avatar .default-avatar { background-image:data-uri("@{images}/h/__account.png"); }
+                .username {
+                    display: table;
+                    height:42px;
+                    margin-top:-14px;
+                    span {
+                        display: table-cell; vertical-align: middle; max-width: 250px;
+                    }
+                }
+            }
+
             .account-link {
                 position:absolute;
                 right:33px;

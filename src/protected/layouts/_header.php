@@ -20,6 +20,7 @@
 <meta name="theme-color" content="#ffffff">
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--[if lt IE 9]><style> input.txt, textarea.txt, select.txt { border:1px solid #444 !important; }</style><![endif]-->
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 <!-- <link href="<?= BASE_URL; ?>/style/style.css?m=<?= (is_readable(ROOT . "/style/style.css")) ? filemtime(ROOT . "/style/style.css") : ''; ?>" rel="stylesheet" type="text/css" /> -->
 <link href="<?= BASE_URL; ?>/static/style.css?m=<?= (is_readable(ROOT . "/style/style.css")) ? filemtime(ROOT . "/style/style.css") : ''; ?>" rel="stylesheet" type="text/css" />
@@ -84,7 +85,7 @@
 											<div class="default-avatar"></div>
 											<!-- <img src="http://placehold.it/34x34" alt=""> -->
 										</div>
-										<div class="username"><?= htmlspecialchars($__userData['name']) . '&nbsp;' . htmlspecialchars($__userData['lastname']); ?></div>
+										<div class="username"><span><?= htmlspecialchars($__userData['name']) . '&nbsp;' . htmlspecialchars($__userData['lastname']); ?></span></div>
 									</div>
 									<div class="item objects">
 										<a href="<?= BASE_URL; ?>/cabinet/objects/">Об'єкти</a>
