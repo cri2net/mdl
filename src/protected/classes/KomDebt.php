@@ -21,22 +21,26 @@ class KomDebt
     
     private function getXML($url, $obj_id, $dateBegin = null)
     {
-        if ($this->testing) {
-            // в режиме тестирования мы не можем обращаться к API (скорее всего), так что берём шаблоны ответов
-            if ($url == self::DEBTURL) {
-                return file_get_contents(ROOT . self::ANSWERS_PATH . 'DEBTURL.xml');
-            } else {
-                return file_get_contents(ROOT . self::ANSWERS_PATH . 'KOMPLATURL.xml');
+        try {
+            if ($this->testing) {
+                // в режиме тестирования мы не можем обращаться к API (скорее всего), так что берём шаблоны ответов
+                if ($url == self::DEBTURL) {
+                    return file_get_contents(ROOT . self::ANSWERS_PATH . 'DEBTURL.xml');
+                } else {
+                    return file_get_contents(ROOT . self::ANSWERS_PATH . 'KOMPLATURL.xml');
+                }
             }
-        }
 
-        $dateData = $this->getDatePeriod($dateBegin);
-        $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
+            $dateData = $this->getDatePeriod($dateBegin);
+            $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
 
-        if (!isset($this->cache[md5($url)])) {
-            $this->cache[md5($url)] = Http::fgets($url);
+            if (!isset($this->cache[md5($url)])) {
+                $this->cache[md5($url)] = Http::fgets($url);
+            }
+            return $this->cache[md5($url)];
+        } catch (Exception $e) {
+            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
         }
-        return $this->cache[md5($url)];
     }
     
     public function clearCache()
@@ -191,7 +195,7 @@ class KomDebt
             $list = [];
            
             $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
-            $list['name_plat'] = (string)$row->NAME_PLAT;
+            $list['name_plat'] = $this->getNamePlat($row->NAME_PLAT);
             $list['CODE_FIRME'] = (string)$row->CODE_FIRME;
             $list['CODE_PLAT'] = (string)$row->CODE_PLAT;
             $list['ID_PLAT'] = (string)$row->ID_PLAT;
@@ -220,7 +224,7 @@ class KomDebt
                 $list['counterData']['date'] = " 01.".date("n").".".date("y");
                 $list['counterData']['tarif'] = str_replace(".",",",sprintf('%.2f',((float)$row->TARIF)/100));
                 $list['counterData']['real_tarif'] = (float)($row->TARIF/100);
-                $list['counterData']['NAME_PLAT'] = (string)$row->NAME_PLAT;
+                $list['counterData']['NAME_PLAT'] = $this->getNamePlat($row->NAME_PLAT);
                 $list['counterData']['NAIM_LG'] = (string)$row->NAIM_LG;
                 $list['counterData']['PROC_LG'] = (string)$row->PROC_LG;
                 $list['counterData']['KOL_LGOT'] = (string)$row->KOL_LGOT;
@@ -318,7 +322,7 @@ class KomDebt
             
             $dataArray = [
                 'NAME_FIRME' => (string)$row->NAME_FIRME,
-                'NAME_PLAT'  => (string)$row->NAME_PLAT,
+                'NAME_PLAT'  => $this->getNamePlat($row->NAME_PLAT),
                 'SUMM'       => str_replace(".",",",sprintf('%.2f',((float)$row->SUMM)/100)),
                 'PDATE'      => date("d.m.y H:i:s", strtotime((string)$row->PDATE)),
                 'ABCOUNT'    => (string)$row->ABCOUNT,
@@ -497,7 +501,7 @@ class KomDebt
                         'COUNTER_NO' => (string)$counter->COUNTER_NO,
                         'OLD_VALUE'  => (string)$counter->OLD_VALUE,
                         'TARIF'      => str_replace(".", ",", sprintf('%.2f', ((float)$row->TARIF)/100)),
-                        'NAME_PLAT'  => (string)$row->NAME_PLAT
+                        'NAME_PLAT'  => $this->getNamePlat($row->NAME_PLAT)
                     ];
                 }
             }
@@ -513,7 +517,7 @@ class KomDebt
             $firmData['SUMM_MONTH'] = ((int)$row->SUMM_MONTH != 0) ? str_replace(".",",",sprintf('%.2f',((float)$row->SUMM_MONTH)/100)) : '0,00';
             $firmData['SUMM_DOLG']  = ((int)$row->SUMM_DOLG != 0)  ? str_replace(".",",",sprintf('%.2f',((float)$row->SUMM_DOLG)/100))  : '0,00';
             
-            $firmData['NAME_PLAT']  = (string)$row->NAME_PLAT;
+            $firmData['NAME_PLAT']  = $this->getNamePlat($row->NAME_PLAT);
             $firmData['TLF'] = (string)$row->TLF;
 
             $data['data'][(string)$row->CODE_FIRME][] = $firmData;
@@ -575,11 +579,11 @@ class KomDebt
             if ($row->COUNTERS->COUNTERS_ITEM) {
                 $data['counter'] = 1;
                 foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
-                    $data['firm'][(string)$row->CODE_FIRME][(string)$row->NAME_PLAT]['counter'][] = [
+                    $data['firm'][(string)$row->CODE_FIRME][$this->getNamePlat($row->NAME_PLAT)]['counter'][] = [
                         'COUNTER_NO' => (string)$counter->COUNTER_NO,
                         'OLD_VALUE'  => (string)$counter->OLD_VALUE,
                         'TARIF'      => str_replace(".",",",sprintf('%.2f',((float)$row->TARIF)/100)),
-                        'NAME_PLAT'  => (string)$row->NAME_PLAT
+                        'NAME_PLAT'  => $this->getNamePlat($row->NAME_PLAT)
                     ];
                 }
             }
@@ -591,10 +595,17 @@ class KomDebt
             $firmData['SUMM_MONTH'] = ((int)$row->SUMM_MONTH != 0) ? str_replace(".",",",sprintf('%.2f',((float)$row->SUMM_MONTH)/100)) : '0,00';
             $firmData['SUMM_DOLG']  = ((int)$row->SUMM_DOLG != 0)  ? str_replace(".",",",sprintf('%.2f',((float)$row->SUMM_DOLG)/100))  : '0,00';
             
-            $firmData['NAME_PLAT'] = (string)$row->NAME_PLAT;
+            $firmData['NAME_PLAT'] = $this->getNamePlat($row->NAME_PLAT);
             $data['data'][(string)$row->CODE_FIRME][] = $firmData;
         }
         
         return $data;
+    }
+
+    private function getNamePlat($string)
+    {
+        $string = str_replace('СЧЕТЧИК', 'ЛІЧИЛЬНИК', $string);
+        $string = str_replace('счетчик', 'лічильник', $string);
+        return $string;
     }
 }
