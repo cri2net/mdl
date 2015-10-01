@@ -83,6 +83,11 @@
                     <div class="title" ></div>
                 </div>
             </div>
+            <div class="input" style="height:40px; line-height:15px; font-size:12px; color:#444;">
+                <div style="position:absolute; width:750px;">
+                    Реєструючись, ви підтверджуєте свою згоду на обробку персональних даних, а також підтверджуєте те, що ознайомились та погоджуєтесь з <a href="<?= BASE_URL; ?>/help/offers/">Угодою користувача</a> та <a href="<?= BASE_URL; ?>/help/offers/">Угодою про конфіденційність інформації</a>
+                </div>
+            </div>
             <div class="input">
                 <button class="btn green bold">Зареєструватися</button>
             </div>

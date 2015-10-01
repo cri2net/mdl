@@ -169,7 +169,7 @@
                             ?>
                         </td>
                         <td>
-                            <input class="bill-summ-input txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>">
+                            <input class="bill-summ-input txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>">
                             <?php
                                 // htmlspecialchars не делаем, так как эти данные уже должны быть обработаны
                                 $tmp_value  =      $item['CODE_FIRME'];

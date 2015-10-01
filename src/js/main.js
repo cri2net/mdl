@@ -86,13 +86,9 @@ function recalc()
     $('input:text').each(function(i){
         var name = $(this).attr('name');
         if (!$(this).attr('disabled') && name.indexOf('sum') != -1){
-            if ($(this).val() == '') {
-                $(this).val('0,00');
-            }
             var val = $(this).val().replace(',', '.');
             
             if (isNaN(val)) {
-                $(this).val('0,00');
                 val = '0.00';
             }
             total += parseFloat(val);
@@ -115,6 +111,21 @@ function recalc()
         totalStr = totalStr + '0';
     }
     $('#total_debt').html(totalStr);
+};
+
+function bill_input_blur(el)
+{
+    var val = parseFloat($(el).val().replace(',', '.'));
+    if (isNaN(val) || (val == 0)) {
+        $(el).val('0,00');
+    }
+};
+
+function bill_input_focus(el)
+{
+    if ($(el).val() == '0,00') {
+        $(el).val('');
+    }
 };
 
 function checkAllServices(checkbox)
