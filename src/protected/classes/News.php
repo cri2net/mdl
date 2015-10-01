@@ -7,18 +7,60 @@ class News
 
     public static function getNewsURL($news_id, $full_path = true)
     {
-        $item = PDO_DB::row_by_id(self::TABLE, $news_id);
+        $news_id = (int)$news_id;
+        $pdo = PDO_DB::getPDO();
+        $stm = $pdo->query("SELECT title FROM " . self::TABLE . " WHERE id='$news_id' LIMIT 1");
+        $title = $stm->fetchColumn();
         $url = '';
         
-        if (!$item) {
+        if (!$title) {
             return '';
         }
         if ($full_path) {
             $url = BASE_URL;
         }
 
-        $url .= '/news/' . composeUrlKey($item['title']) . '_' . $item['id'] . '/';
+        $url .= '/news/' . composeUrlKey($title) . '_' . $news_id . '/';
         return $url;
+    }
+
+    public static function search($search, $get_count = false, $order_column = 'created_at', $order_type = 'DESC', $limit = '')
+    {
+        $pdo = PDO_DB::getPDO();
+        $search = $pdo->quote(trim($search));
+        $table = self::TABLE;
+
+        // экранируем спецсимволы оператора LIKE
+        $search = str_replace(['\\', '_', '%'], ['\\\\', '\\_', '\\%'], $search);
+        $search = '%' . trim($search, "'") . '%';
+
+        $where = "WHERE is_actual=1
+                   AND (
+                        title LIKE '$search'
+                        OR announce LIKE '$search'
+                        OR `text` LIKE '$search'
+                   )";
+
+        if ($get_count) {
+            $stm = $pdo->query("SELECT COUNT(*) FROM $table $where");
+            return intval($stm->fetchColumn());
+        }
+        
+        $order_by = '';
+        if ($order_column) {
+            $order_by = "ORDER BY $order_column ";
+            $order_by .= (strtolower($order_type) == 'asc') ? 'ASC' : 'DESC';
+        }
+        $limit = ($limit) ? "LIMIT $limit" : '';
+
+        $query = "SELECT id, created_at, title, announce, `text`
+                   FROM $table
+                   $where
+                   $order_by
+                   $limit
+                ";
+        $stm = $pdo->query($query);
+        return $stm->fetchAll();
     }
 
     public static function getNewsTitle($news_id)

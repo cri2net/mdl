@@ -448,4 +448,13 @@ ALTER TABLE `gioc_text`
   ADD PRIMARY KEY (`variable`);
 
 
+-- 2015.10.01
+-- Индексы для сортировки при поиске
+ALTER TABLE `gioc_news`   
+  ADD INDEX (`is_actual`, `title`(50));
+
+ALTER TABLE `gioc_pages`   
+  ADD INDEX (`is_active`, `h1`(50));
+
 -- IN ONLINE
+

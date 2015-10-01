@@ -85,6 +85,45 @@ class StaticPage
         return $path;
     }
 
+    public static function search($search, $get_count = false, $order_column = 'created_at', $order_type = 'DESC', $limit = '')
+    {
+        $pdo = PDO_DB::getPDO();
+        $search = $pdo->quote(trim($search));
+        $table = self::TABLE;
+
+        // экранируем спецсимволы оператора LIKE
+        $search = str_replace(['\\', '_', '%'], ['\\\\', '\\_', '\\%'], $search);
+        $search = '%' . trim($search, "'") . '%';
+
+        $where = "WHERE is_active=1
+                   AND (
+                        h1 LIKE '$search'
+                        OR announce LIKE '$search'
+                        OR `text` LIKE '$search'
+                   )";
+
+        if ($get_count) {
+            $stm = $pdo->query("SELECT COUNT(*) FROM $table $where");
+            return intval($stm->fetchColumn());
+        }
+        
+        $order_by = '';
+        if ($order_column) {
+            $order_by = "ORDER BY $order_column ";
+            $order_by .= (strtolower($order_type) == 'asc') ? 'ASC' : 'DESC';
+        }
+        $limit = ($limit) ? "LIMIT $limit" : '';
+
+        $query = "SELECT id, created_at, h1 as title, announce, `text`
+                   FROM $table
+                   $where
+                   $order_by
+                   $limit
+                ";
+        $stm = $pdo->query($query);
+        return $stm->fetchAll();
+    }
+
     /**
      * Сохраняем в БД посещение страницы.
      * Метод может логировать посещения не только статических страниц, но и любых других.

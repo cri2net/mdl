@@ -38,6 +38,7 @@
 @import "pages/calculator"; 
 @import "pages/registration";
 @import "pages/home";
+@import "pages/search";
 @import "forms";
 
 
@@ -78,7 +79,7 @@ ul > li, ol > li { padding-left:15px; line-height:1.5em; font-size:inherit; font
 
 .ui-autocomplete { z-index:5; }
 
-.highlight { color: #f42; font-weight: 900; }
+.highlight { color:#00979c; font-weight:bold; }
 h2.big-success-message { font-size:24px; background-color:rgba(1, 182, 113, 0.8); color:#fff; padding:20px; margin-top:40px; display:inline-block; }
 h2.big-error-message { font-size:24px; background-color:rgba(182, 1, 13, 0.8); color:#fff; padding:20px; margin-top:40px; display:inline-block; }
 .error-description { font-size:18px; color:#900; font-weight:bold; padding:10px; padding-left:0; margin-bottom:20px; }
@@ -331,8 +332,8 @@ header {
             }
 
             .account-link,
+            .account-link .account-open .head-line .avatar .default-avatar { background-image:data-uri("@{images}/h/__account.png"); }
             .account-link .account-open .head-line {
-                .avatar .default-avatar { background-image:data-uri("@{images}/h/__account.png"); }
                 .username {
                     display: table;
                     height:42px;
@@ -698,6 +699,8 @@ content {
             &.green { background-color:#01b671; }
             &.normal-margin { margin-top:26px; }
         }
+
+        h1.search-title { margin-top:34px; }
         
         h2.big-subtitle {
             display:inline-block; font-weight:bold; font-size:24px; color:#fff; padding:10px 30px 10px 33px; margin-left:-33px; margin-top:30px; background-color:#00979c;
@@ -818,7 +821,7 @@ content {
 
         .search {
             padding-top:22px; margin-bottom:15px;
-            input[type=text] { 
+            input[type=text] {
                 color:#444;
                 font-family:"Ubuntu", Arial;
                 font-size:16px;
@@ -830,7 +833,7 @@ content {
                 border:0 none;
                 background-image: data-uri("@{images}/sidebar/__search.png");
                 background-repeat:no-repeat;
-                background-position:202px center;
+                background-position:227px center;
             }
         }
         .payonline { position:relative; margin-bottom:10px; margin-top:11px; display:inline-block; }

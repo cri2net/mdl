@@ -661,6 +661,10 @@ function subscribe_by_email()
     });
 };
 
+function searchSubmit() {
+    var s = $('search').val();
+    return (s.length > 0);
+}
 
 $(document).ready(function(){
     (function(){

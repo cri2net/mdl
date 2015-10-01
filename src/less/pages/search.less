@@ -1,0 +1,52 @@
+content .inner {
+    .search-sort {
+        margin-bottom: 42px;
+        .item {
+            display: inline-block;
+            position:relative;
+            margin-right:70px;
+            min-height:26px;
+            color:#00979c;
+            text-decoration:none;
+            padding-left:30px;
+            background-repeat:no-repeat;
+            background-position:left top;
+            
+            &.by-date { background-image:data-uri("@{images}/pages/search/__by-date.png"); }
+            &.by-title { background-image:data-uri("@{images}/pages/search/__by-title.png"); background-position:left 5px; }
+            &.by-popularity { background-image:data-uri("@{images}/pages/search/__by-popularity.png"); }
+
+            .text { border-bottom:1px dotted #00979c; }
+            .order-by {
+                position:absolute; top:2px; right:-17px; display:none; .size(8, 12); background-image:data-uri("@{images}/pages/search/__asc.png");
+                &.desc { background-image:data-uri("@{images}/pages/search/__desc.png"); }
+            }
+
+            &.active {
+                color:#000204;
+                &.by-date { background-image:data-uri("@{images}/pages/search/__by-date-active.png"); }
+                &.by-title { background-image:data-uri("@{images}/pages/search/__by-title-active.png"); }
+                &.by-popularity { background-image:data-uri("@{images}/pages/search/__by-popularity-active.png"); }
+                .text { border-bottom-color:#000204; }
+                .order-by { display:block; }
+            }
+        }
+    }
+    .search-results {
+        padding: 15px 15px 15px 0;
+
+        .search-result-title {
+            padding-top:25px; padding-bottom:9px; border-top:2px solid #cceaeb; margin-left:-33px; padding-left:33px;
+            &.news { border-top-width:1px; }
+        }
+        ol {
+            list-style-type:none; margin:0;
+            li {
+                padding-bottom:32px; padding-left:33px; position:relative;
+                .decimal { color:#aaa; font-size:12px; display:inline-block; position:absolute; top:0; left:0; }
+                .title { display:inline-block; margin-bottom:5px; color:#000204; font-size:16px; font-weight:bold; text-decoration:none; }
+                .text { color:#444; font-size:12px; line-height:20px; }
+            }
+        }
+    }
+}

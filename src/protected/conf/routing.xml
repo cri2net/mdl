@@ -53,7 +53,8 @@
         <route match="feed" controller="rss" action="rss" />
         <route match="checkout" controller="page" action="checkout" />
         <route match="tender" controller="page" action="tender" />
-        <route match="paybill"  controller="page" action="paybill" />
+        <route match="paybill" controller="page" action="paybill" />
+        <route match="search" controller="page" action="search" />
         <route match="contacts" controller="page" action="contacts" />
         <route match="foruser" controller="page" action="foruser" />
         <route match="calc-devices" controller="page" action="calc-devices" />

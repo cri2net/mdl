@@ -8,6 +8,9 @@
             $breadcrumbs[] = ['title' => 'Головна'];
             break;
 
+        case 'page/search':
+            $breadcrumbs[] = ['title' => 'Результати пошуку'];
+            break;
         case 'page/tender':
             $breadcrumbs[] = ['title' => 'Державні закупівлі'];
             break;
