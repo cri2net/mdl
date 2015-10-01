@@ -74,7 +74,7 @@
 ?>
 <div class="qr-code-box">
     <div class="inner" >
-        <img style="max-width:290px;" src="<?= BASE_URL; ?>/pic/sidebar/qr-code-resized.png" alt=""><br/><br/>
+        <img style="max-width:290px;" src="<?= BASE_URL; ?>/pic/sidebar/qr-code-resized.png" alt=""><br><br>
         <img src="<?= BASE_URL ?>/pic/sidebar/icon-scan.png" />&nbsp;&nbsp;&nbsp;Скануй та зберiгай
     </div>
 </div>

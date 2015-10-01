@@ -6,27 +6,27 @@
             <div class="title"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-notepad.png" alt="" />Базовi данi</div>
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-people.png" alt="" /></div>
-                <div class="col-label">Кількість мешканців, які<br/>користуються послугами</div>
+                <div class="col-label">Кількість мешканців, які<br>користуються послугами</div>
                 <div class="col-input">
                     <input name="KPR" type="text" class="txt num-short green bold s24 form-txt-input" value="<?= $KPR; ?>" maxlength="2" onkeypress="return isNumberKey(event);" />
                 </div>
             </div>
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-abacus.png" alt="" /></div>
-                <div class="col-label">Кількість пільг, які надаються<br/>по даному особовому рахунку</div>
+                <div class="col-label">Кількість пільг, які надаються<br>по даному особовому рахунку</div>
                 <div class="col-input">
                     <input type="text" maxlength="1" onkeypress="return isNumberKey(event);" value="<?= $KLG; ?>" id="KLG" name="KLG" class="txt num-short green bold s24 form-txt-input" />
                 </div>
             </div>
             <div class="calc-subblock">
                 <div class="item-row">
-                    <div class="col-label">Кількість пільговиків, які користуються<br/>1-ю пільгою</div>
+                    <div class="col-label">Кількість пільговиків, які користуються<br>1-ю пільгою</div>
                     <div class="col-input">
                         <input type="text" class="txt num-short green bold s24 form-txt-input" name="KLLG[]" value="<?= $KLLG[0]; ?>" maxlength="1" onkeypress="return isNumberKey(event);" />
                     </div>
                 </div>
                 <div class="item-row">
-                    <div class="col-label">Кількість пільговиків, які користуються<br/>1-ю пільгою</div>
+                    <div class="col-label">Кількість пільговиків, які користуються<br>1-ю пільгою</div>
                     <div class="col-input">
                         <select class="dropdown" name="PRO[]">
                             <option>Оберiть %</option>
@@ -57,7 +57,7 @@
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-cube.png" alt="" /></div>
                 <div class="col-label">
-                    Кількість спожитих м³<br/>
+                    Кількість спожитих м³<br>
                     <span class="comment">
                     за показаннями засобів обліку холодної води 
                     (якщо встановлено декілька засобів обліку 
@@ -71,7 +71,7 @@
 
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-money.png" alt="" /></div>
-                <div class="col-label">Тариф за 1 м³ холодної води та<br/>водовідведення, грн <span class="q tooltip" title="Можна вносити інше значення тарифу"></span></div>
+                <div class="col-label">Тариф за 1 м³ холодної води та<br>водовідведення, грн <span class="q tooltip" title="Можна вносити інше значення тарифу"></span></div>
                 <div class="col-input">
                     <input type="text" class="txt num-short green bold s24 form-txt-input" name="T_HW" value="<?= (!isset($T_HW) || ($T_HW == '') || ($T_HW == 0)) ? "10.24" : "$T_HW"; ?>" maxlength="7" />
                 </div>
@@ -100,7 +100,7 @@
             <div class="item-row">
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-cube.png" alt="" /></div>
                 <div class="col-label">
-                    Кількість спожитих м³<br/>
+                    Кількість спожитих м³<br>
                     <span class="comment">
                     за показаннями засобів обліку гарячої води (якщо встановлено декілька засобів обліку наводиться сумарна кількість по всіх засобах обліку)
                     </span>

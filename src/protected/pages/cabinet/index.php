@@ -20,7 +20,7 @@
 </div>
 <?php require_once(ROOT . '/protected/scripts/cabinet/quick-pays.php'); ?>
 <div class="block block--conclusion" >
-    <h2>Користючись нашим сервісом<br/>
+    <h2>Користючись нашим сервісом<br>
     ви завжди отримуєте більше</h2>
     <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate 

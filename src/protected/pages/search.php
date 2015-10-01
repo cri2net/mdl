@@ -61,25 +61,45 @@
         <h2 class="big-error-message"><?= $err; ?></h2>
         <?php
     }
+
+    if ($total_count == 0) {
+        ?>
+        <h3>Нічого не знайдено</h3>
+        <?php
+    }
 ?>
 <div class="search-results">
     <?php
         if (!empty($news)) {
             ?>
-            <h3 class="search-result-title news">Новини</h3>
+            <h3 class="search-result-title">Новини</h3>
             <ol>
                 <?php
-
                 foreach ($news as $item) {
-                    $text = ($item['announce']) ? $item['announce'] : $item['text'];
+                    if (mb_strpos($item['announce'], $_q, 0, 'UTF-8') !== false) {
+                        $text = $item['announce'];
+                    } elseif (mb_strpos($item['text'], $_q, 0, 'UTF-8') !== false) {
+                        $text = $item['text'];
+                    } else {
+                        $text = ($item['announce']) ? $item['announce'] : $item['text'];
+                    }
+
                     $text = strip_tags($text);
+
+                    $pos = mb_strpos($text, $_q, 0, 'UTF-8');
+                    if ($pos !== false) {
+                        if ($pos > 300) {
+                            $text = '...' . mb_substr($text, mb_strpos($text, ' ', $pos - 300, 'UTF-8'), mb_strlen($text), 'UTF-8');
+                        }
+                    }
+
+                    if (mb_strlen($text, 'UTF-8') > 500) {
+                        $text = mb_substr($text, 0, mb_strpos($text, ' ', 500, 'UTF-8'), 'UTF-8');
+                        $text .= '...';
+                    }
 
                     if (mb_strlen($item['title'], 'UTF-8') > 75) {
                         $item['title'] = mb_substr($item['title'], 0, 75, 'UTF-8') . '...';
-                    }
-
-                    if (mb_strlen($text, 'UTF-8') > 430) {
-                        $text = mb_substr($text, 0, 430, 'UTF-8') . '...';
                     }
 
                     ?>
@@ -102,15 +122,30 @@
                 <?php
 
                 foreach ($static_pages as $item) {
-                    $text = ($item['announce']) ? $item['announce'] : $item['text'];
+                    if (mb_strpos($item['announce'], $_q, 0, 'UTF-8') !== false) {
+                        $text = $item['announce'];
+                    } elseif (mb_strpos($item['text'], $_q, 0, 'UTF-8') !== false) {
+                        $text = $item['text'];
+                    } else {
+                        $text = ($item['announce']) ? $item['announce'] : $item['text'];
+                    }
+
                     $text = strip_tags($text);
+
+                    $pos = mb_strpos($text, $_q, 0, 'UTF-8');
+                    if ($pos !== false) {
+                        if ($pos > 300) {
+                            $text = '...' . mb_substr($text, mb_strpos($text, ' ', $pos - 300, 'UTF-8'), mb_strlen($text), 'UTF-8');
+                        }
+                    }
+
+                    if (mb_strlen($text, 'UTF-8') > 500) {
+                        $text = mb_substr($text, 0, mb_strpos($text, ' ', 500, 'UTF-8'), 'UTF-8');
+                        $text .= '...';
+                    }
 
                     if (mb_strlen($item['title'], 'UTF-8') > 75) {
                         $item['title'] = mb_substr($item['title'], 0, 75, 'UTF-8') . '...';
-                    }
-
-                    if (mb_strlen($text, 'UTF-8') > 430) {
-                        $text = mb_substr($text, 0, 430, 'UTF-8') . '...';
                     }
 
                     ?>
