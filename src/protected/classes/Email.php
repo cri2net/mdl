@@ -10,14 +10,29 @@ class Email
     {
         $this->PHPMailer = new PHPMailer();
 
-        $this->CharSet     = 'UTF-8';
-        $this->ContentType = "text/html";
-        $this->From        = EMAIL_FROM;
-        $this->FromName    = EMAIL_FROM_NAME;
-        $this->ReturnPath  = EMAIL_FROM;
-        $this->Hostname    = EMAIL_FROM;
-        $this->AllowEmpty  = true;
-        $this->XMailer     = ' ';
+        $this->CharSet       = 'UTF-8';
+        $this->ContentType   = "text/html";
+        $this->From          = EMAIL_FROM;
+        $this->FromName      = EMAIL_FROM_NAME;
+        $this->ReturnPath    = EMAIL_FROM;
+        $this->Hostname      = EMAIL_HOST;
+        $this->AllowEmpty    = true;
+        $this->XMailer       = ' ';
+        $this->SMTPKeepAlive = true;
+        
+
+        //////////////////////////////////////////////////
+        // блок настроек для отправки сообщений по SMTP //
+        //////////////////////////////////////////////////
+        
+        // $this->isSMTP();
+
+        // $this->Host       = 'localhost'; // SMTP hosts.
+        // $this->Port       = 25; // The default SMTP server port.
+        // $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
+        // $this->SMTPAuth   = true;
+        // $this->Username   = ''; // SMTP username.
+        // $this->Password   = ''; // SMTP password.
     }
 
     public function __set($name, $value)
