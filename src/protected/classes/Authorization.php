@@ -37,7 +37,13 @@ class Authorization
 
     public static function login($login, $password, $is_hash = false, $remember = false)
     {
+        // для поддержки пользователей personal-account, в этом методе есть sha1.
+        // personal-account дал только sha1 паролей своих пользователей.
+        // так что, при успешной авторизации, мы меняем им хеш пароля на наш.
+        // отличительная черта таких пользователей - пустое поле password_key
+        
         $column = self::getLoginColumn($login);
+        $table = User::TABLE;
 
         $_SESSION['auth_data'] = [
             'login' => $login,
@@ -50,19 +56,45 @@ class Authorization
         $login = $pdo->quote($login);
 
         if (!$is_hash) {
+            $sha1_password = sha1($password);
+            $raw_password = $password;
+
             $password = md5(md5($password));
             $password = "MD5(CONCAT(password_key, '$password'))";
         } else {
+            $sha1_password = $password;
             $password = $pdo->quote($password);
         }
 
-        $result = $pdo->query("SELECT * FROM ".DB_TBL_USERS." WHERE deleted=0 AND $column=$login AND `password` = $password LIMIT 1");
+        $result = $pdo->query("SELECT * FROM $table
+                                WHERE deleted=0
+                                      AND $column=$login
+                                      AND (
+                                            `password` = $password
+                                            OR (`password` = '$sha1_password' AND password_key='')
+                                        )
+                                LIMIT 1");
         $arr = $result->fetch();
 
         if (empty($arr)) {
             setcookie(REMEMBER_COOKIE_NAME, '', time(), "/", COOKIE_DOMAIN);
             unset($_SESSION['auth'], $_SESSION['auth_data']);
         } else {
+
+            // это человек от personal-account. Меняем ему данные под нашу схему авторизации
+            if (empty($arr['password_key']) && !$is_hash) {
+                $password_key = generateCode();
+                $update = [
+                    'password' => self::generate_db_password($raw_password, $password_key),
+                    'password_key' => $password_key
+                ];
+                PDO_DB::update($update, User::TABLE, $arr['id']);
+
+                // сразу обновляем данные, чтоб они были актуальны
+                $arr['password'] = $update['password'];
+                $arr['password_key'] = $update['password_key'];
+            }
+
             $_SESSION['auth'] = $arr;
 
             // чтоб не сбивать работу куки при "логине" в рамке работы сессии
@@ -84,7 +116,7 @@ class Authorization
     public static function get_auth_hash1($user_id)
     {
         $user_id = (int)$user_id;
-        $userData = PDO_DB::row_by_id(DB_TBL_USERS, $user_id);
+        $userData = PDO_DB::row_by_id(User::TABLE, $user_id);
         return md5($userData['email'] . self::SALT1);
     }
     
@@ -109,7 +141,7 @@ class Authorization
             $pdo = PDO_DB::getPDO();
             $cookie = $pdo->quote($_COOKIE[REMEMBER_COOKIE_NAME]);
             $salt = $pdo->quote(self::COOKIE_SALT);
-            $result = PDO_DB::query("SELECT * FROM ".DB_TBL_USERS." WHERE MD5(CONCAT(CONCAT(MD5(`id`), `password`), $salt)) = $cookie LIMIT 1");
+            $result = PDO_DB::query("SELECT * FROM ".User::TABLE." WHERE MD5(CONCAT(CONCAT(MD5(`id`), `password`), $salt)) = $cookie LIMIT 1");
             $user = $result->fetch();
 
             if ($user !== false) {
@@ -121,7 +153,7 @@ class Authorization
             if (isset($_REQUEST['hash2']) && isset($_REQUEST['uid'])) {
                 $uid = self::decode_auth_uid_hash($_REQUEST['uid']);
                 if (strcasecmp($_REQUEST['hash2'], self::get_auth_hash2($uid)) == 0) {
-                    $user = PDO_DB::row_by_id(DB_TBL_USERS, $uid);
+                    $user = PDO_DB::row_by_id(User::TABLE, $uid);
                     self::login($user['email'], $user['password'], true, true);
                 }
             }
