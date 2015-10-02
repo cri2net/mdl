@@ -12,7 +12,7 @@
 
         if ($user !== null) {
             // пользователь найден.
-            $restore_code = Authorization::generateRestoreCode($user['id']);
+            $restore_code = Authorization::generateUserCode($user['id']);
             $href = BASE_URL . '/cabinet/restore/' . $restore_code . '/';
             
             $mail->send(

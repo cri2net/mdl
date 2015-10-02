@@ -672,7 +672,21 @@ function subscribe_by_email()
     });
 };
 
-function searchSubmit() {
+function send_activation_code(element)
+{
+    $(element).fadeOut(400);
+    setTimeout(function(){ $('#verify-email_send').fadeIn(400); }, 400);
+    
+    $.ajax({
+        dataType: 'json',
+        data: {},
+        type: 'POST',
+        url : BASE_URL + '/ajax/json/send_activation_code'
+    });
+};
+
+function searchSubmit()
+{
     var s = $('search').val();
     return (s.length > 0);
 }
@@ -708,8 +722,6 @@ $(document).ready(function(){
             var pwd = $(this).val();
 
             var score = zxcvbn(pwd).score;
-            console.log(score);
-            
 
             $('#password-strength-container').width($(this).outerWidth());
 

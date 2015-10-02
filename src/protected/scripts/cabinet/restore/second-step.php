@@ -18,7 +18,7 @@
     }
 
     try {
-        Authorization::verifyRestoreCode($restore_code);
+        Authorization::verifyUserCode($restore_code);
     } catch (Exception $e) {
         ?>
         <h2 class="big-error-message"><?= $e->getMessage(); ?></h2>

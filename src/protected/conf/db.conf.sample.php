@@ -52,6 +52,6 @@ define('DB_TBL_PAYMENT_SERVICES', 'gioc_payment_services');
 define('DB_TBL_STREETS', 'gioc_streets');
 define('DB_TBL_SUBSCRIBES', 'gioc_subscribers');
 define('DB_TBL_USER_FLATS', 'gioc_user_flats');
-define('DB_TBL_USER_RESTORE', 'gioc_user_restore');
+define('DB_TBL_USER_CODES', 'gioc_user_codes');
 define('DB_TBL_USERS', 'gioc_users');
 define('DB_TBL_MENUS', 'gioc_menus');

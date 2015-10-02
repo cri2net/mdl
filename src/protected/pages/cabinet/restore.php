@@ -24,7 +24,7 @@
         Перевірте свою поштову скриньку, ми відправили Вам лист з подальшими інструкціями.
         <?php
         if ($_SESSION['restore']['email_link']) {
-            ?><br> Перейти до <a href="<?= $_SESSION['restore']['email_link']['link']; ?>"><?= $_SESSION['restore']['email_link']['title']; ?></a> <?
+            ?><br> Перейти до <a href="<?= $_SESSION['restore']['email_link']['link']; ?>"><?= $_SESSION['restore']['email_link']['title']; ?></a> <?php
         }
         unset($_SESSION['restore']['status']);
         return;
@@ -32,8 +32,8 @@
 
 
     $_email = (isset($_SESSION['restore']['email']))
-                ? $_SESSION['restore']['email']
-                : ((isset($_SESSION['login']['email'])) ? $_SESSION['login']['email'] : '');
+        ? $_SESSION['restore']['email']
+        : ((isset($_SESSION['login']['email'])) ? $_SESSION['login']['email'] : '');
     $_email = htmlspecialchars($_email, ENT_QUOTES);
 ?>
 <div class="registration">

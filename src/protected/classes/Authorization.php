@@ -5,14 +5,14 @@ class Authorization
     const SALT1 = 'xBBU-?KN;Avay#1D^8sdf)8iP">@v*5=Jwym"uGggea';
     const SALT2 = '08sdfDCqZ<+SI%Yjm,qTUPHmI+#j:UZ)Z$USjI^lFg6';
     const COOKIE_SALT = '2srT57J./(*._8M__jh&~$J9lFgzxs.m75176';
-    const RESTORE_TABLE = DB_TBL_USER_RESTORE;
+    const USER_CODES_TABLE = DB_TBL_USER_CODES;
 
     public static function cron()
     {
         // выключаем просроченные запросы на сброс пароля.
         // По идее, они будут нормально работать и без этого.
         $time = microtime(true);
-        PDO_DB::updateWithWhere(['is_active' => 0], self::RESTORE_TABLE, "is_active=1 AND expires_at<$time");
+        PDO_DB::updateWithWhere(['is_active' => 0], self::USER_CODES_TABLE, "is_active=1 AND expires_at<$time");
     }
 
     public static function check_login()
@@ -183,29 +183,33 @@ class Authorization
     /**
      * Генерация кода для восстановления пароля
      * @param  integer          $user_id ID пользователя, для которого работает ссылка
+     * @param  string           $type    тип кода. OPTIONAL
      * @param  integer | double $expires Смещение по времени от этого момента, в течение которого код работает. OPTIONAL
      * @return string           код для восстановления пароля
      */
-    public static function generateRestoreCode($user_id, $expires = 86400)
+    public static function generateUserCode($user_id, $type = 'restore', $expires = 86400)
     {
         $time = microtime(true);
         $code = generateCode(40);
         $user_id = (int)$user_id;
         $user = User::getUserById($user_id);
-
+        
         // выключаем все предыдущие запросы
-        PDO_DB::updateWithWhere(['is_active' => 0], self::RESTORE_TABLE, "user_id=$user_id AND is_active=1");
+        $pdo = PDO_DB::getPDO();
+        $stm = $pdo->prepare("UPDATE " . self::USER_CODES_TABLE . " SET is_active=0 WHERE user_id=? AND is_active=1 AND type=?");
+        $stm->execute([$user_id, $type]);
 
         $arr = [
             'user_id'                      => $user_id,
             'code'                         => $code,
+            'type'                         => $type,
             'email'                        => $user['email'],
             'created_at'                   => $time,
             'expires_at'                   => $time + $expires,
             'created_by_ip'                => USER_REAL_IP,
             'created_by_user_agent_string' => HTTP_USER_AGENT,
         ];
-        PDO_DB::insert($arr, self::RESTORE_TABLE);
+        PDO_DB::insert($arr, self::USER_CODES_TABLE);
 
         return $code;
     }
@@ -213,13 +217,14 @@ class Authorization
     /**
      * Проверка кода доступа.
      * @param  string  $code  код для восстановления пароля
+     * @param  string  $type  тип кода. OPTIONAL
      * @return array | boolean
      */
-    public static function verifyRestoreCode($code)
+    public static function verifyUserCode($code, $type = 'restore')
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM " . self::RESTORE_TABLE . " WHERE code=? LIMIT 1");
-        $stm->execute([$code]);
+        $stm = $pdo->prepare("SELECT * FROM " . self::USER_CODES_TABLE . " WHERE code=? AND type=? LIMIT 1");
+        $stm->execute([$code, $type]);
 
         $record = $stm->fetch();
 
@@ -246,7 +251,7 @@ class Authorization
      * @param  integer $id  ID кода
      * @return void
      */
-    public static function unsetRestoreCode($id)
+    public static function unsetUserCode($id)
     {
         $arr = [
             'is_active' => 0,
@@ -254,6 +259,6 @@ class Authorization
             'used_at_ip' => USER_REAL_IP,
             'used_at_user_agent_string' => HTTP_USER_AGENT,
         ];
-        PDO_DB::update($arr, self::RESTORE_TABLE, $id);
+        PDO_DB::update($arr, self::USER_CODES_TABLE, $id);
     }
 }

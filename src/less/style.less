@@ -163,8 +163,8 @@ td.tbl-check-no { height:35px; background-image:url("@{images}/pages/tbl-check-n
         display:none;
         a {
             display:block;
-            width:60px;
-            height:60px;
+            outline:none;
+            .size(60);
             background:data-uri("@{images}/__to-top.gif") no-repeat 0 0 #d3d6ce;
             border-radius:30px;
             .box-shadow(0 1px 1px rgba(255,255,255,.5), 0 1px 1px #c3c9b7 inset);
@@ -186,7 +186,8 @@ td.tbl-check-no { height:35px; background-image:url("@{images}/pages/tbl-check-n
 }
 
 .old-browsers-warning {
-    background-color:#ffffaa;
+    &.not-first-warning { margin-top:10px; }
+    background-color:#ffa;
     .inner {
         .inner-global;
         padding-left: 30px; padding-top: 20px; padding-bottom:20px;

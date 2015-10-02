@@ -1,7 +1,7 @@
 <?php
     try {
         $restore_code = stripslashes($_POST['code']);
-        $record = Authorization::verifyRestoreCode($restore_code);
+        $record = Authorization::verifyUserCode($restore_code);
         $user = User::getUserById($record['user_id']);
 
         $_password = stripslashes($_POST['new_password']);
@@ -19,7 +19,7 @@
         ];
 
         PDO_DB::update($update, User::TABLE, $user['id']);
-        Authorization::unsetRestoreCode($record['id']);
+        Authorization::unsetUserCode($record['id']);
         Authorization::login($user['email'], $_password);
         $_SESSION['restore-secont-step']['status'] = true;
     } catch (Exception $e) {

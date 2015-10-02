@@ -48,6 +48,10 @@
                     $breadcrumbs[] = ['title' => 'Реєстрація'];
                     break;
 
+                case 'verify-email':
+                    $breadcrumbs[] = ['title' => 'Підтвердження електронної пошти'];
+                    break;
+
                 case 'login':
                     $breadcrumbs[] = ['title' => 'Вхід'];
                     break;

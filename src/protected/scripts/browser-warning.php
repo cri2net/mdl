@@ -1,7 +1,9 @@
 <?php
+$have_header_warning = false;
+
 if (!BROWSER_VALID) {
     ?>
-    <div class="old-browsers-warning">
+    <div class="old-browsers-warning <?= ($have_header_warning) ? 'not-first-warning' : '' ?>">
         <div class="inner">
             <b>Попередження:</b> Ви використовуєте застарілу версію інтернет-браузера, що може призвести до некоректного відображення сайту.<br>
             Рекомендуємо завантажити останню версію одного з популярних браузерів
@@ -11,4 +13,19 @@ if (!BROWSER_VALID) {
         </div>
     </div>
     <?php
+    $have_header_warning = true;
 }
+
+if (Authorization::isLogin() && (!$__userData['activated'] || !$__userData['verified_email'])) {
+    ?>
+    <div id="verify-email-header-warning" class="old-browsers-warning <?= ($have_header_warning) ? 'not-first-warning' : '' ?>">
+        <div class="inner">
+            <b>Попередження:</b> Ваша електронна пошта не підтверджена. Деякий функціонал сайту може бути недоступний.<br>
+            <a class="browser" href="<?= BASE_URL; ?>/cabinet/verify-email/">Підтвердити електронну пошту</a>
+        </div>
+    </div>
+    <?php
+    $have_header_warning = true;
+}
+
+unset($have_header_warning);
