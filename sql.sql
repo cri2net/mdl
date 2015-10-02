@@ -456,5 +456,14 @@ ALTER TABLE `gioc_news`
 ALTER TABLE `gioc_pages`   
   ADD INDEX (`is_active`, `h1`(50));
 
+
+-- 2015.10.02
+-- перевод контента страницы ЛК для неавторизованных в БД
+INSERT INTO `gioc_text` (`variable`, `text`) VALUES
+('CABINET_BLOCK_1', '<div class="block block--personal-cabinet">\r\n    <div class="subblock-left">\r\n        <h2>Сплачуйте житлово-комунальні послуги</h2>\r\n        <div class="list">\r\n            <div class="item"><div class="icon time"></div> —&nbsp;&nbsp;Швидко</div>\r\n            <div class="item"><div class="icon hand"></div> —&nbsp;&nbsp;Без черг та без комісії</div>\r\n            <div class="item"><div class="icon secure"></div> —&nbsp;&nbsp;Безпечно</div>\r\n            <div class="item"><div class="icon easy"></div> —&nbsp;&nbsp;Обирайте зручний спосіб</div>\r\n        </div>\r\n    </div>\r\n    <div class="subblock-right">\r\n        <div class="in">\r\n            <a href="{SITE_URL}/cabinet/login/" class="btn green btn-login">\r\n                <span class="icon-login"></span>\r\n                Увiйти\r\n            </a>\r\n            або <a href="{SITE_URL}/cabinet/registration/">зареєструватися</a>\r\n        </div>\r\n    </div>\r\n</div>'),
+('CABINET_BLOCK_2', '<div class="block block--quick-pays">\r\n    <h2>Миттєвi платежi</h2>\r\n    <a href="{SITE_URL}/cabinet/instant-payments/dai/" class="police">Cплачуйте штрафи ДАІ</a>\r\n    <a href="{SITE_URL}/cabinet/instant-payments/kindergarten/" class="baby">Сплата за дитячий садок</a>\r\n    <a href="{SITE_URL}/cabinet/instant-payments/cards/" class="cards">Переводи з карти на карту</a>\r\n  <a href="{SITE_URL}/cabinet/instant-payments/phone/" class="phone">Поповнення рахунку<br/>на мобільному</a>\r\n</div>'),
+('CABINET_BLOCK_3', '<!--\r\n<div class="block block--conclusion">\r\n  <h2>Користючись нашим сервісом<br/> ви завжди отримуєте більше</h2>\r\n    <p>\r\n    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate \r\n    commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris molestie elit, et lacinia ipsum quam \r\n    nec dui. Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna. Aenean velit odio, elementum in tempus ut, vehicula eu diam. \r\n    Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales nec vulputate justo hendrerit. Vivamus varius pretium ligula, a \r\n    aliquam odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at ultricies metus viverra. Pellentesque arcu mauris, \r\n    malesuada quis ornare accumsan, blandit sed diam.\r\n    </p>\r\n</div>\r\n-->');
+
+
 -- IN ONLINE
 
