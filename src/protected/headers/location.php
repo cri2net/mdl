@@ -80,7 +80,7 @@
         }
     } else {
     
-        switch($__route_result['controller'] . "/" . $__route_result['action']) {
+        switch ($__route_result['controller'] . "/" . $__route_result['action']) {
 
             case 'page/news-item':
                 // проверка, существует ли новость

@@ -7,9 +7,9 @@
     $flat_id = $__route_result['values']['id'];
     
     try {
-        $flatData = Flat::getUserFlatById($flat_id);
+        $flatData = Flat::getUserFlatById($flat_id, true);
 
-        if($flatData == null) {
+        if ($flatData == null) {
             throw new Exception(ERROR_NOT_FIND_FLAT);
         }
         
@@ -65,7 +65,7 @@
                         </label>
                     </div>
                 </td>
-                <td style="white-space:nowrap;">Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']; ?>, грн</td>
+                <td style="white-space:nowrap;">Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']['small']; ?>, грн</td>
                 <td style="white-space:nowrap;">Сума боргу,<br>грн</td>
                 <td style="white-space:nowrap;">Переплата,<br>грн</td>
                 <td style="white-space:nowrap;">До сплати,<br>грн</td>

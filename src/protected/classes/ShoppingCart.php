@@ -78,7 +78,7 @@ class ShoppingCart
     public static function getTotalDebtSum($data)
     {
         $sum = 0;
-        foreach($data['items'] as $item) {
+        foreach ($data['items'] as $item) {
             $servicePostSum = str_replace(",", ".", $data[$item."_sum"]);
             if ((float)$servicePostSum <= 0) {
                 continue;
@@ -483,7 +483,7 @@ class ShoppingCart
         $payment['processing_data'] = (array)(@json_decode($payment['processing_data']));
         $to_update = [];
 
-        switch($payment['processing']) {
+        switch ($payment['processing']) {
             case '_test_upc':
                 // по идее на тестовом мерчанте это не работает. Код для всех остальных UPC мерчантов
 

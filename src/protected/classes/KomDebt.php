@@ -9,14 +9,17 @@ class KomDebt
     public $testing = false;
     protected $cache = [];
 
-    private $months = ['1'=>'січня', '2'=>'лютого', '3'=>'березня', '4'=>'квiтня', '5'=>'травня', '6'=>'червня', '7'=>'липня', '8'=>'серпня', '9'=>'вересня', '10'=>'жовтня', '11'=>'листопада', '12'=>'грудня'];
-    private $monthsFullName = ['01'=>'Січень', '02'=>'Лютий', '03'=>'Березень', '04'=>'Квітень', '05'=>'Травень', '06'=>'Червень', '07'=>'Липень', '08'=>'Серпень', '09'=>'Вересень', '10'=>'Жовтень', '11'=>'Листопад', '12'=>'Грудень'];
+    private $months;
+    private $monthsFullName;
     private $beginDate;
     private $endDate;
 
     public function __construct()
     {
+        global $MONTHS, $MONTHS_NAME;
         $this->testing = !HAVE_ACCESS_TO_API;
+        $this->months = $MONTHS;
+        $this->monthsFullName = $MONTHS_NAME;
     }
     
     private function getXML($url, $obj_id, $dateBegin = null)
@@ -52,7 +55,9 @@ class KomDebt
     {
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
-        $error = (string)$xml->ROW[0]->KOM_ERROR;
+        if (isset($xml->ROW[0]->KOM_ERROR)) {
+            $error = (string)$xml->ROW[0]->KOM_ERROR;
+        }
         
         if (!empty($error)) {
             self::getPreviosMonth($previousMonth, $previousYear);
@@ -70,14 +75,14 @@ class KomDebt
         $debt = 0;
         $have_data = false;
 
-        foreach($xml->xpath("//ROW") as $row) {
-            if((int)$row->SUMM_DOLG > 0 && !$row->COUNTERS->COUNTERS_ITEM) {
+        foreach ($xml->xpath("//ROW") as $row) {
+            if ((int)$row->SUMM_DOLG > 0 && !$row->COUNTERS->COUNTERS_ITEM) {
                 $debt += (float)$row->SUMM_DOLG;
             }
             $have_data = true;
         }
         
-        if(($debt == 0) && ($dateBegin == null) && !$have_data) {
+        if (($debt == 0) && ($dateBegin == null) && !$have_data) {
             // maybe no data for this month
             $new_month = strftime('%m', strtotime('first day of previous month'));
             $new_year = ($new_month == '12')?(string)((int)date("Y") - 1):date("Y");
@@ -92,10 +97,10 @@ class KomDebt
     
     private function getDatePeriod($dateBegin = null)
     {
-        if(empty($dateBegin)) {
+        if (empty($dateBegin)) {
             $this->beginDate = $beginDate = "1.".date("m.Y");
         
-            if(date("n") == 12) {
+            if (date("n") == 12) {
                 $nextMonth = 1;
                 $year = date("Y") + 1;
             } else {
@@ -164,10 +169,12 @@ class KomDebt
     public function getData($obj_id, $dateBegin = null)
     {
         $data = [];
-        $data['date'] = '1 ' . $this->months[date("n")]." ".date("Y");
+        $data['date'] = '1 ' . $this->months[date("n")]['ua'] . " " . date("Y");
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
-        $error = (string)$xml->ROW[0]->KOM_ERROR;
+        if (isset($xml->ROW[0]->KOM_ERROR)) {
+            $error = (string)$xml->ROW[0]->KOM_ERROR;
+        }
         
         if (!empty($error)) {
             self::getPreviosMonth($previousMonth, $previousYear);
@@ -175,9 +182,9 @@ class KomDebt
             $dateBegin = "01.".$month2.".".$previousYear;
             $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
             $xml = new SimpleXMLElement($xmlString);
-            $error = (string)$xml->ROW[0]->KOM_ERROR;
+            $error = (isset($xml->ROW[0]->KOM_ERROR)) ? ((string)$xml->ROW[0]->KOM_ERROR) : '';
             
-            $data['date'] = '1 ' . $this->months[$previousMonth]." ".$previousYear;
+            $data['date'] = '1 ' . $this->months[$previousMonth]['ua'] . " " . $previousYear;
         }
         
         if (!empty($error)) {
@@ -186,11 +193,13 @@ class KomDebt
         
         $data['dbegin'] = $this->beginDate;
         $data['dend'] = $this->endDate;
-        $data['PEOPLE'] = $xml->ROW[0]->PEOPLE;
-        $data['PL_OB'] = $xml->ROW[0]->PL_OB;
-        $data['PL_POL'] = $xml->ROW[0]->PL_POL;
+        $data['PEOPLE'] = (isset($xml->ROW[0]->PEOPLE)) ? $xml->ROW[0]->PEOPLE : null;
+        $data['PL_OB']  = (isset($xml->ROW[0]->PL_OB))  ? $xml->ROW[0]->PL_OB  : null;
+        $data['PL_POL'] = (isset($xml->ROW[0]->PL_POL)) ? $xml->ROW[0]->PL_POL : null;
         
         $fullDept = 0;
+        $data['list'] = [];
+
         foreach ($xml->xpath("//ROW") as $row) {
             $list = [];
            
@@ -308,7 +317,9 @@ class KomDebt
         $xmlString = $this->getXML(self::KOMPLATURL, $obj_id, $dateBegin);
         $xmlString = str_replace("&nbsp;", "", $xmlString);
         $xml = new SimpleXMLElement($xmlString);
-        $error = (string)$xml->ROW[0]->KOM_ERROR;
+        if (isset($xml->ROW[0]->KOM_ERROR)) {
+            $error = (string)$xml->ROW[0]->KOM_ERROR;
+        }
     
         if (!empty($error)) {
             throw new Exception(ERROR_GETTING_DEBT);
@@ -365,17 +376,21 @@ class KomDebt
         $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id);
         $xml = new SimpleXMLElement($xmlString);
-        $error = (string)$xml->ROW[0]->KOM_ERROR;
-        $data['date'] = "01"." ".$this->months[date("n")]." ".date("Y");
+        if (isset($xml->ROW[0]->KOM_ERROR)) {
+            $error = (string)$xml->ROW[0]->KOM_ERROR;
+        }
+        $data['date'] = '01  ' . $this->months[date("n")]['ua'] . " " . date("Y");
         
         if (!empty($error)) {
             self::getPreviosMonth($previousMonth, $previousYear);
             $month2 = date("m", strtotime("01-".$previousMonth."-".$previousYear));
-            $data['date'] = "01"." ".$this->months[$previousMonth]." ".$previousYear;
-            $dateBegin = "01.".$month2.".".$previousYear;
+            $data['date'] = '01 ' . $this->months[$previousMonth]['ua'] . " " . $previousYear;
+            $dateBegin = '01.' . $month2 . "." . $previousYear;
             $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
             $xml = new SimpleXMLElement($xmlString);
-            $error = (string)$xml->ROW[0]->KOM_ERROR;
+            if (isset($xml->ROW[0]->KOM_ERROR)) {
+                $error = (string)$xml->ROW[0]->KOM_ERROR;
+            }
         }
         
         if (!empty($error)) {
@@ -394,16 +409,20 @@ class KomDebt
         $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
-        $error = (string)$xml->ROW[0]->KOM_ERROR;
+        if (isset($xml->ROW[0]->KOM_ERROR)) {
+            $error = (string)$xml->ROW[0]->KOM_ERROR;
+        }
         
         if (!empty($error)) {
             self::getPreviosMonth($previousMonth, $previousYear);
             $month2 = date("m", strtotime("01-".$previousMonth."-".$previousYear));
-            $data['date'] = "01"." ".$this->months[$previousMonth]." ".$previousYear;
-            $dateBegin = "01.".$month2.".".$previousYear;
+            $data['date'] = '01 ' . $this->months[$previousMonth]['ua'] . " " . $previousYear;
+            $dateBegin = '01.' . $month2 . "." . $previousYear;
             $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
             $xml = new SimpleXMLElement($xmlString);
-            $error = (string)$xml->ROW[0]->KOM_ERROR;
+            if (isset($xml->ROW[0]->KOM_ERROR)) {
+                $error = (string)$xml->ROW[0]->KOM_ERROR;
+            }
         }
         
         if (!empty($error)) {
@@ -436,11 +455,13 @@ class KomDebt
         $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
-        $error = (string)$xml->ROW[0]->KOM_ERROR;
-        $data['date'] = "01"." ".$this->months[date("n")]." ".date("Y");
+        $data['date'] = '01 ' . $this->months[date("n")]['ua'] . " " . date("Y");
         $data['curr_month'] = date("m");
         $data['curr_year'] = date("Y");
         $data['dateBegin'] = $dateBegin;
+        if (isset($xml->ROW[0]->KOM_ERROR)) {
+            $error = (string)$xml->ROW[0]->KOM_ERROR;
+        }
         
         if ((!$is_filter) && (!empty($error))) {
             self::getPreviosMonth($previousMonth, $previousYear);
@@ -450,11 +471,13 @@ class KomDebt
             $dateBegin = "01.".$month2.".".$year2;
             $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
             $xml = new SimpleXMLElement($xmlString);
-            $error = (string)$xml->ROW[0]->KOM_ERROR;
+            if (isset($xml->ROW[0]->KOM_ERROR)) {
+                $error = (string)$xml->ROW[0]->KOM_ERROR;
+            }
                 
             $data['dateBegin'] = $dateBegin;
-            $data['date'] = "01"." ".$this->months[$previousMonth]." ".$previousYear;
-            $data['curr_month'] = date("m", strtotime("01".".".$previousMonth.".".$previousYear));
+            $data['date'] = '01 ' . $this->months[$previousMonth]['ua'] . " " . $previousYear;
+            $data['curr_month'] = date("m", strtotime("01".".".$previousMonth . "." . $previousYear));
             $data['curr_year'] = $previousYear;
         }
         
@@ -470,14 +493,15 @@ class KomDebt
         self::getPreviosMonth($previousMonth, $previousYear, $debtBeginMonth);
         
         $data['previous_date'] = "01.".date("m", strtotime("01-".$previousMonth."-".date("Y"))).".".$previousYear;
-        $data['begin_month'] = $this->monthsFullName[date("m", strtotime($this->beginDate))];
-        $data['previous_month'] = $this->monthsFullName[date("m", strtotime("01-".$previousMonth."-".$previousYear))];
+        $data['begin_month'] = $this->monthsFullName[date('n', strtotime($this->beginDate))]['ua']['big'];
+        $data['previous_month'] = $this->monthsFullName[date('n', strtotime("01-".$previousMonth."-".$previousYear))]['ua']['big'];
         $data['counter'] = 0;
         $data['PEOPLE'] = $xml->ROW[0]->PEOPLE;
         $data['PL_OB'] = $xml->ROW[0]->PL_OB;
         $data['PL_POL'] = $xml->ROW[0]->PL_POL;
             
         $data['TLF'] = $xml->ROW[0]->TLF;
+        $arr_keys = ['ISXDOLG', 'OPLAT', 'SUBS', 'TARIF', 'SUMM_MONTH', 'SUMM_DOLG'];
 
         foreach ($xml->xpath("//ROW") as $row) {
             if ($firmName && (string)$row->CODE_FIRME != $firmName) {
@@ -510,13 +534,12 @@ class KomDebt
             $data['firm'][(string)$row->CODE_FIRME]['TLF'] = (string)$row->TLF;
             $data['firm'][(string)$row->CODE_FIRME]['ABCOUNT'] = (string)$row->ABCOUNT;
             
-            $firmData['ISXDOLG']    = ((int)$row->ISXDOLG != 0)    ? str_replace(".",",",sprintf('%.2f',((float)$row->ISXDOLG)/100))    : '0,00';
-            $firmData['OPLAT']      = ((int)$row->OPLAT != 0)      ? str_replace(".",",",sprintf('%.2f',((float)$row->OPLAT)/100))      : '0,00';
-            $firmData['SUBS']       = ((int)$row->SUBS != 0)       ? str_replace(".",",",sprintf('%.2f',((float)$row->SUBS)/100))       : '0,00';
-            $firmData['TARIF']      = ((int)$row->TARIF != 0)      ? str_replace(".",",",sprintf('%.2f',((float)$row->TARIF)/100))      : '0,00';
-            $firmData['SUMM_MONTH'] = ((int)$row->SUMM_MONTH != 0) ? str_replace(".",",",sprintf('%.2f',((float)$row->SUMM_MONTH)/100)) : '0,00';
-            $firmData['SUMM_DOLG']  = ((int)$row->SUMM_DOLG != 0)  ? str_replace(".",",",sprintf('%.2f',((float)$row->SUMM_DOLG)/100))  : '0,00';
-            
+            foreach ($arr_keys as $arr_key) {
+                $firmData[$arr_key] = ((int)$row->$arr_key != 0)
+                    ? str_replace(".", ",", sprintf('%.2f', ((float)$row->$arr_key) / 100))
+                    : '0,00';
+            }
+
             $firmData['NAME_PLAT']  = $this->getNamePlat($row->NAME_PLAT);
             $firmData['TLF'] = (string)$row->TLF;
 
@@ -531,14 +554,16 @@ class KomDebt
         $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = new SimpleXMLElement($xmlString);
-        $error = (string)$xml->ROW[0]->KOM_ERROR;
+        if (isset($xml->ROW[0]->KOM_ERROR)) {
+            $error = (string)$xml->ROW[0]->KOM_ERROR;
+        }
         
         if (!empty($error)) {
             throw new Exception(ERROR_GETTING_DEBT);
         }
         
         $data['firm'] = [];
-        $data['date'] = "01"." ".$this->months[date("n")]." ".date("Y");
+        $data['date'] = '01 ' . $this->months[date("n")]['ua'] . " " . date("Y");
         $data['dbegin'] = date("d.m.y", strtotime($this->beginDate));
         $data['dend'] = date("d.m.y", strtotime($this->endDate));
         
@@ -546,14 +571,16 @@ class KomDebt
         self::getPreviosMonth($previousMonth, $previousYear, $debtBeginMonth);
         
         $data['previous_date'] = "01.".date("m", strtotime("01-".$previousMonth2."-".date("Y"))).".".$previousYear2;
-        $data['begin_month'] = $this->monthsFullName[date("m", strtotime($this->beginDate))];
-        $data['previous_month'] = $this->monthsFullName[date("m", strtotime("01-".$previousMonth2."-".$previousYear2))];
+        $data['begin_month'] = $this->monthsFullName[date('n', strtotime($this->beginDate))]['ua']['big'];
+        $data['previous_month'] = $this->monthsFullName[date('n', strtotime("01-".$previousMonth2."-".$previousYear2))]['ua']['big'];
         $data['FIO'] = (string)$xml->ROW[0]->FIO;
         // $data['ABCOUNT'] = (string)$xml->ROW[0]->ABCOUNT;
         $data['counter'] = 0;
         $data['PEOPLE'] = $xml->ROW[0]->PEOPLE;
         $data['PL_OB'] = $xml->ROW[0]->PL_OB;
         $data['PL_POL'] = $xml->ROW[0]->PL_POL;
+
+        $arr_keys = ['ISXDOLG', 'OPLAT', 'SUBS', 'TARIF', 'SUMM_MONTH', 'SUMM_DOLG'];
         
         foreach ($xml->xpath("//ROW") as $row) {
             if ($firmName && (string)$row->CODE_FIRME != $firmName) {
@@ -588,13 +615,12 @@ class KomDebt
                 }
             }
             
-            $firmData['ISXDOLG']    = ((int)$row->ISXDOLG != 0)    ? str_replace(".",",",sprintf('%.2f',((float)$row->ISXDOLG)/100))    : '0,00';
-            $firmData['OPLAT']      = ((int)$row->OPLAT != 0)      ? str_replace(".",",",sprintf('%.2f',((float)$row->OPLAT)/100))      : '0,00';
-            $firmData['SUBS']       = ((int)$row->SUBS != 0)       ? str_replace(".",",",sprintf('%.2f',((float)$row->SUBS)/100))       : '0,00';
-            $firmData['TARIF']      = ((int)$row->TARIF != 0)      ? str_replace(".",",",sprintf('%.2f',((float)$row->TARIF)/100))      : '0,00';
-            $firmData['SUMM_MONTH'] = ((int)$row->SUMM_MONTH != 0) ? str_replace(".",",",sprintf('%.2f',((float)$row->SUMM_MONTH)/100)) : '0,00';
-            $firmData['SUMM_DOLG']  = ((int)$row->SUMM_DOLG != 0)  ? str_replace(".",",",sprintf('%.2f',((float)$row->SUMM_DOLG)/100))  : '0,00';
-            
+            foreach ($arr_keys as $arr_key) {
+                $firmData[$arr_key] = ((int)$row->$arr_key != 0)
+                    ? str_replace(".", ",", sprintf('%.2f', ((float)$row->$arr_key) / 100))
+                    : '0,00';
+            }
+
             $firmData['NAME_PLAT'] = $this->getNamePlat($row->NAME_PLAT);
             $data['data'][(string)$row->CODE_FIRME][] = $firmData;
         }

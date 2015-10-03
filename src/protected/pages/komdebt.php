@@ -23,8 +23,7 @@
     $isRegionStep = true;
     $breadcrumbs = $first_step_breadcrumbs;
 
-    if(isset($_POST['paykomdebtform']) && ($_POST['paykomdebtform'] == 1))
-    {
+    if (isset($_POST['paykomdebtform']) && ($_POST['paykomdebtform'] == 1)) {
         // validate data:
         $user_lastname = trim($_POST['user_lastname']); // фамилия плательщика
         $user_name = trim($_POST['user_name']); // имя плательщика

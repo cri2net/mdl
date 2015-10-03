@@ -1,6 +1,6 @@
 <?php
     $__INT_IP = (isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER["REMOTE_ADDR"] : '';
-    if(isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+    if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
         $__INT_IP = (isset($_SERVER["HTTP_X_REAL_IP"])) ? $_SERVER["HTTP_X_REAL_IP"] : $_SERVER["HTTP_X_FORWARDED_FOR"];
     }
     define('USER_REAL_IP', $__INT_IP);

@@ -125,19 +125,9 @@ class Authorization
         return md5($hash1 . self::SALT2 . md5($user_id . self::SALT1 . $hash1));
     }
     
-    public static function encode_auth_uid_hash($user_id)
-    {
-        return 'u' . $user_id;
-    }
-    
-    public static function decode_auth_uid_hash($uid_hash)
-    {
-        return ((int)substr($uid_hash, 1));
-    }
-    
     public static function check_cookie()
     {
-        if ((isset($_COOKIE[REMEMBER_COOKIE_NAME])) && ($_GET['page'] != 'logout')) {
+        if (isset($_COOKIE[REMEMBER_COOKIE_NAME])) {
             $pdo = PDO_DB::getPDO();
             $cookie = $pdo->quote($_COOKIE[REMEMBER_COOKIE_NAME]);
             $salt = $pdo->quote(self::COOKIE_SALT);
@@ -151,9 +141,9 @@ class Authorization
 
         if (!self::isLogin()) {
             if (isset($_REQUEST['hash2']) && isset($_REQUEST['uid'])) {
-                $uid = self::decode_auth_uid_hash($_REQUEST['uid']);
-                if (strcasecmp($_REQUEST['hash2'], self::get_auth_hash2($uid)) == 0) {
-                    $user = PDO_DB::row_by_id(User::TABLE, $uid);
+                $hash1 = self::get_auth_hash1($_REQUEST['uid']);
+                if (strcasecmp($_REQUEST['hash2'], self::get_auth_hash2($_REQUEST['uid'], $hash1)) == 0) {
+                    $user = PDO_DB::row_by_id(User::TABLE, $_REQUEST['uid']);
                     self::login($user['email'], $user['password'], true, true);
                 }
             }

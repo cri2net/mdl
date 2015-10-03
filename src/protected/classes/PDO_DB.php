@@ -126,13 +126,13 @@ class PDO_DB
         $pdo = self::getPDO();
 
         $query = "SELECT * FROM `$table`";
-        if($where != null) {
+        if ($where != null) {
             $query .= " WHERE $where";
         }
-        if($order != null) {
+        if ($order != null) {
             $query .= " ORDER BY $order";
         }
-        if($limit != null) {
+        if ($limit != null) {
             $query .= " LIMIT $limit";
         }
         
@@ -148,7 +148,7 @@ class PDO_DB
         $stm->execute(array($id));
         $record = $stm->fetch();
         
-        if($record === false) {
+        if ($record === false) {
             return null;
         }
 
@@ -192,7 +192,7 @@ class PDO_DB
         $pdo = self::getPDO();
         $posFrom = (int)$posFrom;
         $posTo = (int)$posTo;
-        if($posFrom == $posTo || $posFrom == 0 || $posTo == 0) {
+        if ($posFrom == $posTo || $posFrom == 0 || $posTo == 0) {
             return false;
         }
 
@@ -201,13 +201,13 @@ class PDO_DB
         $stm = $pdo->query("SELECT `id` FROM $table WHERE $qW `pos`=$posFrom LIMIT 1");
         $row = $stm->fetch();
         
-        if($row === false) {
+        if ($row === false) {
             return false;
         }
         
         $id = $row['id'];
         
-        if($posFrom > $posTo) {
+        if ($posFrom > $posTo) {
             $pdo->query("UPDATE $table SET `pos` = `pos` + 1 WHERE $qW `pos` >= $posTo AND `pos` < $posFrom");
         } else {
             $pdo->query("UPDATE $table SET `pos` = `pos` - 1 WHERE $qW `pos` > $posFrom AND `pos` <= $posTo");
@@ -226,7 +226,7 @@ class PDO_DB
         self::rebuild_pos($table, $where, $order);
         $qWhere = ($where == null) ? '' : "AND $where";
         
-        switch($dir) {
+        switch ($dir) {
             case 'dup':
                 $pdo->query("UPDATE `$table` SET `pos`=0 WHERE `id`='$id'");
                 break;
@@ -244,7 +244,7 @@ class PDO_DB
 
                 $item2 = $stm->fetch();
                 
-                if($item2 !== false) {
+                if ($item2 !== false) {
                     $pdo->query("UPDATE $table SET `pos`='$pos2' WHERE `id`='{$item1['id']}' LIMIT 1");
                     $pdo->query("UPDATE $table SET `pos`='$pos1' WHERE `id`='{$item2['id']}' LIMIT 1");
                 }
@@ -259,7 +259,7 @@ class PDO_DB
                 $stm = $pdo->query("SELECT * FROM `$table` WHERE `pos`='$pos2' $qWhere LIMIT 1");
                 $item2 = $stm->fetch();
                 
-                if($item2 !== false) {
+                if ($item2 !== false) {
                     $pdo->query("UPDATE $table SET `pos`='$pos2' WHERE `id`='{$item1['id']}' LIMIT 1");
                     $pdo->query("UPDATE $table SET `pos`='$pos1' WHERE `id`='{$item2['id']}' LIMIT 1");
                 }

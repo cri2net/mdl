@@ -1,11 +1,10 @@
 <h1>Розрахунок розміру обов’язкового платежу</h1>
 <div class="calculator">
     <?php
-    if(isset($_POST['action']))
-    {
+    if (isset($_POST['action'])) {
         ?>
         <div class="result-block">
-            <table class="no-border" >
+            <table class="no-border">
                 <tr>
                     <td class="title blue p50 rbw">Базовi данi</td>
                     <td class="title green p50 lbw">Розрахованi данi</td>
@@ -57,7 +56,7 @@
     ?>
 
 
-    <form action="#" method="POST">
+    <form action="#" method="post">
         <div class="item-row">
             <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-money.png" alt="" /></div>
             <div class="col-label">Середньомісячний сукупний дохід усіх<br>зареєстрованих членів сім’ї (грн) <span class="q tooltip" title="При розрахунку потрібно враховувати розмір нарахованого доходу<br>(а не фактично отриманого) за останні 6 місяців перед місяцем звертання<br>" ></span></div>

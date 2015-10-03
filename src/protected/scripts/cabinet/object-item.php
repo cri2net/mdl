@@ -5,7 +5,7 @@
 <?php
     try {
         $user_id = Authorization::getLoggedUserId();
-        $object = Flat::getUserFlatById($__route_result['values']['id']);
+        $object = Flat::getUserFlatById($__route_result['values']['id'], true);
         $current_section = $__route_result['values']['section'];
         
         if (!$object || ($object['user_id'] != $user_id)) {

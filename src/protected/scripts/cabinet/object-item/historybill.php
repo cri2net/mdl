@@ -56,7 +56,7 @@
             <select class="dotted-select" name="month">
                 <?php
                     foreach ($MONTHS_NAME as $key => $month) {
-                        ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']; ?></option> <?php
+                        ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']['small']; ?></option> <?php
                     }
                 ?>
             </select>

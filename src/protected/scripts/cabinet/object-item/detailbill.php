@@ -68,7 +68,7 @@
             <select class="dotted-select" name="month">
                 <?php
                     foreach ($MONTHS_NAME as $key => $month) {
-                        ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']; ?></option> <?php
+                        ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']['small']; ?></option> <?php
                     }
                 ?>
             </select>
@@ -138,7 +138,7 @@
                             ?>
                             <br>
                             <?php
-                                if ($debtData['firm'][$key]['lgoti']) {
+                                if (!empty($debtData['firm'][$key]['lgoti'])) {
                                     ?>
                                     Льготы: <?= $debtData['firm'][$key]['lgoti']['NAIM_LG']; ?>,
                                     <?= $debtData['firm'][$key]['lgoti']['PROC_LG']; ?>%
@@ -157,7 +157,6 @@
                             $counter++;
 
                             $no_border = (($counter == count($firm)) && ($firm_counter < count($debtData['data'])));
-                            $pdate = DateTime::createFromFormat('d.m.y H:i:s', $item['PDATE']);
                             ?>
                             <tr class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
                                 <td class="first">
@@ -220,7 +219,7 @@
                         
                         foreach ($debtData['firm'] as $key => $firm) {
                             
-                            if ($firm['counter']) {
+                            if (!empty($firm['counter'])) {
                                 $firm_counter++;
 
                                 ?>
@@ -236,7 +235,6 @@
                                         $counter++;
 
                                         $no_border = (($counter == count($firm['counter'])) && ($firm_counter < count($debtData['firm'])));
-                                        $pdate = DateTime::createFromFormat('d.m.y H:i:s', $item['PDATE']);
                                         ?>
                                         <tr class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
                                             <td class="first" colspan="3"><?= $counter['NAME_PLAT']; ?></td>

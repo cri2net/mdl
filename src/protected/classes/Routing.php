@@ -108,7 +108,7 @@ class Routing
         
             if (isset($route[0][$string])) {
                 $array_link = $route[0][$string];
-            } elseif(isset($route[1])) {
+            } elseif (isset($route[1])) {
                 foreach ($route[1] as $key => &$value) {
                     if (isset($value['params']['regex'])) {
                         if (preg_match($value['params']['regex'], $string, $temp_values)) {
@@ -171,7 +171,7 @@ class Routing
             $element_name = (string)$route['match'];
             $type = 0;
             
-            foreach($route->attributes() as $key => $value) {
+            foreach ($route->attributes() as $key => $value) {
                 $params[(string)$key] = (string)$value;
             }
             
@@ -182,9 +182,9 @@ class Routing
                 }
             }
             
-            if(strpos($params['match'], '{') !== false) {
+            if (strpos($params['match'], '{') !== false) {
                 preg_match_all('/\{(.+)(\|num|\|str|)\}/siuU', $params['match'], $match_attrs, PREG_SET_ORDER);
-                foreach($match_attrs as $key => $varible) {
+                foreach ($match_attrs as $key => $varible) {
                     $params['match'] = str_replace("{" . $varible[1] . "}", '(.+)', $params['match']);
                     $params['match'] = str_replace("{" . $varible[1] . "|num}", '(\d*)', $params['match']);
                     $params['match'] = str_replace("{" . $varible[1] . "|str}", '([а-яёa-z1-9]*)', $params['match']);
