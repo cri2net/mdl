@@ -14,7 +14,8 @@ var WEBPAGES_MASK = [
     './src/robots.txt',
     './src/**/{*.php,*.html}',
      './src/{script,config,lib,auth,splash,protected}/**/*.*',
-    '!./src/protected/**/{*.css,*.js}'
+    '!./src/protected/**/{*.css,*.js}',
+    '!./src/protected/**/db.conf.sample.php'
 ];
 
 var IMAGES_MASK = ['./src/{pic,images}/**/{*.png,*.jpg,*.jpeg,*.gif,*.ico}', '!./src/pic/**/__*.*'];
