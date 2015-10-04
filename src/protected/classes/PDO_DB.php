@@ -121,6 +121,32 @@ class PDO_DB
         return trim($str, ', ');
     }
 
+    /**
+     *  Почти что псевдоним table_list
+     */
+    public static function first()
+    {
+        $instance = self::getInstance();
+        $args = func_get_args();
+
+        // LIMIT стоит 4-м аргументов, перед ним два необязательных. Если он не указан, ставим ему '1'
+        if (!isset($args[1])) {
+            $args[1] = null;
+        }
+        if (!isset($args[2])) {
+            $args[2] = null;
+        }
+        if (!isset($args[3])) {
+            $args[3] = '1';
+        }
+
+        $result = call_user_func_array([$instance, 'table_list'], $args);
+        if (count($result) == 0) {
+            return null;
+        }
+        return $result[0];
+    }
+
     public static function table_list($table, $where = null, $order = null, $limit = null)
     {
         $pdo = self::getPDO();

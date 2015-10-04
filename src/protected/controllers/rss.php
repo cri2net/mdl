@@ -25,9 +25,8 @@
             }
 
             $desc = $item['text'];
-            $img = PDO_DB::table_list(News::IMAGES_TABLE, "news_id={$item['id']} AND `is_main`=1", null, "1");
+            $img = PDO_DB::first(News::IMAGES_TABLE, "news_id={$item['id']} AND `is_main`=1");
             if ($img) {
-                $img = $img[0];
                 $desc = "<img src='" . BASE_URL . "/db_pic/news/500x500wm/{$img['filename']}.jpg' alt='' /><br>" . $desc;
             }
             
