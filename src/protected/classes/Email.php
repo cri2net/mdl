@@ -52,8 +52,17 @@ class Email
     public function send($to, $subject, $message, $template = '', $data = [])
     {
         $message = (strlen($template) > 0) ? (self::getTemplate($template)) : $message;
+
+        try {
+            if (strlen($template) > 0) {
+                $main_template = self::getTemplate('__main');
+                $message = str_ireplace('{{MAIN_CONTENT}}', $message, $main_template);
+            }
+        } catch (Exception $e) {
+        }
+
         $message = self::fetch($message, $data);
-        
+
         $this->Subject = $subject;
         $this->Body    = $message;
         
@@ -86,7 +95,7 @@ class Email
 
         if (preg_match_all("/".$re1.$re2."/is", $template_text, $matches)) {
             for ($i=0; $i < count($matches[1]); $i++) {
-                $template_text = str_replace($matches[1][$i], $data[$matches[2][$i]], $template_text);
+                $template_text = str_ireplace($matches[1][$i], $data[$matches[2][$i]], $template_text);
             }
         }
 
@@ -100,6 +109,12 @@ class Email
         }
         if (defined('BASE_URL') && !isset($data['base_url'])) {
             $data['base_url'] = BASE_URL;
+        }
+        if (defined('EMAIL_FROM') && !isset($data['email_from'])) {
+            $data['email_from'] = EMAIL_FROM;
+        }
+        if (!isset($data['year'])) {
+            $data['year'] = date('Y');
         }
     }
 

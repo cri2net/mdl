@@ -1,6 +1,6 @@
 <?php
-    $__is_email_mode = (isset($_GET['email_mode']));
-    $__is_text_mode = (isset($_GET['text_mode']));
+    $__is_email_mode = isset($_GET['email_mode']);
+    $__is_text_mode = isset($_GET['text_mode']);
     $__img_path = BASE_URL . '/pic/email/';
     $_text_color = 'color:#00979c;';
 
