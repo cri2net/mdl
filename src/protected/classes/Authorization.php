@@ -2,9 +2,6 @@
 
 class Authorization
 {
-    const SALT1 = 'xBBU-?KN;Avay#1D^8sdf)8iP">@v*5=Jwym"uGggea';
-    const SALT2 = '08sdfDCqZ<+SI%Yjm,qTUPHmI+#j:UZ)Z$USjI^lFg6';
-    const COOKIE_SALT = '2srT57J./(*._8M__jh&~$J9lFgzxs.m75176';
     const USER_CODES_TABLE = DB_TBL_USER_CODES;
 
     public static function cron()
@@ -100,7 +97,7 @@ class Authorization
             // чтоб не сбивать работу куки при "логине" в рамке работы сессии
             if ($remember !== -1) {
                 if ($remember) {
-                    setcookie(REMEMBER_COOKIE_NAME, md5(md5($arr['id']) . $arr['password'] . self::COOKIE_SALT), time() + 86400 * 60, "/", COOKIE_DOMAIN);
+                    setcookie(REMEMBER_COOKIE_NAME, md5(md5($arr['id']) . $arr['password'] . $arr['password_key']), time() + 86400 * 60, "/", COOKIE_DOMAIN);
                 } else {
                     setcookie(REMEMBER_COOKIE_NAME, '', time(), "/", COOKIE_DOMAIN);
                 }
@@ -116,13 +113,30 @@ class Authorization
     public static function get_auth_hash1($user_id)
     {
         $user_id = (int)$user_id;
-        $userData = PDO_DB::row_by_id(User::TABLE, $user_id);
-        return md5($userData['email'] . self::SALT1);
+
+        // если это текущий авторизованный пользователь, незачем делать запрос в базу
+        if (isset($_SESSION['auth']['id']) && (intval($_SESSION['auth']['id']) === $user_id)) {
+            $userData = $_SESSION['auth'];
+        } else {
+            $userData = PDO_DB::row_by_id(User::TABLE, $user_id);
+        }
+        
+        // получается, что если человек сменил пароль, то все такие ссылки перестают работать. Жёстко, но секьюрно.
+        return md5($userData['password'] . $userData['password_key'] . $userData['id']);
     }
     
     public static function get_auth_hash2($user_id, $hash1)
     {
-        return md5($hash1 . self::SALT2 . md5($user_id . self::SALT1 . $hash1));
+        $user_id = (int)$user_id;
+
+        // если это текущий авторизованный пользователь, незачем делать запрос в базу
+        if (isset($_SESSION['auth']['id']) && (intval($_SESSION['auth']['id']) === $user_id)) {
+            $userData = $_SESSION['auth'];
+        } else {
+            $userData = PDO_DB::row_by_id(User::TABLE, $user_id);
+        }
+
+        return md5($hash1 . $userData['password_key'] . sha1($user_id . $userData['password'] . $hash1));
     }
     
     public static function check_cookie()
@@ -130,8 +144,7 @@ class Authorization
         if (isset($_COOKIE[REMEMBER_COOKIE_NAME])) {
             $pdo = PDO_DB::getPDO();
             $cookie = $pdo->quote($_COOKIE[REMEMBER_COOKIE_NAME]);
-            $salt = $pdo->quote(self::COOKIE_SALT);
-            $result = PDO_DB::query("SELECT * FROM ".User::TABLE." WHERE MD5(CONCAT(CONCAT(MD5(`id`), `password`), $salt)) = $cookie LIMIT 1");
+            $result = PDO_DB::query("SELECT * FROM ".User::TABLE." WHERE MD5(CONCAT(CONCAT(MD5(id), `password`), password_key)) = $cookie LIMIT 1");
             $user = $result->fetch();
 
             if ($user !== false) {
@@ -166,7 +179,8 @@ class Authorization
     public static function logout()
     {
         unset($_SESSION['auth'], $_SESSION['auth_data']);
-        session_destroy();
+        @session_unset();
+        @session_destroy();
         setcookie(REMEMBER_COOKIE_NAME, '', time(), "/", COOKIE_DOMAIN);
     }
 
