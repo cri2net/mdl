@@ -695,11 +695,10 @@ $(document).ready(function(){
     (function(){
         $('.spoiler-title').click(function(){
             var par = $(this).parent();
-            var btn = $(par).find('.spoiler-title');
             if ($(par).hasClass('open')) {
-                $(par).removeClass('open').find('.spoiler-text').slideUp(400);
+                $(par).removeClass('open').find('.spoiler-text').first().slideUp(400);
             } else {
-                $(par).addClass('open').find('.spoiler-text').slideDown(400);
+                $(par).addClass('open').find('.spoiler-text').first().slideDown(400);
             }
         });
         $('.spoiler-close').click(function(){
