@@ -1,7 +1,7 @@
 <h1>Розрахунок за показаннями квартирних<br>приладів обліку</h1>
 
 <div class="calculator">
-    <form action="#" method="post">
+    <form action="<?= BASE_URL; ?>/calc-devices/" method="post">
         <div class="calc-block">
             <div class="title"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-notepad.png" alt="" />Базовi данi</div>
             <div class="item-row">
@@ -15,29 +15,30 @@
                 <div class="col-icon"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-abacus.png" alt="" /></div>
                 <div class="col-label">Кількість пільг, які надаються<br>по даному особовому рахунку</div>
                 <div class="col-input">
-                    <input type="text" maxlength="1" onkeypress="return isNumberKey(event);" value="<?= $KLG; ?>" id="KLG" name="KLG" class="txt num-short green bold s24 form-txt-input" />
+                    <input type="text" maxlength="1" onkeypress="return isNumberKey(event);" onkeyup="$(this).change();" value="<?= ($KLG) ? $KLG : 1; ?>" id="KLG" name="KLG" class="txt num-short green bold s24 form-txt-input" />
                 </div>
             </div>
-            <div class="calc-subblock">
-                <div class="item-row">
-                    <div class="col-label">Кількість пільговиків, які користуються<br>1-ю пільгою</div>
-                    <div class="col-input">
-                        <input type="text" class="txt num-short green bold s24 form-txt-input" name="KLLG[]" value="<?= $KLLG[0]; ?>" maxlength="1" onkeypress="return isNumberKey(event);" />
+            <div id="calc-kllg-subblocks">
+                <div class="calc-subblock">
+                    <div class="item-row">
+                        <div class="col-label">Кількість пільговиків, які користуються<br>1-ю пільгою</div>
+                        <div class="col-input">
+                            <input type="text" class="txt num-short green bold s24 form-txt-input" name="KLLG[]" value="<?= $KLLG[0]; ?>" maxlength="1" onkeypress="return isNumberKey(event);" />
+                        </div>
+                    </div>
+                    <div class="item-row">
+                        <div class="col-label">Кількість пільговиків, які користуються<br>1-ю пільгою</div>
+                        <div class="col-input">
+                            <select class="dropdown" name="PRO[]">
+                                <option value="%">Оберiть %</option>
+                                <option value="100%">100%</option>
+                                <option value="75%">75%</option>
+                                <option value="50%">50%</option>
+                                <option value="25%">25%</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="item-row">
-                    <div class="col-label">Кількість пільговиків, які користуються<br>1-ю пільгою</div>
-                    <div class="col-input">
-                        <select class="dropdown" name="PRO[]">
-                            <option>Оберiть %</option>
-                            <option>100%</option>
-                            <option>75%</option>
-                            <option>50%</option>
-                            <option>25%</option>
-                        </select>
-                    </div>
-                </div>
-                
             </div>
         </div>
 
@@ -77,12 +78,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
 
 
         <div class="calc-block">
@@ -131,3 +126,21 @@
         <button class="btn green bold">Розрахувати</button> 
     </form>
 </div>
+<script>
+    $(document).ready(function(){
+        calc_kllg_subblock_html = $('#calc-kllg-subblocks').html();
+        
+        $("#KLG").change(function(){
+            var val = parseInt($("#KLG").val());
+            if (isNaN(val)) {
+                val = 0;
+            }
+            var html = '';
+            for (var i = 0; i < val; i++) {
+                html += calc_kllg_subblock_html;
+            };
+            $('#calc-kllg-subblocks').html(html);
+        });
+        $("#KLG").change();
+    });
+</script>
