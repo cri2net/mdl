@@ -1,6 +1,37 @@
 <h1>Розрахунок за показаннями квартирних<br>приладів обліку</h1>
 
 <div class="calculator">
+    <?php
+        if (!empty($_POST)) {
+            ?>
+            <div class="result-block">
+                <table class="no-border">
+                    <tr>
+                        <td class="title green p50 lbw">Результати розрахунків</td>
+                    </tr>
+                    <tr>
+                        <td class="data rbw">
+                            <table class="no-border">
+                                <tr>
+                                    <td>Холодне водопостачання та водовідведення</td>
+                                    <td><b>206.85 грн</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Гаряче водопостачання</td>
+                                    <td><b>278.26 грн</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Водовідведення гарячої води</td>
+                                    <td><b>32.78 грн</b></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <?php
+        }
+    ?>
     <form action="<?= BASE_URL; ?>/calc-devices/" method="post">
         <div class="calc-block">
             <div class="title"><img src="<?= BASE_URL ?>/pic/pages/calculator/icon-notepad.png" alt="" />Базовi данi</div>

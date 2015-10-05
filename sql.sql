@@ -475,5 +475,10 @@ ALTER TABLE `gioc_user_restore`
 RENAME TABLE `gioc_user_restore` TO `gioc_user_codes`;
 
 
+-- 2015.10.06
+ALTER TABLE `gioc_users`
+  CHANGE `reg_time` `created_at` DOUBLE NOT NULL;
+
+
 -- IN ONLINE
 
