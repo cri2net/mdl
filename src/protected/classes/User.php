@@ -100,7 +100,7 @@ class User
             'lastname'     => $data['lastname'],
             'name'         => $data['name'],
             'fathername'   => $data['fathername'],
-            'created_at'     => microtime(true),
+            'created_at'   => microtime(true),
             'mob_phone'    => $data['phone']
         ];
 
@@ -122,7 +122,7 @@ class User
             'lastname'     => $lastname,
             'name'         => $name,
             'fathername'   => $fathername,
-            'created_at'     => microtime(true),
+            'created_at'   => microtime(true),
             'mob_phone'    => '',
             'auto_reg'     => 1,
         ];
