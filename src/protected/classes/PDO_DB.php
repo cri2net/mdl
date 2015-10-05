@@ -2,20 +2,13 @@
 
 class PDO_DB
 {
-    private static $instance = null;
+    use Singleton;
+
     private static $pdo = null;
 
     private function __construct()
     {
         $this->init();
-    }
-
-    /**
-     * Закрываем доступ к методу вне класса.
-     * Паттерн Singleton не допускает вызов этой функции вне класса
-     */
-    private function __clone()
-    {
     }
 
     private function init()
@@ -32,14 +25,6 @@ class PDO_DB
                 )
             );
         }
-    }
-
-    public static function getInstance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
     }
 
     public static function getPDO()
