@@ -20,7 +20,7 @@ if (Authorization::isLogin() && (!$__userData['activated'] || !$__userData['veri
     ?>
     <div id="verify-email-header-warning" class="old-browsers-warning <?= ($have_header_warning) ? 'not-first-warning' : '' ?>">
         <div class="inner">
-            <b>Попередження:</b> Ваша електронна пошта не підтверджена. Деякий функціонал сайту може бути недоступний.<br>
+            <b>Попередження:</b> Ваша електронна пошта не підтверджена. Деякий функціонал сайту може бути недоступний.
             <a class="browser" href="<?= BASE_URL; ?>/cabinet/verify-email/">Підтвердити електронну пошту</a>
         </div>
     </div>
