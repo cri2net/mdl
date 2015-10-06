@@ -78,3 +78,41 @@
     require_once(ROOT . "/protected/headers/x-frame-options.php");
     // require_once(ROOT."/protected/headers/content-security-policy.php");
 
+
+
+
+
+    $dsn = "mysql:host=localhost;dbname=giocwww;charset=utf8";
+    $opt = array(
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+    );
+    $pdo = new PDO($dsn, 'root', 'root', $opt);
+
+    $stm = $pdo->query("SELECT * FROM active_users_subscriptions");
+
+    while ($row = $stm->fetch()) {
+
+        $data = Flat::getFlatByPlatCode($row['pin']);
+        if (!$data) {
+            continue;
+        }
+
+        $insert = [
+            'user_id' => $row['user_id'],
+            'city_id' => $data['city_id'],
+            'street_id' => $data['street_id'],
+            'house_id' => $data['house_id'],
+            'flat_id' => $data['object_id'],
+            'timestamp' => microtime(true),
+            'timestamp' => microtime(true),
+            'notify' => intval($row['isactive'] == 'TRUE'),
+            'title' => $row['comment'],
+            'plat_code' => $row['pin'],
+        ];
+
+        PDO_DB::insert($insert, Flat::USER_FLATS_TABLE);
+    }
+
+    die();
