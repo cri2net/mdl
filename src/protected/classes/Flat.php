@@ -9,14 +9,28 @@ class Flat
     const FLAT_ID_BY_PLATCODE_URL = '/reports/rwservlet?report=site/g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
 
     /**
+     * Проверка ключа авторизации для объекта
+     * 
+     * @param  string  $auth_key
+     * @param  integer $flat_id
+     * @param  integer $city_id. OPTIONAL
+     */
+    public static function verify_auth_key($auth_key, $flat_id, $city_id = Street::KIEV_ID)
+    {
+        // заглушка. Пока мы не можем проверять валидность ключа.
+        return true;
+    }
+
+    /**
      * Добавление квартиры/дома в профиль пользоваетеля
      * 
      * @param  integer $flat_id
+     * @param  string  $auth_key ключ авторизации для объекта
      * @param  integer $city_id. OPTIONAL
      * @param  integer $user_id. OPTIONAL
      * @return string — id новой записи
      */
-    public static function addFlat($flat_id, $city_id = Street::KIEV_ID, $user_id = null)
+    public static function addFlat($flat_id, $auth_key, $city_id = Street::KIEV_ID, $user_id = null)
     {
         if ($user_id == null) {
             $user_id = Authorization::getLoggedUserId();
@@ -54,7 +68,8 @@ class Flat
             'street_id' => $flat['street_id'],
             'house_id' => $flat['house_id'],
             'flat_id' => $flat_id,
-            'timestamp' => microtime(true)
+            'timestamp' => microtime(true),
+            'auth_key' => $auth_key
         ];
         $record_id = PDO_DB::insert($data, self::USER_FLATS_TABLE);
         

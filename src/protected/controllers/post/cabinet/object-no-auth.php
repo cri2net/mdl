@@ -12,12 +12,18 @@
         }
 
         $flat = Flat::getFlatById($_POST['flat']);
+        $auth_key = stripslashes($_POST['auth_key']);
 
         if (!$flat) {
             throw new Exception(ERROR_NOT_FIND_FLAT);
         }
 
+        if (!Flat::verify_auth_key($auth_key, $_POST['flat'])) {
+            throw new Exception(ERROR_FLAT_INVALID_AUTH_KEY);
+        }
+
         $_SESSION['after_register']['add_object'] = $flat;
+        $_SESSION['after_register']['add_object']['auth_key'] = $auth_key;
         $_SESSION['registration']['show_message'] = [
             'type' => 'success',
             'text' => 'Об\'єкт буде у вашому аккаунті після реєстрації',

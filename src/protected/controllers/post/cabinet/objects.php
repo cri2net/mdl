@@ -6,7 +6,13 @@
             throw new Exception(ERROR_GET_FLAT);
         }
 
-        $flat = Flat::addFlat($_POST['flat']);
+        $auth_key = stripslashes($_POST['auth_key']);
+
+        if (!Flat::verify_auth_key($auth_key, $_POST['flat'])) {
+            throw new Exception(ERROR_FLAT_INVALID_AUTH_KEY);
+        }
+
+        $flat = Flat::addFlat($_POST['flat'], $auth_key);
 
         if (!$flat) {
             throw new Exception(ERROR_NOT_FIND_FLAT);

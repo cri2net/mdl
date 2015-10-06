@@ -55,6 +55,7 @@
         if (isset($_SESSION['after_register']['add_object'])) {
             Flat::addFlat(
                 $_SESSION['after_register']['add_object']['object_id'],
+                $_SESSION['after_register']['add_object']['auth_key'],
                 $_SESSION['after_register']['add_object']['city_id']
             );
             unset($_SESSION['after_register']['add_object']);

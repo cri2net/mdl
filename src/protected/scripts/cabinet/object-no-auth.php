@@ -1,4 +1,12 @@
 <h1 class="big-title">Об'єкти</h1>
+<?php
+    if (isset($_SESSION['objects']['status']) && !$_SESSION['objects']['status']) {
+        ?>
+        <br><h2 class="big-error-message"><?= $_SESSION['objects']['error']['text']; ?></h2>
+        <?php
+        unset($_SESSION['objects']['status']);
+    }
+?>
 <div class="registration object-no-auth">
     <div class="form-block">
         <form method="post" action="<?= BASE_URL; ?>/post/cabinet/object-no-auth/">

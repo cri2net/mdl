@@ -20,6 +20,11 @@
         </select>
     </label>
 </div>
+<div class="input">
+    <label>Ключ авторизації <br>
+        <input required="required" style="text-transform:uppercase;" disabled="disabled" class="txt form-txt-input" autocomplete="off" type="text" name="auth_key" id="add_obj_auth_key" value="">
+    </label>
+</div>
 <?php
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::MAX_USER_FLATS));
 ?>
@@ -51,6 +56,7 @@
             },
             select: function(event, ui){
                 $('#add_obj_flat').html('<option>-- виберіть --</option>').attr('disabled', true);
+                $('#add_obj_auth_key').attr('disabled', true);
                 _selected_street_id = ui.item.id;
 
                 $.ajax({
@@ -79,8 +85,11 @@
                     for (var i = 0; i < data.length; i++)
                         select_options += '<option value="'+ data[i].id +'">'+ data[i].label +'</option>';
                     $('#add_obj_flat').html(select_options).attr('disabled', false);
+                    $('#add_obj_auth_key').html(select_options).attr('disabled', false);
                 },
             });
         });
+        $.mask.definitions['r'] = '[A-Z,a-z,0-9а-яёА-ЯЁ]';
+        $("#add_obj_auth_key").mask("rrrr-rrrr-rrrr");
     });
 </script>
