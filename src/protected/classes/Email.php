@@ -49,6 +49,11 @@ class Email
         }
     }
 
+    public function call_phpmailer_send()
+    {
+        $this->PHPMailer->Send();
+    }
+
     public function send($to, $subject, $message, $template = '', $data = [])
     {
         $message = (strlen($template) > 0) ? (self::getTemplate($template)) : $message;

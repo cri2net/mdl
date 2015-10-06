@@ -40,6 +40,7 @@ define('TABLE_PREFIX', 'gioc_');
 
 define('DB_TBL_CHIEF', 'gioc_chief');
 define('DB_TBL_CITIES', 'gioc_cities');
+define('DB_TBL_EMAIL_CRON', 'gioc_email_cron');
 define('DB_TBL_FLATS', 'gioc_flat');
 define('DB_TBL_HOUSES', 'gioc_houses');
 define('DB_TBL_NEWS', 'gioc_news');

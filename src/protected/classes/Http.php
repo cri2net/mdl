@@ -57,7 +57,7 @@ class Http
         echo $content;
     }
 
-    public static function httpGet($url, $checkStatus = true)
+    public static function httpGet($url, $checkStatus = true, $follow_location = true)
     {
         $ch = curl_init();
         $options = array(
@@ -68,6 +68,8 @@ class Http
         );
 
         curl_setopt_array($ch, $options);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $follow_location);
+
         $response = curl_exec($ch);
 
         if ($checkStatus) {

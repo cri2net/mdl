@@ -480,8 +480,21 @@ ALTER TABLE `gioc_users`
   CHANGE `reg_time` `created_at` DOUBLE NOT NULL;
 
 ALTER TABLE `gioc_user_flats`
-  ADD COLUMN `plat_code` INT(11) NULL AFTER `title`;
+  ADD COLUMN `plat_code` INT(11) NULL AFTER `title`,
+  ADD COLUMN `auth_key` VARCHAR(30) NULL AFTER `plat_code`,
+  ADD INDEX (`notify`, `user_id`);
 
+CREATE TABLE `gioc_email_cron`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `status` ENUM('new','sending','complete','pause') NOT NULL DEFAULT 'new',
+  `type` ENUM('invoice','newsletter','newsletter_for_subscribers') NOT NULL DEFAULT 'invoice',
+  `created_at` DOUBLE NOT NULL,
+  `updated_at` DOUBLE NOT NULL,
+  `start_user_id` INT(11) NOT NULL DEFAULT 1,
+  `subject` VARCHAR(500) NOT NULL,
+  `content` MEDIUMTEXT,
+  PRIMARY KEY (`id`),
+  INDEX (`status`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- IN ONLINE
-
