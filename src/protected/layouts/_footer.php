@@ -129,7 +129,6 @@
 
         $('.tooltip').tooltipster({
             contentAsHTML: true
-
         });
     });
     $('a').each(function() {
