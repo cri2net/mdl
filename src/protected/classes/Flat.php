@@ -6,6 +6,7 @@ class Flat
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
     const MAX_USER_FLATS = 4;
     const FLAT_URL = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
+    const FLAT_ID_BY_PLATCODE_URL = '/reports/rwservlet?report=site/g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
 
     /**
      * Добавление квартиры/дома в профиль пользоваетеля
@@ -264,6 +265,28 @@ class Flat
         }
 
         return $result;
+    }
+
+    /**
+     * Получение квартиры по платёжному коду.
+     * Платёжный код = шифр_ЖЭО * 1000000 + лицевой_счёт
+     * 
+     * @param  int     $plat_code
+     * @param  boolean $from_reports Нужно ли брать данные с oracle reports server, или же можно воспользоваться локальной базой
+     * @return array
+     */
+    public static function getFlatByPlatCode($plat_code)
+    {
+        $data = Http::fgets(API_URL . self::FLAT_ID_BY_PLATCODE_URL . $plat_code);
+        $data = iconv('CP1251', 'UTF-8', $data);
+        $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
+        $xml = @simplexml_load_string($data);
+
+        if ($xml == false) {
+            return false;
+        }
+
+        return self::getFlatById($xml->ROW->ID_OBJ);
     }
 
     /**

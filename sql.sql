@@ -479,6 +479,9 @@ RENAME TABLE `gioc_user_restore` TO `gioc_user_codes`;
 ALTER TABLE `gioc_users`
   CHANGE `reg_time` `created_at` DOUBLE NOT NULL;
 
+ALTER TABLE `gioc_user_flats`
+  ADD COLUMN `plat_code` INT(11) NULL AFTER `title`;
+
 
 -- IN ONLINE
 
