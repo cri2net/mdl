@@ -110,7 +110,7 @@
             <tr>
                 <th class="first">Послуга, <br> комунальне пiдприємство</th>
                 <th class="td-sum">Боргу на <?= $debtData['previous_date']; ?></th>
-                <th class="td-sum">Сплачено на <?= $debtData['previous_month']; ?></th>
+                <th class="td-sum">Сплачено за <?= $debtData['previous_month']; ?></th>
                 <th>Субс.</th>
                 <th>Тариф, грн</th>
                 <th>Нараховано за <?= $debtData['previous_month']; ?></th>

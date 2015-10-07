@@ -40,6 +40,9 @@
     }
 ?>
 
+<script>
+    var new_counter_no = {};
+</script>
 <form class="real-full-width-block" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
     <table class="full-width-table datailbill-table no-border">
         <thead>
@@ -123,6 +126,13 @@
                                         </div>
                                         <?php
                                     }
+                                    ?>
+                                    <script>
+                                        new_counter_no.k<?= $key; ?> = <?= count($item['counterData']['counters']); ?>;
+                                    </script>
+                                    <div id="new_counters_for_<?= $key; ?>"></div>
+                                    <label style="color:#00979c; display:inline-block; margin-top:20px;" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>);">додати лічильник</label>
+                                    <?php
                                 }
                             ?>
                         </td>

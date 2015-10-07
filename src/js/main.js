@@ -266,9 +266,10 @@ function recount_counter_summ(key, tarif, counter_no) {
                 var other_summ = $(elem).val();
                 other_summ = other_summ.split(',').join('.');
                 other_summ = parseFloat(other_summ);
-                var other_old_summ = $('#old_' + $(elem).attr('id')).html();
+                var other_old_summ = $('#old_' + $(elem).attr('id')).val();
                 other_old_summ = other_old_summ.split(',').join('.');
                 other_old_summ = parseFloat(other_old_summ);
+                
                 if (!isNaN(other_summ) && !isNaN(other_old_summ) && (other_summ >= other_old_summ)) {
                     add_cost += (other_summ - other_old_summ) * tarif;
                 }
@@ -710,6 +711,29 @@ function strtoupper(str)
     var arr = {'a':'A', 'b':'B', 'c':'C', 'd':'D', 'e':'E', 'f':'F', 'g':'G', 'h':'H', 'i':'I', 'j':'J', 'k':'K', 'l':'L', 'm':'M', 'n':'N', 'o':'O', 'p':'P', 'q':'Q', 'r':'R', 's':'S', 't':'T', 'u':'U', 'v':'V', 'w':'W', 'x':'X', 'y':'Y', 'z':'Z'};
     var replacer=function(a){return arr[a]||a};
     return str.replace(/[A-z]/g,replacer);
+};
+
+function add_new_counters(key, abcounter, tarif)
+{
+    new_counter_no['k' + key]++;
+    var new_counter_numnber = new_counter_no['k' + key];
+    
+    var html = '<div class="counter-data"><br> Показання лічильника №'+ new_counter_numnber +' : <br>' +
+        '<div style="margin-top:5px; margin-bottom:5px;">' +
+            '<label for="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Попередні:</label>' +
+            '<input style="width:50px;" value="0" id="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_old_count[]" type="number" min="0" maxlength="6" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
+        '</div>' +
+        '<div style="margin-bottom:5px;">' +
+            '<label for="inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Поточні:</label>' +
+            '<input style="width: 50px;" min="0" class="text inp_'+ key +'_new_count" type="number" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="6" value="" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
+        '</div>' +
+        '<input type="hidden" name="inp_'+ key +'_old_count[]" value="0">' +
+        '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
+        '<input type="hidden" name="inp_'+ key +'_abcounter[]" value="'+ abcounter +'">' +
+        'До сплати: ( <div style="display:inline-block;" id="newval_counter_'+ key +'_'+ new_counter_numnber +'">нове&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_'+ key +'_'+ new_counter_numnber +'">0</span>)&nbsp;*&nbsp;'+ tarif +'&nbsp;грн' +
+    '</div>';
+
+    $(html).insertBefore('#new_counters_for_' + key);
 };
 
 $(document).ready(function(){
