@@ -54,6 +54,8 @@
         if (empty($debtData['data'])) {
             throw new Exception(ERROR_EMPTY_BILL);
         }
+        $prev_month = DateTime::createFromFormat('d.m.Y', $debtData['previous_date']);
+        $prev_month_when = $MONTHS_WHEN[$prev_month->format('n')]['ua'];
         $have_error = false;
 
     } catch(Exception $e) {
@@ -112,7 +114,7 @@
                 <th class="td-sum">Боргу на <?= $debtData['previous_date']; ?></th>
                 <th>Тариф, грн</th>
                 <th>Нараховано за <?= $debtData['previous_month']; ?></th>
-                <th class="td-sum">Сплачено за <?= $debtData['previous_month']; ?></th>
+                <th class="td-sum">Сплачено у <?= $prev_month_when; ?></th>
                 <th>Субсидія,<br>компенсація</th>
                 <th>Боргу на <?= $debtData['dbegin']; ?></th>
             </tr>
