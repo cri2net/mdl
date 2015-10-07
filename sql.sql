@@ -497,4 +497,10 @@ CREATE TABLE `gioc_email_cron`(
   INDEX (`status`)
 ) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
 
+
+ALTER TABLE `gioc_flat`
+  ADD COLUMN `need_del_after_rebuild` TINYINT(1) DEFAULT 0  NOT NULL AFTER `flat_number`, 
+  ADD INDEX (`need_del_after_rebuild`);
+
+
 -- IN ONLINE

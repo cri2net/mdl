@@ -310,11 +310,10 @@ class Flat
      */
     public static function rebuild()
     {
-        $streets = Street::get('');
-        
         $pdo = PDO_DB::getPDO();
         $stm_del = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=? AND house_id=?");
         $stm_insert = $pdo->prepare("INSERT INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, object_id=?, flat_number=?");
+        $pdo->query("UPDATE " . self::TABLE . " SET need_del_after_rebuild=1");
         
         $stm = $pdo->prepare("SELECT * FROM ". House::TABLE ." WHERE city_id=?");
         $stm->execute([Street::KIEV_ID]);
@@ -333,9 +332,7 @@ class Flat
             }
         }
 
-        // Too slow query
-        // $stm = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=? AND house_id NOT IN (SELECT house_id FROM ". House::TABLE ." WHERE city_id=?)");
-        // $stm->execute(array(Street::KIEV_ID, Street::KIEV_ID));
+        $stm = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE need_del_after_rebuild=1");
     }
 
     /**
