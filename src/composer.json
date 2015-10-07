@@ -9,7 +9,8 @@
         "jbdemonte/barcode": "^2.1"
     },
     "config": {
-        "vendor-dir": "protected/vendor"
+        "vendor-dir": "protected/vendor",
+        "optimize-autoloader": true
     },
     "autoload": {
         "classmap" : [
