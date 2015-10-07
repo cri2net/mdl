@@ -93,9 +93,9 @@
 									<div class="item bank">
 										<a href="<?= BASE_URL; ?>/cabinet/payments/">Мої платежі</a>
 									</div>
-									<div class="item flash">
+									<?php/*<div class="item flash">
 										<a href="<?= BASE_URL; ?>/cabinet/instant-payments/">Миттєві платежі</a>
-									</div>
+									</div>*/?>
 									<div class="item settings with-border">
 										<a href="<?= BASE_URL; ?>/cabinet/settings/">Настройки профілю</a>
 									</div>
