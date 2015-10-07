@@ -1,37 +1,5 @@
 <?php
 try {
-    
-    if (isset($__route_result['values']['path'])) {
-        $ext = pathinfo(basename($__route_result['values']['path']), PATHINFO_EXTENSION);
-
-        switch ($ext) {
-            case 'css':
-                $filename = ROOT . '/style/' . $__route_result['values']['path'];
-                if (file_exists($filename)) {
-                    Http::gzip(file_get_contents($filename), true, 'text/css');
-                    exit();
-                } else {
-                    header("HTTP/1.1 404 Not Found");
-                    exit();
-                }
-                break;
-
-            case 'js':
-                $filename = ROOT . '/js/' . $__route_result['values']['path'];
-                if (file_exists($filename)) {
-                    Http::gzip(file_get_contents($filename), true, 'application/javascript');
-                    exit();
-                } else {
-                    header("HTTP/1.1 404 Not Found");
-                    exit();
-                }
-                break;
-        }
-
-        header("HTTP/1.1 404 Not Found");
-        exit();
-    }
-
     switch ($__route_result['values']['type']) {
         case 'payment':
             if (!Authorization::isLogin()) {

@@ -34,8 +34,6 @@
             </route>
         </route>
         <route match="static" controller="error" action="404">
-            <route match="{path}" controller="static" action="">
-            </route>
             <route match="pdf" controller="error" action="404">
                 <route match="{type}" controller="error" action="404">
                     <route match="{id|num}" controller="static" action="">

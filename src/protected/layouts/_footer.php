@@ -63,17 +63,17 @@
     </footer>
 </div>
 <div id="back-top-wrapper"><span id="back-top"><a href="#top"></a></span></div>
-<script src="<?= BASE_URL; ?>/static/main.js?m=<?= (is_readable(ROOT . "/js/main.js")) ? filemtime(ROOT . "/js/main.js") : ''; ?>"></script>
-<script src="<?= BASE_URL; ?>/static/jquery-ui.1.10.4.min.js"></script>
-<script src="<?= BASE_URL; ?>/static/jquery.timers.js"></script>
-<script src="<?= BASE_URL; ?>/static/jquery_extends.js"></script>
-<script src="<?= BASE_URL; ?>/static/jquery.maskedinput-1.4.1.js"></script>
-<script src="<?= BASE_URL; ?>/static/jquery.prettyPhoto.js"></script>
-<script src="<?= BASE_URL; ?>/static/orphus.js" defer></script>
-<script src="<?= BASE_URL; ?>/static/jqueryrotate.2.1.js" defer></script>
-<script src="<?= BASE_URL; ?>/static/jquery.easydropdown.min.js"></script>
-<script src="<?= BASE_URL; ?>/static/jquery.tooltipster.min.js"></script>
-<script src="<?= BASE_URL; ?>/static/zxcvbn.js"></script>
+<script src="<?= BASE_URL; ?>/js/main.js?m=<?= (is_readable(ROOT . "/js/main.js")) ? filemtime(ROOT . "/js/main.js") : ''; ?>"></script>
+<script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.timers.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery_extends.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.maskedinput-1.4.1.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.prettyPhoto.js"></script>
+<script src="<?= BASE_URL; ?>/js/orphus.js" defer></script>
+<script src="<?= BASE_URL; ?>/js/jqueryrotate.2.1.js" defer></script>
+<script src="<?= BASE_URL; ?>/js/jquery.easydropdown.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery.tooltipster.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/zxcvbn.js"></script>
 <script>
     var BASE_URL = '<?= BASE_URL ?>';
 </script>

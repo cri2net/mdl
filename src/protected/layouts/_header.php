@@ -23,7 +23,7 @@
 <!--[if lt IE 9]><style> input.txt, textarea.txt, select.txt { border:1px solid #444 !important; }</style><![endif]-->
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 <!-- <link href="<?= BASE_URL; ?>/style/style.css?m=<?= (is_readable(ROOT . "/style/style.css")) ? filemtime(ROOT . "/style/style.css") : ''; ?>" rel="stylesheet" type="text/css" /> -->
-<link href="<?= BASE_URL; ?>/static/style.css?m=<?= (is_readable(ROOT . "/style/style.css")) ? filemtime(ROOT . "/style/style.css") : ''; ?>" rel="stylesheet" type="text/css" />
+<link href="<?= BASE_URL; ?>/style/style.css?m=<?= (is_readable(ROOT . "/style/style.css")) ? filemtime(ROOT . "/style/style.css") : ''; ?>" rel="stylesheet" type="text/css" />
 <title><?php require_once(ROOT . "/protected/scripts/seo/title.php"); ?></title>
 <meta name="keywords" content="<?php require_once(ROOT . "/protected/scripts/seo/keywords.php"); ?>" />
 <meta name="description" content="<?php require_once(ROOT . "/protected/scripts/seo/description.php"); ?>" />
@@ -46,7 +46,7 @@
             define('HAVE_SIDEBAR', false);
     }
 ?>
-<script src="<?= BASE_URL; ?>/static/jquery-1.7.2.min.js"></script>
+<script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
 </head>
 <body>
 	<?php require_once(ROOT . '/protected/scripts/browser-warning.php'); ?>
