@@ -33,11 +33,6 @@
                 <route match="video" controller="page" action="media" />
             </route>
         </route>
-
-        <route match="komdebt" controller="page" action="komdebt">
-            <route match="{subpage}" controller="page" action="komdebt" />
-            <route match="{subpage}-{payment_id|num}" controller="page" action="komdebt" />
-        </route>
         <route match="static" controller="error" action="404">
             <route match="{path}" controller="static" action="">
             </route>
