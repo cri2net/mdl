@@ -68,7 +68,7 @@
         $__userData = User::getUserById(Authorization::getLoggedUserId());
     }
 
-    $router = new Routing(ROOT . '/protected/conf/routing.xml', true);
+    $router = new Routing(ROOT . '/protected/conf/routing.xml');
     $route_path = (strpos($_SERVER['REQUEST_URI'], '?') !== false)
         ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
         : $_SERVER['REQUEST_URI'];

@@ -110,10 +110,10 @@
             <tr>
                 <th class="first">Послуга, <br> комунальне пiдприємство</th>
                 <th class="td-sum">Боргу на <?= $debtData['previous_date']; ?></th>
-                <th class="td-sum">Сплачено за <?= $debtData['previous_month']; ?></th>
-                <th>Субс.</th>
                 <th>Тариф, грн</th>
                 <th>Нараховано за <?= $debtData['previous_month']; ?></th>
+                <th class="td-sum">Сплачено за <?= $debtData['previous_month']; ?></th>
+                <th>Субсидія,<br>компенсація</th>
                 <th>Боргу на <?= $debtData['dbegin']; ?></th>
             </tr>
         </thead>
@@ -170,8 +170,6 @@
                                     ?>
                                     <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                 </td>
-                                <td><?= $item['OPLAT']; ?></td>
-                                <td><?= $item['SUBS']; ?></td>
                                 <td><?= $item['TARIF']; ?></td>
                                 <td>
                                     <?php
@@ -181,6 +179,8 @@
                                     ?>
                                     <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                 </td>
+                                <td><?= $item['OPLAT']; ?></td>
+                                <td><?= $item['SUBS']; ?></td>
                                 <td>
                                     <?php
                                         $summ = floatval(str_replace(",", ".", $item['SUMM_DOLG']));
