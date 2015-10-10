@@ -33,26 +33,9 @@
             break;
         
         default:
-            switch ($_SERVER['HTTP_HOST']) {
-                case 's1.mailing.com.ua':
-                    $_SERVER['REQUEST_URI'] = str_replace('/clients/gioc/', '/', $_SERVER['REQUEST_URI']);
-                    define('COOKIE_DOMAIN', '.' . $_SERVER['HTTP_HOST']);
-                    define('BASE_URL', "http://{$_SERVER['HTTP_HOST']}/clients/gioc");
-                    define('HAVE_ACCESS_TO_API', false);
-                    break;
-
-                case 'kiev.gerc.ua':
-                    define('COOKIE_DOMAIN', '.' . $_SERVER['HTTP_HOST']);
-                    define('BASE_URL', "http://{$_SERVER['HTTP_HOST']}");
-                    define('HAVE_ACCESS_TO_API', true);
-                    break;
-
-                default:
-                    define('COOKIE_DOMAIN', 'kiev.gerc.ua');
-                    // define('BASE_URL', 'http://kiev.gerc.ua');
-                    define('BASE_URL', 'http://splata.gioc.kiev.ua');
-                    define('HAVE_ACCESS_TO_API', true);
-            }
+            define('COOKIE_DOMAIN', '.gioc.kiev.ua');
+            define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
+            define('HAVE_ACCESS_TO_API', true);
     }
 
     define('EMAIL_FROM', 'info@gioc.kiev.ua');
@@ -77,4 +60,3 @@
     require_once(ROOT . "/protected/headers/location.php");
     require_once(ROOT . "/protected/headers/x-frame-options.php");
     // require_once(ROOT."/protected/headers/content-security-policy.php");
-
