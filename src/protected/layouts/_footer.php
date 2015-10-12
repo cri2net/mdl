@@ -147,7 +147,6 @@
 <?php
     if (USER_REAL_IP !== '127.0.0.1') {
         require_once(ROOT . '/protected/scripts/yandex-metrika.php');
-        require_once(ROOT . '/protected/scripts/yandex-metrika-for-kiev.gerc.ua.php');
     }
 ?>
 </body>

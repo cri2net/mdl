@@ -33,7 +33,6 @@
 		?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php
 	} else {
 		require_once(ROOT . '/protected/scripts/google-analytics.php');
-		require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php');
 	}
 
     $tmp = PDO_DB::table_list(TABLE_PREFIX . 'text', "variable IN ('HEADER_PHONE', 'HEADER_PHONE_SECOND', 'HEADER_WORK')");
@@ -47,6 +46,8 @@
     }
 ?>
 <script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
+<meta name="google-site-verification" content="0UGlupvvEO3lxBitGmrsRE3uxascX123gKbj9O5k-KY" />
+<meta name="google-site-verification" content="ba0Oq4krG43JMDsAVoNBcrMm7qYzTbClU1emrsqcKYw" />
 </head>
 <body>
 	<?php require_once(ROOT . '/protected/scripts/browser-warning.php'); ?>
