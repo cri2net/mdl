@@ -5,6 +5,12 @@ class House
     const TABLE = DB_TBL_HOUSES;
     const HOUSE_URL = '/reports/rwservlet?report=/site/dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
     
+    public static function cron()
+    {
+        set_time_limit(0);
+        self::rebuild();
+    }
+    
     /**
      * Получение номера дома по его id и id города
      * 

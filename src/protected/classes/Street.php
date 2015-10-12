@@ -6,6 +6,12 @@ class Street
     const KIEV_ID = 100;
     const STREET_URL = '/reports/rwservlet?report=/site/dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
     
+    public static function cron()
+    {
+        set_time_limit(0);
+        self::rebuild();
+    }
+    
     public static function getStreetName($street_id, $city_id = self::KIEV_ID)
     {
         $pdo = PDO_DB::getPDO();

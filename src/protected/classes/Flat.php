@@ -8,6 +8,12 @@ class Flat
     const FLAT_URL = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
     const FLAT_ID_BY_PLATCODE_URL = '/reports/rwservlet?report=site/g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
 
+    public static function cron()
+    {
+        set_time_limit(0);
+        self::rebuild();
+    }
+
     /**
      * Проверка ключа авторизации для объекта
      * 
@@ -304,10 +310,6 @@ class Flat
         return self::getFlatById($xml->ROW->ID_OBJ);
     }
 
-    /**
-     * Заменяем то, что в локальной базе хранится данными из reports путём полного перегона этих данных
-     * @return void
-     */
     public static function rebuild()
     {
         $pdo = PDO_DB::getPDO();
