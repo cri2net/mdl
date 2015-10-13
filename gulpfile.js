@@ -15,7 +15,11 @@ var WEBPAGES_MASK = [
     './src/**/{*.php,*.html}',
      './src/{script,config,lib,auth,splash,protected}/**/*.*',
     '!./src/protected/**/{*.css,*.js}',
-    '!./src/protected/**/db.conf.sample.php'
+    '!./src/protected/**/db.conf.sample.php',
+    '!./src/protected/vendor/**/*.xml.dist',
+    '!./src/protected/vendor/**/composer.{json,lock}',
+    '!./src/protected/vendor/**/*.md',
+    '!./src/protected/vendor/**/{tests,Tests,test,docs,examples}/**/*.*'
 ];
 
 var IMAGES_MASK = ['./src/{pic,images}/**/{*.png,*.jpg,*.jpeg,*.gif,*.ico}', '!./src/pic/**/__*.*'];
