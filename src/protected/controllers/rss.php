@@ -9,7 +9,6 @@
     <description><![CDATA[<?= SITE_DESCRIPTION; ?>]]></description>
     <pubDate><?= date("r"); ?></pubDate>
     <lastBuildDate><?= date("r"); ?></lastBuildDate>
-
     <language>uk</language>
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
     <?php
@@ -29,7 +28,6 @@
             if ($img) {
                 $desc = "<img src='" . BASE_URL . "/db_pic/news/500x500wm/{$img['filename']}.jpg' alt='' /><br>" . $desc;
             }
-            
             
             ?><item>
                 <title><![CDATA[<?= htmlspecialchars_decode($item['title']) . $postfix; ?>]]></title>

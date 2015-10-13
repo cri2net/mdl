@@ -171,7 +171,7 @@ class User
     {
         $pdo = PDO_DB::getPDO();
         $_email = $pdo->quote($email);
-        $subscriber = PDO_DB::table_list(self::SUBSCRIBE_TABLE, "email=$_email", null, '1');
+        $subscriber = PDO_DB::first(self::SUBSCRIBE_TABLE, "email=$_email");
         $time = microtime(true);
 
         if (empty($subscriber)) {
@@ -183,8 +183,8 @@ class User
             return PDO_DB::insert($insert, self::SUBSCRIBE_TABLE);
         }
 
-        PDO_DB::update(['updated_at' => $time, 'subscribe' => 1], self::SUBSCRIBE_TABLE, $subscriber[0]['id']);
-        return $subscriber[0]['id'];
+        PDO_DB::update(['updated_at' => $time, 'subscribe' => 1], self::SUBSCRIBE_TABLE, $subscriber['id']);
+        return $subscriber['id'];
     }
 
 }
