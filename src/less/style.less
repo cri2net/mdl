@@ -941,7 +941,18 @@ footer{
             float: left;
             display: inline-block;
             .links {
-                a { color:#01b671; margin-right:14px; }
+                a {
+                    color: #01b671;
+                    &.first {
+                        display: inline-block;
+                        width: 110px;
+                        float: left;
+                    }
+                    &.last {
+                        margin-left: 120px;
+                        display:block;
+                    }
+                }
             }
             .mistakes { color:#888; margin-top:25px;
                 a { color:#20837c; text-decoration:none; }

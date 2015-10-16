@@ -78,8 +78,8 @@
                     1963—{{year}} © <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="{{base_url}}" target="_blank"><?= SITE_DOMAIN; ?></a>
                 </td>
                 <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px" align="right">
-                    <a style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="{{base_url}}/help/offers/" target="_blank">Угода користувача</a> &nbsp;&nbsp;&nbsp;
-                    <a style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="{{base_url}}/help/offers/" target="_blank">Угода про конфіденційність</a>
+                    <a style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="{{base_url}}/help/offers/" target="_blank">Згода користувача</a> &nbsp;&nbsp;&nbsp;
+                    <a style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="{{base_url}}/help/offers/" target="_blank">Згода на збір та обробку персональних даних</a>
                 </td>
             </tr>
         </tbody></table>

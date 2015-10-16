@@ -22,8 +22,8 @@
             </div>
             <div class="center">
                 <div class="links">
-                    <a href="<?= BASE_URL; ?>/help/offers/">Угода користувача</a>
-                    <a href="<?= BASE_URL; ?>/help/offers/">Угода про конфіденційність інформації</a>
+                    <a class="first" href="<?= BASE_URL; ?>/help/offers/">Згода користувача</a>
+                    <a class="last" href="<?= BASE_URL; ?>/help/offers/">Згода на збір та обробку персональних даних</a>
                 </div>
                 <div class="mistakes">
                     Якщо Ви побачили граматичну або синтаксичну <br>
@@ -41,8 +41,8 @@
                                 ?><a class="icon <?= $icons[$i]['key']; ?> <?= ($i == 0) ? 'first' : ''; ?> <?= ($i == count($icons) - 1) ? 'last' : ''; ?>" target="<?= $icons[$i]['target']; ?>" href="<?= htmlspecialchars($icons[$i]['link'], ENT_QUOTES); ?>" title="<?= htmlspecialchars($icons[$i]['title'], ENT_QUOTES); ?>"></a> <?php
                             }
                         ?>
-                        <div class="rss-container" >
-                            <a class="icon rss" href="<?= BASE_URL ?>/feed/" ></a>— наш <a href="<?= BASE_URL ?>/feed/" >RSS канал</a>
+                        <div class="rss-container">
+                            <a class="icon rss" href="<?= BASE_URL ?>/feed/"></a>— наш <a href="<?= BASE_URL ?>/feed/">RSS канал</a>
                         </div>
                     </div>
                 </div>
