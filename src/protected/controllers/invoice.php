@@ -239,9 +239,9 @@
             <td align="right" bgcolor="#eeeeee" style="background-color:#eeeeee; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" width="30" height="30" valign="top">№</td>
             <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px; padding-left:20px;" height="30" valign="top">Послуга</td>
             <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Борг<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, 1.<?= date('m', strtotime('previous month')); ?></span>&nbsp;&nbsp;</td>
-            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Сплачено<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, <?= $prev_month_name; ?></span>&nbsp;&nbsp;</td>
             <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Тариф&nbsp;&nbsp;</td>
             <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Нараховано<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, 1.<?= date('m'); ?></span>&nbsp;&nbsp;</td>
+            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Сплачено<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, <?= $prev_month_name; ?></span>&nbsp;&nbsp;</td>
             <td align="right" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px; padding-right:30px;" height="30" valign="top">Борг<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, 1.<?= date('m'); ?></span></td>
             <td style="padding:0px; line-height:10px;" width="18">&nbsp;</td>
         </tr>
@@ -319,9 +319,9 @@
                         <?= htmlspecialchars($debtData_item['FIO']); ?>
                     </td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $prev_month_debt; ?></td>
-                    <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $oplat; ?></td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $tarif; ?></td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $summ_month; ?></td>
+                    <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $oplat; ?></td>
                     <td bgcolor="<?= $bg_color; ?>" align="right" style="border-right:1px solid #eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px; padding-right:30px;" height="30"><?= $to_pay; ?></td>
                     <td style="padding:0px; line-height:10px;" width="18">&nbsp;</td>
                 </tr>
