@@ -34,8 +34,8 @@
         <form onsubmit="registration_form_submit();" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
             <div class="input login-form-email">
                 <div class="bracket">або</div>
-                <label>Електронна пошта / логiн <br>
-                    <input class="txt form-txt-input" type="text" name="email" value="<?= $_email; ?>">
+                <label><span style="cursor:help;" title="Ви можете використовувати обліковий запис (логін, пароль) який ви використовували на personal-account.kiev.ua">Електронна пошта / логiн </span> <br>
+                    <input class="txt form-txt-input" type="text" name="email" value="<?= $_email; ?>" style="cursor:help;" title="Ви можете використовувати обліковий запис (логін, пароль) який ви використовували на personal-account.kiev.ua">
                 </label>
             </div>
             <div class="input">

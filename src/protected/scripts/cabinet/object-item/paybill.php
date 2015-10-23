@@ -29,6 +29,7 @@
         return;
     }
 ?>
+<h2 class="big-error-message">Можливість сплати тимчасово заблокована</h2>
 <div class="form-subtitle subtitle-bg-green">Оберіть, будь ласка, спосіб сплати:</div>
 <form class="form-block full-width" action="<?= BASE_URL; ?>/post/cabinet/object-item/checkout/" method="post">
     <div class="paysystems">
@@ -111,7 +112,7 @@
 
     <div class="input align-center">
         <div class="btn-box">
-            <button class="btn green bold">Продовжити</button>
+            <button class="btn green bold" disabled>Продовжити</button>
         </div>
         <input type="hidden" name="cctype" id="cctype" value="<?= $pay_systems[0]; ?>">
         <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
@@ -120,7 +121,7 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function(){
-        getShoppingCartTotal('<?= $total_sum; ?>', '<?= $visaSum; ?>', '1');
+        getShoppingCartTotal('<?= $total_sum; ?>', '<?= $visaSum; ?>', '<?= $pay_systems[0]; ?>');
       
         $(".niceCheck").click(function() {
             changeCheck($(this), 'check-group');

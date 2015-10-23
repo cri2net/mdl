@@ -20,6 +20,11 @@
             throw new Exception(ERROR_NOT_FIND_FLAT);
         }
         
+
+        throw new Exception('Можливість сплати тимчасово заблокована');
+        
+
+
         $_debp_sum = $_payment['summ_plat'];
         $percent = ShoppingCart::getPercent($_debp_sum);
         $percent = $percent[$pay_system]['percent'];
@@ -40,6 +45,11 @@
     } catch (Exception $e) {
         $_SESSION['object-item']['status'] = false;
         $_SESSION['object-item']['error']['text'] = $e->getMessage();
+
+        if ($flatData['id']) {
+            return BASE_URL . '/cabinet/objects/'. $flatData['id'] .'/paybill/';
+        }
+        return BASE_URL . '/cabinet/objects/';
     }
 
     if ($flatData['id']) {

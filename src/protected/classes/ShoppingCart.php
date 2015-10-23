@@ -15,7 +15,7 @@ class ShoppingCart
     {
         return ($get_all_supported_paysystems)
             ? ['_test_upc', 'aval', 'other', 'imeks', 'webmoney', 'visa', 'mastercard', 'private', 'mtb', 'w1']
-            : ['_test_upc', 'aval', 'other', 'imeks', 'webmoney', 'visa', 'mastercard', 'private', 'mtb', 'w1'];
+            : ['visa', 'aval', 'other', 'imeks', 'webmoney', 'mastercard', 'private', 'mtb', 'w1'];
     }
     
     public static function get_id_kass()
