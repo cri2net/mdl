@@ -17,8 +17,8 @@ define('ERROR_LOGIN_ALREADY_EXIST', 'Користувач з таким логі
 define('ERROR_SET_NEWPASSWORD', 'Неможливо задати новий пароль.');
 define('ERROR_SENDING_MAIL', 'Неможливо відправити повідомлення.');
 define('ERROR_DATE', 'Помилка дати.');
-define('ERROR_EMPTY_BILL', 'Нарахування на даний місяць відсутні.');
-define('ERROR_EMPTY_HISTORYBILL', 'Платежі на даний місяць відсутні.');
+define('ERROR_EMPTY_BILL', 'Нарахування за даний місяць відсутні.');
+define('ERROR_EMPTY_HISTORYBILL', 'Платежі за даний місяць відсутні.');
 define('ERROR_OLD_REQUEST', 'Ваш сеанс застарів, будь ласка, повторіть ваш запит');
 define('ERROR_GET_FLAT', 'Помилка при отриманні квартири.');
 define('ERROR_FLAT_INVALID_AUTH_KEY', 'Ключ авторизації не є дійсний');

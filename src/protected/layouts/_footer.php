@@ -22,8 +22,8 @@
             </div>
             <div class="center">
                 <div class="links">
-                    <a class="first" href="<?= BASE_URL; ?>/help/offers/">Згода користувача</a>
-                    <a class="last" href="<?= BASE_URL; ?>/help/offers/">Згода на збір та обробку персональних даних</a>
+                    <a class="first" href="<?= BASE_URL; ?>/help/offers/">Угода користувача</a>
+                    <a class="last" href="<?= BASE_URL; ?>/help/offers/">Згода на збір даних</a>
                 </div>
                 <div class="mistakes">
                     Якщо Ви побачили граматичну або синтаксичну <br>

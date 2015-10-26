@@ -14,7 +14,7 @@ class ShoppingCart
     {
         return ($get_all_supported_paysystems)
             ? ['_test_upc', 'visa', 'mastercard']
-            : ['visa', 'mastercard'];
+            : ['visa'];
     }
 
     public static function getPercentRule($pay_system = null)
