@@ -20,11 +20,6 @@
             throw new Exception(ERROR_NOT_FIND_FLAT);
         }
         
-
-        throw new Exception('Можливість сплати тимчасово заблокована');
-        
-
-
         $_debp_sum = $_payment['summ_plat'];
         $percent = ShoppingCart::getPercent($_debp_sum);
         $percent = $percent[$pay_system]['percent'];

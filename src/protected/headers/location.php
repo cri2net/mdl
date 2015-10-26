@@ -2,7 +2,7 @@
     
     // перекидываем заходы по ссылкам старого сайта на новые URL:
     
-    if (preg_match('/^\/main\/document\/([1-9][0-9]{0,15})\//i', $_SERVER['REQUEST_URI'], $matches)) {
+    if (preg_match('/^\/main\/document\/([1-9][0-9]{0,15})/i', $_SERVER['REQUEST_URI'], $matches)) {
 
         $static_page_arr = [
          
@@ -110,6 +110,7 @@
                     'main/history/achievements' => '/about/strides/',
                     'main/media'                => '/about/media/video/',
                     'main/banks'                => '/foruser/banks/',
+                    'main/news'                 => '/news/',
                     'main/terminals'            => '/foruser/terminals/',
                     'main/compensation'         => '/law/compensation/',
                     'main/law/tariff'           => '/law/compensation/',

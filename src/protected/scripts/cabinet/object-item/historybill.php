@@ -39,7 +39,7 @@
         $debtData = $debt->getHistoryBillData($object['flat_id'], $dateBegin);
 
         if (empty($debtData['bank'])) {
-            throw new Exception(ERROR_EMPTY_BILL);
+            throw new Exception(ERROR_EMPTY_HISTORYBILL);
         }
 
         $have_error = false;

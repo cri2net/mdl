@@ -45,7 +45,7 @@
         if ($use_cabinet_menu) {
             ?><div class="item item-right goback"><div class="goback"></div><a class="a-element-box" onmouseover="close_all_header_submenu(-1);" href="<?= BASE_URL; ?>/"><span class="for-border">Перейти до ГіОЦ</span></a></div> <?php
         } else {
-            ?><div class="item item-right forum"><div class="forum"></div><a class="a-element-box" onmouseover="close_all_header_submenu(-1);" href="<?= BASE_URL; ?>/forums/"><span class="for-border">Форум</span></a></div> <?php
+            ?><div class="item item-right forum"><div class="forum"></div><a class="a-element-box" onmouseover="close_all_header_submenu(-1);" href="http://forums.gioc-kmda.kiev.ua/"><span class="for-border">Форум</span></a></div> <?php
         }
     ?>
 </div>

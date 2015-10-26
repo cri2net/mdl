@@ -19,9 +19,7 @@
 
     $visaSum = ShoppingCart::getPercentSum($total_sum, 'visa');
     $mastercardSum = ShoppingCart::getPercentSum($total_sum, 'mastercard');
-    $mastercardSum = ShoppingCart::getPercentSum($total_sum, '_test_upc');
-    $privateSum = ShoppingCart::getPercentSum($total_sum, 'private');
-    $webmoneySum = ShoppingCart::getPercentSum($total_sum, 'webmoney');
+    $_test_upcSum = ShoppingCart::getPercentSum($total_sum, '_test_upc');
 
     if ($error) {
         ?><h2 class="big-error-message"><?= $error; ?></h2><?php
@@ -29,7 +27,6 @@
         return;
     }
 ?>
-<h2 class="big-error-message">Можливість сплати тимчасово заблокована</h2>
 <div class="form-subtitle subtitle-bg-green">Оберіть, будь ласка, спосіб сплати:</div>
 <form class="form-block full-width" action="<?= BASE_URL; ?>/post/cabinet/object-item/checkout/" method="post">
     <div class="paysystems">
@@ -61,34 +58,10 @@
             if (in_array('_test_upc', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_persent__test_upc" class="niceCheck radio"><input value="<?= $percent['_test_upc']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="_test_upc"></span>
+                    <span id="checkbox_persent__test_upc" class="niceCheck radio"><input value="<?= $percent['_test_upc']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $_test_upcSum; ?>" data-paysystem-key="_test_upc"></span>
                     <label onclick="$('#checkbox_persent__test_upc').click();">
                         <img alt="" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
                         <span style="color:#f00;" class="text-label"><b>Тестовий мерчант UPC</b></span>
-                    </label>
-                </div>
-                <?php
-            }
-
-            if (in_array('private', $pay_systems)) {
-                ?>
-                <div class="check-box-line">
-                    <span id="checkbox_persent_private" class="niceCheck radio"><input value="<?= $percent['private']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $privateSum; ?>" data-paysystem-key="private"></span>
-                    <label onclick="$('#checkbox_persent_private').click();">
-                        <img alt="privatbank" src="<?= BASE_URL; ?>/images/paysystems/pb-logo.png" />
-                        <span class="text-label">Карта банка "Приватбанк"</span>
-                    </label>
-                </div>
-                <?php
-            }
-            
-            if (in_array('webmoney', $pay_systems)) {
-                ?>
-                <div class="check-box-line">
-                    <span id="checkbox_persent_webmoney" class="niceCheck radio"><input value="<?= $percent['webmoney']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $webmoneySum; ?>" data-paysystem-key="webmoney"></span>
-                    <label onclick="$('#checkbox_persent_webmoney').click();">
-                        <img alt="Webmoney" src="<?= BASE_URL; ?>/images/paysystems/wm-logo.png" />
-                        <span class="text-label">Webmoney</span>
                     </label>
                 </div>
                 <?php
@@ -112,7 +85,7 @@
 
     <div class="input align-center">
         <div class="btn-box">
-            <button class="btn green bold" disabled>Продовжити</button>
+            <button class="btn green bold">Продовжити</button>
         </div>
         <input type="hidden" name="cctype" id="cctype" value="<?= $pay_systems[0]; ?>">
         <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">

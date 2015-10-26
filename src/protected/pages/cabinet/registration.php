@@ -2,7 +2,8 @@
     <h1>Реєстрація</h1>
     <div class="already-have">
         <a href="<?= BASE_URL; ?>/cabinet/login/">У мене вже є аккаунт</a> <br>
-        <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a>
+        <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a> <br>
+        <a href="<?= BASE_URL; ?>/help/faq/">Як зараєструватись?</a>
     </div>
 </div>
 <?php

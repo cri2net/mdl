@@ -4,8 +4,7 @@ class ShoppingCart
 {
     const TABLE = DB_TBL_PAYMENT;
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
-    const USE_TEST_KASS = true;
-    const TEST_KASS_ID = '998';
+    const KASS_ID = '1028';
     const REPORT_BASE_URL   = '/reports/rwservlet';
     const PDF_FIRST_URL     = '/reports/rwservlet?report=ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
     const PDF_TODAY_URL     = '/reports/rwservlet?report=ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
@@ -14,32 +13,16 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['_test_upc', 'aval', 'other', 'imeks', 'webmoney', 'visa', 'mastercard', 'private', 'mtb', 'w1']
-            : ['visa', 'aval', 'other', 'imeks', 'webmoney', 'mastercard', 'private', 'mtb', 'w1'];
-    }
-    
-    public static function get_id_kass()
-    {
-        if (self::USE_TEST_KASS) {
-            return self::TEST_KASS_ID;
-        }
-
-        throw new Exception("SET WORK KASS ID");
+            ? ['_test_upc', 'visa', 'mastercard']
+            : ['visa', 'mastercard'];
     }
 
     public static function getPercentRule($pay_system = null)
     {
         $rules = [
             '_test_upc'  => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
-            'aval'       => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
-            'other'      => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
-            'imeks'      => ['percent' => 2, 'min' => 2],
-            'webmoney'   => ['percent' => 2, 'min' => 2],
             'visa'       => ['percent' => 2, 'min' => 2],
             'mastercard' => ['percent' => 2, 'min' => 2],
-            'private'    => ['percent' => 2, 'min' => 2],
-            'mtb'        => ['percent' => 2, 'min' => 2],
-            'w1'         => ['percent' => 4, 'min' => 2],
         ];
 
         if ($pay_system) {
@@ -220,7 +203,10 @@ class ShoppingCart
             case 'komdebt':
 
                 switch ($payment['processing']) {
+                    
                     case '_test_upc':
+                    case 'mastercard':
+                    case 'visa':
                         $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                         $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
                         $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
@@ -350,7 +336,7 @@ class ShoppingCart
             case 'komdebt':
                 $xml = '<?xml version="1.0" encoding="windows-1251" ?>';
                 $xml .= "\n<rowset>\n";
-                $xml .= "\t<id_kass>". self::get_id_kass() ."</id_kass>\n";
+                $xml .= "\t<id_kass>". self::KASS_ID ."</id_kass>\n";
                 $xml .= "\t<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>\n";
                 $xml .= "\t<idsiteuser>{$payment['user_id']}</idsiteuser>\n";
 
@@ -439,6 +425,10 @@ class ShoppingCart
         }
 
         $to_update['acq']                     = $xml->ROW->ACQ.'';
+
+        // reports игнорирует комиссию, которую расчитал сайт. Но правильная комиссия его. Они должны совпадать, но перезаменяем значение в БД на всякий случай
+        $to_update['summ_komis']              = floatval($xml->ROW->SUMM_KOMIS.'') / 100;
+        
         $to_update['reports_id_pack']         = $xml->ROW->ID_PACK.'';
         $to_update['reports_num_kvit']        = $xml->ROW->NUM_KVIT.'';
         $to_update['reports_id_plat_klient']  = $xml->ROW->ID_PLAT_KLIENT.'';
@@ -485,6 +475,8 @@ class ShoppingCart
 
         switch ($payment['processing']) {
             case '_test_upc':
+            case 'visa':
+            case 'mastercard':
                 // по идее на тестовом мерчанте это не работает. Код для всех остальных UPC мерчантов
 
                 $url = UPC::ACTION;
@@ -565,7 +557,6 @@ class ShoppingCart
         for ($i=0; $i < count($arr); $i++) {
             self::send_payment_status_to_reports($arr[$i]['id']);
         }
-
 
         // проверяем статусы транзакций
         $arr = self::get_payments_to_check_status();

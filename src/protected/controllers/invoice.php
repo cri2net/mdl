@@ -7,6 +7,8 @@
     // тут отображаем счёт для текущего авторизованного пользователя, если в ссылке не передан другой id
     // то есть на сайте ссылки сюда смогут быть без user_id.
 
+    Authorization::check_login();
+
     if (Authorization::isLogin()) {
         $house = Flat::getUserFlatById($_GET['f'], false, $__userData['id']);
     }
@@ -100,7 +102,6 @@
 <?php
     if (!$__is_email_mode) {
         require_once(ROOT . '/protected/scripts/google-analytics.php');
-        require_once(ROOT . '/protected/scripts/google-analytics-for-kiev.gerc.ua.php');
     }
 ?>
 </head>
@@ -440,7 +441,6 @@
 <?php
     if (!$__is_email_mode) {
         require_once(ROOT . '/protected/scripts/yandex-metrika.php');
-        require_once(ROOT . '/protected/scripts/yandex-metrika-for-kiev.gerc.ua.php');
     }
 ?>
 </body>
