@@ -3,7 +3,7 @@
     <div class="already-have">
         <a href="<?= BASE_URL; ?>/cabinet/login/">У мене вже є аккаунт</a> <br>
         <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a> <br>
-        <a href="<?= BASE_URL; ?>/help/faq/">Як зараєструватись?</a>
+        <a href="<?= BASE_URL; ?>/help/faq/">Як зареєструватись?</a>
     </div>
 </div>
 <?php
