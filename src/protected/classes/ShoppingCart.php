@@ -6,9 +6,9 @@ class ShoppingCart
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
     const KASS_ID = '1028';
     const REPORT_BASE_URL   = '/reports/rwservlet';
-    const PDF_FIRST_URL     = '/reports/rwservlet?report=ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-    const PDF_TODAY_URL     = '/reports/rwservlet?report=ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_FIRST_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+    const PDF_TODAY_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
@@ -313,7 +313,8 @@ class ShoppingCart
         $email->addStringAttachment($pdf, "Receipt-{$payment['id']}.pdf");
         $success = $email->send(
             [$user['email'], "{$user['name']} {$user['fathername']}"],
-            'Квитанція про сплату №' . $payment['id']
+            'Квитанція про сплату №' . $payment['id'],
+            ''
         );
 
         if ($success) {

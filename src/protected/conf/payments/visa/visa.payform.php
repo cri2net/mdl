@@ -7,5 +7,5 @@
 <input type="hidden" name="SD" value="<?= $sd; ?>">
 <input type="hidden" name="OrderID" value="<?= $_payment['id']; ?>">
 <input type="hidden" name="PurchaseTime" value="<?= $purchaseTime; ?>">
-<input type="hidden" name="PurchaseDesc" value="Оплата коммунальных услуг">
+<input type="hidden" name="PurchaseDesc" value="Сплата комунальних послуг">
 <input type="hidden" name="Signature" value="<?= $signature; ?>">

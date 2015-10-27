@@ -44,9 +44,6 @@
     var new_counter_no = {};
 </script>
 <form class="real-full-width-block" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
-    <div style="padding-left:33px" class="error-description">
-        Можливість сплатити тимчасово заблоковано
-    </div>
     <table class="full-width-table datailbill-table no-border">
         <thead>
             <tr>
