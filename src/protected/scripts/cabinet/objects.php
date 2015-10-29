@@ -24,24 +24,23 @@
                 } else {
                     $prevMonth = date("n") - 1;
                     if (strlen($prevMonth) == 1) {
-                        $prevMonth = '0'.$prevMonth;
+                        $prevMonth = '0' . $prevMonth;
                     }
                     $year = date("Y");
                 }
-                $dateBegin = "1.".$prevMonth.".".$year;
+                $dateBegin = "1.$prevMonth.$year";
             } else {
                 $dateBegin = date('1.m.Y');
             }
 
 
             $debtData = $debt->getData($houses[$i]['flat_id'], $dateBegin);
+            $dateBegin = date('1.m.Y', $debtData['timestamp']);
             $houses[$i]['debt_sum'] = $debt->getDebtSum($houses[$i]['flat_id'], $dateBegin);
 
             
-            $this_year = substr($debtData['list'][0]['DBEGIN_XML'], 0, 4);
-            $this_month = (int)substr($debtData['list'][0]['DBEGIN_XML'], 5, 2);
-            $houses[$i]['in_this_month'] = $MONTHS_WHEN[(int)$this_month]['ua'];
-            $houses[$i]['date'] = '1 ' . $MONTHS[$this_month]['ua'].' '.$this_year;
+            $houses[$i]['in_this_month'] = $MONTHS_WHEN[date('n', $debtData['timestamp'])]['ua'];
+            $houses[$i]['date'] = $debtData['date'];
 
             $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], $dateBegin);
 

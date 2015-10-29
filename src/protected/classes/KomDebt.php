@@ -293,7 +293,16 @@ class KomDebt
         }
         
         $data['full_dept'] = str_replace(".", ",", $data['full_dept']);
-        
+
+        if ($data['list'][0]['DBEGIN_XML']) {
+            $date = DateTime::createFromFormat('Y-m-d', $data['list'][0]['DBEGIN_XML']);
+            $data['date'] = $date->format('j ') . $this->months[$date->format('n')]['ua'] . $date->format(' Y');
+        } else {
+            $date = DateTime::createFromFormat($data['date']);
+        }
+
+        $data['timestamp'] = date_timestamp_get($date);
+
         return $data;
     }
 

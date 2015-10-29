@@ -18,6 +18,8 @@
             '119' => '/foruser/terminals/',
             '146' => '/foruser/terminals/',
             '353' => '/law/tariff/',
+            
+            '365' => '/news/new_250/',
 
             // Про ОСББ
             '250' => '/law/osbb/',

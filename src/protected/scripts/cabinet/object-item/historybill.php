@@ -4,7 +4,7 @@
         $years = [];
         $debt = new KomDebt();
         
-        for ($i=date("Y"); $i>=date("Y")-3; $i--) {
+        for ($i=date("Y"); $i>=2012; $i--) {
             $years[] = $i;
         }
 
@@ -17,8 +17,8 @@
             $previousYear = date("Y");
         }
 
-        $_need_month = $previousMonth;
-        $_need_year = $previousYear;
+        $_need_month = date('m');
+        $_need_year = date('Y');
 
         if (isset($_GET['month'])) {
             foreach ($MONTHS_NAME as $key => $value) {
@@ -73,6 +73,9 @@
         <button class="btn green bold">Фільтрувати</button>
     </div>
 </form>
+<div class="error-description">
+    Сторінка працює у тестовому режимі
+</div>
 <?php
     if ($have_error) {
         ?><h2 class="big-error-message"><?= $error; ?></h2> <?php
