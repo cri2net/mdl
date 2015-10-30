@@ -14,7 +14,7 @@ class EmailCron
         }
         $start_user_id = $cron['start_user_id'];
         $start_time = microtime(true);
-        // PDO_DB::update(['status' => 'sending', 'updated_at' => microtime(true)], self::TABLE, $cron['id']);
+        PDO_DB::update(['status' => 'sending', 'updated_at' => microtime(true)], self::TABLE, $cron['id']);
 
         try {
             $pdo = PDO_DB::getPDO();
