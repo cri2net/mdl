@@ -427,8 +427,11 @@ class ShoppingCart
 
         $to_update['acq']                     = $xml->ROW->ACQ.'';
 
-        // reports игнорирует комиссию, которую расчитал сайт. Но правильная комиссия его. Они должны совпадать, но перезаменяем значение в БД на всякий случай
+        // reports игнорирует комиссию, которую расчитал сайт. Но правильная комиссия его.
+        // Они должны совпадать, но перезаменяем значение в БД на всякий случай
         $to_update['summ_komis']              = floatval($xml->ROW->SUMM_KOMIS.'') / 100;
+        $to_update['summ_plat']               = floatval($xml->ROW->SUMM_PLAT.'') / 100;
+        $to_update['summ_total']              = floatval($xml->ROW->SUMM_TOTAL.'') / 100;
         
         $to_update['reports_id_pack']         = $xml->ROW->ID_PACK.'';
         $to_update['reports_num_kvit']        = $xml->ROW->NUM_KVIT.'';

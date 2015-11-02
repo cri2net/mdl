@@ -33,11 +33,9 @@
                 $dateBegin = date('1.m.Y');
             }
 
-
             $debtData = $debt->getData($houses[$i]['flat_id'], $dateBegin);
-            $dateBegin = date('1.m.Y', $debtData['timestamp']);
-            $houses[$i]['debt_sum'] = $debt->getDebtSum($houses[$i]['flat_id'], $dateBegin);
-
+            // $dateBegin = date('d.m.Y', $debtData['timestamp']);
+            $houses[$i]['debt_sum'] = $debtData['full_dept'];
             
             $houses[$i]['in_this_month'] = $MONTHS_WHEN[date('n', $debtData['timestamp'])]['ua'];
             $houses[$i]['date'] = $debtData['date'];

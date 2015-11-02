@@ -22,6 +22,7 @@ switch (USER_REAL_IP) {
 
 define('TABLE_PREFIX', 'gioc_');
 
+define('DB_TBL_AUTH_CODE', 'gioc_auth_code');
 define('DB_TBL_CHIEF', 'gioc_chief');
 define('DB_TBL_CITIES', 'gioc_cities');
 define('DB_TBL_EMAIL_CRON', 'gioc_email_cron');

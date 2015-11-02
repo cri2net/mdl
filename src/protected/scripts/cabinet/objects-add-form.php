@@ -7,7 +7,7 @@
     </div>
 </div>
 <div class="input house-input">
-    <label>Номер будинку <br> <div class="hint-blue"><a href="#">Немає номера будинку у списку?</a></div>
+    <label>Номер будинку <br> <div class="hint-blue"><a onclick="return false;">Немає номера будинку у списку?</a></div>
         <select class="txt" name="house" disabled="disabled" id="add_obj_house">
             <option>-- виберіть --</option>
         </select>
@@ -21,7 +21,7 @@
     </label>
 </div>
 <div class="input">
-    <label>Ключ авторизації <br>
+    <label>Ключ авторизації <br> <div class="hint-blue"><a rel="prettyPhoto" href="<?= BASE_URL; ?>/db_pic/images/wm/image_20-10-2015_[1445345532].jpg">Де знаходиться ключ авторизації?</a></div>
         <input required="required" style="text-transform:uppercase;" disabled="disabled" class="txt form-txt-input" autocomplete="off" type="text" name="auth_key" id="add_obj_auth_key" value="">
     </label>
 </div>

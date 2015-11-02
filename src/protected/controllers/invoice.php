@@ -158,13 +158,13 @@
                     <tr>
                         <td width="137" height="32"><table background="<?= $__img_path; ?>date-left.png" <?= $_table_attr; ?>>
                             <tbody><tr>
-                                <td width="137" align="center" height="32" style="color:#444444; <?= $_ff; ?> font-size:14px; line-height:14px; font-weight:normal;">на <b>01 <?= $MONTHS_NAME[date('n', $haveDataTime)]['ua']['short'] . date(' Y', $haveDataTime); ?></b></td>
+                                <td width="137" align="center" height="32" style="color:#444444; <?= $_ff; ?> font-size:14px; line-height:14px; font-weight:normal;">за <b><?= $MONTHS_NAME[date('n', $haveDataTime)]['ua']['small'] . date(' Y', $haveDataTime); ?></b></td>
                             </tr></tbody>
                         </table></td>
                         <td style="font-size:14px; line-height:14px;" width="44">&nbsp;</td>
                         <td width="137" height="32"><table background="<?= $__img_path; ?>date-right.png" <?= $_table_attr; ?>>
                             <tbody><tr>
-                                <td width="137" align="center" height="32" style="color:#444444; <?= $_ff; ?> font-size:14px; line-height:14px; font-weight:normal;">от <b><?= date('d ') . $this_month_short . date(' Y'); ?></b></td>
+                                <td width="137" align="center" height="32" style="color:#444444; <?= $_ff; ?> font-size:14px; line-height:14px; font-weight:normal;">від <b><?= date('d ') . $this_month_short . date(' Y'); ?></b></td>
                             </tr></tbody>
                         </table></td>
                     </tr>
@@ -172,7 +172,7 @@
             </table></td>
             <td width="20">&nbsp;</td>
             <td width="200" align="center" valign="top" style="vertical-align:top; padding-top:7px; padding-left:20px;">
-                <img hspace="0" vspace="0" border="0" style="width:180px; height:50px; line-height:normal;" width="180" height="50" src="<?= BASE_URL; ?>/barcode/barcode.gif?code=<?= $house['flat_id']; ?>" alt="barcode"><br>
+                <img hspace="0" vspace="0" border="0" style="width:180px; height:50px; line-height:normal;" width="180" height="50" src="<?= BASE_URL; ?>/barcode/barcode.gif?code=<?= $debtData['PLAT_CODE']; ?>" alt="barcode"><br>
             </td>
         </tr>
     </tbody></table>
@@ -215,7 +215,7 @@
     <table width="100%" cellspacing="0" cellpadding="18" border="0"><tbody><tr>
         <td style="line-height:24px; <?= $_ff; ?> font-size:14px; color:#000000;" height="10">
             <span style="line-height:38px; font-size:18px; <?= $_ff; ?> font-weight:bold;"><?= $say_good_day; ?></span><br>
-            Ви можете заплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ» або роздрукувати рахунок та сплатити у найближчій касі банку.
+            Ви можете заплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ».
         </td>
     </tr></tbody></table>
 

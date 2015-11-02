@@ -504,3 +504,18 @@ ALTER TABLE `gioc_flat`
 
 
 -- IN ONLINE
+
+-- 2015.11.02
+ALTER TABLE `gioc_flat`
+  ADD COLUMN `plat_code` INT(11) NULL AFTER `need_del_after_rebuild`;
+
+CREATE TABLE `gioc_auth_code`(
+  `city_id` INT(11) NOT NULL,
+  `object_id` INT(11) NOT NULL,
+  `code` VARCHAR(20) NOT NULL,
+  `plat_code` INT(11) NOT NULL,
+  PRIMARY KEY (`object_id`, `city_id`, `code`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+ALTER TABLE `gioc_auth_code`
+  ADD COLUMN `created_at` DOUBLE NOT NULL AFTER `plat_code`;

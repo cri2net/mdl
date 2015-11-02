@@ -38,12 +38,16 @@ class PDO_DB
      * @param array $data - associated array of data, key name should be as field name in the DB table.
      * @param string $table - name of the table, where data should be inserted.
      */
-    public static function insert(array $data, $table)
+    public static function insert(array $data, $table, $ignore = false)
     {
         if (!empty($data)) {
             $pdo = self::getPDO();
             $str = self::arrayToString($data);
-            $pdo->query("INSERT INTO `$table` SET $str");
+            if ($ignore) {
+                $pdo->query("INSERT IGNORE INTO `$table` SET $str");
+            } else {
+                $pdo->query("INSERT INTO `$table` SET $str");
+            }
             return $pdo->lastInsertId();
         }
     }

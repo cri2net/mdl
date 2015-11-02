@@ -3,6 +3,7 @@
 class Flat
 {
     const TABLE = DB_TBL_FLATS;
+    const TABLE_AUTH_CODE = DB_TBL_AUTH_CODE;
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
     const MAX_USER_FLATS = 4;
     const FLAT_URL = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
@@ -23,8 +24,25 @@ class Flat
      */
     public static function verify_auth_key($auth_key, $flat_id, $city_id = Street::KIEV_ID)
     {
-        // заглушка. Пока мы не можем проверять валидность ключа.
-        return true;
+        $auth_key = str_replace('-', '', $auth_key);
+        $pdo = PDO_DB::getPDO();
+
+        $stm = $pdo->prepare("SELECT * FROM " . self::TABLE_AUTH_CODE . " WHERE object_id=? AND city_id=? AND code=? LIMIT 1");
+        $stm->execute([$flat_id, $city_id, $auth_key]);
+        $record = $stm->fetch();
+
+        if ($record !== false) {
+            return true;
+        }
+
+        // Даём последний шанс: это пользователь ввёл ключ, которого в БД ещё нет.
+        // Получаем этот ключ, дёргая историю начислений.
+        $KomDebt = new KomDebt();
+        @$KomDebt->getData($flat_id);
+        $stm->execute([$flat_id, $city_id, $auth_key]);
+        $record = $stm->fetch();
+
+        return ($record !== false);
     }
 
     /**
@@ -308,6 +326,41 @@ class Flat
         }
 
         return self::getFlatById($xml->ROW->ID_OBJ);
+    }
+
+    /**
+     * Сохраняем ключ авторизации.
+     * 
+     * @param  string  $auth_key  — Ключ авторизации для объекта
+     * @param  int     $plat_code — Платёжный код = шифр_ЖЭО * 1000000 + лицевой_счёт
+     * @param  int     $obj_id    — Уникальный ID объекта в рамках города
+     * @param  int     $city_id   — id города. OPTIONAL
+     * 
+     * @return void
+     */
+    public static function addAuthKey($auth_key, $plat_code, $obj_id, $city_id = Street::KIEV_ID)
+    {
+        if ($auth_key) {
+            $arr = [
+                'city_id' => $city_id,
+                'object_id' => $obj_id,
+                'code' => $auth_key,
+                'plat_code' => $plat_code,
+                'created_at' => microtime(true)
+            ];
+            PDO_DB::insert($arr, self::TABLE_AUTH_CODE, true);
+        }
+
+        // это относится напрямую к данной фукнции, но сразу сохраним в базу plat_code для квартиры
+        if ($plat_code) {
+            $pdo = PDO_DB::getPDO();
+            
+            $stm = $pdo->prepare('UPDATE ' . self::TABLE . ' SET plat_code=? WHERE city_id=? AND object_id=? LIMIT 1');
+            $stm->execute([$plat_code, $city_id, $obj_id]);
+            
+            $stm = $pdo->prepare('UPDATE ' . self::USER_FLATS_TABLE . ' SET plat_code=? WHERE city_id=? AND flat_id=? LIMIT 1');
+            $stm->execute([$plat_code, $city_id, $obj_id]);
+        }
     }
 
     public static function rebuild()
