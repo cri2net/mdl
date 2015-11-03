@@ -11,13 +11,11 @@ class UPC
         switch ($code) {
             case '000': return ''; // all ok
     
-            case '410': return 'Заказ уже был успешно оплачен';
-            case '601': return 'Транзакция не завершена';
-            case '105': return 'Транзакция не разрешена банком-эмитентом';
-            case '116': return 'Недостаточно средств';
-            case '111': return 'Несуществующая карта';
-            case '108': return 'Карта утеряна или украдена';
             case '101': return 'Неверный срок действия карты';
+            case '105': return 'Транзакция не разрешена банком-эмитентом';
+            case '108': return 'Карта утеряна или украдена';
+            case '111': return 'Несуществующая карта';
+            case '116': return 'Недостаточно средств';
             case '130': return 'Превышен допустимый лимит расходов';
             case '290': return 'Банк-издатель недоступен';
             case '291': return 'Техническая или коммуникационная проблема';
@@ -30,16 +28,40 @@ class UPC
             case '407': return 'Торговец отключен от шлюза';
             case '408': return 'Транзакция не найдена';
             case '409': return 'Несколько транзакций найдено';
+            case '410': return 'Заказ уже был успешно оплачен';
             case '411': return 'Некорректное время в запросе';
             case '412': return 'Параметры заказа уже были получены ранее';
+            case '413': return 'Unknown card type';
             case '420': return 'Превышен дневной лимит транзакций';
             case '421': return 'Превышена максимально разрешенная сумма транзакции';
             case '430': return 'Транзакция запрещена на уровне платежного шлюза';
             case '431': return 'Не разрешена транзакция без полной аутентификации по схеме 3-D Secure';
+            case '432': return 'Card is in stop list';
+            case '433': return 'The number of transactions has exceeded the limit';
+            case '434': return 'The merchant does not accept cards from the country';
+            case '435': return 'CLient IP address is on stop list';
+            case '436': return 'The sum of amount transactions has exceeded the limit';
+            case '437': return 'The limit of card number inputs has been exceeded';
+            case '438': return 'Unacceptable currency code';
+            case '439': return 'The time limit from request to authorization has been exceeded';
+            case '440': return 'The authorization time limit has been exceeded';
+            case '441': return 'MPI interaction problem';
+            case '450': return 'Recurrent payments are prohibited';
+            case '451': return 'MPI service not enabled';
+            case '452': return 'Card-to-Card Payment service not enabled';
             case '501': return 'Транзакция отменена пользователем';
             case '502': return 'Сессия браузера устарела';
             case '503': return 'Транзакция отменена магазином';
             case '504': return 'Транзакция отменена шлюзом';
+            case '505': return 'Invalid sequense of operations';
+            case '506': return 'Preauthorized transaction is expired';
+            case '507': return 'Preauthorized transaction already processed with payment';
+            case '508': return 'Invalid amount to pay a preauthorized transaction';
+            case '509': return 'Not able to trace back to original transaction';
+            case '510': return 'Refund is expired';
+            case '511': return 'Transaction was canceled by settlement action';
+            case '512': return 'Repeated reversal or refund';
+            case '601': return 'Транзакция не завершена';
 
             default: return 'Произошла неизвестная ошибка '.$code;
         }

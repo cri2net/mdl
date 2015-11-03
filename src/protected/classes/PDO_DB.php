@@ -37,6 +37,7 @@ class PDO_DB
      * Preform SQL insert operation. 
      * @param array $data - associated array of data, key name should be as field name in the DB table.
      * @param string $table - name of the table, where data should be inserted.
+     * @param boolean $ignore - use INSERT or INSERT IGNORE statement. OPTIONAL
      */
     public static function insert(array $data, $table, $ignore = false)
     {

@@ -48,7 +48,7 @@
         <thead>
             <tr>
                 <th class="first align-center counters-th" colspan="5">
-                    Рахунок на <?= $debtData['date']; ?>
+                    Рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?>
                 </th>
             </tr>
             <tr>
