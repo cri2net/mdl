@@ -63,13 +63,22 @@ class Email
                 $main_template = self::getTemplate('__main');
                 $message = str_ireplace('{{MAIN_CONTENT}}', $message, $main_template);
             }
+    
+            if (strlen($template) > 0) {
+                $plaintext = self::getTemplate($template, true);
+                $plaintext = self::fetch($plaintext, $data);
+            }
         } catch (Exception $e) {
         }
+
 
         $message = self::fetch($message, $data);
 
         $this->Subject = $subject;
         $this->Body    = $message;
+        if (isset($plaintext)) {
+            $this->AltBody = $plaintext;
+        }
         
         if (is_array($to)) {
             call_user_func_array([$this->PHPMailer, 'AddAddress'], $to);
@@ -80,9 +89,11 @@ class Email
         return $this->PHPMailer->Send();
     }
 
-    public static function getTemplate($template)
+    public static function getTemplate($template, $plaintext = false)
     {
-        $filename = ROOT . self::FOLDER . '/' . $template . '.tpl';
+        $filename = ($plaintext)
+            ? ROOT . self::FOLDER . '/plain_text/' . $template . '.tpl'
+            : ROOT . self::FOLDER . '/' . $template . '.tpl';
 
         if (file_exists($filename)) {
             return file_get_contents($filename);
