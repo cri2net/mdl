@@ -52,13 +52,13 @@
             <div id="calc-kllg-subblocks">
                 <div class="calc-subblock">
                     <div class="item-row">
-                        <div class="col-label">Кількість пільговиків, які користуються<br>1-ю пільгою</div>
+                        <div class="col-label">Кількість пільговиків, які користуються<br>{{nth}}-ю пільгою</div>
                         <div class="col-input">
                             <input type="text" class="txt num-short green bold s24 form-txt-input" name="KLLG[]" value="<?= $KLLG[0]; ?>" maxlength="1" onkeypress="return isNumberKey(event);" />
                         </div>
                     </div>
                     <div class="item-row">
-                        <div class="col-label">Кількість пільговиків, які користуються<br>1-ю пільгою</div>
+                        <div class="col-label">Кількість пільговиків, які користуються<br>{{nth}}-ю пільгою</div>
                         <div class="col-input">
                             <select class="dropdown" name="PRO[]">
                                 <option value="%">Оберiть %</option>
@@ -168,7 +168,7 @@
             }
             var html = '';
             for (var i = 0; i < val; i++) {
-                html += calc_kllg_subblock_html;
+                html += calc_kllg_subblock_html.split('{{nth}}').join((i + 1).toString());
             };
             $('#calc-kllg-subblocks').html(html);
         });
