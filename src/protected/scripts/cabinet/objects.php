@@ -19,8 +19,8 @@
         for ($i=0; $i < count($houses); $i++) {
 
             try {
-                $debtData = $debt->getData($houses[$i]['flat_id'], null, 0, $haveDataTime);
-                $dateBegin = date('1.m.Y', $haveDataTime);
+                $debtData = $debt->getData($houses[$i]['flat_id'], null, 0);
+                $dateBegin = date('1.m.Y', $debtData['timestamp']);
 
                 $houses[$i]['debt_sum'] = $debtData['full_dept'];
                 
