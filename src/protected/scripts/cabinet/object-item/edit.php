@@ -4,7 +4,7 @@
         <div class="check-box-line check-box-line-email">
             <span class="niceCheck <?= ($object['notify']) ? 'checked' : ''; ?>" id="checkbox_notify_house"><input value="1" type="checkbox" <?= ($object['notify']) ? 'checked' : ''; ?> name="notify_house"></span>
             <label onclick="$('#checkbox_notify_house').click();">
-                Отримувати листи з рахунками-повідомленнями для цьго об'єкта
+                Отримувати листи з рахунками-повідомленнями для цього об'єкта
             </label>
         </div>
         <div class="input edit-object-title">

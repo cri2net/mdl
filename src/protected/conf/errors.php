@@ -41,5 +41,5 @@ define('ERROR_USER_NOT_LOGGED_IN', 'Користувач повинен бути
 define('ERROR_NOT_FIND_FLAT', 'Запитуваний об\'єкт не знайдено');
 define('ERROR_INVALID_ZERO_PAYMENT', 'Платіж не може бути порожнім');
 define('ERROR_GER_RESTORE_CODE', 'Такий код доступу не знайдено');
-define('ERROR_RESTORE_CODE_EXPIRE', 'Час дії цьго коду закінчився');
+define('ERROR_RESTORE_CODE_EXPIRE', 'Час дії цього коду закінчився');
 define('ERROR_RESTORE_CODE_ACTIVE', 'Цей код вже використано або було сформовано новий');

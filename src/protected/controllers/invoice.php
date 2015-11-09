@@ -54,13 +54,8 @@
         exit();
     }
 
-
-    $haveDataToThisMounth = $debt->haveDataToThisMounth($house['flat_id']);
-    $haveDataTime = ($haveDataToThisMounth) ? time() : strtotime('first day of previous month');
-    $dateBegin = date('1.m.Y', $haveDataTime);
-
-    $debtData = $debt->getData($house['flat_id'], $dateBegin);
-
+    $debtData = $debt->getData($house['flat_id']);
+    $dateBegin = date('1.m.Y', $debtData['timestamp']);
     $house['debt_sum'] = $debt->getDebtSum($house['flat_id'], $dateBegin);
 
     $this_year = substr($debtData['dbegin'], strlen($debtData['dbegin'])-4);
@@ -158,7 +153,7 @@
                     <tr>
                         <td width="137" height="32"><table background="<?= $__img_path; ?>date-left.png" <?= $_table_attr; ?>>
                             <tbody><tr>
-                                <td width="137" align="center" height="32" style="color:#444444; <?= $_ff; ?> font-size:14px; line-height:14px; font-weight:normal;">за <b><?= $MONTHS_NAME[date('n', $haveDataTime)]['ua']['small'] . date(' Y', $haveDataTime); ?></b></td>
+                                <td width="137" align="center" height="32" style="color:#444444; <?= $_ff; ?> font-size:14px; line-height:14px; font-weight:normal;">за <b><?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'] . date(' Y', $debtData['timestamp']); ?></b></td>
                             </tr></tbody>
                         </table></td>
                         <td style="font-size:14px; line-height:14px;" width="44">&nbsp;</td>

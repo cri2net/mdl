@@ -4,21 +4,12 @@
         $years = [];
         $debt = new KomDebt();
         
-        for ($i=date("Y"); $i>=date("Y")-3; $i--) {
+        for ($i=date("Y"); $i>=2012; $i--) {
             $years[] = $i;
         }
 
-        if ($currMonth == 1) {
-            $previousMonth = "12"; 
-            $previousYear = date("Y") - 1;
-        } else {
-            $previousMonth = $currMonth-1;
-            $previousMonth = date("m", strtotime("01-".$previousMonth."-".date("Y")));
-            $previousYear = date("Y");
-        }
-
-        $_need_month = $previousMonth;
-        $_need_year = $previousYear;
+        $_need_firm = !empty($_GET['service']) ? intval($_GET['service']) : 0;
+        $filter = ($_need_firm > 0);
 
         if (isset($_GET['month'])) {
             foreach ($MONTHS_NAME as $key => $value) {
@@ -32,24 +23,27 @@
             $_need_year = (int)$_GET['year'];
         }
 
-        $dateBegin = "1.".$_need_month.".".$_need_year;
 
-        $_need_firm = !empty($_GET['service']) ? intval($_GET['service']) : 0;
-        $filter = ($_need_firm > 0);
+        // Если мы смотрим начисления с 1.10 по 1.11, то отдадутся за сентябрь, а не за октябрь!!!
+        // И это типа правильно.
+        // Короче, если пользователь выставил фильтр по дате,
+        // то DBEGIN в запросе к ораклу формируем на месяц позже.
+
+        if (isset($_need_month) && isset($_need_year)) {
+            $dateBegin = "1.".$_need_month.".".$_need_year;
+            $time = DateTime::createFromFormat('j.m.Y', $dateBegin);
+            $time = strtotime('first day of next month', date_timestamp_get($time));
+            $dateBegin = date('j.m.Y', $time);
+            $firmData = $debt->getUniqueFirmName($object['flat_id'], $dateBegin, 100);
+        } else {
+            $firmData = $debt->getUniqueFirmName($object['flat_id'], null, 0, $real_timestamp);
+            $dateBegin = date('1.m.Y', $real_timestamp);
+            $_need_month = date('m', strtotime('first day of previous month', $real_timestamp));
+            $_need_year = date('Y', strtotime('first day of previous month', $real_timestamp));
+        }
         
         $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
-        $firmData = $debt->getUniqueFirmName($object['flat_id'], $dateBegin);
-        
-        if (empty($firmData) && empty($_GET['month'])) {
-            $new_month = strftime('%m', strtotime('first day of previous month'));
-            $new_year = ($new_month == '12') ? (string)((int)date("Y") - 1) : date("Y");
-            $dateBegin = '1.' . $new_month . '.' . $new_year;
-            $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
-            $firmData = $debt->getUniqueFirmName($object['flat_id'], $dateBegin);
-            $debtData['curr_month'] = $new_month;
-            $debtData['curr_year'] = $new_year;
-            $debtData['date'] = str_replace(' ', '&nbsp;', '01 ' . $MONTHS[(int)$new_month] . ' ' . $new_year);
-        }
+        $debtData['date'] = str_replace(' ', '&nbsp;', '01 ' . $MONTHS[(int)$new_month] . ' ' . $new_year);
 
         if (empty($debtData['data'])) {
             throw new Exception(ERROR_EMPTY_BILL);

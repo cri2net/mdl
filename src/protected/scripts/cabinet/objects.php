@@ -17,24 +17,10 @@
         $debt = new KomDebt();
         
         for ($i=0; $i < count($houses); $i++) {
-            if (!$debt->haveDataToThisMounth($houses[$i]['flat_id'])) {
-                if (date("n") == 1) {
-                    $prevMonth = 12;
-                    $year = date("Y") - 1;
-                } else {
-                    $prevMonth = date("n") - 1;
-                    if (strlen($prevMonth) == 1) {
-                        $prevMonth = '0' . $prevMonth;
-                    }
-                    $year = date("Y");
-                }
-                $dateBegin = "1.$prevMonth.$year";
-            } else {
-                $dateBegin = date('1.m.Y');
-            }
 
-            $debtData = $debt->getData($houses[$i]['flat_id'], $dateBegin);
-            // $dateBegin = date('d.m.Y', $debtData['timestamp']);
+            $debtData = $debt->getData($houses[$i]['flat_id'], null, 0, $haveDataTime);
+            $dateBegin = date('1.m.Y', $haveDataTime);
+
             $houses[$i]['debt_sum'] = $debtData['full_dept'];
             
             $houses[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];

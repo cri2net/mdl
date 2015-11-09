@@ -8,18 +8,6 @@
             $years[] = $i;
         }
 
-        if ($currMonth == 1) {
-            $previousMonth = "12"; 
-            $previousYear = date("Y") - 1;
-        } else {
-            $previousMonth = $currMonth-1;
-            $previousMonth = date("m", strtotime("01-".$previousMonth."-".date("Y")));
-            $previousYear = date("Y");
-        }
-
-        $_need_month = date('m');
-        $_need_year = date('Y');
-
         if (isset($_GET['month'])) {
             foreach ($MONTHS_NAME as $key => $value) {
                 if (strtolower($value['en']) == strtolower($_GET['month'])) {
@@ -32,11 +20,15 @@
             $_need_year = (int)$_GET['year'];
         }
 
-        // // пока не обрабатываем
-        // $_POST['service'];
-
-        $dateBegin = "1.".$_need_month.".".$_need_year;
-        $debtData = $debt->getHistoryBillData($object['flat_id'], $dateBegin);
+        if (isset($_need_month) && isset($_need_year)) {
+            $dateBegin = "1.".$_need_month.".".$_need_year;
+            $debtData = $debt->getHistoryBillData($object['flat_id'], $dateBegin, 100);
+        } else {
+            $debtData = $debt->getHistoryBillData($object['flat_id'], null, 0, $real_timestamp);
+            $dateBegin = date('1.m.Y', $real_timestamp);
+            $_need_month = date('m', $real_timestamp);
+            $_need_year = date('Y', $real_timestamp);
+        }
 
         if (empty($debtData['bank'])) {
             throw new Exception(ERROR_EMPTY_HISTORYBILL);
