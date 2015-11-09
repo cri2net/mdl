@@ -18,28 +18,32 @@
         
         for ($i=0; $i < count($houses); $i++) {
 
-            $debtData = $debt->getData($houses[$i]['flat_id'], null, 0, $haveDataTime);
-            $dateBegin = date('1.m.Y', $haveDataTime);
+            try {
+                $debtData = $debt->getData($houses[$i]['flat_id'], null, 0, $haveDataTime);
+                $dateBegin = date('1.m.Y', $haveDataTime);
 
-            $houses[$i]['debt_sum'] = $debtData['full_dept'];
-            
-            $houses[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];
-            $houses[$i]['date'] = $debtData['date'];
+                $houses[$i]['debt_sum'] = $debtData['full_dept'];
+                
+                $houses[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];
+                $houses[$i]['date'] = $debtData['date'];
 
-            $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], $dateBegin);
+                $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], $dateBegin);
 
-            $tmp_oplat = (double)str_replace(',', '.', $oplat);
-            $tmp_debt_summ = (double)str_replace(',', '.', $houses[$i]['debt_sum']);
+                $tmp_oplat = (double)str_replace(',', '.', $oplat);
+                $tmp_debt_summ = (double)str_replace(',', '.', $houses[$i]['debt_sum']);
 
-            $houses[$i]['payed'] = (($tmp_oplat > 0) && ($tmp_oplat >= $tmp_debt_summ))?'bbox-green':'';
-            $houses[$i]['oplat_this_month'] = $oplat;
-            $houses[$i]['oplat_this_month_str'] = substr($oplat, 0, strlen($oplat) - 3);
-            $houses[$i]['oplat_this_month_str'] .= '<span class="small">'.substr($oplat, strlen($oplat) - 3).' <span class="currency">грн</span></span>';
+                $houses[$i]['payed'] = (($tmp_oplat > 0) && ($tmp_oplat >= $tmp_debt_summ))?'bbox-green':'';
+                $houses[$i]['oplat_this_month'] = $oplat;
+                $houses[$i]['oplat_this_month_str'] = substr($oplat, 0, strlen($oplat) - 3);
+                $houses[$i]['oplat_this_month_str'] .= '<span class="small">'.substr($oplat, strlen($oplat) - 3).' <span class="currency">грн</span></span>';
 
-            $houses[$i]['debt_sum_str'] = '<span class="right">'.substr($houses[$i]['debt_sum'], 0, strlen($houses[$i]['debt_sum']) - 3);
-            $houses[$i]['debt_sum_str'] .= '<span class="small">'.substr($houses[$i]['debt_sum'], strlen($houses[$i]['debt_sum']) - 3).' <span class="currency">грн</span></span>';
-            $houses[$i]['debt_sum_str'] .= '</span>';
-            $houses[$i]['icon'] = ($houses[$i]['kvartira'] > 0) ? 'flat' : '';
+                $houses[$i]['debt_sum_str'] = '<span class="right">'.substr($houses[$i]['debt_sum'], 0, strlen($houses[$i]['debt_sum']) - 3);
+                $houses[$i]['debt_sum_str'] .= '<span class="small">'.substr($houses[$i]['debt_sum'], strlen($houses[$i]['debt_sum']) - 3).' <span class="currency">грн</span></span>';
+                $houses[$i]['debt_sum_str'] .= '</span>';
+                $houses[$i]['icon'] = ($houses[$i]['kvartira'] > 0) ? 'flat' : '';
+            } catch (Exception $e) {
+                $houses[$i]['error'] = 1;
+            }
         }
     } catch (Exception $e) {
         ?><h2 class="big-error-message"><?= $e->getMessage(); ?></h2> <?php
