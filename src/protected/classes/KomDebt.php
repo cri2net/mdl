@@ -55,20 +55,9 @@ class KomDebt
     {
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
         $xml = @new SimpleXMLElement($xmlString);
+        
         if (isset($xml->ROW[0]->KOM_ERROR)) {
             $error = (string)$xml->ROW[0]->KOM_ERROR;
-        }
-        
-        if (!empty($error)) {
-            self::getPreviosMonth($previousMonth, $previousYear);
-            $month2 = date("m", strtotime("01.$previousMonth.$previousYear"));
-            $dateBegin = "01.$month2.$previousYear";
-            $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
-            $xml = @new SimpleXMLElement($xmlString);
-            $error = (string)$xml->ROW[0]->KOM_ERROR;
-        }
-        
-        if (!empty($error)) {
             throw new Exception(ERROR_GETTING_DEBT);
         }
         
@@ -177,17 +166,6 @@ class KomDebt
         $xml = @new SimpleXMLElement($xmlString);
         if (isset($xml->ROW[0]->KOM_ERROR)) {
             $error = (string)$xml->ROW[0]->KOM_ERROR;
-        }
-        
-        if (!empty($error)) {
-            self::getPreviosMonth($previousMonth, $previousYear);
-            $month2 = date("m", strtotime("01-".$previousMonth."-".$previousYear));
-            $dateBegin = "01.".$month2.".".$previousYear;
-            $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
-            $xml = @new SimpleXMLElement($xmlString);
-            $error = (isset($xml->ROW[0]->KOM_ERROR)) ? ((string)$xml->ROW[0]->KOM_ERROR) : '';
-            
-            $data['date'] = '1 ' . $this->months[$previousMonth]['ua'] . " " . $previousYear;
         }
         
         if (!empty($error)) {
@@ -313,26 +291,11 @@ class KomDebt
             $date = DateTime::createFromFormat('Y-m-d', $data['list'][0]['DBEGIN_XML']);
             $data['date'] = $date->format('j ') . $this->months[$date->format('n')]['ua'] . $date->format(' Y');
         } else {
-            $date = DateTime::createFromFormat($data['date']);
+            $date = DateTime::createFromFormat('j.m.Y', $dateBegin);
         }
 
         $data['timestamp'] = date_timestamp_get($date);
         return $data;
-    }
-
-    private static function getPreviosMonth(&$previousMonth, &$previousYear, $month = null)
-    {
-        if ($month == null) {
-            $month = date("n");
-        }
-        
-        if ($month == 1) {
-            $previousMonth = 12;
-            $previousYear = date("Y") - 1;
-        } else {
-            $previousMonth = $month - 1;
-            $previousYear = date("Y");
-        }
     }
 
     public function getHistoryBillData($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null)
@@ -467,29 +430,9 @@ class KomDebt
         $data['curr_month'] = date("m");
         $data['curr_year'] = date("Y");
         $data['dateBegin'] = $dateBegin;
+        
         if (isset($xml->ROW[0]->KOM_ERROR)) {
             $error = (string)$xml->ROW[0]->KOM_ERROR;
-        }
-        
-        if ((!$is_filter) && (!empty($error))) {
-            self::getPreviosMonth($previousMonth, $previousYear);
-
-            $month2 = date("m", strtotime("01.".$previousMonth.".".$previousYear));
-            $year2 = date("Y", strtotime("01.".$previousMonth.".".$previousYear));
-            $dateBegin = "01.".$month2.".".$year2;
-            $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
-            $xml = @new SimpleXMLElement($xmlString);
-            if (isset($xml->ROW[0]->KOM_ERROR)) {
-                $error = (string)$xml->ROW[0]->KOM_ERROR;
-            }
-                
-            $data['dateBegin'] = $dateBegin;
-            $data['date'] = '01 ' . $this->months[$previousMonth]['ua'] . " " . $previousYear;
-            $data['curr_month'] = date("m", strtotime("01".".".$previousMonth . "." . $previousYear));
-            $data['curr_year'] = $previousYear;
-        }
-        
-        if (!empty($error)) {
             throw new Exception(ERROR_GETTING_DEBT);
         }
         
@@ -497,12 +440,13 @@ class KomDebt
         $data['dbegin'] = date("d.m.y", strtotime($this->beginDate));
         $data['dend'] = date("d.m.y", strtotime($this->endDate));
         
-        $debtBeginMonth = date("n", strtotime($this->beginDate));
-        self::getPreviosMonth($previousMonth, $previousYear, $debtBeginMonth);
+        $debtBeginMonth = DateTime::createFromFormat('j.m.Y', $this->beginDate);
+        $debtBeginMonth = strtotime('first day of previous month', date_timestamp_get($debtBeginMonth));
+        $data['previous_date'] = date('d.m.Y', $debtBeginMonth);
+
         
-        $data['previous_date'] = "01.".date("m", strtotime("01-".$previousMonth."-".date("Y"))).".".$previousYear;
         $data['begin_month'] = $this->monthsFullName[date('n', strtotime($this->beginDate))]['ua']['big'];
-        $data['previous_month'] = $this->monthsFullName[date('n', strtotime("01-".$previousMonth."-".$previousYear))]['ua']['big'];
+        $data['previous_month'] = $this->monthsFullName[date('n', $debtBeginMonth)]['ua']['big'];
         $data['counter'] = 0;
         $data['PEOPLE'] = $xml->ROW[0]->PEOPLE;
         $data['PL_OB'] = $xml->ROW[0]->PL_OB;

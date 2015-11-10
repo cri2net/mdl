@@ -21,13 +21,15 @@
             try {
                 $debtData = $debt->getData($houses[$i]['flat_id'], null, 0);
                 $dateBegin = date('1.m.Y', $debtData['timestamp']);
+                $oplat_timestamp = strtotime('first day of next month', $debtData['timestamp']);
 
                 $houses[$i]['debt_sum'] = $debtData['full_dept'];
                 
                 $houses[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];
                 $houses[$i]['date'] = $debtData['date'];
 
-                $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], $dateBegin);
+                // Оплаты за месяц надо запрашивать, передавая dbegin на 1 число след. месяца
+                $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], date('1.m.Y', $oplat_timestamp));
 
                 $tmp_oplat = (double)str_replace(',', '.', $oplat);
                 $tmp_debt_summ = (double)str_replace(',', '.', $houses[$i]['debt_sum']);
