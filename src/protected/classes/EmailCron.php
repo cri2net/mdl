@@ -21,7 +21,7 @@ class EmailCron
             $email = new Email();
             $stm_update = $pdo->prepare("UPDATE " . self::TABLE . " SET updated_at=?, start_user_id=? WHERE id=? LIMIT 1");
 
-            if ($cron['type'] == 'invoice') {    
+            if ($cron['type'] == 'invoice') {
                 $stm = $pdo->prepare("SELECT * FROM " . Flat::USER_FLATS_TABLE . " WHERE notify=1 AND user_id>=? ORDER BY user_id ASC");
                 $stm->execute([$start_user_id]);
 
@@ -191,6 +191,8 @@ class EmailCron
 
         $email_object->Subject = $subject;
         $email_object->call_phpmailer_send();
+
+        gc_collect_cycles();
 
         return true;
     }
