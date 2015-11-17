@@ -548,24 +548,21 @@ class ShoppingCart
         }
     }
 
-    public static function get_payments_to_check_status()
-    {
-        $time = time() - 300;
-        return PDO_DB::table_list(self::TABLE, "status='new' AND go_to_payment_time<$time AND go_to_payment_time IS NOT NULL", "id ASC");
-    }
-
     public static function cron()
     {
-        $arr = PDO_DB::table_list(self::TABLE, "status<>'new' AND send_payment_status_to_reports=0", "id ASC");
-        
-        for ($i=0; $i < count($arr); $i++) {
-            self::send_payment_status_to_reports($arr[$i]['id']);
+        $pdo = PDO_DB::getPDO();
+        $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status<>'new' AND send_payment_status_to_reports=0 ORDER BY id ASC");
+
+        while ($row = $stm->fetch()) {
+            self::send_payment_status_to_reports($row['id']);
         }
 
         // проверяем статусы транзакций
-        $arr = self::get_payments_to_check_status();
-        for ($i=0; $i < count($arr); $i++) {
-            self::check_payments_status($arr[$i]['id']);
-        }
+        // $time = time() - 300;
+        // $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status='new' AND go_to_payment_time<$time AND go_to_payment_time IS NOT NULL");
+        
+        // while ($row = $stm->fetch()) {
+        //     self::check_payments_status($row['id']);
+        // }
     }
 }
