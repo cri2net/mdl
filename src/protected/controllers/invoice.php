@@ -56,12 +56,13 @@
 
     $debtData = $debt->getData($house['flat_id']);
     $dateBegin = date('1.m.Y', $debtData['timestamp']);
-    $house['debt_sum'] = $debt->getDebtSum($house['flat_id'], $dateBegin);
+    $house['debt_sum'] = $debtData['full_dept'];
 
     $this_year = substr($debtData['dbegin'], strlen($debtData['dbegin'])-4);
     $this_month = (int)substr($debtData['dbegin'], strlen($debtData['dbegin'])-7, 2);
     $house['in_this_month'] = $MONTHS_WHEN[(int)$this_month];
     $house['date'] = '1 ' . $MONTHS[$this_month]['ua'] . ' ' . $this_year;
+
 
     $oplat = $debt->getPayOnThisMonth($house['flat_id'], $dateBegin);
 

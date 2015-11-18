@@ -60,7 +60,7 @@ class EmailCron
                         if (!$plain_text) {
                             $plain_text = null;
                         }
-                        
+
                         $this->sendInvoiceFromCron(
                             $email,
                             $curr_user['email'],
@@ -70,7 +70,9 @@ class EmailCron
                             $plain_text,
                             $online_version
                         );
+                        
                         $stm_update_count->execute([$cron['id']]);
+                        echo date('Y.m.d H:i:s '), "TO: $email, user_id={$row['user_id']}, user_flat_id={$row['id']}\r\n";
                     }
                 }
 
