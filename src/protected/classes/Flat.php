@@ -8,6 +8,7 @@ class Flat
     const MAX_USER_FLATS = 4;
     const FLAT_URL = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
     const FLAT_ID_BY_PLATCODE_URL = '/reports/rwservlet?report=site/g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
+    const FLAT_PIN_BY_ID_URL = '/reports/rwservlet?report=g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
 
     public static function cron()
     {
@@ -31,6 +32,9 @@ class Flat
         // Мы знаем его номер телефона.
         if ($_SESSION['auth']['mob_phone'] === '+380970301830') {
             return 30;
+        }
+        if ($_SESSION['auth']['email'] === 'zirka83@mail.ru') {
+            return 40;
         }
 
         return self::MAX_USER_FLATS;
@@ -348,6 +352,28 @@ class Flat
         }
 
         return self::getFlatById($xml->ROW->ID_OBJ);
+    }
+    
+    
+    /**
+     * Получение PIN ЖЭО * 1000000 + лицевой_счёт по квартире.
+     *
+     * @param  int     $flatID
+     * @return array
+     */
+    public static function getFlatPINByID($flatID)
+    {
+        $data = Http::fgets(API_URL . self::FLAT_PIN_BY_ID_URL . $flatID."&dbegin=1.09.2015&dend=1.10.2015");
+        //$data = Http::fgets("https://bank.gioc.kiev.ua" . self::FLAT_PIN_BY_ID_URL . $flatID."&dbegin=1.09.2015&dend=1.10.2015");
+        $data = iconv('CP1251', 'UTF-8', $data);
+        $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
+        $xml = @simplexml_load_string($data);
+    
+        if ($xml == false) {
+            return false;
+        }
+    
+        return (string)$xml->ROW[0]->PLAT_CODE;//self::getFlatById($xml->ROW->ID_OBJ);
     }
 
     /**
