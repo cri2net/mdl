@@ -29,7 +29,11 @@
                 $houses[$i]['date'] = $debtData['date'];
 
                 // Оплаты за месяц надо запрашивать, передавая dbegin на 1 число след. месяца
-                $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], date('1.m.Y', $oplat_timestamp));
+                try {
+                    $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], date('1.m.Y', $oplat_timestamp));
+                } catch (Exception $e) {
+                    $oplat = '0,00';
+                }
 
                 $tmp_oplat = (double)str_replace(',', '.', $oplat);
                 $tmp_debt_summ = (double)str_replace(',', '.', $houses[$i]['debt_sum']);
