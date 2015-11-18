@@ -20,6 +20,7 @@ class EmailCron
             $pdo = PDO_DB::getPDO();
             $email = new Email();
             $stm_update = $pdo->prepare("UPDATE " . self::TABLE . " SET updated_at=?, start_user_id=? WHERE id=? LIMIT 1");
+            $stm_update_count = $pdo->prepare("UPDATE " . self::TABLE . " SET send_email=send_email+1 WHERE id=? LIMIT 1");
 
             if ($cron['type'] == 'invoice') {
                 $stm = $pdo->prepare("SELECT * FROM " . Flat::USER_FLATS_TABLE . " WHERE notify=1 AND user_id>=? ORDER BY user_id ASC");
@@ -69,8 +70,8 @@ class EmailCron
                             $plain_text,
                             $online_version
                         );
+                        $stm_update_count->execute([$cron['id']]);
                     }
-                    
                 }
 
                 $update = [
@@ -105,6 +106,7 @@ class EmailCron
                     $email->AltBody = $email->wrapText($email->normalizeBreaks($email->html2text($message)), 80);
                     $email->Subject = $cron['subject'];
                     $email->call_phpmailer_send();
+                    $stm_update_count->execute([$cron['id']]);
                 }
 
                 $update = [
@@ -141,6 +143,7 @@ class EmailCron
 
                     $email->Subject = $cron['subject'];
                     $email->call_phpmailer_send();
+                    $stm_update_count->execute([$cron['id']]);
                 }
 
                 $update = [
