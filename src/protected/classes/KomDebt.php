@@ -114,7 +114,7 @@ class KomDebt
                     case 4:
                     case 6:
                     case 9:
-                    case 10:
+                    case 11:
                         $days_count = "30";
                         break;
 
@@ -163,114 +163,119 @@ class KomDebt
         $data = [];
         $data['date'] = '1 ' . $this->months[date("n")]['ua'] . " " . date("Y");
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
-        $xml = @new SimpleXMLElement($xmlString);
-        if (isset($xml->ROW[0]->KOM_ERROR)) {
-            $error = (string)$xml->ROW[0]->KOM_ERROR;
-        }
         
-        if (!empty($error)) {
-            throw new Exception(ERROR_GETTING_DEBT);
-        }
-        
-        $data['dbegin']    = $this->beginDate;
-        $data['dend']      = $this->endDate;
-        $data['PEOPLE']    = (isset($xml->ROW[0]->PEOPLE))    ? $xml->ROW[0]->PEOPLE    : null;
-        $data['PL_OB']     = (isset($xml->ROW[0]->PL_OB))     ? $xml->ROW[0]->PL_OB     : null;
-        $data['PL_POL']    = (isset($xml->ROW[0]->PL_POL))    ? $xml->ROW[0]->PL_POL    : null;
-        $data['PLAT_CODE'] = (isset($xml->ROW[0]->PLAT_CODE)) ? $xml->ROW[0]->PLAT_CODE : null;
-        // Такие вещи, как PLAT_CODE и OUT_KEY доступны только в истории начислений
-        
-        $fullDept = 0;
-        $data['list'] = [];
-
-        foreach ($xml->xpath("//ROW") as $row) {
-            $list = [];
-
-            $list['OUT_KEY'] = (isset($xml->ROW[0]->OUT_KEY)) ? $xml->ROW[0]->OUT_KEY : null;
-            if ($list['OUT_KEY']) {
-                Flat::addAuthKey($list['OUT_KEY'], $data['PLAT_CODE'], $obj_id);
-            }
-           
-            $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
-            $list['name_plat'] = $this->getNamePlat($row->NAME_PLAT);
-            $list['CODE_FIRME'] = (string)$row->CODE_FIRME;
-            $list['CODE_PLAT'] = (string)$row->CODE_PLAT;
-            $list['ID_PLAT'] = (string)$row->ID_PLAT;
-            $list['ABCOUNT'] = (string)$row->ABCOUNT;
-            $list['PLAT_CODE'] = (string)$row->PLAT_CODE;
-            $list['NAME_BANKS'] = htmlspecialchars(trim((string)$row->NAME_BANKS), ENT_QUOTES);
-            $list['BANK_CODE'] = (string)$row->MFO;
-            $list['DBEGIN_XML'] = date("Y-m-d", strtotime((string)$row->DBEGIN));
-            $list['DEND_XML'] = date("Y-m-d", strtotime((string)$row->DEND));
-            $list['DATE_D'] = (string)$row->DATE_D;
-            $list['FIO'] = (string)$row->FIO;
-            $list['TLF'] = (string)$row->TLF;
-            $list['R_COUNT'] = (string)$row->R_COUNT;
-
-            $SUMM_MONTH = ((float)$row->SUMM_MONTH)/100;
-            if ($SUMM_MONTH <= 0) {
-                $list['SUMM_MONTH'] = '-';
-            } else {
-                $list['SUMM_MONTH'] = sprintf('%.2f', $SUMM_MONTH);
-                $list['SUMM_MONTH'] = str_replace(".", ",", $list['SUMM_MONTH']);
-            }
-
-            if ($row->COUNTERS->COUNTERS_ITEM) {
-                $list['counterData']['FIRM_NAME'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
-                $list['counterData']['CODE_FIRME'] = (int)$row->CODE_FIRME;
-                $list['counterData']['date'] = " 01.".date("n").".".date("y");
-                $list['counterData']['tarif'] = str_replace('.', ',', sprintf('%.2f',((float)$row->TARIF)/100));
-                $list['counterData']['real_tarif'] = (float)($row->TARIF/100);
-                $list['counterData']['NAME_PLAT'] = $this->getNamePlat($row->NAME_PLAT);
-                $list['counterData']['NAIM_LG'] = (string)$row->NAIM_LG;
-                $list['counterData']['PROC_LG'] = (string)$row->PROC_LG;
-                $list['counterData']['KOL_LGOT'] = (string)$row->KOL_LGOT;
-                $list['counterData']['PEOPLE'] = (int)$row->PEOPLE;
-
-                foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
-                    $list['counterData']['counters'][] = [
-                        'COUNTER_NO' => (int)$counter->COUNTER_NO,
-                        'OLD_VALUE' => (int)$counter->OLD_VALUE,
-                        'ABCOUNTER' => (string)$counter->ABCOUNTER,
-                    ];
-                }
+        if ($xmlString !== false) {
+            $xml = @new SimpleXMLElement($xmlString);
+            if (isset($xml->ROW[0]->KOM_ERROR)) {
+                $error = (string)$xml->ROW[0]->KOM_ERROR;
             }
             
-            $debt = ((float)$row->SUMM_DOLG)/100;
+            if (!empty($error)) {
+                throw new Exception(ERROR_GETTING_DEBT);
+            }
             
-            if ((int)$row->SUMM_DOLG < 0) {
-                $list['over_pay'] = substr($debt, 1);
-                $list['over_pay'] = str_replace(".", ",", $list['over_pay']);
-                $list['to_pay'] = "0,00";
-                $list['debt'] = "-";
-            } elseif ((int)$row->SUMM_DOLG == 0) {
-                $list['over_pay'] = "-";
-                $list['to_pay'] = "0,00";
-                $list['debt'] = "-";
-            } else {
-                if (!$row->COUNTERS->COUNTERS_ITEM) {
-                    $fullDept += (int)$row->SUMM_DOLG;
+            $data['dbegin']    = $this->beginDate;
+            $data['dend']      = $this->endDate;
+            $data['PEOPLE']    = (isset($xml->ROW[0]->PEOPLE))    ? $xml->ROW[0]->PEOPLE    : null;
+            $data['PL_OB']     = (isset($xml->ROW[0]->PL_OB))     ? $xml->ROW[0]->PL_OB     : null;
+            $data['PL_POL']    = (isset($xml->ROW[0]->PL_POL))    ? $xml->ROW[0]->PL_POL    : null;
+            $data['PLAT_CODE'] = (isset($xml->ROW[0]->PLAT_CODE)) ? $xml->ROW[0]->PLAT_CODE : null;
+            // Такие вещи, как PLAT_CODE и OUT_KEY доступны только в истории начислений
+            
+            $fullDept = 0;
+            $data['list'] = [];
+
+            foreach ($xml->xpath("//ROW") as $row) {
+                $list = [];
+
+                $list['OUT_KEY'] = (isset($xml->ROW[0]->OUT_KEY)) ? $xml->ROW[0]->OUT_KEY : null;
+                if ($list['OUT_KEY']) {
+                    Flat::addAuthKey($list['OUT_KEY'], $data['PLAT_CODE'], $obj_id);
                 }
-                $list['over_pay'] = "-";
-                $list['to_pay'] = sprintf('%.2f', $debt);
-                $list['debt'] = sprintf('%.2f', $debt);
+               
+                $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
+                $list['name_plat'] = $this->getNamePlat($row->NAME_PLAT);
+                $list['CODE_FIRME'] = (string)$row->CODE_FIRME;
+                $list['CODE_PLAT'] = (string)$row->CODE_PLAT;
+                $list['ID_PLAT'] = (string)$row->ID_PLAT;
+                $list['ABCOUNT'] = (string)$row->ABCOUNT;
+                $list['PLAT_CODE'] = (string)$row->PLAT_CODE;
+                $list['NAME_BANKS'] = htmlspecialchars(trim((string)$row->NAME_BANKS), ENT_QUOTES);
+                $list['BANK_CODE'] = (string)$row->MFO;
+                $list['DBEGIN_XML'] = date("Y-m-d", strtotime((string)$row->DBEGIN));
+                $list['DEND_XML'] = date("Y-m-d", strtotime((string)$row->DEND));
+                $list['DATE_D'] = (string)$row->DATE_D;
+                $list['FIO'] = (string)$row->FIO;
+                $list['TLF'] = (string)$row->TLF;
+                $list['R_COUNT'] = (string)$row->R_COUNT;
+
+                $SUMM_MONTH = ((float)$row->SUMM_MONTH)/100;
+                if ($SUMM_MONTH <= 0) {
+                    $list['SUMM_MONTH'] = '-';
+                } else {
+                    $list['SUMM_MONTH'] = sprintf('%.2f', $SUMM_MONTH);
+                    $list['SUMM_MONTH'] = str_replace(".", ",", $list['SUMM_MONTH']);
+                }
+
+                if ($row->COUNTERS->COUNTERS_ITEM) {
+                    $list['counterData']['FIRM_NAME'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
+                    $list['counterData']['CODE_FIRME'] = (int)$row->CODE_FIRME;
+                    $list['counterData']['date'] = " 01.".date("n").".".date("y");
+                    $list['counterData']['tarif'] = str_replace('.', ',', sprintf('%.2f',((float)$row->TARIF)/100));
+                    $list['counterData']['real_tarif'] = (float)($row->TARIF/100);
+                    $list['counterData']['NAME_PLAT'] = $this->getNamePlat($row->NAME_PLAT);
+                    $list['counterData']['NAIM_LG'] = (string)$row->NAIM_LG;
+                    $list['counterData']['PROC_LG'] = (string)$row->PROC_LG;
+                    $list['counterData']['KOL_LGOT'] = (string)$row->KOL_LGOT;
+                    $list['counterData']['PEOPLE'] = (int)$row->PEOPLE;
+
+                    foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
+                        $list['counterData']['counters'][] = [
+                            'COUNTER_NO' => (int)$counter->COUNTER_NO,
+                            'OLD_VALUE' => (int)$counter->OLD_VALUE,
+                            'ABCOUNTER' => (string)$counter->ABCOUNTER,
+                        ];
+                    }
+                }
                 
-                $list['to_pay'] = str_replace(".", ",", $list['to_pay']);
-                $list['debt'] = str_replace(".", ",", $list['debt']);
+                $debt = ((float)$row->SUMM_DOLG)/100;
+                
+                if ((int)$row->SUMM_DOLG < 0) {
+                    $list['over_pay'] = substr($debt, 1);
+                    $list['over_pay'] = str_replace(".", ",", $list['over_pay']);
+                    $list['to_pay'] = "0,00";
+                    $list['debt'] = "-";
+                } elseif ((int)$row->SUMM_DOLG == 0) {
+                    $list['over_pay'] = "-";
+                    $list['to_pay'] = "0,00";
+                    $list['debt'] = "-";
+                } else {
+                    if (!$row->COUNTERS->COUNTERS_ITEM) {
+                        $fullDept += (int)$row->SUMM_DOLG;
+                    }
+                    $list['over_pay'] = "-";
+                    $list['to_pay'] = sprintf('%.2f', $debt);
+                    $list['debt'] = sprintf('%.2f', $debt);
+                    
+                    $list['to_pay'] = str_replace(".", ",", $list['to_pay']);
+                    $list['debt'] = str_replace(".", ",", $list['debt']);
+                }
+                
+                if ($row->COUNTERS->COUNTERS_ITEM) {
+                    $list['counter'] = 1;
+                    $list['to_pay'] = "-";
+                    $list['debt'] = "-";
+                } else {
+                    $list['counter'] = 0;
+                }
+                $data['list'][] = $list;
             }
-            
-            if ($row->COUNTERS->COUNTERS_ITEM) {
-                $list['counter'] = 1;
-                $list['to_pay'] = "-";
-                $list['debt'] = "-";
-            } else {
-                $list['counter'] = 0;
-            }
-            $data['list'][] = $list;
+
+            $data['list'] = $this->msort($data['list'], 'counter', true);
+            $data['full_dept'] = sprintf('%.2f',((float)$fullDept)/100);
+        } else {
+            $data = [];
         }
-        
-        $data['list'] = $this->msort($data['list'], 'counter', true);
-        $data['full_dept'] = sprintf('%.2f',((float)$fullDept)/100);
         
         if ((count($data['list']) == 0) && ($depth < 4)) {
             // maybe no data for this month
@@ -284,17 +289,24 @@ class KomDebt
             $dateBegin = date('1.m.Y', strtotime('first day of previous month', $now));
             return $this->getData($obj_id, $dateBegin, $depth + 1);
         }
+
+        // не получилось вытащить данные. Генерируем пустышку
+        if (empty($data)) {
+            $data['timestamp'] = time();
+            $data['list'] = [];
+            return $data;
+        }
         
         $data['full_dept'] = str_replace(".", ",", $data['full_dept']);
 
         if ($data['list'][0]['DBEGIN_XML']) {
-            $date = DateTime::createFromFormat('Y-m-d', $data['list'][0]['DBEGIN_XML']);
+            $date = @DateTime::createFromFormat('Y-m-d', $data['list'][0]['DBEGIN_XML']);
             $data['date'] = $date->format('j ') . $this->months[$date->format('n')]['ua'] . $date->format(' Y');
         } else {
-            $date = DateTime::createFromFormat('j.m.Y', $dateBegin);
+            $date = @DateTime::createFromFormat('j.m.Y', $dateBegin);
         }
 
-        $data['timestamp'] = date_timestamp_get($date);
+        $data['timestamp'] = @date_timestamp_get($date);
         return $data;
     }
 
@@ -354,9 +366,10 @@ class KomDebt
     public function getPayOnThisMonth($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null)
     {
         $xmlString = $this->getXML(self::KOMPLATURL, $obj_id, $dateBegin);
+
         $xmlString = str_replace("&nbsp;", "", $xmlString);
         $xml = @new SimpleXMLElement($xmlString);
-        
+
         if (!empty($xml->ROW[0]->KOM_ERROR)) {
             throw new Exception(ERROR_GETTING_DEBT);
             return false;
