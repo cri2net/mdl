@@ -65,9 +65,6 @@
         <button class="btn green bold">Фільтрувати</button>
     </div>
 </form>
-<div class="error-description">
-    Сторінка працює у тестовому режимі
-</div>
 <?php
     if ($have_error) {
         ?><h2 class="big-error-message"><?= $error; ?></h2> <?php
