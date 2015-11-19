@@ -13,7 +13,7 @@
 
             $update = [
                 'activated'      => 1,
-                'broken_email'   => 1,
+                'broken_email'   => 0,
                 'verified_email' => 1,
             ];
 
