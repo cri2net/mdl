@@ -37,7 +37,10 @@
     $processing_data['requests'][$date] = $_POST;
 
 
-    $to_update = array('processing_data' => json_encode($processing_data));
+    $to_update = [
+        'processing_data' => json_encode($processing_data),
+        'send_payment_status_to_reports' => 0
+    ];
 
     switch ($_POST['TranCode']) {
         case '000': // all ok
