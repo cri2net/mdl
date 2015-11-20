@@ -37,6 +37,11 @@ class Flat
             return 40;
         }
 
+        // Это человек попросил больше объектов (клиент)
+        if ($_SESSION['auth']['mob_phone'] === '+380671253289') {
+            return 5;
+        }
+
         return self::MAX_USER_FLATS;
     }
 
