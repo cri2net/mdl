@@ -13,7 +13,7 @@
         $percent = $percent[$pay_system]['percent'];
         $payment_id = $_payment['id'];
 
-        $commissionSum = ShoppingCart::getPercentSum($_debp_sum, $pay_system);
+        $commissionSum = $_payment['summ_komis'];
         $file = ROOT . "/protected/conf/payments/$pay_system/$pay_system";
         if (file_exists($file . ".conf.php")) {
             require_once($file . ".conf.php");
