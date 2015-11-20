@@ -1,6 +1,11 @@
 <?php
     try {
         $_q = trim($_GET['q']);
+
+        if (empty($q)) {
+            throw new Exception("Введіть фразу для пошуку");
+        }
+
         $items_on_page = 10;
         $news = [];
         $static_pages = [];
