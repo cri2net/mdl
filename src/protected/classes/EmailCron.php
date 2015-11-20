@@ -3,7 +3,7 @@
 class EmailCron
 {
     const TABLE = DB_TBL_EMAIL_CRON;
-    const TIME_LIMIIT = 500;
+    const TIME_LIMIIT = 290;
     protected $inline_attachments = [];
 
     public function cron()
@@ -72,7 +72,7 @@ class EmailCron
                         );
                         
                         $stm_update_count->execute([$cron['id']]);
-                        echo date('Y.m.d H:i:s '), "TO: $email, user_id={$row['user_id']}, user_flat_id={$row['id']}\r\n";
+                        echo date('Y.m.d H:i:s '), "TO: {$curr_user['email']}, user_id={$row['user_id']}, user_flat_id={$row['id']}\r\n";
                     }
                 }
 
