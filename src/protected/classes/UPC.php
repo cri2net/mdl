@@ -5,6 +5,8 @@ class UPC
     const UPC_FOLDER = '/protected/conf/payments/_test_upc';
     const ACTION = 'https://secure.upc.ua/go/enter';
     const TEST_ACTION = 'https://secure.upc.ua/ecgtest/enter';
+    const CHECK_STATUS_URL = 'https://secure.upc.ua/go/service/01';
+    const TEST_CHECK_STATUS_URL = 'https://ecg.test.upc.ua/ecgtest/service/01';
 
     public static function get_upc_error($code)
     {

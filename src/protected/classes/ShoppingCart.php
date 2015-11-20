@@ -279,8 +279,12 @@ class ShoppingCart
 
         // ERR = 7: Status of payment already sent
         if ($xml->ROW->ERR.'' && ($xml->ROW->ERR.'' != '7')) {
+            if ($xml->ROW->ERR.'' == '4') {
+                $to_update['send_payment_status_to_reports'] = 1;
+            }
+            
             PDO_DB::update($to_update, self::TABLE, $payment['id']);
-            throw new Exception(self::get_create_payment_error($xml->ROW->ERR.''));
+            // throw new Exception("id: {$payment['id']}, " . self::get_create_payment_error($xml->ROW->ERR.''));
             return false;
         }
 
@@ -484,7 +488,7 @@ class ShoppingCart
             case 'mastercard':
                 // по идее на тестовом мерчанте это не работает. Код для всех остальных UPC мерчантов
 
-                $url = UPC::ACTION;
+                $url = UPC::CHECK_STATUS_URL;
                 
                 $postdata = [
                     'MerchantID'   => $payment['processing_data']['first']->upc_merchantid,
@@ -559,11 +563,11 @@ class ShoppingCart
         }
 
         // проверяем статусы транзакций
-        // $time = time() - 300;
-        // $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status='new' AND go_to_payment_time<$time AND go_to_payment_time IS NOT NULL");
+        $time = time() - 300;
+        $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status='new' AND go_to_payment_time<$time AND go_to_payment_time IS NOT NULL");
         
-        // while ($row = $stm->fetch()) {
-        //     self::check_payments_status($row['id']);
-        // }
+        while ($row = $stm->fetch()) {
+            self::check_payments_status($row['id']);
+        }
     }
 }
