@@ -62,7 +62,7 @@
                 </td>
             </tr>
             <tr class="item-row odd">
-                <td colspan="1" class="first">Усьго</td>
+                <td colspan="1" class="first">Усього</td>
                 <td colspan="4">
                     <?php
                         $summ = explode('.', number_format($payment['summ_total'], 2));

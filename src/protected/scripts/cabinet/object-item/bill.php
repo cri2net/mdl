@@ -203,7 +203,7 @@
                 }
             ?>
             <tr class="total-summ-tr">
-                <td class="first align-right" colspan="4">Усьго, грн:</td>
+                <td class="first align-right" colspan="4">Усього, грн:</td>
                 <td class="total-sum" id="total_debt"><?= $debtData['full_dept']; ?></td>
             </tr>
             <tr>
