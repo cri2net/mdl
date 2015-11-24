@@ -534,6 +534,9 @@ class ShoppingCart
                         $decline = true;
                     } elseif (in_array($params['TranCode'], ['408', '409'])) {
                         $decline = (time() - $payment['timestamp'] >= 900);
+                    } elseif ($params['TranCode'] == '601') {
+                        // логи в БД занимают слишком много места. Не логируем запросы статусов на транзакции, которые не завершены.
+                        unset($to_update);
                     }
 
                     if ($decline) {
