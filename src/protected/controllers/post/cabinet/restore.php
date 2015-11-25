@@ -9,6 +9,7 @@
 
         $user = User::getUserByEmail($_email);
         $mail = new Email();
+        $mail->changeMXToQuick();
 
         if ($user !== null) {
             // пользователь найден.

@@ -25,14 +25,14 @@ class Email
         // блок настроек для отправки сообщений по SMTP //
         //////////////////////////////////////////////////
         
-        // $this->isSMTP();
+        $this->isSMTP();
 
-        // $this->Host       = 'localhost'; // SMTP hosts.
-        // $this->Port       = 25; // The default SMTP server port.
-        // $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
-        // $this->SMTPAuth   = true;
-        // $this->Username   = ''; // SMTP username.
-        // $this->Password   = ''; // SMTP password.
+        $this->Host       = 'xrelay.givc-kgga.kiev.ua'; //'mail.gioc.kiev.ua'; // SMTP hosts.
+        $this->Port       = 25; // The default SMTP server port.
+        $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
+        $this->SMTPAuth   = false; //true;
+        $this->Username   = ''; // SMTP username.
+        $this->Password   = ''; // SMTP password.
     }
 
     public function __set($name, $value)
@@ -47,6 +47,16 @@ class Email
         if (is_callable([$this->PHPMailer, $name])) {
             return call_user_func_array([$this->PHPMailer, $name], $arguments);
         }
+    }
+
+    public function changeMXToQuick()
+    {
+        $this->Host       = 'xrelay.givc-kgga.kiev.ua'; //'mail.gioc.kiev.ua'; // SMTP hosts.
+        $this->Port       = 25; // The default SMTP server port.
+        $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
+        $this->SMTPAuth   = false; //true;
+        $this->Username   = ''; // SMTP username.
+        $this->Password   = ''; // SMTP password.
     }
 
     public function call_phpmailer_send()
