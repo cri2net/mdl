@@ -51,7 +51,7 @@ class Email
 
     public function changeMXToQuick()
     {
-        $this->Host       = 'xrelay.givc-kgga.kiev.ua'; //'mail.gioc.kiev.ua'; // SMTP hosts.
+        $this->Host       = 'mail.gioc.kiev.ua'; // SMTP hosts.
         $this->Port       = 25; // The default SMTP server port.
         $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
         $this->SMTPAuth   = false; //true;
