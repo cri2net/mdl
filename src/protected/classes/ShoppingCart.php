@@ -483,10 +483,8 @@ class ShoppingCart
         $to_update = [];
 
         switch ($payment['processing']) {
-            case '_test_upc':
             case 'visa':
             case 'mastercard':
-                // по идее на тестовом мерчанте это не работает. Код для всех остальных UPC мерчантов
 
                 $url = UPC::CHECK_STATUS_URL;
                 
@@ -534,6 +532,11 @@ class ShoppingCart
                         $decline = true;
                     } elseif (in_array($params['TranCode'], ['408', '409'])) {
                         $decline = (time() - $payment['timestamp'] >= 900);
+
+                        if (!$decline) {
+                            unset($to_update);
+                        }
+
                     } elseif ($params['TranCode'] == '601') {
                         // логи в БД занимают слишком много места. Не логируем запросы статусов на транзакции, которые не завершены.
                         unset($to_update);
