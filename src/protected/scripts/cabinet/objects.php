@@ -21,6 +21,7 @@
             try {
                 $debtData = $debt->getData($houses[$i]['flat_id'], null, 0);
                 $dateBegin = date('1.m.Y', $debtData['timestamp']);
+                $houses[$i]['timestamp'] = $debtData['timestamp'];
                 $oplat_timestamp = strtotime('first day of next month', $debtData['timestamp']);
 
                 $houses[$i]['debt_sum'] = $debtData['full_dept'];
@@ -91,7 +92,7 @@
 
                                     if (!$house['error']) {
                                         ?>
-                                        <div class="bydate">рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?> року</div>
+                                        <div class="bydate">рахунок за <?= $MONTHS_NAME[date('n', $house['timestamp'])]['ua']['small']; ?> <?= date('Y', $house['timestamp']); ?> року</div>
                                         <?php
                                     }
                                 ?>
