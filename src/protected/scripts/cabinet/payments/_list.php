@@ -6,6 +6,12 @@
         return;
     }
 ?>
+<div class="check-box-line" style="margin-top: 20px;">
+    <span class="niceCheck checked" id="payments_only_success"><input type="checkbox" checked="checked"></span>
+    <label style="position: relative; top:-3px; left:10px;" onclick="$('#payments_only_success').click();">
+        Тільки успішні платежі
+    </label>
+</div>
 <div class="real-full-width-block">
     <table class="full-width-table datailbill-table no-border">
         <thead>
@@ -24,7 +30,7 @@
                 foreach ($payments as $item) {
                     $counter++;
                     ?>
-                    <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                    <tr style="<?= ($item['status'] == 'success') ? '' : 'display: none;'; ?>" class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?> item-payment-status item-payment-status-<?= $item['status']; ?>">
                         <td class="first">
                             <a href="<?= BASE_URL; ?>/cabinet/payments/details/<?= $item['id']; ?>/"><?= $item['id']; ?></a>
                         </td>
@@ -73,3 +79,18 @@
         </tbody>
     </table>
 </div>
+<script>
+$(document).ready(function(){
+    $(".niceCheck").click(function() {
+        changeCheck($(this), 'check-group');
+    });
+    $("#payments_only_success input").change(function() {
+        var checked = ($("#payments_only_success input").is(':checked'));
+        if (checked) {
+            $('.item-payment-status').not('.item-payment-status-success').css('display', 'none');
+        } else {
+            $('.item-payment-status').css('display', '');
+        }
+    });
+});
+</script>
