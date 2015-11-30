@@ -33,6 +33,10 @@
             break;
         
         default:
+            if (!isset($_SERVER['HTTP_HOST']) || !$_SERVER['HTTP_HOST']) {
+                $_SERVER['HTTP_HOST'] = 'www.gioc.kiev.ua';
+            }
+
             define('COOKIE_DOMAIN', '.gioc.kiev.ua');
             define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
             define('HAVE_ACCESS_TO_API', true);
