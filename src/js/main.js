@@ -66,7 +66,18 @@ function recalc2()
             total += parseFloat(val);
         }
     });
+
+    fetchTotalSumm(total);
+};
+
+function fetchTotalSumm(total)
+{
     total = toFloat(total);
+    if (total <= 0) {
+        $('#pay_button').attr('disabled', 'disabled');
+    } else {
+        $('#pay_button').removeAttr('disabled');
+    }
     if (is_int(total)) {
         total = total+',00';
     }
@@ -94,23 +105,8 @@ function recalc()
             total += parseFloat(val);
         }
     });
-    total = toFloat(total);
-    if (total <= 0) {
-        $('#pay_button').attr('disabled', 'disabled');
-    } else {
-        $('#pay_button').removeAttr('disabled');
-    }
-    if (is_int(total)) {
-        total = total+',00';
-    }
-    var str = new String(total);
-    totalStr = str.replace('.', ',');
-    var indx = totalStr.lastIndexOf(',');
-    var sub = totalStr.substring(indx+1, totalStr.length);
-    if (sub.length < 2) {
-        totalStr = totalStr + '0';
-    }
-    $('#total_debt').html(totalStr);
+    
+    fetchTotalSumm(total);
 };
 
 function bill_input_blur(el)
@@ -727,7 +723,6 @@ function add_new_counters(key, abcounter, tarif)
             '<label for="inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Поточні:</label>' +
             '<input style="width: 50px;" min="0" class="text inp_'+ key +'_new_count" type="number" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="6" value="" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
         '</div>' +
-        '<input type="hidden" name="inp_'+ key +'_old_count[]" value="0">' +
         '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
         '<input type="hidden" name="inp_'+ key +'_abcounter[]" value="'+ abcounter +'">' +
         'До сплати: ( <div style="display:inline-block;" id="newval_counter_'+ key +'_'+ new_counter_numnber +'">нове&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_'+ key +'_'+ new_counter_numnber +'">0</span>)&nbsp;*&nbsp;'+ tarif +'&nbsp;грн' +

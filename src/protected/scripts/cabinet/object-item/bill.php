@@ -119,7 +119,6 @@
                                                 <input style="width: 50px;" min="<?= (int)$counter['OLD_VALUE']; ?>" class="text inp_<?= $key; ?>_new_count" type="number" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="6" value="" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
                                             </div>
                                             
-                                            <input type="hidden" name="inp_<?= $key; ?>_old_count[]" value="<?= $counter['OLD_VALUE']; ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
                                             До сплати: ( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span>)&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;грн
