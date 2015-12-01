@@ -502,14 +502,20 @@ class ShoppingCart
                 if (!isset($payment['processing_data']['cron_check_status'])) {
                     $payment['processing_data']['cron_check_status'] = [];
                 }
-                
-                $payment['processing_data']['cron_check_status'][] = [
-                    'timestamp' => microtime(true),
-                    'raw_data' => $result
-                ];
+                if (!isset($payment['processing_data']['first']->upc_merchantid)) {
+                    $payment['processing_data']['cron_check_status'] = [];
+                }
+
+                if ($result && stristr($result, '403 Forbidden')) {
+                    $result = false;
+                } else {
+                    $payment['processing_data']['cron_check_status'][] = [
+                        'timestamp' => microtime(true),
+                        'raw_data' => $result
+                    ];
+                }
                 
                 $to_update['processing_data'] = json_encode($payment['processing_data']);
-
 
                 if (!$result) {
                     $decline = (time() - $payment['timestamp'] >= 1800);
@@ -528,6 +534,21 @@ class ShoppingCart
 
                     if (in_array($params['TranCode'], ['000', '410'])) {
                         $to_update['status'] = 'success';
+
+
+                        // в дальнейшем эти данные будут использоваться для отправки статуса на reports
+                        $date = date('d-m-Y H:i:s');
+
+                        $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
+                        $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
+                        $payment['processing_data']['dates'][] = $date;
+                        $payment['processing_data']['requests'][$date] = ['_is_from_cron_check_status' => true];
+
+                        foreach ($params as $key => $value) {
+                            $payment['processing_data']['requests'][$date][$key] = $value;
+                        }
+                        $to_update['processing_data'] = json_encode($payment['processing_data']);
+
                     } elseif (in_array($params['TranCode'], ['105', '116', '111', '108', '101', '130', '290', '291', '401', '402', '403', '404', '405', '406', '407', '411', '412', '420', '421', '430', '431', '501', '502', '503', '504'])) {
                         $decline = true;
                     } elseif (in_array($params['TranCode'], ['408', '409'])) {
@@ -540,6 +561,8 @@ class ShoppingCart
                     } elseif ($params['TranCode'] == '601') {
                         // логи в БД занимают слишком много места. Не логируем запросы статусов на транзакции, которые не завершены.
                         unset($to_update);
+                    } else {
+                        $decline = (time() - $payment['timestamp'] >= 1800);
                     }
 
                     if ($decline) {
