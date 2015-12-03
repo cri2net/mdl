@@ -268,13 +268,21 @@ header {
     .top-line {
         & > .inner {
             .inner-global; height:@header-height;
-            .logo { .size(391,67); position:absolute; top:5px; left:33px; background-image:url("@{images}/logo-header.png?v3"); }
+            .logo {
+                .size(367, 67);
+                background-image: url("@{images}/logo-header.png");
+                left: 33px;
+                position: absolute;
+                top: 5px;
+            }
+            
             .phone-block {
-                display:block;
-                position:absolute;
-                top:18px;
-                left:550px;
-                padding-left:38px;
+                display: block;
+                left: 540px;
+                padding-left: 38px;
+                position: absolute;
+                top: 18px;
+                
                 .phone-icon { display:block; left:0; top:5px; position:absolute; .size(27); z-index:9; background-image:data-uri("@{images}/h/__phone.png"); }
                 .tel {
                     text-decoration:none;
