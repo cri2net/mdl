@@ -502,16 +502,18 @@ class ShoppingCart
                 if (!isset($payment['processing_data']['cron_check_status'])) {
                     $payment['processing_data']['cron_check_status'] = [];
                 }
-                if (!isset($payment['processing_data']['first']->upc_merchantid)) {
-                    $payment['processing_data']['cron_check_status'] = [];
-                }
+                // Это было временно.
+                // if (!isset($payment['processing_data']['first']->upc_merchantid)) {
+                //     $payment['processing_data']['cron_check_status'] = [];
+                // }
 
                 if ($result && stristr($result, '403 Forbidden')) {
                     $result = false;
                 } else {
                     $payment['processing_data']['cron_check_status'][] = [
                         'timestamp' => microtime(true),
-                        'raw_data' => $result
+                        'raw_data' => $result,
+                        'request' => $postdata
                     ];
                 }
                 
@@ -552,7 +554,7 @@ class ShoppingCart
                     } elseif (in_array($params['TranCode'], ['105', '116', '111', '108', '101', '130', '290', '291', '401', '402', '403', '404', '405', '406', '407', '411', '412', '420', '421', '430', '431', '501', '502', '503', '504'])) {
                         $decline = true;
                     } elseif (in_array($params['TranCode'], ['408', '409'])) {
-                        $decline = (time() - $payment['timestamp'] >= 900);
+                        $decline = (time() - $payment['go_to_payment_time'] >= 900);
 
                         if (!$decline) {
                             unset($to_update);
@@ -560,9 +562,12 @@ class ShoppingCart
 
                     } elseif ($params['TranCode'] == '601') {
                         // логи в БД занимают слишком много места. Не логируем запросы статусов на транзакции, которые не завершены.
-                        unset($to_update);
+                        $decline = (time() - $payment['go_to_payment_time'] >= 3600 * 3);
+                        if (!$decline) {
+                            unset($to_update);
+                        }
                     } else {
-                        $decline = (time() - $payment['timestamp'] >= 1800);
+                        $decline = (time() - $payment['go_to_payment_time'] >= 1800);
                     }
 
                     if ($decline) {
