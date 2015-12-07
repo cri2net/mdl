@@ -39,6 +39,7 @@ define('ERROR_TRANSACTION_FOUND', 'Транзакція не знайдена.')
 define('ERROR_INCORRECT_PHONE_FORMAT_ERROR_MSG', 'Неправильний формат телефону.');
 define('ERROR_USER_NOT_LOGGED_IN', 'Користувач повинен бути авторизований');
 define('ERROR_NOT_FIND_FLAT', 'Запитуваний об\'єкт не знайдено');
+define('ERROR_NOT_FIND_FLAT_FOR_REPAY', 'Неможливо повторити платіж: об\'єкт був видалений з Вашого аккаунту.');
 define('ERROR_INVALID_ZERO_PAYMENT', 'Платіж не може бути порожнім');
 define('ERROR_GER_RESTORE_CODE', 'Такий код доступу не знайдено');
 define('ERROR_RESTORE_CODE_EXPIRE', 'Час дії цього коду закінчився');

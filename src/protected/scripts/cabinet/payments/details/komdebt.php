@@ -130,5 +130,12 @@
         ?>
         <a class="btn green big" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/GIOC-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
         <?php
+    } elseif ($payment['status'] == 'error') {
+        ?>
+        <form method="post" action="<?= BASE_URL; ?>/post/cabinet/object-item/repay/">
+            <input type="hidden" name="payment_id" value="<?= $payment['id']; ?>" />
+            <button class="btn green big">Спробувати сплатити ще раз</button>
+        </form>
+        <?php
     }
 ?>

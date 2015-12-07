@@ -79,7 +79,7 @@
                     </span>
                 </label>
                 <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
-                <div id="password-strength-container" >
+                <div id="password-strength-container">
                     <div class="gauge"></div>
                     <div class="title"></div>
                 </div>

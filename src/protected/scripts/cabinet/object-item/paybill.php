@@ -1,5 +1,4 @@
 <?php
-    
     // проверка, что мы пришли сюда после post запроса на оплату
     if (!isset($_SESSION['paybill-post-flag'])) {
         $error = ERROR_OLD_REQUEST;

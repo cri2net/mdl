@@ -295,7 +295,7 @@
                     <td bgcolor="<?= $bg_color; ?>" align="right" style="border-left:1px solid #eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $number; ?></td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-top:9px; padding-bottom:11px; padding-left:20px;" height="30">
                         <?= $debtData_item['name_plat']; ?> <br>
-                        <span style="color:#888888; line-height:18px; <?= $_ff; ?> font-size:12px;"><?= $debtData_item['firm_name']; ?> (л.с.<?= htmlspecialchars($debtData_item['ABCOUNT']); ?>)</span> <br>
+                        <span style="color:#888888; line-height:18px; <?= $_ff; ?> font-size:12px;"><?= $debtData_item['firm_name']; ?> (о/р <?= htmlspecialchars($debtData_item['ABCOUNT']); ?>)</span> <br>
                         <?php
                             if ($have_counters) {
                                     
