@@ -24,6 +24,10 @@
     <label>Ключ авторизації <br> <div class="hint-blue"><a rel="prettyPhoto" href="<?= BASE_URL; ?>/db_pic/images/wm/image_20-10-2015_[1445345532].jpg">Де знаходиться ключ авторизації?</a></div>
         <input required="required" style="text-transform:uppercase;" disabled="disabled" class="txt form-txt-input" autocomplete="off" type="text" name="auth_key" id="add_obj_auth_key" value="">
     </label>
+    <div class="hint-blue">
+        Використовуйте ключ авторизації лише з рахунків, які датовані жовтнем 2015 або пізніше.
+    </div>
+    <br> <br>
 </div>
 <?php
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));

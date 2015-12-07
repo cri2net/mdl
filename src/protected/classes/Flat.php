@@ -54,7 +54,6 @@ class Flat
      */
     public static function verify_auth_key($auth_key, $flat_id, $city_id = Street::KIEV_ID)
     {
-        return true;
         $auth_key = str_replace('-', '', $auth_key);
         $pdo = PDO_DB::getPDO();
 
