@@ -239,9 +239,23 @@ function getShoppingCartTotal(total, persentSum, cctype)
 
 function checkForInt(evt)
 {
-    var charCode = ( evt.which != null ) ? evt.which : event.keyCode
+    var charCode = (evt.which != null) ? evt.which : event.keyCode
     // charCodes < 32 include tab, delete, arrow keys, etc
     return (charCode < 32 || (charCode >= 48 && charCode <= 57))
+};
+
+function checkForDouble(input)
+{
+    // даёт возможность вставить одну точку или одну запятую и цифры
+    var val = $(input).val();
+    var goodval = val.replace(/[^\d,.]*/g, '')
+          .replace(/([,.])[,.]+/g, '$1')
+          .replace(/^[^\d]*(\d+([.,]\d{0,5})?).*$/g, '$1');
+
+    if (goodval != val) {
+        $(input).val(goodval).change();
+    }
+    $(input).change();
 };
 
 function recount_counter_summ(key, tarif, counter_no) {
@@ -717,11 +731,11 @@ function add_new_counters(key, abcounter, tarif)
     var html = '<div class="counter-data"><br> Показання лічильника №'+ new_counter_numnber +' : <br>' +
         '<div style="margin-top:5px; margin-bottom:5px;">' +
             '<label for="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Попередні:</label>' +
-            '<input style="width:50px;" value="0" id="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_old_count[]" type="number" min="0" maxlength="6" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
+            '<input style="width:50px;" value="0" id="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
         '</div>' +
         '<div style="margin-bottom:5px;">' +
             '<label for="inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Поточні:</label>' +
-            '<input style="width: 50px;" min="0" class="text inp_'+ key +'_new_count" type="number" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="6" value="" onkeypress="return checkForInt(event);" onkeyup="$(this).change();" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
+            '<input style="width: 50px;" class="text inp_'+ key +'_new_count" type="text" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
         '</div>' +
         '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
         '<input type="hidden" name="inp_'+ key +'_abcounter[]" value="'+ abcounter +'">' +

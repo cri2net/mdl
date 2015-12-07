@@ -121,8 +121,8 @@ class ShoppingCart
                         continue;
                     }
 
-                    $old_value = $data[$item.'_old_count'][$key];
-                    $new_value = $data[$item.'_new_count'][$key];
+                    $old_value = round($data[$item.'_old_count'][$key], 3);
+                    $new_value = round($data[$item.'_new_count'][$key], 3);
                     $used_value = $new_value - $old_value;
 
                     if ($used_value < 0) {
@@ -368,7 +368,12 @@ class ShoppingCart
                     
                     $xml .= "\t\t\t<counters>\n";
                     for ($j=0; $j < count($counters); $j++) {
+
                         $counters[$j] = (array)$counters[$j];
+                        $counters[$j]['old_value'] = str_replace('.', ',', $counters[$j]['old_value']);
+                        $counters[$j]['new_value'] = str_replace('.', ',', $counters[$j]['new_value']);
+                        $counters[$j]['pcount'] = str_replace('.', ',', $counters[$j]['pcount']);
+
                         $xml .= "\t\t\t\t<counter>\n";
                         $xml .= "\t\t\t\t\t<abcounter>{$counters[$j]['abcounter']}</abcounter>\n";
                         $xml .= "\t\t\t\t\t<counter_no>{$counters[$j]['counter_num']}</counter_no>\n";
