@@ -16,7 +16,7 @@
 		<div class="feature right">
 			<div class="title">Де сплатити послуги ЖКГ?</div>
 			<ul>
-				<li class="bank"><a href="<?= BASE_URL; ?>/foruser/banks/">Банки</a>
+				<!-- li class="bank"><a href="<?= BASE_URL; ?>/foruser/banks/">Банки</a -->
 				<li class="terminal"><a href="<?= BASE_URL; ?>/foruser/terminals/">Термiнали самооблуговування</a>
 			</ul>
 		</div>
