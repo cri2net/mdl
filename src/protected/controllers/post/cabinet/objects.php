@@ -8,10 +8,8 @@ try {
 
     $auth_key = stripslashes($_POST['auth_key']);
 
-    if ($_SESSION['auth']['email'] !== 'zirka83@mail.ru') {
-        if (!Flat::verify_auth_key($auth_key, $_POST['flat'])) {
-            throw new Exception(ERROR_FLAT_INVALID_AUTH_KEY);
-        }
+    if (!Flat::verify_auth_key($auth_key, $_POST['flat'])) {
+        throw new Exception(ERROR_FLAT_INVALID_AUTH_KEY);
     }
 
     $flat = Flat::addFlat($_POST['flat'], $auth_key);

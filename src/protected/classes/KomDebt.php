@@ -25,6 +25,8 @@ class KomDebt
     private function getXML($url, $obj_id, $dateBegin = null)
     {
         try {
+            $dateData = $this->getDatePeriod($dateBegin);
+            
             if ($this->testing) {
                 // в режиме тестирования мы не можем обращаться к API (скорее всего), так что берём шаблоны ответов
                 if ($url == self::DEBTURL) {
@@ -34,7 +36,6 @@ class KomDebt
                 }
             }
 
-            $dateData = $this->getDatePeriod($dateBegin);
             $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
 
             if (!isset($this->cache[md5($url)])) {
@@ -188,9 +189,9 @@ class KomDebt
             foreach ($xml->xpath("//ROW") as $row) {
                 $list = [];
 
-                $list['OUT_KEY'] = (isset($xml->ROW[0]->OUT_KEY)) ? $xml->ROW[0]->OUT_KEY : null;
+                $list['OUT_KEY'] = (isset($xml->ROW[0]->OUT_KEY)) ? ($xml->ROW[0]->OUT_KEY . '') : null;
                 if ($list['OUT_KEY']) {
-                    Flat::addAuthKey($list['OUT_KEY'], $data['PLAT_CODE'], $obj_id);
+                    Flat::addAuthKey($list['OUT_KEY'], $data['PLAT_CODE'] . '', $obj_id);
                 }
                
                 $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
@@ -310,7 +311,7 @@ class KomDebt
         return $data;
     }
 
-    public function getHistoryBillData($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null)
+    public function getHistoryBillData($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null, $first_real_timestamp = null)
     {
         $xmlString = $this->getXML(self::KOMPLATURL, $obj_id, $dateBegin);
         $xmlString = str_replace("&nbsp;", "", $xmlString);
@@ -354,16 +355,24 @@ class KomDebt
             $real_timestamp = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
         }
 
+        if ($first_real_timestamp == null) {
+            $first_real_timestamp = $real_timestamp;
+        }
+
         // maybe no data for this month
         if (empty($data) && ($depth < 4)) {
             $dateBegin = date('1.m.Y', strtotime('first day of previous month', $real_timestamp));
-            return $this->getHistoryBillData($obj_id, $dateBegin, $depth + 1, $real_timestamp);
+            return $this->getHistoryBillData($obj_id, $dateBegin, $depth + 1, $real_timestamp, $first_real_timestamp);
+        }
+
+        if (empty($data)) {
+            $real_timestamp = $first_real_timestamp;
         }
 
         return $data;
     }
     
-    public function getPayOnThisMonth($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null)
+    public function getPayOnThisMonth($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null, $first_real_timestamp = null)
     {
         $xmlString = $this->getXML(self::KOMPLATURL, $obj_id, $dateBegin);
 
@@ -387,16 +396,24 @@ class KomDebt
             $real_timestamp = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
         }
 
+        if ($first_real_timestamp == null) {
+            $first_real_timestamp = $real_timestamp;
+        }
+
         // maybe no data for this month
         if (!$have_data && ($depth < 4)) {
             $dateBegin = date('1.m.Y', strtotime('first day of previous month', $real_timestamp));
-            return $this->getPayOnThisMonth($obj_id, $dateBegin, $depth + 1, $real_timestamp);
+            return $this->getPayOnThisMonth($obj_id, $dateBegin, $depth + 1, $real_timestamp, $first_real_timestamp);
+        }
+
+        if (!$have_data) {
+            $real_timestamp = $first_real_timestamp;
         }
         
         return str_replace(".", ",", sprintf('%.2f', $summ));
     }
     
-    public function getUniqueFirmName($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null)
+    public function getUniqueFirmName($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null, $first_real_timestamp = null)
     {
         $data = [];
         $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
@@ -425,10 +442,18 @@ class KomDebt
             $real_timestamp = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
         }
 
+        if ($first_real_timestamp == null) {
+            $first_real_timestamp = $real_timestamp;
+        }
+
         // maybe no data for this month
         if (!$have_data && ($depth < 4)) {
             $dateBegin = date('1.m.Y', strtotime('first day of previous month', $real_timestamp));
-            return $this->getUniqueFirmName($obj_id, $dateBegin, $depth + 1, $real_timestamp);
+            return $this->getUniqueFirmName($obj_id, $dateBegin, $depth + 1, $real_timestamp, $first_real_timestamp);
+        }
+
+        if (!$have_data) {
+            $real_timestamp = $first_real_timestamp;
         }
 
         return  $data['firm'];
