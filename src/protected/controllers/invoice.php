@@ -400,7 +400,7 @@
         </td>
     </tr></tbody></table>
     <table <?= $_table_attr; ?>><tbody><tr>
-        <td width="222" bgcolor="#eeeeee" style="padding-bottom:27px; padding-top:27px; padding-left:18px; padding-right:11px;"><img src="<?= $__img_path; ?>paysystems.png" alt="ми приймаємо до сплати" height="25" width="222" hspace="0" vspace="0" border="0"></td>
+        <td width="222" bgcolor="#eeeeee" style="padding-bottom:27px; padding-top:27px; padding-left:18px; padding-right:11px;"><img src="<?= $__img_path; ?>paysystems.png" alt="ми приймаємо до сплати" height="25" width="111" hspace="0" vspace="0" border="0"></td>
         <td valign="middle" bgcolor="#eeeeee" style="color:#888888; font-style:italic; font-size:14px; <?= $_ff; ?> line-height:18px;">—&nbsp;&nbsp;ми приймаємо до сплати</td>
     </tr></tbody></table>
     <table <?= $_table_attr; ?>><tbody><tr><td style="padding-top:20px; padding-left:18px; padding-right:18px; padding-bottom:0px;" bgcolor="#00979c">
@@ -427,8 +427,9 @@
                     1963—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="<?= BASE_URL; ?>" target="_blank"><?= SITE_DOMAIN; ?></a>
                 </td>
                 <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px" align="right">
-                    <a style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="<?= BASE_URL; ?>/help/offers/" target="_blank">Згода користувача</a> &nbsp;&nbsp;&nbsp;
-                    <a style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="<?= BASE_URL; ?>/help/offers/" target="_blank">Згода на збір та обробку персональних даних</a>
+                    <a style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="<?= BASE_URL; ?>/cabinet/settings/notifications/?uid=<?= $__userData['id']; ?>&amp;hash2=<?= $hash2; ?>" target="_blank">Відписатися</a> &nbsp;&nbsp;&nbsp;
+                    <a style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="<?= BASE_URL; ?>/help/offers/" target="_blank">Угода користувача</a> &nbsp;&nbsp;&nbsp;
+                    <a style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="<?= BASE_URL; ?>/help/offers/" target="_blank">Згода на збір даних</a>
                 </td>
             </tr>
         </tbody></table>
