@@ -82,7 +82,7 @@ class JAK8583
         46  => array('an',  999, self::VARIABLE_LENGTH),        //Amounts fees
         47  => array('an',  999, self::VARIABLE_LENGTH),        //Additional data national
         48  => array('ans', 119, self::VARIABLE_LENGTH),        //Additional data private
-        49  => array('an',  3,   self::FIXED_LENGTH),           //Verification data
+        49  => array('an',  3,   self::FIXED_LENGTH),           //Verification data          | Currency code, transaction (https://en.wikipedia.org/wiki/ISO_8583)
         50  => array('an',  3,   self::FIXED_LENGTH),           //Currency code, settlement
         51  => array('a',   3,   self::FIXED_LENGTH),           //Currency code, cardholder billing
         52  => array('an',  16,  self::FIXED_LENGTH),           //Personal identification number (PIN) data
