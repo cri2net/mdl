@@ -463,7 +463,6 @@ class KomDebt
     public function getUniqueFirmXIface($obj_id, $firmName = null, $dateBegin = null, $is_filter = false)
     {
         
-        include_once ROOT .'/protected/classes/xifaceClass.php';
         //return;
         $this->beginDate = $dateBegin;
         $pin = Flat::getFlatPINByID($obj_id);
