@@ -223,7 +223,6 @@ class JAK8583
             }
         }
 
-        echo "result -> ". $result ."\n";
         return $result;
     }
 
@@ -236,7 +235,6 @@ class JAK8583
     {
         $tmp  = sprintf("%064d", 0);
         $tmp2 = sprintf("%064d", 0);
-        print_r($this->_data);
         
         foreach ($this->_data as $key =>$val) {
             if ($key<65) {
@@ -245,28 +243,22 @@ class JAK8583
                 $tmp[0]        = 1;
                 $tmp2[$key-65] = 1;
             }
-            echo "key: ". $key ."\n";
         }
 
-        echo "tmp: ". $tmp ."\n";
-        echo "tmp2: ". $tmp2 ."\n";
-        $result = "";
+        $result = '';
         if ($tmp[0] == 1) {
             while ($tmp2!='') {
                 $result  .= base_convert(substr($tmp2, 0, 4), 2, 16);
-                echo "result *: ". $result  ." from: ". substr($tmp2, 0, 4)  ."\n";
                 $tmp2     = substr($tmp2, 4, strlen($tmp2)-4);
             }
         }
 
-        echo "result: ". $result ."\n";
         $main = "";
         while ($tmp!='') {
             $main  .= base_convert(substr($tmp, 0, 4), 2, 16);
             $tmp    = substr($tmp, 4, strlen($tmp)-4);
         }
 
-        echo "bitmap -> ". $main ."". $result ."\n";
         $this->_bitmap = strtoupper($main. $result);
         return $this->_bitmap;
     }
@@ -353,18 +345,15 @@ class JAK8583
         }
 
         if (is_array($this->_data)) {
-            $this->_valid['data']         = true;
+            $this->_valid['data'] = true;
             
             foreach ($this->_data as $key =>$val) {
                 $this->_valid['de'][$key] = false;
-                print 'Current key: '. $key. "\n";
                 
                 if ($this->DATA_ELEMENT[$key][0]!='b') {
-                    print 'is not b'. '\n';
                     
                     //fixed length
                     if ($this->DATA_ELEMENT[$key][2] == self::FIXED_LENGTH) {
-                        print 'is fixed'. '\n';
                         $tmp = substr($inp, 0, $this->DATA_ELEMENT[$key][1]);
                         
                         if (strlen($tmp) == $this->DATA_ELEMENT[$key][1]) {
@@ -380,10 +369,8 @@ class JAK8583
 
                     } else {
                         //dynamic length
-                        print 'is dynamic'. '\n';
                         $len = strlen($this->DATA_ELEMENT[$key][1]);
                         $tmp = substr($inp, 0, $len);
-                        print 'tmp: '. $tmp. ' - '. $len .'\n';
                         
                         if (strlen($tmp) == $len ) {
                             $num = (integer) $tmp;
@@ -401,38 +388,32 @@ class JAK8583
                             }
                         }
                     }
-                } else {
-                    print 'is b\n';
-                    if ($key>1) {
-                        
-                        //fixed length
-                        if ($this->DATA_ELEMENT[$key][2] == self::FIXED_LENGTH) {
-                            $start = false;
-                            for ($i = 0; $i<$this->DATA_ELEMENT[$key][1]/4; $i++) {
-                                $bit = base_convert($inp[$i], 16, 2);
-                                if ($bit!=0) {
-                                    $start = true;
-                                }
-                                if ($start){
-                                    $this->_data[$key] .= $bit;
-                                }
+                } elseif ($key>1) {
+                    //fixed length
+                    if ($this->DATA_ELEMENT[$key][2] == self::FIXED_LENGTH) {
+                        $start = false;
+                        for ($i = 0; $i<$this->DATA_ELEMENT[$key][1]/4; $i++) {
+                            $bit = base_convert($inp[$i], 16, 2);
+                            if ($bit!=0) {
+                                $start = true;
                             }
-                            $this->_data[$key] = $bit;
+                            if ($start){
+                                $this->_data[$key] .= $bit;
+                            }
                         }
-                    } else {
-                        $tmp = substr($this->_iso, 4+16, 16);
-                        if (strlen($tmp) == 16) {
-                            $this->_data[$key]        = substr($this->_iso, 4+16, 16);
-                            $this->_valid['de'][$key] = true;
-                        }
+                        $this->_data[$key] = $bit;
+                    }
+                } else {
+                    $tmp = substr($this->_iso, 4+16, 16);
+                    if (strlen($tmp) == 16) {
+                        $this->_data[$key]        = substr($this->_iso, 4+16, 16);
+                        $this->_valid['de'][$key] = true;
                     }
                 }
 
                 if (!$this->_valid['de'][$key]) {
                     $this->_valid['data'] = false;
                 }
-
-                print_r($this->_data);
             }
         }
 
