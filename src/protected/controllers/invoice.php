@@ -48,13 +48,17 @@
 
         echo $say_good_day, "\r\n",
              'Доступний рахунок на сплату ЖКП для Київ, ', trim($house['street_name_full']), ', ', $address_detail['house'], $_flat_number, "\r\n",
-             'Ви можете сплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ» або роздрукувати рахунок та сплатити у найближчій касі банку.', "\r\n\r\n",
+             'Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ» або роздрукувати рахунок та сплатити у найближчій касі банку.', "\r\n\r\n",
              "Сплатити на сайті КП «ГіОЦ»: $paybill_link\r\n\r\n",
              "Онлайн версія листа: $online_version\r\n";
         exit();
     }
 
     $debtData = $debt->getData($house['flat_id']);
+    if (empty($debtData['list']) && $__is_email_mode) {
+        exit();
+    }
+
     $dateBegin = date('1.m.Y', $debtData['timestamp']);
     $house['debt_sum'] = $debtData['full_dept'];
 
@@ -211,7 +215,7 @@
     <table width="100%" cellspacing="0" cellpadding="18" border="0"><tbody><tr>
         <td style="line-height:24px; <?= $_ff; ?> font-size:14px; color:#000000;" height="10">
             <span style="line-height:38px; font-size:18px; <?= $_ff; ?> font-weight:bold;"><?= $say_good_day; ?></span><br>
-            Ви можете заплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ».
+            Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ».
         </td>
     </tr></tbody></table>
 
