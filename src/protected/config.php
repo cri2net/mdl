@@ -64,3 +64,34 @@
     require_once(ROOT . "/protected/headers/location.php");
     require_once(ROOT . "/protected/headers/x-frame-options.php");
     // require_once(ROOT."/protected/headers/content-security-policy.php");
+
+
+// $pdo = PDO_DB::getPDO();
+// $stm_del = $pdo->prepare("DELETE FROM ta WHERE id=? LIMIT 1");
+// $stm = $pdo->query("SELECT * FROM ta WHERE id > 5000");
+// while ($row = $stm->fetch()) {
+    
+
+
+
+//     $obj_id = Flat::getFlatByPlatCode($row['int8'])['object_id'];
+//     var_dump($obj_id);
+// die('s');
+//     if (!$obj_id) {
+//         continue;
+//     }
+
+//     $arr = [
+//         'city_id' => 100,
+//         'code' => $row['authkey'],
+//         'plat_code' => $row['int8'],
+//         'created_at' => microtime(true),
+//         'object_id' => $obj_id
+//     ];
+//     var_dump($arr); die();
+//     PDO_DB::insert($arr, 'gioc_auth_code', true);
+//     $stm_del->execute([$row['id']]);
+// }
+
+// die();
+
