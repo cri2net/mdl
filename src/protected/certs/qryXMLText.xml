@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataExchangeModule>
+  <Head Type="Reply" Query="GetPayments" Result="OK(200)" Reason="Запрос успешно обработан." DateTime="2015-11-09 19:20:26"/>
+  <Data>
+    <Payments>
+      <Payment EPayID="15796776" RSBPaymentID="fce8aa1e-b755-4cad-8f66-0f8988251452">
+        <Bill ID="7ec1780f-0ca2-1853-aa4e-ac3e902ea104" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201509</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20151021</PayDate>
+        <Period>201509</Period>
+        <Summ>193.12</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="8590e337-263b-4536-a289-98bf759c999c">
+        <Bill ID="de2d2ed7-ea5b-d1c8-f84b-234da76ff8cb" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201508</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150919</PayDate>
+        <Period>201508</Period>
+        <Summ>182.08</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="9c762427-9872-400d-92d5-54f3b1a8abc5">
+        <Bill ID="2ebccde4-e7d8-2d06-498a-30e9de7342e4" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201507</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150820</PayDate>
+        <Period>201507</Period>
+        <Summ>182.08</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="06e1b5cc-7e0f-4c9e-83b3-c1d5aaed96ca">
+        <Bill ID="69db77a1-861e-6a28-a17b-62fb54c1fa0e" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201506</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150720</PayDate>
+        <Period>201506</Period>
+        <Summ>151.36</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="9dea5f1b-913b-4561-8b35-b7666c0fd605">
+        <Bill ID="4c69886a-2980-46a9-b331-26e247c8ac95" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201505</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150618</PayDate>
+        <Period>201505</Period>
+        <Summ>149.15</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment EPayID="13451541" RSBPaymentID="ca8adee2-4cac-43f4-b220-566c3e106dad">
+        <Bill ID="f7014d50-c245-133f-49bd-39f3b914c673" TypeID="be05964a-d77c-4d7c-b62d-4adbe186d64c">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ОПАЛЕННЯ</Title>
+          <Period>201504</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150520</PayDate>
+        <Period>201504</Period>
+        <Summ>97.64</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="8da1ce6a-e98f-4618-bd52-863e6c4bb13e">
+        <Bill ID="b5dcaeee-3ac6-84bd-8f23-9048eb3e4d5d" TypeID="539554ab-2884-4577-8218-928d4a6aa498">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ПОСТАЧАННЯ ГАРЯЧОЇ ВОДИ</Title>
+          <Period>201504</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150520</PayDate>
+        <Period>201504</Period>
+        <Summ>25.06</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="11ae37b5-aecf-42d1-a08d-db9e83823787">
+        <Bill ID="b5dcaeee-3ac6-84bd-8f23-9048eb3e4d5d" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201504</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150520</PayDate>
+        <Period>201504</Period>
+        <Summ>173.68</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment EPayID="12549813" RSBPaymentID="66e35777-d28f-457f-ab17-bc77db8735ab">
+        <Bill ID="af8fa664-90d9-ac3a-0e32-4f0c502640f2" TypeID="be05964a-d77c-4d7c-b62d-4adbe186d64c">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ОПАЛЕННЯ</Title>
+          <Period>201503</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150420</PayDate>
+        <Period>201503</Period>
+        <Summ>317.4</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="2de15739-4409-454f-ac2e-5df85ef20c29">
+        <Bill ID="f7875793-afbd-b1ca-127b-375ea59f111b" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201503</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150420</PayDate>
+        <Period>201503</Period>
+        <Summ>132.8</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment EPayID="11717783" RSBPaymentID="fb03c1ff-b60d-4a18-86cb-1ee21d4af934">
+        <Bill ID="0f989b75-8c8a-922d-ffe0-11f02bd48701" TypeID="be05964a-d77c-4d7c-b62d-4adbe186d64c">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ОПАЛЕННЯ</Title>
+          <Period>201502</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150321</PayDate>
+        <Period>201502</Period>
+        <Summ>317.4</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="4713666f-388b-4c2e-b30f-ea8e5029e7a7">
+        <Bill ID="9e9b950d-2c4f-36bb-3a2e-b0c5bd3addbb" TypeID="539554ab-2884-4577-8218-928d4a6aa498">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ПОСТАЧАННЯ ГАРЯЧОЇ ВОДИ</Title>
+          <Period>201502</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150321</PayDate>
+        <Period>201502</Period>
+        <Summ>25.06</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="013b7b3e-0223-4dde-a060-6c7b037755b7">
+        <Bill ID="9e9b950d-2c4f-36bb-3a2e-b0c5bd3addbb" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201502</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150321</PayDate>
+        <Period>201502</Period>
+        <Summ>136.38</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="0603e147-ea5e-44ba-a75a-5b937c62739c">
+        <Bill ID="902cc052-4242-2537-41a5-1eb35de24a0a" TypeID="be05964a-d77c-4d7c-b62d-4adbe186d64c">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ОПАЛЕННЯ</Title>
+          <Period>201501</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150220</PayDate>
+        <Period>201501</Period>
+        <Summ>317.4</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="75e16b09-ff1f-4be6-b08b-2682ef6902cf">
+        <Bill ID="9f8d36da-7400-0e6a-9861-a4e90e7396af" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201501</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150220</PayDate>
+        <Period>201501</Period>
+        <Summ>162.65</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="40f2710e-53b5-496d-a86c-e5b4e1d55999">
+        <Bill ID="60cb7212-880e-86dd-6e46-beb8528cd47d" TypeID="be05964a-d77c-4d7c-b62d-4adbe186d64c">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ОПАЛЕННЯ</Title>
+          <Period>201412</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150122</PayDate>
+        <Period>201412</Period>
+        <Summ>317.4</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="aa28c25d-d54d-4543-af4c-e681e71e274e">
+        <Bill ID="d07f6905-6d44-2839-b937-546b887a096a" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201412</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20150121</PayDate>
+        <Period>201412</Period>
+        <Summ>132.79</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="6d06f800-0cfd-4c7e-b198-703f168d8260">
+        <Bill ID="81de1843-cf09-ec2e-f685-6bc45342f984" TypeID="be05964a-d77c-4d7c-b62d-4adbe186d64c">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ОПАЛЕННЯ</Title>
+          <Period>201411</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20141224</PayDate>
+        <Period>201411</Period>
+        <Summ>318.09</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="5028af71-9b44-4d51-abe6-b1f3a27ee03d">
+        <Bill ID="9fa72418-f3b5-5ef2-cfae-0e83ca37f004" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201411</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20141224</PayDate>
+        <Period>201411</Period>
+        <Summ>162.33</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="e68b7d9c-f034-4e83-b8e9-05c1510638fa">
+        <Bill ID="3a52c017-4012-91b4-1a2d-078468220d6d" TypeID="539554ab-2884-4577-8218-928d4a6aa498">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ПОСТАЧАННЯ ГАРЯЧОЇ ВОДИ</Title>
+          <Period>201411</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20141224</PayDate>
+        <Period>201411</Period>
+        <Summ>50.2</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="1e70dca6-af7c-4723-8198-b6c086ddfbba">
+        <Bill ID="4f9b67da-f58d-05de-ed62-4f829c7fb84a" TypeID="539554ab-2884-4577-8218-928d4a6aa498">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ПОСТАЧАННЯ ГАРЯЧОЇ ВОДИ</Title>
+          <Period>201410</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20141127</PayDate>
+        <Period>201410</Period>
+        <Summ>25.1</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="fb70765f-6019-4af3-b160-07376fcfd93e">
+        <Bill ID="6c131e69-9b4f-2b79-f51e-c739db742147" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201410</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20141125</PayDate>
+        <Period>201410</Period>
+        <Summ>176.65</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="aedc2970-5d4d-4eb9-9985-1ea1a55bb815">
+        <Bill ID="6c131e69-9b4f-2b79-f51e-c739db742147" TypeID="be05964a-d77c-4d7c-b62d-4adbe186d64c">
+          <Title>ЦЕНТРАЛІЗОВАНЕ ОПАЛЕННЯ</Title>
+          <Period>201410</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20141125</PayDate>
+        <Period>201410</Period>
+        <Summ>41.04</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="0e85fcb0-b8ba-4973-acf1-b55e840b0431">
+        <Bill ID="64040825-854b-f9f2-f578-3679d1c301b9" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201409</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20141027</PayDate>
+        <Period>201409</Period>
+        <Summ>155.2</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="5b5093ba-bd5b-4719-9d74-2997224349ee">
+        <Bill ID="47cc4b00-7581-d4ea-f4c0-8ff66e5e1b01" TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201408</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140919</PayDate>
+        <Period>201408</Period>
+        <Summ>147.72</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="586d0bcf-298c-4574-a89c-4558c2c1cedf">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201407</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140820</PayDate>
+        <Period>201407</Period>
+        <Summ>225.73</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="7d86c255-ca31-4ee8-ac37-1a1d75710f45">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201406</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140717</PayDate>
+        <Period>201406</Period>
+        <Summ>236.58</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="fde77911-5da8-4a51-b734-9d28306e73fd">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201405</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140619</PayDate>
+        <Period>201405</Period>
+        <Summ>233.4</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="f3919388-d14f-4178-9f49-3fdf7f816106">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201404</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140520</PayDate>
+        <Period>201404</Period>
+        <Summ>249.35</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="a68b9865-e418-457a-923e-c4a2e782624f">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201403</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140418</PayDate>
+        <Period>201403</Period>
+        <Summ>236.58</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="7ad1bceb-f526-4be1-8c6e-6e2f4cda67f4">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201402</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140318</PayDate>
+        <Period>201402</Period>
+        <Summ>230.22</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="7b9b4c32-62d5-42ca-9237-fe0a205b7e2e">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201401</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140219</PayDate>
+        <Period>201401</Period>
+        <Summ>230.22</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="ef9bfa3e-a389-498b-9b5b-b43a393746f0">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201312</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20140116</PayDate>
+        <Period>201312</Period>
+        <Summ>230.22</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="9db47768-506a-4257-8208-74303bef2167">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201311</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20131218</PayDate>
+        <Period>201311</Period>
+        <Summ>278.6</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="c1e35b8b-94bc-470c-bf04-3d2e777a814d">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201310</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20131113</PayDate>
+        <Period>201310</Period>
+        <Summ>262.36</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="b60b4f51-367f-4152-ae66-21e9de4ccb86">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201309</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20131014</PayDate>
+        <Period>201309</Period>
+        <Summ>278.6</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="888a650a-e71c-4266-b7ce-454901bc7c1a">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201308</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130911</PayDate>
+        <Period>201308</Period>
+        <Summ>281.78</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="3bc99673-272e-4b20-891a-4b6f35366a89">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201307</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130809</PayDate>
+        <Period>201307</Period>
+        <Summ>271.9</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="c21758af-f44c-4dc7-9e78-0195d626c496">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201306</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130704</PayDate>
+        <Period>201306</Period>
+        <Summ>224.88</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="c3f30151-bfec-4024-96da-7870f0fa918e">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201305</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130610</PayDate>
+        <Period>201305</Period>
+        <Summ>116.76</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="80d58174-cc39-4917-9666-1a08449f0e28">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201304</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130508</PayDate>
+        <Period>201304</Period>
+        <Summ>445.1</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="4b7268e4-3364-405a-a1a3-0c643ad7760c">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201303</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130405</PayDate>
+        <Period>201303</Period>
+        <Summ>280.71</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="e6571b45-83f7-42f3-8c2a-295d2bc5744b">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201302</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130322</PayDate>
+        <Period>201302</Period>
+        <Summ>308.62</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="8e14fdea-6cbc-4b09-a26b-13920b5f4295">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201301</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130225</PayDate>
+        <Period>201301</Period>
+        <Summ>353.94</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="f122145c-0f2e-4167-9bdf-bb392b2445e1">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201212</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20130128</PayDate>
+        <Period>201212</Period>
+        <Summ>310.74</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="f8a0a110-d671-4379-a4c2-c255503ec103">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201211</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20121220</PayDate>
+        <Period>201211</Period>
+        <Summ>262.02</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="dbfc1be5-3416-4844-ad9f-46277742fa27">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201210</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20121120</PayDate>
+        <Period>201210</Period>
+        <Summ>245.78</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+      <Payment RSBPaymentID="eeb43c84-a6e0-47a4-a495-dd19f79405ed">
+        <Bill TypeID="226100e6-847f-48bd-a765-2e1a1567a425">
+          <Title>ЖИТЛОВО-КОМУНАЛЬНІ ТА ІНШІ ПОСЛУГИ</Title>
+          <Period>201209</Period>
+          <JEK>307</JEK>
+          <PACC>17479</PACC>
+        </Bill>
+        <PayDate>20121019</PayDate>
+        <Period>201209</Period>
+        <Summ>217.16</Summ>
+        <Status>Enrolled</Status>
+      </Payment>
+    </Payments>
+  </Data>
+</DataExchangeModule>
