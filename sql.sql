@@ -523,3 +523,14 @@ ALTER TABLE `gioc_auth_code`
 -- 2015.11.18
 ALTER TABLE `gioc_email_cron`
   ADD COLUMN `send_email` INT(11) UNSIGNED DEFAULT 0  NOT NULL AFTER `content`;
+
+-- 2015.12.11
+-- plat_code меняется от месяца к месяцу (часто), так что нет смысла его хранить.
+ALTER TABLE `gioc_auth_code`
+  DROP COLUMN `plat_code`;
+
+ALTER TABLE `gioc_flat`
+  DROP COLUMN `plat_code`;
+
+ALTER TABLE `gioc_user_flats`
+  DROP COLUMN `plat_code`;

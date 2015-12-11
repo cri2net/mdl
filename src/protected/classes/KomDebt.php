@@ -191,7 +191,7 @@ class KomDebt
 
                 $list['OUT_KEY'] = (isset($xml->ROW[0]->OUT_KEY)) ? ($xml->ROW[0]->OUT_KEY . '') : null;
                 if ($list['OUT_KEY']) {
-                    Flat::addAuthKey($list['OUT_KEY'], $data['PLAT_CODE'] . '', $obj_id);
+                    Flat::addAuthKey($list['OUT_KEY'], $obj_id);
                 }
                
                 $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
@@ -278,7 +278,7 @@ class KomDebt
             $data = [];
         }
         
-        if ((count($data['list']) == 0) && ($depth < 2)) {
+        if ((count($data['list']) == 0) && ($depth < 1)) {
             // maybe no data for this month
             
             if ($dateBegin == null) {
@@ -360,7 +360,7 @@ class KomDebt
         }
 
         // maybe no data for this month
-        if (empty($data) && ($depth < 2)) {
+        if (empty($data) && ($depth < 1)) {
             $dateBegin = date('1.m.Y', strtotime('first day of previous month', $real_timestamp));
             return $this->getHistoryBillData($obj_id, $dateBegin, $depth + 1, $real_timestamp, $first_real_timestamp);
         }
@@ -401,7 +401,7 @@ class KomDebt
         }
 
         // maybe no data for this month
-        if (!$have_data && ($depth < 2)) {
+        if (!$have_data && ($depth < 1)) {
             $dateBegin = date('1.m.Y', strtotime('first day of previous month', $real_timestamp));
             return $this->getPayOnThisMonth($obj_id, $dateBegin, $depth + 1, $real_timestamp, $first_real_timestamp);
         }
@@ -447,7 +447,7 @@ class KomDebt
         }
 
         // maybe no data for this month
-        if (!$have_data && ($depth < 2)) {
+        if (!$have_data && ($depth < 1)) {
             $dateBegin = date('1.m.Y', strtotime('first day of previous month', $real_timestamp));
             return $this->getUniqueFirmName($obj_id, $dateBegin, $depth + 1, $real_timestamp, $first_real_timestamp);
         }

@@ -397,34 +397,21 @@ class Flat
      * Сохраняем ключ авторизации.
      * 
      * @param  string  $auth_key  — Ключ авторизации для объекта
-     * @param  int     $plat_code — Платёжный код = шифр_ЖЭО * 1000000 + лицевой_счёт
      * @param  int     $obj_id    — Уникальный ID объекта в рамках города
      * @param  int     $city_id   — id города. OPTIONAL
      * 
      * @return void
      */
-    public static function addAuthKey($auth_key, $plat_code, $obj_id, $city_id = Street::KIEV_ID)
+    public static function addAuthKey($auth_key, $obj_id, $city_id = Street::KIEV_ID)
     {
         if ($auth_key) {
             $arr = [
                 'city_id' => $city_id,
                 'object_id' => $obj_id,
                 'code' => $auth_key,
-                'plat_code' => $plat_code,
                 'created_at' => microtime(true)
             ];
             PDO_DB::insert($arr, self::TABLE_AUTH_CODE, true);
-        }
-
-        // это не относится напрямую к данной фукнции, но сразу сохраним в базу plat_code для квартиры
-        if ($plat_code) {
-            $pdo = PDO_DB::getPDO();
-            
-            $stm = $pdo->prepare('UPDATE ' . self::TABLE . ' SET plat_code=? WHERE city_id=? AND object_id=? LIMIT 1');
-            $stm->execute([$plat_code, $city_id, $obj_id]);
-            
-            $stm = $pdo->prepare('UPDATE ' . self::USER_FLATS_TABLE . ' SET plat_code=? WHERE city_id=? AND flat_id=? LIMIT 1');
-            $stm->execute([$plat_code, $city_id, $obj_id]);
         }
     }
 
