@@ -189,9 +189,9 @@ class KomDebt
             foreach ($xml->xpath("//ROW") as $row) {
                 $list = [];
 
-                $list['OUT_KEY'] = (isset($xml->ROW[0]->OUT_KEY)) ? ($xml->ROW[0]->OUT_KEY . '') : null;
-                if ($list['OUT_KEY']) {
-                    Flat::addAuthKey($list['OUT_KEY'], $obj_id);
+                $auth_key = (isset($row->OUT_KEY)) ? ($row->OUT_KEY . '') : null;
+                if ($auth_key) {
+                    Flat::addAuthKey($auth_key, $obj_id);
                 }
                
                 $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
