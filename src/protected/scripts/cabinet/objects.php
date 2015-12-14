@@ -22,14 +22,17 @@
                 $debtData = $debt->getData($houses[$i]['flat_id'], null, 0);
                 $dateBegin = date('1.m.Y', $debtData['timestamp']);
                 $houses[$i]['timestamp'] = $debtData['timestamp'];
+                
+                // Оплаты за месяц надо запрашивать, передавая dbegin на 1 число след. след. месяца от dbegin оплат
+                // Чтобы было: начисления за ноябрь, dbegin = 1.10, а оплаты dbegin оплат = 1.12
                 $oplat_timestamp = strtotime('first day of next month', $debtData['timestamp']);
+                $oplat_timestamp = strtotime('first day of next month', $oplat_timestamp);
 
                 $houses[$i]['debt_sum'] = $debtData['full_dept'];
                 
-                $houses[$i]['for_prev_month'] = $MONTHS_NAME[date('n', strtotime('first day of previous month', $debtData['timestamp']))]['ua']['small'];
+                $houses[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];
                 $houses[$i]['date'] = $debtData['date'];
 
-                // Оплаты за месяц надо запрашивать, передавая dbegin на 1 число след. месяца
                 try {
                     $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], date('1.m.Y', $oplat_timestamp));
                 } catch (Exception $e) {
@@ -115,7 +118,7 @@
                                             </div>
                                         </div>
                                         <div class="value-line small-line">
-                                            <div class="value-title">Сплачено за <?= $house['for_prev_month']; ?></div>
+                                            <div class="value-title">Сплачено за <?= $house['on_this_month']; ?></div>
                                             <div class="align-right">
                                                 <div class="value-border"></div>
                                                 <div class="value"><?= $house['oplat_this_month_str']; ?></div>
