@@ -26,7 +26,7 @@
 
                 $houses[$i]['debt_sum'] = $debtData['full_dept'];
                 
-                $houses[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];
+                $houses[$i]['for_prev_month'] = $MONTHS_NAME[date('n', strtotime('first day of previous month', $debtData['timestamp']))]['ua']['small'];
                 $houses[$i]['date'] = $debtData['date'];
 
                 // Оплаты за месяц надо запрашивать, передавая dbegin на 1 число след. месяца
@@ -115,7 +115,7 @@
                                             </div>
                                         </div>
                                         <div class="value-line small-line">
-                                            <div class="value-title">Сплачено за <?= $house['on_this_month']; ?></div>
+                                            <div class="value-title">Сплачено за <?= $house['for_prev_month']; ?></div>
                                             <div class="align-right">
                                                 <div class="value-border"></div>
                                                 <div class="value"><?= $house['oplat_this_month_str']; ?></div>
