@@ -201,22 +201,19 @@ class KomDebt
                 if ($auth_key) {
                     Flat::addAuthKey($auth_key, $obj_id);
                 }
-               
+
+                $tmp_keys = ['CODE_FIRME', 'CODE_PLAT', 'ID_PLAT', 'ABCOUNT', 'PLAT_CODE', 'DATE_D', 'FIO', 'TLF', 'R_COUNT', 'NAME_BANKS'];
+                foreach ($tmp_keys as $tmp_key) {
+                    $list[$tmp_key] = trim($row->$tmp_key . '');
+                }
+
                 $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
                 $list['name_plat'] = $this->getNamePlat($row->NAME_PLAT);
-                $list['CODE_FIRME'] = (string)$row->CODE_FIRME;
-                $list['CODE_PLAT'] = (string)$row->CODE_PLAT;
-                $list['ID_PLAT'] = (string)$row->ID_PLAT;
-                $list['ABCOUNT'] = (string)$row->ABCOUNT;
-                $list['PLAT_CODE'] = (string)$row->PLAT_CODE;
-                $list['NAME_BANKS'] = htmlspecialchars(trim((string)$row->NAME_BANKS), ENT_QUOTES);
+                $list['NAME_BANKS'] = htmlspecialchars($list['NAME_BANKS'], ENT_QUOTES);
                 $list['BANK_CODE'] = (string)$row->MFO;
                 $list['DBEGIN_XML'] = date("Y-m-d", strtotime((string)$row->DBEGIN));
                 $list['DEND_XML'] = date("Y-m-d", strtotime((string)$row->DEND));
-                $list['DATE_D'] = (string)$row->DATE_D;
-                $list['FIO'] = (string)$row->FIO;
-                $list['TLF'] = (string)$row->TLF;
-                $list['R_COUNT'] = (string)$row->R_COUNT;
+                $list['ISXDOLG'] = ($row->ISXDOLG.'') / 100;
 
                 $SUMM_MONTH = ((float)$row->SUMM_MONTH)/100;
                 if ($SUMM_MONTH <= 0) {
