@@ -1,28 +1,27 @@
 <?php
 switch (USER_REAL_IP) {
-    case '127.0.0.1':
+    case '127.0.0.111':
         define('DB_HOST', 'localhost');
         define('DB_NAME', 'gioc_site');
         define('DB_USER', 'root');
         define('DB_PASSWORD', 'root');
 
-        // define('API_URL', 'http://193.200.205.201:8888');
-        define('API_URL', 'https://193.200.205.201');
+        define('API_URL', 'https://bank.gioc.kiev.ua');
         break;
     
     default:
         define('DB_HOST', 'localhost');
         define('DB_NAME', 'gioc_site');
-        define('DB_USER', 'root');
-        define('DB_PASSWORD', 'kykyev');
+        define('DB_USER', 'giocwww');
+        define('DB_PASSWORD', 'skjdgiougKPs8d69t3bhLJGFIOugtlsd');
         
-        define('API_URL', 'https://bank.gioc.kiev.ua');
-        // define('API_URL', 'http://10.12.2.201:8888');
+        // define('API_URL', 'https://bank.gioc.kiev.ua');
+        // define('API_URL', 'http://10.12.2.201');
+        define('API_URL', 'http://10.12.2.201:8888');
 }
 
 define('TABLE_PREFIX', 'gioc_');
 
-define('DB_TBL_AUTH_CODE', 'gioc_auth_code');
 define('DB_TBL_CHIEF', 'gioc_chief');
 define('DB_TBL_CITIES', 'gioc_cities');
 define('DB_TBL_EMAIL_CRON', 'gioc_email_cron');
@@ -41,3 +40,5 @@ define('DB_TBL_USER_FLATS', 'gioc_user_flats');
 define('DB_TBL_USER_CODES', 'gioc_user_codes');
 define('DB_TBL_USERS', 'gioc_users');
 define('DB_TBL_MENUS', 'gioc_menus');
+
+define('DB_TBL_AUTH_CODE', 'gioc_auth_code');

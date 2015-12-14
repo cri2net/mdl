@@ -2,12 +2,12 @@
 
 class KomDebt
 {
-    const DEBTURL = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-    const KOMPLATURL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
     const ANSWERS_PATH = '/protected/conf/testing/';
     
     public $testing = false;
     protected $cache = [];
+    protected $komplat_URL;
+    protected $debt_URL;
 
     private $months;
     private $monthsFullName;
@@ -20,6 +20,14 @@ class KomDebt
         $this->testing = !HAVE_ACCESS_TO_API;
         $this->months = $MONTHS;
         $this->monthsFullName = $MONTHS_NAME;
+
+        if (stristr(API_URL, 'bank.gioc')) {
+            $this->komplat_URL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+            $this->debt_URL = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+        } else {
+            $this->komplat_URL = '/reports/rwservlet?report=g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+            $this->debt_URL = '/reports/rwservlet?report=g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+        }
     }
     
     private function getXML($url, $obj_id, $dateBegin = null)
@@ -29,7 +37,7 @@ class KomDebt
             
             if ($this->testing) {
                 // в режиме тестирования мы не можем обращаться к API (скорее всего), так что берём шаблоны ответов
-                if ($url == self::DEBTURL) {
+                if ($url == $this->debt_URL) {
                     return file_get_contents(ROOT . self::ANSWERS_PATH . 'DEBTURL.xml');
                 } else {
                     return file_get_contents(ROOT . self::ANSWERS_PATH . 'KOMPLATURL.xml');
@@ -54,7 +62,7 @@ class KomDebt
 
     public function getDebtSum($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null)
     {
-        $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
+        $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
         $xml = @new SimpleXMLElement($xmlString);
         
         if (isset($xml->ROW[0]->KOM_ERROR)) {
@@ -163,7 +171,7 @@ class KomDebt
     {
         $data = [];
         $data['date'] = '1 ' . $this->months[date("n")]['ua'] . " " . date("Y");
-        $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
+        $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
         
         if ($xmlString !== false) {
             $xml = @new SimpleXMLElement($xmlString);
@@ -313,7 +321,7 @@ class KomDebt
 
     public function getHistoryBillData($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null, $first_real_timestamp = null)
     {
-        $xmlString = $this->getXML(self::KOMPLATURL, $obj_id, $dateBegin);
+        $xmlString = $this->getXML($this->komplat_URL, $obj_id, $dateBegin);
         $xmlString = str_replace("&nbsp;", "", $xmlString);
         $xml = @new SimpleXMLElement($xmlString);
         if (isset($xml->ROW[0]->KOM_ERROR)) {
@@ -325,7 +333,7 @@ class KomDebt
         }
         
         $data = [];
-        
+
         foreach ($xml->xpath("//ROW") as $row) {
             $data['bank'][(string)$row->PUNKT_ID]['NAMEOKP'] = (string)$row->NAMEOKP;
             $data['bank'][(string)$row->PUNKT_ID]['KASSA'] = (string)$row->KASSA;
@@ -374,7 +382,7 @@ class KomDebt
     
     public function getPayOnThisMonth($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null, $first_real_timestamp = null)
     {
-        $xmlString = $this->getXML(self::KOMPLATURL, $obj_id, $dateBegin);
+        $xmlString = $this->getXML($this->komplat_URL, $obj_id, $dateBegin);
 
         $xmlString = str_replace("&nbsp;", "", $xmlString);
         $xml = @new SimpleXMLElement($xmlString);
@@ -416,7 +424,7 @@ class KomDebt
     public function getUniqueFirmName($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null, $first_real_timestamp = null)
     {
         $data = [];
-        $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
+        $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
         $xml = @new SimpleXMLElement($xmlString);
         if (isset($xml->ROW[0]->KOM_ERROR)) {
             $error = (string)$xml->ROW[0]->KOM_ERROR;
@@ -612,7 +620,7 @@ class KomDebt
         
         //OLD METHOD
         $data = [];
-        $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
+        $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
         $xml = @new SimpleXMLElement($xmlString);
         $data['date'] = '01 ' . $this->months[date("n")]['ua'] . " " . date("Y");
         $data['curr_month'] = date("m");
@@ -628,7 +636,7 @@ class KomDebt
             $month2 = date("m", strtotime("01.".$previousMonth.".".$previousYear));
             $year2 = date("Y", strtotime("01.".$previousMonth.".".$previousYear));
             $dateBegin = "01.".$month2.".".$year2;
-            $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
+            $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
             $xml = @new SimpleXMLElement($xmlString);
             if (isset($xml->ROW[0]->KOM_ERROR)) {
                 $error = (string)$xml->ROW[0]->KOM_ERROR;
@@ -713,7 +721,7 @@ class KomDebt
     public function getUniqueFirm($obj_id, $firmName = null, $dateBegin = null, $is_filter = false)
     {
         $data = [];
-        $xmlString = $this->getXML(self::DEBTURL, $obj_id, $dateBegin);
+        $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
         $xml = @new SimpleXMLElement($xmlString);
         $data['date'] = '01 ' . $this->months[date("n")]['ua'] . " " . date("Y");
         $data['curr_month'] = date("m");
@@ -724,7 +732,7 @@ class KomDebt
             $error = (string)$xml->ROW[0]->KOM_ERROR;
             throw new Exception(ERROR_GETTING_DEBT);
         }
-        
+
         $data['firm'] = [];
         $data['dbegin'] = date("d.m.y", strtotime($this->beginDate));
         $data['dend'] = date("d.m.y", strtotime($this->endDate));

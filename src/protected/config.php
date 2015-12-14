@@ -64,4 +64,3 @@ $__route_result = $router->get($route_path);
 require_once(ROOT . "/protected/headers/location.php");
 require_once(ROOT . "/protected/headers/x-frame-options.php");
 // require_once(ROOT."/protected/headers/content-security-policy.php");
-
