@@ -3,12 +3,24 @@
 class House
 {   
     const TABLE = DB_TBL_HOUSES;
-    const HOUSE_URL = '/reports/rwservlet?report=/site/dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
     
     public static function cron()
     {
         set_time_limit(0);
         self::rebuild();
+    }
+
+    public static function get_API_URL($key)
+    {
+        $urls = [];
+
+        if (stristr(API_URL, 'bank.gioc')) {
+            $urls['HOUSE_URL'] = '/reports/rwservlet?report=/site/dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
+        } else {
+            $urls['HOUSE_URL'] = '/reports/rwservlet?report=dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
+        }
+
+        return $urls[$key];
     }
     
     /**
@@ -38,7 +50,6 @@ class House
         $table = self::TABLE;
         $city_id = $pdo->quote($city_id);
         $street_id = $pdo->quote($street_id);
-        $q = $pdo->quote('%' . trim($q) . '%');
         
         $res = $pdo->query("SELECT * FROM $table WHERE city_id=$city_id AND street_id=$street_id ORDER BY house_number ASC");
         return $res->fetchAll();
@@ -53,7 +64,7 @@ class House
         $stm_insert = $pdo->prepare("INSERT INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, house_number=?");
         
         for ($i=0; $i < count($streets); $i++) {
-            $data = Http::fgets(API_URL . self::HOUSE_URL . $streets[$i]['street_id']);
+            $data = Http::fgets(API_URL . self::get_API_URL('HOUSE_URL') . $streets[$i]['street_id']);
             $data = iconv('CP1251', 'UTF-8', $data);
             $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
             $xml = @simplexml_load_string($data);

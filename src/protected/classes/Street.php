@@ -4,12 +4,24 @@ class Street
 {   
     const TABLE = DB_TBL_STREETS;
     const KIEV_ID = 100;
-    const STREET_URL = '/reports/rwservlet?report=/site/dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
     
     public static function cron()
     {
         set_time_limit(0);
         self::rebuild();
+    }
+
+    public static function get_API_URL($key)
+    {
+        $urls = [];
+
+        if (stristr(API_URL, 'bank.gioc')) {
+            $urls['STREET_URL'] = '/reports/rwservlet?report=/site/dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
+        } else {
+            $urls['STREET_URL'] = '/reports/rwservlet?report=dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
+        }
+
+        return $urls[$key];
     }
     
     public static function getStreetName($street_id, $city_id = self::KIEV_ID)
@@ -28,12 +40,13 @@ class Street
 
     public static function get($q, $city_id = self::KIEV_ID, $limit=0)
     {
+        self::rebuild();
         $pdo = PDO_DB::getPDO();
         $limit = (int)$limit;
         $limit = ($limit > 0) ? "LIMIT $limit" : '';
         $table = self::TABLE;
         $city_id = $pdo->quote($city_id);
-        $q = $pdo->quote('%' . trim($q) . '%');
+        $q = $pdo->quote(trim($q) . '%');
         
         $res = $pdo->query("SELECT * FROM $table WHERE city_id=$city_id AND name_ua LIKE $q ORDER BY name_ua ASC $limit");
         return $res->fetchAll();
@@ -41,7 +54,7 @@ class Street
 
     public static function rebuild()
     {
-        $data = Http::fgets(API_URL . self::STREET_URL);
+        $data = Http::fgets(API_URL . self::get_API_URL('STREET_URL'));
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);

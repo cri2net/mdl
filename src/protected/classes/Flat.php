@@ -6,14 +6,28 @@ class Flat
     const TABLE_AUTH_CODE = DB_TBL_AUTH_CODE;
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
     const MAX_USER_FLATS = 4;
-    const FLAT_URL = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
-    const FLAT_ID_BY_PLATCODE_URL = '/reports/rwservlet?report=site/g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
-    const FLAT_PIN_BY_ID_URL = '/reports/rwservlet?report=g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
 
     public static function cron()
     {
         set_time_limit(0);
         self::rebuild();
+    }
+
+    public static function get_API_URL($key)
+    {
+        $urls = [];
+
+        if (stristr(API_URL, 'bank.gioc')) {
+            $urls['FLAT_URL']                = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
+            $urls['FLAT_ID_BY_PLATCODE_URL'] = '/reports/rwservlet?report=/site/g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
+            $urls['FLAT_PIN_BY_ID_URL']      = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+        } else {
+            $urls['FLAT_URL']                = '/reports/rwservlet?report=dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
+            $urls['FLAT_ID_BY_PLATCODE_URL'] = '/reports/rwservlet?report=g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
+            $urls['FLAT_PIN_BY_ID_URL']      = '/reports/rwservlet?report=g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+        }
+
+        return $urls[$key];
     }
 
     /**
@@ -76,7 +90,7 @@ class Flat
         $now = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
         @$KomDebt->getData($flat_id, $dateBegin, 10);
 
-        for ($i=0; $i < 4; $i++) { 
+        for ($i=0; $i < 4; $i++) {
             $dateBegin = date('1.m.Y', strtotime('first day of previous month', $now));
             $now = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
             @$KomDebt->getData($flat_id, $dateBegin, 10);
@@ -327,7 +341,7 @@ class Flat
         }
 
         $result = [];
-        $data = Http::fgets(API_URL . self::FLAT_URL . $house_id);
+        $data = Http::fgets(API_URL . self::get_API_URL('FLAT_URL') . $house_id);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);
@@ -359,7 +373,7 @@ class Flat
      */
     public static function getFlatByPlatCode($plat_code)
     {
-        $data = Http::fgets(API_URL . self::FLAT_ID_BY_PLATCODE_URL . $plat_code);
+        $data = Http::fgets(API_URL . self::get_API_URL('FLAT_ID_BY_PLATCODE_URL') . $plat_code);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);
@@ -380,8 +394,7 @@ class Flat
      */
     public static function getFlatPINByID($flatID)
     {
-        $data = Http::fgets(API_URL . self::FLAT_PIN_BY_ID_URL . $flatID."&dbegin=1.09.2015&dend=1.10.2015");
-        //$data = Http::fgets("https://bank.gioc.kiev.ua" . self::FLAT_PIN_BY_ID_URL . $flatID."&dbegin=1.09.2015&dend=1.10.2015");
+        $data = Http::fgets(API_URL . self::get_API_URL('FLAT_PIN_BY_ID_URL') . $flatID."&dbegin=1.09.2015&dend=1.10.2015");
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);
@@ -390,7 +403,7 @@ class Flat
             return false;
         }
     
-        return (string)$xml->ROW[0]->PLAT_CODE;//self::getFlatById($xml->ROW->ID_OBJ);
+        return (string)$xml->ROW[0]->PLAT_CODE; // self::getFlatById($xml->ROW->ID_OBJ);
     }
 
     /**
@@ -426,7 +439,7 @@ class Flat
         $stm->execute([Street::KIEV_ID]);
 
         while ($row = $stm->fetch()) {
-            $data = Http::fgets(API_URL . self::FLAT_URL . $row['house_id']);
+            $data = Http::fgets(API_URL . self::get_API_URL('FLAT_URL') . $row['house_id']);
             $data = iconv('CP1251', 'UTF-8', $data);
             $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
             $xml = @simplexml_load_string($data);
