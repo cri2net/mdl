@@ -203,7 +203,7 @@ class PDO_DB
         }
     }
     
-    public static function change_pos_from_to($table, $where, $posFrom, $posTo, $order = null)
+    public static function change_pos_from_to($table, $where, $posFrom, $posTo, $order = null, $column = 'pos')
     {
         $pdo = self::getPDO();
         $posFrom = (int)$posFrom;
@@ -214,7 +214,7 @@ class PDO_DB
 
         $qW = ($where == null)? "" : "$where AND";
         
-        $stm = $pdo->query("SELECT `id` FROM $table WHERE $qW `pos`=$posFrom LIMIT 1");
+        $stm = $pdo->query("SELECT id FROM $table WHERE $qW `$column`=$posFrom LIMIT 1");
         $row = $stm->fetch();
         
         if ($row === false) {
@@ -224,13 +224,12 @@ class PDO_DB
         $id = $row['id'];
         
         if ($posFrom > $posTo) {
-            $pdo->query("UPDATE $table SET `pos` = `pos` + 1 WHERE $qW `pos` >= $posTo AND `pos` < $posFrom");
+            $pdo->query("UPDATE $table SET `$column` = `$column` + 1 WHERE $qW `$column` >= $posTo AND `$column` < $posFrom");
         } else {
-            $pdo->query("UPDATE $table SET `pos` = `pos` - 1 WHERE $qW `pos` > $posFrom AND `pos` <= $posTo");
+            $pdo->query("UPDATE $table SET `$column` = `$column` - 1 WHERE $qW `$column` > $posFrom AND `$column` <= $posTo");
         }
             
-        $pdo->query("UPDATE $table SET `pos`=$posTo WHERE `id`=$id LIMIT 1");
-        
+        $pdo->query("UPDATE $table SET `$column`=$posTo WHERE id=$id LIMIT 1");
         return true;
     }
 
@@ -283,15 +282,15 @@ class PDO_DB
         }
     }
     
-    public static function max_pos($table, $where = null)
+    public static function max_pos($table, $where = null, $column = 'pos')
     {
         $pdo = self::getPDO();
         $qWhere = ($where == null) ? '' : "WHERE $where";
-        $result = $pdo->query("SELECT MAX(`pos`) FROM $table $qWhere");
+        $result = $pdo->query("SELECT MAX($column) FROM $table $qWhere");
         return (int)$result->fetchColumn();
     }
     
-    public static function reset_pos($table, $order = 'id ASC')
+    public static function reset_pos($table, $order = 'id ASC', $column = 'pos')
     {
         $pdo = self::getPDO();
 
@@ -299,7 +298,7 @@ class PDO_DB
         $arr = $result->fetchAll();
 
         for ($i=0; $i < count($arr); $i++) {
-            $pdo->query("UPDATE `$table` SET `pos`='".(++$c)."' WHERE `id`='{$arr[$i]['id']}' LIMIT 1");
+            $pdo->query("UPDATE `$table` SET `$column`='".(++$c)."' WHERE id='{$arr[$i]['id']}' LIMIT 1");
         }
     }
 }
