@@ -279,7 +279,7 @@
                 }
 
                 $debtData_item['OPLAT'] = (isset($debtData_item['OPLAT'])) ? str_replace(',', '.', $debtData_item['OPLAT']) : '0,00';
-                $oplat = str_replace(".", ",", sprintf('%.2f', $debtData_item['SUMM_MONTH']));
+                $oplat = str_replace(".", ",", sprintf('%.2f', $debtData_item['OPLAT']));
                 $oplat = explode(',', $oplat);
                 $oplat = $oplat[0] . '<span style="font-size:12px;">,'. $oplat[1] .'</span>';
 
