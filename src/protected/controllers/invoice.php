@@ -418,7 +418,7 @@
                     <tbody><tr>
                         <td>&nbsp;</td>
                         <td width="93" align="left" style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;">
-                            <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="tel:+380482300032">(044)&nbsp;238&nbsp;80&nbsp;25</a> <br>
+                            <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="tel:+380442388025">(044)&nbsp;238&nbsp;80&nbsp;25</a> <br>
                             <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="mailto:<?= EMAIL_FROM; ?>" target="_blank"><?= EMAIL_FROM; ?></a>
                         </td>
                     </tr></tbody>
