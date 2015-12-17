@@ -15,32 +15,37 @@ class Khreshchatyk
         // написано, что будет по мерчанту для каждого поставщика услуг
         
         // test terminal & merchant 1
-        $this->Terminal_ID = XETEST01;
-        $this->Merchant_ID = XETEST000000001;
+        $this->Terminal_ID = 'XETEST01';
+        $this->Merchant_ID = 'XETEST000000001';
 
         // test terminal & merchant 2
-        // $this->Terminal_ID = XETEST02;
-        // $this->Merchant_ID = XETEST000000002;
+        // $this->Terminal_ID = 'XETEST02';
+        // $this->Merchant_ID = 'XETEST000000002';
     }
 
     private function sendISO($iso)
     {
+        $iso = "0200" . hex2bin('F230400000C080000000000004000000') . '111092288520100000000000000160012171620110000031512171619554900XETEST01XETEST000000001980131110922885201';
+
+
+        var_dump($iso);
+        var_dump(date('d.m.Y H:i:s'));
+        // die();
         $fp = fsockopen($this->SVFE_host, $this->SVFE_port, $errno, $errstr, 10);
         if (!$fp) {
             echo "$errstr ($errno)<br />\r\n";
         } else {
             fwrite($fp, $iso);
+            echo "\r\n<br>\r\n";
+
+            $a = fgets($fp, 102400);
+            echo bin2hex($a);
+            echo "<br>$a";
+            echo "<br>".strlen($a);
+            // echo fgets($fp, 1024);
+            // echo fgets($fp, 1024);
             fclose($fp);
-            var_dump($fp);
             die();
-        
-            echo fgets($fp, 128);
-            die('d7');
-        
-            while (!feof($fp)) {
-                echo fgets($fp, 128);
-            }
-            fclose($fp);
         }
 
         die('----die');
@@ -54,28 +59,43 @@ class Khreshchatyk
         $date = date('mdHis');
 
         $jak->addMTI('0200');
-        $jak->addData(7, $date);
+        $local_date = date('ymdHis');
+        $local_date = '151217161955';
 
-        $jak->addData(41, $this->Terminal_ID);
-        $jak->addData(42, $this->Merchant_ID);
+        $jak->addData(2,   '10922885201');
+        $jak->addData(3,   '000000');
+        $jak->addData(4,   '000000001600');
+        $jak->addData(7,   $date);
+        $jak->addData(11,  '000004');
+        $jak->addData(12,  $local_date);
+        $jak->addData(18,  '4900');
+        $jak->addData(41,  $this->Terminal_ID);
+        $jak->addData(42,  $this->Merchant_ID);
+        $jak->addData(49,  '980');
+        $jak->addData(102, '1110922885201'); // 11 - длина, потом номер 10922885201
+
+        // $iso = $jak->getISO();
 
 
-        $jak->addData(3, '840000');
-        $jak->addData(4, '000000001600');
-        $jak->addData(11, '000002');
-        $jak->addData(12, '150615095240');
-        $jak->addData(18, '4829');
-        $jak->addData(22, '810');
-        $jak->addData(37, '516609000002');
-        $jak->addData(48, '0079803490');
-        $jak->addData(49, '980');
-        $jak->addData(102, '1110922885201');
-        var_dump($jak->getISO());
-        die();
 
         // $jak->addData(11, 286808);
         // $jak->addData(70, '301');
         
+        // return $jak->getISO();
+        
+
+        // $message = $jak->getMTI();
+        // $message .= bin2hex($jak->getBitmap());
+        // $hex_bimap = '';
+
+        // var_dump($bitmap));
+        // die();
+
+        // $message .= $jak->getBitmap();
+
+        // var_dump($jak->getISO());
+        // var_dump($message);
+        // die(__FILE__ . ":" . __LINE__);
         return $this->sendISO($jak->getISO());
     }
 }

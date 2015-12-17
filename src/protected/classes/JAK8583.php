@@ -45,7 +45,7 @@ class JAK8583
         9   => array('n',   8,   self::FIXED_LENGTH),           //Conversion rate reconciliation
         10  => array('n',   8,   self::FIXED_LENGTH),           //Conversion rate cardholder billing
         11  => array('n',   6,   self::FIXED_LENGTH),           //Systems trace audit number
-        12  => array('n',   6,   self::FIXED_LENGTH),           //Date and time local transaction
+        12  => array('n',   12,  self::FIXED_LENGTH),           //Date and time local transaction
         13  => array('n',   4,   self::FIXED_LENGTH),           //Date effective
         14  => array('n',   4,   self::FIXED_LENGTH),           //Date expiration
         15  => array('n',   4,   self::FIXED_LENGTH),           //Date settlement
