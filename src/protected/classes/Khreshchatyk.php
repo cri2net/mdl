@@ -23,14 +23,13 @@ class Khreshchatyk
         // $this->Merchant_ID = 'XETEST000000002';
     }
 
-    private function sendISO($iso)
+    private function sendISO($jak_obj)
     {
-        $iso = "0200" . hex2bin('F230400000C080000000000004000000') . '111092288520100000000000000160012171620110000031512171619554900XETEST01XETEST000000001980131110922885201';
-
+        $iso = $jak_obj->getMTI() . hex2bin($jak_obj->getBitmap()) . implode($jak_obj->getData());
 
         var_dump($iso);
         var_dump(date('d.m.Y H:i:s'));
-        // die();
+        
         $fp = fsockopen($this->SVFE_host, $this->SVFE_port, $errno, $errstr, 10);
         if (!$fp) {
             echo "$errstr ($errno)<br />\r\n";
@@ -38,7 +37,12 @@ class Khreshchatyk
             fwrite($fp, $iso);
             echo "\r\n<br>\r\n";
 
-            $a = fgets($fp, 102400);
+            $time = microtime(true);
+            $a = '';
+            while (microtime(true) - $time < 15) {
+                $a .= fgets($fp, 10240);
+            }
+            
             echo bin2hex($a);
             echo "<br>$a";
             echo "<br>".strlen($a);
@@ -62,11 +66,10 @@ class Khreshchatyk
         $local_date = date('ymdHis');
         $local_date = '151217161955';
 
-        $jak->addData(2,   '10922885201');
         $jak->addData(3,   '000000');
         $jak->addData(4,   '000000001600');
         $jak->addData(7,   $date);
-        $jak->addData(11,  '000004');
+        $jak->addData(11,  '000001');
         $jak->addData(12,  $local_date);
         $jak->addData(18,  '4900');
         $jak->addData(41,  $this->Terminal_ID);
@@ -96,6 +99,6 @@ class Khreshchatyk
         // var_dump($jak->getISO());
         // var_dump($message);
         // die(__FILE__ . ":" . __LINE__);
-        return $this->sendISO($jak->getISO());
+        return $this->sendISO($jak);
     }
 }
