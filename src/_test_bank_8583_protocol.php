@@ -17,10 +17,8 @@ if (!in_array(USER_REAL_IP, ['46.151.192.106', '195.138.83.178', '127.0.0.1'])) 
     $jak = new JAK8583();
     $Khreshchatyk = new Khreshchatyk();
     $iso = $Khreshchatyk->checkBalance();
-    var_dump($iso);
 
-    $jak = new JAK8583();
-    $jak->addISO($iso);
+    
     //get parsing result
     print 'ISO: '. $iso. "<br>\r\n";
     print 'MTI: '. $jak->getMTI(). "<br>\r\n";
