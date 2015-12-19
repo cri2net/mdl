@@ -4,7 +4,8 @@ class ShoppingCart
 {
     const TABLE = DB_TBL_PAYMENT;
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
-    const KASS_ID = '1028';
+    const KASS_ID_AVAL = '1028';
+    const KASS_ID_KHRESHCHATYK = '1048';
     const REPORT_BASE_URL   = '/reports/rwservlet';
     const PDF_FIRST_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
     const PDF_TODAY_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
@@ -28,7 +29,7 @@ class ShoppingCart
         if ($pay_system) {
             $rules = $rules[$pay_system];
         }
-            
+        
         return $rules;
     }
 
@@ -44,6 +45,17 @@ class ShoppingCart
         }
         
         return $rules;
+    }
+
+    public static function getKassID($processing)
+    {
+        switch ($processing) {
+            case 'khreshchatyk':
+                return self::KASS_ID_KHRESHCHATYK;
+
+            default:
+                return self::KASS_ID_AVAL;
+        }
     }
 
     public static function getPercentSum($sum, $type)
@@ -341,7 +353,7 @@ class ShoppingCart
             case 'komdebt':
                 $xml = '<?xml version="1.0" encoding="windows-1251" ?>';
                 $xml .= "\n<rowset>\n";
-                $xml .= "\t<id_kass>". self::KASS_ID ."</id_kass>\n";
+                $xml .= "\t<id_kass>". self::getKassID($payment['processing']) ."</id_kass>\n";
                 $xml .= "\t<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>\n";
                 $xml .= "\t<idsiteuser>{$payment['user_id']}</idsiteuser>\n";
 
