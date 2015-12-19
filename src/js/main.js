@@ -198,13 +198,13 @@ function selectService(chechboxId, inputId)
     billPageUpdateTotalSumm();
 };
 
-function getShoppingCartTotal(total, persentSum, cctype)
+function getShoppingCartTotal(total, percentSum, cctype)
 {
     var fTotal = parseFloat(total.replace(',', '.'));
-    var fPersent = parseFloat(persentSum.replace(',', '.'));
-    var total = fTotal + fPersent;
+    var fPercent = parseFloat(percentSum.replace(',', '.'));
+    var total = fTotal + fPercent;
     total = toFloat(total);
-    fPersent = toFloat(fPersent);
+    fPercent = toFloat(fPercent);
     
     var totalStr = new String(total);
     totalStr = totalStr.replace('.', ',')
@@ -219,21 +219,21 @@ function getShoppingCartTotal(total, persentSum, cctype)
         totalStr = totalStr + ',00';
     }
 
-    var PersentStr = new String(fPersent);
-    PersentStr = PersentStr.replace('.', ',')
-    var indx = PersentStr.lastIndexOf(',');
+    var PercentStr = new String(fPercent);
+    PercentStr = PercentStr.replace('.', ',')
+    var indx = PercentStr.lastIndexOf(',');
 
     if (indx != -1){
-        var sub = PersentStr.substring(indx+1, PersentStr.length);
+        var sub = PercentStr.substring(indx+1, PercentStr.length);
         if (sub.length < 2){
-            PersentStr = PersentStr + '0';
+            PercentStr = PercentStr + '0';
         }
     } else {
-        PersentStr = PersentStr + ',00';
+        PercentStr = PercentStr + ',00';
     }
 
     $('#totalBillSum').html(totalStr + ' грн');
-    $('#comission_sum').html(PersentStr + ' грн');
+    $('#comission_sum').html(PercentStr + ' грн');
     $('#cctype').val(cctype);
 };
 

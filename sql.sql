@@ -564,3 +564,7 @@ CREATE TABLE `gioc_user_cards`(
   INDEX (`user_id`, `type`, `is_work`, `pos`),
   INDEX (`pan`)
 );
+
+ALTER TABLE `gioc_payment`
+  CHANGE `persent` `percent` DOUBLE NULL;
+

@@ -12,7 +12,7 @@
             $breadcrumbs[] = ['title' => 'Результати пошуку'];
             break;
         case 'page/tender':
-            $breadcrumbs[] = ['title' => 'Державні закупівлі'];
+            $breadcrumbs[] = ['title' => 'Тендерні закупівлі'];
             break;
         case 'page/about':
             $breadcrumbs[] = ['title' => 'Про ГіOЦ'];
