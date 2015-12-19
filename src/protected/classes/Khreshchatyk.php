@@ -40,14 +40,16 @@ class Khreshchatyk
             $time = microtime(true);
             $raw_answer = '';
             while ((microtime(true) - $time) < 10) {
-                $raw_answer .= fgets($fp, 10240);
+                $raw_answer .= fgets($fp, 1024);
             }
+
+            var_dump(strlen($raw_answer));
 
             $answer_jak = $this->parseAnswer($raw_answer);
             var_dump($answer_jak->getMTI());
             print_r($answer_jak->getData());
             
-            fclose($fp);
+            // fclose($fp);
             die();
         }
 
@@ -84,7 +86,7 @@ class Khreshchatyk
         return $jak;
     }
 
-    public function checkBalance()
+    public function makePayment()
     {
         $jak = new JAK8583();
         $date = date('mdHis');
@@ -93,35 +95,17 @@ class Khreshchatyk
         $local_date = date('ymdHis');
         $local_date = '151217161955';
 
-        $jak->addData(3,   '000000');
+        $jak->addData(3,   '840000');
         $jak->addData(4,   '000000001600');
         $jak->addData(7,   $date);
-        $jak->addData(11,  '000005');
+        $jak->addData(11,  '000008');
         $jak->addData(12,  $local_date);
         $jak->addData(18,  '4900');
         $jak->addData(41,  $this->Terminal_ID);
         $jak->addData(42,  $this->Merchant_ID);
         $jak->addData(49,  '980');
-        $jak->addData(102, '1110922885201'); // 11 - длина, потом номер 10922885201
+        $jak->addData(102, '10922885201'); // потом номер 10922885201
 
-        // $iso = $jak->getISO();
-
-        
-        // return $jak->getISO();
-        
-
-        // $message = $jak->getMTI();
-        // $message .= bin2hex($jak->getBitmap());
-        // $hex_bimap = '';
-
-        // var_dump($bitmap));
-        // die();
-
-        // $message .= $jak->getBitmap();
-
-        // var_dump($jak->getISO());
-        // var_dump($message);
-        // die(__FILE__ . ":" . __LINE__);
         return $this->sendISO($jak);
     }
 }

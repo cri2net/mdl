@@ -534,3 +534,33 @@ ALTER TABLE `gioc_flat`
 
 ALTER TABLE `gioc_user_flats`
   DROP COLUMN `plat_code`;
+
+-- 2015.12.19
+ALTER TABLE `gioc_payment`
+  CHANGE `processing` `processing` ENUM('_test_upc','mastercard','visa','webmoney','khreshchatyk') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+
+-- ПРИВЯЗАННЫЕ КАРТЫ пользователя
+-- type:        тип карты. Сейчас только ККК, но в будущем могут быть и другие
+-- created_at:  время создания карты в БД (привязки)
+-- updated_at:  время последнего обновления данных карты. Для Крещатика это означает обновление номера счёта в процессинге (будет храниться в additional)
+-- pos:         позиция карты среди других карт пользователя. Можно использовать для определения "карты по умолчанию"
+-- is_work:     можно ли использовать для оплаты
+-- pan:         номер карты. В случае с Крещатиком, тут будет номер крещатика, а не визы
+-- additional:  поле для дополнительных данных в json
+-- last_verify: время последней проверки тем или иным способом, что человек действительный владелец этой карты.
+CREATE TABLE `gioc_user_cards`(
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `type` ENUM('khreshchatyk') NOT NULL DEFAULT 'khreshchatyk',
+  `created_at` DOUBLE NOT NULL,
+  `updated_at` DOUBLE NOT NULL,
+  `pos` INT(11) NOT NULL,
+  `is_work` TINYINT(1) NOT NULL DEFAULT 1,
+  `pan` VARCHAR(30) NOT NULL,
+  `additional` TEXT COMMENT 'json',
+  `last_verify` DOUBLE,
+  PRIMARY KEY (`id`),
+  INDEX (`user_id`, `type`, `is_work`, `pos`),
+  INDEX (`pan`)
+);
