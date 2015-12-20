@@ -47,4 +47,6 @@ define('ERROR_RESTORE_CODE_ACTIVE', 'Цей код вже використано
 define('ERROR_ADD_CARD_EMPTY_CARD_NUMBER', 'Номер картки не вказано');
 define('ERROR_ADD_CARD_EMPTY_PASP_NUMBER', 'Номер паспорту не вказано');
 define('ERROR_ADD_CARD_EMPTY_BIRTHDAY', 'Дату народження не вказано');
-define('ERROR_ADD_BAD_CARD_STATE_ID', 'Ваша картка неактивна');
+define('ERROR_ADD_CARD_BAD_CARD_STATE_ID', 'Ваша картка неактивна');
+define('ERROR_CARD_NO_SELECT_CARD', 'Ви не вказали картку');
+define('ERROR_GET_CARD', 'Помилка при отриманні картки');

@@ -232,6 +232,11 @@ function getShoppingCartTotal(total, percentSum, cctype)
         PercentStr = PercentStr + ',00';
     }
 
+    if (!$('.paybill-ps-item-' + cctype).is(':visible')) {
+        $('.paybill-ps-item').slideUp(300);
+        $('.paybill-ps-item-' + cctype).slideDown(400);
+    }
+
     $('#totalBillSum').html(totalStr + ' грн');
     $('#comission_sum').html(PercentStr + ' грн');
     $('#cctype').val(cctype);
@@ -463,7 +468,8 @@ function registration_show_password()
     }
 };
 
-function registration_form_submit() {
+function registration_form_submit()
+{
     // меняем пароль на правильное место
     var element = $('#reg-password');
     var replica = $('#reg-password-replica');
@@ -743,6 +749,47 @@ function add_new_counters(key, abcounter, tarif)
     '</div>';
 
     $(html).insertBefore('#new_counters_for_' + key);
+};
+
+function add_card()
+{
+    var data = {
+        action: 'addcard',
+        birthday: $('#addcard_birthday').val(),
+        pasp_number: $('#addcard_pasp-number').val(),
+        card_number: $('#addcard_card-number').val()
+    };
+
+    $.ajax({
+        dataType: 'json',
+        data: data,
+        type: 'POST',
+        url : BASE_URL + '/ajax/json/add_card',
+        success : function(response){
+            if (response.status) {
+                $('.card-error-no-cards').remove();
+                $('#addcard_error').html('').fadeOut(0);
+
+                var new_html = 
+                    '<div class="paybill-ps-card-item">' +
+                        '<span id="khreshchatyk-card-' + response.card_id + '" class="niceCheck radio"><input value="' + response.card_id + '" type="radio" name="khreshchatyk-card" /></span>' +
+                        '<label onclick="$(\'#khreshchatyk-card-' + response.card_id + '\').click();">' +
+                            '<span class="text-label">' + response.card_number + '</span>' +
+                        '</label>' +
+                    '</div>';
+
+                $('.paybill-ps-cards').prepend(new_html);
+                $('.add-card-form').slideToggle();
+                $(".niceCheck").click(function() {
+                    changeCheck($(this), 'check-group');
+                });
+                
+                $('#khreshchatyk-card-' + response.card_id).click();
+            } else {
+                $('#addcard_error').html(response.text).fadeIn(0);
+            }
+        }
+    });
 };
 
 $(document).ready(function(){

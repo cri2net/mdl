@@ -283,6 +283,55 @@ content .inner {
                             img { margin:10px 10px 0 15px; position:relative; top:6px; }
                             .text-label { position:relative; top:-5px; }
                         }
+
+                        .paybill-ps-cards {
+                            margin-bottom: 10px;
+                            margin-top: 20px;
+
+                            .paybill-ps-card-item {
+
+                                margin-bottom: 8px;
+                                margin-left: 40px;
+
+                                &.card-error {
+                                    color: #900;
+                                    font-size: 18px;
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+
+                        .add-card-box {
+                            display: inline-block;
+                            margin: 10px 0;
+
+                            a.add-card-link {
+                                border-bottom: 1px dotted #00979c;
+                                display: inline-block;
+                                margin-bottom: 10px;
+                                margin-left: 40px;
+                                text-decoration: none;
+
+                                &:hover {
+                                    border-bottom-color: transparent;
+                                }
+                            }
+
+                            .add-card-form {
+                                .border-radius(8);
+                                .box-shadow(0 0 5px 0 rgba(0, 0, 0, 0.17));
+                                margin-right: 18px;
+                                padding: 15px 10px 30px;
+
+                                .add-card-btn {
+                                    display: inline-block;
+                                }
+                            }
+
+                            .error-description {
+                                margin-top: 20px;
+                            }
+                        }
                     }
                 }
             }

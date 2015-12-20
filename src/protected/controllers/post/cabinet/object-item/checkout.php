@@ -37,6 +37,30 @@ try {
     PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
     ShoppingCart::send_payment_to_reports($_payment['id']);
 
+
+    if ($pay_system == 'khreshchatyk') {
+        $user_card_id = $_POST['khreshchatyk-card'];
+
+        // проверяем, выбрана ли карта
+        if (!$user_card_id) {
+            throw new Exception(ERROR_CARD_NO_SELECT_CARD);
+        }
+
+        // проверяем, принадлежит ли карта пользователю
+        $card = User::getUserCard($user_card_id);
+        if (!$card) {
+            throw new Exception(ERROR_GET_CARD);
+        }
+
+        // проверяем, активна ли карта, обновляем информацию о ней
+        if (microtime(true) - $card['updated_at'] > 86400) {
+            User::updateUserCardData($card['id']);
+        }
+
+        require_once(ROOT . '/protected/conf/payments/khreshchatyk/khreshchatyk.process.php');
+        return BASE_URL . "/payment-status/{$_payment['id']}/";
+    }
+
 } catch (Exception $e) {
     $_SESSION['object-item']['status'] = false;
     $_SESSION['object-item']['error']['text'] = $e->getMessage();

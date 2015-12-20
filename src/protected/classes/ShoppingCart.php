@@ -14,16 +14,17 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['_test_upc', 'visa', 'mastercard']
-            : ['visa', 'mastercard'];
+            ? ['_test_upc', 'visa', 'mastercard', 'khreshchatyk']
+            : ['visa', 'mastercard', 'khreshchatyk'];
     }
 
     public static function getPercentRule($pay_system = null)
     {
         $rules = [
-            '_test_upc'  => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
-            'visa'       => ['percent' => 2, 'min' => 2],
-            'mastercard' => ['percent' => 2, 'min' => 2],
+            '_test_upc'    => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
+            'visa'         => ['percent' => 2, 'min' => 2],
+            'mastercard'   => ['percent' => 2, 'min' => 2],
+            'khreshchatyk' => ['percent' => 0, 'min' => 0],
         ];
 
         if ($pay_system) {

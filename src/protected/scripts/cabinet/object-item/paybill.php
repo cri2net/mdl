@@ -19,6 +19,7 @@
     $visaSum = ShoppingCart::getPercentSum($total_sum, 'visa');
     $mastercardSum = ShoppingCart::getPercentSum($total_sum, 'mastercard');
     $_test_upcSum = ShoppingCart::getPercentSum($total_sum, '_test_upc');
+    $khreshchatykSum = ShoppingCart::getPercentSum($total_sum, 'khreshchatyk');
 
     if ($error) {
         ?><h2 class="big-error-message"><?= $error; ?></h2><?php
@@ -33,8 +34,8 @@
             if (in_array('visa', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_persent_visa" class="niceCheck radio checked"><input value="<?= $percent['visa']['percent']; ?>" type="radio" name="percent" checked="checked" data-paysystem-sum="<?= $visaSum; ?>" data-paysystem-key="visa"></span>
-                    <label onclick="$('#checkbox_persent_visa').click();">
+                    <span id="checkbox_percent_visa" class="niceCheck radio checked"><input type="radio" name="percent" checked="checked" data-paysystem-sum="<?= $visaSum; ?>" data-paysystem-key="visa"></span>
+                    <label onclick="$('#checkbox_percent_visa').click();">
                         <img alt="visa" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
                         <span class="text-label">Карта Visa, Visa Electron</span>
                     </label>
@@ -45,8 +46,8 @@
             if (in_array('mastercard', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_persent_mastercard" class="niceCheck radio"><input value="<?= $percent['mastercard']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
-                    <label onclick="$('#checkbox_persent_mastercard').click();">
+                    <span id="checkbox_percent_mastercard" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
+                    <label onclick="$('#checkbox_percent_mastercard').click();">
                         <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
                         <span class="text-label">Карта MasterCard, Maestro</span>
                     </label>
@@ -57,11 +58,52 @@
             if (in_array('_test_upc', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_persent__test_upc" class="niceCheck radio"><input value="<?= $percent['_test_upc']['percent']; ?>" type="radio" name="percent" data-paysystem-sum="<?= $_test_upcSum; ?>" data-paysystem-key="_test_upc"></span>
-                    <label onclick="$('#checkbox_persent__test_upc').click();">
+                    <span id="checkbox_percent__test_upc" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $_test_upcSum; ?>" data-paysystem-key="_test_upc"></span>
+                    <label onclick="$('#checkbox_percent__test_upc').click();">
                         <img alt="" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
                         <span style="color:#f00;" class="text-label"><b>Тестовий мерчант UPC</b></span>
                     </label>
+                </div>
+                <?php
+            }
+
+            if (in_array('khreshchatyk', $pay_systems) && (Authorization::getLoggedUserId() == 4)) {
+                ?>
+                <div class="check-box-line">
+                    <span id="checkbox_percent_khreshchatyk" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $khreshchatykSum; ?>" data-paysystem-key="khreshchatyk"></span>
+                    <label onclick="$('#checkbox_percent_khreshchatyk').click();">
+                        <img alt="" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
+                        <span class="text-label">Картка Киянина (Хрещатик)</span>
+                    </label>
+                </div>
+                <div class="paybill-ps-item paybill-ps-item-khreshchatyk" style="display: none;">
+                    <div class="paybill-ps-cards">
+                        <?php
+                            $where = 'user_id=' . Authorization::getLoggedUserId() . " AND type='khreshchatyk' AND is_work=1";
+                            $user_cards = PDO_DB::table_list(TABLE_PREFIX . 'user_cards', $where, "pos ASC");
+
+                            if (count($user_cards) == 0) {
+                                ?>
+                                <div class="paybill-ps-card-item card-error card-error-no-cards">
+                                    Немає прив'язаних карток
+                                </div>
+                                <?php
+                            }
+
+                            for ($i = 0; $i < count($user_cards); $i++) {
+                                ?>
+                                <div class="paybill-ps-card-item">
+                                    <span id="khreshchatyk-card-<?= $user_cards[$i]['id']; ?>" class="niceCheck radio <?= ($i == 0) ? 'checked' : ''; ?>"><input value="<?= $user_cards[$i]['id']; ?>" type="radio" name="khreshchatyk-card" <?= ($i == 0) ? 'checked="checked"' : ''; ?>></span>
+                                    <label onclick="$('#khreshchatyk-card-<?= $user_cards[$i]['id']; ?>').click();">
+                                        <span class="text-label"><?= substr($user_cards[$i]['pan'], 0, 4) . '********' . substr($user_cards[$i]['pan'], 12); ?></span>
+                                    </label>
+                                </div>
+                                <?php
+                            }
+
+                            require_once(ROOT . '/protected/scripts/cabinet/add_card_from.php');
+                        ?>
+                    </div>
                 </div>
                 <?php
             }

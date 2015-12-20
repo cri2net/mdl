@@ -64,6 +64,61 @@ class User
         return $user;
     }
 
+    /**
+     * Получение карты пользователя
+     * @param  integer $card_id id карты в БД сайта
+     * @param  integer $user_id id пользователя, у которого ищем карту. OPTIONAL
+     * @return assoc array | null данные карты
+     */
+    public static function getUserCard($card_id, $user_id = null)
+    {
+        if ($user_id == null) {
+            $user_id = Authorization::getLoggedUserId();
+        }
+        $pdo = PDO_DB::getPDO();
+
+        $stm = $pdo->prepare("SELECT * FROM ". TABLE_PREFIX ."user_cards WHERE id=? AND user_id=? LIMIT 1");
+        $stm->execute([$card_id, $user_id]);
+        $card = $stm->fetch();
+        
+        if ($card === false) {
+            return null;
+        }
+
+        $card['additional'] = (array)(@json_decode($card['additional']));
+
+        return $card;
+    }
+
+    public static function updateUserCardData($card_id)
+    {
+        $card = self::getUserCard($card_id);
+        if (!$card) {
+            return;
+        }
+
+        if ($card['type'] == 'khreshchatyk') {
+            $khreshchatyk = new Khreshchatyk;
+            $actual_card_data = $khreshchatyk->getCardData($card['pan']);
+            $additional = $card['additional'];
+            
+            if ($actual_card_data) {
+                $additional['acc_bank'] = $actual_card_data['acc_bank'];
+                $additional['card_state_id'] = $actual_card_data['card_state_id'];
+
+                $arr = [
+                    'updated_at' => microtime(true),
+                    'additional' => json_encode($additional)
+                ];
+                if ($actual_card_data['card_state_id'] != 5) {
+                    $arr['is_work'] = 0;
+                }
+
+                PDO_DB::update($arr, TABLE_PREFIX . 'user_cards', $card['id']);
+            }
+        }
+    }
+
     public static function getUserByLogin($login)
     {
         $pdo = PDO_DB::getPDO();
