@@ -44,3 +44,7 @@ define('ERROR_INVALID_ZERO_PAYMENT', 'Платіж не може бути пор
 define('ERROR_GER_RESTORE_CODE', 'Такий код доступу не знайдено');
 define('ERROR_RESTORE_CODE_EXPIRE', 'Час дії цього коду закінчився');
 define('ERROR_RESTORE_CODE_ACTIVE', 'Цей код вже використано або було сформовано новий');
+define('ERROR_ADD_CARD_EMPTY_CARD_NUMBER', 'Номер картки не вказано');
+define('ERROR_ADD_CARD_EMPTY_PASP_NUMBER', 'Номер паспорту не вказано');
+define('ERROR_ADD_CARD_EMPTY_BIRTHDAY', 'Дату народження не вказано');
+define('ERROR_ADD_BAD_CARD_STATE_ID', 'Ваша картка неактивна');

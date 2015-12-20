@@ -3,13 +3,13 @@
         <label>Прiзвище <span class="star-required" title="обов'язкове поле">*</span><br>
             <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="lastname" id="reg-lastname" value="<?= htmlspecialchars($__userData['lastname'], ENT_QUOTES); ?>">
         </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="input">
         <label>Ім'я: <span class="star-required" title="обов'язкове поле">*</span><br>
             <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="name" id="reg-name" value="<?= htmlspecialchars($__userData['name'], ENT_QUOTES); ?>">
         </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="input">
         <label>По-батьковi <br>
@@ -22,13 +22,13 @@
         <label>Електронна пошта <span class="star-required" title="обов'язкове поле">*</span><br>
             <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="email" name="email" id="reg-email" value="<?= htmlspecialchars($__userData['email'], ENT_QUOTES); ?>">
         </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="input">
         <label>Телефон <span class="star-required" title="обов'язкове поле">*</span><br>
             <input onblur="setTimeout(function(){registration_ckeck_empty_fileld($('#reg-phone'))}, 200);" required="required" class="txt form-txt-input" placeholder="+380" type="text" name="mob_phone" id="reg-phone" value="<?= htmlspecialchars($__userData['mob_phone'], ENT_QUOTES); ?>">
         </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="input with-btn">
         <button class="btn big green bold">Зберегти</button>

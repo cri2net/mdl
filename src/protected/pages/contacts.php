@@ -42,21 +42,21 @@
             Iм’я <span class="star-required" title="Обов'язкове поле">*</span> <br>
             <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_name; ?>" type="text" name="name" class="txt" required="required">
         </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="field-group">
         <label>
             Електронна пошта <span class="star-required" title="Обов'язкове поле">*</span> <br>
             <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_email; ?>" type="email" name="email" class="txt" required="required">
         </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="field-group">
         <label>
             Текст повiдомлення <span class="star-required" title="Обов'язкове поле">*</span> <br>
             <textarea onblur="registration_ckeck_empty_fileld(this);" required="required" name="text" class="txt"><?= $_contacts_text; ?></textarea>
         </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="field-group">
         <button class="btn green bold">Надiслати</button>

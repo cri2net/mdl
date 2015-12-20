@@ -45,13 +45,13 @@
                 <label>Прiзвище <span class="star-required" title="обов'язкове поле">*</span><br>
                     <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="lastname" id="reg-lastname" value="<?= $_reg_lastname; ?>">
                 </label>
-                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
             </div>
             <div class="input">
                 <label>Ім'я: <span class="star-required" title="обов'язкове поле">*</span><br>
                     <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="name" id="reg-name" value="<?= $_reg_name; ?>">
                 </label>
-                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
             </div>
             <div class="input">
                 <label>По-батьковi <br>
@@ -62,13 +62,13 @@
                 <label>Електронна пошта <span class="star-required" title="обов'язкове поле">*</span><br>
                     <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="email" name="email" id="reg-email" value="<?= $_reg_email; ?>">
                 </label>
-                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
             </div>
             <div class="input">
                 <label>Телефон <span class="star-required" title="обов'язкове поле">*</span><br>
                     <input onblur="setTimeout(function(){registration_ckeck_empty_fileld($('#reg-phone'))}, 200);" required="required" class="txt form-txt-input" placeholder="+380" type="text" name="phone" id="reg-phone" value="<?= $_reg_phone; ?>">
                 </label>
-                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
             </div>
             <div class="input pass">
                 <label>Пароль <span class="star-required" title="обов'язкове поле">*</span> <span class="hint">(не менше 6 символiв)</span><br>
@@ -78,7 +78,7 @@
                         <input style="display:none;" onblur="registration_ckeck_empty_fileld_password(this);" class="txt form-txt-input" id="reg-password-replica" type="text" autocomplete="off">
                     </span>
                 </label>
-                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнiм</div>
+                <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
                 <div id="password-strength-container">
                     <div class="gauge"></div>
                     <div class="title"></div>

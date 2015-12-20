@@ -11,8 +11,6 @@ class Khreshchatyk
     {
         $this->SVFE_host = '10.192.1.241';
         $this->SVFE_port = 12406;
-
-        // написано, что будет по мерчанту для каждого поставщика услуг
         
         // test terminal & merchant 1
         $this->Terminal_ID = 'XETEST01';
@@ -77,8 +75,8 @@ class Khreshchatyk
     {
         $iso = $jak_obj->getMTI() . hex2bin($jak_obj->getBitmap()) . implode($jak_obj->getData());
 
-        var_dump($iso);
-        var_dump(date('d.m.Y H:i:s'));
+        // var_dump($iso);
+        // var_dump(date('d.m.Y H:i:s'));
         
         $fp = fsockopen($this->SVFE_host, $this->SVFE_port, $errno, $errstr, 10);
         if (!$fp) {
@@ -99,8 +97,7 @@ class Khreshchatyk
             var_dump($answer_jak->getMTI());
             print_r($answer_jak->getData());
             
-            // fclose($fp);
-            die();
+            fclose($fp);
         }
 
         die('----die');
@@ -143,18 +140,17 @@ class Khreshchatyk
 
         $jak->addMTI('0200');
         $local_date = date('ymdHis');
-        $local_date = '151217161955';
 
-        $jak->addData(3,   '840000');
-        $jak->addData(4,   '000000001600');
-        $jak->addData(7,   $date);
-        $jak->addData(11,  '000008');
-        $jak->addData(12,  $local_date);
-        $jak->addData(18,  '4900');
-        $jak->addData(41,  $this->Terminal_ID);
-        $jak->addData(42,  $this->Merchant_ID);
-        $jak->addData(49,  '980');
-        $jak->addData(102, '10922885201'); // потом номер 10922885201
+        $jak->addData(3,   '840000');           // тип обработки "покупка", кажется
+        $jak->addData(4,   '000000001600');     // сумма в копейках
+        $jak->addData(7,   $date);              // дата и время отправки сообщения
+        $jak->addData(11,  '000008');           // уникальнй номер транзакции
+        $jak->addData(12,  $local_date);        // дата и время начала транзакции
+        $jak->addData(18,  '4900');             // код типа торговца. 4900 — для коммунальных услуг
+        $jak->addData(41,  $this->Terminal_ID); // ID терминала
+        $jak->addData(42,  $this->Merchant_ID); // ID мерчанта
+        $jak->addData(49,  '980');              // код валюты
+        $jak->addData(102, '10922885201');      // номер счёта в банке
 
         return $this->sendISO($jak);
     }

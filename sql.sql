@@ -568,3 +568,5 @@ CREATE TABLE `gioc_user_cards`(
 ALTER TABLE `gioc_payment`
   CHANGE `persent` `percent` DOUBLE NULL;
 
+ALTER TABLE `gioc_payment`
+  DROP INDEX `user_id_2`;
