@@ -73,39 +73,33 @@ class Khreshchatyk
 
     private function sendISO($jak_obj)
     {
+        $time = microtime(true);
         $iso = $jak_obj->getMTI() . hex2bin($jak_obj->getBitmap()) . implode($jak_obj->getData());
-
-        // var_dump($iso);
-        // var_dump(date('d.m.Y H:i:s'));
         
         $fp = fsockopen($this->SVFE_host, $this->SVFE_port, $errno, $errstr, 10);
         if (!$fp) {
-            echo "$errstr ($errno)<br />\r\n";
-        } else {
-            fwrite($fp, $iso);
-            echo "\r\n<br>\r\n";
-
-            $time = microtime(true);
-            $raw_answer = '';
-            while ((microtime(true) - $time) < 10) {
-                $raw_answer .= fgets($fp, 1024);
-            }
-
-            var_dump(strlen($raw_answer));
-
-            $answer_jak = $this->parseAnswer($raw_answer);
-            var_dump($answer_jak->getMTI());
-            print_r($answer_jak->getData());
-            
-            fclose($fp);
+            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
+            return false;
         }
 
-        die('----die');
+        fwrite($fp, $iso);
 
-        return $response;
+        $raw_answer = '';
+        ini_set('default_socket_timeout', 5);
+
+        while ((microtime(true) - $time) < 10) {
+            $raw_answer .= fgets($fp, 1024);
+            if ($this->parseAnswer($raw_answer, true)) {
+                break;
+            }
+        }
+
+        fclose($fp);
+
+        return $this->parseAnswer($raw_answer);
     }
 
-    public function parseAnswer($iso)
+    public function parseAnswer($iso, $just_validate = false)
     {
         $jak = new JAK8583();
         $inp = bin2hex(substr($iso, 4, 16));
@@ -130,21 +124,83 @@ class Khreshchatyk
         $iso = substr($iso, 0, 4) . $bitmap . substr($iso, (($secondary == '') ? 12 : 20));
         $jak->addISO($iso);
 
+        if ($just_validate) {
+            return $jak->validateISO();
+        }
+
         return $jak;
     }
 
-    public function makePayment()
+    public function makePayment($payment_id)
+    {
+        $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
+        if (!$payment || ($payment['processing'] != 'khreshchatyk')) {
+            return false;
+        }
+        $jak = new JAK8583();
+        $date = date('mdHis');
+
+        $summ = str_pad($payment['summ_total'] * 100, 10, '0', STR_PAD_LEFT);
+        $time = microtime(true);
+
+        $payment['processing_data'] = (array)(@json_decode($payment['processing_data']));
+        $acc_bank = $payment['processing_data']['first']->acc_bank;
+
+
+        $jak->addMTI('0200');
+        $local_date = date('ymdHis', $payment['go_to_payment_time']);
+        $uid = str_pad($payment['id'] % 1000000, 6, '0', STR_PAD_LEFT);
+
+        $jak->addData(3,   '840000');           // тип обработки "покупка", кажется
+        $jak->addData(4,   $summ);              // сумма в копейках
+        $jak->addData(7,   $date);              // дата и время отправки сообщения
+        $jak->addData(11,  $uid);               // уникальнй номер транзакции
+        $jak->addData(12,  $local_date);        // дата и время начала транзакции
+        $jak->addData(18,  '4900');             // код типа торговца. 4900 — для коммунальных услуг
+        $jak->addData(41,  $this->Terminal_ID); // ID терминала
+        $jak->addData(42,  $this->Merchant_ID); // ID мерчанта
+        $jak->addData(49,  '980');              // код валюты
+        $jak->addData(102, $acc_bank);          // номер счёта в банке
+
+        $result = $this->sendISO($jak);
+        $data = $result->getData();
+
+        $request = [
+            'timestamp'   => $time,
+            'TerminalID'  => $data[41],
+            'MerchantID'  => $data[42],
+            'TotalAmount' => $payment['summ_total'] * 100,
+            'Currency'    => $data[49],
+            'OrderID'     => $payment['id'],
+            'Rrn'         => $data[37],
+            'ProxyPan'    => '',
+            'TranCode'    => $data[39],
+            'answer_data' => $data,
+        ];
+        $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
+        $payment['processing_data']['requests'][] = $request;
+
+        $arr = [
+            'processing_data' => json_encode($payment['processing_data']),
+            'status' => (($data[39] == '00') ? 'success' : 'error'),
+        ];
+
+        PDO_DB::update($arr, ShoppingCart::TABLE, $payment['id']);
+    }
+
+    public function makeTestPayment()
     {
         $jak = new JAK8583();
         $date = date('mdHis');
 
         $jak->addMTI('0200');
         $local_date = date('ymdHis');
+        $uid = str_pad(time() % 86400, 6, '0', STR_PAD_LEFT);
 
         $jak->addData(3,   '840000');           // тип обработки "покупка", кажется
         $jak->addData(4,   '000000001600');     // сумма в копейках
         $jak->addData(7,   $date);              // дата и время отправки сообщения
-        $jak->addData(11,  '000008');           // уникальнй номер транзакции
+        $jak->addData(11,  $uid);               // уникальнй номер транзакции
         $jak->addData(12,  $local_date);        // дата и время начала транзакции
         $jak->addData(18,  '4900');             // код типа торговца. 4900 — для коммунальных услуг
         $jak->addData(41,  $this->Terminal_ID); // ID терминала

@@ -252,6 +252,38 @@ class ShoppingCart
 
                         break;
 
+                    case 'khreshchatyk':
+                        $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
+                        $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
+                        $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
+                        $last = (array)$payment['processing_data']['requests'][count($payment['processing_data']['requests']) - 1];
+
+                        $url = API_URL . self::REPORT_BASE_URL;
+                        
+                        $post_data = [
+                            'report'       => ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep',
+                            'destype'      => 'Cache',
+                            'Desformat'    => 'xml',
+                            'cmdkey'       => 'rep',
+                            'idplatklient' => $payment['reports_id_plat_klient'],
+                            'p1'           => $actual_upc_data['MerchantID'],
+                            'p2'           => $actual_upc_data['TerminalID'],
+                            'p3'           => $actual_upc_data['TotalAmount'],
+                            'p4'           => $actual_upc_data['Currency'],
+                            'p5'           => '',
+                            'p6'           => $actual_upc_data['OrderID'],
+                            'p7'           => '',
+                            'p8'           => '',
+                            'p9'           => '',
+                            'p10'          => $actual_upc_data['Rrn'],
+                            'p11'          => $actual_upc_data['ProxyPan'],
+                            'p12'          => $actual_upc_data['TranCode'],
+                            'p13'          => '',
+                            'p14'          => 0,  // delay
+                        ];
+
+                        break;
+
                     default:
                         throw new Exception("Unknow payment processing in send_payment_status_to_reports()");
                         return false;
