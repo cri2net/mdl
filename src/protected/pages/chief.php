@@ -47,7 +47,7 @@
                             <div class="lastname"><?= htmlspecialchars($list[$i]['lastname']); ?></div>
                             <div class="name"><?= htmlspecialchars("{$list[$i]['name']} {$list[$i]['fathername']}"); ?></div>
                             <div class="role"><?= htmlspecialchars($list[$i]['role']); ?></div>
-                            <div onclick="open_feedback_msg('<?= $list[$i]['id']; ?>');" class="btn green bold"><div class="icon-msg"></div>Надiслати повiдомлення</div>
+                            <div onclick="open_feedback_msg('<?= $list[$i]['id']; ?>');" class="btn green bold"><div class="icon-msg"></div>Надіслати повідомлення</div>
                         </div>
                     </div>
                     <?php
@@ -58,13 +58,13 @@
     }
 ?>
 <div id="content-for-popup" style="display:none">
-    <h3 class="page-subtitle border-top">Написати повiдомлення</h3>
+    <h3 class="page-subtitle border-top">Написати повідомлення</h3>
     <form class="feedback-form" action="<?= BASE_URL; ?>/post/chief/" method="post">
         <input type="text" name="country" value="" style="display:none;">
         <input type="hidden" name="chief_id" value="" id="chief_id">
         <div class="field-group">
             <label>
-                Iм’я <span class="star-required" title="Обов'язкове поле">*</span> <br><br>
+                Ім’я <span class="star-required" title="Обов'язкове поле">*</span> <br><br>
                 <input value="<?= $_contacts_name; ?>" type="text" name="name" class="txt" required="required">
             </label>
         </div>
@@ -76,13 +76,13 @@
         </div>
         <div class="field-group">
             <label>
-                Текст повiдомлення <span class="star-required" title="Обов'язкове поле">*</span> <br><br>
+                Текст повідомлення <span class="star-required" title="Обов'язкове поле">*</span> <br><br>
                 <textarea required="required" name="text" class="txt"><?= $_contacts_text; ?></textarea>
             </label>
         </div>
         <div class="field-group buttons-here">
             <button class="btn bold cancel-btn" onclick="close_feedback_msg(); return false;">Скасувати</button>
-            <button class="btn green bold success-btn">Надiслати</button>
+            <button class="btn green bold success-btn">Надіслати</button>
         </div>
     </form>
 </div>

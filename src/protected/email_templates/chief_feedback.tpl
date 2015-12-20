@@ -1,10 +1,10 @@
 <font size="2" face="Arial">Добрий день!<br><br>
-    Вам було залишине повiдомлення на сайтi <a href="{{base_url}}">{{site_domain}}</a>.<br>
+    Вам було залишине повідомлення на сайті <a href="{{base_url}}">{{site_domain}}</a>.<br>
     Автор:<br>
     <br>
-    Iм’я: {{username}}<br>
+    Ім’я: {{username}}<br>
     Електронна пошта: {{email}}<br>
-    Текст повiдомлення: <br>
+    Текст повідомлення: <br>
     <blockquote>{{text}}</blockquote>
     <br>
     <br>

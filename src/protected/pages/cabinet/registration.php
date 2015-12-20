@@ -54,7 +54,7 @@
                 <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
             </div>
             <div class="input">
-                <label>По-батьковi <br>
+                <label>По-батькові <br>
                     <input class="txt form-txt-input" type="text" name="fathername" id="reg-fathername" value="<?= $_reg_fathername; ?>">
                 </label>
             </div>

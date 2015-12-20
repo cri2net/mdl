@@ -39,7 +39,7 @@
     <input type="text" name="country" value="" style="display:none;">
     <div class="field-group">
         <label>
-            Iм’я <span class="star-required" title="Обов'язкове поле">*</span> <br>
+            Ім’я <span class="star-required" title="Обов'язкове поле">*</span> <br>
             <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_name; ?>" type="text" name="name" class="txt" required="required">
         </label>
         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
@@ -53,12 +53,12 @@
     </div>
     <div class="field-group">
         <label>
-            Текст повiдомлення <span class="star-required" title="Обов'язкове поле">*</span> <br>
+            Текст повідомлення <span class="star-required" title="Обов'язкове поле">*</span> <br>
             <textarea onblur="registration_ckeck_empty_fileld(this);" required="required" name="text" class="txt"><?= $_contacts_text; ?></textarea>
         </label>
         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="field-group">
-        <button class="btn green bold">Надiслати</button>
+        <button class="btn green bold">Надіслати</button>
     </div>
 </form>
