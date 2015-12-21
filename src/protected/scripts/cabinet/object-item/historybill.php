@@ -75,10 +75,10 @@
     <table class="full-width-table datailbill-table no-border">
         <thead>
             <tr>
-                <th class="first">Послуга, <br> комунальне пiдприємство</th>
+                <th class="first">Послуга, <br> комунальне підприємство</th>
                 <th>Дата cплати</th>
                 <th class="td-sum">Сума, грн</th>
-                <th class="td-last">Перiод сплати</th>
+                <th class="td-last">Період сплати</th>
             </tr>
         </thead>
         <tbody>

@@ -1,9 +1,9 @@
 <div class="input">
-    <label>Виберiть вулицю: <br>
+    <label>Виберіть вулицю: <br>
         <input required="required" autofocus="autofocus" class="txt form-txt-input" type="text" name="street" id="add_obj_street" value="">
     </label>
     <div class="hint-blue">
-        Введіть перші літери вулиці та обов'язково виберіть її зі списку
+        Введіть перші літери вулиці та обов’язково виберіть її зі списку
     </div>
 </div>
 <div class="input house-input">

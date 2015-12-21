@@ -4,7 +4,7 @@
 </div>
 <?php
     if (count($children) > 0) {
-        ?> <div class="page-subtitle">Пiдроздiли</div> <?php
+        ?> <div class="page-subtitle">Підрозділи</div> <?php
 
         foreach ($children as $child) {
             $bg = '';

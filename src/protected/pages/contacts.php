@@ -20,7 +20,7 @@
 ?>
 <h1 class="big-title normal-margin">Контакти</h1>
 <div class="page-map">
-    <div class="item clock"><a class="dotted" href="#page-map-clock">Графiк роботи</a></div>
+    <div class="item clock"><a class="dotted" href="#page-map-clock">Графік роботи</a></div>
     <div class="item phone"><a class="dotted" href="#page-map-phone">Телефони</a></div>
     <div class="item marker"><a class="dotted" href="#page-map-marker">Адреса</a></div>
     <div class="item letter"><a class="dotted" href="#page-map-letter">Зворотній звязок</a></div>
@@ -34,7 +34,7 @@
 
     echo $_list['CONTACTS_BLOCK_CLOCK'], $_list['CONTACTS_BLOCK_PHONE'], $_list['CONTACTS_BLOCK_MARKER'];
 ?>
-<h3 id="page-map-letter" class="page-subtitle border-top">Зворотнiй зв’язок</h3>
+<h3 id="page-map-letter" class="page-subtitle border-top">Зворотній зв’язок</h3>
 <form class="feedback-form" action="<?= BASE_URL; ?>/post/contacts/" method="post">
     <input type="text" name="country" value="" style="display:none;">
     <div class="field-group">

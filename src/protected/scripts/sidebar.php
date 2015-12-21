@@ -37,7 +37,7 @@
     if ($partners) {
         ?>
         <div class="partners">
-            <div class="title">Нашi партнери</div>
+            <div class="title">Наші партнери</div>
             <?php
                 foreach ($partners as $partner) {
                     $href = str_ireplace('{SITE_URL}', BASE_URL, $partner['link']);
@@ -75,6 +75,6 @@
 <div class="qr-code-box">
     <div class="inner">
         <img style="max-width:290px;" src="<?= BASE_URL; ?>/pic/sidebar/qr-code-resized.png" alt=""><br><br>
-        <img src="<?= BASE_URL ?>/pic/sidebar/icon-scan.png" />&nbsp;&nbsp;&nbsp;Скануй та зберiгай
+        <img src="<?= BASE_URL ?>/pic/sidebar/icon-scan.png" />&nbsp;&nbsp;&nbsp;Скануй та зберігай
     </div>
 </div>

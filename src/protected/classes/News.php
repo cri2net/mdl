@@ -118,7 +118,7 @@ class News
                           .'<h2 class="title">'. htmlspecialchars($news_list[$i]['title']) .'</h2>'
                           .'<div class="date">'. $date .'</div>'
                           .'<div class="announce">'. ($news_list[$i]['announce']) .'</div>'
-                          .'<div class="details"><a href="'. BASE_URL .'/news/'. composeURLKey($news_list[$i]['title']) . '_' . $news_list[$i]['id'] .'/">детальнiше...</a></div>'
+                          .'<div class="details"><a href="'. BASE_URL .'/news/'. composeURLKey($news_list[$i]['title']) . '_' . $news_list[$i]['id'] .'/">детальніше...</a></div>'
                       .'</div>';
         }
         

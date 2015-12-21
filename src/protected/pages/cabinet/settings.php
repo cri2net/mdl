@@ -8,7 +8,7 @@
 ?>
 <div class="h1-line-cabinet">
     <h1 class="big-title">Налаштування профілю</h1>
-    <div class="secure">особистий кабiнет</div>
+    <div class="secure">особистий кабінет</div>
 </div>
 <div class="cabinet-settings">
     <div class="page-tabs">

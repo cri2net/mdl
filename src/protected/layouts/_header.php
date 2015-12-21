@@ -69,7 +69,7 @@
 									<?= $_tmp['HEADER_WORK']; ?>
 									<div class="line">
 										<div class="col">&nbsp;</div>
-										<div class="col-r"><a href="<?= BASE_URL; ?>/contacts/#page-map-clock">Детальнiше</a></div>
+										<div class="col-r"><a href="<?= BASE_URL; ?>/contacts/#page-map-clock">Детальніше</a></div>
 									</div>
 								</div>
 							</div>
@@ -103,13 +103,13 @@
 										<a href="<?= BASE_URL; ?>/help/faq_cabinet/">Онлайн довідка</a>
 									</div>
 									<div class="item logout with-border">
-										<a href="<?= BASE_URL; ?>/post/cabinet/logout/">Вихiд</a>
+										<a href="<?= BASE_URL; ?>/post/cabinet/logout/">Вихід</a>
 									</div>
 								</div>
 							</div>
 							<?php
 						} else {
-							?><a href="<?= BASE_URL; ?>/cabinet/" class="account-link"><span class="border-bot">Особистий кабiнет</span></a> <?php
+							?><a href="<?= BASE_URL; ?>/cabinet/" class="account-link"><span class="border-bot">Особистий кабінет</span></a> <?php
 						}
 					?>
 				</div>

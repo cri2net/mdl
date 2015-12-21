@@ -1,6 +1,6 @@
 <div class="h1-line-cabinet">
     <h1 class="big-title">Об'єкти</h1>
-    <div class="secure">особистий кабiнет</div>
+    <div class="secure">особистий кабінет</div>
 </div>
 <?php
     try {

@@ -53,7 +53,7 @@ try {
     }
     
     $_SESSION['cabinet-settings']['status'] = true;
-    $_SESSION['cabinet-settings']['text'] = 'Змiни збережено';
+    $_SESSION['cabinet-settings']['text'] = 'Зміни збережено';
 } catch (Exception $e) {
     $_SESSION['cabinet-settings']['status'] = false;
     $_SESSION['cabinet-settings']['error']['text'] = $e->getMessage();

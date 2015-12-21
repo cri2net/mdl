@@ -19,7 +19,7 @@
             break;
         case 'page/media':
             $breadcrumbs[] = ['title' => 'Про ГіОЦ', 'link' => '/about/'];
-            $breadcrumbs[] = ['title' => 'Медiа', 'link' => '/about/media/'];
+            $breadcrumbs[] = ['title' => 'Медіа', 'link' => '/about/media/'];
             $breadcrumbs[] = ['title' => 'Відеоматеріали'];
             break;
 
@@ -40,7 +40,7 @@
 
 
         case 'page/cabinet':
-            $breadcrumbs[] = ['title' => 'Особистий кабiнет', 'link' => '/cabinet/'];
+            $breadcrumbs[] = ['title' => 'Особистий кабінет', 'link' => '/cabinet/'];
 
             switch ($__route_result['values']['subpage']) {
 
@@ -61,7 +61,7 @@
                     break;
 
                 case 'objects':
-                    $breadcrumbs[] = ['title' => 'Об\'єкти', 'link' => '/cabinet/objects/'];
+                    $breadcrumbs[] = ['title' => 'Об’єкти', 'link' => '/cabinet/objects/'];
 
                     if (Authorization::isLogin() && isset($__route_result['values']['id'])) {
 
@@ -83,7 +83,7 @@
                                     'bill'        => 'Рахунок до сплати',
                                     'detailbill'  => 'Історія нарахувань',
                                     'historybill' => 'Довідка про платежі',
-                                    'edit'        => 'Редагувати об\'єкт',
+                                    'edit'        => 'Редагувати об’єкт',
                                     'paybill'     => 'Спосіб сплати',
                                     'checkout'    => 'Перенаправлення',
                                 ];
@@ -95,7 +95,7 @@
 
 
                 case 'instant-payments':
-                    $breadcrumbs[] = ['title' => 'Миттєвi платежi', 'link' => '/cabinet/instant-payments/'];
+                    $breadcrumbs[] = ['title' => 'Миттєві платежі', 'link' => '/cabinet/instant-payments/'];
 
                     if (isset($__route_result['values']['section'])) {
                         $sections = [
@@ -113,8 +113,8 @@
 
                     if (isset($__route_result['values']['section'])) {
                         $sections = [
-                            'history' => 'Iсторiя платежiв',
-                            'komdebt' => 'ЖКХ платежi',
+                            'history' => 'Історія платежів',
+                            'komdebt' => 'ЖКХ платежі',
                             'instant' => 'Миттєві платежі',
                             'details' => 'Деталі платежу № ',
                         ];

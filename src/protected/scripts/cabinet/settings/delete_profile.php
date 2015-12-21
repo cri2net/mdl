@@ -1,8 +1,8 @@
 <div class="form-block">
-    <div class="form-subtitle delete-profile">Видалення профiлю</div>
+    <div class="form-subtitle delete-profile">Видалення профілю</div>
     <div class="input">
-        <label>Коментар <span class="hint">(необов'язково)</span> <br>
-            <textarea name="comment" class="txt form-txt-input" placeholder="Опишiть, що Вам не сподобалось"></textarea>
+        <label>Коментар <span class="hint">(необов’язково)</span> <br>
+            <textarea name="comment" class="txt form-txt-input" placeholder="Опишіть, що Вам не сподобалось"></textarea>
         </label>
     </div>
     <div class="field-group buttons-here">

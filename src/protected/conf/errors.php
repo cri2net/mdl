@@ -6,10 +6,10 @@ define('ERROR_FIELD_SPESIAL_CHARS_ERROR_MSG', ' поле не може міст�
 define('ERROR_INCORRECT_EMAIL_ERROR_MSG', 'Адреса електронної пошти невірна.');
 define('ERROR_FIELD_MIN_ERROR_MSG', ' не може бути менше, ніж ');
 define('ERROR_FIELD_MAX_ERROR_MSG', ' не може бути більше, ніж ');
-define('ERROR_LOGIN_FIELDS_EMPTY', 'Данi для авторизації не вказано.');
-define('ERROR_LOGIN_ERROR_MSG', 'Данi для авторизації невірні.');
+define('ERROR_LOGIN_FIELDS_EMPTY', 'Дані для авторизації не вказано.');
+define('ERROR_LOGIN_ERROR_MSG', 'Дані для авторизації невірні.');
 define('ERROR_SECURITY_CODE', 'Невірний перевірочний код.');
-define('ERROR_CURRENT_PASSWORD', 'Дiйсний пароль невірний.');
+define('ERROR_CURRENT_PASSWORD', 'Дійсний пароль невірний.');
 define('ERROR_EMAIL_DOESNOT_EXIST', 'Користувач з такою адресою електронної пошти не існує.');
 define('ERROR_EMAIL_ALREADY_EXIST', 'Користувач з такою адресою електронної пошти вже існує.');
 define('ERROR_PHONE_ALREADY_EXIST', 'Користувач з таким номером мобільного телефону вже існує.');
@@ -48,5 +48,6 @@ define('ERROR_ADD_CARD_EMPTY_CARD_NUMBER', 'Номер картки не вка�
 define('ERROR_ADD_CARD_EMPTY_PASP_NUMBER', 'Номер паспорту не вказано');
 define('ERROR_ADD_CARD_EMPTY_BIRTHDAY', 'Дату народження не вказано');
 define('ERROR_ADD_CARD_BAD_CARD_STATE_ID', 'Ваша картка неактивна');
+define('ERROR_ADD_CARD_CARD_NOT_FOUND', 'Картку не знайдено');
 define('ERROR_CARD_NO_SELECT_CARD', 'Ви не вказали картку');
 define('ERROR_GET_CARD', 'Помилка при отриманні картки');

@@ -50,7 +50,7 @@
                     <div class="title">Будьте в курсі останніх новин:</div>
                     <div class="form-line">
                         <input name="email" type="email" id="subscribe_by_email" class="subscribe-email" placeholder="Електронна пошта">
-                        <div onclick="subscribe_by_email();" class="btn small green bold">Пiдписатися</div>
+                        <div onclick="subscribe_by_email();" class="btn small green bold">Підписатися</div>
                     </div>
                     <div class="clear"></div>
                     <span class="offer-text">

@@ -46,7 +46,7 @@ define('EMAIL_FROM', 'info@gioc.kiev.ua');
 define('EMAIL_HOST', 'gioc.kiev.ua');
 define('EMAIL_FROM_NAME', 'КП «ГіОЦ»');
 define('SITE_NAME', 'КП «ГіОЦ»'); // for rss, etc
-define('SITE_DESCRIPTION', 'Головний iнформацiйно-обчислювальний центр'); // for rss, etc
+define('SITE_DESCRIPTION', 'Головний інформаційно-обчислювальний центр'); // for rss, etc
 define('SITE_DOMAIN', 'gioc.kiev.ua');
 define('REMEMBER_COOKIE_NAME', '__giocudata');
 

@@ -1,12 +1,12 @@
 <div class="form-block left">
     <div class="input">
-        <label>Прiзвище <span class="star-required" title="обов'язкове поле">*</span><br>
+        <label>Прізвище <span class="star-required" title="обов'язкове поле">*</span><br>
             <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="lastname" id="reg-lastname" value="<?= htmlspecialchars($__userData['lastname'], ENT_QUOTES); ?>">
         </label>
         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
     </div>
     <div class="input">
-        <label>Ім'я: <span class="star-required" title="обов'язкове поле">*</span><br>
+        <label>Ім’я: <span class="star-required" title="обов'язкове поле">*</span><br>
             <input onblur="registration_ckeck_empty_fileld(this);" required="required" class="txt form-txt-input" type="text" name="name" id="reg-name" value="<?= htmlspecialchars($__userData['name'], ENT_QUOTES); ?>">
         </label>
         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>

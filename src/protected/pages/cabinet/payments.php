@@ -8,7 +8,7 @@
 ?>
 <div class="h1-line-cabinet">
     <h1 class="big-title">Мої платежі</h1>
-    <div class="secure">особистий кабiнет</div>
+    <div class="secure">особистий кабінет</div>
 </div>
 <div class="cabinet-settings cabinet-payments">
     <?php
@@ -17,8 +17,8 @@
             <div class="page-tabs">
                 <?php
                     $sections = [
-                        'history' => 'Iсторiя платежiв',
-                        'komdebt' => 'ЖКХ платежi',
+                        'history' => 'Історія платежів',
+                        'komdebt' => 'ЖКХ платежі',
                         'instant' => 'Миттєві платежі',
                     ];
                     $i = 0;

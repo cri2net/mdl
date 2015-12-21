@@ -72,8 +72,8 @@
                 <div class="check-box-line">
                     <span id="checkbox_percent_khreshchatyk" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $khreshchatykSum; ?>" data-paysystem-key="khreshchatyk"></span>
                     <label onclick="$('#checkbox_percent_khreshchatyk').click();">
-                        <img alt="" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
-                        <span class="text-label">Картка Киянина (Хрещатик)</span>
+                        <img alt="" class="rounded-img" src="<?= BASE_URL; ?>/images/paysystems/kkk.png" />
+                        <span class="text-label">Картка Киянина (КБ Хрещатик)</span>
                     </label>
                 </div>
                 <div class="paybill-ps-item paybill-ps-item-khreshchatyk" style="display: none;">
