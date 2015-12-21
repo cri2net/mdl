@@ -88,7 +88,7 @@ class Khreshchatyk
         ini_set('default_socket_timeout', 5);
 
         while ((microtime(true) - $time) < 10) {
-            $raw_answer .= fgets($fp, 1024);
+            $raw_answer .= fgets($fp, 129);
             if ($this->parseAnswer($raw_answer, true)) {
                 break;
             }
@@ -208,6 +208,7 @@ class Khreshchatyk
         $jak->addData(49,  '980');              // код валюты
         $jak->addData(102, '10922885201');      // номер счёта в банке
 
-        return $this->sendISO($jak);
+        $answer = $this->sendISO($jak);
+        print_r($answer->getData());
     }
 }

@@ -15,12 +15,11 @@ if (!in_array(USER_REAL_IP, ['46.151.192.106', '195.138.83.178', '127.0.0.1', '1
 <body>
 <?php
     $jak = new JAK8583();
+
+    // die();
     $Khreshchatyk = new Khreshchatyk();
 
-    print_r($Khreshchatyk->getCardData('100000000111111', '111111', '01.01.2015'));
-    die();
-
-    $iso = $Khreshchatyk->makePayment();
+    $iso = $Khreshchatyk->makeTestPayment();
 ?>
 </body>
 </html>

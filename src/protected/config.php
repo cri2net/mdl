@@ -38,7 +38,10 @@ switch (USER_REAL_IP) {
         }
 
         define('COOKIE_DOMAIN', '.gioc.kiev.ua');
-        define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
+        if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+            $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'http';
+        }
+        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST']);
         define('HAVE_ACCESS_TO_API', true);
 }
 
