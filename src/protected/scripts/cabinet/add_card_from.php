@@ -3,7 +3,7 @@
     <a class="add-card-link" onclick="$('.add-card-form').slideToggle();">Прив’язати нову картку</a>
     <div class="add-card-form" style="display: none;">
         <div class="input">
-            <label>Номер картки <span title="обов’язкове поле" class="star-required">*</span><br>
+            <label>Соціальный номер <span title="обов’язкове поле" class="star-required">*</span><br>
                 <input type="text" value="" id="addcard_card-number" placeholder="1111-2222-3333-4444" class="txt form-txt-input" onblur="setTimeout(function(){registration_ckeck_empty_fileld($('#addcard_card-number'))}, 200);">
             </label>
             <div class="error-text" style="display: none;"><div class="error-icon"></div> поле не повинно бути порожнім</div>

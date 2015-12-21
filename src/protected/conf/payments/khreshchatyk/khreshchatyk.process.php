@@ -15,5 +15,5 @@ $cdata = [
 PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
 
 $khreshchatyk = new Khreshchatyk();
-$Khreshchatyk->makePayment($_payment['id']);
+$khreshchatyk->makePayment($_payment['id']);
 ShoppingCart::send_payment_status_to_reports($_payment['id']);
