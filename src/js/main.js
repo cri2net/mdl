@@ -765,7 +765,7 @@ function add_card()
         data: data,
         type: 'POST',
         url : BASE_URL + '/ajax/json/add_card',
-        success : function(response){
+        success : function(response) {
             if (response.status) {
                 $('.card-error-no-cards').remove();
                 $('#addcard_error').html('').fadeOut(0);
@@ -790,6 +790,39 @@ function add_card()
             }
         }
     });
+};
+
+function remove_user_card(card_id)
+{
+    var data = {
+        action: 'remove_card',
+        card_id: card_id
+    };
+
+    $.ajax({
+        dataType: 'json',
+        data: data,
+        type: 'POST',
+        url : BASE_URL + '/ajax/json/add_card',
+        success : function(response) {
+            close_feedback_msg();
+            $('#user_card_'+card_id).remove();
+        }
+    });
+};
+
+function remove_user_card_popup(card_id)
+{
+    $('body').addClass('popup-open').append('<div id="global-owerlay"><div id="popup-box" class="popup-box"><div class="popup-content"></div></div></div>');
+    var popup_html =
+        '<h3 class="page-subtitle border-top">Дійсно хочете видалити картку?</h3>' + 
+        '<div style="height: 130px; text-align: left;">Цю дію неможливо відмінити</div>' +
+        '<div class="field-group buttons-here">' +
+            '<button class="btn bold cancel-btn" onclick="close_feedback_msg(); return false;">Скасувати</button>' +
+            '<button class="btn green bold success-btn" onclick="remove_user_card(\'' + card_id + '\');">Видалити</button>' +
+        '</div>';
+    
+    $('#popup-box .popup-content').html(popup_html);
 };
 
 $(document).ready(function(){

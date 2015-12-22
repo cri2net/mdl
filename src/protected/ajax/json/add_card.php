@@ -1,15 +1,14 @@
 <?php
 try {
     $response = [];
+    $user_id = Authorization::getLoggedUserId();
+    if (!$user_id) {
+        throw new Exception(ERROR_USER_NOT_LOGGED_IN);
+    }
 
     switch ($_POST['action']) {
+
         case 'addcard':
-
-            $user_id = Authorization::getLoggedUserId();
-            if (!$user_id) {
-                throw new Exception(ERROR_USER_NOT_LOGGED_IN);
-            }
-
             $birthday    = trim($_POST['birthday']);
             $pasp_number = trim($_POST['pasp_number']);
             $card_number = trim($_POST['card_number']);
@@ -40,6 +39,15 @@ try {
                 throw new Exception(ERROR_ADD_CARD_BAD_CARD_STATE_ID);
             }
 
+            $pdo = PDO_DB::getPDO();
+            $stm = $pdo->prepare("SELECT * FROM " . TABLE_PREFIX . "user_cards WHERE pan=? AND user_id=? LIMIT 1");
+            $stm->execute([$card_number, $user_id]);
+            
+            $item = $stm->fetch();
+            if ($item) {
+                throw new Exception(ERROR_ADD_CARD_ALREADY_EXISTS);
+            }
+
             $time = microtime(true);
             $pos = PDO_DB::max_pos(TABLE_PREFIX . 'user_cards', "user_id='$user_id'") + 1;
             $additional = [
@@ -61,7 +69,22 @@ try {
             
             $response['card_id'] = $user_card_id;
             $response['card_number'] = substr($card_number, 0, 4) . '********' . substr($card_number, 12);
+            break;
+        
+        case 'remove_card':
+            $card_id = $_POST['card_id'];
+            $pdo = PDO_DB::getPDO();
 
+            $stm = $pdo->prepare("SELECT * FROM " . TABLE_PREFIX . "user_cards WHERE id=? AND user_id=? LIMIT 1");
+            $stm->execute([$card_id, $user_id]);
+            $cart_item = $stm->fetch();
+            
+            if ($cart_item) {
+                $stm = $pdo->prepare("DELETE FROM " . TABLE_PREFIX . "user_cards WHERE id=? LIMIT 1");
+                $stm->execute([$cart_item['id']]);
+                PDO_DB::rebuild_pos(TABLE_PREFIX . 'user_cards', "user_id='$user_id'");
+            }
+            
             break;
 
         default:

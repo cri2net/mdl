@@ -26,6 +26,17 @@
             ?>
             <div class="form-subtitle">Управління підключенними картками</div>
             <?php
+
+            foreach ($cards as $card) {
+                ?>
+                <div class="card-item" id="user_card_<?= $card['id']; ?>">
+                    <div class="icon-logo <?= $card['type']; ?>"></div>
+                    <?= substr($card['pan'], 0, 4) . '********' . substr($card['pan'], 12); ?>
+                    <div class="icon-remove" onclick="remove_user_card_popup('<?= $card['id']; ?>');"></div>
+                </div>
+                <div class="clear"></div>
+                <?php
+            }
         }
     ?>
     <div class="form-subtitle delete-profile">Видалення профілю</div>

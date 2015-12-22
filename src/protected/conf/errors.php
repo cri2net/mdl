@@ -49,5 +49,6 @@ define('ERROR_ADD_CARD_EMPTY_PASP_NUMBER', 'Номер паспорту не в�
 define('ERROR_ADD_CARD_EMPTY_BIRTHDAY', 'Дату народження не вказано');
 define('ERROR_ADD_CARD_BAD_CARD_STATE_ID', 'Ваша картка неактивна');
 define('ERROR_ADD_CARD_CARD_NOT_FOUND', 'Картку не знайдено');
+define('ERROR_ADD_CARD_ALREADY_EXISTS', 'Картка з таким номером вже є у Вашому аккаунті');
 define('ERROR_CARD_NO_SELECT_CARD', 'Ви не вказали картку');
 define('ERROR_GET_CARD', 'Помилка при отриманні картки');

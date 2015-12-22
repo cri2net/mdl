@@ -45,6 +45,9 @@ class Khreshchatyk
      */
     public function getCardData($card_number, $pasp_number = '', $birthday = '')
     {
+        // молча обрезаем ведущие нули в номере карты.
+        $card_number = ltrim($card_number, '0');
+
         $url = API_URL . self::get_API_URL('CARD_BIND_URL') . $card_number;
         if (!empty($pasp_number)) {
             $url .= '&pasp=' . $pasp_number . '&datebr=' . $birthday;
@@ -87,7 +90,7 @@ class Khreshchatyk
         $raw_answer = '';
         ini_set('default_socket_timeout', 5);
 
-        while ((microtime(true) - $time) < 10) {
+        while ((microtime(true) - $time) < 5) {
             $raw_answer .= fgets($fp, 129);
             if ($this->parseAnswer($raw_answer, true)) {
                 break;
