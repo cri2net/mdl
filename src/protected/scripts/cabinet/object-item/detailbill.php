@@ -1,5 +1,8 @@
 <?php
     try {
+        $test_xiface = (in_array(USER_REAL_IP, ['193.200.205.133', '172.16.64.8']) || in_array($__userData['id'], [20, 31, 43068]));
+
+
         $currMonth = date("n");
         $years = [];
         $debt = new KomDebt();
@@ -32,8 +35,13 @@
         if (isset($_need_month) && isset($_need_year)) {
             $dateBegin = "1.".$_need_month.".".$_need_year;
             $time = DateTime::createFromFormat('j.m.Y', $dateBegin);
-            $time = strtotime('first day of next month', date_timestamp_get($time));
+            if ($test_xiface) {
+                $time = strtotime($dateBegin, date_timestamp_get($time));
+            } else {
+                $time = strtotime('first day of next month', date_timestamp_get($time));
+            }
             $dateBegin = date('j.m.Y', $time);
+
             $firmData = $debt->getUniqueFirmName($object['flat_id'], $dateBegin, 100);
         } else {
             $firmData = $debt->getUniqueFirmName($object['flat_id'], null, 0, $real_timestamp);
@@ -42,7 +50,14 @@
             $_need_year = date('Y', strtotime('first day of previous month', $real_timestamp));
         }
         
-        $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
+        /// TESTer xiface
+        if ($test_xiface) {
+            $debtData = $debt->getUniqueFirmXIface($object['flat_id'], $_need_firm, $dateBegin, $filter);
+        } else {
+            $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
+        }
+
+        //$debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
         $debtData['date'] = str_replace(' ', '&nbsp;', '01 ' . $MONTHS[(int)$new_month] . ' ' . $new_year);
 
         if (empty($debtData['data'])) {
@@ -119,10 +134,15 @@
 
                 foreach ($debtData['data'] as $key => $firm) {
                     $firm_counter++;
-
                     ?>
                     <tr class="bank-name">
-                        <td colspan="7" class="first">
+                        <?php
+                            if ($test_xiface) {
+                                echo "<td colspan='4' class='first'>"
+                            } else {
+                                echo "<td colspan='7' class='first'>"
+                            }
+                        ?>
                             <span class="name-plat">
                                 <?= $debtData['firm'][$key]['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>
                             </span>
@@ -145,6 +165,15 @@
                             ?>
                             <div class="address"><?= $object['address']; ?></div>
                         </td>
+                        <?php
+                            if ($test_xiface) {
+                                ?>
+                                <td><?=$debtData['firm'][$key]['pay']; ?></td>
+                                <td></td>
+                                <td><?= $debtData['firm'][$key]['debt_summ']; ?></td>
+                                <?php
+                            }
+                        ?>
                     </tr>
                     <?php
                         $counter = 0;
