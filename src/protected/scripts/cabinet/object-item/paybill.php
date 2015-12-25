@@ -67,7 +67,7 @@
                 <?php
             }
 
-            if (in_array('khreshchatyk', $pay_systems) && (Authorization::getLoggedUserId() == 4)) {
+            if (in_array('khreshchatyk', $pay_systems) && in_array(Authorization::getLoggedUserId(), [4, 44431])) {
                 ?>
                 <div class="check-box-line">
                     <span id="checkbox_percent_khreshchatyk" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $khreshchatykSum; ?>" data-paysystem-key="khreshchatyk"></span>
@@ -85,7 +85,7 @@
                             if (count($user_cards) == 0) {
                                 ?>
                                 <div class="paybill-ps-card-item card-error card-error-no-cards">
-                                    Немає прив'язаних карток
+                                    Немає прив’язаних карток
                                 </div>
                                 <?php
                             }

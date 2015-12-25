@@ -39,7 +39,7 @@ function removeSpaces(string)
     if((string === undefined) || (string.length == 0)) {
         return '';
     }
-    return string.replace(/ +/g, "").replace(/ +/g, "");
+    return string.replace(/ +/g, "").replace(/\t+/g, "");
 };
 
 function toFloat(val)
