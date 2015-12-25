@@ -136,13 +136,7 @@
                     $firm_counter++;
                     ?>
                     <tr class="bank-name">
-                        <?php
-                            if ($test_xiface) {
-                                echo "<td colspan='4' class='first'>"
-                            } else {
-                                echo "<td colspan='7' class='first'>"
-                            }
-                        ?>
+                        <td class="first" colspan="<?= ($test_xiface) ? '4' : '7'; ?>">
                             <span class="name-plat">
                                 <?= $debtData['firm'][$key]['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>
                             </span>
