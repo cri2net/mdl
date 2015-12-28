@@ -12,9 +12,13 @@ class Khreshchatyk
         $this->SVFE_host = '10.192.1.241';
         $this->SVFE_port = 12406;
         
+        // work terminal & merchant
+        $this->Terminal_ID = 'XE010006';
+        $this->Merchant_ID = 'XE0101000000006';
+        
         // test terminal & merchant 1
-        $this->Terminal_ID = 'XETEST01';
-        $this->Merchant_ID = 'XETEST000000001';
+        // $this->Terminal_ID = 'XETEST01';
+        // $this->Merchant_ID = 'XETEST000000001';
 
         // test terminal & merchant 2
         // $this->Terminal_ID = 'XETEST02';
