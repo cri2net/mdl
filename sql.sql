@@ -570,3 +570,8 @@ ALTER TABLE `gioc_payment`
 
 ALTER TABLE `gioc_payment`
   DROP INDEX `user_id_2`;
+
+-- 2016.01.04
+-- В этот индексе два поля, есть такой же индекс, но с третим полем. То есть этот индекс дублируется, удаляю его.
+ALTER TABLE `gioc_page_views`
+  DROP INDEX `page_type`;
