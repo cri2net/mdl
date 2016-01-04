@@ -466,12 +466,11 @@ class ShoppingCart
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = simplexml_load_string($xml_string);
 
-        if ($xml === null) {
+        if ($xml === null || !isset($xml->ROW)) {
             PDO_DB::update($to_update, self::TABLE, $payment['id']);
             throw new Exception(ERROR_CREATE_PAYMENT_XML);
             return false;
         }
-
 
         if ($xml->ROW->ERR.'') {
             PDO_DB::update($to_update, self::TABLE, $payment['id']);
