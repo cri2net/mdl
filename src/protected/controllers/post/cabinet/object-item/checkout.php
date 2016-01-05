@@ -27,16 +27,20 @@ try {
     $totalAmount = $_debp_sum + $commissionSum;
     
     $cdata = [
-        'processing'         => $pay_system,
-        'summ_komis'         => $commissionSum,
-        'summ_total'         => $totalAmount,
-        'percent'            => $percent,
-        'go_to_payment_time' => microtime(true),
+        'processing' => $pay_system,
+        'summ_komis' => $commissionSum,
+        'summ_total' => $totalAmount,
+        'percent'    => $percent,
     ];
    
     PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
     ShoppingCart::send_payment_to_reports($_payment['id']);
 
+    // go_to_payment_time обновляю только если успешно отправили запрос на оракл.
+    // Иначе могут быть проблемы, например, отправка ложного запроса о проверке статуса на процессинг.
+    $cdata = ['go_to_payment_time' => microtime(true)];
+    PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
+    
 
     if ($pay_system == 'khreshchatyk') {
         $user_card_id = $_POST['khreshchatyk-card'];

@@ -536,37 +536,41 @@ class ShoppingCart
             case 'mastercard':
 
                 $url = UPC::CHECK_STATUS_URL;
+                $result = false;
                 
-                $postdata = [
-                    'MerchantID'   => $payment['processing_data']['first']->upc_merchantid,
-                    'TerminalID'   => $payment['processing_data']['first']->upc_terminalid,
-                    'OrderID'      => $payment['processing_data']['first']->upc_orderid,
-                    'Currency'     => $payment['processing_data']['first']->upc_currency,
-                    'TotalAmount'  => $payment['processing_data']['first']->upc_totalamount,
-                    'PurchaseTime' => $payment['processing_data']['first']->upc_purchasetime
-                ];
-
-                $result = Http::HttpPost($url, $postdata);
-
-                if (!isset($payment['processing_data']['cron_check_status'])) {
-                    $payment['processing_data']['cron_check_status'] = [];
-                }
-                // Это было временно.
-                // if (!isset($payment['processing_data']['first']->upc_merchantid)) {
-                //     $payment['processing_data']['cron_check_status'] = [];
-                // }
-
-                if ($result && stristr($result, '403 Forbidden')) {
-                    $result = false;
-                } else {
-                    $payment['processing_data']['cron_check_status'][] = [
-                        'timestamp' => microtime(true),
-                        'raw_data' => $result,
-                        'request' => $postdata
+                if (isset($payment['processing_data']['first']->upc_merchantid)) {
+                    $postdata = [
+                        'MerchantID'   => $payment['processing_data']['first']->upc_merchantid,
+                        'TerminalID'   => $payment['processing_data']['first']->upc_terminalid,
+                        'OrderID'      => $payment['processing_data']['first']->upc_orderid,
+                        'Currency'     => $payment['processing_data']['first']->upc_currency,
+                        'TotalAmount'  => $payment['processing_data']['first']->upc_totalamount,
+                        'PurchaseTime' => $payment['processing_data']['first']->upc_purchasetime
                     ];
+                    $result = Http::HttpPost($url, $postdata);
+
+                    if (!isset($payment['processing_data']['cron_check_status'])) {
+                        $payment['processing_data']['cron_check_status'] = [];
+                    }
+
+                    // Это было временно.
+                    // if (!isset($payment['processing_data']['first']->upc_merchantid)) {
+                    //     $payment['processing_data']['cron_check_status'] = [];
+                    // }
+
+                    if ($result && stristr($result, '403 Forbidden')) {
+                        $result = false;
+                    } else {
+                        $payment['processing_data']['cron_check_status'][] = [
+                            'timestamp' => microtime(true),
+                            'raw_data' => $result,
+                            'request' => $postdata
+                        ];
+                    }
+                    
+                    $to_update['processing_data'] = json_encode($payment['processing_data']);
                 }
-                
-                $to_update['processing_data'] = json_encode($payment['processing_data']);
+
 
                 if (!$result) {
                     $decline = (time() - $payment['timestamp'] >= 1800);
@@ -618,10 +622,10 @@ class ShoppingCart
                     } else {
                         $decline = (time() - $payment['go_to_payment_time'] >= 1800);
                     }
+                }
 
-                    if ($decline) {
-                        $to_update['status'] = 'error';
-                    }
+                if ($decline) {
+                    $to_update['status'] = 'error';
                 }
                 break;
 
