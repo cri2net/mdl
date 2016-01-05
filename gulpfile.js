@@ -41,6 +41,13 @@ gulp.task('less', function () {
         .pipe(gulp.dest('./public/style/'))
 });
 
+/* TASK: Compile LESS files in no-compress CSS file */
+gulp.task('less_nocompress', function () {
+    gulp.src('./src/less/no-compress.less')
+        .pipe(less({}))
+        .pipe(gulp.dest('./public/style/'))
+});
+
 /* TASK: Create webserver for LiveReload */
 gulp.task('connect', function () {
     connect.server({
@@ -91,7 +98,7 @@ gulp.task('watch', function(){
     // watch(IMAGES_MASK, ['images']).on('change', stackReload);
     // watch(CSS_ENCODED_IMAGES_MASK, ['less'] ).on('change', stackReload);
     // watch('./src/**/*.js', ['js']).on('change', stackReload);
-    gulp.watch(['./src/**/*.less'], ['less']).on('change', stackReload);
+    gulp.watch(['./src/**/*.less'], ['less', 'less_nocompress']).on('change', stackReload);
     gulp.watch(WEBPAGES_MASK, ['webpages']).on('change', stackReload);
     gulp.watch(IMAGES_MASK, ['images']).on('change', stackReload);
     gulp.watch(CSS_ENCODED_IMAGES_MASK, ['less'] ).on('change', stackReload);
@@ -123,4 +130,4 @@ gulp.task('cleanup', function(){
 });
 
 /* DEFAULT TASK, running needed tasks */
-gulp.task('default', ['connect', 'webpages', 'less', 'images', 'fonts', 'js', 'css', 'watch']);
+gulp.task('default', ['connect', 'webpages', 'less', 'less_nocompress', 'images', 'fonts', 'js', 'css', 'watch']);
