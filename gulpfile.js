@@ -59,7 +59,7 @@ gulp.task('webpages', function(){
 /* TASK: Moving JS files to public/js directory */
 gulp.task('js', function(){
     gulp.src(JS_MASK)
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(gulp.dest('./public/'))
 });
 
