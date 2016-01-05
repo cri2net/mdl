@@ -251,11 +251,11 @@ function checkForInt(evt)
 
 function checkForDouble(input)
 {
-    // даёт возможность вставить одну точку или одну запятую и цифры
+    // даёт возможность вставить одну точку или одну запятую и одну цифру дробной части
     var val = $(input).val();
     var goodval = val.replace(/[^\d,.]*/g, '')
           .replace(/([,.])[,.]+/g, '$1')
-          .replace(/^[^\d]*(\d+([.,]\d{0,5})?).*$/g, '$1');
+          .replace(/^([^\d]*(\d+([.,]\d{0,1})?)).*$/g, '$1');
 
     if (goodval != val) {
         $(input).val(goodval).change();

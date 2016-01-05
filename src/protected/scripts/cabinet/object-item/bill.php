@@ -58,7 +58,7 @@
                     <?php
                         if (isset($debtData['LGOTA']) && $debtData['LGOTA']) {
                             ?>
-                            <br>Льготи: <?= $debtData['LGOTA']; ?>
+                            <br>Пільги: <?= $debtData['LGOTA']; ?>
                             <?php
                         }
                     ?>
