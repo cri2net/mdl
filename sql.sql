@@ -575,3 +575,12 @@ ALTER TABLE `gioc_payment`
 -- В этот индексе два поля, есть такой же индекс, но с третим полем. То есть этот индекс дублируется, удаляю его.
 ALTER TABLE `gioc_page_views`
   DROP INDEX `page_type`;
+
+
+-- 2016.01.05
+ALTER TABLE `gioc_users`
+  ADD COLUMN `deleted_processed` TINYINT(1) DEFAULT 0  NOT NULL AFTER `deleted_timestamp`,
+  ADD COLUMN `deleted_answer` TEXT NULL AFTER `deleted_processed`,
+  ADD COLUMN `deleted_answer_time` DOUBLE NULL AFTER `deleted_answer`, 
+  DROP INDEX `deleted`,
+  ADD  INDEX `deleted` (`deleted`, `deleted_processed`);
