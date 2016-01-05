@@ -88,11 +88,20 @@
             </tr>
             <?php
                 $counter = 0;
+                $services_with_counters = [];
+
+                for ($i=0; $i < count($services); $i++) {
+                    $services[$i]['counter_data'] = (array)(@json_decode($services[$i]['counter_data']));
+                    $services[$i]['data'] = json_decode($services[$i]['data']);
+                    
+                    if (!empty($services[$i]['counter_data'])) {
+                        $services_with_counters[] = $services[$i];
+                    }
+                }
                 
                 foreach ($services as $item) {
                     $counter++;
 
-                    $item['data'] = json_decode($item['data']);
                     $from_date = DateTime::createFromFormat('Y-m-d', $item['data']->dbegin);
                     $to_date = DateTime::createFromFormat('Y-m-d', $item['data']->dend);
                     ?>
@@ -120,6 +129,80 @@
                 }
             ?>
         </tbody>
+    <?php
+        if (!empty($services_with_counters)) {
+            ?>
+            <thead>
+                <tr>
+                    <th class="first" colspan="5">Показання лічильників</th>
+                </tr>
+            </thead>
+            <thead>
+                <tr class="bank-name title">
+                    <td class="first">Послуга</td>
+                    <td>№ ліч.</td>
+                    <td>Поп. пок., м&sup3;/КвтЧ</td>
+                    <td>Пот. пок., м&sup3;/КвтЧ</td>
+                    <td>Різниця, м&sup3;/КвтЧ</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $counter = 0;
+                    
+                    foreach ($services_with_counters as $item) {
+
+                        $counter_number = 0;
+                        foreach ($item['counter_data'] as $counter_item) {
+                            $counter++;
+                            $counter_number++;
+
+                            if (empty($counter_item->abcounter)) {
+                                $counter_item->abcounter = $counter_number;
+                            }
+
+                            $no_border = (($counter == count($firm['counter'])) && ($counter < count($debtData['firm'])));
+                            ?>
+                            <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                                <td class="first">
+                                    <span><?= $item['data']->name_plat; ?></span>
+                                    <br>
+                                    <?= $item['data']->firm_name; ?>
+                                </td>
+                                <td><span class="item-summ"><?= htmlspecialchars($counter_item->abcounter); ?></span></td>
+                                <td>
+                                    <?php
+                                        $summ = explode('.', number_format($counter_item->old_value, 2));
+                                    ?>
+                                    <span class="item-summ">
+                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <?php
+                                        $summ = explode('.', number_format($counter_item->new_value, 2));
+                                    ?>
+                                    <span class="item-summ">
+                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <?php
+                                        $summ = explode('.', number_format($counter_item->pcount, 2));
+                                    ?>
+                                    <span class="item-summ">
+                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    }
+                ?>
+            </tbody>
+            <?php
+        }
+    ?>
     </table>
 </div>
 <div class="clear"></div>
