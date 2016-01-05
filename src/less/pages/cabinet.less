@@ -443,8 +443,18 @@ content .inner {
                     color:#000; border-bottom:1px solid #ccf0e3; font-size:12px; line-height:16px;
                     &.even { border-bottom-width:2px; }
                     &.no-border { border-bottom-width:0; }
+                    &.hints-tr {
+                        border-top: 2px solid #ccf0e3;
+                        border-bottom-width: 0px;
+                    }
+
                     td {
                         padding-bottom:13px; padding-top:10px;
+
+                        .hint-star {
+                            display: inline-block;
+                            width: 15px;
+                        }
                     }
                 }
                 &.total-summ-tr {
@@ -469,6 +479,21 @@ content .inner {
                     }
                     input.txt.num-short { width:100px; }
                     .btn { width:150px; }
+
+                    &.first {
+                        max-width: 300px;
+                    }
+                }
+            }
+
+            &.hints-table {
+                margin-top: 45px;
+
+                tr {
+                    &.item-row {
+                        border-top: 2px solid #ccf0e3;
+                        border-bottom-width: 0px;
+                    }
                 }
             }
         }

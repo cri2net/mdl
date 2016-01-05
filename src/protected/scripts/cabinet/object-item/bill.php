@@ -47,14 +47,21 @@
     <table class="full-width-table datailbill-table no-border">
         <thead>
             <tr>
-                <th class="first align-center counters-th" colspan="5">
-                    Рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?>
+                <th class="first align-center counters-th" colspan="4">
+                    Рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?> р.
                 </th>
             </tr>
             <tr>
-                <th class="first align-center" colspan="5">
+                <th class="first align-center" colspan="4">
                     <span><?= $object['address']; ?></span><br>
-                    Загальна площа: <b><?= $debtData['PL_OB']; ?> м.кв.</b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м.кв.</b>, проживаючих: <b><?= $debtData['PEOPLE']; ?></b>
+                    Загальна площа: <b><?= $debtData['PL_OB']; ?> м<sup>2</sup></b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м<sup>2</sup></b>, проживаючих: <b><?= $debtData['PEOPLE']; ?></b>
+                    <?php
+                        if (isset($debtData['LGOTA']) && $debtData['LGOTA']) {
+                            ?>
+                            <br>Льготи: <?= $debtData['LGOTA']; ?>
+                            <?php
+                        }
+                    ?>
                 </th>
             </tr>
         </thead>
@@ -64,14 +71,13 @@
                     <div class="check-box-line">
                         <span id="check_all_services" class="niceCheck check-group-rule checked"><input onchange="checkAllServices($('#check_all_services-elem'));" id="check_all_services-elem" type="checkbox" checked="checked"></span>
                         <label onclick="$('#check_all_services').click();">
-                            Назва послуги
+                            Назва послуги /<br>одержувач коштів
                         </label>
                     </div>
                 </td>
-                <td style="white-space:nowrap;">Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']['small']; ?>, грн</td>
-                <td style="white-space:nowrap;">Сума боргу,<br>грн</td>
-                <td style="white-space:nowrap;">Переплата,<br>грн</td>
-                <td style="white-space:nowrap;">До сплати,<br>грн</td>
+                <td style="white-space:nowrap;">Заборгованість /<br>переплата, грн</td>
+                <td style="white-space:nowrap;">Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']['small']; ?>, грн *</td>
+                <td style="white-space:nowrap;">До сплати,<br>грн **</td>
             </tr>
             <?php
                 $counter = 0;
@@ -137,20 +143,6 @@
                         </td>
                         <td>
                             <?php
-                                if ($item['SUMM_MONTH'] == '-') {
-                                    echo '—';
-                                } else {
-                                    $summ = explode(',', $item['SUMM_MONTH']);
-                                    ?>
-                                    <span class="item-summ">
-                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                    </span>
-                                    <?php
-                                }
-                            ?>
-                        </td>
-                        <td>
-                            <?php
                                 if ($item['debt'] == '-') {
                                     echo '—';
                                 } else {
@@ -165,10 +157,10 @@
                         </td>
                         <td>
                             <?php
-                                if ($item['over_pay'] == '-') {
+                                if ($item['SUMM_MONTH'] == '-') {
                                     echo '—';
                                 } else {
-                                    $summ = explode(',', $item['over_pay']);
+                                    $summ = explode(',', $item['SUMM_MONTH']);
                                     ?>
                                     <span class="item-summ">
                                         <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
@@ -202,11 +194,11 @@
                 }
             ?>
             <tr class="total-summ-tr">
-                <td class="first align-right" colspan="4">Усього, грн:</td>
+                <td class="first align-right" colspan="3">Усього, грн:</td>
                 <td class="total-sum" id="total_debt"><?= $debtData['full_dept']; ?></td>
             </tr>
             <tr>
-                <td class="align-center" colspan="5">
+                <td class="align-center" colspan="4">
                     <input type="hidden" name="dbegin" value="<?= $dateBegin; ?>">
                     <input type="hidden" name="dend" value="<?= $dateEnd; ?>">
                     <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
@@ -215,7 +207,19 @@
             </tr>
         </tbody>
     </table>
+    <table class="full-width-table datailbill-table no-border hints-table">
+        <tbody>
+            <tr class="item-row">
+                <td class="first">
+                    <b class="hint-star">*</b> — з врахуванням пільг, субсидій та перерахунків <br>
+                    <b class="hint-star">**</b> — з врахуванням заборгованності <br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </form>
+
+
 
 <script>
 $(document).ready(function(){

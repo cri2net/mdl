@@ -234,7 +234,7 @@ class Flat
         $explode['house'] = House::getHouseName($flat['house_id'], $city_id);
         $explode['flat'] = $flat['flat_number'];
         
-        $address .= "{$explode['street']} {$explode['house']}, кв. {$flat['flat_number']}";
+        $address .= "{$explode['street']}, {$explode['house']}, кв. {$flat['flat_number']}";
         return $address;
     }
 

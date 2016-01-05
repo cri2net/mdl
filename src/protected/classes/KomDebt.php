@@ -185,10 +185,11 @@ class KomDebt
             
             $data['dbegin']    = $this->beginDate;
             $data['dend']      = $this->endDate;
-            $data['PEOPLE']    = (isset($xml->ROW[0]->PEOPLE))    ? $xml->ROW[0]->PEOPLE    : null;
-            $data['PL_OB']     = (isset($xml->ROW[0]->PL_OB))     ? $xml->ROW[0]->PL_OB     : null;
-            $data['PL_POL']    = (isset($xml->ROW[0]->PL_POL))    ? $xml->ROW[0]->PL_POL    : null;
-            $data['PLAT_CODE'] = (isset($xml->ROW[0]->PLAT_CODE)) ? $xml->ROW[0]->PLAT_CODE : null;
+            $data['PEOPLE']    = (isset($xml->ROW[0]->PEOPLE))    ? $xml->ROW[0]->PEOPLE    . '' : null;
+            $data['PL_OB']     = (isset($xml->ROW[0]->PL_OB))     ? $xml->ROW[0]->PL_OB     . '' : null;
+            $data['LGOTA']     = (isset($xml->ROW[0]->LGOTA))     ? $xml->ROW[0]->LGOTA     . '' : null;
+            $data['PL_POL']    = (isset($xml->ROW[0]->PL_POL))    ? $xml->ROW[0]->PL_POL    . '' : null;
+            $data['PLAT_CODE'] = (isset($xml->ROW[0]->PLAT_CODE)) ? $xml->ROW[0]->PLAT_CODE . '' : null;
             // Такие вещи, как PLAT_CODE и OUT_KEY доступны только в истории начислений
             
             $fullDept = 0;
@@ -207,13 +208,16 @@ class KomDebt
                     $list[$tmp_key] = trim($row->$tmp_key . '');
                 }
 
-                $list['firm_name'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
-                $list['name_plat'] = $this->getNamePlat($row->NAME_PLAT);
+                $list['firm_name']  = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
+                $list['name_plat']  = $this->getNamePlat($row->NAME_PLAT);
                 $list['NAME_BANKS'] = htmlspecialchars($list['NAME_BANKS'], ENT_QUOTES);
-                $list['BANK_CODE'] = (string)$row->MFO;
+                $list['BANK_CODE']  = (string)$row->MFO;
                 $list['DBEGIN_XML'] = date("Y-m-d", strtotime((string)$row->DBEGIN));
-                $list['DEND_XML'] = date("Y-m-d", strtotime((string)$row->DEND));
-                $list['ISXDOLG'] = ($row->ISXDOLG.'') / 100;
+                $list['DEND_XML']   = date("Y-m-d", strtotime((string)$row->DEND));
+                $list['ISXDOLG']    = ($row->ISXDOLG.'') / 100;
+                $list['OPLAT']      = ($row->OPLAT.'')   / 100;
+                
+                $list['OPLAT']      = str_replace(".", ",", sprintf('%.2f', $list['OPLAT']));
 
                 $SUMM_MONTH = ((float)$row->SUMM_MONTH)/100;
                 if ($SUMM_MONTH <= 0) {
@@ -245,35 +249,22 @@ class KomDebt
                 }
                 
                 $debt = ((float)$row->SUMM_DOLG)/100;
+                $debt -= $SUMM_MONTH;
+                $debt = round($debt, 2);
                 
-                if ((int)$row->SUMM_DOLG < 0) {
-                    $list['over_pay'] = substr($debt, 1);
-                    $list['over_pay'] = str_replace(".", ",", $list['over_pay']);
-                    $list['to_pay'] = "0,00";
-                    $list['debt'] = "-";
-                } elseif ((int)$row->SUMM_DOLG == 0) {
-                    $list['over_pay'] = "-";
-                    $list['to_pay'] = "0,00";
-                    $list['debt'] = "-";
+                $list['debt'] = sprintf('%.2f', $debt);
+                $list['debt'] = str_replace(".", ",", $list['debt']);                
+                $list['to_pay'] = str_replace(".", ",", sprintf('%.2f', floatval($row->SUMM_DOLG / 100)));
+
+                if (!$row->COUNTERS->COUNTERS_ITEM) {
+                    $fullDept += (int)$row->SUMM_DOLG;
+                    $list['counter'] = 0;
                 } else {
-                    if (!$row->COUNTERS->COUNTERS_ITEM) {
-                        $fullDept += (int)$row->SUMM_DOLG;
-                    }
-                    $list['over_pay'] = "-";
-                    $list['to_pay'] = sprintf('%.2f', $debt);
-                    $list['debt'] = sprintf('%.2f', $debt);
-                    
-                    $list['to_pay'] = str_replace(".", ",", $list['to_pay']);
-                    $list['debt'] = str_replace(".", ",", $list['debt']);
-                }
-                
-                if ($row->COUNTERS->COUNTERS_ITEM) {
                     $list['counter'] = 1;
                     $list['to_pay'] = "-";
                     $list['debt'] = "-";
-                } else {
-                    $list['counter'] = 0;
                 }
+
                 $data['list'][] = $list;
             }
 
@@ -742,9 +733,10 @@ class KomDebt
         $data['begin_month'] = $this->monthsFullName[date('n', strtotime($this->beginDate))]['ua']['big'];
         $data['previous_month'] = $this->monthsFullName[date('n', $debtBeginMonth)]['ua']['big'];
         $data['counter'] = 0;
-        $data['PEOPLE'] = $xml->ROW[0]->PEOPLE;
-        $data['PL_OB'] = $xml->ROW[0]->PL_OB;
-        $data['PL_POL'] = $xml->ROW[0]->PL_POL;
+        $data['PEOPLE']  = (isset($xml->ROW[0]->PEOPLE)) ? $xml->ROW[0]->PEOPLE . '' : null;
+        $data['PL_OB']   = (isset($xml->ROW[0]->PL_OB))  ? $xml->ROW[0]->PL_OB  . '' : null;
+        $data['PL_POL']  = (isset($xml->ROW[0]->PL_POL)) ? $xml->ROW[0]->PL_POL . '' : null;
+        $data['LGOTA']   = (isset($xml->ROW[0]->LGOTA))  ? $xml->ROW[0]->LGOTA  . '' : null;
             
         $data['TLF'] = $xml->ROW[0]->TLF;
         $arr_keys = ['ISXDOLG', 'OPLAT', 'SUBS', 'TARIF', 'SUMM_MONTH', 'SUMM_DOLG'];

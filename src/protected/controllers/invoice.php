@@ -54,7 +54,8 @@
         exit();
     }
 
-    $debtData = $debt->getData($house['flat_id'], null, 10);
+    $depth = ($__is_email_mode) ? 10 : 0;
+    $debtData = $debt->getData($house['flat_id'], null, $depth);
     if (empty($debtData['list']) && $__is_email_mode) {
         exit();
     }
@@ -75,6 +76,7 @@
     $house['payed'] = ($tmp_oplat >= $tmp_debt_summ);
     
     $prev_month_name  = $MONTHS_NAME[date('n', strtotime('previous month'))]['ua']['small'];
+    $prev_month_name_when  = $MONTHS_WHEN[date('n', strtotime('previous month'))]['ua'];
     $this_month_short = $MONTHS_NAME[date('n')]['ua']['short'];
 
     $_ff = 'font-family:Ubuntu, Arial, Times, Georgia;';
@@ -192,6 +194,13 @@
                 <?= $address_detail['city']; ?><br>
                 <span style="<?= $_text_color; ?> <?= $_ff; ?> line-height:20px; font-size:18px;"><?= htmlspecialchars(trim($house['street_name_full'])); ?>, <?= htmlspecialchars($address_detail['house']); ?></span> <br>
                 <?= htmlspecialchars($flat_number); ?>
+                <?php
+                    if (isset($debtData['LGOTA']) && $debtData['LGOTA']) {
+                        ?>
+                        <br>Льготи: <?= $debtData['LGOTA']; ?>
+                        <?php
+                    }
+                ?>
             </td>
         </tr></tbody></table></td>
         <td style="padding-top:14px; padding-bottom:14px; padding-right:8px;"><table <?= $_table_attr; ?>><tbody>
@@ -238,12 +247,12 @@
         <tr>
             <td style="padding:0px; line-height:32px;" width="18">&nbsp;</td>
             <td align="right" bgcolor="#eeeeee" style="background-color:#eeeeee; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" width="30" height="30" valign="top">№</td>
-            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px; padding-left:20px;" height="30" valign="top">Послуга</td>
-            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Борг<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, 01.<?= date('m', strtotime('previous month')); ?></span>&nbsp;&nbsp;</td>
-            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Тариф&nbsp;&nbsp;</td>
-            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Нараховано<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, 01.<?= date('m'); ?></span>&nbsp;&nbsp;</td>
-            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Сплачено<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, <?= $prev_month_name; ?></span>&nbsp;&nbsp;</td>
-            <td align="right" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px; padding-right:30px;" height="30" valign="top">Борг<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;">, 01.<?= date('m'); ?></span></td>
+            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px; padding-left:20px;" height="30" valign="top">Послуга / одержувач коштів</td>
+            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Заборг. / переплата<br /><span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;"> на 01.<?= date('m', strtotime('previous month')); ?>, грн</span>&nbsp;&nbsp;</td>
+            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Тариф, грн&nbsp;&nbsp;</td>
+            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">Нараховано<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;"> <br /> за <?= $prev_month_name; ?>, грн *</span>&nbsp;&nbsp;</td>
+            <td align="left" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px;" height="30" valign="top">До сплати<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;"> <br /> за <?= $prev_month_name; ?>, грн</span></td>
+            <td align="right" bgcolor="#eeeeee" style="background-color:#eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; font-weight:bold; line-height:18px; padding-bottom:2px; padding-right:30px;" height="30" valign="top">Сплачено<span style="font-weight:normal; color:#000000; <?= $_ff; ?> font-size:12px;"> <br /> у <?= $prev_month_name_when; ?>, грн **</span>&nbsp;&nbsp;</td>
             <td style="padding:0px; line-height:10px;" width="18">&nbsp;</td>
         </tr>
         <?php
@@ -278,9 +287,8 @@
                     $summ_month = $summ_month[0] . '<span style="font-size:12px;">,'. $summ_month[1] .'</span>';
                 }
 
-                $debtData_item['OPLAT'] = (isset($debtData_item['OPLAT'])) ? str_replace(',', '.', $debtData_item['OPLAT']) : '0,00';
-                $oplat = str_replace(".", ",", sprintf('%.2f', $debtData_item['OPLAT']));
-                $oplat = explode(',', $oplat);
+                $debtData_item['OPLAT'] = (isset($debtData_item['OPLAT'])) ? $debtData_item['OPLAT'] : '0,00';
+                $oplat = explode(',', $debtData_item['OPLAT']);
                 $oplat = $oplat[0] . '<span style="font-size:12px;">,'. $oplat[1] .'</span>';
 
                 $debtData_item['ISXDOLG'] = (isset($debtData_item['ISXDOLG'])) ? str_replace(',', '.', $debtData_item['ISXDOLG']) : '0,00';
@@ -322,8 +330,8 @@
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $prev_month_debt; ?></td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $tarif; ?></td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $summ_month; ?></td>
-                    <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $oplat; ?></td>
-                    <td bgcolor="<?= $bg_color; ?>" align="right" style="border-right:1px solid #eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px; padding-right:30px;" height="30"><?= $to_pay; ?></td>
+                    <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $to_pay; ?></td>
+                    <td bgcolor="<?= $bg_color; ?>" align="right" style="border-right:1px solid #eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px; padding-right:30px;" height="30"><?= $oplat; ?></td>
                     <td style="padding:0px; line-height:10px;" width="18">&nbsp;</td>
                 </tr>
                 <?php
@@ -376,31 +384,13 @@
             <a href="<?= htmlspecialchars($paybill_link); ?>" target="_blank">
                 <img hspace="0" vspace="0" border="0" src="<?= $__img_path; ?>pay-btn.png" alt="Оплатить онлайн" width="261" height="60">
             </a>
-            <table width="432" cellspacing="0" cellpadding="0" border="0"><tbody><tr>
-                <?php
-                    if ($house['payed']) {
-                        ?>
-                        <td>&nbsp;</td>
-                        <td width="19" style="padding-top:34px;" valign="top"><table background="<?= $__img_path; ?>smile.png" <?= $_table_attr; ?>><tbody><tr>
-                            <td style="padding:0px; line-height:19px;" height="19">&nbsp;</td>
-                        </tr></tbody></table></td>
-                        <td align="left" width="310" style="color:#00b770; font-size:14px; <?= $_ff; ?> line-height:18px; padding-left:12px; padding-top:30px;">
-                            Постачальники комунальних послуг дякують Вам за своєчасну сплату.
-                        </td>
-                        <?php
-                    } else {
-                        ?>
-                        <td>&nbsp;</td>
-                        <td width="21" style="padding-top:33px;" valign="top"><table background="<?= $__img_path; ?>warning.png" <?= $_table_attr; ?>><tbody><tr>
-                            <td style="padding:0px; line-height:18px;" height="18">&nbsp;</td>
-                        </tr></tbody></table></td>
-                        <td align="left" width="370" style="color:#990000; font-size:14px; <?= $_ff; ?> line-height:18px; padding-left:11px; padding-top:30px;">
-                            Ви сплатили не всю заборгованість, можете звернутися для отримання субсидії в <a style="<?= $_text_color; ?> text-decoration:underline; font-size:14px; <?= $_ff; ?> line-height:18px;" href="<?= BASE_URL; ?>/foruser/helplinks/links/#social" target="_blank">Департамент соціальної політики міста Києва.</a>
-                        </td>
-                        <?php
-                    }
-                ?>
-            </tr></tbody></table>
+        </td>
+    </tr></tbody></table>
+    <table <?= $_table_attr; ?>><tbody><tr>
+        <td style="padding:0px; line-height:32px;" width="18">&nbsp;</td>
+        <td align="left" style="font-size:12px; <?= $_ff; ?> line-height:24px; padding-top:11px; padding-right:40px; padding-bottom:34px;">
+            <b class="hint-star">*</b> — з врахуванням пільг та перерахунків <br>
+            <b class="hint-star">**</b> — довідково <br>
         </td>
     </tr></tbody></table>
     <table <?= $_table_attr; ?>><tbody><tr>

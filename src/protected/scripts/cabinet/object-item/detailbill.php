@@ -57,14 +57,15 @@
             $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
         }
 
-        //$debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
-        $debtData['date'] = str_replace(' ', '&nbsp;', '01 ' . $MONTHS[(int)$new_month] . ' ' . $new_year);
-
         if (empty($debtData['data'])) {
             throw new Exception(ERROR_EMPTY_BILL);
         }
+
         $prev_month = DateTime::createFromFormat('d.m.Y', $debtData['previous_date']);
         $prev_month_when = $MONTHS_WHEN[$prev_month->format('n')]['ua'];
+
+        $debtData['date'] = str_replace(' ', '&nbsp;', '01 ' . $MONTHS[(int)$new_month] . ' ' . $new_year);
+        $debtData['previous_month'] = $MONTHS_NAME[$prev_month->format('n')]['ua']['small']; // это просто приводим в нижний регистр
         $have_error = false;
 
     } catch(Exception $e) {
@@ -119,13 +120,17 @@
     <table class="full-width-table datailbill-table no-border">
         <thead>
             <tr>
-                <th class="first">Послуга, <br> комунальне пiдприємство</th>
-                <th class="td-sum">Борг на <?= $debtData['previous_date']; ?></th>
-                <th>Тариф, грн</th>
-                <th>Нараховано за <?= $debtData['previous_month']; ?></th>
-                <th class="td-sum">Сплачено у <?= $prev_month_when; ?></th>
-                <th>Субсидія,<br>компенсація</th>
-                <th>Борг на <?= $debtData['dbegin']; ?></th>
+                <th rowspan="2" class="first">Послуга /<br> одержувач коштів</th>
+                <th rowspan="2" class="td-sum">Заборг. / переплата на <?= date('d.m', date_timestamp_get($prev_month)); ?>, грн</th>
+                <th rowspan="2">Тариф, грн</th>
+                <th rowspan="2">Нараховано за <?= $debtData['previous_month']; ?>, грн *</th>
+                <th colspan="2" style="text-align:center; border-bottom: solid 1px #fff;">Субсидія,&nbsp;грн</th>
+                <th rowspan="2">До сплати за <?= $debtData['previous_month']; ?>, грн</th>
+                <th rowspan="2" class="td-sum">Сплачено у <?= $prev_month_when; ?>, грн **</th>
+            </tr>
+            <tr>
+                <th style="font-size: 12px; padding-left: 0;">Розмір</th>
+                <th style="font-size: 12px; padding-right: 0;">Об.&nbsp;платіж</th>
             </tr>
         </thead>
         <tbody>
@@ -136,7 +141,7 @@
                     $firm_counter++;
                     ?>
                     <tr class="bank-name">
-                        <td class="first" colspan="<?= ($test_xiface) ? '4' : '7'; ?>">
+                        <td class="first" colspan="<?= ($test_xiface) ? '4' : '8'; ?>">
                             <span class="name-plat">
                                 <?= $debtData['firm'][$key]['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>
                             </span>
@@ -198,8 +203,8 @@
                                     ?>
                                     <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                 </td>
-                                <td><?= $item['OPLAT']; ?></td>
                                 <td><?= $item['SUBS']; ?></td>
+                                <td>—</td>
                                 <td>
                                     <?php
                                         $summ = floatval(str_replace(",", ".", $item['SUMM_DOLG']));
@@ -208,11 +213,18 @@
                                     ?>
                                     <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                 </td>
+                                <td><?= $item['OPLAT']; ?></td>
                             </tr>
                             <?php
                         }
                 }
             ?>
+            <tr class="item-row hints-tr">
+                <td class="first" colspan="8">
+                    <b class="hint-star">*</b> — з врахуванням пільг та перерахунків <br>
+                    <b class="hint-star">**</b> — довідково <br>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
