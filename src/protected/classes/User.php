@@ -119,11 +119,18 @@ class User
         }
     }
 
-    public static function getUserByLogin($login)
+    /**
+     * Приватный! метод для получения записи о пользователе по одному из полей.
+     * Рекомендуется указывать те поля, которые уникальны
+     * @param  string $column название поля в структуре таблицы с пользователями
+     * @param  string $value  значение поля
+     * @return assoc array | null
+     */
+    private static function getUserByColumn($column, $value)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE login=? AND deleted=0 LIMIT 1");
-        $stm->execute([$login]);
+        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE $column=? AND deleted=0 LIMIT 1");
+        $stm->execute([$value]);
         $user = $stm->fetch();
         if ($user === false) {
             return null;
@@ -131,16 +138,19 @@ class User
         return $user;
     }
 
+    public static function getUserByLogin($login)
+    {
+        return self::getUserByColumn('login', $login);
+    }
+
+    public static function getUserByPhone($phone)
+    {
+        return self::getUserByColumn('mob_phone', $phone);
+    }
+
     public static function getUserById($user_id)
     {
-        $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE id=? AND deleted=0 LIMIT 1");
-        $stm->execute([$user_id]);
-        $user = $stm->fetch();
-        if ($user === false) {
-            return null;
-        }
-        return $user;
+        return self::getUserByColumn('id', $user_id);
     }
 
     public static function registration($data)

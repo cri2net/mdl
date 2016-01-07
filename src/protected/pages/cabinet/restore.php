@@ -21,7 +21,7 @@
     } elseif (isset($_SESSION['restore']['status'])) {
         ?>
         <h2 class="big-success-message">Цей крок пройдено</h2> <br>
-        Перевірте свою поштову скриньку, ми відправили Вам лист з подальшими інструкціями.
+        <?= $_SESSION['restore']['success_text']; ?>
         <?php
         if ($_SESSION['restore']['email_link']) {
             ?><br> Перейти до <a href="<?= $_SESSION['restore']['email_link']['link']; ?>"><?= $_SESSION['restore']['email_link']['title']; ?></a> <?php
@@ -40,8 +40,14 @@
     <div class="form-block">
         <form method="post" action="<?= BASE_URL; ?>/post/cabinet/restore/">
             <div class="input login-form-email">
-                <label>Електронна пошта <br>
-                    <input class="txt form-txt-input" type="email" name="email" value="<?= $_email; ?>">
+                <div class="bracket">або</div>
+                <label><span style="cursor:help;" title="Ви можете використовувати обліковий запис (логін, пароль) який ви використовували на personal-account.kiev.ua">Електронна пошта / логін </span> <br>
+                    <input class="txt form-txt-input" type="text" name="email" value="<?= $_email; ?>" style="cursor:help;" title="Ви можете використовувати обліковий запис (логін, пароль) який ви використовували на personal-account.kiev.ua">
+                </label>
+            </div>
+            <div class="input">
+                <label>Телефон <br>
+                    <input class="txt form-txt-input" placeholder="+380" type="text" name="phone" id="login-phone" value="<?= $_phone; ?>">
                 </label>
             </div>
             <div class="input">
