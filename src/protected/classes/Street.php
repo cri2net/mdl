@@ -40,7 +40,6 @@ class Street
 
     public static function get($q, $city_id = self::KIEV_ID, $limit=0)
     {
-        self::rebuild();
         $pdo = PDO_DB::getPDO();
         $limit = (int)$limit;
         $limit = ($limit > 0) ? "LIMIT $limit" : '';
@@ -71,7 +70,7 @@ class Street
                 'street_id' => $xml->ROW[$i]->STREET_ID,
                 'name_ua' => $xml->ROW[$i]->NAME_STREET
             ];
-            PDO_DB::insert($street, self::TABLE);
+            PDO_DB::insert($street, self::TABLE, true);
         }
     }
 }

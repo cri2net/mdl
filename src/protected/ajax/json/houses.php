@@ -1,25 +1,25 @@
 <?php
-    $arr = House::get($_GET['street_id']);
+$arr = House::get($_GET['street_id']);
 
-    // делаем умную сортировку.
-    // правильный порядок: 1, 2, 10
-    // НЕправильный порядок: 1, 10, 2
-    
-    $max = 0;
-    for ($i=0; $i < count($arr); $i++) {
-        $max = max($max, strlen($arr[$i]['house_number']));
-    }
+// делаем умную сортировку.
+// правильный порядок: 1, 2, 10
+// НЕправильный порядок: 1, 10, 2
 
-    $keys = [];
-    for ($i=0; $i < count($arr); $i++) {
-        $keys[$i] = str_pad($arr[$i]['house_number'], $max, '0', STR_PAD_LEFT);
-    }
+$max = 0;
+for ($i=0; $i < count($arr); $i++) {
+    $max = max($max, strlen($arr[$i]['house_number']));
+}
 
-    array_multisort($keys, SORT_ASC, $arr);
+$keys = [];
+for ($i=0; $i < count($arr); $i++) {
+    $keys[$i] = str_pad($arr[$i]['house_number'], $max, '0', STR_PAD_LEFT);
+}
 
-    $houses = [];
-    for ($i=0; $i < count($arr); $i++) {
-        $houses[] = ['label' => $arr[$i]['house_number'], 'id' => $arr[$i]['house_id']];
-    }
+array_multisort($keys, SORT_ASC, $arr);
 
-    echo json_encode($houses);
+$houses = [];
+for ($i=0; $i < count($arr); $i++) {
+    $houses[] = ['label' => $arr[$i]['house_number'], 'id' => $arr[$i]['house_id']];
+}
+
+echo json_encode($houses);
