@@ -56,14 +56,13 @@ function recalc2()
             if ($(this).val() == '') {
                 $(this).val('0,00');
             }
-            var val = $(this).val().replace(',', '.');
+            var val = parseFloat($(this).val().replace(',', '.'));
             
             if (isNaN(val)){
                 $(this).val('0,00');
-                val = '0.00';
+            } else if (val > 0) {
+                total += val;
             }
-            
-            total += parseFloat(val);
         }
     });
 
@@ -97,12 +96,11 @@ function recalc()
     $('input:text').each(function(i){
         var name = $(this).attr('name');
         if (!$(this).attr('disabled') && name.indexOf('sum') != -1){
-            var val = $(this).val().replace(',', '.');
+            var val = parseFloat($(this).val().replace(',', '.'));
             
-            if (isNaN(val)) {
-                val = '0.00';
+            if (!isNaN(val) && (val > 0)) {
+                total += val;
             }
-            total += parseFloat(val);
         }
     });
     
@@ -161,7 +159,7 @@ function billPageUpdateTotalSumm()
         if (!$(this).is(':disabled')) {
             var val = $(this).val().replace(',', '.');
             val = parseFloat(val);
-            if (!isNaN(val)) {
+            if (!isNaN(val) && (val > 0)) {
                 total += val;
             }
         }

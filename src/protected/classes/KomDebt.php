@@ -257,7 +257,9 @@ class KomDebt
                 $list['to_pay'] = str_replace(".", ",", sprintf('%.2f', floatval($row->SUMM_DOLG / 100)));
 
                 if (!$row->COUNTERS->COUNTERS_ITEM) {
-                    $fullDept += (int)$row->SUMM_DOLG;
+                    if (intval($row->SUMM_DOLG) > 0) {
+                        $fullDept += (int)$row->SUMM_DOLG;
+                    }
                     $list['counter'] = 0;
                 } else {
                     $list['counter'] = 1;
