@@ -584,3 +584,7 @@ ALTER TABLE `gioc_users`
   ADD COLUMN `deleted_answer_time` DOUBLE NULL AFTER `deleted_answer`, 
   DROP INDEX `deleted`,
   ADD  INDEX `deleted` (`deleted`, `deleted_processed`);
+
+-- 2016.01.13
+ALTER TABLE `gioc_site`.`gioc_email_cron`
+  ADD COLUMN `additional` TEXT NULL  COMMENT 'json' AFTER `send_email`;

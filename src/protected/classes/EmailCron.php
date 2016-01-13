@@ -19,6 +19,20 @@ class EmailCron
         try {
             $pdo = PDO_DB::getPDO();
             $email = new Email();
+
+            $additional = @json_decode($cron['additional']);
+            if ($additional != null) {
+                if ($additional->email_from) {
+                    $email->From = $additional->email_from;
+                }
+                if ($additional->email_from_name) {
+                    $email->FromName = $additional->email_from_name;
+                }
+                if ($additional->email_return_path) {
+                    $email->ReturnPath = $additional->email_return_path;
+                }
+            }
+
             $stm_update = $pdo->prepare("UPDATE " . self::TABLE . " SET updated_at=?, start_user_id=? WHERE id=? LIMIT 1");
             $stm_update_count = $pdo->prepare("UPDATE " . self::TABLE . " SET send_email=send_email+1 WHERE id=? LIMIT 1");
 
