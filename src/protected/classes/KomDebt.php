@@ -59,42 +59,6 @@ class KomDebt
     {
         $this->cache = [];
     }
-
-    public function getDebtSum($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null)
-    {
-        $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
-        $xml = @new SimpleXMLElement($xmlString);
-        
-        if (isset($xml->ROW[0]->KOM_ERROR)) {
-            $error = (string)$xml->ROW[0]->KOM_ERROR;
-            throw new Exception(ERROR_GETTING_DEBT);
-        }
-        
-        $debt = 0;
-        $have_data = false;
-
-        foreach ($xml->xpath("//ROW") as $row) {
-            if (floatval($row->SUMM_DOLG) > 0 && !$row->COUNTERS->COUNTERS_ITEM) {
-                $debt += (float)$row->SUMM_DOLG;
-            }
-            $have_data = true;
-        }
-        
-        if ($dateBegin == null) {
-            $real_timestamp = time();
-        } else {
-            $real_timestamp = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
-        }
-        
-        // maybe no data for this month
-        if (($debt == 0) && !$have_data && ($depth < 4)) {
-            $dateBegin = date('1.m.Y', strtotime('first day of previous month', $real_timestamp));
-            return $this->getDebtSum($obj_id, $dateBegin, $depth + 1);
-        }
-        
-        $debtStr = str_replace('.', ',', sprintf('%.2f',((float)$debt)/100));
-        return $debtStr;
-    }
     
     private function getDatePeriod($dateBegin = null)
     {

@@ -7,7 +7,7 @@
     $flat_id = $__route_result['values']['id'];
     
     try {
-        $flatData = Flat::getUserFlatById($flat_id, true);
+        $flatData = Flat::getUserFlatById($flat_id);
 
         if ($flatData == null) {
             throw new Exception(ERROR_NOT_FIND_FLAT);

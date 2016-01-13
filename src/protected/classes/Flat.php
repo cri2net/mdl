@@ -238,7 +238,7 @@ class Flat
         return $address;
     }
 
-    public static function getUserFlats($user_id, $need_return_debt = false)
+    public static function getUserFlats($user_id)
     {
         $user_id = (int)$user_id;
         $table = self::USER_FLATS_TABLE;
@@ -252,32 +252,20 @@ class Flat
 
         $stm = PDO_DB::query($query);
         $arr = $stm->fetchAll();
-        
-        if ($need_return_debt) {
-            $debt = new KomDebt();
-        }
 
         for ($i=0; $i < count($arr); $i++) {
-            if ($need_return_debt) {
-                try {
-                    $arr[$i]['debt_sum'] = $debt->getDebtSum($arr[$i]['flat_id']);
-                    $arr[$i]['error'] = 0;
-                } catch (Exception $e) {
-                    $arr[$i]['error'] = 1;
-                }
-            }
-            
             if ($arr[$i]['street_name'] !== $arr[$i]['street_name_full']) {
                 $arr[$i]['street_name'] .= "...";
             }
             $arr[$i]['address'] = self::getAddressString($arr[$i]['flat_id'], $arr[$i]['city_id'], $arr[$i]['detail_address']);
             $arr[$i]['kvartira'] = 1; // пока не знаю как получить признак, что это частный дом
+            $arr[$i]['error'] = 0;
         }
         
         return $arr;
     }
     
-    public static function getUserFlatById($id, $need_return_debt = false, $user_id = null)
+    public static function getUserFlatById($id, $user_id = null)
     {
         if ($user_id == null) {
             $user_id = Authorization::getLoggedUserId();
@@ -300,17 +288,6 @@ class Flat
 
         if ($arr === false) {
             return null;
-        }
-
-        if ($need_return_debt) {
-            $debt = new KomDebt();
-            $arr['error'] = 0;
-        
-            try {
-                $arr['debt_sum'] = $debt->getDebtSum($arr['flat_id']);
-            } catch (Exception $e) {
-                $arr['error'] = 1;
-            }
         }
         
         if ($arr['street_name'] !== $arr['street_name_full']) {

@@ -10,7 +10,7 @@
     Authorization::check_login();
 
     if (Authorization::isLogin()) {
-        $house = Flat::getUserFlatById($_GET['f'], false, $__userData['id']);
+        $house = Flat::getUserFlatById($_GET['f'], $__userData['id']);
     }
 
     if (!Authorization::isLogin() || !$house || ($house['user_id'] != $__userData['id'])) {

@@ -13,7 +13,7 @@
 
     try {
         $user_id = Authorization::getLoggedUserId();
-        $houses = Flat::getUserFlats($user_id, true);
+        $houses = Flat::getUserFlats($user_id);
         $debt = new KomDebt();
         
         for ($i=0; $i < count($houses); $i++) {
