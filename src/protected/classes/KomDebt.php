@@ -221,7 +221,7 @@ class KomDebt
                 // Если была переплата за прошлый месяц, то к оплате сумма за месяц (как будто нет переплаты)
                 // Если есть обязательный платёж по субсидии, то нужно платить не меньше, чем он.
                 // Если есть счётчик и обязательный платёж, платим обязательный.
-                $to_pay = max(0, ((float)$row->SUMM_DOLG)/100, $SUMM_MONTH, $list['SUMM_OBL_PAY']);
+                $to_pay = max(0, ((float)$row->SUMM_DOLG)/100, $list['SUMM_OBL_PAY']);
                 
                 $list['debt'] = sprintf('%.2f', $debt);
                 $list['debt'] = str_replace(".", ",", $list['debt']);                
