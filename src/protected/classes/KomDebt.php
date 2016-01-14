@@ -172,14 +172,15 @@ class KomDebt
                     $list[$tmp_key] = trim($row->$tmp_key . '');
                 }
 
-                $list['firm_name']  = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
-                $list['name_plat']  = $this->getNamePlat($row->NAME_PLAT);
-                $list['NAME_BANKS'] = htmlspecialchars($list['NAME_BANKS'], ENT_QUOTES);
-                $list['BANK_CODE']  = (string)$row->MFO;
-                $list['DBEGIN_XML'] = date("Y-m-d", strtotime((string)$row->DBEGIN));
-                $list['DEND_XML']   = date("Y-m-d", strtotime((string)$row->DEND));
-                $list['ISXDOLG']    = ($row->ISXDOLG.'') / 100;
-                $list['OPLAT']      = ($row->OPLAT.'')   / 100;
+                $list['firm_name']    = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
+                $list['name_plat']    = $this->getNamePlat($row->NAME_PLAT);
+                $list['NAME_BANKS']   = htmlspecialchars($list['NAME_BANKS'], ENT_QUOTES);
+                $list['BANK_CODE']    = (string)$row->MFO;
+                $list['DBEGIN_XML']   = date("Y-m-d", strtotime((string)$row->DBEGIN));
+                $list['DEND_XML']     = date("Y-m-d", strtotime((string)$row->DEND));
+                $list['ISXDOLG']      = ($row->ISXDOLG.'')      / 100;
+                $list['OPLAT']        = ($row->OPLAT.'')        / 100;
+                $list['SUMM_OBL_PAY'] = ($row->SUMM_OBL_PAY.'') / 100;
                 
                 $list['OPLAT']      = str_replace(".", ",", sprintf('%.2f', $list['OPLAT']));
 
@@ -215,26 +216,31 @@ class KomDebt
                 $debt = ((float)$row->SUMM_DOLG)/100;
                 $debt -= $SUMM_MONTH;
                 $debt = round($debt, 2);
+
+                // сумма к оплате.
+                // Если была переплата за прошлый месяц, то к оплате сумма за месяц (как будто нет переплаты)
+                // Если есть обязательный платёж по субсидии, то нужно платить не меньше, чем он.
+                // Если есть счётчик и обязательный платёж, платим обязательный.
+                $to_pay = max(0, ((float)$row->SUMM_DOLG)/100, $SUMM_MONTH, $list['SUMM_OBL_PAY']);
                 
                 $list['debt'] = sprintf('%.2f', $debt);
                 $list['debt'] = str_replace(".", ",", $list['debt']);                
-                $list['to_pay'] = str_replace(".", ",", sprintf('%.2f', floatval($row->SUMM_DOLG / 100)));
+                $list['to_pay'] = str_replace(".", ",", sprintf('%.2f', $to_pay));
+                $list['counter'] = ($row->COUNTERS->COUNTERS_ITEM) ? 1 : 0;
 
-                if (!$row->COUNTERS->COUNTERS_ITEM) {
-                    if (intval($row->SUMM_DOLG) > 0) {
-                        $fullDept += (int)$row->SUMM_DOLG;
-                    }
-                    $list['counter'] = 0;
-                } else {
-                    $list['counter'] = 1;
-                    $list['to_pay'] = "-";
+                if ($list['counter']) {
                     $list['debt'] = "-";
+                    if ($list['SUMM_OBL_PAY'] <= 0) {
+                        $to_pay = 0;
+                    }
                 }
 
+                $fullDept += $to_pay * 100;
                 $data['list'][] = $list;
             }
 
             $data['list'] = $this->msort($data['list'], 'counter', true);
+            $list['SUMM_OBL_PAY'] = str_replace(".", ",", sprintf('%.2f', $list['SUMM_OBL_PAY']));
             $data['full_dept'] = sprintf('%.2f',((float)$fullDept)/100);
         } else {
             $data = [];
@@ -705,7 +711,7 @@ class KomDebt
         $data['LGOTA']   = (isset($xml->ROW[0]->LGOTA))  ? $xml->ROW[0]->LGOTA  . '' : null;
             
         $data['TLF'] = $xml->ROW[0]->TLF;
-        $arr_keys = ['ISXDOLG', 'OPLAT', 'SUBS', 'TARIF', 'SUMM_MONTH', 'SUMM_DOLG'];
+        $arr_keys = ['ISXDOLG', 'OPLAT', 'SUBS', 'TARIF', 'SUMM_MONTH', 'SUMM_DOLG', 'SUMM_OBL_PAY'];
 
         foreach ($xml->xpath("//ROW") as $row) {
             if ($firmName && (string)$row->CODE_FIRME != $firmName) {

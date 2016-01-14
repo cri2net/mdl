@@ -130,7 +130,7 @@
             </tr>
             <tr>
                 <th style="font-size: 12px; padding-left: 0;">Розмір</th>
-                <th style="font-size: 12px; padding-right: 0;">Об.&nbsp;платіж</th>
+                <th style="font-size: 12px; padding-right: 0; cursor: help;" title="Обов’язковий платіж">Об.&nbsp;платіж</th>
             </tr>
         </thead>
         <tbody>
@@ -204,7 +204,7 @@
                                     <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                 </td>
                                 <td><?= $item['SUBS']; ?></td>
-                                <td>—</td>
+                                <td><?= $item['SUMM_OBL_PAY']; ?></td>
                                 <td>
                                     <?php
                                         $summ = floatval(str_replace(",", ".", $item['SUMM_DOLG']));
