@@ -1,8 +1,5 @@
 <?php
     try {
-        $test_xiface = (in_array(USER_REAL_IP, ['193.200.205.133', '172.16.64.8']) || in_array($__userData['id'], [20, 31, 43068]));
-
-
         $currMonth = date("n");
         $years = [];
         $debt = new KomDebt();
@@ -35,11 +32,7 @@
         if (isset($_need_month) && isset($_need_year)) {
             $dateBegin = "1.".$_need_month.".".$_need_year;
             $time = DateTime::createFromFormat('j.m.Y', $dateBegin);
-            if ($test_xiface) {
-                $time = strtotime($dateBegin, date_timestamp_get($time));
-            } else {
-                $time = strtotime('first day of next month', date_timestamp_get($time));
-            }
+            $time = strtotime('first day of next month', date_timestamp_get($time));
             $dateBegin = date('j.m.Y', $time);
 
             $firmData = $debt->getUniqueFirmName($object['flat_id'], $dateBegin, 100);
@@ -50,12 +43,9 @@
             $_need_year = date('Y', strtotime('first day of previous month', $real_timestamp));
         }
         
-        /// TESTer xiface
-        if ($test_xiface) {
-            $debtData = $debt->getUniqueFirmXIface($object['flat_id'], $_need_firm, $dateBegin, $filter);
-        } else {
-            $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
-        }
+        // TESTer xiface
+        // $debtData = $debt->getUniqueFirmXIface($object['flat_id'], $_need_firm, $dateBegin, $filter);
+        $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
 
         if (empty($debtData['data'])) {
             throw new Exception(ERROR_EMPTY_BILL);
@@ -141,7 +131,7 @@
                     $firm_counter++;
                     ?>
                     <tr class="bank-name">
-                        <td class="first" colspan="<?= ($test_xiface) ? '4' : '8'; ?>">
+                        <td class="first" colspan="8">
                             <span class="name-plat">
                                 <?= $debtData['firm'][$key]['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>
                             </span>
@@ -164,15 +154,6 @@
                             ?>
                             <div class="address"><?= $object['address']; ?></div>
                         </td>
-                        <?php
-                            if ($test_xiface) {
-                                ?>
-                                <td><?=$debtData['firm'][$key]['pay']; ?></td>
-                                <td></td>
-                                <td><?= $debtData['firm'][$key]['debt_summ']; ?></td>
-                                <?php
-                            }
-                        ?>
                     </tr>
                     <?php
                         $counter = 0;
