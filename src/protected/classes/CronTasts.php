@@ -28,7 +28,7 @@ class CronTasts
             }
         }
 
-        imap_expunge();
+        imap_expunge($inbox);
         imap_close($inbox); // close the connection
     }
 

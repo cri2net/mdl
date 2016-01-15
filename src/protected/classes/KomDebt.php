@@ -430,13 +430,11 @@ class KomDebt
 
     public function getUniqueFirmXIface($obj_id, $firmName = null, $dateBegin = null, $is_filter = false)
     {
-        
         //return;
         $this->beginDate = $dateBegin;
         $pin = Flat::getFlatPINByID($obj_id);
         $pacc = (integer)substr($pin,-6);
         $jek = ($pin-$pacc)/1000000;
-        
         
         $xIfaceClass = new xIfaceClass();
         $xIfaceClass->Query('Municipal-2.0', 'GetBills',
@@ -444,10 +442,6 @@ class KomDebt
                 strtotime(date('Y-m-d 06:00:00',strtotime('+1 day')))-time()/*timeout tomorrow morning*/ );
         $resXMLObj = new SimpleXMLElement($xIfaceClass->replyXML->saveXML());
         
-
-
-
-
 
         //echo date("Ym",strtotime($dateBegin)) ;
         //var_dump($resXMLObj);
@@ -460,8 +454,6 @@ class KomDebt
             //Реализовать вывод только по одному билеру
         }
         
-        
-        
         $data['firm'] = [];
         $data['dbegin'] = date("d.m.y", strtotime($this->beginDate));
         $data['dend'] = date("d.m.y", strtotime($this->endDate));
@@ -471,7 +463,6 @@ class KomDebt
         $debtBeginMonth = strtotime('first day of previous month', date_timestamp_get($debtBeginMonth));
         $data['previous_date'] = date('d.m.Y', $debtBeginMonth);
 
-        
         $data['begin_month'] = $this->monthsFullName[date('n', strtotime($this->beginDate))]['ua']['big'];
         $data['previous_month'] = $this->monthsFullName[date('n', $debtBeginMonth)]['ua']['big'];
         $data['counter'] = 0;
@@ -486,7 +477,6 @@ class KomDebt
         
         $arr_keys = ['ISXDOLG', 'OPLAT', 'SUBS', 'TARIF', 'SUMM_MONTH', 'SUMM_DOLG'];
         foreach ($billsData->Bill as $bill) {
-            
 
             $billID = $bill->attributes()->ID;
             
@@ -531,11 +521,8 @@ class KomDebt
                             ];
                         }
                     }
-                    
                 }
-                
             }
-        
             
             if ($row->NAIM_LG) {
                 $data['firm'][(string)$row->CODE_FIRME]['lgoti'] = [
@@ -572,108 +559,6 @@ class KomDebt
             //$data['data'][(string)$row->CODE_FIRME][] = $firmData;
         }
         
-        //var_dump($data);
-        return $data;
-        
-        
-        
-        
-        //OLD METHOD
-        $data = [];
-        $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
-        $xml = @new SimpleXMLElement($xmlString);
-        $data['date'] = '01 ' . $this->months[date("n")]['ua'] . " " . date("Y");
-        $data['curr_month'] = date("m");
-        $data['curr_year'] = date("Y");
-        $data['dateBegin'] = $dateBegin;
-        if (isset($xml->ROW[0]->KOM_ERROR)) {
-            $error = (string)$xml->ROW[0]->KOM_ERROR;
-        }
-    
-        if ((!$is_filter) && (!empty($error))) {
-            self::getPreviosMonth($previousMonth, $previousYear);
-    
-            $month2 = date("m", strtotime("01.".$previousMonth.".".$previousYear));
-            $year2 = date("Y", strtotime("01.".$previousMonth.".".$previousYear));
-            $dateBegin = "01.".$month2.".".$year2;
-            $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);
-            $xml = @new SimpleXMLElement($xmlString);
-            if (isset($xml->ROW[0]->KOM_ERROR)) {
-                $error = (string)$xml->ROW[0]->KOM_ERROR;
-            }
-    
-            $data['dateBegin'] = $dateBegin;
-            $data['date'] = '01 ' . $this->months[$previousMonth]['ua'] . " " . $previousYear;
-            $data['curr_month'] = date("m", strtotime("01".".".$previousMonth . "." . $previousYear));
-            $data['curr_year'] = $previousYear;
-        }
-    
-        if (!empty($error)) {
-            throw new Exception(ERROR_GETTING_DEBT);
-        }
-    
-        $data['firm'] = [];
-        $data['dbegin'] = date("d.m.y", strtotime($this->beginDate));
-        $data['dend'] = date("d.m.y", strtotime($this->endDate));
-    
-        $debtBeginMonth = DateTime::createFromFormat('j.m.Y', $this->beginDate);
-        $debtBeginMonth = strtotime('first day of previous month', date_timestamp_get($debtBeginMonth));
-        $data['previous_date'] = date('d.m.Y', $debtBeginMonth);
-
-        
-        $data['begin_month'] = $this->monthsFullName[date('n', strtotime($this->beginDate))]['ua']['big'];
-        $data['previous_month'] = $this->monthsFullName[date('n', $debtBeginMonth)]['ua']['big'];
-        $data['counter'] = 0;
-        $data['PEOPLE'] = $xml->ROW[0]->PEOPLE;
-        $data['PL_OB'] = $xml->ROW[0]->PL_OB;
-        $data['PL_POL'] = $xml->ROW[0]->PL_POL;
-    
-        $data['TLF'] = $xml->ROW[0]->TLF;
-        $arr_keys = ['ISXDOLG', 'OPLAT', 'SUBS', 'TARIF', 'SUMM_MONTH', 'SUMM_DOLG'];
-    
-        foreach ($xml->xpath("//ROW") as $row) {
-            if ($firmName && (string)$row->CODE_FIRME != $firmName) {
-                continue;
-            }
-    
-            if (!array_key_exists((string)$row->CODE_FIRME, $data['firm'])) {
-                $data['firm'][(string)$row->CODE_FIRME]['name'] = (string)$row->NAME_FIRME;
-            }
-            if ($row->NAIM_LG) {
-                $data['firm'][(string)$row->CODE_FIRME]['lgoti'] = [
-                'NAIM_LG'  => (string)$row->NAIM_LG,
-                'PROC_LG'  => (string)$row->PROC_LG,
-                'KOL_LGOT' => (string)$row->KOL_LGOT
-                ];
-            }
-            if ($row->COUNTERS->COUNTERS_ITEM) {
-                $data['counter'] = 1;
-                foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
-                    $data['firm'][(string)$row->CODE_FIRME]['counter'][] = [
-                    'COUNTER_NO' => (string)$counter->COUNTER_NO,
-                    'OLD_VALUE'  => (string)$counter->OLD_VALUE,
-                    'TARIF'      => str_replace(".", ",", sprintf('%.2f', ((float)$row->TARIF)/100)),
-                    'NAME_PLAT'  => $this->getNamePlat($row->NAME_PLAT)
-                    ];
-                }
-            }
-    
-            $data['firm'][(string)$row->CODE_FIRME]['FIO'] = (string)$row->FIO;
-            $data['firm'][(string)$row->CODE_FIRME]['TLF'] = (string)$row->TLF;
-            $data['firm'][(string)$row->CODE_FIRME]['ABCOUNT'] = (string)$row->ABCOUNT;
-    
-            foreach ($arr_keys as $arr_key) {
-                $firmData[$arr_key] = ((int)$row->$arr_key != 0)
-                ? str_replace(".", ",", sprintf('%.2f', ((float)$row->$arr_key) / 100))
-                : '0,00';
-            }
-    
-            $firmData['NAME_PLAT']  = $this->getNamePlat($row->NAME_PLAT);
-            $firmData['TLF'] = (string)$row->TLF;
-    
-            $data['data'][(string)$row->CODE_FIRME][] = $firmData;
-        }
-    
         //var_dump($data);
         return $data;
     }

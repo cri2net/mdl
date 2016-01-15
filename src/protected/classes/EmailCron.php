@@ -3,7 +3,7 @@
 class EmailCron
 {
     const TABLE = DB_TBL_EMAIL_CRON;
-    const TIME_LIMIIT = 290;
+    const TIME_LIMIIT = 895;
     protected $inline_attachments = [];
 
     public function cron()
