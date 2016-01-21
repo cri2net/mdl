@@ -9,8 +9,10 @@ class Khreshchatyk
 
     public function __construct()
     {
-        $this->SVFE_host = '10.192.1.241';
-        $this->SVFE_port = 12406;
+        // $this->SVFE_host = '10.192.1.241'; // test
+        // $this->SVFE_port = 12406; // test
+        $this->SVFE_host = '10.192.1.246';
+        $this->SVFE_port = 12350;
         
         // work terminal & merchant
         $this->Terminal_ID = 'XE010006';
@@ -138,6 +140,11 @@ class Khreshchatyk
         return $jak;
     }
 
+    /**
+     * Генерация, отправка и обработака ответа запроса на списание денег
+     * @param  integer $payment_id ID платежа в БД сайта
+     * @return return void
+     */
     public function makePayment($payment_id)
     {
         $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
@@ -170,20 +177,27 @@ class Khreshchatyk
         $jak->addData(49,  '980');              // код валюты
         $jak->addData(102, $acc_bank);          // номер счёта в банке
 
-        $result = $this->sendISO($jak);
-        $data = $result->getData();
+        try {
+            $need_reverse = false;
+            $result = $this->sendISO($jak);
+            $data = $result->getData();
+        } catch (Exception $e) {
+            $need_reverse = true;
+        }
 
         $request = [
-            'timestamp'   => $time,
-            'TerminalID'  => $data[41],
-            'MerchantID'  => $data[42],
-            'TotalAmount' => $payment['summ_total'] * 100,
-            'Currency'    => $data[49],
-            'OrderID'     => $payment['id'],
-            'Rrn'         => $data[37],
-            'ProxyPan'    => '',
-            'TranCode'    => $data[39],
-            'answer_data' => $data,
+            'timestamp'    => $time,
+            'TotalAmount'  => $payment['summ_total'] * 100,
+            'STAN'         => $data[11],
+            'Rrn'          => $data[37],
+            'ApprovalCode' => $data[38],
+            'TranCode'     => $data[39],
+            'TerminalID'   => $data[41],
+            'MerchantID'   => $data[42],
+            'Currency'     => $data[49],
+            'OrderID'      => $payment['id'],
+            'ProxyPan'     => '',
+            'answer_data'  => $data,
         ];
         $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
         $payment['processing_data']['requests'][] = $request;
@@ -191,6 +205,102 @@ class Khreshchatyk
         $arr = [
             'processing_data' => json_encode($payment['processing_data']),
             'status' => (($data[39] == '00') ? 'success' : 'error'),
+        ];
+
+        PDO_DB::update($arr, ShoppingCart::TABLE, $payment['id']);
+
+        if ($need_reverse) {
+            $this->reversesTransaction($payment['id']);
+        }
+    }
+
+    public function reversesTransaction($payment_id, $first = true)
+    {
+        $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
+        if (!$payment || ($payment['processing'] != 'khreshchatyk')) {
+            return false;
+        }
+        $payment['processing_data'] = (array)(@json_decode($payment['processing_data']));
+        if (!$payment['processing_data']) {
+            return false;
+        }
+
+        $jak = new JAK8583();
+        $date = date('mdHis');
+
+        $summ = str_pad($payment['processing_data']['requests'][0]->TotalAmount, 10, '0', STR_PAD_LEFT);
+        $time = microtime(true);
+
+        $acc_bank = $payment['processing_data']['first']->acc_bank;
+
+        $mti = ($first) ? '0400' : '0401';
+        $jak->addMTI($mti);
+        $local_date = date('ymdHis', $payment['go_to_payment_time']);
+        $uid = str_pad($payment['id'] % 1000000, 6, '0', STR_PAD_LEFT);
+
+        // определяем данные для запроса. Некоторые данные мы могли не получить, тогда пишем те, что кажутся правильными
+
+        $ApprovalCode = ($payment['processing_data']['requests'][0]->ApprovalCode != '') ? $payment['processing_data']['requests'][0]->ApprovalCode : '';
+        $TerminalID   = ($payment['processing_data']['requests'][0]->TerminalID != '')   ? $payment['processing_data']['requests'][0]->TerminalID   : $this->Terminal_ID;
+        $MerchantID   = ($payment['processing_data']['requests'][0]->MerchantID != '')   ? $payment['processing_data']['requests'][0]->MerchantID   : $this->Merchant_ID;
+        $Currency     = ($payment['processing_data']['requests'][0]->Currency != '')     ? $payment['processing_data']['requests'][0]->Currency     : '980';
+        $Rrn          = ($payment['processing_data']['requests'][0]->Rrn != '')          ? $payment['processing_data']['requests'][0]->Rrn          : '';
+        $ApprovalCode = str_pad($ApprovalCode, 6, '0', STR_PAD_LEFT); // если поля нет, заполняем нулями
+        $Rrn          = str_pad($Rrn, 12, ' ', STR_PAD_LEFT); // если поля нет, заполняем пробелами
+
+        $jak->addData(3,   '840000');                                       // тип обработки "покупка", кажется
+        $jak->addData(4,   $summ);                                          // сумма в копейках
+        $jak->addData(7,   $date);                                          // дата и время отправки сообщения
+        $jak->addData(11,  $uid);                                           // уникальнй номер транзакции
+        $jak->addData(12,  $local_date);                                    // дата и время начала транзакции
+        $jak->addData(18,  '4900');                                         // код типа торговца. 4900 — для коммунальных услуг
+        $jak->addData(37,  $Rrn);                                           // Retrieval Reference Number
+        $jak->addData(38,  $ApprovalCode);                                  // Код подтверждения
+        $jak->addData(41,  $TerminalID);                                    // ID терминала
+        $jak->addData(42,  $MerchantID);                                    // ID мерчанта
+        $jak->addData(49,  $Currency);                                      // код валюты
+        $jak->addData(102, $payment['processing_data']['first']->acc_bank); // номер счёта в банке
+
+        $result = $this->sendISO($jak);
+        $data = $result->getData();
+
+        $request = [
+            'timestamp'    => $time,
+            'mti'          => $mti,
+            'ProcessType'  => $data[3],
+            'TotalAmount'  => $data[4],
+            'DateTime'     => $data[7],
+            'STAN'         => $data[11],
+            'MerchantType' => $data[18],
+            'Rrn'          => $data[37],
+            'ApprovalCode' => $ApprovalCode,
+            'TranCode'     => $data[39],
+            'TerminalID'   => $data[41],
+            'MerchantID'   => $data[42],
+            'Currency'     => $data[49],
+            'answer_data'  => $data,
+            'request_data' => [
+                '3'   => '840000',
+                '4'   => $summ,
+                '7'   => $date,
+                '11'  => $uid,
+                '12'  => $local_date,
+                '18'  => '4900',
+                '37'  => $Rrn,
+                '38'  => $ApprovalCode,
+                '41'  => $TerminalID,
+                '42'  => $MerchantID,
+                '49'  => $Currency,
+                '102' => $payment['processing_data']['first']->acc_bank
+            ]
+        ];
+        $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
+        $payment['processing_data']['requests'][] = $request;
+
+        $arr = [
+            'status'                         => 'error',
+            'processing_data'                => json_encode($payment['processing_data']),
+            'send_payment_status_to_reports' => 0,
         ];
 
         PDO_DB::update($arr, ShoppingCart::TABLE, $payment['id']);

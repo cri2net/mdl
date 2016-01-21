@@ -70,7 +70,7 @@ class JAK8583
         34  => array('an',  28,  self::VARIABLE_LENGTH),        //Electronic commerce data
         35  => array('z',   37,  self::VARIABLE_LENGTH),        //Track 2 data
         36  => array('n',   104, self::VARIABLE_LENGTH),        //Track 3 data
-        37  => array('an',  12,  self::FIXED_LENGTH),           //Retrieval reference number
+        37  => array('ans', 12,  self::FIXED_LENGTH),           //Retrieval reference number
         38  => array('an',  6,   self::FIXED_LENGTH),           //Approval code
         39  => array('an',  2,   self::FIXED_LENGTH),           //Action code
         40  => array('an',  3,   self::FIXED_LENGTH),           //Service code
