@@ -28,4 +28,22 @@ if (Authorization::isLogin() && (!$__userData['activated'] || !$__userData['veri
     $have_header_warning = true;
 }
 
+if (time() < 1453521600) {
+    ?>
+    <div id="verify-email-header-warning" class="old-browsers-warning <?= ($have_header_warning) ? 'not-first-warning' : '' ?>">
+        <div class="inner">
+            <b>Шановні відвідувачі!</b> Повідомляємо, що у зв'язку із проведенням регламентних технологічних 
+робіт, пов'язаних із розширенням функціональних можливостей сервісів КП 
+ГІОЦ, доступ до сайту нашого підприємства (https://www.gioc.kiev.ua)  
+включно із режимом "Сплатити комунальні послуги онлайн" у період <b>із 
+23:00 22 січня</b> поточного року <b>до 6:00 23 січня</b> поточного року буде 
+тимчасово закритий. <br>
+
+Дякуємо за порозуміння!
+        </div>
+    </div>
+    <?php
+    $have_header_warning = true;
+}
+
 unset($have_header_warning);
