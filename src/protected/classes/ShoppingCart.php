@@ -134,8 +134,8 @@ class ShoppingCart
                         continue;
                     }
 
-                    $old_value = round($data[$item.'_old_count'][$key], 3);
-                    $new_value = round($data[$item.'_new_count'][$key], 3);
+                    $old_value = round(str_replace(',', '.', $data[$item.'_old_count'][$key]), 3);
+                    $new_value = round(str_replace(',', '.', $data[$item.'_new_count'][$key]), 3);
                     $used_value = $new_value - $old_value;
 
                     if ($used_value < 0) {
