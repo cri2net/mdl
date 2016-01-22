@@ -174,7 +174,7 @@
                                 $attrs = '';
                                 if ($item['SUMM_OBL_PAY'] > 0) {
                                     $attrs .= 'data-obl-pay="'. sprintf('%.2f', $item['SUMM_OBL_PAY']) .'" ';
-                                    $attrs .= 'title="Обов’язковий платіж по субсидії" ';
+                                    $attrs .= 'title="Обов’язковий платіж по субсидії '. $item['SUMM_OBL_PAY'] .' грн" ';
                                 }
 
                                 // htmlspecialchars не делаем, так как эти данные уже должны быть обработаны
