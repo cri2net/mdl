@@ -9,22 +9,32 @@ class Khreshchatyk
 
     public function __construct()
     {
-        // $this->SVFE_host = '10.192.1.241'; // test
-        // $this->SVFE_port = 12406; // test
-        $this->SVFE_host = '10.192.1.246';
-        $this->SVFE_port = 12350;
-        
-        // work terminal & merchant
-        $this->Terminal_ID = 'XE010006';
-        $this->Merchant_ID = 'XE0101000000006';
-        
+        $this->setEnvironment();
+    }
+
+    public function setEnvironment($work_env = true)
+    {
+        if ($work_env) {
+            $this->SVFE_host = '10.192.1.246';
+            $this->SVFE_port = 12350;
+
+            // work terminal & merchant
+            $this->Terminal_ID = 'XE010006';
+            $this->Merchant_ID = 'XE0101000000006';
+
+            return;
+        }
+    
+        $this->SVFE_host = '10.192.1.241';
+        $this->SVFE_port = 12406;
+
         // test terminal & merchant 1
-        // $this->Terminal_ID = 'XETEST01';
-        // $this->Merchant_ID = 'XETEST000000001';
+        $this->Terminal_ID = 'XETEST01';
+        $this->Merchant_ID = 'XETEST000000001';
 
         // test terminal & merchant 2
         // $this->Terminal_ID = 'XETEST02';
-        // $this->Merchant_ID = 'XETEST000000002';
+        // $this->Merchant_ID = 'XETEST000000002';    
     }
 
     public static function get_API_URL($key)
@@ -304,6 +314,10 @@ class Khreshchatyk
         ];
 
         PDO_DB::update($arr, ShoppingCart::TABLE, $payment['id']);
+
+        if ((strlen($data) == 0) && $first) {
+            $this->reversesTransaction($payment['id'], false);
+        }
     }
 
     public function makeTestPayment()
