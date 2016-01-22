@@ -97,9 +97,14 @@ function recalc()
         var name = $(this).attr('name');
         if (!$(this).attr('disabled') && name.indexOf('sum') != -1){
             var val = parseFloat($(this).val().replace(',', '.'));
-            
+
             if (!isNaN(val) && (val > 0)) {
                 total += val;
+            } else if (!isNaN(val) && (val == 0)) {
+                var obl_pay = parseFloat($(this).data('obl-pay'));
+                if (!isNaN(obl_pay)) {
+                    total += obl_pay;
+                }
             }
         }
     });
@@ -110,8 +115,15 @@ function recalc()
 function bill_input_blur(el)
 {
     var val = parseFloat($(el).val().replace(',', '.'));
+
     if (isNaN(val) || (val == 0)) {
         $(el).val('0,00');
+        
+        var obl_pay = $(el).data('obl-pay');
+        if (!isNaN(parseFloat(obl_pay))) {
+            $(el).val(obl_pay.toString().split('.').join(','));
+            recalc();
+        }
     }
 };
 
@@ -263,6 +275,7 @@ function checkForDouble(input)
 
 function recount_counter_summ(key, tarif, counter_no) {
     var summ;
+    var obl_pay = $('#inp_'+key).data('obl-pay');
     var old_value = $('#old_inp_'+ key +'_new_count_' + counter_no).val();
     old_value = old_value.split(',').join('.');
     old_value = parseFloat(old_value);
@@ -302,7 +315,7 @@ function recount_counter_summ(key, tarif, counter_no) {
         add_cost = add_cost.toFixed(2);
         add_cost += '';
         add_cost = add_cost.split('.').join(',');
-        $('#inp_'+key).val(add_cost);
+        $('#inp_'+key).val(add_cost).blur();
         return;
     }
 
@@ -313,12 +326,18 @@ function recount_counter_summ(key, tarif, counter_no) {
     }
     summ = (new_value - old_value) * tarif;
     summ += add_cost;
+    var call_input_blur = (!isNaN(parseFloat(obl_pay)) && (summ == 0));
     summ = summ.toFixed(2);
     summ += '';
     summ = summ.split('.').join(',');
+
     $('#inp_'+key).val(summ);
     recalc2();
     $('#newval_counter_'+key + '_' + counter_no).html(new_value);
+
+    if (call_input_blur) {
+        $('#inp_'+key).blur();
+    }
 };
 
 function close_all_header_submenu(submenu_id)

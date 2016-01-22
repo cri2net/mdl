@@ -108,7 +108,7 @@
                             </div>
                             <?php
                                 if ($item['counter'] != 0) {
-                                    $item['to_pay'] = '0,00';
+                                    $item['to_pay'] = str_replace('.', ',', sprintf('%.2f', $item['SUMM_OBL_PAY']));
 
                                     foreach ($item['counterData']['counters'] as $counter) {
                                         ?>
@@ -170,8 +170,13 @@
                             ?>
                         </td>
                         <td>
-                            <input class="bill-summ-input txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>">
                             <?php
+                                $attrs = '';
+                                if ($item['SUMM_OBL_PAY'] > 0) {
+                                    $attrs .= 'data-obl-pay="'. sprintf('%.2f', $item['SUMM_OBL_PAY']) .'" ';
+                                    $attrs .= 'title="Обов’язковий платіж по субсидії" ';
+                                }
+
                                 // htmlspecialchars не делаем, так как эти данные уже должны быть обработаны
                                 $tmp_value  =      $item['CODE_FIRME'];
                                 $tmp_value .= '_'. $item['CODE_PLAT'];
@@ -183,6 +188,7 @@
                                 $tmp_value .= '_'. $item['DEND_XML'];
                                 $tmp_value .= '_'. $item['FIO'];
                             ?>
+                            <input <?= $attrs; ?> class="bill-summ-input txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>">
                             <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $tmp_value; ?>">
                             <input type="hidden" name="inp_<?= $key; ?>_name_plat" value="<?= htmlspecialchars($item['name_plat'], ENT_QUOTES); ?>">
                             <input type="hidden" name="inp_<?= $key; ?>_firm_name" value="<?= htmlspecialchars($item['firm_name'], ENT_QUOTES); ?>">
