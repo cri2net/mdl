@@ -55,6 +55,10 @@ class Flat
         if ($_SESSION['auth']['mob_phone'] === '+380671253289') {
             return 5;
         }
+        
+        if (Authorization::getLoggedUserId() == 73527) {
+            return 8;
+        }
 
         return self::MAX_USER_FLATS;
     }
