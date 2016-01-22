@@ -42,6 +42,13 @@ class Email
         }
     }
 
+    public function __get($name)
+    {
+        if (isset($this->PHPMailer->$name)) {
+            return $this->PHPMailer->$name;
+        }
+    }
+
     public function __call($name, $arguments)
     {
         if (is_callable([$this->PHPMailer, $name])) {

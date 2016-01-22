@@ -25,6 +25,16 @@ class CronTasts
                     $stm_upd->execute([$email]);
                     imap_delete($inbox, $email_number);
                 }
+
+                if (stristr($overview[0]->from, 'quarantine@i.ua')) {
+                    // это письмо с просьбой перейти по ссылке, чтоб письмо попало во входящие
+                    $message = imap_body($inbox, $email_number);
+                    $links = self::extractLinks($message);
+                    if (isset($links[0])) {
+                        imap_delete($inbox, $email_number);
+                        @file_get_contents($links[0]);
+                    }
+                }
             }
         }
 
@@ -32,7 +42,7 @@ class CronTasts
         imap_close($inbox); // close the connection
     }
 
-    private static function extractEmailAddress ($string)
+    private static function extractEmailAddress($string)
     {
         foreach (preg_split('/\s/', $string) as $token) {
             $email = filter_var(filter_var($token, FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
@@ -41,5 +51,20 @@ class CronTasts
             }
         }
         return $emails;
+    }
+
+    private static function extractLinks($string)
+    {
+        $regex = "((https?|ftp)\:\/\/)?"; // SCHEME
+        $regex .= "([a-z0-9+!*(),;?&=\$_.-]+(\:[a-z0-9+!*(),;?&=\$_.-]+)?@)?"; // User and Pass
+        $regex .= "([a-z0-9-.]*)\.([a-z]{2,4})"; // Host or IP
+        $regex .= "(\:[0-9]{2,5})?"; // Port
+        $regex .= "(\/([a-z0-9+\$_-]\.?)+)*\/?"; // Path
+        $regex .= "(\?[a-z+&\$_.-][a-z0-9;:@&%=+\/\$_.-]*)?"; // GET Query
+        $regex .= "(#[a-z_.-][a-z0-9+\$_.-]*)?"; // Anchor
+
+        preg_match_all("/$regex/", $string, $matches); 
+
+        return array_values(array_unique($matches[0]));
     }
 }
