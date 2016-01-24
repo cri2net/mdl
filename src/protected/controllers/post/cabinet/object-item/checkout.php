@@ -43,6 +43,11 @@ try {
     
 
     if ($pay_system == 'khreshchatyk') {
+        require_once(ROOT . '/protected/conf/payments/khreshchatyk/khreshchatyk.conf.php');
+        if (KHRESHCHATYK_MIN_PAYMENT_SUMM > $totalAmount) {
+            throw new Exception(ERROR_KKK_MIN_PAYMENT_SUMM);
+        }
+
         $user_card_id = $_POST['khreshchatyk-card'];
 
         // проверяем, выбрана ли карта

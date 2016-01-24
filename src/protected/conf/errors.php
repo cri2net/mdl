@@ -54,3 +54,4 @@ define('ERROR_ADD_CARD_CARD_NOT_FOUND', 'Картку не знайдено');
 define('ERROR_ADD_CARD_ALREADY_EXISTS', 'Картка з таким номером вже є у Вашому аккаунті');
 define('ERROR_CARD_NO_SELECT_CARD', 'Ви не вказали картку');
 define('ERROR_GET_CARD', 'Помилка при отриманні картки');
+define('ERROR_KKK_MIN_PAYMENT_SUMM', 'Мінімальний платіж Карткою Киянина складає 5 грн');
