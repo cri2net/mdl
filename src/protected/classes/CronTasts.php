@@ -81,9 +81,17 @@ class CronTasts
 
             $email->clearAllRecipients();
             // $email->changeMXToQuick();
-            $person = [$item['email'], "{$item['name']} {$item['fathername']}"];
 
-            $email->send($person, $item['subject'], '', 'feedback_answer', ['answer' => $item['answer']]);
+            $email->send(
+                [$item['email'], "{$item['name']} {$item['fathername']}"],
+                $item['subject'],
+                '',
+                'feedback_answer',
+                [
+                    'answer' => $item['answer'],
+                    'request' => nl2br(htmlspecialchars($item['text']))
+                ]
+            );
             PDO_DB::update(['answer_need_send' => 0], TABLE_PREFIX . 'feedback', $item['id']);
         }
     }

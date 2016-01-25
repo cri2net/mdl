@@ -1,3 +1,3 @@
-<font size="2" face="Arial">
-    {{answer}}
-</font><br>
+<blockquote style="border-left: 2px solid #ccc; padding-left: 5px;">{{request}}</blockquote>
+<br>
+{{answer}}
