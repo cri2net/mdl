@@ -5,6 +5,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
 
 require_once(__DIR__ . '/../config.php');
 ShoppingCart::cron();
+CronTasts::sendFeedbackAnswer();
 
 try {
     $EmailCron = new EmailCron();

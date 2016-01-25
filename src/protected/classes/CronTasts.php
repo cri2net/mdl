@@ -67,4 +67,24 @@ class CronTasts
 
         return array_values(array_unique($matches[0]));
     }
+
+    public static function sendFeedbackAnswer()
+    {
+        $list = PDO_DB::table_list(TABLE_PREFIX . 'feedback', 'answer_need_send=1');
+
+        foreach ($list as $item) {
+            
+            if (!isset($email)) {
+                $email = new Email();
+                // $email->From = 'secretary@gioc-kmda.kiev.ua';
+            }
+
+            $email->clearAllRecipients();
+            // $email->changeMXToQuick();
+            $person = [$item['email'], "{$item['name']} {$item['fathername']}"];
+
+            $email->send($person, $item['subject'], '', 'feedback_answer', ['answer' => $item['answer']]);
+            PDO_DB::update(['answer_need_send' => 0], TABLE_PREFIX . 'feedback', $item['id']);
+        }
+    }
 }

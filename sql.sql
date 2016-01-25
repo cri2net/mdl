@@ -588,3 +588,8 @@ ALTER TABLE `gioc_users`
 -- 2016.01.13
 ALTER TABLE `gioc_site`.`gioc_email_cron`
   ADD COLUMN `additional` TEXT NULL  COMMENT 'json' AFTER `send_email`;
+
+-- 2016.01.25
+ALTER TABLE `gioc_feedback`
+  ADD COLUMN `answer_need_send` TINYINT(1) DEFAULT 0  NOT NULL  COMMENT 'for cron task' AFTER `answer_time`;
+
