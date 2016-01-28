@@ -65,7 +65,7 @@
                     <tbody><tr>
                         <td>&nbsp;</td>
                         <td width="93" align="left" style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;">
-                            <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="tel:+380482300032">(044)&nbsp;238&nbsp;80&nbsp;25</a> <br>
+                            <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="tel:+380442388025">(044)&nbsp;238&nbsp;80&nbsp;25</a> <br>
                             <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="mailto:{{email_from}}" target="_blank">{{email_from}}</a>
                         </td>
                     </tr></tbody>
