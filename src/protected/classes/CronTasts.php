@@ -16,6 +16,7 @@ class CronTasts
 
             $pdo = PDO_DB::getPDO();
             $stm_upd = $pdo->prepare("UPDATE " . User::TABLE . " SET broken_email=1 WHERE email=? AND deleted=0 LIMIT 1");
+            $stm_upd_subs = $pdo->prepare("UPDATE " . User::SUBSCRIBE_TABLE . " SET broken_email=1 WHERE email=? LIMIT 1");
             
             foreach ($emails as $email_number) {
                 $overview = imap_fetch_overview($inbox, $email_number, 0);
@@ -23,6 +24,7 @@ class CronTasts
                 if (stristr($overview[0]->subject, '-- NOT SEND TO:')) {
                     $email = end(self::extractEmailAddress($overview[0]->subject));
                     $stm_upd->execute([$email]);
+                    $stm_upd_subs->execute([$email]);
                     imap_delete($inbox, $email_number);
                 }
 

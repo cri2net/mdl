@@ -3,18 +3,52 @@
 class EmailCron
 {
     const TABLE = DB_TBL_EMAIL_CRON;
-    const TIME_LIMIIT = 895;
+    const STREAM_COUNT = 15;
     protected $inline_attachments = [];
+
+    public function checkCloseCron($cron_id)
+    {
+        $pdo = PDO_DB::getPDO();
+        $table = TABLE_PREFIX . 'email_cron_part';
+        $stm = $pdo->prepare("SELECT * FROM $table WHERE status<>'complete' AND cron_id=? LIMIT 1");
+        $stm->execute([$cron_id]);
+
+        if ($stm->fetch() === false) {
+            PDO_DB::update(['status' => 'complete'], self::TABLE, $cron_id);
+        }
+    }
+
+    public function getCronRecord(&$cron_part)
+    {
+        $pdo = PDO_DB::getPDO();
+        $table = TABLE_PREFIX . 'email_cron_part';
+        $stm = $pdo->query("SELECT COUNT(*) FROM $table WHERE status='sending'");
+        $count = $stm->fetchColumn();
+
+        if ($count >= self::STREAM_COUNT) {
+            return null;
+        }
+
+        $cron_part = PDO_DB::first($table, "status='new'");
+        if (!$cron_part) {
+            return null;
+        }
+
+        return PDO_DB::row_by_id(self::TABLE, $cron_part['cron_id']);
+    }
 
     public function cron()
     {
-        $cron = PDO_DB::first(self::TABLE, "status='new'");
+        $cron = $this->getCronRecord($cron_part);
         if (!$cron) {
             return;
         }
-        $start_user_id = $cron['start_user_id'];
+        $table_part = TABLE_PREFIX . 'email_cron_part';
+        $start_user_id = $cron_part['start_user_id'];
+        $finish_user_id = $cron_part['finish_user_id'];
         $start_time = microtime(true);
         PDO_DB::update(['status' => 'sending', 'updated_at' => microtime(true)], self::TABLE, $cron['id']);
+        PDO_DB::update(['status' => 'sending', 'updated_at' => microtime(true)], $table_part, $cron_part['id']);
 
         try {
             $pdo = PDO_DB::getPDO();
@@ -33,12 +67,13 @@ class EmailCron
                 }
             }
 
-            $stm_update = $pdo->prepare("UPDATE " . self::TABLE . " SET updated_at=?, start_user_id=? WHERE id=? LIMIT 1");
-            $stm_update_count = $pdo->prepare("UPDATE " . self::TABLE . " SET send_email=send_email+1 WHERE id=? LIMIT 1");
+            $stm_update            = $pdo->prepare("UPDATE $table_part SET updated_at=?, start_user_id=? WHERE id=? LIMIT 1");
+            $stm_update_count      = $pdo->prepare("UPDATE " . self::TABLE . " SET send_email=send_email+1 WHERE id=? LIMIT 1");
+            $stm_update_count_part = $pdo->prepare("UPDATE $table_part         SET send_email=send_email+1 WHERE id=? LIMIT 1");
 
             if ($cron['type'] == 'invoice') {
-                $stm = $pdo->prepare("SELECT * FROM " . Flat::USER_FLATS_TABLE . " WHERE notify=1 AND user_id>=? ORDER BY user_id ASC");
-                $stm->execute([$start_user_id]);
+                $stm = $pdo->prepare("SELECT * FROM " . Flat::USER_FLATS_TABLE . " WHERE notify=1 AND user_id>=? AND user_id<=? ORDER BY user_id ASC");
+                $stm->execute([$start_user_id, $finish_user_id]);
 
                 $curr_user = ['id' => 0];
 
@@ -47,12 +82,7 @@ class EmailCron
                     if ($row['user_id'] != $curr_user['id']) {
                         $curr_user = User::getUserById($row['user_id']);
                         $start_user_id = $curr_user['id'];
-
-                        if (microtime(true) - $start_time > self::TIME_LIMIIT) {
-                            throw new Exception("just stop cron");
-                        }
-
-                        $stm_update->execute([microtime(true), $start_user_id, $cron['id']]);
+                        $stm_update->execute([microtime(true), $start_user_id, $cron_part['id']]);
                     }
 
                     if (!$curr_user || $curr_user['broken_email']) {
@@ -86,27 +116,18 @@ class EmailCron
                         );
                         
                         $stm_update_count->execute([$cron['id']]);
+                        $stm_update_count_part->execute([$cron_part['id']]);
                         echo date('Y.m.d H:i:s '), "TO: {$curr_user['email']}, user_id={$row['user_id']}, user_flat_id={$row['id']}\r\n";
                     }
                 }
-
-                $update = [
-                    'status' => 'complete',
-                    'start_user_id' => $start_user_id,
-                    'updated_at' => microtime(true)
-                ];
-                PDO_DB::update($update, self::TABLE, $cron['id']);
             } elseif ($cron['type'] == 'newsletter_for_subscribers') {
-                $stm = $pdo->prepare("SELECT * FROM " . User::SUBSCRIBE_TABLE . " WHERE subscribe=1 AND id>=? ORDER BY id ASC");
-                $stm->execute([$start_user_id]);
+                $stm = $pdo->prepare("SELECT * FROM " . User::SUBSCRIBE_TABLE . " WHERE subscribe=1 AND broken_email=0 AND id>=? AND id<=? ORDER BY id ASC");
+                $stm->execute([$start_user_id, $finish_user_id]);
 
                 while ($row = $stm->fetch()) {
                     
                     $start_user_id = $row['id'];
-                    if (microtime(true) - $start_time > self::TIME_LIMIIT) {
-                        throw new Exception("just stop cron");
-                    }
-                    $stm_update->execute([microtime(true), $start_user_id, $cron['id']]);
+                    $stm_update->execute([microtime(true), $start_user_id, $cron_part['id']]);
 
                     $email->clearAttachments();
                     $email->clearAllRecipients();
@@ -119,34 +140,28 @@ class EmailCron
                     $email->AddAddress($row['email']);
 
                     $email->Body = $message;
-                    $email->AltBody = $email->wrapText($email->normalizeBreaks($email->html2text($message)), 80);
+                    if (!empty($cron['plain_text'])) {
+                        $email->AltBody = $email->wrapText($email->normalizeBreaks($cron['plain_text']), 80);
+                    } else {
+                        $email->AltBody = $email->wrapText($email->normalizeBreaks($email->html2text($message)), 80);
+                    }
                     $email->Subject = $cron['subject'];
                     $email->call_phpmailer_send();
                     $stm_update_count->execute([$cron['id']]);
+                    $stm_update_count_part->execute([$cron_part['id']]);
                 }
-
-                $update = [
-                    'status' => 'complete',
-                    'start_user_id' => $start_user_id,
-                    'updated_at' => microtime(true)
-                ];
-                PDO_DB::update($update, self::TABLE, $cron['id']);
             } elseif ($cron['type'] == 'newsletter') {
-                $stm = $pdo->prepare("SELECT * FROM " . User::TABLE . " WHERE notify_email=1 AND broken_email=0 AND deleted=0 AND id>=? ORDER BY id ASC");
-                $stm->execute([$start_user_id]);
+                $stm = $pdo->prepare("SELECT * FROM " . User::TABLE . " WHERE notify_email=1 AND broken_email=0 AND deleted=0 AND id>=? AND id<=? ORDER BY id ASC");
+                $stm->execute([$start_user_id, $finish_user_id]);
 
                 while ($row = $stm->fetch()) {
                     
                     $start_user_id = $row['id'];
-                    if (microtime(true) - $start_time > self::TIME_LIMIIT) {
-                        throw new Exception("just stop cron");
-                    }
-                    $stm_update->execute([microtime(true), $start_user_id, $cron['id']]);
+                    $stm_update->execute([microtime(true), $start_user_id, $cron_part['id']]);
 
                     $email->clearAttachments();
                     $email->clearAllRecipients();
                     $email->clearCustomHeaders();
-
                     
                     $message = $this->loadStaticAttach($email, $cron['content']);
                     $message = $email->wrapText($message, 80);
@@ -155,29 +170,41 @@ class EmailCron
                     $email->AddAddress($row['email'], trim(htmlspecialchars("{$row['name']} {$row['fathername']}")));
 
                     $email->Body = $message;
-                    $email->AltBody = $email->wrapText($email->normalizeBreaks($email->html2text($message)), 80);
+                    if (!empty($cron['plain_text'])) {
+                        $email->AltBody = $email->wrapText($email->normalizeBreaks($cron['plain_text']), 80);
+                    } else {
+                        $email->AltBody = $email->wrapText($email->normalizeBreaks($email->html2text($message)), 80);
+                    }
 
                     $email->Subject = $cron['subject'];
                     $email->call_phpmailer_send();
                     $stm_update_count->execute([$cron['id']]);
+                    $stm_update_count_part->execute([$cron_part['id']]);
                 }
-
-                $update = [
-                    'status' => 'complete',
-                    'start_user_id' => $start_user_id,
-                    'updated_at' => microtime(true)
-                ];
-                PDO_DB::update($update, self::TABLE, $cron['id']);
             }
 
+            $update = [
+                'status' => 'complete',
+                'start_user_id' => $start_user_id,
+                'updated_at' => microtime(true)
+            ];
+            PDO_DB::update($update, $table_part, $cron_part['id']);
+            $this->checkCloseCron($cron['id']);
+
         } catch (Exception $e) {
+
+            $update = [
+                'status' => 'new',
+                'updated_at' => microtime(true)
+            ];
+            PDO_DB::update($update, self::TABLE, $cron['id']);
 
             $update = [
                 'status' => 'new',
                 'start_user_id' => $start_user_id,
                 'updated_at' => microtime(true)
             ];
-            PDO_DB::update($update, self::TABLE, $cron['id']);
+            PDO_DB::update($update, $table_part, $cron_part['id']);
 
             echo $e->getMessage();
         }

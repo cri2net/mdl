@@ -593,3 +593,28 @@ ALTER TABLE `gioc_site`.`gioc_email_cron`
 ALTER TABLE `gioc_feedback`
   ADD COLUMN `answer_need_send` TINYINT(1) DEFAULT 0  NOT NULL  COMMENT 'for cron task' AFTER `answer_time`;
 
+-- 2016.01.28
+CREATE TABLE `gioc_email_cron_part`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cron_id` INT(11) NOT NULL,
+  `status` ENUM('new','sending','complete','pause') NOT NULL DEFAULT 'new',
+  `created_at` DOUBLE NOT NULL,
+  `updated_at` DOUBLE NOT NULL,
+  `start_user_id` INT(11) NOT NULL,
+  `finish_user_id` INT(11) NOT NULL,
+  `send_email` INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  INDEX (`status`),
+  INDEX (`cron_id`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+ALTER TABLE `gioc_email_cron`
+  DROP COLUMN `start_user_id`;
+
+ALTER TABLE `gioc_email_cron`
+  ADD COLUMN `plain_text` MEDIUMTEXT NULL AFTER `content`;
+
+ALTER TABLE `gioc_subscribers`
+  ADD COLUMN `broken_email` TINYINT(1) DEFAULT 0  NOT NULL AFTER `subscribe`, 
+  DROP INDEX `subscribe`,
+  ADD  INDEX `subscribe` (`subscribe`, `broken_email`);
