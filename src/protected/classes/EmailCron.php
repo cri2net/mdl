@@ -3,7 +3,7 @@
 class EmailCron
 {
     const TABLE = DB_TBL_EMAIL_CRON;
-    const STREAM_COUNT = 15;
+    const STREAM_COUNT = 8;
     protected $inline_attachments = [];
 
     public function checkCloseCron($cron_id)
@@ -149,6 +149,7 @@ class EmailCron
                     $email->call_phpmailer_send();
                     $stm_update_count->execute([$cron['id']]);
                     $stm_update_count_part->execute([$cron_part['id']]);
+                    echo date('Y.m.d H:i:s '), "TO: {$row['email']}, subscriber_id={$row['id']}\r\n";
                 }
             } elseif ($cron['type'] == 'newsletter') {
                 $stm = $pdo->prepare("SELECT * FROM " . User::TABLE . " WHERE notify_email=1 AND broken_email=0 AND deleted=0 AND id>=? AND id<=? ORDER BY id ASC");
@@ -180,6 +181,7 @@ class EmailCron
                     $email->call_phpmailer_send();
                     $stm_update_count->execute([$cron['id']]);
                     $stm_update_count_part->execute([$cron_part['id']]);
+                    echo date('Y.m.d H:i:s '), "TO: {$row['email']}, user_id={$row['id']}\r\n";
                 }
             }
 

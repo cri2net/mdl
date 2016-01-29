@@ -18,6 +18,7 @@ if (!in_array(USER_REAL_IP, ['46.151.192.106', '195.138.83.178', '127.0.0.1', '1
 
     // die();
     $Khreshchatyk = new Khreshchatyk();
+    $Khreshchatyk->setEnvironment(false);
 
     $iso = $Khreshchatyk->makeTestPayment();
 ?>

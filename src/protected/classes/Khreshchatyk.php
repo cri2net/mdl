@@ -322,6 +322,7 @@ class Khreshchatyk
 
     public function makeTestPayment()
     {
+        $this->setEnvironment(false);
         $jak = new JAK8583();
         $date = date('mdHis');
 
@@ -337,6 +338,7 @@ class Khreshchatyk
         $jak->addData(18,  '4900');             // код типа торговца. 4900 — для коммунальных услуг
         $jak->addData(41,  $this->Terminal_ID); // ID терминала
         $jak->addData(42,  $this->Merchant_ID); // ID мерчанта
+        $jak->addData(48,  '9803491');          // Tag 98 (Service ID = 491), этот ID закреплён за ГИОЦ.
         $jak->addData(49,  '980');              // код валюты
         $jak->addData(102, '10922885201');      // номер счёта в банке
 
