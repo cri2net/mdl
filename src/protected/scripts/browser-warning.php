@@ -26,6 +26,17 @@ if (Authorization::isLogin() && (!$__userData['activated'] || !$__userData['veri
     </div>
     <?php
     $have_header_warning = true;
+} elseif (Authorization::isLogin() && $__userData['broken_email']) {
+    ?>
+    <div id="verify-email-header-warning" class="old-browsers-warning <?= ($have_header_warning) ? 'not-first-warning' : '' ?>">
+        <div class="inner">
+            <b>Попередження:</b> Система не може доставити листи на Вашу електронну пошту. Деякий функціонал сайту може бути недоступний. <br>
+            Ви можете <a href="<?= BASE_URL; ?>/cabinet/settings/info/">змінити</a> адресу електронної пошти, або
+            <a href="<?= BASE_URL; ?>/cabinet/verify-email/">підтвердити</a> її.
+        </div>
+    </div>
+    <?php
+    $have_header_warning = true;
 }
 
 unset($have_header_warning);

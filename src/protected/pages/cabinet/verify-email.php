@@ -1,6 +1,6 @@
 <h1 class="big-title">Підтвердження електронної пошти</h1>
 <?php
-    if (Authorization::isLogin() && $__userData['activated'] && $__userData['verified_email']) {
+    if (Authorization::isLogin() && $__userData['activated'] && $__userData['verified_email'] && !$__userData['broken_email']) {
         ?><h2 class="big-success-message">Ваша адреса вже підтверджена</h2><?php
         return;
     }
