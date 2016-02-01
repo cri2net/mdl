@@ -6,6 +6,6 @@
         <div class="item email">інформування через e-mail про наявність нових квитанцій</div>
         <div class="item news">останні новини ринку ЖКП та аналітичні огляди</div>
         <div class="item first">акції, конкурси та приємні подарунки</div>
-        <!-- <div class="item quick">миттєві платежі</div> -->
+        <div class="item quick">миттєві платежі</div>
     </div>
 </div>

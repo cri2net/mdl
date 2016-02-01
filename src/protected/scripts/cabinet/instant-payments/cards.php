@@ -1,3 +1,2 @@
-<h1 class="big-title">Переводи з карти на карту</h1>
-<br><br><br>
-<h2>Розділ у розробці</h2>
+<h1 class="big-title">Перекази з карти на карту</h1>
+<iframe style="width: 790px; height: 1290px;" src="https://gerc-payments.taslink.com.ua/p2p/index.php?type=gioc" frameborder="0"></iframe>

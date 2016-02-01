@@ -101,7 +101,7 @@
                         $sections = [
                             'dai'          => 'Штрафи ДАІ',
                             'kindergarten' => 'Дитячий садок',
-                            'cards'        => 'Переводи з карти на карту',
+                            'cards'        => 'Перекази з карти на карту',
                             'phone'        => 'Поповнення рахунку на мобільному'
                         ];
                         $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
