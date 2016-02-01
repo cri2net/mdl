@@ -67,7 +67,7 @@
                 <?php
             }
 
-            if (in_array('khreshchatyk', $pay_systems) && in_array(Authorization::getLoggedUserId(), [4, 43068, 44431, 21, 8996, 47293, 73827, 2435, 74049])) {
+            if (in_array('khreshchatyk', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
                     <span id="checkbox_percent_khreshchatyk" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $khreshchatykSum; ?>" data-paysystem-key="khreshchatyk"></span>

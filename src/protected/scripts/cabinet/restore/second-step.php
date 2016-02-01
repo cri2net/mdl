@@ -39,7 +39,7 @@
                 </label>
             </div>
             <div class="input">
-                <input type="hidden" name="code", value="<?= htmlspecialchars($restore_code, ENT_QUOTES); ?>">
+                <input type="hidden" name="code" value="<?= htmlspecialchars($restore_code, ENT_QUOTES); ?>">
                 <button class="btn green bold">Змінити пароль</button>
             </div>
         </form>
