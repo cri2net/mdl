@@ -68,7 +68,7 @@ class Email
 
     public function call_phpmailer_send()
     {
-        $this->PHPMailer->Send();
+        return $this->PHPMailer->Send();
     }
 
     public function send($to, $subject, $message, $template = '', $data = [])

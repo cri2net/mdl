@@ -3,7 +3,7 @@
 class EmailCron
 {
     const TABLE = DB_TBL_EMAIL_CRON;
-    const STREAM_COUNT = 8;
+    const STREAM_COUNT = 5;
     protected $inline_attachments = [];
 
     public function checkCloseCron($cron_id)
@@ -37,6 +37,15 @@ class EmailCron
         return PDO_DB::row_by_id(self::TABLE, $cron_part['cron_id']);
     }
 
+    private function checkCronIsActive($statement, $id)
+    {
+        $statement->execute([$cron_part['id']]);
+        $tmp = $statement->fetch();
+        if ($tmp['status'] == 'pause') {
+            throw new Exception("Stoped by adminpanel");
+        }
+    }
+
     public function cron()
     {
         $cron = $this->getCronRecord($cron_part);
@@ -53,6 +62,8 @@ class EmailCron
         try {
             $pdo = PDO_DB::getPDO();
             $email = new Email();
+            $email->SMTPDebug = 1;
+            $email->Debugoutput = 'error_log';
 
             $additional = @json_decode($cron['additional']);
             if ($additional != null) {
@@ -70,6 +81,7 @@ class EmailCron
             $stm_update            = $pdo->prepare("UPDATE $table_part SET updated_at=?, start_user_id=? WHERE id=? LIMIT 1");
             $stm_update_count      = $pdo->prepare("UPDATE " . self::TABLE . " SET send_email=send_email+1 WHERE id=? LIMIT 1");
             $stm_update_count_part = $pdo->prepare("UPDATE $table_part         SET send_email=send_email+1 WHERE id=? LIMIT 1");
+            $stm_count_part_get    = $pdo->prepare("SELECT * FROM $table_part WHERE id=? LIMIT 1");
 
             if ($cron['type'] == 'invoice') {
                 $stm = $pdo->prepare("SELECT * FROM " . Flat::USER_FLATS_TABLE . " WHERE notify=1 AND user_id>=? AND user_id<=? ORDER BY user_id ASC");
@@ -83,6 +95,7 @@ class EmailCron
                         $curr_user = User::getUserById($row['user_id']);
                         $start_user_id = $curr_user['id'];
                         $stm_update->execute([microtime(true), $start_user_id, $cron_part['id']]);
+                        $this->checkCronIsActive($stm_count_part_get, $cron_part['id']);
                     }
 
                     if (!$curr_user || $curr_user['broken_email']) {
@@ -128,6 +141,7 @@ class EmailCron
                     
                     $start_user_id = $row['id'];
                     $stm_update->execute([microtime(true), $start_user_id, $cron_part['id']]);
+                    $this->checkCronIsActive($stm_count_part_get, $cron_part['id']);
 
                     $email->clearAttachments();
                     $email->clearAllRecipients();
@@ -146,7 +160,15 @@ class EmailCron
                         $email->AltBody = $email->wrapText($email->normalizeBreaks($email->html2text($message)), 80);
                     }
                     $email->Subject = $cron['subject'];
-                    $email->call_phpmailer_send();
+
+
+                    $mailSent = false;
+                    $shots = 5;
+                    while (($shots >= 0) && !$mailSent) {
+                        $mailSent = $email->call_phpmailer_send();
+                        $shots--;
+                    }
+
                     $stm_update_count->execute([$cron['id']]);
                     $stm_update_count_part->execute([$cron_part['id']]);
                     echo date('Y.m.d H:i:s '), "TO: {$row['email']}, subscriber_id={$row['id']}\r\n";
@@ -159,6 +181,7 @@ class EmailCron
                     
                     $start_user_id = $row['id'];
                     $stm_update->execute([microtime(true), $start_user_id, $cron_part['id']]);
+                    $this->checkCronIsActive($stm_count_part_get, $cron_part['id']);
 
                     $email->clearAttachments();
                     $email->clearAllRecipients();
@@ -178,7 +201,14 @@ class EmailCron
                     }
 
                     $email->Subject = $cron['subject'];
-                    $email->call_phpmailer_send();
+                    
+                    $mailSent = false;
+                    $shots = 5;
+                    while (($shots >= 0) && !$mailSent) {
+                        $mailSent = $email->call_phpmailer_send();
+                        $shots--;
+                    }
+
                     $stm_update_count->execute([$cron['id']]);
                     $stm_update_count_part->execute([$cron_part['id']]);
                     echo date('Y.m.d H:i:s '), "TO: {$row['email']}, user_id={$row['id']}\r\n";
@@ -238,9 +268,13 @@ class EmailCron
         }
 
         $email_object->Subject = $subject;
-        $email_object->call_phpmailer_send();
 
-        gc_collect_cycles();
+        $mailSent = false;
+        $shots = 5;
+        while (($shots >= 0) && !$mailSent) {
+            $mailSent = $email_object->call_phpmailer_send();
+            $shots--;
+        }
 
         return true;
     }
