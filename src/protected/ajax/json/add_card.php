@@ -35,6 +35,11 @@ try {
                 throw new Exception(ERROR_ADD_CARD_CARD_NOT_FOUND);
             }
 
+            // если номер договора начинается на 2625, значит это карта ощадбанка, отклоняем её
+            if (preg_match('/^2625/', $card_data['acc_bank'])) {
+                throw new Exception(ERROR_ADD_CARD_NOT_KKK);
+            }
+
             if ($card_data['card_state_id'] != 5) {
                 throw new Exception(ERROR_ADD_CARD_BAD_CARD_STATE_ID);
             }

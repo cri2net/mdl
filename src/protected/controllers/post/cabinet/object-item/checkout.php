@@ -58,6 +58,10 @@ try {
         if (microtime(true) - $card['updated_at'] > 86400) {
             User::updateUserCardData($card['id']);
         }
+
+        if (preg_match('/^2625/', $card['additional']['acc_bank'])) {
+            throw new Exception(ERROR_ADD_CARD_NOT_KKK);
+        }
     }
 
     ShoppingCart::send_payment_to_reports($_payment['id']);
