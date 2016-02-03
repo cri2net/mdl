@@ -62,8 +62,8 @@ class EmailCron
         try {
             $pdo = PDO_DB::getPDO();
             $email = new Email();
-            $email->SMTPDebug = 1;
-            $email->Debugoutput = 'error_log';
+            // $email->SMTPDebug = 1;
+            // $email->Debugoutput = 'error_log';
 
             $additional = @json_decode($cron['additional']);
             if ($additional != null) {
@@ -186,8 +186,14 @@ class EmailCron
                     $email->clearAttachments();
                     $email->clearAllRecipients();
                     $email->clearCustomHeaders();
+
+                    $hash_1 = Authorization::get_auth_hash1($row['id']);
+                    $hash_2 = Authorization::get_auth_hash2($row['id'], $hash_1);
+                    $message = $cron['content'];
+                    $message = str_replace('{{user_id}}', $row['id'], $message);
+                    $message = str_replace('{{hash2}}', $hash_2, $message);
                     
-                    $message = $this->loadStaticAttach($email, $cron['content']);
+                    $message = $this->loadStaticAttach($email, $message);
                     $message = $email->wrapText($message, 80);
 
                     $email->addCustomHeader('Precedence', 'bulk');
@@ -203,7 +209,7 @@ class EmailCron
                     $email->Subject = $cron['subject'];
                     
                     $mailSent = false;
-                    $shots = 5;
+                    $shots = 10;
                     while (($shots >= 0) && !$mailSent) {
                         $mailSent = $email->call_phpmailer_send();
                         $shots--;
