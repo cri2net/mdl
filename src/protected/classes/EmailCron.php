@@ -4,6 +4,7 @@ class EmailCron
 {
     const TABLE = DB_TBL_EMAIL_CRON;
     const STREAM_COUNT = 5;
+    public $email_in_connection = 200;
     protected $inline_attachments = [];
 
     public function checkCloseCron($cron_id)
@@ -62,6 +63,7 @@ class EmailCron
         try {
             $pdo = PDO_DB::getPDO();
             $email = new Email();
+            $email_in_connection = 0;
             // $email->SMTPDebug = 1;
             // $email->Debugoutput = 'error_log';
 
@@ -118,7 +120,7 @@ class EmailCron
                             $plain_text = null;
                         }
 
-                        $this->sendInvoiceFromCron(
+                        $mailSent = $this->sendInvoiceFromCron(
                             $email,
                             $curr_user['email'],
                             "{$curr_user['name']} {$curr_user['fathername']}",
@@ -127,10 +129,21 @@ class EmailCron
                             $plain_text,
                             $online_version
                         );
-                        
+
                         $stm_update_count->execute([$cron['id']]);
                         $stm_update_count_part->execute([$cron_part['id']]);
-                        echo date('Y.m.d H:i:s '), "TO: {$curr_user['email']}, user_id={$row['user_id']}, user_flat_id={$row['id']}\r\n";
+
+                        if ($mailSent) {
+                            $email_in_connection++;
+                            echo date('Y.m.d H:i:s '), "TO: {$curr_user['email']}, user_id={$row['user_id']}, user_flat_id={$row['id']}\r\n";
+                        } else {
+                            echo date('Y.m.d H:i:s '), "ERROR TO: {$curr_user['email']}, user_id={$row['user_id']}, user_flat_id={$row['id']}", $email->ErrorInfo, "\r\n";
+                        }
+
+                        if ($email_in_connection >= $this->email_in_connection) {
+                            $email->smtpClose();
+                            $email_in_connection = 0;
+                        }
                     }
                 }
             } elseif ($cron['type'] == 'newsletter_for_subscribers') {
@@ -169,9 +182,20 @@ class EmailCron
                         $shots--;
                     }
 
+                    if ($mailSent) {
+                        $email_in_connection++;
+                        echo date('Y.m.d H:i:s '), "TO: {$row['email']}, subscriber_id={$row['id']}\r\n";
+                    } else {
+                        echo date('Y.m.d H:i:s '), "ERROR TO: {$row['email']}, subscriber_id={$row['id']}", $email->ErrorInfo, "\r\n";
+                    }
+
+                    if ($email_in_connection >= $this->email_in_connection) {
+                        $email->smtpClose();
+                        $email_in_connection = 0;
+                    }
+
                     $stm_update_count->execute([$cron['id']]);
                     $stm_update_count_part->execute([$cron_part['id']]);
-                    echo date('Y.m.d H:i:s '), "TO: {$row['email']}, subscriber_id={$row['id']}\r\n";
                 }
             } elseif ($cron['type'] == 'newsletter') {
                 $stm = $pdo->prepare("SELECT * FROM " . User::TABLE . " WHERE notify_email=1 AND broken_email=0 AND deleted=0 AND id>=? AND id<=? ORDER BY id ASC");
@@ -214,10 +238,20 @@ class EmailCron
                         $mailSent = $email->call_phpmailer_send();
                         $shots--;
                     }
+                    if ($mailSent) {
+                        $email_in_connection++;
+                        echo date('Y.m.d H:i:s '), "TO: {$row['email']}, user_id={$row['id']}\r\n";
+                    } else {
+                        echo date('Y.m.d H:i:s '), "ERROR TO: {$row['email']}, user_id={$row['id']}", $email->ErrorInfo, "\r\n";
+                    }
+
+                    if ($email_in_connection >= $this->email_in_connection) {
+                        $email->smtpClose();
+                        $email_in_connection = 0;
+                    }
 
                     $stm_update_count->execute([$cron['id']]);
                     $stm_update_count_part->execute([$cron_part['id']]);
-                    echo date('Y.m.d H:i:s '), "TO: {$row['email']}, user_id={$row['id']}\r\n";
                 }
             }
 
@@ -282,7 +316,7 @@ class EmailCron
             $shots--;
         }
 
-        return true;
+        return $mailSent;
     }
 
     private function loadStaticAttach($email_object, $message)
