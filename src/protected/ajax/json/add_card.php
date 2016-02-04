@@ -37,6 +37,21 @@ try {
 
             // если номер договора начинается на 2625, значит это карта ощадбанка, отклоняем её
             if (preg_match('/^2625/', $card_data['acc_bank'])) {
+                
+                // считаем кол-во таких обращений
+                $counter = PDO_DB::first(TABLE_PREFIX . 'text', "variable='OSCHADBANK_CARD_COUNT'");
+                if ($counter === null) {
+                    $arr = [
+                        'variable' => 'OSCHADBANK_CARD_COUNT',
+                        'text' => 1
+                    ];
+                    PDO_DB::insert($arr, TABLE_PREFIX . 'text', true);
+                } else {
+                    $counter = intval($counter['text']);
+                    $arr = ['text' => $counter + 1];
+                    PDO_DB::updateWithWhere($arr, TABLE_PREFIX . 'text', "variable='OSCHADBANK_CARD_COUNT'");
+                }
+
                 throw new Exception(ERROR_ADD_CARD_NOT_KKK);
             }
 
