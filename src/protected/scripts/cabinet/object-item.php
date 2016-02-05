@@ -1,5 +1,5 @@
 <div class="h1-line-cabinet">
-    <h1 class="big-title">Об'єкти</h1>
+    <h1 class="big-title">Об’єкти</h1>
     <div class="secure">особистий кабінет</div>
 </div>
 <?php
@@ -23,7 +23,7 @@
                 'bill'        => 'Рахунок до сплати',
                 'detailbill'  => 'Історія нарахувань',
                 'historybill' => 'Довідка про платежі',
-                'edit'        => 'Редагувати об\'єкт',
+                'edit'        => 'Редагувати об’єкт',
             ];
             
             $subsections = [

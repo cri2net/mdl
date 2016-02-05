@@ -2,7 +2,7 @@
 try {
     $_SESSION['cabinet-settings'] = [];
     $_POST['mob_phone'] = '+' . preg_replace('/[^0-9]/', '', $_POST['mob_phone']);
-    $fields = ['name' => 'Ім\'я', 'fathername' => 'По-батькові', 'lastname' => 'Прізвище', 'email' => 'Електронна пошта', 'mob_phone' => 'Телефон'];
+    $fields = ['name' => 'Ім’я', 'fathername' => 'По-батькові', 'lastname' => 'Прізвище', 'email' => 'Електронна пошта', 'mob_phone' => 'Телефон'];
     
     if (!$__userData) {
         throw new Exception(ERROR_USER_NOT_LOGGED_IN);

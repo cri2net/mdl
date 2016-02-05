@@ -1,4 +1,4 @@
-<h1 class="big-title">Об'єкти</h1>
+<h1 class="big-title">Об’єкти</h1>
 <?php
     if (isset($_SESSION['objects']['status']) && !$_SESSION['objects']['status']) {
         ?>

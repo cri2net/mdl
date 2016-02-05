@@ -96,7 +96,7 @@
 										<div class="username"><span><?= htmlspecialchars($__userData['name']) . '&nbsp;' . htmlspecialchars($__userData['lastname']); ?></span></div>
 									</div>
 									<div class="item objects">
-										<a href="<?= BASE_URL; ?>/cabinet/objects/">Об'єкти</a>
+										<a href="<?= BASE_URL; ?>/cabinet/objects/">Об’єкти</a>
 									</div>
 									<div class="item bank">
 										<a href="<?= BASE_URL; ?>/cabinet/payments/">Мої платежі</a>
