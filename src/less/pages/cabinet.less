@@ -7,7 +7,7 @@ content .inner {
         .btn.btn-login {
             margin: 89px 0 31px 32px; font-size:32px; .size(237, 88); padding:0; padding-left:35px; line-height:88px; display:block;
             .icon-login {
-                background-image:data-uri("@{images}/__login-btn-icon.png");
+                background-image: data-uri("@{images}/__login-btn-icon.png");
                 background-repeat: no-repeat;
                 display:block;
                 .size(26, 32);
@@ -15,84 +15,6 @@ content .inner {
                 top:28px;
                 left:60px;
                 z-index:4;
-            }
-        }
-        .block {
-            margin-left:-33px; display: block;
-            & > * { display:inline-block; vertical-align: top;}
-
-
-            /* Сплачуйте житлово-комунальні послуги */
-            &.block--personal-cabinet {
-                margin-top:40px; height:340px;
-                & > .subblock-left {
-                    background-image:url("@{images}/pages/cabinet/no-auth/pay-block-bg.jpg"); 
-                    & > h2 { top:0; color:#fff; font-size:32px; line-height:40px; }
-                    .list {
-                        margin-top: 20px; margin-left:33px;
-                        .item {
-                            color:#fff; font-style:italic; font-size:20px; margin-bottom:22px; position:relative; padding-left:38px;
-                            .icon {
-                                display:block; .size(27, 24); float:left; position:absolute; left:0; top:0;
-                                &.time { background-image:data-uri("@{images}/pages/cabinet/no-auth/__time.png"); .size(27); }
-                                &.hand { background-image:data-uri("@{images}/pages/cabinet/no-auth/__hand.png"); .size(25); }
-                                &.secure { background-image:data-uri("@{images}/pages/cabinet/no-auth/__secure.png"); .size(22, 27); }
-                                &.easy { background-image:data-uri("@{images}/pages/cabinet/no-auth/__easy.png"); }
-                            }
-                        }
-                    }
-                }
-                & > .subblock-left { height:340px; }
-                & > .subblock-right { background-color:#eee; height:340px; text-align:center; }
-            }
-
-            &.block--quick-pays {
-                margin-left:0; 
-                margin-top:60px;
-                h2 { font-size: 32px; display:block; margin-bottom:40px; }
-                
-                font-size:0;
-
-                a {
-                    display:inline-block;
-                    width:400px;
-                    font-size:20px;
-                    padding-top:145px;
-                    height:85px;
-                    text-decoration:none; text-align:center; color:#000;
-                    background-repeat:no-repeat;
-                    background-position: top 50px center;
-                    .transition(all 0.2s ease);
-
-                    &:hover { background-color:#eee; }
-
-                    &.police {
-                        background-color:#00979c; color:#fff;
-                        background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-police.png");
-                        &:hover { background-color:darken(#00979c, 5%); }
-                    }
-                    
-                    &.baby {
-                        background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-baby.png");
-                    }
-
-                    &.cards {
-                        background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-cards.png");
-                    }
-
-                    &.phone {
-                        background-color:#01b671; color:#fff;
-                        background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-phone.png");
-                        &:hover { background-color:darken(#01b671, 5%); }
-                    }
-                }
-            }
-
-            &.block--conclusion {
-                margin-left:0;
-                margin-top:50px;
-                h2 {font-size:20px; }
-                p { font-size:12px; line-height:20px; }
             }
         }
 
@@ -496,6 +418,102 @@ content .inner {
                     }
                 }
             }
+        }
+    }
+
+    .block {
+        margin-left:-33px; display: block;
+        & > * { display:inline-block; vertical-align: top;}
+
+
+        /* Сплачуйте житлово-комунальні послуги */
+        &.block--personal-cabinet {
+            margin-top:40px; height:340px;
+            & > .subblock-left {
+                background-image:url("@{images}/pages/cabinet/no-auth/pay-block-bg.jpg"); 
+                & > h2 { top:0; color:#fff; font-size:32px; line-height:40px; }
+                .list {
+                    margin-top: 20px; margin-left:33px;
+                    .item {
+                        color:#fff; font-style:italic; font-size:20px; margin-bottom:22px; position:relative; padding-left:38px;
+                        .icon {
+                            display:block; .size(27, 24); float:left; position:absolute; left:0; top:0;
+                            &.time { background-image:data-uri("@{images}/pages/cabinet/no-auth/__time.png"); .size(27); }
+                            &.hand { background-image:data-uri("@{images}/pages/cabinet/no-auth/__hand.png"); .size(25); }
+                            &.secure { background-image:data-uri("@{images}/pages/cabinet/no-auth/__secure.png"); .size(22, 27); }
+                            &.easy { background-image:data-uri("@{images}/pages/cabinet/no-auth/__easy.png"); }
+                        }
+                    }
+                }
+            }
+            & > .subblock-left { height:340px; }
+            & > .subblock-right { background-color:#eee; height:340px; text-align:center; }
+        }
+
+        &.block--quick-pays {
+            margin-left:0; 
+            margin-top:60px;
+            h2 { font-size: 32px; display:block; margin-bottom:40px; }
+            
+            font-size:0;
+
+            a {
+                display:inline-block;
+                width:400px;
+                font-size:20px;
+                padding-top:145px;
+                height:85px;
+                text-decoration:none; text-align:center; color:#000;
+                background-repeat:no-repeat;
+                background-position: top 50px center;
+                .transition(all 0.2s ease);
+
+                &:hover { background-color:#eee; }
+
+                &.first {
+                    background-color:#00979c; color:#fff;
+                    &:hover { background-color:darken(#00979c, 5%); }
+                }
+
+                &.police {
+                    background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-police.png");
+                }
+                
+                &.cabinet {
+                    background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-cabinet.png");
+                }
+
+                &.kkk {
+                    background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-kkk.png");
+                }
+                
+                &.baby {
+                    background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-baby.png");
+                }
+
+                &.cards {
+                    background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-cards.png");
+                }
+                &.docs {
+                    background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-docs.png");
+                }
+
+                &.phone {
+                    background-image:url("@{images}/pages/cabinet/no-auth/quick-pays/icon-phone.png");
+                }
+
+                &.last {
+                    background-color:#01b671; color:#fff;
+                    &:hover { background-color:darken(#01b671, 5%); }
+                }
+            }
+        }
+
+        &.block--conclusion {
+            margin-left:0;
+            margin-top:50px;
+            h2 {font-size:20px; }
+            p { font-size:12px; line-height:20px; }
         }
     }
 }

@@ -37,8 +37,7 @@
             
             foreach ($sections as $key => $value) {
                 $i++;
-                $current = (
-                    ($current_section == $key) || in_array($current_section, $subsections[$key]));
+                $current = (($current_section == $key) || in_array($current_section, $subsections[$key]));
                 $class = 'tab';
                 $class .= ($current) ? ' current' : '';
                 $class .= ($i == count($sections)) ? ' last' : '';
