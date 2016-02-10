@@ -14,8 +14,8 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['_test_upc', 'visa', 'mastercard', 'khreshchatyk']
-            : ['visa', 'mastercard', 'khreshchatyk'];
+            ? ['khreshchatyk', '_test_upc', 'visa', 'mastercard']
+            : ['khreshchatyk', 'visa', 'mastercard'];
     }
 
     public static function getPercentRule($pay_system = null)

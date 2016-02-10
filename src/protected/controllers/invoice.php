@@ -416,7 +416,7 @@
             </tr>
             <tr>
                 <td valign="bottom" colspan="2" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
-                    <span style="font-weight:bold; line-height:18px; clor:#ffffff; <?= $_ff; ?> font-size:14px;">КП «ГіОЦ» <br></span>
+                    <span style="font-weight:bold; line-height:18px; color:#ffffff; <?= $_ff; ?> font-size:14px;">КП «ГіОЦ» <br></span>
                     Головний  iнформаційно-<br>обчислювальний центр <br><br>
                     1963—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="<?= BASE_URL; ?>" target="_blank"><?= SITE_DOMAIN; ?></a>
                 </td>
