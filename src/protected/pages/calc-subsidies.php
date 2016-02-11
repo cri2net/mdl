@@ -1,28 +1,34 @@
 <h1>Розрахунок розміру обов’язкового платежу</h1>
 <div class="calculator">
     <?php
-		foreach ($_POST as $key => $value) {
-			$$key = $value;
-		}
+        foreach ($_POST as $key => $value) {
+            $$key = $value;
+        }
 
-		if (!isset($KL) || ($KL == 0) || ($KL == '')) $KL = 1;
-		else $KL = (int)$KL;
-		
-		if (!isset($DOHOD) || ($DOHOD == 0) || ($DOHOD == '')) $DOHOD = '0';
-		else $DOHOD = (int)$DOHOD;
-		
+        if (!isset($KL) || ($KL == 0) || ($KL == '')) $KL = 1;
+        else $KL = (int)$KL;
+        
+        if (!isset($DOHOD) || ($DOHOD == 0) || ($DOHOD == '')) $DOHOD = '0';
+        else $DOHOD = (int)$DOHOD;
+        
         if (!empty($_POST)) {
-			$Err = false;
-			
-			if ((!isset($DOHOD) || ($DOHOD < 1))) $Err = true;
-			if ((!isset($KL) || ($KL < 1))) $Err = true;
-				
-			if ($Err == False) // Считаем
-			{
-				$RES  = round( $DOHOD / $KL / 1330 / 2 * 15 , 2 ); // 1176 --> 1330
-				$RESP = round( $DOHOD / 100 * $RES , 2 );
-			}
-		
+            $Err = false; $Err_BIG_DOHOD = false;
+            
+            if ((!isset($DOHOD) || ($DOHOD < 1))) $Err = true;
+            if ((!isset($KL) || ($KL < 1))) $Err = true;
+                
+            if ($Err == False) // Считаем
+            {
+                $RES  = round( $DOHOD / $KL / 1330 / 2 * 15 , 2 ); // 1176 --> 1330
+                $RESP = round( $DOHOD / 100 * $RES , 2 );
+                
+                if (($RES > 100) || ($DOHOD / $KL > 3000)){
+                    $Err_BIG_DOHOD = true;
+                    $RES  = "";
+                    $RESP = "";
+                }
+            }
+        
             ?>
             <div class="result-block">
                 <table class="no-border">
@@ -50,7 +56,7 @@
                                     <td><b class="green"><?=$RES?>%</b></td>
                                 </tr>
                                 <tr>
-                                    <td>Обов'язкова плата за ЖКП</td>
+                                    <td>Обов’язкова плата за ЖКП</td>
                                     <td><b class="green"><?=$RESP?> грн</b></td>
                                 </tr>
                             </table>
@@ -58,7 +64,7 @@
                     </tr>
                 </table>
                 <div class="inner alert">
-				<? if ($Err == False) { ?>
+                <? if (($Err == False) && ($Err_BIG_DOHOD == False)) { ?>
                     <h4>Увага! Усі розрахунки є приблизними і не є підставою для призначення субсидії!</h3>
                     <br>
                     <p>
@@ -71,10 +77,16 @@
                     нутись до спеціалістів управлінь праці та соціального захисту населення районних в місті<br>
                     Києві державних адміністрацій.<span class="q tooltip" title="257-23-87 - Голосіївський<br>563-96-42 - Дарницький<br>545-14-14 - Деснянський<br>542-66-09 - Дніпровський<br>467-98-58 - Оболонський<br>254-35-37 - Печерський<br>425-85-16 - Подільський<br>405-73-13 - Святошинський<br>207-39-12 - Солом’янський<br>238-00-51 - Шевченківський"></span>
                     </p>
-				<? } else { ?>
-					<h4>Базові дані введено невірно!</h3>
-					<br>
-				<? } ?>
+                <? } elseif ($Err_BIG_DOHOD) { ?>
+                    <h4>Перевірте, будь ласка, вхідні дані.</h3>
+                    <br>
+                    <p>
+                    За наданою інформацією, Ваш сукупний дохід дозволяє сплачувати за житлово-комунальні послуги в повному обсязі, без державної дотації. Орієнтовний розрахунок відсотку обов'язкового платежу не проводиться.
+                    </p>
+                <? } else { ?>
+                    <h4>Базові дані введено невірно!</h3>
+                    <br>
+                <? } ?>
                 </div>
             </div>
             <?php
