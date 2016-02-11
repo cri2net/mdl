@@ -72,6 +72,7 @@ try {
     PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
     
     if ($pay_system == 'khreshchatyk') {
+        unset($_SESSION['paybill'], $_SESSION['paybill-post-flag']);
         require_once(ROOT . '/protected/conf/payments/khreshchatyk/khreshchatyk.process.php');
         return BASE_URL . "/payment-status/{$_payment['id']}/";
     }
