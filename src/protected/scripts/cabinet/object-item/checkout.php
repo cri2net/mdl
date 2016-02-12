@@ -29,8 +29,7 @@
             require_once($file . ".process.php");
         }
         
-        unset($_SESSION['paybill']['payment_id']);
-
+        unset($_SESSION['paybill']['payment_id'], $_SESSION['paybill-post-flag']);
     } catch (Exception $e) {
         $error = $e->getMessage();
         ?><h2 class="big-error-message"><?= $error; ?></h2><?php
