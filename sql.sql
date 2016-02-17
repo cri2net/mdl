@@ -618,3 +618,7 @@ ALTER TABLE `gioc_subscribers`
   ADD COLUMN `broken_email` TINYINT(1) DEFAULT 0  NOT NULL AFTER `subscribe`, 
   DROP INDEX `subscribe`,
   ADD  INDEX `subscribe` (`subscribe`, `broken_email`);
+
+-- 2016.02.17
+ALTER TABLE `gioc_payment`
+  CHANGE `processing` `processing` ENUM('_test_upc','mastercard','visa','webmoney','khreshchatyk','tas') CHARSET utf8 COLLATE utf8_general_ci NULL;

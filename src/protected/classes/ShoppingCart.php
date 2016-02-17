@@ -4,6 +4,7 @@ class ShoppingCart
 {
     const TABLE = DB_TBL_PAYMENT;
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
+    const KASS_ID_TAS  = '1080';
     const KASS_ID_AVAL = '1028';
     const KASS_ID_KHRESHCHATYK = '1048';
     const REPORT_BASE_URL   = '/reports/rwservlet';
@@ -14,8 +15,8 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['khreshchatyk', '_test_upc', 'visa', 'mastercard']
-            : ['khreshchatyk', 'visa', 'mastercard'];
+            ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard']
+            : ['khreshchatyk', 'tas', 'visa', 'mastercard'];
     }
 
     public static function getPercentRule($pay_system = null)
@@ -23,6 +24,7 @@ class ShoppingCart
         $rules = [
             '_test_upc'    => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
             'visa'         => ['percent' => 2, 'min' => 2],
+            'tas'          => ['percent' => 2, 'min' => 2],
             'mastercard'   => ['percent' => 2, 'min' => 2],
             'khreshchatyk' => ['percent' => 0, 'min' => 0],
         ];
@@ -53,6 +55,9 @@ class ShoppingCart
         switch ($processing) {
             case 'khreshchatyk':
                 return self::KASS_ID_KHRESHCHATYK;
+
+            case 'tas':
+                return self::KASS_ID_TAS;
 
             default:
                 return self::KASS_ID_AVAL;
@@ -220,6 +225,7 @@ class ShoppingCart
                     case '_test_upc':
                     case 'mastercard':
                     case 'visa':
+                    case 'tas':
                         $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                         $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
                         $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
@@ -250,6 +256,19 @@ class ShoppingCart
                             'p14'          => 0,  // delay
                         ];
 
+                        if ($payment['processing'] == 'tas') {
+                            $paytime = date_timestamp_get(DateTime::createFromFormat('d-m-Y H:i:s', $actual_upc_data['TIME']));
+                            
+                            $post_data['p2']  = $payment['processing_data']['first']->termname;
+                            $post_data['p3']  = rawurlencode($payment['summ_total'] * 100);
+                            $post_data['p4']  = '980';
+                            $post_data['p5']  = strftime("%y%m%d%H%M%S", $paytime);
+                            $post_data['p6']  = $actual_upc_data['TRANID'];
+                            $post_data['p9']  = $actual_upc_data['APPROVAL'];
+                            $post_data['p11'] = $actual_upc_data['PAN'];
+                            $post_data['p12'] = $actual_upc_data['RESPCODE'];
+                            $post_data['p13'] = $actual_upc_data['SIGN'];
+                        }
                         break;
 
                     case 'khreshchatyk':
@@ -281,7 +300,6 @@ class ShoppingCart
                             'p13'          => '',
                             'p14'          => 0,  // delay
                         ];
-
                         break;
 
                     default:
@@ -511,7 +529,7 @@ class ShoppingCart
             case '5' : return 'Немає реквізиту';
             case '6' : return 'Сума платежа дорівнює 0';
             case '7' : return 'Платіж з таким id_plat_klient вже був проведений';
-            case '8' : return 'Обов\'язкові реквізити платежу не заповнені';
+            case '8' : return 'Обов’язкові реквізити платежу не заповнені';
             case '9' : return 'Статус платежу не 20';
             case '10': return 'Помилка XML формату';
             
@@ -532,6 +550,12 @@ class ShoppingCart
         $to_update = [];
 
         switch ($payment['processing']) {
+            case 'tas':
+                $type = ($payment['type'] == 'komdebt') ? 'komdebt' : 'budget';
+                $taslink = new TasLink($type);
+                $taslink->checkStatus($payment['id']);
+                break;
+
             case 'visa':
             case 'mastercard':
 

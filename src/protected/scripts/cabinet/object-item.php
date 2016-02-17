@@ -27,7 +27,7 @@
             ];
             
             $subsections = [
-                'bill'        => ['paybill', 'checkout'],
+                'bill'        => ['paybill', 'checkout', 'processing'],
                 'detailbill'  => [],
                 'historybill' => [],
                 'edit'        => [],

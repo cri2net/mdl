@@ -3,8 +3,14 @@ try {
     if (!Authorization::isLogin()) {
         throw new Exception(ERROR_USER_NOT_LOGGED_IN);
     }
+    
+    $flatData = Flat::getUserFlatById($_POST['flat_id']);
 
+    if (($_POST['cctype'] == 'tas_mc') || ($_POST['cctype'] == 'tas_visa')) {
+        $_POST['cctype'] = 'tas';
+    }
     $pay_system = $_POST['cctype'];
+
     $user_id = Authorization::getLoggedUserId();
     if (!in_array($pay_system, ShoppingCart::getActivePaySystems())){
         throw new Exception("Невідома платіжна система $pay_system");
@@ -15,7 +21,6 @@ try {
         throw new Exception("Невідома транзакція {$_SESSION['paybill']['payment_id']}");
     }
 
-    $flatData = Flat::getUserFlatById($_POST['flat_id']);
     if (!$flatData) {
         throw new Exception(ERROR_NOT_FIND_FLAT);
     }
@@ -75,6 +80,12 @@ try {
         unset($_SESSION['paybill'], $_SESSION['paybill-post-flag']);
         require_once(ROOT . '/protected/conf/payments/khreshchatyk/khreshchatyk.process.php');
         return BASE_URL . "/payment-status/{$_payment['id']}/";
+    } elseif ($pay_system == 'tas') {
+        $TasLink = new TasLink('komdebt');
+        $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_payment['id']); // в БД теперь правильная комиссия, которую вернул reports
+        $tas_session_id = $TasLink->initSession($_payment['id']);
+        $TasLink->makePayment($_payment['summ_plat'], $_payment['summ_komis']);
+        return BASE_URL . '/cabinet/objects/'. $flatData['id'] .'/processing/';
     }
 
 } catch (Exception $e) {

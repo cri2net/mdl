@@ -86,6 +86,7 @@
                                     'edit'        => 'Редагувати об’єкт',
                                     'paybill'     => 'Спосіб сплати',
                                     'checkout'    => 'Перенаправлення',
+                                    'processing'  => 'Сплата',
                                 ];
                                 $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                             }

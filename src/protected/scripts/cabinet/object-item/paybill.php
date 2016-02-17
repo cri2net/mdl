@@ -16,10 +16,10 @@
     $totalBillSum = $_SESSION['paybill']['totalBillSum'];
     $pay_systems = ShoppingCart::getActivePaySystems();
 
-    $visaSum = ShoppingCart::getPercentSum($total_sum, 'visa');
-    $mastercardSum = ShoppingCart::getPercentSum($total_sum, 'mastercard');
-    $_test_upcSum = ShoppingCart::getPercentSum($total_sum, '_test_upc');
-    $khreshchatykSum = ShoppingCart::getPercentSum($total_sum, 'khreshchatyk');
+    foreach ($pay_systems as $tmp) {
+        $name = $tmp . 'Sum';
+        $$name = ShoppingCart::getPercentSum($total_sum, $tmp);
+    }
 
     if ($error) {
         ?><h2 class="big-error-message"><?= $error; ?></h2><?php
@@ -72,11 +72,11 @@
                 <?php
             }
 
-            if (in_array('visa', $pay_systems)) {
+            if (in_array('tas', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_percent_visa" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $visaSum; ?>" data-paysystem-key="visa"></span>
-                    <label onclick="$('#checkbox_percent_visa').click();">
+                    <span id="checkbox_percent_tas_visa" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_visa"></span>
+                    <label onclick="$('#checkbox_percent_tas_visa').click();">
                         <img alt="visa" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
                         <span class="text-label">Карта Visa, Visa Electron</span>
                     </label>
@@ -84,14 +84,32 @@
                 <?php
             }
             
-            if (in_array('mastercard', $pay_systems)) {
+            if (in_array('mastercard', $pay_systems) || in_array('tas', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_percent_mastercard" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
+                    <span id="checkbox_percent_mastercard" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="mastercard_box"></span>
                     <label onclick="$('#checkbox_percent_mastercard').click();">
                         <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
                         <span class="text-label">Карта MasterCard, Maestro</span>
                     </label>
+                </div>
+                <div class="paybill-ps-item paybill-ps-item-mastercard paybill-ps-item-tas_mc paybill-ps-item-mastercard_box" style="display: none;">
+                    <div class="paybill-ps-sub-items">
+                        <div class="check-box-line">
+                            <span id="checkbox_percent_mastercard_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
+                            <label onclick="$('#checkbox_percent_mastercard_1').click();">
+                                <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/aval.png" />
+                                <span class="text-label">Райффайзен банк Аваль</span>
+                            </label>
+                        </div>
+                        <div class="check-box-line">
+                            <span id="checkbox_percent_mastercard_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_mc"></span>
+                            <label onclick="$('#checkbox_percent_mastercard_2').click();">
+                                <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
+                                <span class="text-label">Інші банки</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <?php
             }
@@ -138,6 +156,10 @@
       
         $(".niceCheck").click(function() {
             changeCheck($(this), 'check-group');
+        });
+
+        $("#checkbox_percent_mastercard").click(function() {
+            $('#checkbox_percent_mastercard_2').click();
         });
 
         $("input[name=percent]").change(function() {
