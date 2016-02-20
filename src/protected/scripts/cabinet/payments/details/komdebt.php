@@ -33,8 +33,11 @@
             <tr class="item-row even">
                 <td colspan="1" class="first">Дата та час</td>
                 <td colspan="4" class="">
-                    <span class="date-day"><?= getUkraineDate('j m Y', $payment['go_to_payment_time']); ?></span>
-                    <span class="date-time"><?= getUkraineDate('H:i:s', $payment['go_to_payment_time']); ?></span>
+                    <?php
+                        $time = ($payment['go_to_payment_time']) ? $payment['go_to_payment_time'] : $payment['timestamp'];
+                    ?>
+                    <span class="date-day"><?= getUkraineDate('j m Y', $time); ?></span>
+                    <span class="date-time"><?= getUkraineDate('H:i:s', $time); ?></span>
                 </td>
             </tr>
             <tr class="item-row odd">

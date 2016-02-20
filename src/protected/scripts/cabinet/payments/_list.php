@@ -29,14 +29,15 @@
                 
                 foreach ($payments as $item) {
                     $counter++;
+                    $time = ($item['go_to_payment_time']) ? $item['go_to_payment_time'] : $item['timestamp'];
                     ?>
                     <tr style="<?= ($item['status'] == 'success') ? '' : 'display: none;'; ?>" class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?> item-payment-status item-payment-status-<?= $item['status']; ?>">
                         <td class="first">
                             <a href="<?= BASE_URL; ?>/cabinet/payments/details/<?= $item['id']; ?>/"><?= $item['id']; ?></a>
                         </td>
                         <td>
-                            <span class="date-day"><?= getUkraineDate('j m Y', $item['go_to_payment_time']); ?></span><br>
-                            <span class="date-time"><?= date('H:i:s', $item['go_to_payment_time']); ?></span>
+                            <span class="date-day"><?= getUkraineDate('j m Y', $time); ?></span><br>
+                            <span class="date-time"><?= date('H:i:s', $time); ?></span>
                         </td>
                         <td>
                             <?php
