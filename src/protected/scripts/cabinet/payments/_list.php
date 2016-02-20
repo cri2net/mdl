@@ -60,6 +60,7 @@
                             <?php
                                 switch ($item['status']) {
                                     case 'new':
+                                    case 'timeout':
                                         echo 'Новий (не оплачений)';
                                         break;
 
@@ -69,6 +70,10 @@
 
                                     case 'error':
                                         echo 'Помилка';
+                                        break;
+
+                                    case 'reverse':
+                                        echo 'Cторнований';
                                         break;
                                 }
                             ?>

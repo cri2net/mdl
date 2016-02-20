@@ -213,7 +213,7 @@ class ShoppingCart
     public static function send_payment_status_to_reports($payment_id)
     {
         $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
-        if (($payment === null) || $payment['send_payment_status_to_reports'] || ($payment['status'] == 'new')) {
+        if (($payment === null) || $payment['send_payment_status_to_reports'] || ($payment['status'] == 'new') || ($payment['status'] == 'timeout')) {
             return;
         }
 
@@ -596,56 +596,53 @@ class ShoppingCart
                     $to_update['processing_data'] = json_encode($payment['processing_data']);
                 }
 
-
                 if (!$result) {
-                    $decline = (time() - $payment['timestamp'] >= 1800);
-                } else {
-                    $lines = explode("\n", $result);
-                    $params = [];
-                    
-                    for ($i=0; $i < count($lines); $i++) {
-                        $vars = explode('=', $lines[$i]);
-
-                        $var = trim($vars[0]);
-                        if (strlen($var) > 0) {
-                            $params[$var] = trim($vars[1]);
-                        }
+                    if (time() - $payment['timestamp'] >= 1800) {
+                        $to_update['status'] = 'timeout';
                     }
+                    break;
+                }
 
-                    if (in_array($params['TranCode'], ['000', '410'])) {
-                        $to_update['status'] = 'success';
+                $lines = explode("\n", $result);
+                $params = [];
+                
+                for ($i=0; $i < count($lines); $i++) {
+                    $vars = explode('=', $lines[$i]);
 
+                    $var = trim($vars[0]);
+                    if (strlen($var) > 0) {
+                        $params[$var] = trim($vars[1]);
+                    }
+                }
 
-                        // в дальнейшем эти данные будут использоваться для отправки статуса на reports
-                        $date = date('d-m-Y H:i:s');
+                if (in_array($params['TranCode'], ['000', '410'])) {
+                    $to_update['status'] = 'success';
 
-                        $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
-                        $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
-                        $payment['processing_data']['dates'][] = $date;
-                        $payment['processing_data']['requests'][$date] = ['_is_from_cron_check_status' => true];
+                    // в дальнейшем эти данные будут использоваться для отправки статуса на reports
+                    $date = date('d-m-Y H:i:s');
 
-                        foreach ($params as $key => $value) {
-                            $payment['processing_data']['requests'][$date][$key] = $value;
-                        }
-                        $to_update['processing_data'] = json_encode($payment['processing_data']);
+                    $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
+                    $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
+                    $payment['processing_data']['dates'][] = $date;
+                    $payment['processing_data']['requests'][$date] = ['_is_from_cron_check_status' => true];
 
-                    } elseif (in_array($params['TranCode'], ['105', '116', '111', '108', '101', '130', '290', '291', '401', '402', '403', '404', '405', '406', '407', '411', '412', '420', '421', '430', '431', '501', '502', '503', '504'])) {
-                        $decline = true;
-                    } elseif (in_array($params['TranCode'], ['408', '409'])) {
-                        $decline = (time() - $payment['go_to_payment_time'] >= 900);
+                    foreach ($params as $key => $value) {
+                        $payment['processing_data']['requests'][$date][$key] = $value;
+                    }
+                    $to_update['processing_data'] = json_encode($payment['processing_data']);
 
-                        if (!$decline) {
-                            unset($to_update);
-                        }
-
-                    } elseif ($params['TranCode'] == '601') {
-                        // логи в БД занимают слишком много места. Не логируем запросы статусов на транзакции, которые не завершены.
-                        $decline = (time() - $payment['go_to_payment_time'] >= 3600 * 3);
-                        if (!$decline) {
-                            unset($to_update);
-                        }
+                } elseif (in_array($params['TranCode'], ['105', '116', '111', '108', '101', '130', '290', '291', '401', '402', '403', '404', '405', '406', '407', '411', '412', '420', '421', '430', '431', '501', '502', '503', '504'])) {
+                    $decline = true;
+                } elseif (in_array($params['TranCode'], ['408', '409', '601'])) {
+                    // логи в БД занимают слишком много места. Не логируем запросы статусов на транзакции, которые не завершены.
+                    if (time() - $payment['go_to_payment_time'] >= 3600 * 3) {
+                        $to_update['status'] = 'timeout';
                     } else {
-                        $decline = (time() - $payment['go_to_payment_time'] >= 1800);
+                        unset($to_update);
+                    }
+                } else {
+                    if (time() - $payment['go_to_payment_time'] >= 1800) {
+                        $to_update['status'] = 'timeout';
                     }
                 }
 
@@ -660,6 +657,9 @@ class ShoppingCart
 
 
         if ($to_update) {
+            if (isset($to_update['status']) && ($to_update['status'] == 'timeout')) {
+                $to_update['send_payment_status_to_reports'] = 1;
+            }
             PDO_DB::update($to_update, self::TABLE, $payment['id']);
             self::send_payment_status_to_reports($payment['id']);
         }
@@ -668,7 +668,7 @@ class ShoppingCart
     public static function cron()
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status<>'new' AND send_payment_status_to_reports=0 ORDER BY id ASC");
+        $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status<>'new' AND status<>'timeout' AND send_payment_status_to_reports=0 ORDER BY id ASC");
 
         while ($row = $stm->fetch()) {
             self::send_payment_status_to_reports($row['id']);

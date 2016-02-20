@@ -622,3 +622,7 @@ ALTER TABLE `gioc_subscribers`
 -- 2016.02.17
 ALTER TABLE `gioc_payment`
   CHANGE `processing` `processing` ENUM('_test_upc','mastercard','visa','webmoney','khreshchatyk','tas') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+-- 2016.02.21
+ALTER TABLE `gioc_payment`
+  CHANGE `status` `status` ENUM('new','success','error','reverse','timeout') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'new' NOT NULL;

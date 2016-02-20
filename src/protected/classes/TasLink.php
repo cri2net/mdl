@@ -140,7 +140,8 @@ class TasLink
             $discard = (microtime(true) - $payment['paytime'] > 1800);
 
             if ($discard) {
-                $data['status'] = 'error';
+                $data['status'] = 'timeout';
+                $data['send_payment_status_to_reports'] = 1;
 
                 $payment['processing_data']->cron_check_status[] = [
                     'timestamp' => microtime(true),

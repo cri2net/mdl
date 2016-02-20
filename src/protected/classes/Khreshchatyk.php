@@ -308,7 +308,7 @@ class Khreshchatyk
         $payment['processing_data']['requests'][] = $request;
 
         $arr = [
-            'status'                         => 'error',
+            'status'                         => 'reverse',
             'processing_data'                => json_encode($payment['processing_data']),
             'send_payment_status_to_reports' => 0,
         ];
