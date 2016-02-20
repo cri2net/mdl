@@ -315,7 +315,7 @@ class Khreshchatyk
 
         PDO_DB::update($arr, ShoppingCart::TABLE, $payment['id']);
 
-        if ((strlen($data) == 0) && $first) {
+        if (empty($data) && $first) {
             $this->reversesTransaction($payment['id'], false);
         }
     }

@@ -257,7 +257,8 @@ class ShoppingCart
                         ];
 
                         if ($payment['processing'] == 'tas') {
-                            $paytime = date_timestamp_get(DateTime::createFromFormat('d-m-Y H:i:s', $actual_upc_data['TIME']));
+                            $paytime = DateTime::createFromFormat('d-m-Y H:i:s', $actual_upc_data['TIME']);
+                            $paytime = ($paytime === false) ? microtime(true) : date_timestamp_get($paytime);
                             
                             $post_data['p2']  = $payment['processing_data']['first']->termname;
                             $post_data['p3']  = rawurlencode($payment['summ_total'] * 100);

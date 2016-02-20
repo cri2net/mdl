@@ -89,13 +89,16 @@ class TasLink
     {
         $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
         $payment['processing_data'] = json_decode($payment['processing_data']);
+        if (!isset($payment['processing_data']->cron_check_status)) {
+            $payment['processing_data']->cron_check_status = [];
+        }
 
         $type = 'GetStatus';
         $oid = $payment['processing_data']->first->oid;
         $termname = $payment['processing_data']->first->termname;
         $sign = md5(strtoupper(strrev($type) . strrev($termname) . strrev($oid) . strrev(self::PASSWORD_STATUS_REQ)));
 
-        $data = [
+        $send_data = [
             'type'     => $type,     // тип операции
             'termname' => $termname, // имя терминала в платежном шлюзе Тас Линк
             'oid'      => $oid,      // ордер, в рамках которого было иниццировано платеж  
@@ -103,7 +106,7 @@ class TasLink
         ];
 
         $url = self::get_API_URL('CHECK_STATUS');
-        $response = self::httpPost($url, json_encode($data));
+        $response = self::httpPost($url, json_encode($send_data));
         $response = @json_decode($response);
         $data = [];
 
@@ -127,16 +130,28 @@ class TasLink
             } else {
                 $data['status'] = 'error';
             }
+            
+            $payment['processing_data']->cron_check_status[] = [
+                'timestamp' => microtime(true),
+                'raw_data' => $response,
+                'request' => $send_data
+            ];
         } catch (Exception $e) {
             $discard = (microtime(true) - $payment['paytime'] > 1800);
 
             if ($discard) {
-                $data['status'] = 2;
-                $data['logdata'] = json_encode($response);
+                $data['status'] = 'error';
+
+                $payment['processing_data']->cron_check_status[] = [
+                    'timestamp' => microtime(true),
+                    'raw_data' => $response,
+                    'request' => $send_data
+                ];
             }
         }
 
         if (!empty($data)) {
+            $data['processing_data'] = json_encode($payment['processing_data']);
             PDO_DB::update($data, ShoppingCart::TABLE, $payment_id);
             ShoppingCart::send_payment_status_to_reports($payment_id);
         }
