@@ -27,7 +27,7 @@
                             case 'error':
                                 echo 'Помилка';
                                 break;
-                                
+
                             case 'reverse':
                                 echo 'Cторнований';
                                 break;
@@ -221,7 +221,7 @@
         ?>
         <a class="btn green big" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/GIOC-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
         <?php
-    } elseif ($payment['status'] == 'error') {
+    } elseif ($payment['status'] != 'new') {
         ?>
         <form method="post" action="<?= BASE_URL; ?>/post/cabinet/object-item/repay/">
             <input type="hidden" name="payment_id" value="<?= $payment['id']; ?>" />

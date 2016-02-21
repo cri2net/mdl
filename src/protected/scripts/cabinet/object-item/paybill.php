@@ -94,7 +94,7 @@
                             <span id="checkbox_percent_visa_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_visa"></span>
                             <label onclick="$('#checkbox_percent_visa_2').click();">
                                 <img alt="tas" src="<?= BASE_URL; ?>/images/paysystems/tas-logo.png" />
-                                <span class="text-label">Інші банки</span>
+                                <span class="text-label">ТасКомБанк</span>
                             </label>
                         </div>
                     </div>
