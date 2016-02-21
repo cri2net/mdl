@@ -72,14 +72,32 @@
                 <?php
             }
 
-            if (in_array('tas', $pay_systems)) {
+            if (in_array('visa', $pay_systems) || in_array('tas', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_percent_tas_visa" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_visa"></span>
-                    <label onclick="$('#checkbox_percent_tas_visa').click();">
+                    <span id="checkbox_percent_visa" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $visaSum; ?>" data-paysystem-key="visa_box"></span>
+                    <label onclick="$('#checkbox_percent_visa').click();">
                         <img alt="visa" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
                         <span class="text-label">Карта Visa, Visa Electron</span>
                     </label>
+                </div>
+                <div class="paybill-ps-item paybill-ps-item-visa paybill-ps-item-tas_visa paybill-ps-item-visa_box" style="display: none;">
+                    <div class="paybill-ps-sub-items">
+                        <div class="check-box-line">
+                            <span id="checkbox_percent_visa_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $visaSum; ?>" data-paysystem-key="visa"></span>
+                            <label onclick="$('#checkbox_percent_visa_1').click();">
+                                <img alt="visa" src="<?= BASE_URL; ?>/images/paysystems/visa-logo.png" />
+                                <span class="text-label">Інші банки</span>
+                            </label>
+                        </div>
+                        <div class="check-box-line">
+                            <span id="checkbox_percent_visa_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_visa"></span>
+                            <label onclick="$('#checkbox_percent_visa_2').click();">
+                                <img alt="tas" src="<?= BASE_URL; ?>/images/paysystems/tas-logo.png" />
+                                <span class="text-label">Інші банки</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <?php
             }
@@ -98,15 +116,15 @@
                         <div class="check-box-line">
                             <span id="checkbox_percent_mastercard_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
                             <label onclick="$('#checkbox_percent_mastercard_1').click();">
-                                <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/aval.png" />
-                                <span class="text-label">Райффайзен банк Аваль</span>
+                                <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
+                                <span class="text-label">Інші банки</span>
                             </label>
                         </div>
                         <div class="check-box-line">
                             <span id="checkbox_percent_mastercard_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_mc"></span>
                             <label onclick="$('#checkbox_percent_mastercard_2').click();">
-                                <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
-                                <span class="text-label">Інші банки</span>
+                                <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/tas-logo.png" />
+                                <span class="text-label">ТасКомБанк</span>
                             </label>
                         </div>
                     </div>
@@ -159,7 +177,10 @@
         });
 
         $("#checkbox_percent_mastercard").click(function() {
-            $('#checkbox_percent_mastercard_2').click();
+            $('#checkbox_percent_mastercard_1').click();
+        });
+        $("#checkbox_percent_visa").click(function() {
+            $('#checkbox_percent_visa_1').click();
         });
 
         $("input[name=percent]").change(function() {
