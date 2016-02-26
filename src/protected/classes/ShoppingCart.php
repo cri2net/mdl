@@ -6,7 +6,8 @@ class ShoppingCart
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
     const KASS_ID_TAS  = '1080';
     const KASS_ID_AVAL = '1028';
-    const KASS_ID_KHRESHCHATYK = '1048';
+    const KASS_ID_OSCHAD = '1058';
+    const KASS_ID_KHRESHCHATYK = '1048'; /// УЗНАТЬ ТОЧНЫЙ ID !!
     const REPORT_BASE_URL   = '/reports/rwservlet';
     const PDF_FIRST_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
     const PDF_TODAY_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
@@ -15,8 +16,8 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard']
-            : ['khreshchatyk', 'tas', 'visa', 'mastercard'];
+            ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard', 'oschad']
+            : ['khreshchatyk', 'tas', 'visa', 'mastercard', 'oschad'];
     }
 
     public static function getPercentRule($pay_system = null)
@@ -27,12 +28,13 @@ class ShoppingCart
             'tas'          => ['percent' => 2, 'min' => 2],
             'mastercard'   => ['percent' => 2, 'min' => 2],
             'khreshchatyk' => ['percent' => 0, 'min' => 0],
+            'oschad'       => ['percent' => 0, 'min' => 0],
         ];
 
         if ($pay_system) {
             $rules = $rules[$pay_system];
         }
-        
+
         return $rules;
     }
 
@@ -40,13 +42,13 @@ class ShoppingCart
     {
         $sum = (double)(str_replace(",", ".", $sum));
         $rules = self::getPercentRule();
-        
+
         foreach ($rules as $key => $value) {
             if (isset($rules['big_after']) && (isset($rules['big_after']) <= $sum)) {
                 $rules[$key]['percent'] = $rules[$key]['big_percent'];
             }
         }
-        
+
         return $rules;
     }
 
@@ -58,6 +60,9 @@ class ShoppingCart
 
             case 'tas':
                 return self::KASS_ID_TAS;
+
+            case 'oschad':
+                return self::KASS_ID_OSCHAD;
 
             default:
                 return self::KASS_ID_AVAL;
@@ -72,10 +77,10 @@ class ShoppingCart
         if (isset($rules[$type])) {
             return sprintf('%.2f', max(round($sum * $rules[$type]['percent'] / 100, 2), $rules[$type]['min']));
         }
-        
+
         throw new Exception("UNKNOW TYPE $type");
     }
-    
+
     public static function getTotalDebtSum($data)
     {
         $sum = 0;
@@ -89,13 +94,13 @@ class ShoppingCart
         $sum = sprintf('%.2f',$sum);
         return $sum;
     }
-    
+
     public static function add($data, $user_id)
     {
         $summ_plat = 0;
         $real_servises = [];
         $timestamp = microtime(true);
-        
+
         if (count($data['items']) > 0) {
             foreach ($data['items'] as $item) {
                 $tmp_sum = (float)str_replace(",", ".", $data[$item."_sum"]);
@@ -128,10 +133,10 @@ class ShoppingCart
         ];
 
         $payment_id = PDO_DB::insert($payment_data, self::TABLE);
-        
+
         foreach ($real_servises as $item) {
             $servicePostSum = str_replace(",", ".", $data[$item."_sum"]);
-            
+
             $counter_data = [];
             if (!empty($data[$item.'_new_count'])) {
                 foreach ($data[$item.'_new_count'] as $key => $counter) {
@@ -146,7 +151,7 @@ class ShoppingCart
                     if ($used_value < 0) {
                         $used_value -= pow(10, strlen(floor($old_value)));
                     }
-                    
+
                     $counter_data[] = [
                         'counter_num' => $data[$item.'_count_number'][$key],
                         'abcounter'   => $data[$item.'_abcounter'][$key],
@@ -174,7 +179,7 @@ class ShoppingCart
                 'name_plat'  => $data[$item.'_name_plat'],
                 'firm_name'  => $data[$item.'_firm_name'],
             ];
-            
+
             $serviceData = [
                 'sum'          => $servicePostSum,
                 'payment_id'   => $payment_id,
@@ -183,10 +188,10 @@ class ShoppingCart
                 'data'         => json_encode($kombebt_data),
                 'counter_data' => json_encode($counter_data)
             ];
-            
+
             $serviceId = PDO_DB::insert($serviceData, self::SERVICE_TABLE);
         }
-        
+
         return $payment_id;
     }
 
@@ -200,7 +205,7 @@ class ShoppingCart
         if ($first) {
             return Http::fgets(API_URL . self::PDF_FIRST_URL . $payment['reports_id_pack']);
         }
-        
+
         $pdf1_url = API_URL . self::PDF_TODAY_URL . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
         $pdf2_url = API_URL . self::PDF_NOT_TODAY_URL . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
 
@@ -221,7 +226,7 @@ class ShoppingCart
             case 'komdebt':
 
                 switch ($payment['processing']) {
-                    
+
                     case '_test_upc':
                     case 'mastercard':
                     case 'visa':
@@ -233,7 +238,7 @@ class ShoppingCart
                         $actual_upc_data = (array)$payment['processing_data']['requests'][$actual_date];
 
                         $url = API_URL . self::REPORT_BASE_URL;
-                        
+
                         $post_data = [
                             'report'       => ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep',
                             'destype'      => 'Cache',
@@ -259,7 +264,7 @@ class ShoppingCart
                         if ($payment['processing'] == 'tas') {
                             $paytime = DateTime::createFromFormat('d-m-Y H:i:s', $actual_upc_data['TIME']);
                             $paytime = ($paytime === false) ? microtime(true) : date_timestamp_get($paytime);
-                            
+
                             $post_data['p2']  = $payment['processing_data']['first']->termname;
                             $post_data['p3']  = rawurlencode($payment['summ_total'] * 100);
                             $post_data['p4']  = '980';
@@ -279,7 +284,7 @@ class ShoppingCart
                         $last = (array)$payment['processing_data']['requests'][count($payment['processing_data']['requests']) - 1];
 
                         $url = API_URL . self::REPORT_BASE_URL;
-                        
+
                         $post_data = [
                             'report'       => ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep',
                             'destype'      => 'Cache',
@@ -323,7 +328,7 @@ class ShoppingCart
         if (!$reports_data) {
             $reports_data = [];
         }
-        
+
         $reports_data[$date] = [
             'timestamp' => microtime(true),
             'reports_url' => $url,
@@ -346,7 +351,7 @@ class ShoppingCart
             if ($xml->ROW->ERR.'' == '4') {
                 $to_update['send_payment_status_to_reports'] = 1;
             }
-            
+
             PDO_DB::update($to_update, self::TABLE, $payment['id']);
             // throw new Exception("id: {$payment['id']}, " . self::get_create_payment_error($xml->ROW->ERR.''));
             return false;
@@ -410,7 +415,7 @@ class ShoppingCart
                 $xml .= "\t<idsiteuser>{$payment['user_id']}</idsiteuser>\n";
 
                 $xml .= "\t<plat_list>\n";
-                
+
                 for ($i=0; $i < count($services); $i++) {
                     $data = (array)json_decode($services[$i]['data']);
                     $counters = (array)json_decode($services[$i]['counter_data']);
@@ -422,14 +427,14 @@ class ShoppingCart
                     $xml .= "\t\t\t<id_plat>{$data['id_pat']}</id_plat>\n";
                     $xml .= "\t\t\t<date_d>{$data['date_d']}</date_d>\n";
                     $xml .= "\t\t\t<summ_plat>". ($services[$i]['sum'] * 100) ."</summ_plat>\n";
-                    
+
                     list($year, $month, $day) = explode('-', $data['dbegin']);
                     $xml .= "\t\t\t<dbegin>$day.$month.$year 00:00:00</dbegin>\n";
-                    
+
                     list($year, $month, $day) = explode('-', $data['dend']);
                     $xml .= "\t\t\t<dend>$day.$month.$year 00:00:00</dend>\n";
 
-                    
+
                     $xml .= "\t\t\t<counters>\n";
                     for ($j=0; $j < count($counters); $j++) {
 
@@ -447,7 +452,7 @@ class ShoppingCart
                         $xml .= "\t\t\t\t</counter>\n";
                     }
                     $xml .= "\t\t\t</counters>\n";
-                    
+
                     $xml .= "\t\t</plat>\n";
                 }
 
@@ -473,7 +478,7 @@ class ShoppingCart
         if (!$reports_data) {
             $reports_data = [];
         }
-        
+
         $reports_data[$date] = [
             'timestamp' => microtime(true),
             'reports_url' => $url,
@@ -501,11 +506,11 @@ class ShoppingCart
 
         // reports игнорирует комиссию, которую расчитал сайт. Но правильная комиссия его.
         // Они должны совпадать, но перезаменяем значение в БД на всякий случай
-        
+
         $to_update['summ_komis']              = floatval($xml->ROW->SUMM_KOMIS.'') / 100;
         $to_update['summ_plat']               = floatval($xml->ROW->SUMM_PLAT.'')  / 100;
         $to_update['summ_total']              = floatval($xml->ROW->SUMM_TOTAL.'') / 100;
-        
+
         $to_update['reports_id_pack']         = $xml->ROW->ID_PACK.'';
         $to_update['reports_num_kvit']        = $xml->ROW->NUM_KVIT.'';
         $to_update['reports_id_plat_klient']  = $xml->ROW->ID_PLAT_KLIENT.'';
@@ -523,7 +528,7 @@ class ShoppingCart
             case '':
             case '0':
                 return '';
-            
+
             case '1' : return 'Касовий день закритий';
             case '2' : return 'Стан фіксації (блокування) платежу. Вносити зміни не можна.';
             case '4' : return 'Немає платежу';
@@ -533,7 +538,7 @@ class ShoppingCart
             case '8' : return 'Обов’язкові реквізити платежу не заповнені';
             case '9' : return 'Статус платежу не 20';
             case '10': return 'Помилка XML формату';
-            
+
             case '100':
             default:
                 return 'Невідома помилка ' . $error_code;
@@ -562,7 +567,7 @@ class ShoppingCart
 
                 $url = UPC::CHECK_STATUS_URL;
                 $result = false;
-                
+
                 if (isset($payment['processing_data']['first']->upc_merchantid)) {
                     $postdata = [
                         'MerchantID'   => $payment['processing_data']['first']->upc_merchantid,
@@ -592,7 +597,7 @@ class ShoppingCart
                             'request' => $postdata
                         ];
                     }
-                    
+
                     $to_update['processing_data'] = json_encode($payment['processing_data']);
                 }
 
@@ -605,7 +610,7 @@ class ShoppingCart
 
                 $lines = explode("\n", $result);
                 $params = [];
-                
+
                 for ($i=0; $i < count($lines); $i++) {
                     $vars = explode('=', $lines[$i]);
 
@@ -677,7 +682,7 @@ class ShoppingCart
         // проверяем статусы транзакций
         $time = time() - 300;
         $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status='new' AND go_to_payment_time<$time AND go_to_payment_time IS NOT NULL");
-        
+
         while ($row = $stm->fetch()) {
             self::check_payments_status($row['id']);
         }
