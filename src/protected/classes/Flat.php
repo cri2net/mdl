@@ -42,25 +42,8 @@ class Flat
             return self::MAX_USER_FLATS;
         }
 
-        // Одному пользователю нужно иметь возможность добавить много квартир.
-        // Мы знаем его номер телефона.
-        if ($_SESSION['auth']['mob_phone'] === '+380970301830') {
-            return 30;
-        }
-        if (in_array($_SESSION['auth']['email'], ['zirka83@mail.ru', 'di.yarovoy@gmail.com', 'cri2net@gmail.com'])) {
-            return 40;
-        }
-
-        // Это человек попросил больше объектов (клиент)
-        if ($_SESSION['auth']['mob_phone'] === '+380671253289') {
-            return 5;
-        }
-        
-        if (Authorization::getLoggedUserId() == 73527) {
-            return 8;
-        }
-
-        return self::MAX_USER_FLATS;
+        $user = User::getUserById(Authorization::getLoggedUserId());
+        return $user['max_objects'];
     }
 
     /**

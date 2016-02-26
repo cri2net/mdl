@@ -2,7 +2,7 @@
     <div class="form-subtitle">Зміна логіну</div>
     <div class="input">
         <label>Логін: <br>
-            <input class="txt form-txt-input" type="text" name="login" value="<?= htmlspecialchars($__userData['login'], ENT_QUOTES); ?>">
+            <input autocomplete="off" class="txt form-txt-input" type="text" name="login" value="<?= htmlspecialchars($__userData['login'], ENT_QUOTES); ?>">
         </label>
     </div>
     <div class="form-subtitle">Зміна паролю</div>

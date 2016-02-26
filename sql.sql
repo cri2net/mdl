@@ -631,3 +631,10 @@ ALTER TABLE `gioc_payment`
 ALTER TABLE `gioc_payment`
   CHANGE `processing` `processing` ENUM('_test_upc','mastercard','visa','webmoney','khreshchatyk','tas','oschad') CHARSET utf8 COLLATE utf8_general_ci NULL;
 
+ALTER TABLE `gioc_users`
+  DROP COLUMN `oauth_uid`, 
+  DROP COLUMN `oauth_provider`, 
+  DROP COLUMN `userpic`, 
+  DROP COLUMN `username`, 
+  DROP COLUMN `screen_name`, 
+  ADD COLUMN `max_objects` INT(11) DEFAULT 4  NOT NULL AFTER `deleted_answer_time`;
