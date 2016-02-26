@@ -7,6 +7,7 @@ class TasLink
     const PASSWORD_FIN_RESPONSE = 'TASLINK_FIN_RESP';
     const PASSWORD_STATUS_REQ = 'TASLINK_STATUS_REQ';
     const PASSWORD_STATUS_RESP = 'TASLINK_STATUS_RESP';
+    const PASSWORD_BATCH_REQ = 'TASLINK_BATCH_REQ';
     const IFRAME_SRC = 'https://gerc-payments.taslink.com.ua/gioc.html?oid=';
 
     public $session_id;
@@ -24,6 +25,7 @@ class TasLink
         $urls['INIT_SESSION']  = 'https://gerc-payments.taslink.com.ua/getOrder.php';
         $urls['MAKE_PAYMEENT'] = 'https://gerc-payments.taslink.com.ua/finAction.php';
         $urls['CHECK_STATUS']  = 'https://gerc-payments.taslink.com.ua/getStatus.php';
+        $urls['GET_BATCH']     = 'https://gerc-payments.taslink.com.ua/getBatch.php';
 
         return $urls[$key];
     }
@@ -181,6 +183,26 @@ class TasLink
 
         throw new Exception($response);
         return false;
+    }
+
+    public function getBatch($date = null)
+    {
+        if ($date == null) {
+            $date = date('dmY');
+        }
+        $type = 'getBatch';
+        $sign = md5(strtoupper(strrev($type) . strrev($date) . strrev(self::PASSWORD_BATCH_REQ)));
+        $url = self::get_API_URL('GET_BATCH');
+
+        $data = [
+            'type'    => $type,
+            'batchno' => $date, // день в формате DDMMYYYY, напр. 01012016
+            'sign'    => $sign, // signature
+        ];
+
+        $response = self::httpPost($url, json_encode($data));
+
+        return $response;
     }
 
     /**
