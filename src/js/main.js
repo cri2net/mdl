@@ -842,6 +842,13 @@ function remove_user_card_popup(card_id)
     $('#popup-box .popup-content').html(popup_html);
 };
 
+function tas_frame_load()
+{
+    $('#tas_frame_error').css('display', 'none');
+    $('#tas_frame').css('display', '');
+    clearTimeout(tas_timeout_id);
+};
+
 $(document).ready(function(){
     (function(){
         $('.spoiler-title').click(function(){
