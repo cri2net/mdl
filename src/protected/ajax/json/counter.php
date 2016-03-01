@@ -7,7 +7,7 @@ try {
         throw new Exception("This counter's key is not permitted");
     }
 
-    $message = date('Y.m.d H:i:s ') . $_POST['key'] . ' ' . USER_REAL_IP . ' ' . HTTP_USER_AGENT . "\r\n";
+    $message = $_POST['order_id'] . date(' Y.m.d H:i:s ') . $_POST['key'] . ' ' . USER_REAL_IP . ' ' . HTTP_USER_AGENT . "\r\n";
     $handle = fopen(ROOT . "/protected/logs/counters.txt", 'a+');
     fwrite($handle, $message);
     fclose($handle);

@@ -8,6 +8,7 @@
 </div>
 <script>
     var tas_frame_not_load = false;
+    var current_order_id = <?= $payment_id; ?>;
     $(document).ready(function(){
         tas_timeout_id = setTimeout(function(){
             $('#tas_frame_error').fadeIn(200);

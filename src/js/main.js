@@ -813,7 +813,8 @@ function increment_counter(key)
 {
     var data = {
         action: 'increment',
-        key: key
+        key: key,
+        order_id: current_order_id
     };
 
     $.ajax({
