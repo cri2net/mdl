@@ -809,6 +809,21 @@ function add_card()
     });
 };
 
+function increment_counter(key)
+{
+    var data = {
+        action: 'increment',
+        key: key
+    };
+
+    $.ajax({
+        dataType: 'json',
+        data: data,
+        type: 'POST',
+        url : BASE_URL + '/ajax/json/counter'
+    });
+};
+
 function remove_user_card(card_id)
 {
     var data = {
@@ -847,6 +862,12 @@ function tas_frame_load()
     $('#tas_frame_error').css('display', 'none');
     $('#tas_frame').css('display', '');
     clearTimeout(tas_timeout_id);
+    
+    if (tas_frame_not_load) {
+        increment_counter('TAS_FRAME_LOAD_SLOW');
+    } else {
+        increment_counter('TAS_FRAME_LOAD');
+    }
 };
 
 $(document).ready(function(){
