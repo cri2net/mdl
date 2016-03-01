@@ -8,18 +8,8 @@
     if(!isset($_POST['Result'])) die('$_POST[Result] not set');
 
 if($_POST['Function'] == 'TransResponse'){
-/*
-  $mess = date('d-m-Y H:i:s').' -- '.USER_REAL_IP."\r\n";
-  $mess .= "POST: ".var_export($_POST, true)."\r\n\r\n\r\n\r\n";
-  $log_folder = ROOT . "/protected/logs/paysystems/oschad";
-  if (!file_exists($log_folder)) {
-      mkdir($log_folder, 0755, true);
-  }
-  $handle = fopen($log_folder . "/oschad.txt", 'a+');
-  fwrite($handle, $mess);
-  fclose($handle);
-*/
-  log_paysys('oschad', 'POST', var_export($_POST, true));
+  $rcdesc = (isset($_POST['RC']))?get_oschad_rc_desc($_POST['RC']):'';
+  log_paysys('oschad', 'POST '.$rcdesc, var_export($_POST, true));
   $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_POST['Order']);
   if ($_payment === null) {
       throw new Exception("Unknow OrderID {$_POST['Order']}");
