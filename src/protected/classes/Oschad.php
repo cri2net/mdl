@@ -51,7 +51,7 @@ class Oschad
   */
   }
 
-  public function set_order(){
+  public function set_order($AMOUNT, $ORDER, $DESC){
           $this->fields['AMOUNT'] = $AMOUNT;
           $this->fields['ORDER'] = $ORDER;
           $this->fields['DESC'] = $DESC;
