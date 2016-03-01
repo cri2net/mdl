@@ -6,7 +6,7 @@ class ShoppingCart
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
     const KASS_ID_TAS  = '1080';
     const KASS_ID_AVAL = '1028';
-    const KASS_ID_OSCHAD = '1058';
+    const KASS_ID_OSCHAD = '1085';//osc_site/osc_site123
     const KASS_ID_KHRESHCHATYK = '1048'; /// УЗНАТЬ ТОЧНЫЙ ID !!
     const REPORT_BASE_URL   = '/reports/rwservlet';
     const PDF_FIRST_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
