@@ -3,7 +3,7 @@
 //require_once('protected/classes/Oschad.php');
 $oschad = new Oschad();
 $oschad->set_merchant($oschad_merchant_settings);
-$oschad->set_order(/*$totalAmountKop/100*/0.01, '0000000'.$_payment['id'], 'Splata komunalnyh poslug');
+$oschad->set_order(/*$totalAmountKop/100*/0.01, str_pad($_payment['id'], 7, '0', STR_PAD_LEFT), 'Splata komunalnyh poslug');
 //iconv('UTF-8','windows-1251//TRANSLIT','КП ГIОЦ');
 $oschad->set_transaction('auth');
 $oschad->sign($oschad_sign_key);
