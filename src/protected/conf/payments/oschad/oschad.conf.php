@@ -1,8 +1,8 @@
 <?php
 $oschad_merchant_settings = array(
   'CURRENCY' => 'UAH',
-  'MERCH_NAME' =>iconv('UTF-8','windows-1251//TRANSLIT',SITE_DOMAIN),// mb_convert_encoding(SITE_NAME ,"Windows-1251")
-  'MERCH_URL' => SITE_DOMAIN,
+  'MERCH_NAME' =>iconv('UTF-8','windows-1251//TRANSLIT','gioc.kiev.ua'),// mb_convert_encoding(SITE_NAME ,"Windows-1251")
+  'MERCH_URL' => 'gioc.kiev.ua',
   'MERCHANT' => '20904292',
   'TERMINAL' => '20907201',
   'EMAIL' => 'olgenur@gmail.com',

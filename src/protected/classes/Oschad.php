@@ -51,7 +51,7 @@ class Oschad
   */
   }
 
-  public function set_order($AMOUNT, $ORDER, $DESC){
+  public function set_order(){
           $this->fields['AMOUNT'] = $AMOUNT;
           $this->fields['ORDER'] = $ORDER;
           $this->fields['DESC'] = $DESC;
@@ -62,6 +62,18 @@ class Oschad
           $this->trtype_str = $TRTYPE;
           $this->fields['NONCE'] = md5(time().'hvji87.}%3@3*6hg');
           $this->fields['TIMESTAMP'] = gmdate('YmdHis');
+  }
+
+  public function set_reversal($ORDER, $AMOUNT, $RRN, $INT_REF){
+    $this->fields['ORDER'] = $ORDER;
+    $this->fields['ORG_AMOUNT'] = $AMOUNT;
+    $this->fields['AMOUNT'] = $AMOUNT;
+    $this->fields['TRTYPE'] = '24';
+    $this->fields['RRN'] = $RRN;
+    $this->fields['INT_REF'] = $INT_REF;
+    $this->trtype_str = 'revers';
+    $this->fields['NONCE'] = md5(time().'hvji87.}%3@3*6hg');
+    $this->fields['TIMESTAMP'] = gmdate('YmdHis');
   }
 
   public function sign($key_hex){
