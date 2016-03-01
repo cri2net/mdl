@@ -7,7 +7,7 @@
     if(!isset($_POST['Function'])) die('$_POST[Function] not set');
     if(!isset($_POST['Result'])) die('$_POST[Result] not set');
 
-//if($_POST['Function'] == 'TransResponse'){
+if($_POST['Function'] == 'TransResponse'){
 /*
   $mess = date('d-m-Y H:i:s').' -- '.USER_REAL_IP."\r\n";
   $mess .= "POST: ".var_export($_POST, true)."\r\n\r\n\r\n\r\n";
@@ -19,7 +19,7 @@
   fwrite($handle, $mess);
   fclose($handle);
 */
-  log_paysys('oschad', 'POST', var_export($_POST, true));  
+  log_paysys('oschad', 'POST', var_export($_POST, true));
   $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_POST['Order']);
   if ($_payment === null) {
       throw new Exception("Unknow OrderID {$_POST['Order']}");
@@ -40,7 +40,7 @@
       break;
     default:
       $to_update['status'] = 'error';
-  //}
+  }
 
   PDO_DB::update($to_update, ShoppingCart::TABLE, $_payment['id']);
   ShoppingCart::send_payment_status_to_reports($_payment['id']);
