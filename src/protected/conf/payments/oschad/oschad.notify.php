@@ -4,7 +4,7 @@
     require_once('oschad.conf.php');
 
     if(!isset($_POST) || !isset($_POST['Function'])) {
-      header("Location: https://{SITE_DOMAIN}/cabinet/objects/");
+      header('Location: '.BASE_URL.'/cabinet/payments/history/');
       die('$_POST[Function] not set');
     }
     if(!isset($_POST['Result'])) die('$_POST[Result] not set');
