@@ -325,6 +325,7 @@ class ShoppingCart
                               'p13'          => $osc_first->P_SIGN, //SIGN
                               'p14'          => 0,  // delay
                           ];
+                          break;
 
                     case 'khreshchatyk':
                         $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
