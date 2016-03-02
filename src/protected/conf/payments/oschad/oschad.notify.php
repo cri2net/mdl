@@ -28,7 +28,7 @@ if($_POST['Function'] == 'TransResponse'){
           'processing_data' => json_encode($processing_data),
           'send_payment_status_to_reports' => 0
       ];
-      $to_update['status'] = 'success';
+      $to_update['status'] = ($_POST['TRTYPE']=='24')?'reverse':'success';
       break;
     default:
       $to_update['status'] = 'error';
