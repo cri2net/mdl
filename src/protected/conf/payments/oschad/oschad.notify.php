@@ -1,10 +1,12 @@
 <?php
-    header("Content-Type: text/plain; charset=UTF-8");
+    //header("Content-Type: text/plain; charset=UTF-8");
 
     require_once('oschad.conf.php');
 
-    if(!isset($_POST)) die('$_POST not set');
-    if(!isset($_POST['Function'])) die('$_POST[Function] not set');
+    if(!isset($_POST) || !isset($_POST['Function'])) {
+      header("Location: https://{SITE_DOMAIN}/cabinet/objects/");
+      die('$_POST[Function] not set');
+    }
     if(!isset($_POST['Result'])) die('$_POST[Result] not set');
 
 if($_POST['Function'] == 'TransResponse'){

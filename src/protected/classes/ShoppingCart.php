@@ -222,6 +222,24 @@ class ShoppingCart
             return;
         }
 
+
+        /* ФОРМАТ ДАННЫХ В ОРАКЛЕ
+          Следующие поля могут быть пустыми:
+          p1=   MERCHANTID      VARCHAR2(30 CHAR)
+          p2=   TERMINALID      VARCHAR2(16 CHAR),
+          p3=   TOTALAMOUNT     NUMBER(20),
+          p4=  CURRENCY        NUMBER(6),
+          p5=  PURCHASETIME    NUMBER(20),
+          p6=  ORDERID         VARCHAR2(20 CHAR),
+          p7=  XID             VARCHAR2(28 CHAR),
+          p8=  SD              VARCHAR2(100 CHAR),
+          p9=  APPROVALCODE    VARCHAR2(20 CHAR),
+          p10=  RRN             NUMBER(20),
+          p11=  PROXYPAN        VARCHAR2(30 CHAR),
+          p12=  TRANCODE        NUMBER(6),
+          p13=  SIGNATURE       VARCHAR2(240 CHAR),
+          p14=  DELAY           NUMBER(6)
+        */
         switch ($payment['type']) {
             case 'komdebt':
 
@@ -276,6 +294,37 @@ class ShoppingCart
                             $post_data['p13'] = $actual_upc_data['SIGN'];
                         }
                         break;
+
+                      case 'oschad':
+                          $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
+                          $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
+                          $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
+                          $actual_date = $payment['processing_data']['dates'][count($payment['processing_data']['dates']) - 1];
+                          $actual_osc_data = (array)$payment['processing_data']['requests'][$actual_date];
+                          $osc_first = $payment['processing_data']['first'];
+                          $url = API_URL . self::REPORT_BASE_URL;
+
+                          $post_data = [
+                              'report'       => ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep',
+                              'destype'      => 'Cache',
+                              'Desformat'    => 'xml',
+                              'cmdkey'       => 'rep',
+                              'idplatklient' => $payment['reports_id_plat_klient'],
+                              'p1'           => $osc_first->MERCHANT,
+                              'p2'           => $osc_first->TERMINAL,
+                              'p3'           => $actual_osc_data['Amount']*100,
+                              'p4'           => '980',
+                              'p5'           => $osc_first->TIMESTAMP, // pay time
+                              'p6'           => $actual_osc_data['Order'],
+                              'p7'           => '', //XID
+                              'p8'           => '', //SD
+                              'p9'           => $actual_osc_data['AuthCode'], //APPROVAL, ApprovalCode
+                              'p10'          => $actual_osc_data['RRN'],
+                              'p11'          => '', //PAN, ProxyPan
+                              'p12'          => $actual_osc_data['RC'], //TranCode, RESPCODE
+                              'p13'          => $osc_first->P_SIGN, //SIGN
+                              'p14'          => 0,  // delay
+                          ];
 
                     case 'khreshchatyk':
                         $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
