@@ -113,6 +113,27 @@ class Oschad
       $this->fields = $POST;
 
   }
+
+  public function revers_payment($pid){
+    global $oschad_merchant_settings, $oschad_sign_key, $payment_form_action;
+    $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $pid);
+    if ($_payment === null) {
+        return false;
+    }
+    $proc_data = (array)(@json_decode($_payment['processing_data']));
+    $proc_data['requests'] = (array)$proc_data['requests'];
+    $resp_date = $proc_data['dates'][count($proc_data['dates']-1)];
+    $last_resp = $resp_data['requests'][$resp_date];
+    $osc_first = $_payment['processing_data']['first'];
+
+    $oschad_merchant_settings['BACKREF'] = 'https://www.gioc.kiev.ua/payment-status/'.((integer)$pid);
+    $this->set_merchant($oschad_merchant_settings);
+    $this->set_reversal($pid, $last_resp->AMOUNT, $last_resp->RRN, $last_resp->INT_REF);
+    $this->sign($oschad_sign_key);
+
+    $res = Http::HttpPost($payment_form_action, $this->fields, false);
+    return $res;
+  }
 /*
   public function check_sign($key_hex){
     $fcount = count($this->fields_order[$this->trtype_str]);
