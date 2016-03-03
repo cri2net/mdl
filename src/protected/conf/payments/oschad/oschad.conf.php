@@ -14,6 +14,23 @@ $payment_form_action = 'https://3ds.oschadnybank.com/cgi-bin/cgi_link';
 $oschad_sign_key = '0089e7e9a1abca22ae2d621a050d8966';//'0089e7e9a1abca22ae2d621a079bcad0';
 $payment_form_target = '_self';
 
+function switch_to_merchant($merch_index){
+  global $oschad_merchant_settings, $oschad_sign_key;
+  $osc_merch = array(
+    2 => array(
+      'MERCHANT' => '20904330',
+      'TERMINAL' => '20907286',
+    )
+  );
+  $osc_sign_key = array(
+    2 => '0089e7e9a1abca22ae2d621a050d8966'
+  );
+
+  foreach($osc_merch[$merch_index] as $key => $val){
+      $oschad_merchant_settings[$key] = $val;
+  }
+  $oschad_sign_key = $osc_sign_key[$merch_index];
+}
 
 function log_paysys($paysys_name, $title, $text){
   $mess = date('d-m-Y H:i:s').' -- '.USER_REAL_IP."\r\n";
