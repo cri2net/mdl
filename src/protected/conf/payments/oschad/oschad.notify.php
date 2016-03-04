@@ -1,13 +1,11 @@
 <?php
-    //header("Content-Type: text/plain; charset=UTF-8");
+require_once('oschad.conf.php');
 
-    require_once('oschad.conf.php');
-
-    if(!isset($_POST) || !isset($_POST['Function'])) {
-      header('Location: '.BASE_URL.'/cabinet/payments/history/');
-      die('$_POST[Function] not set');
-    }
-    if(!isset($_POST['Result'])) die('$_POST[Result] not set');
+if(!isset($_POST) || !isset($_POST['Function'])) {
+  header('Location: '.BASE_URL.'/cabinet/payments/history/');
+  die('$_POST[Function] not set');
+}
+if(!isset($_POST['Result'])) die('$_POST[Result] not set');
 
 if($_POST['Function'] == 'TransResponse'){
   $rcdesc = (isset($_POST['RC']))?get_oschad_rc_desc($_POST['RC']):'';

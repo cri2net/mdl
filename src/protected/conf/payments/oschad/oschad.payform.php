@@ -1,6 +1,4 @@
 <?php
-$s = $oschad->get_html_fields();
-echo $s;
-
-log_paysys('oschad', 'QUERY', $s);
+echo $oschad->get_html_fields();
+log_paysys('oschad', 'QUERY', var_export($oschad->get_fields(), true));
 ?>
