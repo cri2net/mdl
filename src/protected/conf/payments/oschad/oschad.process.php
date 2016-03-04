@@ -1,19 +1,18 @@
 <?php
 
-//require_once('protected/classes/Oschad.php');
 $oschad = new Oschad();
+$oschad_merchant_settings['BACKREF'] = 'https://www.gioc.kiev.ua/payment-status/' . $_payment['id'] . '/';
 $oschad->set_merchant($oschad_merchant_settings);
-$oschad_merchant_settings['BACKREF'] = 'https://www.gioc.kiev.ua/payment-status/'.$_payment['id'];
-$oschad->set_order($totalAmountKop/100, str_pad($_payment['id'], 7, '0', STR_PAD_LEFT), 'Splata komunalnyh poslug');
-//iconv('UTF-8','windows-1251//TRANSLIT','КП ГIОЦ');
+
+$oschad->set_order($totalAmountKop/100, str_pad($_payment['id'], 6, '0', STR_PAD_LEFT), 'Splata komunalnyh poslug');
 $oschad->set_transaction('auth');
 $oschad->sign($oschad_sign_key);
 
-$processing_data = array(
-    'first' => $oschad->get_fields(),
-    'dates' => array(), // массив с ключами для requests
-    'requests' => array() // массив с историей запросов
-);
+$processing_data = [
+    'first'    => $oschad->get_fields(),
+    'dates'    => [], // массив с ключами для requests
+    'requests' => []  // массив с историей запросов
+];
 
-$update_data = array('processing_data' => json_encode($processing_data));
+$update_data = ['processing_data' => json_encode($processing_data)];
 PDO_DB::update($update_data, ShoppingCart::TABLE, $_payment['id']);
