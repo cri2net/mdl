@@ -246,6 +246,10 @@ function getShoppingCartTotal(total, percentSum, cctype)
         $('.paybill-ps-item').slideUp(300);
         $('.paybill-ps-item-' + cctype).slideDown(400);
     }
+    if (!$('.paybill-ps-item-hide-' + cctype).is(':visible')) {
+        $('.paybill-ps-item-hide').slideUp(300);
+        $('.paybill-ps-item-hide-' + cctype).slideDown(400);
+    }
 
     $('#totalBillSum').html(totalStr + ' грн');
     $('#comission_sum').html(PercentStr + ' грн');
