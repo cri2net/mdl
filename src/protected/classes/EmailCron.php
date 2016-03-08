@@ -111,9 +111,6 @@ class EmailCron
                     $url = $online_version . '&email_mode=1';
                     $content = Http::HttpGet($url, false, false);
 
-                    $replace = ($additional->info_block) ? "<br><br>{$additional->info_block}" : '';
-                    $content = str_ireplace('<!-- {{infoblock}} -->', $additional->info_block, $content);
-                    
                     if (strlen($content) > 250) {
                         $address = Flat::getAddressString($row['flat_id'], $row['city_id']);
                         $subject = str_replace('{ADDRESS}', $address, $cron['subject']);
@@ -121,9 +118,6 @@ class EmailCron
                         
                         if (!$plain_text) {
                             $plain_text = null;
-                        } else {
-                            $replace = ($additional->info_block) ? (strip_tags($additional->info_block) . "\r\n\r\n") : '';
-                            $plain_text = str_ireplace('{{infoblock}}', $replace, $plain_text);
                         }
 
                         $mailSent = $this->sendInvoiceFromCron(

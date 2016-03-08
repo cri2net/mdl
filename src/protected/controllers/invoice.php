@@ -19,6 +19,8 @@
         exit();
     }
 
+    $info_block = PDO_DB::first(TABLE_PREFIX . 'text', "variable='INVOICE_INFO_BLOCK'");
+
     $hash1 = Authorization::get_auth_hash1($__userData['id']);
     $hash2 = Authorization::get_auth_hash2($__userData['id'], $hash1);
     $debt = new KomDebt();
@@ -46,11 +48,17 @@
             $_flat_number = ', квартира ' . $address_detail['flat'];
         }
 
+        if ($info_block['text']) {
+            $info_block_plain_text = strip_tags($info_block['text']) . "\r\n";
+        } else {
+            $info_block_plain_text = '';
+        }
+
         echo $say_good_day, "\r\n",
              'Доступний рахунок на сплату ЖКП для Київ, ', trim($house['street_name_full']), ', ', $address_detail['house'], $_flat_number, "\r\n",
              'Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ» або роздрукувати рахунок та сплатити у найближчій касі банку.', "\r\n\r\n",
              "Сплатити на сайті КП «ГіОЦ»: $paybill_link\r\n\r\n",
-             "{{infoblock}}",
+             $info_block_plain_text,
              "Онлайн версія листа: $online_version\r\n";
         exit();
     }
@@ -226,7 +234,11 @@
         <td style="line-height:24px; <?= $_ff; ?> font-size:14px; color:#000000;" height="10">
             <span style="line-height:38px; font-size:18px; <?= $_ff; ?> font-weight:bold;"><?= $say_good_day; ?></span><br>
             Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ».
-            <!-- {{infoblock}} -->
+            <?php
+                if ($info_block['text']) {
+                    echo '<br><br>', $info_block['text'];
+                }
+            ?>
         </td>
     </tr></tbody></table>
 
