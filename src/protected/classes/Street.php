@@ -15,7 +15,7 @@ class Street
     {
         $urls = [];
 
-        if (stristr(API_URL, 'bank.gioc')) {
+        if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
             $urls['STREET_URL'] = '/reports/rwservlet?report=/site/dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
         } else {
             $urls['STREET_URL'] = '/reports/rwservlet?report=dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
