@@ -644,3 +644,5 @@ ALTER TABLE `gioc_users`
 ALTER TABLE `gioc_payment`
   CHANGE `reports_data` `reports_data` MEDIUMTEXT CHARSET utf8 COLLATE utf8_general_ci NULL;
 
+ALTER TABLE `gioc_payment`
+  DROP COLUMN `reports_data`;
