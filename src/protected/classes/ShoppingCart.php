@@ -20,6 +20,23 @@ class ShoppingCart
             : ['khreshchatyk', 'tas', 'visa', 'mastercard', 'oschad'];
     }
 
+    public static function logRequestToReports($message, $payment_id, $success = true, $type = 'new')
+    {
+        $dir = ROOT . "/protected/logs/reports/$type/" . date('Y/m/d/');
+
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $file = $dir . "$payment_id---" . microtime(true) . '.txt';
+        error_log($message . "\r\n\r\n", 3, $file);
+
+        if (!$success) {
+            $file = ROOT . "/protected/logs/reports/$type/with_error.txt";
+            error_log("payment_id = $payment_id\r\n" . $message . "\r\n\r\n", 3, $file);
+        }
+    }
+
     public static function getPercentRule($pay_system = null)
     {
         $rules = [
@@ -371,33 +388,32 @@ class ShoppingCart
         }
 
         $res = Http::HttpPost($url, $post_data);
-
-        $date = date('Y-m-d H:i:s');
         $xml_string = iconv('CP1251', 'UTF-8', $res);
-        $reports_data = (array)(@json_decode($payment['reports_data']));
-        if (!$reports_data) {
-            $reports_data = [];
-        }
+        $to_update = [];
 
-        $reports_data[$date] = [
-            'timestamp' => microtime(true),
-            'reports_url' => $url,
-            'send_data' => $post_data,
-            'answer' => $xml_string,
-        ];
-        $to_update = ['reports_data' => json_encode($reports_data)];
+        $message_to_log = var_export(
+            [
+                'date' => date('Y-m-d H:i:s'),
+                'timestamp' => microtime(true),
+                'reports_url' => $url,
+                'send_data' => $post_data,
+                'answer' => $xml_string,
+            ],
+            true
+        );
 
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = simplexml_load_string($xml_string);
 
         if ($xml === null) {
-            PDO_DB::update($to_update, self::TABLE, $payment['id']);
+            self::logRequestToReports($message_to_log, $payment['id'], false, 'status');
             throw new Exception(ERROR_CREATE_PAYMENT_XML);
             return false;
         }
 
         // ERR = 7: Status of payment already sent
         if ($xml->ROW->ERR.'' && ($xml->ROW->ERR.'' != '7')) {
+            self::logRequestToReports($message_to_log, $payment['id'], false, 'status');
             if ($xml->ROW->ERR.'' == '4') {
                 $to_update['send_payment_status_to_reports'] = 1;
             }
@@ -415,6 +431,7 @@ class ShoppingCart
 
         PDO_DB::update($to_update, self::TABLE, $payment['id']);
         self::sendFirstPDF($payment['id']);
+        self::logRequestToReports($message_to_log, $payment['id'], true, 'status');
         return true;
     }
 
@@ -524,33 +541,36 @@ class ShoppingCart
 
         $date = date('Y-m-d H:i:s');
         $xml_string = iconv('CP1251', 'UTF-8', $res);
-        $reports_data = (array)(@json_decode($payment['reports_data']));
-        if (!$reports_data) {
-            $reports_data = [];
-        }
+        $to_update = [];
 
-        $reports_data[$date] = [
-            'timestamp' => microtime(true),
-            'reports_url' => $url,
-            'send_data' => $post_data,
-            'answer' => $xml_string,
-        ];
-        $to_update = ['reports_data' => json_encode($reports_data)];
+        $message_to_log = var_export(
+            [
+                'date' => date('Y-m-d H:i:s'),
+                'timestamp' => microtime(true),
+                'reports_url' => $url,
+                'send_data' => $post_data,
+                'answer' => $xml_string,
+            ],
+            true
+        );
+
 
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = simplexml_load_string($xml_string);
 
         if ($xml === null || !isset($xml->ROW)) {
-            PDO_DB::update($to_update, self::TABLE, $payment['id']);
+            self::logRequestToReports($message_to_log, $payment['id'], false);
             throw new Exception(ERROR_CREATE_PAYMENT_XML);
             return false;
         }
 
         if ($xml->ROW->ERR.'') {
-            PDO_DB::update($to_update, self::TABLE, $payment['id']);
+            self::logRequestToReports($message_to_log, $payment['id'], false);
             throw new Exception(self::get_create_payment_error($xml->ROW->ERR.''));
             return false;
         }
+        
+        self::logRequestToReports($message_to_log, $payment['id']);
 
         $to_update['acq']                     = $xml->ROW->ACQ.'';
 
