@@ -23,10 +23,10 @@ class KomDebt
 
         if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
             $this->komplat_URL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-            $this->debt_URL = '/reports/rwservlet?report=/site/g_komdebt_site.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+            $this->debt_URL = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
         } else {
             $this->komplat_URL = '/reports/rwservlet?report=g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-            $this->debt_URL = '/reports/rwservlet?report=g_komdebt_site.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+            $this->debt_URL = '/reports/rwservlet?report=g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
         }
     }
     
