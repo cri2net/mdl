@@ -141,7 +141,6 @@ class ShoppingCart
             'flat_id' => $data['flat_id'],
             'city_id' => $data['city_id'],
             'count_services' => count($real_servises),
-            'reports_data' => '',
             'summ_plat' => $summ_plat,
             'summ_komis' => '',
             'summ_total' => '',

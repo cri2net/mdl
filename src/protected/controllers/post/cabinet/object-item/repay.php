@@ -48,7 +48,6 @@ try {
         'flat_id' => $flatData['flat_id'],
         'city_id' => $flatData['city_id'],
         'count_services' => count($real_servises),
-        'reports_data' => '',
         'summ_plat' => $total_sum,
         'summ_komis' => '',
         'summ_total' => '',
