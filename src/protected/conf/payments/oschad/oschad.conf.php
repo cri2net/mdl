@@ -11,13 +11,13 @@ $oschad_merchant_settings = [
     'BACKREF'    => 'https://www.gioc.kiev.ua/payments-notify/oschad/'
 ];
 $payment_form_action = 'https://3ds.oschadnybank.com/cgi-bin/cgi_link';
-$oschad_sign_key = '0089e7e9a1abca22ae2d621a050d8966';//'0089e7e9a1abca22ae2d621a079bcad0';
+$oschad_sign_key = '58102f462425c6e829ac878e6dd0ea61';
 $payment_form_target = '_self';
 
 function switch_to_merchant($merch_index)
 {
     global $oschad_merchant_settings, $oschad_sign_key;
-    
+
     $osc_merch = [
         2 => [
             'MERCHANT' => '20904330',
@@ -33,5 +33,3 @@ function switch_to_merchant($merch_index)
     }
     $oschad_sign_key = $osc_sign_key[$merch_index];
 }
-
-
