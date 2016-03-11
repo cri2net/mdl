@@ -222,7 +222,7 @@ class Oschad
         $this->fields['RRN'] = $RRN;
         $this->fields['INT_REF'] = $INT_REF;
         $this->trtype_str = 'revers';
-        $this->fields['NONCE'] = md5(time().'hvji87.}%3@3*6hg');
+        $this->fields['NONCE'] = md5(microtime().'hvji87.}%3@');
         $this->fields['TIMESTAMP'] = gmdate('YmdHis');
     }
 
@@ -270,7 +270,7 @@ class Oschad
     public function revers_payment($pid)
     {
         global $oschad_merchant_settings, $oschad_sign_key, $payment_form_action;
-        
+
         $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $pid);
         if ($_payment === null) {
             return false;
