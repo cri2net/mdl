@@ -404,9 +404,8 @@ class ShoppingCart
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = simplexml_load_string($xml_string);
 
-        if ($xml === null) {
+        if (($xml === null) || ($xml === false)) {
             self::logRequestToReports($message_to_log, $payment['id'], false, 'status');
-            throw new Exception(ERROR_CREATE_PAYMENT_XML);
             return false;
         }
 
@@ -557,7 +556,7 @@ class ShoppingCart
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = simplexml_load_string($xml_string);
 
-        if ($xml === null || !isset($xml->ROW)) {
+        if (($xml === null) || ($xml === false) || !isset($xml->ROW)) {
             self::logRequestToReports($message_to_log, $payment['id'], false);
             throw new Exception(ERROR_CREATE_PAYMENT_XML);
             return false;

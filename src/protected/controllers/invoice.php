@@ -49,7 +49,7 @@
         }
 
         if ($info_block['text']) {
-            $info_block_plain_text = strip_tags($info_block['text']) . "\r\n";
+            $info_block_plain_text = html_entity_decode(strip_tags($info_block['text'])) . "\r\n";
         } else {
             $info_block_plain_text = '';
         }
