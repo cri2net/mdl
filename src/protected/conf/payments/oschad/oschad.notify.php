@@ -11,13 +11,13 @@ if (!isset($_POST['Result'])) {
 if ($_POST['Function'] == 'TransResponse') {
     $rcdesc = (isset($_POST['RC'])) ? Oschad::getRCDesciption($_POST['RC']) : '';
     Oschad::logPaysys('oschad', 'POST ' . $rcdesc, var_export($_POST, true));
-    
+
     $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_POST['Order']);
     if ($_payment === null) {
         throw new Exception("Unknow OrderID {$_POST['Order']}");
         exit();
     }
-
+    $date = date('d-m-Y H:i:s');
     switch ($_POST['Result']) {
         case 0:
             $processing_data = (array)(@json_decode($_payment['processing_data']));
