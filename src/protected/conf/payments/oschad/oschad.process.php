@@ -4,7 +4,7 @@ $oschad = new Oschad();
 $oschad_merchant_settings['BACKREF'] = 'https://www.gioc.kiev.ua/payment-status/' . $_payment['id'] . '/';
 $oschad->set_merchant($oschad_merchant_settings);
 
-$oschad->set_order($totalAmountKop/100, str_pad($_payment['id'], 6, '0', STR_PAD_LEFT), 'Splata komunalnyh poslug');
+$oschad->set_order(round($totalAmountKop/100,2), str_pad($_payment['id'], 6, '0', STR_PAD_LEFT), 'Splata komunalnyh poslug');
 $oschad->set_transaction('auth');
 $oschad->sign($oschad_sign_key);
 
