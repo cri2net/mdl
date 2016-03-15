@@ -27,6 +27,9 @@ if (!$_payment) {
 }
 
 $response = [];
+if ($request->APPROVAL == 'Отсутствует') {
+    $request->APPROVAL = '';
+}
 
 $processing_data = (array)(@json_decode($_payment['processing_data']));
 $processing_data['requests'] = (array)$processing_data['requests'];
