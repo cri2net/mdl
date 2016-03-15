@@ -238,24 +238,6 @@ class ShoppingCart
             return;
         }
 
-
-        /* ФОРМАТ ДАННЫХ В ОРАКЛЕ
-          Следующие поля могут быть пустыми:
-          p1=   MERCHANTID      VARCHAR2(30 CHAR)
-          p2=   TERMINALID      VARCHAR2(16 CHAR),
-          p3=   TOTALAMOUNT     NUMBER(20),
-          p4=  CURRENCY        NUMBER(6),
-          p5=  PURCHASETIME    NUMBER(20),
-          p6=  ORDERID         VARCHAR2(20 CHAR),
-          p7=  XID             VARCHAR2(28 CHAR),
-          p8=  SD              VARCHAR2(100 CHAR),
-          p9=  APPROVALCODE    VARCHAR2(20 CHAR),
-          p10=  RRN             NUMBER(20),
-          p11=  PROXYPAN        VARCHAR2(30 CHAR),
-          p12=  TRANCODE        NUMBER(6),
-          p13=  SIGNATURE       VARCHAR2(240 CHAR),
-          p14=  DELAY           NUMBER(6)
-        */
         switch ($payment['type']) {
             case 'komdebt':
 

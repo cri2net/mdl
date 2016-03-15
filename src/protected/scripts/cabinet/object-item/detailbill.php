@@ -43,8 +43,6 @@
             $_need_year = date('Y', strtotime('first day of previous month', $real_timestamp));
         }
         
-        // TESTer xiface
-        // $debtData = $debt->getUniqueFirmXIface($object['flat_id'], $_need_firm, $dateBegin, $filter);
         $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
 
         if (empty($debtData['data'])) {
