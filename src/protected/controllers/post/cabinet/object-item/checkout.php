@@ -35,7 +35,6 @@ try {
         'processing' => $pay_system,
         'summ_komis' => $commissionSum,
         'summ_total' => $totalAmount,
-        'percent'    => $percent,
     ];
    
     PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
