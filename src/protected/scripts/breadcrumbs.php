@@ -115,7 +115,7 @@
                     if (isset($__route_result['values']['section'])) {
                         $sections = [
                             'history' => 'Історія платежів',
-                            'komdebt' => 'ЖКХ платежі',
+                            'komdebt' => 'ЖКГ платежі',
                             'instant' => 'Миттєві платежі',
                             'details' => 'Деталі платежу № ',
                         ];
