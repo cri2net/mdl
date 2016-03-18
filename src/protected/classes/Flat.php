@@ -396,7 +396,7 @@ class Flat
     {
         $pdo = PDO_DB::getPDO();
         $stm_del = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=? AND house_id=?");
-        $stm_insert = $pdo->prepare("INSERT INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, object_id=?, flat_number=?");
+        $stm_insert = $pdo->prepare("INSERT IGNORE INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, object_id=?, flat_number=?");
         $pdo->query("UPDATE " . self::TABLE . " SET need_del_after_rebuild=1");
         
         $stm = $pdo->prepare("SELECT * FROM ". House::TABLE ." WHERE city_id=?");

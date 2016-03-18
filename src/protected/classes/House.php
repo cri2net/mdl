@@ -57,11 +57,12 @@ class House
 
     public static function rebuild()
     {
-        $streets = Street::get('');
-        
         $pdo = PDO_DB::getPDO();
-        $stm_del = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=? AND street_id=?");
-        $stm_insert = $pdo->prepare("INSERT INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, house_number=?");
+        $streets = Street::get('');
+        $stm_insert = $pdo->prepare("INSERT IGNORE INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, house_number=?");
+        
+        $stm = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=?");
+        $stm->execute([Street::KIEV_ID]);
         
         for ($i=0; $i < count($streets); $i++) {
             $data = Http::fgets(API_URL . self::get_API_URL('HOUSE_URL') . $streets[$i]['street_id']);
@@ -70,14 +71,13 @@ class House
             $xml = @simplexml_load_string($data);
 
             if ($xml !== false) {
-                $stm_del->execute(array(Street::KIEV_ID, $streets[$i]['street_id']));
                 for ($j=0; $j<count($xml->ROW); $j++) {
-                    $stm_insert->execute(array(Street::KIEV_ID, $streets[$i]['street_id'], $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM));
+                    $stm_insert->execute([Street::KIEV_ID, $streets[$i]['street_id'], $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM]);
                 }
             }
         }
         
         $stm = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=? AND street_id NOT IN (SELECT street_id FROM ". Street::TABLE ." WHERE city_id=?)");
-        $stm->execute(array(Street::KIEV_ID, Street::KIEV_ID));
+        $stm->execute([Street::KIEV_ID, Street::KIEV_ID]);
     }
 }
