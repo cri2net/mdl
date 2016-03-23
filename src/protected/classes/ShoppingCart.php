@@ -468,6 +468,7 @@ class ShoppingCart
                 $xml .= "<id_kass>". self::getKassID($payment['processing']) ."</id_kass>";
                 $xml .= "<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>";
                 $xml .= "<idsiteuser>{$payment['user_id']}</idsiteuser>";
+                $xml .= "<uniqid>". md5(uniqid(rand(), 1)) ."</uniqid>";
 
                 $xml .= "<plat_list>";
 
@@ -480,7 +481,6 @@ class ShoppingCart
                     $xml .= "<abcount>{$data['abcount']}</abcount>";
                     $xml .= "<id_firme>{$data['kode_firme']}</id_firme>";
                     $xml .= "<id_plat>{$data['id_pat']}</id_plat>";
-                    $xml .= "<date_d>{$data['date_d']}</date_d>";
                     $xml .= "<summ_plat>". ($services[$i]['sum'] * 100) ."</summ_plat>";
 
                     list($year, $month, $day) = explode('-', $data['dbegin']);
