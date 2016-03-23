@@ -46,7 +46,7 @@
                             <span id="checkbox_percent_kkk_1" class="niceCheck radio checked"><span class="dotted-line"></span><input checked="checked" type="radio" name="percent" data-paysystem-sum="<?= $khreshchatykSum; ?>" data-paysystem-key="khreshchatyk"></span>
                             <label onclick="$('#checkbox_percent_kkk_1').click();">
                                 <img alt="Хрещатик" src="<?= BASE_URL; ?>/images/paysystems/khreshchatyk.png" />
-                                <span class="text-label">КБ Хрещатик</span>
+                                <span class="text-label">КБ Хрещатик (Картка Киянина)</span>
                             </label>
                         </div>
                         <div class="paybill-ps-item-hide paybill-ps-item-hide-khreshchatyk">
@@ -82,7 +82,7 @@
                             <span id="checkbox_percent_kkk_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" data-paysystem-key="oschad"></span>
                             <label onclick="$('#checkbox_percent_kkk_2').click();">
                                 <img alt="Ощадбанк" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
-                                <span class="text-label">Ощадбанк</span>
+                                <span class="text-label">Ощадбанк (Картка Киянина)</span>
                             </label>
                         </div>
                     </div>

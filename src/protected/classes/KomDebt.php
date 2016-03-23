@@ -172,6 +172,8 @@ class KomDebt
                     $list[$tmp_key] = trim($row->$tmp_key . '');
                 }
 
+                $list['FIO'] = str_replace('ФИО НЕ УКАЗАНО', 'ПІБ НЕ ВКАЗАНО', $list['FIO']);
+
                 $list['firm_name']    = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
                 $list['name_plat']    = $this->getNamePlat($row->NAME_PLAT);
                 $list['NAME_BANKS']   = htmlspecialchars($list['NAME_BANKS'], ENT_QUOTES);
@@ -227,12 +229,12 @@ class KomDebt
                 $list['to_pay'] = str_replace(".", ",", sprintf('%.2f', $to_pay));
                 $list['counter'] = ($row->COUNTERS->COUNTERS_ITEM) ? 1 : 0;
 
-                if ($list['counter']) {
-                    $list['debt'] = "-";
-                    if ($list['SUMM_OBL_PAY'] >= 0) {
-                        $to_pay = $list['SUMM_OBL_PAY'];
-                    }
-                }
+                // if ($list['counter']) {
+                //     $list['debt'] = "-";
+                //     if ($list['SUMM_OBL_PAY'] >= 0) {
+                //         $to_pay = $list['SUMM_OBL_PAY'];
+                //     }
+                // }
                 if ($to_pay > 0) {
                     $fullDept += $to_pay * 100;
                 }
@@ -490,6 +492,7 @@ class KomDebt
             }
             
             $data['firm'][(string)$row->CODE_FIRME]['FIO'] = (string)$row->FIO;
+            $data['firm'][(string)$row->CODE_FIRME]['FIO'] = str_replace('ФИО НЕ УКАЗАНО', 'ПІБ НЕ ВКАЗАНО', $data['firm'][(string)$row->CODE_FIRME]['FIO']);
             $data['firm'][(string)$row->CODE_FIRME]['TLF'] = (string)$row->TLF;
             $data['firm'][(string)$row->CODE_FIRME]['ABCOUNT'] = (string)$row->ABCOUNT;
             

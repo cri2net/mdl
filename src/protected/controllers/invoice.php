@@ -292,13 +292,12 @@
                     $tarif = $tarif[0] . '<span style="font-size:12px;">,'. $tarif[1] .'</span>';
                 }
 
-                if ($have_counters) {
+                $debtData_item['SUMM_MONTH'] = (isset($debtData_item['SUMM_MONTH'])) ? str_replace(',', '.', $debtData_item['SUMM_MONTH']) : '0,00';
+                $summ_month = str_replace(".", ",", sprintf('%.2f', $debtData_item['SUMM_MONTH']));
+                $summ_month = explode(',', $summ_month);
+                $summ_month = $summ_month[0] . '<span style="font-size:12px;">,'. $summ_month[1] .'</span>';
+                if ($have_counters && ($debtData_item['SUMM_MONTH'] == '0,00')) {
                     $summ_month = '—';
-                } else {
-                    $debtData_item['SUMM_MONTH'] = (isset($debtData_item['SUMM_MONTH'])) ? str_replace(',', '.', $debtData_item['SUMM_MONTH']) : '0,00';
-                    $summ_month = str_replace(".", ",", sprintf('%.2f', $debtData_item['SUMM_MONTH']));
-                    $summ_month = explode(',', $summ_month);
-                    $summ_month = $summ_month[0] . '<span style="font-size:12px;">,'. $summ_month[1] .'</span>';
                 }
 
                 $debtData_item['OPLAT'] = (isset($debtData_item['OPLAT'])) ? $debtData_item['OPLAT'] : '0,00';
@@ -310,7 +309,7 @@
                 $prev_month_debt = explode(',', $prev_month_debt);
                 $prev_month_debt = $prev_month_debt[0] . '<span style="font-size:12px;">,'. $prev_month_debt[1] .'</span>';
 
-                $to_pay = ($have_counters) ? '—' : explode(',', $debtData_item['to_pay']);
+                $to_pay = explode(',', $debtData_item['to_pay']);
                 if (is_array($to_pay)) {
                     $to_pay = $to_pay[0] . '<span style="font-size:12px;">,'. $to_pay[1] .'</span>';
                 }

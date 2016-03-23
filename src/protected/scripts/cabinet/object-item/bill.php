@@ -108,7 +108,7 @@
                             </div>
                             <?php
                                 if ($item['counter'] != 0) {
-                                    $item['to_pay'] = str_replace('.', ',', sprintf('%.2f', $item['SUMM_OBL_PAY']));
+                                    // $item['to_pay'] = str_replace('.', ',', sprintf('%.2f', $item['SUMM_OBL_PAY']));
 
                                     foreach ($item['counterData']['counters'] as $counter) {
                                         ?>
