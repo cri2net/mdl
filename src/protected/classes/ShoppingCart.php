@@ -9,9 +9,9 @@ class ShoppingCart
     const KASS_ID_OSCHAD = '1085';//osc_site/osc_site123
     const KASS_ID_KHRESHCHATYK = '1048'; /// УЗНАТЬ ТОЧНЫЙ ID !!
     const REPORT_BASE_URL   = '/reports/rwservlet';
-    const PDF_FIRST_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-    const PDF_TODAY_URL     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_FIRST_URL     = '/reports/rwservlet?report=/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
@@ -255,74 +255,82 @@ class ShoppingCart
 
                         $url = API_URL . self::REPORT_BASE_URL;
 
-                        $post_data = [
-                            'report'       => ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep',
-                            'destype'      => 'Cache',
-                            'Desformat'    => 'xml',
-                            'cmdkey'       => 'rep',
-                            'idplatklient' => $payment['reports_id_plat_klient'],
-                            'p1'           => $actual_upc_data['MerchantID'],
-                            'p2'           => $actual_upc_data['TerminalID'],
-                            'p3'           => $actual_upc_data['TotalAmount'],
-                            'p4'           => $actual_upc_data['Currency'],
-                            'p5'           => $actual_upc_data['PurchaseTime'],
-                            'p6'           => $actual_upc_data['OrderID'],
-                            'p7'           => $actual_upc_data['XID'],
-                            'p8'           => $actual_upc_data['SD'],
-                            'p9'           => $actual_upc_data['ApprovalCode'],
-                            'p10'          => $actual_upc_data['Rrn'],
-                            'p11'          => $actual_upc_data['ProxyPan'],
-                            'p12'          => $actual_upc_data['TranCode'],
-                            'p13'          => $actual_upc_data['Signature'],
-                            'p14'          => 0,  // delay
-                        ];
+                        $url .= '?report='       . rawurlencode(($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep');
+                        $url .= '&destype='      . rawurlencode('Cache');
+                        $url .= '&Desformat='    . rawurlencode('xml');
+                        $url .= '&cmdkey='       . rawurlencode('rep');
+                        $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
+                        $url .= '&p1='           . rawurlencode($actual_upc_data['MerchantID']);
 
                         if ($payment['processing'] == 'tas') {
                             $paytime = DateTime::createFromFormat('d-m-Y H:i:s', $actual_upc_data['TIME']);
                             $paytime = ($paytime === false) ? microtime(true) : date_timestamp_get($paytime);
 
-                            $post_data['p2']  = $payment['processing_data']['first']->termname;
-                            $post_data['p3']  = rawurlencode($payment['summ_total'] * 100);
-                            $post_data['p4']  = '980';
-                            $post_data['p5']  = strftime("%y%m%d%H%M%S", $paytime);
-                            $post_data['p6']  = $actual_upc_data['TRANID'];
-                            $post_data['p9']  = $actual_upc_data['APPROVAL'];
-                            $post_data['p11'] = $actual_upc_data['PAN'];
-                            $post_data['p12'] = $actual_upc_data['RESPCODE'];
-                            $post_data['p13'] = $actual_upc_data['SIGN'];
+                           $url .= '&p2='        . rawurlencode($payment['processing_data']['first']->termname);
+                           $url .= '&p3='        . rawurlencode($payment['summ_total'] * 100);
+                           $url .= '&p4='        . rawurlencode('980');
+                           $url .= '&p5='        . rawurlencode(strftime("%y%m%d%H%M%S", $paytime));
+                           $url .= '&p6='        . rawurlencode($actual_upc_data['TRANID']);
+                        } else {
+                            $url .= '&p2='       . rawurlencode($actual_upc_data['TerminalID']);
+                            $url .= '&p3='       . rawurlencode($actual_upc_data['TotalAmount']);
+                            $url .= '&p4='       . rawurlencode($actual_upc_data['Currency']);
+                            $url .= '&p5='       . rawurlencode($actual_upc_data['PurchaseTime']);
+                            $url .= '&p6='       . rawurlencode($actual_upc_data['OrderID']);
                         }
+                        
+                        $url .= '&p7='           . rawurlencode($actual_upc_data['XID']);
+                        $url .= '&p8='           . rawurlencode($actual_upc_data['SD']);
+
+                        if ($payment['processing'] == 'tas') {
+                           $url .= '&p9='        . rawurlencode($actual_upc_data['APPROVAL']);
+                        } else {
+                            $url .= '&p9='       . rawurlencode($actual_upc_data['ApprovalCode']);
+                        }
+                        
+                        $url .= '&p10='          . rawurlencode($actual_upc_data['Rrn']);
+                        
+                        if ($payment['processing'] == 'tas') {
+                           $url .= '&p11='       . rawurlencode($actual_upc_data['PAN']);
+                           $url .= '&p12='       . rawurlencode($actual_upc_data['RESPCODE']);
+                           $url .= '&p13='       . rawurlencode($actual_upc_data['SIGN']);
+                        } else {
+                            $url .= '&p11='      . rawurlencode($actual_upc_data['ProxyPan']);
+                            $url .= '&p12='      . rawurlencode($actual_upc_data['TranCode']);
+                            $url .= '&p13='      . rawurlencode($actual_upc_data['Signature']);
+                        }
+
+                        $url .= '&p14=0';
                         break;
 
                       case 'oschad':
-                          $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
-                          $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
-                          $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
-                          $actual_date = $payment['processing_data']['dates'][count($payment['processing_data']['dates']) - 1];
-                          $actual_osc_data = (array)$payment['processing_data']['requests'][$actual_date];
-                          $osc_first = $payment['processing_data']['first'];
-                          $url = API_URL . self::REPORT_BASE_URL;
+                            $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
+                            $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
+                            $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
+                            $actual_date = $payment['processing_data']['dates'][count($payment['processing_data']['dates']) - 1];
+                            $actual_osc_data = (array)$payment['processing_data']['requests'][$actual_date];
+                            $osc_first = $payment['processing_data']['first'];
+                            $url = API_URL . self::REPORT_BASE_URL;
 
-                          $post_data = [
-                              'report'       => ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep',
-                              'destype'      => 'Cache',
-                              'Desformat'    => 'xml',
-                              'cmdkey'       => 'rep',
-                              'idplatklient' => $payment['reports_id_plat_klient'],
-                              'p1'           => $osc_first->MERCHANT,
-                              'p2'           => $osc_first->TERMINAL,
-                              'p3'           => $actual_osc_data['Amount']*100,
-                              'p4'           => '980',
-                              'p5'           => $osc_first->TIMESTAMP, // pay time
-                              'p6'           => $actual_osc_data['Order'],
-                              'p7'           => '', //XID
-                              'p8'           => '', //SD
-                              'p9'           => $actual_osc_data['AuthCode'], //APPROVAL, ApprovalCode
-                              'p10'          => $actual_osc_data['RRN'],
-                              'p11'          => '', //PAN, ProxyPan
-                              'p12'          => $actual_osc_data['RC'], //TranCode, RESPCODE
-                              'p13'          => $osc_first->P_SIGN, //SIGN
-                              'p14'          => 0,  // delay
-                          ];
+                            $url .= '?report='       . rawurlencode(($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep');
+                            $url .= '&destype='      . rawurlencode('Cache');
+                            $url .= '&Desformat='    . rawurlencode('xml');
+                            $url .= '&cmdkey='       . rawurlencode('rep');
+                            $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
+                            $url .= '&p1='           . rawurlencode($osc_first->MERCHANT);
+                            $url .= '&p2='           . rawurlencode($osc_first->TERMINAL);
+                            $url .= '&p3='           . rawurlencode($actual_osc_data['Amount']*100);
+                            $url .= '&p4='           . rawurlencode('980');
+                            $url .= '&p5='           . rawurlencode($osc_first->TIMESTAMP);
+                            $url .= '&p6='           . rawurlencode($actual_osc_data['Order']);
+                            $url .= '&p7=';
+                            $url .= '&p8=';
+                            $url .= '&p9='           . rawurlencode($actual_osc_data['AuthCode']);
+                            $url .= '&p10='          . rawurlencode($actual_osc_data['RRN']);
+                            $url .= '&p11=';
+                            $url .= '&p12='          . rawurlencode($actual_osc_data['RC']);
+                            $url .= '&p13='          . rawurlencode($osc_first->P_SIGN);
+                            $url .= '&p14=0';
                           break;
 
                     case 'khreshchatyk':
@@ -333,27 +341,25 @@ class ShoppingCart
 
                         $url = API_URL . self::REPORT_BASE_URL;
 
-                        $post_data = [
-                            'report'       => ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep',
-                            'destype'      => 'Cache',
-                            'Desformat'    => 'xml',
-                            'cmdkey'       => 'rep',
-                            'idplatklient' => $payment['reports_id_plat_klient'],
-                            'p1'           => $last['MerchantID'],
-                            'p2'           => $last['TerminalID'],
-                            'p3'           => $last['TotalAmount'],
-                            'p4'           => $last['Currency'],
-                            'p5'           => '',
-                            'p6'           => $last['OrderID'],
-                            'p7'           => '',
-                            'p8'           => '',
-                            'p9'           => '',
-                            'p10'          => $last['Rrn'],
-                            'p11'          => $last['ProxyPan'],
-                            'p12'          => $last['TranCode'],
-                            'p13'          => '',
-                            'p14'          => 0,  // delay
-                        ];
+                        $url .= '?report='       . rawurlencode(($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep');
+                        $url .= '&destype='      . rawurlencode('Cache');
+                        $url .= '&Desformat='    . rawurlencode('xml');
+                        $url .= '&cmdkey='       . rawurlencode('rep');
+                        $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
+                        $url .= '&p1='           . rawurlencode($last['MerchantID']);
+                        $url .= '&p2='           . rawurlencode($last['TerminalID']);
+                        $url .= '&p3='           . rawurlencode($last['TotalAmount']);
+                        $url .= '&p4='           . rawurlencode($last['Currency']);
+                        $url .= '&p5=';
+                        $url .= '&p6='           . rawurlencode($last['OrderID']);
+                        $url .= '&p7=';
+                        $url .= '&p8=';
+                        $url .= '&p9=';
+                        $url .= '&p10='          . rawurlencode($last['Rrn']);
+                        $url .= '&p11='          . rawurlencode($last['ProxyPan']);
+                        $url .= '&p12='          . rawurlencode($last['TranCode']);
+                        $url .= '&p13=';
+                        $url .= '&p14=0';
                         break;
 
                     default:
@@ -368,7 +374,9 @@ class ShoppingCart
                 return false;
         }
 
-        $res = Http::HttpPost($url, $post_data);
+        $res = Http::fgets($url);
+
+        $date = date('Y-m-d H:i:s');
         $xml_string = iconv('CP1251', 'UTF-8', $res);
         $to_update = [];
 
@@ -456,33 +464,32 @@ class ShoppingCart
         switch ($payment['type']) {
             case 'komdebt':
                 $xml = '<?xml version="1.0" encoding="windows-1251" ?>';
-                $xml .= "\n<rowset>\n";
-                $xml .= "\t<id_kass>". self::getKassID($payment['processing']) ."</id_kass>\n";
-                $xml .= "\t<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>\n";
-                $xml .= "\t<idsiteuser>{$payment['user_id']}</idsiteuser>\n";
+                $xml .= "<rowset>";
+                $xml .= "<id_kass>". self::getKassID($payment['processing']) ."</id_kass>";
+                $xml .= "<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>";
+                $xml .= "<idsiteuser>{$payment['user_id']}</idsiteuser>";
 
-                $xml .= "\t<plat_list>\n";
+                $xml .= "<plat_list>";
 
                 for ($i=0; $i < count($services); $i++) {
                     $data = (array)json_decode($services[$i]['data']);
                     $counters = (array)json_decode($services[$i]['counter_data']);
-                    $xml .= "\t\t<plat>\n";
+                    $xml .= "<plat>";
 
-                    $xml .= "\t\t\t<plat_code>{$data['platcode']}</plat_code>\n";
-                    $xml .= "\t\t\t<abcount>{$data['abcount']}</abcount>\n";
-                    $xml .= "\t\t\t<id_firme>{$data['kode_firme']}</id_firme>\n";
-                    $xml .= "\t\t\t<id_plat>{$data['id_pat']}</id_plat>\n";
-                    $xml .= "\t\t\t<date_d>{$data['date_d']}</date_d>\n";
-                    $xml .= "\t\t\t<summ_plat>". ($services[$i]['sum'] * 100) ."</summ_plat>\n";
+                    $xml .= "<plat_code>{$data['platcode']}</plat_code>";
+                    $xml .= "<abcount>{$data['abcount']}</abcount>";
+                    $xml .= "<id_firme>{$data['kode_firme']}</id_firme>";
+                    $xml .= "<id_plat>{$data['id_pat']}</id_plat>";
+                    $xml .= "<date_d>{$data['date_d']}</date_d>";
+                    $xml .= "<summ_plat>". ($services[$i]['sum'] * 100) ."</summ_plat>";
 
                     list($year, $month, $day) = explode('-', $data['dbegin']);
-                    $xml .= "\t\t\t<dbegin>$day.$month.$year 00:00:00</dbegin>\n";
+                    $xml .= "<dbegin>$day.$month.$year 00:00:00</dbegin>";
 
                     list($year, $month, $day) = explode('-', $data['dend']);
-                    $xml .= "\t\t\t<dend>$day.$month.$year 00:00:00</dend>\n";
+                    $xml .= "<dend>$day.$month.$year 00:00:00</dend>";
 
-
-                    $xml .= "\t\t\t<counters>\n";
+                    $xml .= "<counters>";
                     for ($j=0; $j < count($counters); $j++) {
 
                         $counters[$j] = (array)$counters[$j];
@@ -490,34 +497,28 @@ class ShoppingCart
                         $counters[$j]['new_value'] = str_replace('.', ',', $counters[$j]['new_value']);
                         $counters[$j]['pcount'] = str_replace('.', ',', $counters[$j]['pcount']);
 
-                        $xml .= "\t\t\t\t<counter>\n";
-                        $xml .= "\t\t\t\t\t<abcounter>{$counters[$j]['abcounter']}</abcounter>\n";
-                        $xml .= "\t\t\t\t\t<counter_no>{$counters[$j]['counter_num']}</counter_no>\n";
-                        $xml .= "\t\t\t\t\t<old_value>{$counters[$j]['old_value']}</old_value>\n";
-                        $xml .= "\t\t\t\t\t<new_value>{$counters[$j]['new_value']}</new_value>\n";
-                        $xml .= "\t\t\t\t\t<pcount>{$counters[$j]['pcount']}</pcount>\n";
-                        $xml .= "\t\t\t\t</counter>\n";
+                        $xml .= "<counter>";
+                        $xml .= "<abcounter>{$counters[$j]['abcounter']}</abcounter>";
+                        $xml .= "<counter_no>{$counters[$j]['counter_num']}</counter_no>";
+                        $xml .= "<old_value>{$counters[$j]['old_value']}</old_value>";
+                        $xml .= "<new_value>{$counters[$j]['new_value']}</new_value>";
+                        $xml .= "<pcount>{$counters[$j]['pcount']}</pcount>";
+                        $xml .= "</counter>";
                     }
-                    $xml .= "\t\t\t</counters>\n";
+                    $xml .= "</counters>";
 
-                    $xml .= "\t\t</plat>\n";
+                    $xml .= "</plat>";
                 }
 
-                $xml .= "\t</plat_list>\n";
+                $xml .= "</plat_list>";
                 $xml .= "</rowset>";
                 break;
         }
 
         $xml = iconv('UTF-8', 'WINDOWS-1251', $xml);
-        $url = API_URL . self::REPORT_BASE_URL;
-        $post_data = [
-            'report' => 'pnew_gkom.rep',
-            'destype' => 'Cache',
-            'Desformat' => 'xml',
-            'cmdkey' => 'rep',
-            'in_xml' => $xml
-        ];
-        $res = Http::HttpPost($url, $post_data);
+        $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode('/site_api/pnew_gkom.rep') . '&destype=Cache&Desformat=xml&cmdkey=rep';
+        $url .= '&in_xml=' . rawurlencode($xml);
+        $res = Http::fgets($url);
 
         $date = date('Y-m-d H:i:s');
         $xml_string = iconv('CP1251', 'UTF-8', $res);

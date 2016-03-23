@@ -14,7 +14,7 @@ class House
     {
         $urls = [];
 
-        if (stristr(API_URL, 'bank.gioc')) {
+        if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
             $urls['HOUSE_URL'] = '/reports/rwservlet?report=/site/dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
         } else {
             $urls['HOUSE_URL'] = '/reports/rwservlet?report=dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';

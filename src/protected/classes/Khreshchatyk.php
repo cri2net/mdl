@@ -41,7 +41,7 @@ class Khreshchatyk
     {
         $urls = [];
 
-        if (stristr(API_URL, 'bank.gioc')) {
+        if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
             $urls['CARD_BIND_URL'] = '/reports/rwservlet?report=/site_api/get_accbank.rep&destype=Cache&Desformat=xml&cmdkey=rep&cn=';
         } else {
             $urls['CARD_BIND_URL'] = '/reports/rwservlet?report=/home/oracle/reports/site_api/get_accbank.rep&destype=Cache&Desformat=xml&cmdkey=rep&cn=';

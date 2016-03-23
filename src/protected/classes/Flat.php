@@ -17,7 +17,7 @@ class Flat
     {
         $urls = [];
 
-        if (stristr(API_URL, 'bank.gioc')) {
+        if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
             $urls['FLAT_URL']                = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
             $urls['FLAT_ID_BY_PLATCODE_URL'] = '/reports/rwservlet?report=/site/g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
             $urls['FLAT_PIN_BY_ID_URL']      = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
