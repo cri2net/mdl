@@ -385,7 +385,6 @@ class ShoppingCart
                 'date' => date('Y-m-d H:i:s'),
                 'timestamp' => microtime(true),
                 'reports_url' => $url,
-                'send_data' => $post_data,
                 'answer' => $xml_string,
             ],
             true
@@ -529,7 +528,6 @@ class ShoppingCart
                 'date' => date('Y-m-d H:i:s'),
                 'timestamp' => microtime(true),
                 'reports_url' => $url,
-                'send_data' => $post_data,
                 'answer' => $xml_string,
             ],
             true
