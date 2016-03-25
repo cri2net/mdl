@@ -3,7 +3,6 @@
 class News
 {
     const TABLE = DB_TBL_NEWS;
-    const IMAGES_TABLE = DB_TBL_NEWS_IMAGES;
 
     public static function getNewsURL($news_id, $full_path = true)
     {

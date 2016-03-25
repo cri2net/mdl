@@ -28,7 +28,6 @@ define('DB_TBL_EMAIL_CRON', 'gioc_email_cron');
 define('DB_TBL_FLATS', 'gioc_flat');
 define('DB_TBL_HOUSES', 'gioc_houses');
 define('DB_TBL_NEWS', 'gioc_news');
-define('DB_TBL_NEWS_IMAGES', 'gioc_news_images');
 define('DB_TBL_PAGE_VIEWS', 'gioc_page_views');
 define('DB_TBL_PAGES', 'gioc_pages');
 define('DB_TBL_PAGES_LINKS', 'gioc_pages_links');

@@ -651,3 +651,6 @@ ALTER TABLE `gioc_payment`
 ALTER TABLE `gioc_payment`
   DROP COLUMN `percent`, 
   DROP INDEX `type`;
+
+-- 2016.03.24
+DROP TABLE gioc_news_images;
