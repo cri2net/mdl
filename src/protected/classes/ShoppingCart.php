@@ -17,7 +17,7 @@ class ShoppingCart
     {
         return ($get_all_supported_paysystems)
             ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard', 'oschad']
-            : ['khreshchatyk', 'tas', 'visa', 'mastercard', 'oschad'];
+            : ['tas', 'visa', 'mastercard', 'oschad'];
     }
 
     public static function logRequestToReports($message, $payment_id, $success = true, $type = 'new')
