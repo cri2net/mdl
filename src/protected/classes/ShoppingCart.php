@@ -6,18 +6,37 @@ class ShoppingCart
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
     const KASS_ID_TAS  = '1080';
     const KASS_ID_AVAL = '1028';
-    const KASS_ID_OSCHAD = '1085';//osc_site/osc_site123
-    const KASS_ID_KHRESHCHATYK = '1048'; /// УЗНАТЬ ТОЧНЫЙ ID !!
+    const KASS_ID_OSCHAD = '1085';
+    const KASS_ID_KHRESHCHATYK = '1048';
     const REPORT_BASE_URL   = '/reports/rwservlet';
-    const PDF_FIRST_URL     = '/reports/rwservlet?report=/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
             ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard', 'oschad']
             : ['tas', 'visa', 'mastercard', 'oschad'];
+    }
+
+    public static function get_API_URL($key)
+    {
+        $urls = [];
+
+        if (self::useBalancer()) {
+            $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+            $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+            $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+        } else {
+            $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+            $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+            $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+        }
+
+        return $urls[$key];
+    }
+
+    public static function useBalancer()
+    {
+        return (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206'));
     }
 
     public static function logRequestToReports($message, $payment_id, $success = true, $type = 'new')
@@ -219,11 +238,11 @@ class ShoppingCart
         }
 
         if ($first) {
-            return Http::fgets(API_URL . self::PDF_FIRST_URL . $payment['reports_id_pack']);
+            return Http::fgets(API_URL . self::get_API_URL('PDF_FIRST_URL') . $payment['reports_id_pack']);
         }
 
-        $pdf1_url = API_URL . self::PDF_TODAY_URL . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
-        $pdf2_url = API_URL . self::PDF_NOT_TODAY_URL . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
+        $pdf1_url = API_URL . self::get_API_URL('PDF_TODAY_URL')     . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
+        $pdf2_url = API_URL . self::get_API_URL('PDF_NOT_TODAY_URL') . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
 
         $pdf1 = Http::fgets($pdf1_url);
         $pdf2 = Http::fgets($pdf2_url);
@@ -241,6 +260,11 @@ class ShoppingCart
         switch ($payment['type']) {
             case 'komdebt':
 
+                $report = ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep';
+                if (self::useBalancer()) {
+                    $report = ($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep';
+                }
+
                 switch ($payment['processing']) {
 
                     case '_test_upc':
@@ -255,7 +279,7 @@ class ShoppingCart
 
                         $url = API_URL . self::REPORT_BASE_URL;
 
-                        $url .= '?report='       . rawurlencode(($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep');
+                        $url .= '?report='       . rawurlencode($report);
                         $url .= '&destype='      . rawurlencode('Cache');
                         $url .= '&Desformat='    . rawurlencode('xml');
                         $url .= '&cmdkey='       . rawurlencode('rep');
@@ -312,7 +336,7 @@ class ShoppingCart
                             $osc_first = $payment['processing_data']['first'];
                             $url = API_URL . self::REPORT_BASE_URL;
 
-                            $url .= '?report='       . rawurlencode(($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep');
+                            $url .= '?report='       . rawurlencode($report);
                             $url .= '&destype='      . rawurlencode('Cache');
                             $url .= '&Desformat='    . rawurlencode('xml');
                             $url .= '&cmdkey='       . rawurlencode('rep');
@@ -341,7 +365,7 @@ class ShoppingCart
 
                         $url = API_URL . self::REPORT_BASE_URL;
 
-                        $url .= '?report='       . rawurlencode(($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep');
+                        $url .= '?report='       . rawurlencode($report);
                         $url .= '&destype='      . rawurlencode('Cache');
                         $url .= '&Desformat='    . rawurlencode('xml');
                         $url .= '&cmdkey='       . rawurlencode('rep');
@@ -515,7 +539,8 @@ class ShoppingCart
         }
 
         $xml = iconv('UTF-8', 'WINDOWS-1251', $xml);
-        $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode('/site_api/pnew_gkom.rep') . '&destype=Cache&Desformat=xml&cmdkey=rep';
+        $report = (self::useBalancer()) ? '/site_api/pnew_gkom.rep' : 'pnew_gkom.rep';
+        $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode($report) . '&destype=Cache&Desformat=xml&cmdkey=rep';
         $url .= '&in_xml=' . rawurlencode($xml);
         $res = Http::fgets($url);
 
