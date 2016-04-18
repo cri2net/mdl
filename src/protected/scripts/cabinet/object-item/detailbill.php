@@ -133,7 +133,7 @@
                             <span class="name-plat">
                                 <?= $debtData['firm'][$key]['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>
                             </span>
-                            <span class="abcount">(р/с: <?= $debtData['firm'][$key]['ABCOUNT']; ?>)</span>
+                            <span class="abcount">(о.р. <?= $debtData['firm'][$key]['ABCOUNT']; ?>)</span>
                             <?php
                                 if (trim($debtData['firm'][$key]['TLF']) != "") {
                                     ?> (Телефон: <?= $debtData['firm'][$key]['TLF']; ?>) <?php

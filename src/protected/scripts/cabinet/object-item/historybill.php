@@ -107,7 +107,7 @@
                                 <td class="first">
                                     <span class="name-plat"><?= $item['NAME_PLAT']; ?></span> <br>
                                     <span class="name-firme"><?= $item['NAME_FIRME']; ?></span>
-                                    <span class="abcount">р/с: <?= $item['ABCOUNT']; ?></span> <br>
+                                    <span class="abcount">о.р. <?= $item['ABCOUNT']; ?></span> <br>
                                     <div class="address"><?= $object['address']; ?></div>
                                 </td>
                                 <td>
