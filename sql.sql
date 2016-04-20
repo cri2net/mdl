@@ -654,3 +654,7 @@ ALTER TABLE `gioc_payment`
 
 -- 2016.03.24
 DROP TABLE gioc_news_images;
+
+-- 2016.04.20
+ALTER TABLE `gioc_feedback`
+  ADD COLUMN `address` VARCHAR(500) NULL AFTER `subject`;

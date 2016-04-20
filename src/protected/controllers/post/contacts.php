@@ -1,7 +1,7 @@
 <?php
 try {
     $_SESSION['contacts'] = [];
-    $fields = ['name' => 'Ім’я', 'email' => 'Електронна пошта', 'text' => 'Текст повідомлення'];
+    $fields = ['name' => 'Ім’я', 'address' => 'Адреса', 'email' => 'Електронна пошта', 'subject' => 'Тема звернення', 'text' => 'Текст повідомлення'];
 
     // переганяем данные в сессию, чтобы можно было их подставить обратно на форму
     foreach ($fields as $key => $value) {
@@ -29,38 +29,19 @@ try {
     }
 
     $data = [
-        'email' => $_SESSION['contacts']['email'],
-        'phone' => '',
-        'user_id' => (int)Authorization::getLoggedUserId(),
-        'name' => $_SESSION['contacts']['name'],
-        'surname' => '',
+        'email'      => $_SESSION['contacts']['email'],
+        'phone'      => '',
+        'user_id'    => (int)Authorization::getLoggedUserId(),
+        'name'       => $_SESSION['contacts']['name'],
+        'surname'    => '',
         'fathername' => '',
-        'timestamp' => microtime(true),
-        'ip' => USER_REAL_IP,
-        'subject' => '',
-        'text' => $_SESSION['contacts']['text']
+        'timestamp'  => microtime(true),
+        'ip'         => USER_REAL_IP,
+        'subject'    => $_SESSION['contacts']['subject'],
+        'address'    => $_SESSION['contacts']['address'],
+        'text'       => $_SESSION['contacts']['text']
     ];
     PDO_DB::insert($data, TABLE_PREFIX . 'feedback');
-
-    ////////////////
-    // send email //
-    ////////////////
-    
-    
-    $email = new Email();
-    $email->AddReplyTo($_SESSION['contacts']['email'], $_SESSION['contacts']['name']);
-    
-    $email->send(
-        'secretary@gioc-kmda.kiev.ua',
-        'КП «ГіОЦ». Нове повідомлення з сайта',
-        '',
-        'contacts_feedback',
-        [
-            'username' => htmlspecialchars($_SESSION['contacts']['name']),
-            'email' => $_SESSION['contacts']['email'],
-            'text' => htmlspecialchars($_SESSION['contacts']['text'])
-        ]
-    );
 
     $_SESSION['contacts']['status'] = true;
 } catch (Exception $e) {

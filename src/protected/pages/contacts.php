@@ -10,9 +10,11 @@
         unset($_SESSION['contacts']['status']);
     }
 
-    $_contacts_name  = (isset($_SESSION['contacts']['name']))  ? $_SESSION['contacts']['name'] : '';
-    $_contacts_text  = (isset($_SESSION['contacts']['text']))  ? $_SESSION['contacts']['text'] : '';
-    $_contacts_email = (isset($_SESSION['contacts']['email'])) ? $_SESSION['contacts']['email'] : '';
+    $_contacts_name    = (isset($_SESSION['contacts']['name']))    ? $_SESSION['contacts']['name']    : '';
+    $_contacts_text    = (isset($_SESSION['contacts']['text']))    ? $_SESSION['contacts']['text']    : '';
+    $_contacts_email   = (isset($_SESSION['contacts']['email']))   ? $_SESSION['contacts']['email']   : '';
+    $_contacts_address = (isset($_SESSION['contacts']['address'])) ? $_SESSION['contacts']['address'] : '';
+    $_contacts_subject = (isset($_SESSION['contacts']['subject'])) ? $_SESSION['contacts']['subject'] : '';
 
     $_contacts_name = htmlspecialchars($_contacts_name, ENT_QUOTES);
     $_contacts_text = htmlspecialchars($_contacts_text, ENT_QUOTES);
@@ -23,7 +25,7 @@
     <div class="item clock"><a class="dotted" href="#page-map-clock">Графік роботи</a></div>
     <div class="item phone"><a class="dotted" href="#page-map-phone">Телефони</a></div>
     <div class="item marker"><a class="dotted" href="#page-map-marker">Адреса</a></div>
-    <div class="item letter"><a class="dotted" href="#page-map-letter">Зворотній звязок</a></div>
+    <div class="item letter"><a class="dotted" href="#page-map-letter">Зворотній зв’язок</a></div>
 </div>
 <?php
     // может странный способ, но это один запрос к БД, а не 3
@@ -36,24 +38,43 @@
 ?>
 <h3 id="page-map-letter" class="page-subtitle border-top">Зворотній зв’язок</h3>
 <form class="feedback-form" action="<?= BASE_URL; ?>/post/contacts/" method="post">
-    <input type="text" name="country" value="" style="display:none;">
-    <div class="field-group">
-        <label>
-            Ім’я <span class="star-required" title="Обов'язкове поле">*</span> <br>
-            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_name; ?>" type="text" name="name" class="txt" required="required">
-        </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+    <input type="text" name="country" value="" style="display:none;" autocomplete="off">
+    <div style="display: inline-block; float: none; width: 100%;">
+        <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
+            <label>
+                Ім’я <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_name; ?>" type="text" name="name" class="txt" required="required">
+            </label>
+            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+        </div>
+        <div class="field-group" style="display: inline-block;">
+            <label>
+                Адреса <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_address; ?>" type="text" name="address" class="txt" required="required">
+            </label>
+            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+        </div>
     </div>
-    <div class="field-group">
-        <label>
-            Електронна пошта <span class="star-required" title="Обов'язкове поле">*</span> <br>
-            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_email; ?>" type="email" name="email" class="txt" required="required">
-        </label>
-        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+    <div style="display: inline-block; float: none; width: 100%;">
+        <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
+            <label>
+                Електронна пошта <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_email; ?>" type="email" name="email" class="txt" required="required">
+            </label>
+            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+        </div>
+        <div class="field-group" style="display: inline-block;">
+            <label>
+                Тема звернення <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_subject; ?>" type="text" name="subject" class="txt" required="required">
+            </label>
+            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+        </div>
     </div>
+
     <div class="field-group">
         <label>
-            Текст повідомлення <span class="star-required" title="Обов'язкове поле">*</span> <br>
+            Текст повідомлення <span class="star-required" title="Обов’язкове поле">*</span> <br>
             <textarea onblur="registration_ckeck_empty_fileld(this);" required="required" name="text" class="txt"><?= $_contacts_text; ?></textarea>
         </label>
         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
