@@ -66,7 +66,15 @@
         <div class="field-group" style="display: inline-block;">
             <label>
                 Тема звернення <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= $_contacts_subject; ?>" type="text" name="subject" class="txt" required="required">
+                <select class="txt" required="required" name="subject" onblur="registration_ckeck_empty_fileld(this);">
+                    <option value="">-- Будь ласка, оберіть --</option>
+                    <?php
+                        $themes = ['Робота сайту', 'Розшук та перевірка платежів', 'Пільги та субсидії', 'Інше'];
+                        foreach ($themes as $item) {
+                            ?><option <?= ($item == $_contacts_subject) ? 'selected="selected"' : ''; ?> value="<?= $item; ?>"><?= $item; ?></option> <?php
+                        }
+                    ?>
+                </select>
             </label>
             <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
         </div>
