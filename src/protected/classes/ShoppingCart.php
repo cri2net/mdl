@@ -423,7 +423,8 @@ class ShoppingCart
         }
 
         // ERR = 7: Status of payment already sent
-        if ($xml->ROW->ERR.'' && ($xml->ROW->ERR.'' != '7')) {
+        // ERR = 9: Status of payment not 20 (NEW)
+        if ($xml->ROW->ERR.'' && ($xml->ROW->ERR.'' != '7') && ($xml->ROW->ERR.'' != '9')) {
             self::logRequestToReports($message_to_log, $payment['id'], false, 'status');
             if ($xml->ROW->ERR.'' == '4') {
                 $to_update['send_payment_status_to_reports'] = 1;
