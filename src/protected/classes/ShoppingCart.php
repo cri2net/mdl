@@ -7,14 +7,15 @@ class ShoppingCart
     const KASS_ID_TAS  = '1080';
     const KASS_ID_AVAL = '1028';
     const KASS_ID_OSCHAD = '1085';
+    const KASS_ID_OSCHAD_MYCARD = '1142';
     const KASS_ID_KHRESHCHATYK = '1048';
     const REPORT_BASE_URL   = '/reports/rwservlet';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard', 'oschad']
-            : ['tas', 'visa', 'mastercard', 'oschad'];
+            ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard', 'oschad', 'oschad_mycard']
+            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard'];
     }
 
     public static function get_API_URL($key)
@@ -59,12 +60,13 @@ class ShoppingCart
     public static function getPercentRule($pay_system = null)
     {
         $rules = [
-            '_test_upc'    => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
-            'visa'         => ['percent' => 2, 'min' => 2],
-            'tas'          => ['percent' => 2, 'min' => 2],
-            'mastercard'   => ['percent' => 2, 'min' => 2],
-            'khreshchatyk' => ['percent' => 0, 'min' => 0],
-            'oschad'       => ['percent' => 0, 'min' => 0],
+            '_test_upc'     => ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5],
+            'visa'          => ['percent' => 2, 'min' => 2],
+            'tas'           => ['percent' => 2, 'min' => 2],
+            'mastercard'    => ['percent' => 2, 'min' => 2],
+            'khreshchatyk'  => ['percent' => 0, 'min' => 0],
+            'oschad'        => ['percent' => 0, 'min' => 0],
+            'oschad_mycard' => ['percent' => 0, 'min' => 0]
         ];
 
         if ($pay_system) {
@@ -99,6 +101,9 @@ class ShoppingCart
 
             case 'oschad':
                 return self::KASS_ID_OSCHAD;
+
+            case 'oschad_mycard':
+                return self::KASS_ID_OSCHAD_MYCARD;
 
             default:
                 return self::KASS_ID_AVAL;
@@ -302,7 +307,7 @@ class ShoppingCart
                             $url .= '&p5='       . rawurlencode($actual_upc_data['PurchaseTime']);
                             $url .= '&p6='       . rawurlencode($actual_upc_data['OrderID']);
                         }
-                        
+
                         $url .= '&p7='           . rawurlencode($actual_upc_data['XID']);
                         $url .= '&p8='           . rawurlencode($actual_upc_data['SD']);
 
@@ -311,9 +316,9 @@ class ShoppingCart
                         } else {
                             $url .= '&p9='       . rawurlencode($actual_upc_data['ApprovalCode']);
                         }
-                        
+
                         $url .= '&p10='          . rawurlencode($actual_upc_data['Rrn']);
-                        
+
                         if ($payment['processing'] == 'tas') {
                            $url .= '&p11='       . rawurlencode($actual_upc_data['PAN']);
                            $url .= '&p12='       . rawurlencode($actual_upc_data['RESPCODE']);
@@ -327,6 +332,7 @@ class ShoppingCart
                         $url .= '&p14=0';
                         break;
 
+                      case 'oschad_mycard':
                       case 'oschad':
                             $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                             $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
@@ -574,7 +580,7 @@ class ShoppingCart
             throw new Exception(self::get_create_payment_error($xml->ROW->ERR.''));
             return false;
         }
-        
+
         self::logRequestToReports($message_to_log, $payment['id']);
 
         $to_update['acq']                     = $xml->ROW->ACQ.'';
