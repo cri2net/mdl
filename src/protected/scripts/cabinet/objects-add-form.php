@@ -33,7 +33,7 @@
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));
 ?>
 <div class="input">
-    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn green bold"><div class="icon-objects"></div>Додати об'єкт</button>
+    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn green bold"><div class="icon-objects"></div>Додати об’єкт</button>
 </div>
 <?php
     if ($disabled) {

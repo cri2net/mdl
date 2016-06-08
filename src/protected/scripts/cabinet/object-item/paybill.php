@@ -35,7 +35,7 @@
             if (in_array('oschad', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_percent_kkk_2" class="niceCheck radio checked"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" checked="checked" data-paysystem-key="oschad"></span>
+                    <span id="checkbox_percent_kkk_2" class="niceCheck radio checked"><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" checked="checked" data-paysystem-key="oschad"></span>
                     <label onclick="$('#checkbox_percent_kkk_2').click();">
                         <img alt="Ощадбанк" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
                         <span class="text-label">Ощадбанк (Картка Киянина)</span>

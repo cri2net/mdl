@@ -18,7 +18,7 @@
                 <div class="check-box-line">
                     <span class="niceCheck check-group-rule <?= ($have_checked_object) ? 'checked' : ''; ?>" id="check-group-rule"><input <?= ($have_checked_object) ? 'checked' : ''; ?> type="checkbox"></span>
                     <label onclick="$('#check-group-rule').click();">
-                        Отримувати листи з рахунками-повідомленнями для усіх об'єктів
+                        Отримувати листи з рахунками-повідомленнями для усіх об’єктів
                     </label>
                 </div>
                 <div class="checkboxes">

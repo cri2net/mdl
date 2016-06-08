@@ -129,7 +129,7 @@
                                 }
                             ?>
                             <div class="align-center">
-                                <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об'єкту</a>
+                                <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об’єкту</a>
                             </div>
                         </div>
                         <?php

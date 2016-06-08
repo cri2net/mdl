@@ -26,10 +26,16 @@ class ShoppingCart
             $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
             $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
             $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+            $urls['KASS_STATUS']       = '/reports/rwservlet?report=/gioc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+            $urls['KASS_OPEN']         = '/reports/rwservlet?report=/gioc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
         } else {
             $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
             $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
             $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+            
+            // не уверен, что тут правильно указаны параметры report=
+            $urls['KASS_STATUS']       = '/reports/rwservlet?report=/home/oracle/reports/gioc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+            $urls['KASS_OPEN']         = '/reports/rwservlet?report=/home/oracle/reports/gioc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
         }
 
         return $urls[$key];
@@ -40,6 +46,94 @@ class ShoppingCart
         return (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206'));
     }
 
+    /**
+     * По ID кассы получаем логин и хеш пароля кассира
+     * @param  integer $kass_id  ID кассы в оракле
+     * @param  string  $login    Логин кассира (SHA1, кажется)
+     * @param  string  $password Хеш пароля кассира
+     * 
+     * @return void
+     */
+    public static function pppGetCashierByKassId($kass_id, &$login, &$password)
+    {
+        switch ($kass_id) {
+            case 1028:
+                $login    = 'UPJG_SITE';
+                $password = '4ED9C35810216E6A9322716762D93CE0D483497E';
+                break;
+
+            case 1048:
+                $login    = 'UIWL_SITE';
+                $password = '084E600EEB2A7D9E255DCFB2736674DB91F00CB4';
+                break;
+
+            case 1080:
+                $login    = 'GIOCKIEVUA';
+                $password = '7D107006F752860E6FAEBD84156A676B8852C439';
+                break;
+
+            case 1085:
+                $login    = 'OSCH_SITE';
+                $password = 'E9BF0325E4037057562EA08E28EEB43CBAA0E15B';
+                break;
+
+            case 1142:
+                $login    = 'OSCH_SITE_MYCARD';
+                $password = 'EB35DBDC5AB7AA5662BCEBDE3C6DBAF6989F45A0';
+                break;
+        }
+    }
+
+    /**
+     * Метод проверяет открыта ли касса в оракле по её id
+     * @param  штеупук $kass_id
+     * @return boolean
+     */
+    public static function pppCheckOpenKass($kass_id)
+    {
+        self::pppGetCashierByKassId($kass_id, $login, $password);
+
+        $url = API_URL . self::get_API_URL('KASS_STATUS');
+        $url .= rawurlencode($login);
+        $url .= '&pwd=' . rawurlencode($password);
+
+        $xml_string = Http::fgets($url);
+        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
+        $xml = simplexml_load_string($xml_string);
+
+        if (($xml === null) || ($xml === false)) {
+            return false;
+        }
+
+        $row = $xml->ROW;
+
+        if ($row->ERR.'' && ($row->ERR.'' != '0')) {
+            throw new Exception("Ошибка при выполнении запроса $row->ERR");
+            return;
+        }
+
+        $status = $row->STATUS_KASS.'';
+        return ($status == '1');
+    }
+
+    /**
+     * Метод пробует открыть кассу в оракле
+     * @param  integer $kass_id ID кассы в оракле
+     * @param  integer $shift   Смена кассы: 0 = дневная, 1 = вечерняя. OPTIONAL
+     * @return void
+     */
+    public static function pppOpenKass($kass_id, $shift = 0)
+    {
+        self::pppGetCashierByKassId($kass_id, $login, $password);
+
+        $url = API_URL . self::get_API_URL('KASS_OPEN');
+        $url .= rawurlencode($login);
+        $url .= '&pwd=' . rawurlencode($password);
+        $url .= '&smena=' . $shift;
+
+        $xml_string = Http::fgets($url);
+    }
+    
     public static function logRequestToReports($message, $payment_id, $success = true, $type = 'new')
     {
         $dir = ROOT . "/protected/logs/reports/$type/" . date('Y/m/d/');
