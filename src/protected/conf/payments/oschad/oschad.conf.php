@@ -8,7 +8,7 @@ $oschad_merchant_settings = [
     'EMAIL'      => 'mistakes@gioc.kiev.ua',
     'COUNTRY'    => 'UA',
     'MERCH_GMT'  => '+2',
-    'BACKREF'    => 'https://www.gioc.kiev.ua/payments-notify/oschad/'
+    'BACKREF'    => BASE_URL . '/payments-notify/oschad/'
 ];
 $payment_form_action = 'https://3ds.oschadnybank.com/cgi-bin/cgi_link';
 $oschad_sign_key = '58102f462425c6e829ac878e6dd0ea61';

@@ -658,3 +658,7 @@ DROP TABLE gioc_news_images;
 -- 2016.04.20
 ALTER TABLE `gioc_feedback`
   ADD COLUMN `address` VARCHAR(500) NULL AFTER `subject`;
+
+-- 2016.06.08
+ALTER TABLE `gioc_payment`   
+  CHANGE `processing` `processing` ENUM('_test_upc','mastercard','visa','webmoney','khreshchatyk','tas','oschad','oschad_mycard') CHARSET utf8 COLLATE utf8_general_ci NULL;
