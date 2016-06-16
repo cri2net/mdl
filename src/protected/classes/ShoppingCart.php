@@ -252,17 +252,17 @@ class ShoppingCart
         }
 
         $payment_data = [
-            'user_id' => $user_id,
-            'acq' => '',
-            'timestamp' => $timestamp,
-            'type' => 'komdebt',
-            'flat_id' => $data['flat_id'],
-            'city_id' => $data['city_id'],
-            'count_services' => count($real_servises),
-            'summ_plat' => $summ_plat,
-            'summ_komis' => '',
-            'summ_total' => '',
-            'ip' => USER_REAL_IP,
+            'user_id'           => $user_id,
+            'acq'               => '',
+            'timestamp'         => $timestamp,
+            'type'              => 'komdebt',
+            'flat_id'           => $data['flat_id'],
+            'city_id'           => $data['city_id'],
+            'count_services'    => count($real_servises),
+            'summ_plat'         => $summ_plat,
+            'summ_komis'        => 0,
+            'summ_total'        => $summ_plat,
+            'ip'                => USER_REAL_IP,
             'user_agent_string' => HTTP_USER_AGENT
         ];
 
