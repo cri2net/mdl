@@ -585,59 +585,55 @@ class ShoppingCart
 
         $services = PDO_DB::table_list(self::SERVICE_TABLE, "payment_id='{$payment['id']}'", 'id ASC', $payment['count_services'] . '');
 
-        switch ($payment['type']) {
-            case 'komdebt':
-                $xml = '<?xml version="1.0" encoding="windows-1251" ?>';
-                $xml .= "<rowset>";
-                $xml .= "<id_kass>". self::getKassID($payment['processing']) ."</id_kass>";
-                $xml .= "<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>";
-                $xml .= "<idsiteuser>{$payment['user_id']}</idsiteuser>";
-                $xml .= "<uniqid>". md5(uniqid(rand(), 1)) ."</uniqid>";
+        $xml = '<?xml version="1.0" encoding="windows-1251" ?>';
+        $xml .= "<rowset>";
+        $xml .= "<id_kass>". self::getKassID($payment['processing']) ."</id_kass>";
+        $xml .= "<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>";
+        $xml .= "<idsiteuser>{$payment['user_id']}</idsiteuser>";
+        $xml .= "<uniqid>". md5(uniqid(rand(), 1)) ."</uniqid>";
 
-                $xml .= "<plat_list>";
+        $xml .= "<plat_list>";
 
-                for ($i=0; $i < count($services); $i++) {
-                    $data = (array)json_decode($services[$i]['data']);
-                    $counters = (array)json_decode($services[$i]['counter_data']);
-                    $xml .= "<plat>";
+        for ($i=0; $i < count($services); $i++) {
+            $data = (array)json_decode($services[$i]['data']);
+            $counters = (array)json_decode($services[$i]['counter_data']);
+            $xml .= "<plat>";
 
-                    $xml .= "<plat_code>{$data['platcode']}</plat_code>";
-                    $xml .= "<abcount>{$data['abcount']}</abcount>";
-                    $xml .= "<id_firme>{$data['kode_firme']}</id_firme>";
-                    $xml .= "<id_plat>{$data['id_pat']}</id_plat>";
-                    $xml .= "<summ_plat>". ($services[$i]['sum'] * 100) ."</summ_plat>";
+            $xml .= "<plat_code>{$data['platcode']}</plat_code>";
+            $xml .= "<abcount>{$data['abcount']}</abcount>";
+            $xml .= "<id_firme>{$data['kode_firme']}</id_firme>";
+            $xml .= "<id_plat>{$data['id_pat']}</id_plat>";
+            $xml .= "<summ_plat>". ($services[$i]['sum'] * 100) ."</summ_plat>";
 
-                    list($year, $month, $day) = explode('-', $data['dbegin']);
-                    $xml .= "<dbegin>$day.$month.$year 00:00:00</dbegin>";
+            list($year, $month, $day) = explode('-', $data['dbegin']);
+            $xml .= "<dbegin>$day.$month.$year 00:00:00</dbegin>";
 
-                    list($year, $month, $day) = explode('-', $data['dend']);
-                    $xml .= "<dend>$day.$month.$year 00:00:00</dend>";
+            list($year, $month, $day) = explode('-', $data['dend']);
+            $xml .= "<dend>$day.$month.$year 00:00:00</dend>";
 
-                    $xml .= "<counters>";
-                    for ($j=0; $j < count($counters); $j++) {
+            $xml .= "<counters>";
+            for ($j=0; $j < count($counters); $j++) {
 
-                        $counters[$j] = (array)$counters[$j];
-                        $counters[$j]['old_value'] = str_replace('.', ',', $counters[$j]['old_value']);
-                        $counters[$j]['new_value'] = str_replace('.', ',', $counters[$j]['new_value']);
-                        $counters[$j]['pcount'] = str_replace('.', ',', $counters[$j]['pcount']);
+                $counters[$j] = (array)$counters[$j];
+                $counters[$j]['old_value'] = str_replace('.', ',', $counters[$j]['old_value']);
+                $counters[$j]['new_value'] = str_replace('.', ',', $counters[$j]['new_value']);
+                $counters[$j]['pcount'] = str_replace('.', ',', $counters[$j]['pcount']);
 
-                        $xml .= "<counter>";
-                        $xml .= "<abcounter>{$counters[$j]['abcounter']}</abcounter>";
-                        $xml .= "<counter_no>{$counters[$j]['counter_num']}</counter_no>";
-                        $xml .= "<old_value>{$counters[$j]['old_value']}</old_value>";
-                        $xml .= "<new_value>{$counters[$j]['new_value']}</new_value>";
-                        $xml .= "<pcount>{$counters[$j]['pcount']}</pcount>";
-                        $xml .= "</counter>";
-                    }
-                    $xml .= "</counters>";
+                $xml .= "<counter>";
+                $xml .= "<abcounter>{$counters[$j]['abcounter']}</abcounter>";
+                $xml .= "<counter_no>{$counters[$j]['counter_num']}</counter_no>";
+                $xml .= "<old_value>{$counters[$j]['old_value']}</old_value>";
+                $xml .= "<new_value>{$counters[$j]['new_value']}</new_value>";
+                $xml .= "<pcount>{$counters[$j]['pcount']}</pcount>";
+                $xml .= "</counter>";
+            }
+            $xml .= "</counters>";
 
-                    $xml .= "</plat>";
-                }
-
-                $xml .= "</plat_list>";
-                $xml .= "</rowset>";
-                break;
+            $xml .= "</plat>";
         }
+
+        $xml .= "</plat_list>";
+        $xml .= "</rowset>";
 
         $xml = iconv('UTF-8', 'WINDOWS-1251', $xml);
         $report = (self::useBalancer()) ? '/site_api/pnew_gkom.rep' : 'pnew_gkom.rep';
@@ -757,11 +753,6 @@ class ShoppingCart
                     if (!isset($payment['processing_data']['cron_check_status'])) {
                         $payment['processing_data']['cron_check_status'] = [];
                     }
-
-                    // Это было временно.
-                    // if (!isset($payment['processing_data']['first']->upc_merchantid)) {
-                    //     $payment['processing_data']['cron_check_status'] = [];
-                    // }
 
                     if ($result && stristr($result, '403 Forbidden')) {
                         $result = false;
