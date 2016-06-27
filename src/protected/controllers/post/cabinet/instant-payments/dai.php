@@ -69,7 +69,7 @@ try {
     
     if ($record['processing'] == 'tas') {
         $TasLink = new TasLink('budget');
-        $tas_session_id = $TasLink->initSession('gioc-' . $record['id']);
+        $tas_session_id = $TasLink->initSession($record['id']);
         $TasLink->makePayment($record['summ_plat'] / 100, $record['summ_komis'] / 100);
     }
 

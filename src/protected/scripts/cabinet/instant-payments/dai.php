@@ -1,5 +1,5 @@
 <h1 class="big-title">Cплата штрафів за порушення ПДР</h1>
-<br><br><br>
+<br><br>
 
 <?php
     if (!Authorization::isLogin()) {
@@ -30,13 +30,16 @@
     if (!isset($_SESSION['instant-payments-dai']['step'])) {
         $_SESSION['instant-payments-dai']['step'] = 'region';
     }
-    
-    if (($_GET['step'] == 'success') || ($_GET['step'] == 'error')) {
 
-        if (!isset($_SESSION['GAI'])) {
-            $this->smarty->assign('error_msg', 'Просмотр оплаты более недоступен');
-        } else {
-            $record = $Gai->get_transaction($_SESSION['GAI']['id']);
+    try {
+        
+        if (($_GET['step'] == 'success') || ($_GET['step'] == 'error')) {
+
+            if (!isset($_SESSION['instant-payments-dai']['record_id'])) {
+                throw new Exception(ERROR_OLD_REQUEST);
+            }
+
+            $record = $Gai->get_transaction($_SESSION['instant-payments-dai']['record_id']);
 
             if ($record['status'] == 'new') {
                 // оплата ещё не завершена
@@ -46,119 +49,96 @@
                 $_SESSION['instant-payments-dai']['status'] = false;
                 $_SESSION['instant-payments-dai']['error']['text'] = 'Помилка оплати';
             }
-        }
-    } elseif (isset($_POST['get_last_step'])) {
-        
-        $id = $_SESSION['instant-payments-dai']['dai_last_payment_id'];
-        $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $id);
-        
-        if ($payment) {
-            $payment['processing_data'] = json_decode($payment['processing_data']);
-            $iframe_src = TasLink::IFRAME_SRC . $payment['processing_data']->first->oid;
-            $isFrameStep = true;
-        }
-   }
 
+        } elseif (isset($_POST['get_last_step'])) {
+            
+            $id = $_SESSION['instant-payments-dai']['dai_last_payment_id'];
+            $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $id);
+            $payment_id = $_payment['id'];
+            
+            if ($_payment) {
+                $_SESSION['instant-payments-dai']['step'] = 'frame';
+            } else {
+                throw new Exception(ERROR_OLD_REQUEST);
+            }
+       }
 
-   if (isset($_SESSION['instant-payments-dai']['status']) && !$_SESSION['instant-payments-dai']['status']) {
-       ?>
-       <h2 class="big-error-message">Під час надсилання повідомлення виникла помилка:</h2>
-       <div class="error-description"><?= $_SESSION['instant-payments-dai']['error']['text']; ?></div>
-       <?php
-       unset($_SESSION['instant-payments-dai']['status']);
-   }
-?>
+    } catch (Exception $e) {
+        $_SESSION['instant-payments-dai']['status'] = false;
+        $_SESSION['instant-payments-dai']['error']['text'] = $e->getMessage();
+        $_SESSION['instant-payments-dai']['step'] = 'region';
+    }
+    
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#protocol_date").datepicker({
-            changeMonth: true,
-            numberOfMonths: 1,
-            dateFormat:"dd.mm.yy",
-            maxDate: '0'
-        });
-    });
-</script>
-<?php
+    if (isset($_SESSION['instant-payments-dai']['status']) && !$_SESSION['instant-payments-dai']['status']) {
+        ?>
+        <h2 class="big-error-message">Під час надсилання повідомлення виникла помилка:</h2>
+        <div class="error-description"><?= $_SESSION['instant-payments-dai']['error']['text']; ?></div>
+        <?php
+        unset($_SESSION['instant-payments-dai']['status']);
+    }
     
     switch ($_SESSION['instant-payments-dai']['step']) {
         case 'frame':
-            ?>
-            <div id="tas_frame_box">
-                <div id="tas_frame_error" style="display: none; font-size:14px; color: #900; padding: 0 5px 0 40px;">
-                    <b>Уважаемые клиенты!</b> <br><br>
-                    Для обеспечения максимально безопасного платежа с помощью нашего сервиса просим обновить Ваш браузер до последней доступной версии.
-                    (в случае проблем с отображением просим в настройках браузера включить протокол безопасности TLS 1.2)
-                </div>
-                <iframe id="tas_frame" onload="tas_frame_load();" src="<?= $iframe_src; ?>" frameborder="0" style="width:837px; height:888px;"></iframe>
-            </div>
-            <script>
-                $(document).ready(function(){
-                    tas_timeout_id = setTimeout(function(){
-                        $('#tas_frame_error').fadeIn(200);
-                        $('#tas_frame').css('display', 'none');
-                    }, 3500);
-                });
-                $(document).keydown(function(e) {
-                    if ((e.keyCode == 116) || (e.keyCode == 82 && e.ctrlKey)) {
-                        return false;
-                    }
-                });
-            </script>
-            <?php
+            $file = ROOT . "/protected/conf/payments/tas/tas";
+            if (file_exists($file . ".conf.php")) {
+                require_once($file . ".conf.php");
+            }
+            if (file_exists($file . ".process.php")) {
+                require_once($file . ".process.php");
+            }
+            if (file_exists($file . ".payform.php")) {
+                require_once($file . ".payform.php");
+            }
             break;
 
         case 'success':
             ?>
-            <form class="gerts-register" name="gerts-register" method="post" action="" id="register">
-                <div class="success">
-                    <div style="font-size: 18px;">Оплата успешно завершена <br></div>
-                    <span><a style="font-size:14px;" onclick="sendInvoice(); return false;" href="#">Скачать квитанцию об оплате в PDF ↓</a></span>
-                </div>
-            </form>
-            <form action="{*$DOMAIN_URL*}" method="post" name="send_invoice" id="send_invoice" style="display:none;">
-                <input type="hidden" value="1" name="send_flag">
-            </form>
+            <h2 class="big-success-message">Оплата успішно здійснена</h2>
             <?php
             break;
 
         case 'details':
+            $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_SESSION['instant-payments-dai']['dai_last_payment_id']);
+            $_service = PDO_DB::table_list(ShoppingCart::SERVICE_TABLE, "payment_id='{$_payment['id']}'");
+            $_service = $_service[0];
+            $_service['data'] = @json_decode($_service['data']);
             ?>
             <div class="oplata-box">
-                <div class="title_row">Реквизиты</div>
+                <div class="title_row">Реквізити</div>
                 <div class="details_row">
                     <div class="right_details">
-                        <p><span>Получатель</span> <?= $record['dst_name']; ?></p>
-                        <p><span>ЕГРПОУ (ОКПО)</span> <?= $record['dst_okpo']; ?></p>
-                        <p><span>МФО</span> <?= $record['dst_mfo']; ?></p>
-                        <p><span>Расчетный счет</span> <?= $record['dst_rcount']; ?></p>
+                        <p><span>Отримувач</span> <?= $_service['data']->dst_name; ?></p>
+                        <p><span>ЕГРПОУ (ОКПО)</span> <?= $_service['data']->dst_okpo; ?></p>
+                        <p><span>МФО</span> <?= $_service['data']->dst_mfo; ?></p>
+                        <p><span>Розрахунковий рахунок</span> <?= $_service['data']->dst_rcount; ?></p>
                     </div>
                     <div class="clr"></div>
                 </div>
-                <div class="title_row">Информация о платеже</div>
+                <div class="title_row">Інформація про платіж</div>
                 <div class="details_row">
                     <div class="right_details">
-                        <p><span style="width:270px;">Дата операции</span> <?= $record['date']; ?></p>
-                        <p><span style="width:270px;">Получатель платежа</span> <?= $record['dst_name']; ?></p>
-                        <p><span style="width:270px;">Назначение платежа</span> <?= $record['dest']; ?></p>
-                        <p><span style="width:270px;">Сумма платежа</span> <?= $record['summ_plat']; ?> грн</p>
+                        <p><span style="width:270px;">Дата операції</span> <?= date('Y.m.d', $_service['timestamp']); ?></p>
+                        <p><span style="width:270px;">Одержувач платежу</span> <?= $_service['data']->dst_name; ?></p>
+                        <p><span style="width:270px;">Призначення платежу</span> <?= $_service['data']->dest; ?></p>
+                        <p><span style="width:270px;">Сума платежа</span> <?= $_payment['summ_plat']; ?> грн</p>
                     </div>
                     <div class="clr"></div>
                 </div>
 
-                <div class="title_row">Информация о плательщике</div>
+                <div class="title_row">Інформація про платника</div>
                 <div class="details_row">
                     <div class="right_details">
-                        <p><span style="width:270px;">ФИО плательщика</span> <?= $record['vr1']; ?></p>
-                        <p><span style="width:270px;">Место проживания (регистрация)</span> <?= $record['vr2']; ?></p>
+                        <p><span style="width:270px;">ФИО плательщика</span> <?= $_service['data']->r1; ?></p>
+                        <p><span style="width:270px;">Место проживания (регистрация)</span> <?= $_service['data']->vr2; ?></p>
                     </div>
                     <div class="clr"></div>
                 </div>
-                <div class="title_row">Стоимость платежа</div>
+                <div class="title_row">Вартість платежу</div>
                 <div class="details_row">
                     <div class="right_details">
-                        <p><span style="width:270px;">Сбор за обработку платежа</span> <?= $record['summ_komis']; ?> грн</p>
-                        <p><span style="width:270px;">Всего к оплате</span> <?= $record['summ_total']; ?> грн</p>
+                        <p><span style="width:270px;">Збір за обробку платежу</span> <?= $_payment['summ_komis']; ?> грн</p>
+                        <p><span style="width:270px;">Усього до сплати</span> <?= $_payment['summ_total']; ?> грн</p>
                     </div>
                     <div class="clr"></div>
                 </div>
@@ -166,7 +146,7 @@
                     <form action="" method="post">
                         <input type="hidden" name="get_last_step" value="1">
                         <div class="blue_button registration">
-                            <button style="width:240px;" id="submitOrder" class="btn green bold">Перейти к оплате</button>
+                            <button style="width:240px;" id="submitOrder" class="btn green bold">Перейти до сплати</button>
                         </div>
                     </form>
                 </div>
@@ -295,3 +275,13 @@
     .details_row .right_details p { line-height: 22px; padding-bottom: 10px; font-size: 14px; }
     .details_row .right_details p span {color: #707780; float: left; font-weight: bold; width: 130px; }
 </style>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#protocol_date").datepicker({
+            changeMonth: true,
+            numberOfMonths: 1,
+            dateFormat:"dd.mm.yy",
+            maxDate: '0'
+        });
+    });
+</script>

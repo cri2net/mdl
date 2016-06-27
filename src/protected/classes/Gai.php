@@ -156,6 +156,14 @@ class Gai
             'r10'    => $r10,
             'idarea' => $idarea,
         ];
+        $xml_fields = ['OUTBANK', 'NAME_OWNER_BANK', 'NAME_BANK', 'NAME_PLAT', 'DST_NAME', 'DST_MFO', 'DST_OKPO', 'DST_RCOUNT', 'DST_NAME_BANK', 'DEST'];
+
+        for ($i=0; $i < count($xml_fields); $i++) {
+            $field = $xml_fields[$i];
+            $var = '_' . strtolower($field);
+            $$var = $xml->ROW->$field . '';
+            $data[strtolower($field)] = $$var;
+        }
 
         $service = [
             'payment_id' => $payment['id'],
