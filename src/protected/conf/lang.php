@@ -51,7 +51,7 @@ $DAYS_OF_WEEK = [
         2 => ['short' => 'вт', 'full' => 'Вівторок',  'is_holiday' => false],
         3 => ['short' => 'ср', 'full' => 'Середа',    'is_holiday' => false],
         4 => ['short' => 'чт', 'full' => 'Четвер',    'is_holiday' => false],
-        5 => ['short' => 'пт', 'full' => 'П\'ятниця', 'is_holiday' => false],
+        5 => ['short' => 'пт', 'full' => 'П’ятниця',  'is_holiday' => false],
         6 => ['short' => 'сб', 'full' => 'Субота',    'is_holiday' => true],
     ],
     'ru' => [
