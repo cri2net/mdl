@@ -5,7 +5,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
 
 require_once(__DIR__ . '/../config.php');
 ShoppingCart::cron();
-CronTasts::sendFeedbackAnswer();
+CronTasks::sendFeedbackAnswer();
 
 try {
     $EmailCron = new EmailCron();
@@ -16,5 +16,5 @@ try {
 
 if (date('i') % 5 == 0) {
     // every 5 minutes  
-    CronTasts::findBrokenEmails();
+    CronTasks::findBrokenEmails();
 }

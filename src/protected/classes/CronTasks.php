@@ -1,5 +1,5 @@
 <?php
-class CronTasts
+class CronTasks
 {
     public static function findBrokenEmails()
     {
