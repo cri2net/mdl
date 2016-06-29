@@ -194,23 +194,4 @@ class Gai
     {
         return PDO_DB::row_by_id(ShoppingCart::TABLE, str_replace('gioc-', '', $id));
     }
-    
-    public function getPDF($id, $is_first = false)
-    {
-        $record = self::get_transaction($id);
-
-        if (!$record) {
-            return;
-        }
-
-        if ($is_first) {
-            $url = $this->ppp_url_pdf_first . '&id_p=' . $record['id_pack'];
-            return Http::httpGet($url);
-        }
-
-        $first_pdf  = Http::httpGet($this->ppp_url_pdf     . '&id_k=' . $record['id_plat_klient'] . '&num_group=' . $record['num_kvit']);
-        $second_pdf = Http::httpGet($this->ppp_history_url . '&id_k=' . $record['id_plat_klient'] . '&num_group=' . $record['num_kvit']);
-
-        return (strlen($first_pdf) > strlen($second_pdf)) ? $first_pdf : $second_pdf;
-    }
 }

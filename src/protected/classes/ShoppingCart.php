@@ -573,13 +573,7 @@ class ShoppingCart
             return;
         }
 
-        if ($payment['type'] == 'gai') {
-            $Gai = new Gai;
-            $pdf = $Gai->getPDF($payment['id'], true);
-        } else {
-            $pdf = self::getPDF($payment['id'], true);
-        }
-
+        $pdf = self::getPDF($payment['id'], true);
         $user = User::getUserById($payment['user_id']);
 
         if (!$pdf || !$user) {
