@@ -356,13 +356,29 @@ class ShoppingCart
             return;
         }
 
-        switch ($payment['type']) {
-            case 'komdebt':
+        $url = API_URL . self::REPORT_BASE_URL;
 
+        switch ($payment['type']) {
+            case 'gai':
+                Gai::pppGetCashierByKassId($login, $password);
+
+                $report = ($payment['status'] == 'success') ? 'prov_gai.rep' : 'pacq50_gai.rep';
+                if (self::useBalancer()) {
+                    $report = ($payment['status'] == 'success') ? '/site_api/prov_gai.rep' : '/site_api/pacq50_gai.rep';
+                }
+                break;
+
+            case 'komdebt':
                 $report = ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep';
                 if (self::useBalancer()) {
                     $report = ($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep';
                 }
+                break;
+        }
+
+        switch ($payment['type']) {
+            case 'gai':
+            case 'komdebt':
 
                 switch ($payment['processing']) {
 
@@ -376,12 +392,15 @@ class ShoppingCart
                         $actual_date = $payment['processing_data']['dates'][count($payment['processing_data']['dates']) - 1];
                         $actual_upc_data = (array)$payment['processing_data']['requests'][$actual_date];
 
-                        $url = API_URL . self::REPORT_BASE_URL;
-
                         $url .= '?report='       . rawurlencode($report);
                         $url .= '&destype='      . rawurlencode('Cache');
                         $url .= '&Desformat='    . rawurlencode('xml');
                         $url .= '&cmdkey='       . rawurlencode('rep');
+
+                        if ($payment['type'] == 'gai') {
+                            $url .= '&login=' . $login;
+                        }
+
                         $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
                         $url .= '&p1='           . rawurlencode($actual_upc_data['MerchantID']);
 
@@ -554,7 +573,13 @@ class ShoppingCart
             return;
         }
 
-        $pdf = self::getPDF($payment['id'], true);
+        if ($payment['type'] == 'gai') {
+            $Gai = new Gai;
+            $pdf = $Gai->getPDF($payment['id'], true);
+        } else {
+            $pdf = self::getPDF($payment['id'], true);
+        }
+
         $user = User::getUserById($payment['user_id']);
 
         if (!$pdf || !$user) {

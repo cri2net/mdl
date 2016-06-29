@@ -5,8 +5,6 @@ class Gai
     public $bank;
 
     private $ppp_url           = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=site_api/pnew_gai.rep&destype=Cache&Desformat=xml&cmdkey=rep';
-    private $ppp_url_prov      = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=site_api/prov_gai.rep&destype=Cache&Desformat=xml&cmdkey=rep';
-    private $ppp_url_error     = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=site_api/pacq50_gai.rep&destype=Cache&Desformat=xml&cmdkey=rep';
     private $ppp_url_pdf       = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep';
     private $ppp_history_url   = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep';
     private $ppp_url_pdf_first = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep';
@@ -19,7 +17,7 @@ class Gai
     public static function getRegions()
     {
         return [
-            ['NAME_STATE' => 'Одеська область',           'NAME_FIRM' => 'ГУК в Од.обл./',                 'ID_AREA' => 1],
+            ['NAME_STATE' => 'Київська область',          'NAME_FIRM' => 'ГУК у Київ.обл./Київ.обл./',     'ID_AREA' => 233],
             ['NAME_STATE' => 'Вінницька область',         'NAME_FIRM' => 'ГУК у Вінницькій обл./Він.обл/', 'ID_AREA' => 72],
             ['NAME_STATE' => 'Волинська область',         'NAME_FIRM' => 'ГУК у Волин.обл/Волинська.обл/', 'ID_AREA' => 100],
             ['NAME_STATE' => 'Дніпропетровська область',  'NAME_FIRM' => 'ГУК у Днiпр-кiй обл/Дн-ка об/',  'ID_AREA' => 117],
@@ -28,11 +26,11 @@ class Gai
             ['NAME_STATE' => 'Закарпатська область',      'NAME_FIRM' => 'ГУК у Закарп.обл/Закарп. обл./', 'ID_AREA' => 183],
             ['NAME_STATE' => 'Запорізька область',        'NAME_FIRM' => 'ГУК у Зап.обл./Зап.обл./',       'ID_AREA' => 197],
             ['NAME_STATE' => 'Івано-Франківська область', 'NAME_FIRM' => 'ГУК в Iв.-Франк.об/Iв.-Фран.о/', 'ID_AREA' => 218],
-            ['NAME_STATE' => 'Київська область',          'NAME_FIRM' => 'ГУК у Київ.обл./Київ.обл./',     'ID_AREA' => 233],
             ['NAME_STATE' => 'Кіровоградська область',    'NAME_FIRM' => 'ГУК у Кіров.обл./Кіров.обл./',   'ID_AREA' => 259],
             ['NAME_STATE' => 'Луганська область',         'NAME_FIRM' => 'ГУК у Луг.обл./Луганська обл./', 'ID_AREA' => 281],
             ['NAME_STATE' => 'Львівська область',         'NAME_FIRM' => 'ГУК у Львiв. обл./Львів. обл/',  'ID_AREA' => 300],
             ['NAME_STATE' => 'Миколаївська область',      'NAME_FIRM' => 'Миколаївське ГУК/Микол.обл./',   'ID_AREA' => 321],
+            ['NAME_STATE' => 'Одеська область',           'NAME_FIRM' => 'ГУК в Од.обл./',                 'ID_AREA' => 1],
             ['NAME_STATE' => 'Полтавська область',        'NAME_FIRM' => 'ГУК Полтав.обл/Полтавська/',     'ID_AREA' => 341],
             ['NAME_STATE' => 'Рівненська область',        'NAME_FIRM' => 'ГУК у Рівнен.обл./Рівнен.обл./', 'ID_AREA' => 367],
             ['NAME_STATE' => 'Сумська область',           'NAME_FIRM' => 'ГУК у Сумській обл/Сумська обл/','ID_AREA' => 384],
@@ -53,14 +51,14 @@ class Gai
      * 
      * @return void
      */
-    public function pppGetCashierByKassId(&$login, &$password)
+    public static function pppGetCashierByKassId(&$login, &$password)
     {
-        switch ($this->bank) {
-            case 'tas':
+        // switch ($this->bank) {
+        //     case 'tas':
                 $login    = 'GIOCKIEVUA';
                 $password = '7D107006F752860E6FAEBD84156A676B8852C439';
-                break;
-        }
+                // break;
+        // }
     }
 
     /**
@@ -179,7 +177,7 @@ class Gai
 
     public function check_order($id)
     {
-        $transaction = $this->get_transaction($id);
+        $transaction = self::get_transaction($id);
 
         if (!$transaction || ($transaction['status'] != 0)) {
             return;
@@ -192,153 +190,14 @@ class Gai
         }
     }
 
-    public function get_transaction($id)
+    public static function get_transaction($id)
     {
         return PDO_DB::row_by_id(ShoppingCart::TABLE, str_replace('gioc-', '', $id));
     }
     
-    public function set_transaction_status($status_ok, $id, $MerchantID, $TerminalID, $TotalAmount, $XID, $PurchaseTime, $Currency, $SD, $ApprovalCode, $Rrn, $ProxyPan, $TranCode, $Signature)
-    {
-        $transaction = $this->get_transaction($id);
-        if (!$transaction) {
-            return;
-        }
-        
-        $url = ($status_ok) ? $this->ppp_url_prov : $this->ppp_url_error;
-        $TotalAmount = str_replace('.', ',', $TotalAmount);
-
-        self::pppGetCashierByKassId($login, $password);
-
-        $url .= '&login=' . $login;
-        $url .= '&idplatklient=' . $transaction['id_plat_klient'];
-        $url .= '&p1=' . rawurlencode(iconv('UTF-8', 'CP1251', $MerchantID));
-        $url .= '&p2=' . rawurlencode(iconv('UTF-8', 'CP1251', $TerminalID));
-        $url .= '&p3=' . rawurlencode(iconv('UTF-8', 'CP1251', $TotalAmount));
-        $url .= '&p4=' . rawurlencode(iconv('UTF-8', 'CP1251', $Currency));
-        $url .= '&p5=' . rawurlencode(iconv('UTF-8', 'CP1251', $PurchaseTime));
-        $url .= '&p6=' . rawurlencode(iconv('UTF-8', 'CP1251', $transaction['id'])); // ORDERID
-        $url .= '&p7=' . rawurlencode(iconv('UTF-8', 'CP1251', $XID));
-        $url .= '&p8=' . rawurlencode(iconv('UTF-8', 'CP1251', $SD));
-        $url .= '&p9=' . rawurlencode(iconv('UTF-8', 'CP1251', $ApprovalCode));
-        $url .= '&p10=' . rawurlencode(iconv('UTF-8', 'CP1251', $Rrn));
-        $url .= '&p11=' . rawurlencode(iconv('UTF-8', 'CP1251', $ProxyPan));
-        $url .= '&p12=' . rawurlencode(iconv('UTF-8', 'CP1251', $TranCode));
-        $url .= '&p13=' . rawurlencode(iconv('UTF-8', 'CP1251', $Signature));
-        $url .= '&p14=' . 0; // DELAY
-
-
-        $xml_string = Http::httpGet($url);
-        $_xml_answer = UPC::escape($xml_string);
-        $_xml_url = UPC::escape($url);
-
-        $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
-        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
-        $_xml = @simplexml_load_string($xml_string);
-        
-        if ($_xml === false) {
-            exit("Invalid XML: ".$xml_string);
-        }
-
-        $err = $_xml->ROW->ERR.'';
-        $append = '';
-        $ppp_error = false;
-
-        if ($err != '0') {
-            if ($err == '7') {
-                // платёж уже проведён
-                $query = "UPDATE $this->table SET
-                            purchasetime='$PurchaseTime',
-                            merchantid='$MerchantID',
-                            terminalid='$TerminalID',
-                            totalamount='$TotalAmount',
-                            status='1',
-                            xid='$XID',
-                            approvalcode='$ApprovalCode',
-                            rrn='$Rrn',
-                            proxypan='$ProxyPan',
-                            trancode='$TranCode'
-                        WHERE id='{$transaction['id']}'
-                        LIMIT 1
-                ";
-                $DB->execute($query);
-
-                // данные обновили, но платёж уже проведён, больше делать нечего
-                return;
-            } else {
-                $ppp_error = true;
-                echo UPC::get_error($err);
-            }
-        }
-
-        $NUM_KVIT = UPC::escape($_xml->ROW->NUM_KVIT.'');
-        $DATE_ACQ = UPC::escape($_xml->ROW->DATE_ACQ.'');
-
-        $_acq = UPC::escape($_xml->ROW->ACQ.'');
-        if(strlen($_acq) > 0)
-            $append .= " acq='$_acq', ";
-       
-        if ($ppp_error) {
-            $append .= " status='3', ";
-        } else {
-            $append .= ($status_ok) ? " status='1', " : " status='2', ";
-        }
-
-        if (!$ppp_error) {
-            $append .= " num_kvit='$NUM_KVIT', date_acq='$DATE_ACQ', ";
-        }
-
-        $query = "UPDATE $this->table SET
-                    purchasetime='$PurchaseTime',
-                    merchantid='$MerchantID',
-                    terminalid='$TerminalID',
-                    totalamount='$TotalAmount',
-                    $append
-                    xid='$XID',
-                    approvalcode='$ApprovalCode',
-                    rrn='$Rrn',
-                    proxypan='$ProxyPan',
-                    trancode='$TranCode',
-                    xml_status_answer='$_xml_answer',
-                    xml_status_url='$_xml_url'
-                WHERE id='{$transaction['id']}'
-                LIMIT 1
-        ";
-        $DB->execute($query);
-
-        if ($status_ok) {
-            $this->send_pdf($id);
-        }
-    }
-    
-    public function send_pdf($id)
-    {
-        $record = $this->get_transaction($id);
-        if (!$record) {
-            return;
-        }
-
-        $user = User::getUserById($record['user_id']);
-        if (!$user) {
-            return;
-        }
-
-        $pdf = $this->getPDF($id, true);
-        if (!$pdf) {
-            return;
-        }
-
-        $email = new Email();
-        $email->addStringAttachment($pdf, "Receipt-{$record['id']}.pdf");
-        $success = $email->send(
-            [$user['email'], "{$user['name']} {$user['fathername']}"],
-            'Квитанція про сплату №' . $record['id'],
-            ''
-        );
-    }
-
     public function getPDF($id, $is_first = false)
     {
-        $record = $this->get_transaction($id);
+        $record = self::get_transaction($id);
 
         if (!$record) {
             return;

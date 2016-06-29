@@ -70,7 +70,7 @@ try {
     if ($record['processing'] == 'tas') {
         $TasLink = new TasLink('budget');
         $tas_session_id = $TasLink->initSession($record['id']);
-        $TasLink->makePayment($record['summ_plat'] / 100, $record['summ_komis'] / 100);
+        $TasLink->makePayment($record['summ_plat'], $record['summ_komis']);
     }
 
     // суммы в копейках, переводим в гривны:

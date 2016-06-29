@@ -57,6 +57,8 @@
             $payment_id = $_payment['id'];
             
             if ($_payment) {
+                $arr = ['go_to_payment_time' => microtime(true)];
+                PDO_DB::update($arr, ShoppingCart::TABLE, $id);
                 $_SESSION['instant-payments-dai']['step'] = 'frame';
             } else {
                 throw new Exception(ERROR_OLD_REQUEST);
@@ -90,6 +92,8 @@
             if (file_exists($file . ".payform.php")) {
                 require_once($file . ".payform.php");
             }
+
+            $_SESSION['instant-payments-dai']['step'] = 'region';
             break;
 
         case 'success':
@@ -104,52 +108,122 @@
             $_service = $_service[0];
             $_service['data'] = @json_decode($_service['data']);
             ?>
-            <div class="oplata-box">
-                <div class="title_row">Реквізити</div>
-                <div class="details_row">
-                    <div class="right_details">
-                        <p><span>Отримувач</span> <?= $_service['data']->dst_name; ?></p>
-                        <p><span>ЕГРПОУ (ОКПО)</span> <?= $_service['data']->dst_okpo; ?></p>
-                        <p><span>МФО</span> <?= $_service['data']->dst_mfo; ?></p>
-                        <p><span>Розрахунковий рахунок</span> <?= $_service['data']->dst_rcount; ?></p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-                <div class="title_row">Інформація про платіж</div>
-                <div class="details_row">
-                    <div class="right_details">
-                        <p><span style="width:270px;">Дата операції</span> <?= date('Y.m.d', $_service['timestamp']); ?></p>
-                        <p><span style="width:270px;">Одержувач платежу</span> <?= $_service['data']->dst_name; ?></p>
-                        <p><span style="width:270px;">Призначення платежу</span> <?= $_service['data']->dest; ?></p>
-                        <p><span style="width:270px;">Сума платежа</span> <?= $_payment['summ_plat']; ?> грн</p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-
-                <div class="title_row">Інформація про платника</div>
-                <div class="details_row">
-                    <div class="right_details">
-                        <p><span style="width:270px;">ФИО плательщика</span> <?= $_service['data']->r1; ?></p>
-                        <p><span style="width:270px;">Место проживания (регистрация)</span> <?= $_service['data']->vr2; ?></p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-                <div class="title_row">Вартість платежу</div>
-                <div class="details_row">
-                    <div class="right_details">
-                        <p><span style="width:270px;">Збір за обробку платежу</span> <?= $_payment['summ_komis']; ?> грн</p>
-                        <p><span style="width:270px;">Усього до сплати</span> <?= $_payment['summ_total']; ?> грн</p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-                <div style="text-align:center;">
-                    <form action="" method="post">
-                        <input type="hidden" name="get_last_step" value="1">
-                        <div class="blue_button registration">
-                            <button style="width:240px;" id="submitOrder" class="btn green bold">Перейти до сплати</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="real-full-width-block">
+                <table class="full-width-table datailbill-table no-border">
+                    <thead>
+                        <tr>
+                            <th colspan="5" class="first">Реквізити</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="item-row even">
+                            <td class="first" colspan="1">Отримувач</td>
+                            <td colspan="4"><?= $_service['data']->dst_name; ?></td>
+                        </tr>
+                        <tr class="item-row odd">
+                            <td class="first" colspan="1">ЄДРПОУ (ЗКПО)</td>
+                            <td colspan="4"><?= $_service['data']->dst_okpo; ?></td>
+                        </tr>
+                        <tr class="item-row even">
+                            <td class="first" colspan="1">МФО</td>
+                            <td colspan="4"><?= $_service['data']->dst_mfo; ?></td>
+                        </tr>
+                        <tr class="item-row odd">
+                            <td class="first" colspan="1">Розрахунковий рахунок</td>
+                            <td colspan="4"><?= $_service['data']->dst_rcount; ?></td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="5" class="first">Інформація про платіж</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="item-row even">
+                            <td class="first" colspan="1">Дата операції</td>
+                            <td colspan="4">
+                                <span class="date-day"><?= getUkraineDate('j m Y', $_service['timestamp']); ?></span>
+                                <span class="date-time"><?= getUkraineDate('H:i:s', $_service['timestamp']); ?></span>
+                            </td>
+                        </tr>
+                        <tr class="item-row odd">
+                            <td class="first" colspan="1">Одержувач платежу</td>
+                            <td colspan="4"><?= $_service['data']->dst_name; ?></td>
+                        </tr>
+                        <tr class="item-row even">
+                            <td class="first" colspan="1">Призначення платежу</td>
+                            <td colspan="4"><?= $_service['data']->dest; ?></td>
+                        </tr>
+                        <tr class="item-row odd">
+                            <td class="first" colspan="1">Сума платежу</td>
+                            <td colspan="4">
+                                <?php
+                                    $summ = explode('.', number_format($_payment['summ_plat'], 2));
+                                ?>
+                                <span class="item-summ">
+                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                </span>
+                                грн
+                            </td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="5" class="first">Інформація про платника</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="item-row even">
+                            <td class="first" colspan="1">ПІБ</td>
+                            <td colspan="4"><?= htmlspecialchars($_service['data']->r1); ?></td>
+                        </tr>
+                        <tr class="item-row odd">
+                            <td class="first" colspan="1">Місце проживання</td>
+                            <td colspan="4"><?= htmlspecialchars($_service['data']->r2); ?></td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="5" class="first">Вартість платежу</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="item-row even">
+                            <td class="first" colspan="1">Збір за обробку платежу</td>
+                            <td colspan="4">
+                                <?php
+                                    $summ = explode('.', number_format($_payment['summ_komis'], 2));
+                                ?>
+                                <span class="item-summ">
+                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                </span>
+                                грн
+                            </td>
+                        </tr>
+                        <tr class="item-row odd">
+                            <td class="first" colspan="1">Усього до сплати</td>
+                            <td colspan="4">
+                                <?php
+                                    $summ = explode('.', number_format($_payment['summ_total'], 2));
+                                ?>
+                                <span class="item-summ">
+                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                </span>
+                                грн
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-center" colspan="5">
+                                <form action="" method="post">
+                                    <input type="hidden" name="get_last_step" value="1">
+                                    <div class="blue_button registration">
+                                        <button style="width:240px;" id="submitOrder" class="btn green bold">Перейти до сплати</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <?php
             break;
