@@ -45,6 +45,10 @@
                                     case 'komdebt':
                                         echo 'Комунальні послуги';
                                         break;
+
+                                    case 'gai':
+                                        echo 'Штрафи за порушення ПДР';
+                                        break;
                                 }
                             ?>
                         </td>
