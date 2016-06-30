@@ -11,19 +11,20 @@ session_start();
 
 date_default_timezone_set("Europe/Kiev");
 define('ROOT', dirname(preg_replace('/\\\\/', '/', __DIR__ . '../')));
+define('PROTECTED_DIR', ROOT . '/protected');
 
-@ini_set('error_log', ROOT . '/protected/logs/php-errors.log');
+@ini_set('error_log', PROTECTED_DIR . '/logs/php-errors.log');
 
 if (!file_exists(ROOT . "/protected/conf/db.conf.php")) {
     die('Please create file /protected/conf/db.conf.php as copy of /protected/conf/db.conf.sample.php');
 }
 
-require_once(ROOT . "/protected/conf/db.conf.php");
-require_once(ROOT . "/protected/conf/errors.php");
-require_once(ROOT . "/protected/conf/lang.php");
-require_once(ROOT . "/protected/lib/func.lib.php");
-require_once(ROOT . "/protected/vendor/autoload.php");
-require_once(ROOT . "/protected/conf/browser.php");
+require_once(PROTECTED_DIR . "/conf/db.conf.php");
+require_once(PROTECTED_DIR . "/conf/errors.php");
+require_once(PROTECTED_DIR . "/conf/lang.php");
+require_once(PROTECTED_DIR . "/lib/func.lib.php");
+require_once(PROTECTED_DIR . "/vendor/autoload.php");
+require_once(PROTECTED_DIR . "/conf/browser.php");
 
 switch (USER_REAL_IP) {
     case '127.0.0.1':
@@ -58,12 +59,12 @@ if (Authorization::isLogin()) {
     $__userData = User::getUserById(Authorization::getLoggedUserId());
 }
 
-$router = new Routing(ROOT . '/protected/conf/routing.xml');
+$router = new Routing(PROTECTED_DIR . '/conf/routing.xml');
 $route_path = (strpos($_SERVER['REQUEST_URI'], '?') !== false)
     ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
     : $_SERVER['REQUEST_URI'];
 $__route_result = $router->get($route_path);
 
-require_once(ROOT . "/protected/headers/location.php");
-require_once(ROOT . "/protected/headers/x-frame-options.php");
-// require_once(ROOT."/protected/headers/content-security-policy.php");
+require_once(PROTECTED_DIR . "/headers/location.php");
+require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
+// require_once(PROTECTED_DIR."/headers/content-security-policy.php");

@@ -34,7 +34,7 @@
                 throw new Exception(ERROR_OLD_REQUEST);
             }
 
-            $record = $Gai->get_transaction($_SESSION['instant-payments-dai']['record_id']);
+            $record = PDO_DB::row_by_id(ShoppingCart::TABLE, str_replace('gioc-', '', $_SESSION['instant-payments-dai']['record_id']));
 
             if ($record['status'] == 'new') {
                 // оплата ещё не завершена
@@ -102,125 +102,8 @@
             $_service = PDO_DB::table_list(ShoppingCart::SERVICE_TABLE, "payment_id='{$_payment['id']}'");
             $_service = $_service[0];
             $_service['data'] = @json_decode($_service['data']);
-            ?>
-            <div class="real-full-width-block">
-                <table class="full-width-table datailbill-table no-border">
-                    <thead>
-                        <tr>
-                            <th colspan="5" class="first">Реквізити</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="item-row even">
-                            <td class="first" colspan="1">Отримувач</td>
-                            <td colspan="4"><?= $_service['data']->dst_name; ?></td>
-                        </tr>
-                        <tr class="item-row odd">
-                            <td class="first" colspan="1">ЄДРПОУ (ЗКПО)</td>
-                            <td colspan="4"><?= $_service['data']->dst_okpo; ?></td>
-                        </tr>
-                        <tr class="item-row even">
-                            <td class="first" colspan="1">МФО</td>
-                            <td colspan="4"><?= $_service['data']->dst_mfo; ?></td>
-                        </tr>
-                        <tr class="item-row odd">
-                            <td class="first" colspan="1">Розрахунковий рахунок</td>
-                            <td colspan="4"><?= $_service['data']->dst_rcount; ?></td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th colspan="5" class="first">Інформація про платіж</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="item-row even">
-                            <td class="first" colspan="1">Дата операції</td>
-                            <td colspan="4">
-                                <span class="date-day"><?= getUkraineDate('j m Y', $_service['timestamp']); ?></span>
-                                <span class="date-time"><?= getUkraineDate('H:i:s', $_service['timestamp']); ?></span>
-                            </td>
-                        </tr>
-                        <tr class="item-row odd">
-                            <td class="first" colspan="1">Одержувач платежу</td>
-                            <td colspan="4"><?= $_service['data']->dst_name; ?></td>
-                        </tr>
-                        <tr class="item-row even">
-                            <td class="first" colspan="1">Призначення платежу</td>
-                            <td colspan="4"><?= $_service['data']->dest; ?></td>
-                        </tr>
-                        <tr class="item-row odd">
-                            <td class="first" colspan="1">Сума платежу</td>
-                            <td colspan="4">
-                                <?php
-                                    $summ = explode('.', number_format($_payment['summ_plat'], 2));
-                                ?>
-                                <span class="item-summ">
-                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                </span>
-                                грн
-                            </td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th colspan="5" class="first">Інформація про платника</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="item-row even">
-                            <td class="first" colspan="1">ПІБ</td>
-                            <td colspan="4"><?= htmlspecialchars($_service['data']->r1); ?></td>
-                        </tr>
-                        <tr class="item-row odd">
-                            <td class="first" colspan="1">Місце проживання</td>
-                            <td colspan="4"><?= htmlspecialchars($_service['data']->r2); ?></td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th colspan="5" class="first">Вартість платежу</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="item-row even">
-                            <td class="first" colspan="1">Збір за обробку платежу</td>
-                            <td colspan="4">
-                                <?php
-                                    $summ = explode('.', number_format($_payment['summ_komis'], 2));
-                                ?>
-                                <span class="item-summ">
-                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                </span>
-                                грн
-                            </td>
-                        </tr>
-                        <tr class="item-row odd">
-                            <td class="first" colspan="1">Усього до сплати</td>
-                            <td colspan="4">
-                                <?php
-                                    $summ = explode('.', number_format($_payment['summ_total'], 2));
-                                ?>
-                                <span class="item-summ">
-                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                </span>
-                                грн
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="align-center" colspan="5">
-                                <form action="" method="post">
-                                    <input type="hidden" name="get_last_step" value="1">
-                                    <div class="blue_button registration">
-                                        <button style="width:240px;" id="submitOrder" class="btn green bold">Перейти до сплати</button>
-                                    </div>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <?php
+            
+            require_once(PROTECTED_DIR . '/scripts/cabinet/instant-payments/_payment_details_step.php');
             break;
 
         case 'region':
@@ -330,20 +213,12 @@
                 </div>
             </form>
             <style>
-                #submitOrder:disabled { cursor:default; }
+                #submitOrder:disabled { cursor: default; }
             </style>
             <?php
             break;
     }
 ?>
-<style type="text/css">
-    .details_row { padding-top:10px; padding-left:15px; }
-    .details_row .right_details { float:left; }
-    .clr { clear: both; }
-    .title_row {background-color: #ededed; border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6; color: #21234b; font-size: 16px; height: 38px; line-height: 38px; padding-left: 17px; }
-    .details_row .right_details p { line-height: 22px; padding-bottom: 10px; font-size: 14px; }
-    .details_row .right_details p span {color: #707780; float: left; font-weight: bold; width: 130px; }
-</style>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#protocol_date").datepicker({

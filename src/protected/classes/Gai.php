@@ -174,24 +174,4 @@ class Gai
 
         return $payment;
     }
-
-    public function check_order($id)
-    {
-        $transaction = self::get_transaction($id);
-
-        if (!$transaction || ($transaction['status'] != 0)) {
-            return;
-        }
-
-        if ($transaction['processing'] == 'tas') {
-            $TasLink = new TasLink('budget');
-            $TasLink->checkStatus('g' . $id);
-            return;
-        }
-    }
-
-    public static function get_transaction($id)
-    {
-        return PDO_DB::row_by_id(ShoppingCart::TABLE, str_replace('gioc-', '', $id));
-    }
 }
