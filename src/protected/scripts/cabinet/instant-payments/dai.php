@@ -2,11 +2,6 @@
 <br><br>
 
 <?php
-    if (!Authorization::isLogin()) {
-        define('SHOW_NEED_AUTH_MESSAGE', true);
-        return require_once(ROOT . '/protected/pages/cabinet/login.php');
-    }
-
     $regions = Gai::getRegions();
 
     if (is_array($_SESSION['instant-payments-dai']['columns'])) {
@@ -271,7 +266,7 @@
                     <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
                         <label>
                             Сума штрафу, грн <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                            <input onblur="registration_ckeck_empty_fileld(this);" maxlength="8" value="<?= htmlspecialchars($protocol_summ, ENT_QUOTES); ?>" type="text" name="protocol_summ" class="txt" required="required">
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($protocol_summ, ENT_QUOTES); ?>" type="text" name="protocol_summ" class="txt" required="required">
                         </label>
                         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
                     </div>
@@ -290,7 +285,7 @@
                     <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
                         <label>
                             Прізвище <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                            <input onblur="registration_ckeck_empty_fileld(this);" maxlength="3" value="<?= htmlspecialchars($penalty_user_lastname, ENT_QUOTES); ?>" type="text" name="penalty_user_lastname" class="txt" required="required">
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_lastname, ENT_QUOTES); ?>" type="text" name="penalty_user_lastname" class="txt" required="required">
                         </label>
                         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
                     </div>
@@ -298,7 +293,7 @@
                     <div class="field-group" style="display: inline-block;">
                         <label>
                             Ім’я <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                            <input onblur="registration_ckeck_empty_fileld(this);" maxlength="3" value="<?= htmlspecialchars($penalty_user_name, ENT_QUOTES); ?>" type="text" name="penalty_user_name" class="txt" required="required">
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_name, ENT_QUOTES); ?>" type="text" name="penalty_user_name" class="txt" required="required">
                         </label>
                         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
                     </div>
@@ -307,7 +302,7 @@
                     <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
                         <label>
                             По-батькові <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                            <input onblur="registration_ckeck_empty_fileld(this);" maxlength="8" value="<?= htmlspecialchars($penalty_user_fathername, ENT_QUOTES); ?>" type="text" name="penalty_user_fathername" class="txt" required="required">
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_fathername, ENT_QUOTES); ?>" type="text" name="penalty_user_fathername" class="txt" required="required">
                         </label>
                         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
                     </div>

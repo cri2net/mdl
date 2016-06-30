@@ -1,10 +1,6 @@
 <?php
 try {
 
-    if (!Authorization::isLogin()) {
-        throw new Exception(ERROR_USER_NOT_LOGGED_IN);
-    }
-
     $regions = Gai::getRegions();
     $Gai = new Gai();
 
@@ -57,8 +53,25 @@ try {
 
     $_SESSION['instant-payments-dai']['step'] = 'details';
 
+    if (!Authorization::isLogin()) {
+        $user = User::getUserByEmail($_SESSION['instant-payments-dai']['columns']['penalty_user_email']);
+
+        if ($user !== null) {
+            $user_id = $user['id'];
+        } else {
+            $user_id = User::registerFromPayment(
+                $_SESSION['instant-payments-dai']['columns']['penalty_user_email'],
+                $_SESSION['instant-payments-dai']['columns']['penalty_user_lastname'],
+                $_SESSION['instant-payments-dai']['columns']['penalty_user_name'],
+                $_SESSION['instant-payments-dai']['columns']['penalty_user_fathername']
+            );
+        }
+
+    } else {
+        $user_id = Authorization::getLoggedUserId();
+    }
+
     $fio = "$penalty_user_lastname $penalty_user_name $penalty_user_fathername";
-    $user_id = Authorization::getLoggedUserId();
     $record = $Gai->set_request_to_ppp($error_str, $region, $protocol_summ, $user_id, $fio, $penalty_user_address, '', '', '', '', $postanova_series, $postanova_number, '', $protocol_date);
     
     if ($record == false) {
