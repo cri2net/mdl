@@ -2,21 +2,20 @@
 <br><br>
 
 <?php
-
-    if (is_array($_SESSION['instant-payments-kinders']['columns'])) {
-        foreach ($_SESSION['instant-payments-kinders']['columns'] as $key => $value) {
-            $$key = $value;
-        }
-    }
-
-
-    if (!isset($_SESSION['instant-payments-kinders']['step'])) {
-        $_SESSION['instant-payments-kinders']['step'] = 'region';
-    }
-
     try {
+        $Kinders = new Kinders();
 
+        if (is_array($_SESSION['instant-payments-kinders']['columns'])) {
+            foreach ($_SESSION['instant-payments-kinders']['columns'] as $key => $value) {
+                $$key = $value;
+            }
+        }
 
+        if (!isset($_SESSION['instant-payments-kinders']['step'])) {
+            $_SESSION['instant-payments-kinders']['step'] = 'region';
+        }
+
+        $districts = Kinders::getFirmeList();
 
 
     } catch (Exception $e) {
@@ -27,7 +26,7 @@
 
     if (isset($_SESSION['instant-payments-kinders']['status']) && !$_SESSION['instant-payments-kinders']['status']) {
         ?>
-        <h2 class="big-error-message">Під час надсилання повідомлення виникла помилка:</h2>
+        <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
         <div class="error-description"><?= $_SESSION['instant-payments-kinders']['error']['text']; ?></div>
         <?php
         unset($_SESSION['instant-payments-kinders']['status']);
@@ -66,135 +65,137 @@
 
         case 'region':
         default:
+            ?>
+            <form class="feedback-form" method="post" action="<?= BASE_URL; ?>/post/cabinet/instant-payments/kindergarten/">
+                <div style="display: inline-block; float: none; width: 100%;">
+                    <div class="field-group" style="display: inline-block;">
+                        <label>
+                            Район міста <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <select class="txt" required="required" id="id_district" name="id_district" onchange="kinders_district_onchange(this);" onblur="registration_ckeck_empty_fileld(this);">
+                                <option value="">-- Будь ласка, оберіть --</option>
+                                <?php
+                                    foreach ($districts as $item) {
+                                        ?><option <?= ($id_district == $item['id']) ? 'selected="selected"' : ''; ?> value="<?= $item['id']; ?>"><?= htmlspecialchars($item['name']); ?></option> <?php
+                                    }
+                                ?>
+                            </select>
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                </div>
+
+                <div style="display: inline-block; float: none; width: 100%;">
+                    <div class="field-group" style="display: inline-block;">
+                        <input type="hidden" id="final_kindergarten" name="kindergarten" value="<?= $R101; ?>" />
+                        <label>
+                            Установа <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <?php
+                                foreach ($districts as $item) {
+                                    ?>
+                                    <select class="txt kindergarten_select" required="required" onchange="$('#final_kindergarten').val($(this).val()).change();" onblur="registration_ckeck_empty_fileld(this);" style="display:<?= ($id_district == $item['id']) ? 'inline-block' : 'none'; ?>;" id="kindergarten_<?= $item['id']; ?>">
+                                        <option value="0">-- Будь ласка, оберіть --</option>
+                                        <?php
+                                            $list = Kinders::getInstitutionList($item['id']);
+                                            
+                                            foreach ($list as $list_key => $list_item) {
+                                                ?>
+                                                <option <?= ($R101 == $list_item['R101']) ? 'selected="selected"' : ''; ?> value="<?= $list_item['R101']; ?>"><?= $list_item['NAME_SAD']; ?></option>
+                                                <?php
+                                            }
+                                        ?>
+                                    </select>
+                                    <?php
+                                }
+                            ?>
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                </div>
+
+                <div style="display: inline-block; float: none; width: 100%;">
+                    <div class="field-group" style="display: inline-block;">
+                        <label>
+                            Група / клас <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <select class="txt" required="required" id="kindergarten_class_select" name="child_class" onblur="registration_ckeck_empty_fileld(this);">
+                                <option value="">-- Будь ласка, оберіть --</option>
+                            </select>
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                </div>
+
+                <div style="display: inline-block; float: none; width: 100%;">
+                    <div title="введіть перші три літери прізвища" class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
+                        <label>
+                            ПІБ учня <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <input onblur="registration_ckeck_empty_fileld(this);" class="txt"  disabled="disabled" type="text" name="child_fio" required="required" style="width:200px;" id="kindergarten_fio_select">
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                    <div class="field-group" style="display: inline-block;">
+                        <label>
+                            Сума штрафу, грн <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($summ, ENT_QUOTES); ?>" type="text" name="summ" class="txt" required="required">
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                </div>
+
+                <h3>Платник штрафу</h3>
+
+                <div style="display: inline-block; float: none; width: 100%;">
+                    <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
+                        <label>
+                            Прізвище <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_lastname, ENT_QUOTES); ?>" type="text" name="penalty_user_lastname" class="txt" required="required">
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+
+                    <div class="field-group" style="display: inline-block;">
+                        <label>
+                            Ім’я <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_name, ENT_QUOTES); ?>" type="text" name="penalty_user_name" class="txt" required="required">
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                </div>
+                <div style="display: inline-block; float: none; width: 100%;">
+                    <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
+                        <label>
+                            По-батькові <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_fathername, ENT_QUOTES); ?>" type="text" name="penalty_user_fathername" class="txt" required="required">
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                    <div class="field-group" style="display: inline-block;">
+                        <label>
+                            Електронна пошта <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_email, ENT_QUOTES); ?>" type="email" name="penalty_user_email" class="txt" required="required">
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                </div>
+                
+                <div style="display: inline-block; float: none; width: 100%;">
+                    <div class="field-group full-width">
+                        <label>
+                            Адреса <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <input style="width: 655px;" onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_address, ENT_QUOTES); ?>" type="text" name="penalty_user_address" class="txt" required="required">
+                        </label>
+                        <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                    </div>
+                </div>
+
+                <div class="field-group align-center">
+                    <button id="submitOrder" class="btn green bold">Далі</button>
+                </div>
+            </form>
+            <?php
     }
 
 ?>
 
-
-{*elseif $isRegionStep*}
-    <form class="gerts-register" method="post" action="" id="register">
-        <div class="error" style="{*$error*}" id="error_reg">
-            <p><span id="error_msg">{*$error_msg*}</span><br />
-            </p>
-        </div>
-        <div class="success" style="{*$success*}">
-            <p><span id="success_msg"></span><br /></p>
-        </div>
-        <div class="input">
-            <div class="field_col" style="height:24px; margin-top:15px;">
-                <div class="select">
-                    <label style="display:inline-block;  width:150px; text-align:left;" for="id_district">Район города:</label>
-                    <select onchange="kinders_district_onchange(this);" style="display:inline-block; width:450px; float:none;" required="required" id="id_district" name="id_district" style="width:255px;">
-                        {*foreach from=$districts item=item*}
-                            <option {*if ($id_district == $item.id)*} selected="selected" {*/if*} value="{*$item.id*}">{*$item.name*}</option>
-                        {*/foreach*}
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="input">
-            <div class="field_col" style="height:24px; margin-top:15px;">
-                <div class="select">
-                    <input type="hidden" id="final_kindergarten" name="kindergarten" value="{*$R101*}" />
-                    <label id="kindergarten_label" style="display:inline-block;  width:150px; text-align:left;">Учреждение:</label>
-                    {*foreach from=$districts item=item*}
-                        <select onchange="$('#final_kindergarten').val($(this).val()).change();" class="kindergarten_select" style="display:{*if ($id_district == $item.id)*} inline-block {*else*} none {*/if*}; width:450px; float:none;" required="required" id="kindergarten_{*$item.id*}" style="width:255px;">
-                            <option value="0">-- Выберите учреждение --</option>
-                            {*foreach from=$list key=list_key item=list_item*}
-                                {*if ($list_item.ID_DISTRICT == $item.id)*}
-                                    <option {*if ($R101 == $list_item.R101)*} selected="selected" {*/if*} value="{*$list_item.R101*}">{*$list_item.NAME_SAD*}</option>
-                                {*/if*}
-                            {*/foreach*}
-                        </select>
-                    {*/foreach*}
-                </div>
-            </div>
-        </div>
-        <div class="input">
-            <div class="field_col" style="height:24px; margin-top:15px;">
-                <div class="select">
-                    <label style="display:inline-block;  width:150px; text-align:left;" for="kindergarten_class_select">Группа / класс:</label>
-                    <select disabled="disabled" name="child_class" required="required" id="kindergarten_class_select" style="display: inline-block; width:450px; float:none;">
-                        <option value="">-- Выберите группу/класс --</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="input">
-            <div class="field_col" style="height:24px; margin-top:15px;">
-                <div class="select">
-                    <label style="display:inline-block;  width:150px; text-align:left;" for="kindergarten_fio_select"> ФИО воспитанника: </label>
-                    <input disabled="disabled" type="text" name="child_fio" required="required" style="width:200px;" id="kindergarten_fio_select">
-                    <span style="font-size:12px; color:#555; position:relative; top:-2px; margin-left:10px;"> введите первые три буквы фамилии</span>
-                </div>
-            </div>
-        </div>
-        <div class="input">
-            <div class="field_col" style="height:24px; margin-top:15px;">
-                <label style="display:inline-block;  width:150px; text-align:left;" for="kindergarten_summ">Сумма, грн:</label>
-                <input id="kindergarten_summ" title="Пример: 200" style="width:450px;" required="required" type="text" name="summ" value="{*if $smarty.post.summ*}{*$smarty.post.summ*}{*/if*}"/>
-            </div>
-        </div>
-        <div class="input">
-            <div class="row-title">Данные плательщика</div>
-            <div class="field_col">
-                <label for="penalty_user_lastname">Фамилия:</label><br>
-                <input type="text" value="{*$penalty_last_name*}" name="penalty_user_lastname" required="required" style="width:200px;" id="penalty_user_lastname">
-            </div>
-            <div class="field_col">
-                <label for="penalty_user_name">Имя:</label><br>
-                <input type="text" value="{*$penalty_first_name*}" name="penalty_user_name" style="width:200px;" required="required" id="penalty_user_name">
-            </div>
-            <div class="field_col">
-                <label for="penalty_user_fathername">Отчество:</label><br>
-                <input type="text" value="{*$penalty_middle_name*}" name="penalty_user_fathername" style="width:200px;" id="penalty_user_fathername">
-            </div>
-            <div class="field_col">
-                <label for="penalty_user_address">Адрес:</label><br>
-                <input type="text" maxlength="150" value="{*if $smarty.post.penalty_user_address*}{*$smarty.post.penalty_user_address*}{*/if*}" name="penalty_user_address" required="required" style="width:421px;" title="Пример: Одесса, ул. Катериненская, 52" id="penalty_user_address">
-            </div>
-            <div class="field_col">
-                <label for="penalty_user_email">E-Mail:</label><br>
-                <input type="email" value="{*$penalty_email*}" name="penalty_user_email" style="width:200px;" required="required" title="Пример: username@example.com" id="penalty_user_email">
-            </div>
-        </div>
-        <div class="clearr"></div>
-        <label style="display:inline-block; text-align:left; margin:0 0 15px; font-size:12px; width:100%; cursor:text;">Нажимая кнопку «Далее» Вы соглашаетесь с правилами <a target="_blank" href="/policy/">публичной оферты</a></label>
-
-        <div class="blue_button registration btn-box">
-            <button id="submitOrder" class="btn blue big bold">Далее</button>
-        </div>
-        <input type="hidden" value="1" name="paygairegionform" />
-    </form>
-
-
-<style type="text/css">
-    .mini_info_block .gai-fees { padding:45px 0 48px 140px; }
-    label { font-size:14px; }
-    .field_col { display:inline-block; text-align:left; margin-right:10px; margin-bottom:10px; }
-    .field_col label { float: none !important; }
-    .field_col input { width: 200px; }
-    .field_col .hint { display:none; }
-    .input .row-title { display:block; font-weight:bold; color:#111; font-size:14px; font-family:Arial; margin:20px 0 10px; }
-
-    .details_row { padding-top:10px; padding-left:15px; }
-    .details_row .right_details { float:left; }
-    .clr { clear: both; }
-    .title_row {background-color: #ededed; border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6; color: #21234b; font-size: 16px; height: 38px; line-height: 38px; padding-left: 17px; }
-    .details_row .right_details p { line-height: 22px; padding-bottom: 10px; font-size: 14px; }
-    .details_row .right_details p span {color: #707780; float: left; font-weight: bold; width: 130px; }
-
-    .check-box-line img {
-        margin: 10px 10px 0 15px;
-        position: relative;
-        top: 6px;
-    }
-    .check-box-line input[type=radio] { width: 15px !important; }
-    .check-box-line .text-label {
-        position: relative;
-        top: -5px;
-    }
-</style>
 <script type="text/javascript">
     $(function(){
         $('#protocol_series').poshytip({className: 'tip-twitter', showOn: 'focus', alignTo: 'target', alignX: 'inner-left', offsetX: -55, offsetY: 10, showTimeout: 100 });

@@ -69,7 +69,7 @@
 
     if (isset($_SESSION['instant-payments-dai']['status']) && !$_SESSION['instant-payments-dai']['status']) {
         ?>
-        <h2 class="big-error-message">Під час надсилання повідомлення виникла помилка:</h2>
+        <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
         <div class="error-description"><?= $_SESSION['instant-payments-dai']['error']['text']; ?></div>
         <?php
         unset($_SESSION['instant-payments-dai']['status']);

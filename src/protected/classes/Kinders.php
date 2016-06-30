@@ -2,20 +2,61 @@
 
 class Kinders
 {
-    const PPP_URL_INSTITUTION = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=site_api/dic_rono_sad.rep&cmdkey=api_test&id_firme=';
-    const PPP_URL_CLASSES     = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=site_api/dic_rono_group&cmdkey=api_test&id_sad=';
-    const PPP_URL_CHILDREN    = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=site_api/dic_rono_child&cmdkey=api_test&id_rono_group=';
-    CONST PPP_URL_DEBT        = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=gerc_api/get_rono_debt&cmdkey=api_test&login=';
-
-    const PPP_URL_CREATE      = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=gerc_api/api_pnew_rono.rep&cmdkey=api_test&login=';
-    const PPP_URL_PROV        = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=gerc_api/api_prov.rep&cmdkey=api_test&login=';
-    const PPP_URL_ERROR       = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=gerc_api/api_pacq50.rep&cmdkey=api_test&login=';
-    
     public $bank;
     
     public function __construct($bank = 'tas')
     {
         $this->bank = $bank;
+    }
+
+    public static function get_API_URL($key)
+    {
+        $urls = [];
+
+        if (ShoppingCart::useBalancer()) {
+
+            $urls['PPP_URL_INSTITUTION'] = '/reports/rwservlet?report=site_api/dic_rono_sad.rep&cmdkey=rep&destype=cache&Desformat=xml&id_firme=';
+            $urls['PPP_URL_CLASSES']     = '/reports/rwservlet?report=site_api/dic_rono_group&cmdkey=rep&destype=cache&Desformat=xml&id_sad=';
+            $urls['PPP_URL_CHILDREN']    = '/reports/rwservlet?report=site_api/dic_rono_child&cmdkey=rep&destype=cache&Desformat=xml&id_rono_group=';
+            $urls['PPP_URL_DEBT']        = '/reports/rwservlet?report=gerc_api/get_rono_debt&cmdkey=rep&destype=cache&Desformat=xml&login=';
+            $urls['PPP_URL_FIRME']       = '/reports/rwservlet?report=gioc_api/dic_rono_firme.rep&cmdkey=rep&destype=cache&Desformat=xml&id_area=';
+            $urls['PPP_URL_CREATE']      = '/reports/rwservlet?report=gerc_api/api_pnew_rono.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        } else {
+
+            throw new Exception('Ссылки без использования балансировщика не указаны');
+        }
+
+        return $urls[$key];
+    }
+
+    /**
+     * Получение списка районов (вроде)
+     * @param  integer $id_area 233 = Киев
+     * @return array
+     */
+    public static function getFirmeList($id_area = 233)
+    {
+        $url = API_URL . self::get_API_URL('PPP_URL_FIRME') . $id_area;
+
+        $xml_string = Http::fgets($url);
+        $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
+        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
+        $xml = @simplexml_load_string($xml_string);
+        
+        if (($xml === false) || ($xml === null)) {
+            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
+        }
+
+        $result = [];
+
+        for ($i=0; $i < count($xml->ROWSET->ROW); $i++) {
+            $result[] = [
+                'name' => $xml->ROWSET->ROW[$i]->NAME_FIRME . '',
+                'id'   => $xml->ROWSET->ROW[$i]->ID_FIRME . '',
+            ];
+        }
+
+        return $result;
     }
 
     private function getLogin()
@@ -40,7 +81,7 @@ class Kinders
 
     public function getDebt($child_id, &$debt_date = null)
     {
-        $url = self::PPP_URL_DEBT . $this->getLogin() . '&pwd=' . $this->getPassword() . '&id_rono_child=' . $child_id;
+        $url = API_URL . self::get_API_URL('PPP_URL_DEBT') . $this->getLogin() . '&pwd=' . $this->getPassword() . '&id_rono_child=' . $child_id;
         $xml_string = file_get_contents($url);
         $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
@@ -65,7 +106,7 @@ class Kinders
 
         $fio = mb_strtolower($fio, 'UTF-8');
 
-        $url = self::PPP_URL_CHILDREN . $id_rono_group;
+        $url = API_URL . self::get_API_URL('PPP_URL_CHILDREN') . $id_rono_group;
         $xml_string = file_get_contents($url);
         $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
@@ -92,7 +133,7 @@ class Kinders
 
     public function getClassesList($id_sad)
     {
-        $url = self::PPP_URL_CLASSES . $id_sad;
+        $url = API_URL . self::get_API_URL('PPP_URL_CLASSES') . $id_sad;
         $xml_string = file_get_contents($url);
         $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
@@ -114,25 +155,25 @@ class Kinders
         return array('list' => $list);
     }
 
-    public function getInstitutionList($id_firme)
+    public static function getInstitutionList($id_firme)
     {
-        $url = self::PPP_URL_INSTITUTION . $id_firme;
-        $xml_string = file_get_contents($url);
+        $url = API_URL . self::get_API_URL('PPP_URL_INSTITUTION') . $id_firme;
+        $xml_string = Http::fgets($url);
         $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = @simplexml_load_string($xml_string);
         
-        if ($xml === false) {
-            return array();
+        if (($xml === false) || ($xml === null)) {
+            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
         }
 
-        $list = array();
+        $list = [];
 
         for ($i=0; $i < count($xml->ROW); $i++) {
-            $list[] = array(
+            $list[] = [
                 'NAME_SAD' => $xml->ROW[$i]->NAME_SAD . '',
-                'R101' => $xml->ROW[$i]->ID_SAD . ''
-            );
+                'R101'     => $xml->ROW[$i]->ID_SAD . ''
+            ];
         }
 
         return $list;
@@ -142,9 +183,9 @@ class Kinders
      * Функция посылает запрос на ppp с реквизитами человека. В ответ получаем данные для платежа
      *
     */
-    public function pppCreatePayment(&$error_str, $idarea, $firme, $summ, $user_id, $r1, $r2, $r101, $r102, $r103)
+    public function pppCreatePayment($idarea, $firme, $summ, $user_id, $r1, $r2, $r101, $r102, $r103)
     {
-        // $url = self::PPP_URL_CREATE;
+        // $url = API_URL . self::get_API_URL('PPP_URL_CREATE');
         // $summ .= '';
         // $summ = str_replace('.', ',', $summ);
 
@@ -166,7 +207,7 @@ class Kinders
         // $xml = @simplexml_load_string($xml_string);
         
         // if ($xml === false) {
-        //     $error_str = 'Некорректный XML';
+        //     throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
         //     return false;
         // }
 
@@ -174,7 +215,7 @@ class Kinders
         // $err = $row_elem->ERR.'';
 
         // if ($err != '0') {
-        //     $error_str = UPC::get_error($err);
+        //     throw new Exception(UPC::get_error($err));
         //     return false;
         // }
 

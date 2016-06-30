@@ -72,13 +72,9 @@ try {
     }
 
     $fio = "$penalty_user_lastname $penalty_user_name $penalty_user_fathername";
-    $record = $Gai->set_request_to_ppp($error_str, $region, $protocol_summ, $user_id, $fio, $penalty_user_address, '', '', '', '', $postanova_series, $postanova_number, '', $protocol_date);
+    $record = $Gai->set_request_to_ppp($region, $protocol_summ, $user_id, $fio, $penalty_user_address, '', '', '', '', $postanova_series, $postanova_number, '', $protocol_date);
     
-    if ($record == false) {
-        $err[] = $error_str;
-    } else {
-        $_SESSION['instant-payments-dai']['dai_last_payment_id'] = $record['id'];
-    }
+    $_SESSION['instant-payments-dai']['dai_last_payment_id'] = $record['id'];
     
     if ($record['processing'] == 'tas') {
         $TasLink = new TasLink('budget');

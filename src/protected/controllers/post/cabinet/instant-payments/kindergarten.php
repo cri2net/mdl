@@ -1,29 +1,11 @@
 <?php
 
-
-// может это брать в онлайне с reports?
-private $districts = array(
-    array('name' => 'СУВОРОВЬСКА РАОМР', 'id' => 28366),
-    array('name' => 'КИЇВСЬКА РАОМР',    'id' => 28367),
-    array('name' => 'МАЛИНОВСЬКА РАОМР', 'id' => 28368),
-    array('name' => 'ПРИМОРЬСКА РАОМР',  'id' => 28369),
-    array('name' => 'ГОРОНО',            'id' => 111020),
-);
-
-private $list = array(
-    array('R101' => '28421'),
-    array('R101' => '28422'),
-    array('R101' => '28423'),
-    array('R101' => '28424'),
-    array('R101' => '28530'),
-);
-
-$err = array();
+$districts = Kinders::getFirmeList();
 $Kinders = new Kinders();
 
-foreach ($this->districts as $item) {
+foreach ($districts as $item) {
    
-    $list = $Kinders->getInstitutionList($item['id']);
+    $list = Kinders::getInstitutionList($item['id']);
    
     for ($i=0; $i < count($list); $i++) {
         $kindergarten = $list[$i];
@@ -55,11 +37,10 @@ $this->smarty->assign('child_fio', $child_fio);
 $this->smarty->assign('child_class', $child_class);
 
 $this->smarty->assign('list', $this->list);
-$this->smarty->assign('districts', $this->districts);
 
 $id_district = (isset($_POST['id_district'])) ? ((int)$_POST['id_district']) : $this->districts[0]['id'];
 
-$this->smarty->assign('isRegionStep', '1');
+$_SESSION['instant-payments-kinders']['step'] = 'region';
 
 if (isset($_POST['paygairegionform']) && ($_POST['paygairegionform'] == 1)) {
 
@@ -124,8 +105,7 @@ if (isset($_POST['paygairegionform']) && ($_POST['paygairegionform'] == 1)) {
     }
 
     if (count($err) == 0) {
-        $this->smarty->assign('isRegionStep', '0');
-        $this->smarty->assign('isDetailsStep', '1');
+        $_SESSION['instant-payments-kinders']['step'] = 'details';
 
         $fio = "$penalty_user_lastname $penalty_user_name $penalty_user_fathername";
 
@@ -180,14 +160,11 @@ if (isset($_POST['paygairegionform']) && ($_POST['paygairegionform'] == 1)) {
     
     if (count($err) > 0) {
         $this->smarty->assign('error_msg', $err[0]);
-        $this->smarty->assign('isRegionStep', '1');
+        $_SESSION['instant-payments-kinders']['step'] = 'region';
     }
 }
 
 $this->smarty->assign('id_district', $id_district);
-$this->smarty->assign('isSuccessStep', 0);
-$this->smarty->assign('isErrorStep', 0);
-$this->smarty->assign('isFrameStep', 0);
 
 if (($_GET['step'] == 'success') || ($_GET['step'] == 'error')) {
 
@@ -220,6 +197,8 @@ if (($_GET['step'] == 'success') || ($_GET['step'] == 'error')) {
 
 
 
+
+// скопировано с ГАИ:
 
 try {
 
