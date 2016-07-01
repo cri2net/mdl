@@ -2,64 +2,31 @@
 <br><br>
 
 <?php
-    $regions = Gai::getRegions();
-
-    if (is_array($_SESSION['instant-payments-dai']['columns'])) {
-        foreach ($_SESSION['instant-payments-dai']['columns'] as $key => $value) {
-            $$key = $value;
-        }
-    }
-
-    $Gai = new Gai();
-    $penalty_user_email      = (isset($__userData['email']))      ? $__userData['email'] : '';
-    $penalty_user_name       = (isset($__userData['name']))       ? $__userData['name'] : '';
-    $penalty_user_fathername = (isset($__userData['fathername'])) ? $__userData['fathername'] : '';
-    $penalty_user_lastname   = (isset($__userData['lastname']))   ? $__userData['lastname'] : '';
-    
-    $penalty_user_email      = (isset($_SESSION['instant-payments-dai']['columns']['penalty_user_email']))      ? $_SESSION['instant-payments-dai']['columns']['penalty_user_email']      : $penalty_user_email;
-    $penalty_user_name       = (isset($_SESSION['instant-payments-dai']['columns']['penalty_user_name']))       ? $_SESSION['instant-payments-dai']['columns']['penalty_user_name']       : $penalty_user_name;
-    $penalty_user_fathername = (isset($_SESSION['instant-payments-dai']['columns']['penalty_user_fathername'])) ? $_SESSION['instant-payments-dai']['columns']['penalty_user_fathername'] : $penalty_user_fathername;
-    $penalty_user_lastname   = (isset($_SESSION['instant-payments-dai']['columns']['penalty_user_lastname']))   ? $_SESSION['instant-payments-dai']['columns']['penalty_user_lastname']   : $penalty_user_lastname;
-
-    
-    if (!isset($_SESSION['instant-payments-dai']['step'])) {
-        $_SESSION['instant-payments-dai']['step'] = 'region';
-    }
-
     try {
+        $regions = Gai::getRegions();
+
+        if (is_array($_SESSION['instant-payments-dai']['columns'])) {
+            foreach ($_SESSION['instant-payments-dai']['columns'] as $key => $value) {
+                $$key = $value;
+            }
+        }
+
+        $Gai = new Gai();
+        $penalty_user_email      = (isset($__userData['email']))      ? $__userData['email'] : '';
+        $penalty_user_name       = (isset($__userData['name']))       ? $__userData['name'] : '';
+        $penalty_user_fathername = (isset($__userData['fathername'])) ? $__userData['fathername'] : '';
+        $penalty_user_lastname   = (isset($__userData['lastname']))   ? $__userData['lastname'] : '';
         
-        if (($_GET['step'] == 'success') || ($_GET['step'] == 'error')) {
+        $penalty_user_email      = (isset($_SESSION['instant-payments-dai']['columns']['penalty_user_email']))      ? $_SESSION['instant-payments-dai']['columns']['penalty_user_email']      : $penalty_user_email;
+        $penalty_user_name       = (isset($_SESSION['instant-payments-dai']['columns']['penalty_user_name']))       ? $_SESSION['instant-payments-dai']['columns']['penalty_user_name']       : $penalty_user_name;
+        $penalty_user_fathername = (isset($_SESSION['instant-payments-dai']['columns']['penalty_user_fathername'])) ? $_SESSION['instant-payments-dai']['columns']['penalty_user_fathername'] : $penalty_user_fathername;
+        $penalty_user_lastname   = (isset($_SESSION['instant-payments-dai']['columns']['penalty_user_lastname']))   ? $_SESSION['instant-payments-dai']['columns']['penalty_user_lastname']   : $penalty_user_lastname;
 
-            if (!isset($_SESSION['instant-payments-dai']['record_id'])) {
-                throw new Exception(ERROR_OLD_REQUEST);
-            }
-
-            $record = PDO_DB::row_by_id(ShoppingCart::TABLE, str_replace('gioc-', '', $_SESSION['instant-payments-dai']['record_id']));
-
-            if ($record['status'] == 'new') {
-                // оплата ещё не завершена
-            } elseif ($record['status'] == 'success') {
-                $_SESSION['instant-payments-dai']['step'] = 'success';
-            } else {
-                $_SESSION['instant-payments-dai']['status'] = false;
-                $_SESSION['instant-payments-dai']['error']['text'] = 'Помилка оплати';
-            }
-
-        } elseif (isset($_POST['get_last_step'])) {
-            
-            $id = $_SESSION['instant-payments-dai']['dai_last_payment_id'];
-            $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $id);
-            $payment_id = $_payment['id'];
-            
-            if ($_payment) {
-                $arr = ['go_to_payment_time' => microtime(true)];
-                PDO_DB::update($arr, ShoppingCart::TABLE, $id);
-                $_SESSION['instant-payments-dai']['step'] = 'frame';
-            } else {
-                throw new Exception(ERROR_OLD_REQUEST);
-            }
-       }
-
+        
+        if (!isset($_SESSION['instant-payments-dai']['step'])) {
+            $_SESSION['instant-payments-dai']['step'] = 'region';
+        }
+        
     } catch (Exception $e) {
         $_SESSION['instant-payments-dai']['status'] = false;
         $_SESSION['instant-payments-dai']['error']['text'] = $e->getMessage();
@@ -77,6 +44,10 @@
     
     switch ($_SESSION['instant-payments-dai']['step']) {
         case 'frame':
+            $id = $_SESSION['instant-payments-dai']['dai_last_payment_id'];
+            $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $id);
+            $payment_id = $_payment['id'];
+        
             $file = ROOT . "/protected/conf/payments/tas/tas";
             if (file_exists($file . ".conf.php")) {
                 require_once($file . ".conf.php");
@@ -89,12 +60,6 @@
             }
 
             $_SESSION['instant-payments-dai']['step'] = 'region';
-            break;
-
-        case 'success':
-            ?>
-            <h2 class="big-success-message">Оплата успішно здійснена</h2>
-            <?php
             break;
 
         case 'details':

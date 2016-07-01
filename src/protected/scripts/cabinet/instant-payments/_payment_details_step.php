@@ -104,7 +104,7 @@
             </tr>
             <tr>
                 <td class="align-center" colspan="5">
-                    <form action="" method="post">
+                    <form action="<?= BASE_URL; ?>/post/cabinet/instant-payments/<?= $__route_result['values']['section']; ?>/" method="post">
                         <input type="hidden" name="get_last_step" value="1">
                         <div class="blue_button registration">
                             <button style="width:240px;" id="submitOrder" class="btn green bold">Перейти до сплати</button>

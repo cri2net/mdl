@@ -1,5 +1,23 @@
 <?php
+
 try {
+
+    if (isset($_POST['get_last_step'])) {
+        $id = $_SESSION['instant-payments-dai']['dai_last_payment_id'];
+        $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $id);
+        $payment_id = $_payment['id'];
+
+        if ($_payment) {
+            $arr = ['go_to_payment_time' => microtime(true)];
+            PDO_DB::update($arr, ShoppingCart::TABLE, $id);
+            $_SESSION['instant-payments-dai']['step'] = 'frame';
+        } else {
+            throw new Exception(ERROR_OLD_REQUEST);
+        }
+
+        return BASE_URL . '/cabinet/instant-payments/dai/';
+    }
+
 
     $regions = Gai::getRegions();
     $Gai = new Gai();
@@ -74,6 +92,7 @@ try {
     $fio = "$penalty_user_lastname $penalty_user_name $penalty_user_fathername";
     $record = $Gai->set_request_to_ppp($region, $protocol_summ, $user_id, $fio, $penalty_user_address, '', '', '', '', $postanova_series, $postanova_number, '', $protocol_date);
     
+    $_SESSION['instant-payments-dai']['record_id'] = $record['id'];
     $_SESSION['instant-payments-dai']['dai_last_payment_id'] = $record['id'];
     
     if ($record['processing'] == 'tas') {
@@ -81,17 +100,6 @@ try {
         $tas_session_id = $TasLink->initSession($record['id']);
         $TasLink->makePayment($record['summ_plat'], $record['summ_komis']);
     }
-
-    // суммы в копейках, переводим в гривны:
-    $record['summ_plat'] = number_format($record['summ_plat'] / 100, 1);
-    $record['summ_komis'] = number_format($record['summ_komis'] / 100, 1);
-    $record['summ_total'] = number_format($record['summ_total'] / 100, 1);
-
-    $record['summ_plat'] .= (substr($record['summ_plat'], strlen($record['summ_plat']) - 2) == '.0') ? '0' : '';
-    $record['summ_komis'] .= (substr($record['summ_komis'], strlen($record['summ_komis']) - 2) == '.0') ? '0' : '';
-    $record['summ_total'] .= (substr($record['summ_total'], strlen($record['summ_total']) - 2) == '.0') ? '0' : '';
-
-    $_SESSION['instant-payments-dai']['record_id'] = $record['id'];
 
 } catch (Exception $e) {
     $_SESSION['instant-payments-dai']['step'] = 'region';
