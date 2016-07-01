@@ -10,7 +10,7 @@ try {
         throw new Exception('PROTECTED CLASS CALLED : '. $objClassName, 666);
     }
 
-    if (file_exists(ROOT . "/protected/classes/$objClassName.class.php")) {
+    if (file_exists(ROOT . "/protected/classes/$objClassName.php")) {
         if (!class_exists($objClassName)) {
             throw new Exception('UNKNOWN CLASS CALLED : '. $objClassName, 666);
         }

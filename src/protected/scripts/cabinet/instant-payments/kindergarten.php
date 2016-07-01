@@ -3,7 +3,7 @@
 
 <?php
     try {
-        $Kinders = new Kinders();
+        $districts = Kinders::getFirmeList();
 
         if (is_array($_SESSION['instant-payments-kinders']['columns'])) {
             foreach ($_SESSION['instant-payments-kinders']['columns'] as $key => $value) {
@@ -15,7 +15,19 @@
             $_SESSION['instant-payments-kinders']['step'] = 'region';
         }
 
-        $districts = Kinders::getFirmeList();
+        $penalty_user_email      = (isset($__userData['email']))      ? $__userData['email'] : '';
+        $penalty_user_name       = (isset($__userData['name']))       ? $__userData['name'] : '';
+        $penalty_user_fathername = (isset($__userData['fathername'])) ? $__userData['fathername'] : '';
+        $penalty_user_lastname   = (isset($__userData['lastname']))   ? $__userData['lastname'] : '';
+        
+        $penalty_user_email      = (isset($_SESSION['instant-payments-kinders']['columns']['penalty_user_email']))      ? $_SESSION['instant-payments-kinders']['columns']['penalty_user_email']      : $penalty_user_email;
+        $penalty_user_name       = (isset($_SESSION['instant-payments-kinders']['columns']['penalty_user_name']))       ? $_SESSION['instant-payments-kinders']['columns']['penalty_user_name']       : $penalty_user_name;
+        $penalty_user_fathername = (isset($_SESSION['instant-payments-kinders']['columns']['penalty_user_fathername'])) ? $_SESSION['instant-payments-kinders']['columns']['penalty_user_fathername'] : $penalty_user_fathername;
+        $penalty_user_lastname   = (isset($_SESSION['instant-payments-kinders']['columns']['penalty_user_lastname']))   ? $_SESSION['instant-payments-kinders']['columns']['penalty_user_lastname']   : $penalty_user_lastname;
+
+        if (!isset($id_district) || !$id_district) {
+            $id_district = $districts[0]['id'];
+        }
 
 
     } catch (Exception $e) {
@@ -34,6 +46,10 @@
 
     switch ($_SESSION['instant-payments-kinders']['step']) {
         case 'frame':
+            $id = $_SESSION['instant-payments-kinders']['kinders_last_payment_id'];
+            $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $id);
+            $payment_id = $_payment['id'];
+        
             $file = ROOT . "/protected/conf/payments/tas/tas";
             if (file_exists($file . ".conf.php")) {
                 require_once($file . ".conf.php");
@@ -46,12 +62,6 @@
             }
 
             $_SESSION['instant-payments-kinders']['step'] = 'region';
-            break;
-
-        case 'success':
-            ?>
-            <h2 class="big-success-message">Оплата успішно здійснена</h2>
-            <?php
             break;
 
         case 'details':
@@ -92,7 +102,7 @@
                             <?php
                                 foreach ($districts as $item) {
                                     ?>
-                                    <select class="txt kindergarten_select" required="required" onchange="$('#final_kindergarten').val($(this).val()).change();" onblur="registration_ckeck_empty_fileld(this);" style="display:<?= ($id_district == $item['id']) ? 'inline-block' : 'none'; ?>;" id="kindergarten_<?= $item['id']; ?>">
+                                    <select class="txt kindergarten_select" required="required" onchange="$('#final_kindergarten').val($(this).val()).trigger('change');" onblur="registration_ckeck_empty_fileld(this);" style="display:<?= ($id_district == $item['id']) ? 'inline-block' : 'none'; ?>;" id="kindergarten_<?= $item['id']; ?>">
                                         <option value="0">-- Будь ласка, оберіть --</option>
                                         <?php
                                             $list = Kinders::getInstitutionList($item['id']);
@@ -134,14 +144,14 @@
                     </div>
                     <div class="field-group" style="display: inline-block;">
                         <label>
-                            Сума штрафу, грн <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            Сума, грн <span class="star-required" title="Обов’язкове поле">*</span> <br>
                             <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($summ, ENT_QUOTES); ?>" type="text" name="summ" class="txt" required="required">
                         </label>
                         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
                     </div>
                 </div>
 
-                <h3>Платник штрафу</h3>
+                <h3>Платник</h3>
 
                 <div style="display: inline-block; float: none; width: 100%;">
                     <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
@@ -198,29 +208,21 @@
 
 <script type="text/javascript">
     $(function(){
-        $('#protocol_series').poshytip({className: 'tip-twitter', showOn: 'focus', alignTo: 'target', alignX: 'inner-left', offsetX: -55, offsetY: 10, showTimeout: 100 });
-        $('#protocol_number, #protocol_summ, #penalty_user_address').poshytip({className: 'tip-twitter', showOn: 'focus', alignTo: 'target', alignX: 'inner-left', offsetX: 0, offsetY: 10, showTimeout: 100 });
-        $("#protocol_date").datepicker({
-            changeMonth: true,
-            numberOfMonths: 1,
-            dateFormat:"dd.mm.yy",
-            maxDate: '0'
-        });
-
         $("#kindergarten_fio_select").autocomplete({
             source: function(request, response){
+
                 var val = $('#kindergarten_class_select').val();
-                var Data = {};
-                Data.obj = 'Kinders';
-                Data.ac = 'getChildrenList';
-                Data.args = [val, request.term];
 
                 $.ajax({
-                    url : './service/',
+                    url : BASE_URL + '/ajax/json/kindergarten',
                     type: "POST",
                     dataType: "json",
                     minLength: 3,
-                    data: Data,
+                    data: {
+                        action: 'get_children_list',
+                        id_rono_group: val,
+                        fio: request.term,
+                    },
                     success: function(data) {
                         response($.map(data.list, function(item) {
                             return {
@@ -247,36 +249,34 @@
 
         $('#final_kindergarten').change(function() {
             var val = $('#final_kindergarten').val();
-            var first_option = '<option value="">-- Выберите группу/класс --</option>';
-            $('#kindergarten_class_select').html(first_option).attr('disabled', 'disabled').change();
+            var first_option = '<option value="">-- Будь ласка, оберіть --</option>';
+            $('#kindergarten_class_select').html(first_option).attr('disabled', 'disabled').trigger('change');
             $('#kindergarten_fio_select').val('').attr('disabled', 'disabled');
 
             if (val == '') {
                 return;
             }
 
-            var Data = {};
-            Data.obj = 'Kinders';
-            Data.ac = 'getClassesList';
-            Data.args = [val];
-
-            jQuery.ajax({
+            $.ajax({
                 dataType: 'json',
-                data: Data,
+                data: {
+                    action: 'get_classes_list',
+                    id_sad: val
+                },
                 type: 'POST',
-                url : './service/',
-                success : function(response){
+                url : BASE_URL + '/ajax/json/kindergarten',
+                success : function(response) {
                     var html = '';
                     for (var i = 0; i < response.list.length; i++) {
                         html += '<option value="'+ response.list[i].id +'">'+ response.list[i].name +'</option>';
                     };
-                    $('#kindergarten_class_select').html(html).removeAttr('disabled').change();
+                    $('#kindergarten_class_select').html(html).removeAttr('disabled').trigger('change');
                 }
             });
         });
     });
 
-    var id_district = {* $id_district *};
+    var id_district = <?= $id_district; ?>;
     function kinders_district_onchange(el)
     {
         var tmp_id_district = $(el).val();
@@ -285,8 +285,8 @@
         $('#kindergarten_'+tmp_id_district).css('display', 'inline-block');
         $('#kindergarten_label').attr('for', 'kindergarten_'+tmp_id_district);
 
-        var first_option = '<option value="">-- Выберите группу/класс --</option>';
-        $('#kindergarten_class_select').html(first_option).attr('disabled', 'disabled').change();
+        var first_option = '<option value="">-- Будь ласка, оберіть --</option>';
+        $('#kindergarten_class_select').html(first_option).attr('disabled', 'disabled').trigger('change');
         $('#kindergarten_fio_select').val('').attr('disabled', 'disabled');
 
         id_district = tmp_id_district;

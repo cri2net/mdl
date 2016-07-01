@@ -199,7 +199,7 @@ class UPC
             case '10': return 'Помилка XML формату';
             
             case '100':
-            default: return 'Произошла неизвестная ошибка '.$code;
+            default: return 'Невідома помилка з кодом '.$code;
         }
     }
 

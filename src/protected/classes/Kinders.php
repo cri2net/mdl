@@ -2,25 +2,18 @@
 
 class Kinders
 {
-    public $bank;
-    
-    public function __construct($bank = 'tas')
-    {
-        $this->bank = $bank;
-    }
-
     public static function get_API_URL($key)
     {
         $urls = [];
 
         if (ShoppingCart::useBalancer()) {
 
-            $urls['PPP_URL_INSTITUTION'] = '/reports/rwservlet?report=site_api/dic_rono_sad.rep&cmdkey=rep&destype=cache&Desformat=xml&id_firme=';
-            $urls['PPP_URL_CLASSES']     = '/reports/rwservlet?report=site_api/dic_rono_group&cmdkey=rep&destype=cache&Desformat=xml&id_sad=';
-            $urls['PPP_URL_CHILDREN']    = '/reports/rwservlet?report=site_api/dic_rono_child&cmdkey=rep&destype=cache&Desformat=xml&id_rono_group=';
-            $urls['PPP_URL_DEBT']        = '/reports/rwservlet?report=gerc_api/get_rono_debt&cmdkey=rep&destype=cache&Desformat=xml&login=';
+            $urls['PPP_URL_INSTITUTION'] = '/reports/rwservlet?report=gioc_api/dic_rono_sad.rep&cmdkey=rep&destype=cache&Desformat=xml&id_firme=';
+            $urls['PPP_URL_CLASSES']     = '/reports/rwservlet?report=gioc_api/dic_rono_group&cmdkey=rep&destype=cache&Desformat=xml&id_sad=';
+            $urls['PPP_URL_CHILDREN']    = '/reports/rwservlet?report=gioc_api/dic_rono_child&cmdkey=rep&destype=cache&Desformat=xml&id_rono_group=';
+            $urls['PPP_URL_DEBT']        = '/reports/rwservlet?report=gioc_api/get_rono_debt&cmdkey=rep&destype=cache&Desformat=xml&login=';
             $urls['PPP_URL_FIRME']       = '/reports/rwservlet?report=gioc_api/dic_rono_firme.rep&cmdkey=rep&destype=cache&Desformat=xml&id_area=';
-            $urls['PPP_URL_CREATE']      = '/reports/rwservlet?report=gerc_api/api_pnew_rono.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+            $urls['PPP_URL_CREATE']      = '/reports/rwservlet?report=gioc_api/api_pnew_rono.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
         } else {
 
             throw new Exception('Ссылки без использования балансировщика не указаны');
@@ -59,29 +52,13 @@ class Kinders
         return $result;
     }
 
-    private function getLogin()
-    {
-        switch ($this->bank) {
-            case 'tas':  return 'GERCUA';
-            
-            default:
-                throw new Exception("Unknow bank");
-        }
-    }
 
-    private function getPassword()
+    public static function getDebt($child_id, &$debt_date = null)
     {
-        switch ($this->bank) {
-            case 'tas':  return 'B7300BFB9411B748A291A37F4E815809D81AB8FA';
-            
-            default:
-                throw new Exception("Unknow bank");
-        }
-    }
+        $TAS_KASS_ID = 1080;
+        ShoppingCart::pppGetCashierByKassId($TAS_KASS_ID, $login, $password);
 
-    public function getDebt($child_id, &$debt_date = null)
-    {
-        $url = API_URL . self::get_API_URL('PPP_URL_DEBT') . $this->getLogin() . '&pwd=' . $this->getPassword() . '&id_rono_child=' . $child_id;
+        $url = API_URL . self::get_API_URL('PPP_URL_DEBT') . $login . '&pwd=' . $password . '&id_rono_child=' . $child_id;
         $xml_string = file_get_contents($url);
         $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
@@ -98,10 +75,10 @@ class Kinders
         return $debt;
     }
 
-    public function getChildrenList($id_rono_group, $fio)
+    public static function getChildrenList($id_rono_group, $fio)
     {
         if (mb_strlen($fio, 'UTF-8') < 3) {
-            return array('list' => array());
+            return ['list' => []];
         }
 
         $fio = mb_strtolower($fio, 'UTF-8');
@@ -112,26 +89,26 @@ class Kinders
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = @simplexml_load_string($xml_string);
         
-        if ($xml === false) {
-            return array('list' => array());
+        if (($xml === false) || ($xml === null)) {
+            return ['list' => []];
         }
 
-        $list = array();
+        $list = [];
 
-        for ($i=0; $i < count($xml->ROW); $i++) {
-            $name = $xml->ROW[$i]->FIO_RONO_CHILD . '';
+        for ($i=0; $i < count($xml->ROWSET->ROW); $i++) {
+            $name = $xml->ROWSET->ROW[$i]->FIO_RONO_CHILD . '';
             if (strpos(mb_strtolower($name, 'UTF-8'), $fio) !== false) {
-                $list[] = array(
+                $list[] = [
                     'name' => $name,
-                    'id' => $xml->ROW[$i]->ID_RONO_CHILD . ''
-                );
+                    'id'   => $xml->ROWSET->ROW[$i]->ID_RONO_CHILD . ''
+                ];
             }
         }
 
-        return array('list' => $list);
+        return ['list' => $list];
     }
 
-    public function getClassesList($id_sad)
+    public static function getClassesList($id_sad)
     {
         $url = API_URL . self::get_API_URL('PPP_URL_CLASSES') . $id_sad;
         $xml_string = file_get_contents($url);
@@ -139,20 +116,20 @@ class Kinders
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = @simplexml_load_string($xml_string);
         
-        if ($xml === false) {
-            return array('list' => array());
+        if (($xml === false) || ($xml === null)) {
+            return ['list' => []];
         }
 
-        $list = array();
+        $list = [];
 
-        for ($i=0; $i < count($xml->ROW); $i++) {
-            $list[] = array(
-                'name' => $xml->ROW[$i]->NAME_RONO_GROUP . '',
-                'id' => $xml->ROW[$i]->ID_RONO_GROUP . ''
-            );
+        for ($i=0; $i < count($xml->ROWSET->ROW); $i++) {
+            $list[] = [
+                'name' => $xml->ROWSET->ROW[$i]->NAME_RONO_GROUP . '',
+                'id'   => $xml->ROWSET->ROW[$i]->ID_RONO_GROUP . ''
+            ];
         }
 
-        return array('list' => $list);
+        return ['list' => $list];
     }
 
     public static function getInstitutionList($id_firme)
@@ -169,10 +146,10 @@ class Kinders
 
         $list = [];
 
-        for ($i=0; $i < count($xml->ROW); $i++) {
+        for ($i=0; $i < count($xml->ROWSET->ROW); $i++) {
             $list[] = [
-                'NAME_SAD' => $xml->ROW[$i]->NAME_SAD . '',
-                'R101'     => $xml->ROW[$i]->ID_SAD . ''
+                'NAME_SAD' => $xml->ROWSET->ROW[$i]->NAME_SAD . '',
+                'R101'     => $xml->ROWSET->ROW[$i]->ID_SAD . ''
             ];
         }
 
@@ -183,54 +160,52 @@ class Kinders
      * Функция посылает запрос на ppp с реквизитами человека. В ответ получаем данные для платежа
      *
     */
-    public function pppCreatePayment($idarea, $firme, $summ, $user_id, $r1, $r2, $r101, $r102, $r103)
+    public static function pppCreatePayment($idarea, $firme, $summ, $user_id, $r1, $r2, $r101, $r102, $r103)
     {
-        // $url = API_URL . self::get_API_URL('PPP_URL_CREATE');
-        // $summ .= '';
-        // $summ = str_replace('.', ',', $summ);
+        $url = API_URL . self::get_API_URL('PPP_URL_CREATE');
+        $summ = str_replace('.', ',', $summ);
 
-        // $url .= $this->getLogin();
-        // $url .= '&pwd=' . $this->getPassword();
-        // $url .= '&idarea=' . $idarea;
-        // $url .= '&id_firme=' . $firme;
-        // $url .= '&summ=' . $summ;
-        // $url .= '&idsiteuser=' . $user_id;
-        // $url .= '&r1='   . rawurlencode(iconv('UTF-8', 'CP1251', $r1));
-        // $url .= '&r2='   . rawurlencode(iconv('UTF-8', 'CP1251', $r2));
-        // $url .= '&r101=' . $r101;
-        // $url .= '&r102=' . rawurlencode(iconv('UTF-8', 'CP1251', $r102));
-        // $url .= '&r103=' . rawurlencode(iconv('UTF-8', 'CP1251', $r103));
+        $TAS_KASS_ID = 1080;
+        ShoppingCart::pppGetCashierByKassId($TAS_KASS_ID, $login, $password);
 
-        // $xml_string = file_get_contents($url);
-        // $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
+        $url .= $login;
+        $url .= '&pwd=' . $password;
+        $url .= '&idarea=' . $idarea;
+        $url .= '&id_firme=' . $firme;
+        $url .= '&summ=' . $summ;
+        $url .= '&idsiteuser=' . $user_id;
+        $url .= '&r1='   . rawurlencode(iconv('UTF-8', 'CP1251', $r1));
+        $url .= '&r2='   . rawurlencode(iconv('UTF-8', 'CP1251', $r2));
+        $url .= '&r101=' . $r101;
+        $url .= '&r102=' . rawurlencode(iconv('UTF-8', 'CP1251', $r102));
+        $url .= '&r103=' . rawurlencode(iconv('UTF-8', 'CP1251', $r103));
+
+        $xml_string = file_get_contents($url);
+        $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
-        // $xml = @simplexml_load_string($xml_string);
+        $xml = @simplexml_load_string($xml_string);
         
-        // if ($xml === false) {
-        //     throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
-        //     return false;
-        // }
+        if (($xml === false) || ($xml === null)) {
+            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
+            return false;
+        }
 
-        // $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
-        // $err = $row_elem->ERR.'';
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
+        $err = $row_elem->ERR.'';
 
-        // if ($err != '0') {
-        //     throw new Exception(UPC::get_error($err));
-        //     return false;
-        // }
-
-
-
+        if ($err != '0') {
+            throw new Exception(UPC::get_error($err));
+            return false;
+        }
 
         $insert = [
             'user_id'                  => $user_id,
             'acq'                      => $row_elem->ACQ.'',
             'timestamp'                => $timestamp,
-            'type'                     => 'gai',
+            'type'                     => 'kinders',
             'count_services'           => 1,
-            'processing'               => $this->bank,
+            'processing'               => 'tas',
             'summ_komis'               => floatval($row_elem->SUMM_KOMIS.'') / 100,
-            'summ_plat'                => floatval($row_elem->SUMM_PLAT.'')  / 100,
             'summ_total'               => floatval($row_elem->SUMM_TOTAL.'') / 100,
             'reports_id_pack'          => $row_elem->ID_PACK.'',
             'reports_num_kvit'         => $row_elem->NUM_KVIT.'',
@@ -239,6 +214,7 @@ class Kinders
             'ip'                       => USER_REAL_IP,
             'user_agent_string'        => HTTP_USER_AGENT,
         ];
+        $insert['summ_plat'] = round($insert['summ_total'] - $insert['summ_komis'], 2);
 
         $payment_id = PDO_DB::insert($insert, ShoppingCart::TABLE);
         $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
@@ -256,12 +232,12 @@ class Kinders
             'r10'    => $r10,
             'idarea' => $idarea,
         ];
-        $xml_fields = ['OUTBANK', 'NAME_OWNER_BANK', 'NAME_BANK', /*'NAME_PLAT',*/ 'DST_NAME', 'DST_MFO', 'DST_OKPO', 'DST_RCOUNT', 'DST_NAME_BANK', 'DEST'];
+        $xml_fields = ['OUTBANK', 'NAME_OWNER_BANK', 'NAME_BANK', 'NAME_PLAT', 'DST_NAME', 'DST_MFO', 'DST_OKPO', 'DST_RCOUNT', 'DST_NAME_BANK', 'DEST'];
 
         for ($i=0; $i < count($xml_fields); $i++) {
             $field = $xml_fields[$i];
             $var = '_' . strtolower($field);
-            $$var = $xml->ROW->$field . '';
+            $$var = $row_elem->$field . '';
             $data[strtolower($field)] = $$var;
         }
 

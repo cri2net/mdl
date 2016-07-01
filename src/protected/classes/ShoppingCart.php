@@ -368,6 +368,15 @@ class ShoppingCart
                 }
                 break;
 
+            case 'kinders':
+                self::pppGetCashierByKassId(self::KASS_ID_TAS, $login, $password);
+
+                $report = ($payment['status'] == 'success') ? 'api_prov.rep' : 'api_pacq50.rep';
+                if (self::useBalancer()) {
+                    $report = ($payment['status'] == 'success') ? '/gioc_api/api_prov.rep' : '/gioc_api/api_pacq50.rep';
+                }
+                break;
+
             case 'komdebt':
                 $report = ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep';
                 if (self::useBalancer()) {
@@ -378,6 +387,7 @@ class ShoppingCart
 
         switch ($payment['type']) {
             case 'gai':
+            case 'kinders':
             case 'komdebt':
 
                 switch ($payment['processing']) {
@@ -399,6 +409,9 @@ class ShoppingCart
 
                         if ($payment['type'] == 'gai') {
                             $url .= '&login=' . $login;
+                        } elseif ($payment['type'] == 'kinders') {
+                            $url .= '&login=' . $login;
+                            $url .= '&pwd=' . $password;
                         }
 
                         $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
@@ -541,23 +554,29 @@ class ShoppingCart
             return false;
         }
 
+        $row_elem = $xml->ROW;
+        
+        if (isset($xml->ROWSET->ROW)) {
+            $row_elem = $xml->ROWSET->ROW;
+        }
+
         // ERR = 7: Status of payment already sent
         // ERR = 9: Status of payment not 20 (NEW)
-        if ($xml->ROW->ERR.'' && ($xml->ROW->ERR.'' != '7') && ($xml->ROW->ERR.'' != '9')) {
+        if ($row_elem->ERR.'' && ($row_elem->ERR.'' != '7') && ($row_elem->ERR.'' != '9')) {
             self::logRequestToReports($message_to_log, $payment['id'], false, 'status');
-            if ($xml->ROW->ERR.'' == '4') {
+            if ($row_elem->ERR.'' == '4') {
                 $to_update['send_payment_status_to_reports'] = 1;
             }
 
             PDO_DB::update($to_update, self::TABLE, $payment['id']);
-            // throw new Exception("id: {$payment['id']}, " . self::get_create_payment_error($xml->ROW->ERR.''));
+            // throw new Exception("id: {$payment['id']}, " . self::get_create_payment_error($row_elem->ERR.''));
             return false;
         }
 
-        $to_update['reports_num_kvit']               = $xml->ROW->NUM_KVIT.'';
-        $to_update['acq']                            = ($xml->ROW->ACQ.'')            ? $xml->ROW->ACQ.''            : $payment['acq'];
-        $to_update['reports_id_pack']                = ($xml->ROW->ID_PACK.'')        ? $xml->ROW->ID_PACK.''        : $payment['reports_id_pack'];
-        $to_update['reports_id_plat_klient']         = ($xml->ROW->ID_PLAT_KLIENT.'') ? $xml->ROW->ID_PLAT_KLIENT.'' : $payment['reports_id_plat_klient'];
+        $to_update['reports_num_kvit']               = $row_elem->NUM_KVIT.'';
+        $to_update['acq']                            = ($row_elem->ACQ.'')            ? $row_elem->ACQ.''            : $payment['acq'];
+        $to_update['reports_id_pack']                = ($row_elem->ID_PACK.'')        ? $row_elem->ID_PACK.''        : $payment['reports_id_pack'];
+        $to_update['reports_id_plat_klient']         = ($row_elem->ID_PLAT_KLIENT.'') ? $row_elem->ID_PLAT_KLIENT.'' : $payment['reports_id_plat_klient'];
         $to_update['send_payment_status_to_reports'] = 1;
 
         PDO_DB::update($to_update, self::TABLE, $payment['id']);
