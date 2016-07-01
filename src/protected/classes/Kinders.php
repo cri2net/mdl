@@ -164,6 +164,7 @@ class Kinders
     {
         $url = API_URL . self::get_API_URL('PPP_URL_CREATE');
         $summ = str_replace('.', ',', $summ);
+        $timestamp = microtime(true);
 
         $TAS_KASS_ID = 1080;
         ShoppingCart::pppGetCashierByKassId($TAS_KASS_ID, $login, $password);

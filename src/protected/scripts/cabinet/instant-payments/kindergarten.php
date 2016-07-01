@@ -26,9 +26,8 @@
         $penalty_user_lastname   = (isset($_SESSION['instant-payments-kinders']['columns']['penalty_user_lastname']))   ? $_SESSION['instant-payments-kinders']['columns']['penalty_user_lastname']   : $penalty_user_lastname;
 
         if (!isset($id_district) || !$id_district) {
-            $id_district = $districts[0]['id'];
+            $id_district = 0;
         }
-
 
     } catch (Exception $e) {
         $_SESSION['instant-payments-kinders']['status'] = false;
@@ -291,4 +290,6 @@
 
         id_district = tmp_id_district;
     }
+
+    $('#id_district').trigger('change');
 </script>
