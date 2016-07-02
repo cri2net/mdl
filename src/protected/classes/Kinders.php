@@ -41,11 +41,12 @@ class Kinders
         }
 
         $result = [];
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
 
-        for ($i=0; $i < count($xml->ROWSET->ROW); $i++) {
+        for ($i=0; $i < count($row_elem); $i++) {
             $result[] = [
-                'name' => $xml->ROWSET->ROW[$i]->NAME_FIRME . '',
-                'id'   => $xml->ROWSET->ROW[$i]->ID_FIRME . '',
+                'name' => $row_elem[$i]->NAME_FIRME . '',
+                'id'   => $row_elem[$i]->ID_FIRME . '',
             ];
         }
 
@@ -88,19 +89,21 @@ class Kinders
         $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = @simplexml_load_string($xml_string);
+
         
         if (($xml === false) || ($xml === null)) {
             return ['list' => []];
         }
 
         $list = [];
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
 
-        for ($i=0; $i < count($xml->ROWSET->ROW); $i++) {
-            $name = $xml->ROWSET->ROW[$i]->FIO_RONO_CHILD . '';
+        for ($i=0; $i < count($row_elem); $i++) {
+            $name = $row_elem[$i]->FIO_RONO_CHILD . '';
             if (strpos(mb_strtolower($name, 'UTF-8'), $fio) !== false) {
                 $list[] = [
                     'name' => $name,
-                    'id'   => $xml->ROWSET->ROW[$i]->ID_RONO_CHILD . ''
+                    'id'   => $row_elem[$i]->ID_RONO_CHILD . ''
                 ];
             }
         }
@@ -121,11 +124,12 @@ class Kinders
         }
 
         $list = [];
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
 
-        for ($i=0; $i < count($xml->ROWSET->ROW); $i++) {
+        for ($i=0; $i < count($row_elem); $i++) {
             $list[] = [
-                'name' => $xml->ROWSET->ROW[$i]->NAME_RONO_GROUP . '',
-                'id'   => $xml->ROWSET->ROW[$i]->ID_RONO_GROUP . ''
+                'name' => $row_elem[$i]->NAME_RONO_GROUP . '',
+                'id'   => $row_elem[$i]->ID_RONO_GROUP . ''
             ];
         }
 
@@ -145,11 +149,12 @@ class Kinders
         }
 
         $list = [];
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
 
-        for ($i=0; $i < count($xml->ROWSET->ROW); $i++) {
+        for ($i=0; $i < count($row_elem); $i++) {
             $list[] = [
-                'NAME_SAD' => $xml->ROWSET->ROW[$i]->NAME_SAD . '',
-                'R101'     => $xml->ROWSET->ROW[$i]->ID_SAD . ''
+                'NAME_SAD' => $row_elem[$i]->NAME_SAD . '',
+                'R101'     => $row_elem[$i]->ID_SAD . ''
             ];
         }
 
