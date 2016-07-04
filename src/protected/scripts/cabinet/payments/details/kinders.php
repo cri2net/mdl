@@ -12,7 +12,7 @@
         <tbody>
             <tr class="item-row even">
                 <td colspan="1" class="first">Тип платежу</td>
-                <td colspan="4" class="">Сплата штрафу за порушення ПДР</td>
+                <td colspan="4" class="">Дитячі садки м.Київ (харчування)</td>
             </tr>
             <tr class="item-row odd">
                 <td colspan="1" class="first">Статус</td>
