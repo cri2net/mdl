@@ -6,7 +6,8 @@
         "php": ">=5.4.0",
         "phpmailer/phpmailer": "^5.2.10",
         "sinergi/browser-detector": "^5.0",
-        "jbdemonte/barcode": "^2.1"
+        "jbdemonte/barcode": "^2.1",
+        "phpoffice/phpexcel": "^1.8"
     },
     "config": {
         "vendor-dir": "protected/vendor",
