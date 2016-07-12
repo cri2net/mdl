@@ -280,6 +280,7 @@ class ShoppingCart
 
                     $old_value = round(str_replace(',', '.', $data[$item.'_old_count'][$key]), 3);
                     $new_value = round(str_replace(',', '.', $data[$item.'_new_count'][$key]), 3);
+                    $cur_value = round(str_replace(',', '.', $data[$item.'_cur_count'][$key]), 3);
                     $used_value = $new_value - $old_value;
 
                     if ($used_value < 0) {
@@ -291,6 +292,7 @@ class ShoppingCart
                         'abcounter'   => $data[$item.'_abcounter'][$key],
                         'old_value'   => $old_value,
                         'new_value'   => $new_value,
+                        'cur_value'   => $cur_value,
                         'pcount'      => $used_value,
                     ];
                 }
@@ -655,6 +657,7 @@ class ShoppingCart
                 $counters[$j] = (array)$counters[$j];
                 $counters[$j]['old_value'] = str_replace('.', ',', $counters[$j]['old_value']);
                 $counters[$j]['new_value'] = str_replace('.', ',', $counters[$j]['new_value']);
+                $counters[$j]['cur_value'] = str_replace('.', ',', $counters[$j]['cur_value']);
                 $counters[$j]['pcount'] = str_replace('.', ',', $counters[$j]['pcount']);
 
                 $xml .= "<counter>";
@@ -662,6 +665,7 @@ class ShoppingCart
                 $xml .= "<counter_no>{$counters[$j]['counter_num']}</counter_no>";
                 $xml .= "<old_value>{$counters[$j]['old_value']}</old_value>";
                 $xml .= "<new_value>{$counters[$j]['new_value']}</new_value>";
+                $xml .= "<cur_value>{$counters[$j]['cur_value']}</cur_value>";
                 $xml .= "<pcount>{$counters[$j]['pcount']}</pcount>";
                 $xml .= "</counter>";
             }

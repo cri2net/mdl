@@ -81,9 +81,12 @@
             </tr>
             <?php
                 $counter = 0;
+                $platcode = null;
+                $have_one_platcode = true;
 
                 foreach ($debtData['list'] as $key => $item) {
                     $counter++;
+
                     ?>
                     <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
                         <td class="first">
@@ -108,25 +111,38 @@
                             </div>
                             <?php
                                 if ($item['counter'] != 0) {
+
+                                    if (($platcode !== null) && ($platcode != $item['ABCOUNT'])) {
+                                        $have_one_platcode = false;
+                                    }
+                                    $platcode = $item['ABCOUNT'];
+
                                     // $item['to_pay'] = str_replace('.', ',', sprintf('%.2f', $item['SUMM_OBL_PAY']));
 
                                     foreach ($item['counterData']['counters'] as $counter) {
                                         ?>
                                         <div class="counter-data">
                                             <br>
-                                            Показання лічильника №<?= $counter['COUNTER_NO']; ?> : <br>
                                             
+                                            Показання лічильника №<?= $counter['COUNTER_NO']; ?> : <br>
                                             <div style="margin-top:5px; margin-bottom:5px;">
                                                 <label for="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Попередні:</label>
-                                                <input style="width:50px;" value="<?= $counter['OLD_VALUE']; ?>" id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
+                                                <input style="width: 60px;" value="<?= $counter['OLD_VALUE']; ?>" id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
                                             </div>
                                             <div style="margin-bottom:5px;">
-                                                <label for="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Поточні:</label>
-                                                <input style="width: 50px;" class="text inp_<?= $key; ?>_new_count" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
+                                                <label for="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Нові:</label>
+                                                <input style="width: 60px;" class="inp_<?= $key; ?>_new_count" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
+                                            </div>
+                                            <div style="margin-bottom:5px;">
+                                                <label for="cur_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Поточні:</label>
+                                                <input style="width: 60px;" type="text" id="cur_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_cur_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);">
+                                            </div>
+                                            <div style="margin-bottom:5px;">
+                                                <label for="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Заводський номер:</label>
+                                                <input style="width: 60px;" type="text" id="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
                                             </div>
                                             
                                             <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
-                                            <input type="hidden" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
                                             До сплати: ( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span>)&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;грн
                                         </div>
                                         <?php
@@ -221,6 +237,24 @@
                     <b class="hint-star">**</b> — з врахуванням заборгованності <br>
                 </td>
             </tr>
+            <?php
+                if ($have_one_platcode && ($platcode !== null)) {
+                    ?>
+                    <tr class="item-row">
+                        <td class="first">
+                            <?php
+                                $link = 'http://mars.givc-kgga.kiev.ua/cks.user.input/';
+                                $link .= '?platcode=' . rawurlencode($platcode);
+                                $link .= '&email=' . rawurlencode($__userData['email']);
+                                $link .= '&user_id=' . $__userData['id'];
+                                $link .= '&hash=' . md5(strtoupper(strrev($platcode) . strrev($__userData['email']) . strrev($__userData['id']) . strrev('GIOC_UKRAINE_IN_KIEV' . date('Ymd'))));
+                            ?>
+                            <a target="_blank" href="<?= $link; ?>">введення показань приладів обліку</a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            ?>
         </tbody>
     </table>
 </form>
