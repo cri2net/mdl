@@ -140,7 +140,7 @@ class Http
             )
         ));
 
-        return file_get_contents($url, false, $context);
+        return @file_get_contents($url, false, $context);
     }
 
 }

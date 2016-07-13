@@ -3,7 +3,7 @@
 
 <?php
     try {
-        $districts = Kinders::getFirmeList();
+        $districts = (array)Kinders::getFirmeList();
 
         if (is_array($_SESSION['instant-payments-kinders']['columns'])) {
             foreach ($_SESSION['instant-payments-kinders']['columns'] as $key => $value) {
