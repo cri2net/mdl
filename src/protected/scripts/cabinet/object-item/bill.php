@@ -82,11 +82,13 @@
             <?php
                 $counter = 0;
                 $platcode = null;
-                $have_one_platcode = true;
 
                 foreach ($debtData['list'] as $key => $item) {
                     $counter++;
 
+                    if (str_replace(' ', '', $item['firm_name']) == 'КПГIОЦ') {
+                        $platcode = $item['PLAT_CODE'];
+                    }
                     ?>
                     <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
                         <td class="first">
@@ -111,11 +113,6 @@
                             </div>
                             <?php
                                 if ($item['counter'] != 0) {
-
-                                    if (($platcode !== null) && ($platcode != $item['ABCOUNT'])) {
-                                        $have_one_platcode = false;
-                                    }
-                                    $platcode = $item['ABCOUNT'];
 
                                     // $item['to_pay'] = str_replace('.', ',', sprintf('%.2f', $item['SUMM_OBL_PAY']));
 
@@ -238,7 +235,7 @@
                 </td>
             </tr>
             <?php
-                if ($have_one_platcode && ($platcode !== null)) {
+                if ($platcode !== null) {
                     ?>
                     <tr class="item-row">
                         <td class="first">
