@@ -246,7 +246,9 @@
                                 $link .= '&user_id=' . $__userData['id'];
                                 $link .= '&hash=' . md5(strtoupper(strrev($platcode) . strrev($__userData['email']) . strrev($__userData['id']) . strrev('GIOC_UKRAINE_IN_KIEV' . date('Ymd'))));
                             ?>
-                            <a target="_blank" href="<?= $link; ?>">введення показань приладів обліку</a>
+                            <a target="_blank" href="<?= $link; ?>">
+                                <img alt="" src="<?= BASE_URL; ?>/pic/pages/cabinet/objects/counters.png" />
+                            </a>
                         </td>
                     </tr>
                     <?php

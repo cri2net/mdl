@@ -321,8 +321,8 @@ class ShoppingCart
                 'payment_id'   => $payment_id,
                 'user_id'      => $user_id,
                 'timestamp'    => $timestamp,
-                'data'         => json_encode($kombebt_data),
-                'counter_data' => json_encode($counter_data)
+                'data'         => json_encode($kombebt_data, JSON_UNESCAPED_UNICODE),
+                'counter_data' => json_encode($counter_data, JSON_UNESCAPED_UNICODE)
             ];
 
             $serviceId = PDO_DB::insert($serviceData, self::SERVICE_TABLE);
@@ -806,7 +806,7 @@ class ShoppingCart
                         ];
                     }
 
-                    $to_update['processing_data'] = json_encode($payment['processing_data']);
+                    $to_update['processing_data'] = json_encode($payment['processing_data'], JSON_UNESCAPED_UNICODE);
                 }
 
                 if (!$result) {
@@ -842,7 +842,7 @@ class ShoppingCart
                     foreach ($params as $key => $value) {
                         $payment['processing_data']['requests'][$date][$key] = $value;
                     }
-                    $to_update['processing_data'] = json_encode($payment['processing_data']);
+                    $to_update['processing_data'] = json_encode($payment['processing_data'], JSON_UNESCAPED_UNICODE);
 
                 } elseif (in_array($params['TranCode'], ['105', '116', '111', '108', '101', '130', '290', '291', '401', '402', '403', '404', '405', '406', '407', '411', '412', '420', '421', '430', '431', '501', '502', '503', '504'])) {
                     $decline = true;
