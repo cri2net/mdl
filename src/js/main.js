@@ -315,7 +315,7 @@ function recount_counter_summ(key, tarif, counter_no) {
     }
 
     if (isNaN(tarif) || isNaN(new_value)) {
-        $('#newval_counter_' + key + '_' + counter_no).html('нове&nbsp;значення');
+        $('#newval_counter_' + key + '_' + counter_no).html('поточне&nbsp;значення');
         add_cost = add_cost.toFixed(2);
         add_cost += '';
         add_cost = add_cost.split('.').join(',');
@@ -761,11 +761,11 @@ function add_new_counters(key, abcounter, tarif)
             '<input style="width: 60px;" value="0" id="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
         '</div>' +
         '<div style="margin-bottom:5px;">' +
-            '<label for="inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Нові:</label>' +
+            '<label for="inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Поточні:</label>' +
             '<input style="width: 60px;" class="inp_'+ key +'_new_count" type="text" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
         '</div>' +
         '<div style="margin-bottom:5px;">' +
-            '<label for="cur_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Поточні:</label>' +
+            '<label for="cur_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">поточні на дату сплати:</label>' +
             '<input style="width: 60px;" type="text" id="cur_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_cur_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);">' +
         '</div>' +
         '<div style="margin-bottom:5px;">' +
@@ -774,7 +774,7 @@ function add_new_counters(key, abcounter, tarif)
         '</div>' +
 
         '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
-        'До сплати: ( <div style="display:inline-block;" id="newval_counter_'+ key +'_'+ new_counter_numnber +'">нове&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_'+ key +'_'+ new_counter_numnber +'">0</span>)&nbsp;*&nbsp;'+ tarif +'&nbsp;грн' +
+        'До сплати: ( <div style="display:inline-block;" id="newval_counter_'+ key +'_'+ new_counter_numnber +'">поточне&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_'+ key +'_'+ new_counter_numnber +'">0</span>)&nbsp;*&nbsp;'+ tarif +'&nbsp;грн' +
     '</div>';
 
     $(html).insertBefore('#new_counters_for_' + key);

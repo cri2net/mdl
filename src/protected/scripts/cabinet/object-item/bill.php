@@ -127,11 +127,11 @@
                                                 <input style="width: 60px;" value="<?= $counter['OLD_VALUE']; ?>" id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
                                             </div>
                                             <div style="margin-bottom:5px;">
-                                                <label for="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Нові:</label>
+                                                <label for="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Поточні:</label>
                                                 <input style="width: 60px;" class="inp_<?= $key; ?>_new_count" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
                                             </div>
                                             <div style="margin-bottom:5px;">
-                                                <label for="cur_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Поточні:</label>
+                                                <label for="cur_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">поточні на дату сплати:</label>
                                                 <input style="width: 60px;" type="text" id="cur_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_cur_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);">
                                             </div>
                                             <div style="margin-bottom:5px;">
@@ -140,7 +140,7 @@
                                             </div>
                                             
                                             <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
-                                            До сплати: ( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">нове&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span>)&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;грн
+                                            До сплати: ( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">поточне&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span>)&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;грн
                                         </div>
                                         <?php
                                     }
