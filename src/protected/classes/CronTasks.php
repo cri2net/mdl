@@ -119,7 +119,7 @@ class CronTasks
         $objPHPExcel->getProperties()->setTitle("GIOC. Платежи через ТасЛинк за " . date('Y-m-d', $time_from));
         $objPHPExcel->setActiveSheetIndex(0);
 
-        $abc = "ABCDEFGHIJLKLMNO";
+        $abc = "ABCDEFGHIJLKLMNOP";
         for ($i = 0; $i < strlen($abc); $i++) {
             $objPHPExcel->getActiveSheet()->getColumnDimension($abc[$i])->setAutoSize(true);
         }
@@ -139,9 +139,10 @@ class CronTasks
         $objPHPExcel->getActiveSheet()->setCellValue('M1', "Код подтверждения");
         $objPHPExcel->getActiveSheet()->setCellValue('N1', "Время от процессинга");
         $objPHPExcel->getActiveSheet()->setCellValue('O1', "ID у процессинга");
+        $objPHPExcel->getActiveSheet()->setCellValue('P1', "Платёжная система");
 
-        $objPHPExcel->getActiveSheet()->getStyle('A1:O1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);  
-        $objPHPExcel->getActiveSheet()->getStyle('A1:O1')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);  
+        $objPHPExcel->getActiveSheet()->getStyle('A1:P1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);  
+        $objPHPExcel->getActiveSheet()->getStyle('A1:P1')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);  
         $styleThinBlackBorderOutline = array(
             'borders' => array(
                 'inside' => array(
@@ -154,7 +155,7 @@ class CronTasks
                 ),
             ),
         );
-        $objPHPExcel->getActiveSheet()->getStyle('A1:O1')->applyFromArray($styleThinBlackBorderOutline);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:P1')->applyFromArray($styleThinBlackBorderOutline);
 
         $stm = $pdo->prepare("SELECT * FROM " . ShoppingCart::TABLE . " WHERE processing='tas' AND status='success' AND go_to_payment_time>? AND go_to_payment_time<?");
         $stm->execute([$time_from, $time_to]);
@@ -188,6 +189,16 @@ class CronTasks
                     $type = $row['type'];
             }
 
+            if (empty($actual_upc_data['PAN'])) {
+                $row['paysystem'] = '';
+            } elseif ($actual_upc_data['PAN'][0] == '4') {
+                $row['paysystem'] = 'VISA';
+            } elseif ($actual_upc_data['PAN'][0] == '5') {
+                $row['paysystem'] = 'MasterCard';
+            } else {
+                $row['paysystem'] = 'Другое';
+            }
+
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$counter, $row['id']);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$counter, $row['user_id']);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$counter, "{$user['lastname']} {$user['name']} {$user['fathername']}");
@@ -203,6 +214,7 @@ class CronTasks
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$counter, $actual_upc_data['APPROVAL']);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$counter, $actual_upc_data['TIME']);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$counter, $row['processing_data']['first']->oid);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$counter, $row['paysystem']);
 
             $counter++;
         }
@@ -221,8 +233,8 @@ class CronTasks
         ob_end_clean();
 
         $email = new Email();
-        $email->addStringAttachment($xls, "GIOC-Taslink-report " . date('Y-m-d', $time_from) . '.xls');
-        $email->Subject = "GIOC. Платежи через ТасЛинк за " . date('Y-m-d', $time_from);
+        $email->addStringAttachment($xls, "GIOC-Taslink-report " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to) . '.xls');
+        $email->Subject = "GIOC. Платежи через ТасЛинк за " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to);
         
         foreach ($to_emails as $to_email) {
             $email->clearAllRecipients();
