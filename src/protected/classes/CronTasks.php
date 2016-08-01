@@ -101,7 +101,7 @@ class CronTasks
     public static function sendReportAboutTasLink($time_from, $time_to)
     {
         $pdo = PDO_DB::getPDO();
-        $to_emails = ['saifudinova@gerc.ua', 'cri2net@gmail.com'];
+        $to_emails = ['saifudinova@gerc.ua', 'cri2net@gmail.com', 'di.yarovoy@gmail.com'];
 
         $payment_systems = [
             'visa'          => 'Аваль Visa',
