@@ -195,6 +195,11 @@ class KomDebt
                 }
 
                 if ($row->COUNTERS->COUNTERS_ITEM) {
+                    
+                    if (($list['SUMM_MONTH'] > 0) && ($row->SUMM_DOLG . '' == '0')) {
+                        $row->SUMM_DOLG = $row->SUMM_MONTH . '';
+                    }
+
                     $list['counterData']['FIRM_NAME'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
                     $list['counterData']['CODE_FIRME'] = (int)$row->CODE_FIRME;
                     $list['counterData']['date'] = " 01.".date("n").".".date("y");
