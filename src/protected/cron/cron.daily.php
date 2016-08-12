@@ -14,3 +14,11 @@ $today = new DateTime('today');
 CronTasks::sendReportAboutTasLink(date_timestamp_get($first_day), date_timestamp_get($today) - 1);
 
 Authorization::cron();
+
+$start = microtime(true);
+
+Street::cron();
+House::cron();
+Flat::cron();
+
+echo "finish after " . (microtime(true) - $start) . " seconds\r\n";
