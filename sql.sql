@@ -662,3 +662,7 @@ ALTER TABLE `gioc_feedback`
 -- 2016.06.08
 ALTER TABLE `gioc_payment`   
   CHANGE `processing` `processing` ENUM('_test_upc','mastercard','visa','webmoney','khreshchatyk','tas','oschad','oschad_mycard') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+-- 2016.18.19
+ALTER TABLE `gioc_payment`
+  ADD COLUMN `trancode` VARCHAR(10) NULL AFTER `flat_id`;
