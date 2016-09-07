@@ -666,3 +666,8 @@ ALTER TABLE `gioc_payment`
 -- 2016.18.19
 ALTER TABLE `gioc_payment`
   ADD COLUMN `trancode` VARCHAR(10) NULL AFTER `flat_id`;
+
+-- 2016.09.07
+ALTER TABLE `gioc_page_views`
+  DROP INDEX `page_type_2`,
+  ADD  INDEX `page_type_2` (`page_type`, `page_id`);
