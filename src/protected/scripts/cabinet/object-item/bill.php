@@ -80,17 +80,17 @@
                 <td style="white-space:nowrap;">До сплати,<br>грн **</td>
             </tr>
             <?php
-                $counter = 0;
+                $row_counter = 0;
                 $platcode = null;
 
                 foreach ($debtData['list'] as $key => $item) {
-                    $counter++;
+                    $row_counter++;
 
                     if (str_replace(' ', '', $item['firm_name']) == 'КПГIОЦ') {
                         $platcode = $item['PLAT_CODE'];
                     }
                     ?>
-                    <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                    <tr class="item-row <?= ($row_counter % 2 == 0) ? 'even' : 'odd'; ?>">
                         <td class="first">
                             <div class="check-box-line">
                                 <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>">
@@ -104,7 +104,7 @@
                                         if (!empty($item['counterData']['NAIM_LG'])) {
                                             ?>
                                             <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> <br>
-                                            <span class="small">Льготы: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
+                                            <span class="small">Льготи: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
                                             <?php
                                         }
                                     ?>

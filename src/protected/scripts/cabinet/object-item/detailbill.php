@@ -52,7 +52,6 @@
         $prev_month = DateTime::createFromFormat('d.m.Y', $debtData['previous_date']);
         $prev_month_when = $MONTHS_WHEN[$prev_month->format('n')]['ua'];
 
-        $debtData['date'] = str_replace(' ', '&nbsp;', '01 ' . $MONTHS[(int)$new_month] . ' ' . $new_year);
         $debtData['previous_month'] = $MONTHS_NAME[$prev_month->format('n')]['ua']['small']; // это просто приводим в нижний регистр
         $have_error = false;
 

@@ -135,7 +135,7 @@ class StaticPage
      */
     public static function logView($page_id, $page_type = 'static_page', $user_id = null)
     {
-        if (preg_match('/robot|spider|crawler|curl|^$/i', HTTP_USER_AGENT)) {
+        if (preg_match('/robot|spider|crawler|bot|curl|^$/i', HTTP_USER_AGENT)) {
             // не логируем действия ботов
             return;
         }

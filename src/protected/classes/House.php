@@ -30,7 +30,7 @@ class House
      * @param  integer $city_id. OPTIONAL
      * @return string номер дома
      */
-    public static function getHouseName($house_id, $city_id = self::KIEV_ID)
+    public static function getHouseName($house_id, $city_id = Street::KIEV_ID)
     {
         $pdo = PDO_DB::getPDO();
         $stm = $pdo->prepare("SELECT house_number FROM ". self::TABLE . " WHERE city_id=? AND house_id=? LIMIT 1");

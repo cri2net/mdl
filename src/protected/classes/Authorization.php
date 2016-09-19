@@ -233,7 +233,7 @@ class Authorization
         $record = $stm->fetch();
 
         if ($record === false) {
-            throw new Exception(ERROR_GER_RESTORE_CODE);
+            throw new Exception(ERROR_GET_RESTORE_CODE);
             return false;
         }
 
