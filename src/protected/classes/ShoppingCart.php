@@ -359,6 +359,7 @@ class ShoppingCart
         }
 
         $url = API_URL . self::REPORT_BASE_URL;
+        $to_update = [];
 
         switch ($payment['type']) {
             case 'gai':
@@ -448,48 +449,51 @@ class ShoppingCart
                         $url .= '&p10='          . rawurlencode($actual_upc_data['Rrn']);
 
                         if ($payment['processing'] == 'tas') {
-                           $url .= '&p11='       . rawurlencode($actual_upc_data['PAN']);
-                           $url .= '&p12='       . rawurlencode($actual_upc_data['RESPCODE']);
-                           $url .= '&p13='       . rawurlencode($actual_upc_data['SIGN']);
+                            $url .= '&p11='       . rawurlencode($actual_upc_data['PAN']);
+                            $url .= '&p12='       . rawurlencode($actual_upc_data['RESPCODE']);
+                            $url .= '&p13='       . rawurlencode($actual_upc_data['SIGN']);
+                            $to_update['trancode'] = $actual_upc_data['RESPCODE'];
                         } else {
                             $url .= '&p11='      . rawurlencode($actual_upc_data['ProxyPan']);
                             $url .= '&p12='      . rawurlencode($actual_upc_data['TranCode']);
                             $url .= '&p13='      . rawurlencode($actual_upc_data['Signature']);
+                            $to_update['trancode'] = $actual_upc_data['TranCode'];
                         }
 
                         $url .= '&p14=0';
                         break;
 
-                      case 'oschad_mycard':
-                      case 'oschad':
-                            $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
-                            $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
-                            $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
-                            $actual_date = $payment['processing_data']['dates'][count($payment['processing_data']['dates']) - 1];
-                            $actual_osc_data = (array)$payment['processing_data']['requests'][$actual_date];
-                            $osc_first = $payment['processing_data']['first'];
-                            $url = API_URL . self::REPORT_BASE_URL;
+                    case 'oschad_mycard':
+                    case 'oschad':
+                        $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
+                        $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
+                        $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
+                        $actual_date = $payment['processing_data']['dates'][count($payment['processing_data']['dates']) - 1];
+                        $actual_osc_data = (array)$payment['processing_data']['requests'][$actual_date];
+                        $osc_first = $payment['processing_data']['first'];
+                        $url = API_URL . self::REPORT_BASE_URL;
 
-                            $url .= '?report='       . rawurlencode($report);
-                            $url .= '&destype='      . rawurlencode('Cache');
-                            $url .= '&Desformat='    . rawurlencode('xml');
-                            $url .= '&cmdkey='       . rawurlencode('rep');
-                            $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
-                            $url .= '&p1='           . rawurlencode($osc_first->MERCHANT);
-                            $url .= '&p2='           . rawurlencode($osc_first->TERMINAL);
-                            $url .= '&p3='           . rawurlencode($actual_osc_data['Amount']*100);
-                            $url .= '&p4='           . rawurlencode('980');
-                            $url .= '&p5='           . rawurlencode($osc_first->TIMESTAMP);
-                            $url .= '&p6='           . rawurlencode($actual_osc_data['Order']);
-                            $url .= '&p7=';
-                            $url .= '&p8=';
-                            $url .= '&p9='           . rawurlencode($actual_osc_data['AuthCode']);
-                            $url .= '&p10='          . rawurlencode($actual_osc_data['RRN']);
-                            $url .= '&p11=';
-                            $url .= '&p12='          . rawurlencode($actual_osc_data['RC']);
-                            $url .= '&p13='          . rawurlencode($osc_first->P_SIGN);
-                            $url .= '&p14=0';
-                          break;
+                        $url .= '?report='       . rawurlencode($report);
+                        $url .= '&destype='      . rawurlencode('Cache');
+                        $url .= '&Desformat='    . rawurlencode('xml');
+                        $url .= '&cmdkey='       . rawurlencode('rep');
+                        $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
+                        $url .= '&p1='           . rawurlencode($osc_first->MERCHANT);
+                        $url .= '&p2='           . rawurlencode($osc_first->TERMINAL);
+                        $url .= '&p3='           . rawurlencode($actual_osc_data['Amount']*100);
+                        $url .= '&p4='           . rawurlencode('980');
+                        $url .= '&p5='           . rawurlencode($osc_first->TIMESTAMP);
+                        $url .= '&p6='           . rawurlencode($actual_osc_data['Order']);
+                        $url .= '&p7=';
+                        $url .= '&p8=';
+                        $url .= '&p9='           . rawurlencode($actual_osc_data['AuthCode']);
+                        $url .= '&p10='          . rawurlencode($actual_osc_data['RRN']);
+                        $url .= '&p11=';
+                        $url .= '&p12='          . rawurlencode($actual_osc_data['RC']);
+                        $url .= '&p13='          . rawurlencode($osc_first->P_SIGN);
+                        $url .= '&p14=0';
+                        $to_update['trancode'] = $actual_osc_data['RC'];
+                        break;
 
                     case 'khreshchatyk':
                         $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
@@ -518,6 +522,7 @@ class ShoppingCart
                         $url .= '&p12='          . rawurlencode($last['TranCode']);
                         $url .= '&p13=';
                         $url .= '&p14=0';
+                        $to_update['trancode'] = $last['TranCode'];
                         break;
 
                     default:
@@ -536,7 +541,6 @@ class ShoppingCart
 
         $date = date('Y-m-d H:i:s');
         $xml_string = iconv('CP1251', 'UTF-8', $res);
-        $to_update = [];
 
         $message_to_log = var_export(
             [

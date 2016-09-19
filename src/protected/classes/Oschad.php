@@ -239,21 +239,16 @@ class Oschad
         $this->last_mac_str = $text;
     }
 
-    public function get_html_fields($test_mode = false)
+    public function get_html_fields()
     {
-        $ftype = ($test_mode)?'text':'hidden';
         $fcount = count($this->fields_order[$this->trtype_str]);
         $text = '';
         for ($i=0; $i<$fcount; $i++) {
             $fname = $this->fields_order[$this->trtype_str][$i];
-            $text .= '<input type="'.$ftype.'" name="'.$fname.'" value="'.$this->fields[$fname].'">';
+            $text .= '<input type="hidden" name="'.$fname.'" value="'.$this->fields[$fname].'">';
         }
-        $text .= '<input type="'.$ftype.'" name="P_SIGN" value="'.$this->fields['P_SIGN'].'">';
+        $text .= '<input type="hidden" name="P_SIGN" value="'.$this->fields['P_SIGN'].'">';
 
-        if ($test_mode) {
-            $text .= '<input type="'.$ftype.'" value="'.$this->last_mac_str.'">';
-            $text .= '<br><input type="submit" value="submit">';
-        }
         return $text;
     }
 
@@ -290,18 +285,4 @@ class Oschad
         $res = Http::HttpPost($payment_form_action, $this->fields, false);
         return $res;
     }
-
-    /*
-    public function check_sign($key_hex){
-    $fcount = count($this->fields_order[$this->trtype_str]);
-    $text = '';
-    $trtype_str = $this->trtype_by_code($this->fields['TRTYPE']);
-    for($i=0; $i<$fcount; $i++){
-    $fname = $this->fields_order[$trtype_str][$i];
-    $text .= mb_strlen( $this->fields[$fname]) . $this->fields[$fname];
-    }
-    $key = pack('H*', $key_hex);
-    return ($this->fields['P_SIGN'] == hash_hmac('sha1',$text,$key));
-    }
-    */
 }

@@ -17,17 +17,21 @@ if ($_POST['Function'] == 'TransResponse') {
         throw new Exception("Unknow OrderID {$_POST['Order']}");
         exit();
     }
+    
     $date = date('d-m-Y H:i:s');
+
+    $processing_data = (array)(@json_decode($_payment['processing_data']));
+    $processing_data['requests'] = (array)$processing_data['requests'];
+    $processing_data['dates'][] = $date;
+    $processing_data['requests'][$date] = $_POST;
+    
+    $to_update = [
+        'processing_data' => json_encode($processing_data),
+        'send_payment_status_to_reports' => 0
+    ];
+
     switch ($_POST['Result']) {
         case 0:
-            $processing_data = (array)(@json_decode($_payment['processing_data']));
-            $processing_data['requests'] = (array)$processing_data['requests'];
-            $processing_data['dates'][] = $date;
-            $processing_data['requests'][$date] = $_POST;
-            $to_update = [
-                'processing_data' => json_encode($processing_data),
-                'send_payment_status_to_reports' => 0
-            ];
             $to_update['status'] = ($_POST['TRTYPE'] == '24') ? 'reverse' : 'success';
             break;
 

@@ -178,7 +178,7 @@ class UPC
         if (isset($arr['ua'][$code])) {
             return $arr['ua'][$code];
         }
-        return 'Невідома помилка з кодом '.$code;
+        return '';
     }
 
     public static function get_error($code)
