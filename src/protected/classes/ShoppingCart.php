@@ -882,6 +882,23 @@ class ShoppingCart
         }
     }
 
+    public static function getErrorDescription($processing, $trancode)
+    {
+        switch ($processing) {
+            case '_test_upc':
+            case 'mastercard':
+            case 'visa':
+
+                return UPC::get_upc_error($trancode);
+                break;
+
+            case 'khreshchatyk':
+                break;
+        }
+
+        return '';
+    }
+
     public static function cron()
     {
         $pdo = PDO_DB::getPDO();

@@ -39,6 +39,21 @@
                     ?>
                 </td>
             </tr>
+            <?php
+                if ($payment['status'] == 'error') {
+                    $error_desc = ShoppingCart::getErrorDescription($payment['processing'], $payment['trancode']);
+                    
+                    if (!empty($error_desc)) {
+                        ?>
+                        <tr class="item-row odd">
+                            <td colspan="1" class="first">Код помилки</td>
+                            <td colspan="4"><?= $error_desc; ?>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                }
+            ?>
             <tr class="item-row even">
                 <td colspan="1" class="first">Дата та час</td>
                 <td colspan="4" class="">
