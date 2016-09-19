@@ -42,9 +42,8 @@
                     if (!empty($error_desc)) {
                         ?>
                         <tr class="item-row odd">
-                            <td colspan="1" class="first">Код помилки</td>
-                            <td colspan="4"><?= $error_desc; ?>
-                            </td>
+                            <td class="first">Код, опис помилки</td>
+                            <td colspan="4"><?= $payment['trancode']; ?>, <?= $error_desc; ?></td>
                         </tr>
                         <?php
                     }

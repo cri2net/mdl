@@ -894,6 +894,11 @@ class ShoppingCart
 
             case 'khreshchatyk':
                 break;
+
+            case 'oschad':
+            case 'oschad_mycard':
+            case 'oschadbank':
+                return Oschad::getErrorDescription($trancode);
         }
 
         return '';

@@ -9,8 +9,7 @@ if (!isset($_POST['Result'])) {
 }
 
 if ($_POST['Function'] == 'TransResponse') {
-    $rcdesc = (isset($_POST['RC'])) ? Oschad::getRCDesciption($_POST['RC']) : '';
-    Oschad::logPaysys('oschad_mycard', 'POST ' . $rcdesc, var_export($_POST, true));
+    Oschad::logPaysys('oschad_mycard', 'POST ' . Oschad::getErrorDescription($_POST['RC']), var_export($_POST, true));
 
     $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_POST['Order']);
     if ($_payment === null) {
