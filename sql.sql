@@ -671,3 +671,7 @@ ALTER TABLE `gioc_payment`
 ALTER TABLE `gioc_page_views`
   DROP INDEX `page_type_2`,
   ADD  INDEX `page_type_2` (`page_type`, `page_id`);
+
+-- 2016.09.19
+ALTER TABLE `gioc_payment`
+  CHANGE `processing` `processing` ENUM('_test_upc','mastercard','visa','webmoney','khreshchatyk','tas','oschad','oschad_mycard','oschadbank') CHARSET utf8 COLLATE utf8_general_ci NULL;
