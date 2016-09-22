@@ -906,6 +906,10 @@ class ShoppingCart
             case 'khreshchatyk':
                 break;
 
+            case 'tas':
+                return TasLink::getErrorDescription($trancode);
+                break;
+
             case 'oschad':
             case 'oschad_mycard':
             case 'oschadbank':
