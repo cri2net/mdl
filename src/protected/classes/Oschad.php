@@ -376,17 +376,18 @@ class Oschad
             return false;
         }
 
-        $proc_data = (array)(@json_decode($_payment['processing_data']));
-        $proc_data['requests'] = (array)$proc_data['requests'];
-        $resp_date = $proc_data['dates'][count($proc_data['dates']-1)];
-        $last_resp = $resp_data['requests'][$resp_date];
-        $osc_first = $_payment['processing_data']['first'];
+        $_payment['processing_data'] = (array)(json_decode($_payment['processing_data']));
+        $_payment['processing_data']['dates'] = (array)$_payment['processing_data']['dates'];
+        $_payment['processing_data']['requests'] = (array)$_payment['processing_data']['requests'];
+        $actual_date = $_payment['processing_data']['dates'][count($_payment['processing_data']['dates']) - 1];
+        $actual_osc_data = (array)$_payment['processing_data']['requests'][$actual_date];
 
-        $oschad_merchant_settings['BACKREF'] = 'https://www.gioc.kiev.ua/payment-status/'.((integer)$pid);
+        $oschad_merchant_settings['BACKREF'] = 'https://www.gioc.kiev.ua/payment-status/' . $pid . '/';
         $this->set_merchant($oschad_merchant_settings);
-        $this->set_reversal($pid, $last_resp->AMOUNT, $last_resp->RRN, $last_resp->INT_REF);
+        $this->set_reversal($pid, $actual_osc_data->AMOUNT, $actual_osc_data->RRN, $actual_osc_data->INT_REF);
         $this->sign($oschad_sign_key);
 
+        return [$payment_form_action, $this->fields, false];
         $res = Http::HttpPost($payment_form_action, $this->fields, false);
         return $res;
     }

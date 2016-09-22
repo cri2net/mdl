@@ -4,18 +4,19 @@ class ShoppingCart
 {
     const TABLE = DB_TBL_PAYMENT;
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
-    const KASS_ID_TAS  = '1080';
-    const KASS_ID_AVAL = '1028';
-    const KASS_ID_OSCHAD = '1085';
-    const KASS_ID_OSCHAD_MYCARD = '1142';
-    const KASS_ID_KHRESHCHATYK = '1048';
+    const KASS_ID_TAS  = 1080;
+    const KASS_ID_AVAL = 1028;
+    const KASS_ID_OSCHAD = 1085;
+    const KASS_ID_OSCHAD_MYCARD = 1142;
+    const KASS_ID_OSCHADBANK = 1344;
+    const KASS_ID_KHRESHCHATYK = 1048;
     const REPORT_BASE_URL   = '/reports/rwservlet';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard', 'oschad', 'oschad_mycard']
-            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard'];
+            ? ['khreshchatyk', 'tas', '_test_upc', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank']
+            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank'];
     }
 
     public static function get_API_URL($key)
@@ -80,6 +81,11 @@ class ShoppingCart
             case 1142:
                 $login    = 'OSCH_SITE_MYCARD';
                 $password = 'EB35DBDC5AB7AA5662BCEBDE3C6DBAF6989F45A0';
+                break;
+
+            case 1344:
+                $login    = 'osch_site_allcards';
+                $password = strtoupper(sha1('osch_site_allcards123'));
                 break;
         }
     }
@@ -160,7 +166,8 @@ class ShoppingCart
             'mastercard'    => ['percent' => 2, 'min' => 2],
             'khreshchatyk'  => ['percent' => 0, 'min' => 0],
             'oschad'        => ['percent' => 0, 'min' => 0],
-            'oschad_mycard' => ['percent' => 0, 'min' => 0]
+            'oschad_mycard' => ['percent' => 0, 'min' => 0],
+            'oschadbank'    => ['percent' => 0, 'min' => 0],
         ];
 
         if ($pay_system) {
@@ -198,6 +205,9 @@ class ShoppingCart
 
             case 'oschad_mycard':
                 return self::KASS_ID_OSCHAD_MYCARD;
+
+            case 'oschadbank':
+                return self::KASS_ID_OSCHADBANK;
 
             default:
                 return self::KASS_ID_AVAL;
@@ -463,8 +473,9 @@ class ShoppingCart
                         $url .= '&p14=0';
                         break;
 
-                    case 'oschad_mycard':
                     case 'oschad':
+                    case 'oschad_mycard':
+                    case 'oschadbank':
                         $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                         $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
                         $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
