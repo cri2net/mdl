@@ -125,6 +125,23 @@ class StaticPage
     }
 
     /**
+     * сохраняет user agent в отдельную таблицу
+     * @param string $user_agent_string строка user agent
+     * @return array вставленная запись
+     */
+    public static function addUserAgent($user_agent_string)
+    {
+        $arr = [
+            'created_at'        => microtime(true),
+            'updated_at'        => microtime(true),
+            'user_agent_string' => $user_agent_string,
+        ];
+
+        $insert_id = PDO_DB::insert($arr, TABLE_PREFIX . 'page_views_user_agents');
+        return PDO_DB::row_by_id(TABLE_PREFIX . 'page_views_user_agents', $insert_id);
+    }
+
+    /**
      * Сохраняем в БД посещение страницы.
      * Метод может логировать посещения не только статических страниц, но и любых других.
      * 
@@ -140,6 +157,15 @@ class StaticPage
             return;
         }
 
+        $pdo = PDO_DB::getPDO();
+        $stm = $pdo->prepare("SELECT * FROM " . TABLE_PREFIX . "page_views_user_agents WHERE user_agent_string=? LIMIT 1");
+        $stm->execute([HTTP_USER_AGENT]);
+        $user_agent = $stm->fetch();
+
+        if ($user_agent === false) {
+            $user_agent = self::addUserAgent(HTTP_USER_AGENT);
+        }
+
         if ($user_id === null) {
             $user_id = Authorization::getLoggedUserId();
             if (!$user_id) {
@@ -148,15 +174,18 @@ class StaticPage
         }
 
         $arr = [
-            'timestamp' => microtime(true),
-            'page_type' => $page_type,
-            'page_id' => $page_id,
-            'user_id' => $user_id,
-            'ip' => USER_REAL_IP,
-            'user_agent_string' => HTTP_USER_AGENT,
+            'timestamp'     => microtime(true),
+            'page_type'     => $page_type,
+            'page_id'       => $page_id,
+            'user_id'       => $user_id,
+            'ip'            => USER_REAL_IP,
+            'user_agent_id' => $user_agent['id'],
         ];
 
         PDO_DB::insert($arr, self::TABLE_VIEWS);
+
+        $stm = $pdo->prepare("UPDATE " . TABLE_PREFIX . "page_views_user_agents SET views = views + 1, updated_at=? WHERE id=? LIMIT 1");
+        $stm->execute([microtime(true), $user_agent['id']]);
     }
 
     public static function incrementViews($id)

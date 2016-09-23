@@ -675,3 +675,21 @@ ALTER TABLE `gioc_page_views`
 -- 2016.09.19
 ALTER TABLE `gioc_payment`
   CHANGE `processing` `processing` ENUM('_test_upc','mastercard','visa','webmoney','khreshchatyk','tas','oschad','oschad_mycard','oschadbank') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+-- 2016.09.22
+CREATE TABLE `gioc_page_views_user_agents`(
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `created_at` DOUBLE NOT NULL,
+  `updated_at` DOUBLE NOT NULL,
+  `views` INT(11) NOT NULL DEFAULT 0,
+  `user_agent_string` VARCHAR(2000),
+  PRIMARY KEY (`id`),
+  INDEX (`user_agent_string`(30))
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+ALTER TABLE `gioc_page_views`
+  ADD COLUMN `user_agent_id` INT(11) NOT NULL AFTER `user_agent_string`;
+
+ALTER TABLE `gioc_page_views`
+  DROP COLUMN `user_agent_string`;
+
