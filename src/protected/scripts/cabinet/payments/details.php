@@ -1,4 +1,7 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 try {
     $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $__route_result['values']['id']);
     if (!$payment || !$payment['go_to_payment_time'] || ($payment['user_id'] != $__userData['id'])) {

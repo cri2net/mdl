@@ -1,5 +1,7 @@
 <?php
 
+use cri2net\php_pdo_db\PDO_DB;
+
 $oschad = new Oschad();
 $oschad_merchant_settings['BACKREF'] = 'https://www.gioc.kiev.ua/payment-status/' . $_payment['id'] . '/';
 $oschad->set_merchant($oschad_merchant_settings);

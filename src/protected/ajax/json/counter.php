@@ -1,4 +1,7 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 try {
     $response = [];
     $good_keys = ['OSCHADBANK_CARD_COUNT', 'TAS_FRAME_LOAD', 'TAS_FRAME_NOT_LOAD', 'TAS_FRAME_LOAD_SLOW'];

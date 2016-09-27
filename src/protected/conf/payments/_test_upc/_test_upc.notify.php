@@ -1,4 +1,7 @@
 <?php
+
+    use cri2net\php_pdo_db\PDO_DB;
+    
     header("Content-Type: text/plain; charset=UTF-8");
 
     $_test_sert = ROOT . UPC::UPC_FOLDER . '/test-server.crt';

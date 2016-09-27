@@ -1,4 +1,7 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 if (!isset($_POST) || !isset($_POST['Function'])) {
     header('Location: ' . BASE_URL . '/cabinet/payments/history/');
     exit('$_POST[Function] not set');

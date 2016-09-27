@@ -1,5 +1,7 @@
 <?php
 
+use cri2net\php_pdo_db\PDO_DB;
+
 try {
 
     if (isset($_POST['get_last_step'])) {

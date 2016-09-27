@@ -15,8 +15,6 @@
 	}
 ?>
 <title><?php require_once(ROOT . "/protected/scripts/seo/title.php"); ?></title>
-<meta name="keywords" content="<?php require_once(ROOT . "/protected/scripts/seo/keywords.php"); ?>" />
-<meta name="description" content="<?php require_once(ROOT . "/protected/scripts/seo/description.php"); ?>" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&amp;subset=latin,cyrillic">
 <?php
 	if (USER_REAL_IP === '127.0.0.1') {
@@ -24,16 +22,6 @@
 	} else {
 		require_once(ROOT . '/protected/scripts/google-analytics.php');
 	}
-
-    $tmp = PDO_DB::table_list(TABLE_PREFIX . 'text', "variable IN ('HEADER_PHONE', 'HEADER_PHONE_SECOND', 'HEADER_WORK')");
-    for ($i=0; $i < count($tmp); $i++) { 
-        $_tmp[$tmp[$i]['variable']] = $tmp[$i]['text'];
-    }
-
-    switch ($__route_result['controller'] . "/" . $__route_result['action']) {
-        case 'page/tender':
-            define('HAVE_SIDEBAR', false);
-    }
 ?>
 <script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
 </head>

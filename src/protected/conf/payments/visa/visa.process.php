@@ -1,4 +1,7 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 $str_to_sign = "$MerchantID;$TerminalID;$purchaseTime;{$_payment['id']};$Currency;$totalAmountKop;$sd;";
 $fp = fopen(ROOT . "/protected/conf/payments/$pay_system/$MerchantID.pem", "r");
 $priv_key = fread($fp, 8192);

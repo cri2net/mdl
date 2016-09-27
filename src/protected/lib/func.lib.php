@@ -1,4 +1,7 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 function generateCode($length = 8, $possible = '012346789abcdefghijkmnopqrtvwxyz')
 {
     $string = '';

@@ -1,3 +1,6 @@
+<?php
+    use cri2net\php_pdo_db\PDO_DB;
+?>
 <div class="form-block">
     <div class="form-subtitle">Зміна логіну</div>
     <div class="input">

@@ -1,3 +1,6 @@
+<?php
+    use cri2net\php_pdo_db\PDO_DB;
+?>
 <h1 class="big-title">Cплата штрафів за порушення ПДР</h1>
 <br><br>
 

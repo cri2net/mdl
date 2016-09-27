@@ -1,3 +1,6 @@
+<?php
+    use cri2net\php_pdo_db\PDO_DB;
+?>
 <h1 class="big-title">Підтвердження електронної пошти</h1>
 <?php
     if (Authorization::isLogin() && $__userData['activated'] && $__userData['verified_email'] && !$__userData['broken_email']) {

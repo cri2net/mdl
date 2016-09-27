@@ -1,4 +1,7 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 try {
     if (!Authorization::isLogin()) {
         throw new Exception(ERROR_USER_NOT_LOGGED_IN);

@@ -1,5 +1,7 @@
 <?php
 
+use cri2net\php_pdo_db\PDO_DB;
+
 class Authorization
 {
     const USER_CODES_TABLE = DB_TBL_USER_CODES;

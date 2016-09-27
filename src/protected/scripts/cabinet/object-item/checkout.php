@@ -1,4 +1,6 @@
 <?php
+    use cri2net\php_pdo_db\PDO_DB;
+    
     try {
         if (!isset($_SESSION['paybill']['payment_id'])) {
             throw new Exception(ERROR_OLD_REQUEST);

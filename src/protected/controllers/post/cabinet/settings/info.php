@@ -1,4 +1,7 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 try {
     $_SESSION['cabinet-settings'] = [];
     $_POST['mob_phone'] = '+' . preg_replace('/[^0-9]/', '', $_POST['mob_phone']);

@@ -4,9 +4,82 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "559d0255ccf915a57c4eff95bd37c082",
-    "content-hash": "9312e1c683f604e9c26e27646d02d612",
+    "hash": "adb22007b06d88aa37feb83c2e223e0f",
+    "content-hash": "b1914aa2e8d1ca710e92574942bd2bfe",
     "packages": [
+        {
+            "name": "cri2net/php-pdo-db",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/cri2net/php-pdo-db.git",
+                "reference": "be67689290d51a50719c89e1947c6de79f2cefdb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/be67689290d51a50719c89e1947c6de79f2cefdb.zip",
+                "reference": "be67689290d51a50719c89e1947c6de79f2cefdb",
+                "shasum": ""
+            },
+            "require": {
+                "cri2net/php-singleton": "~1.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "cri2net\\php_pdo_db\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Davidovich",
+                    "email": "cri2net@gmail.com"
+                }
+            ],
+            "description": "PHP Class to work with the database using PDO",
+            "time": "2016-08-23 17:35:11"
+        },
+        {
+            "name": "cri2net/php-singleton",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/cri2net/php-singleton.git",
+                "reference": "a3e2618af8d44593e7da090e02bafd88c65f409a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/cri2net/php-singleton/get/a3e2618af8d44593e7da090e02bafd88c65f409a.zip",
+                "reference": "a3e2618af8d44593e7da090e02bafd88c65f409a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "cri2net\\php_singleton\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Davidovich",
+                    "email": "cri2net@gmail.com"
+                }
+            ],
+            "description": "PHP Trait Singleton",
+            "time": "2016-01-30 00:37:39"
+        },
         {
             "name": "jbdemonte/barcode",
             "version": "2.1.0",

@@ -1,5 +1,7 @@
 <?php
 
+use cri2net\php_pdo_db\PDO_DB;
+
 class Kinders
 {
     public static function get_API_URL($key)

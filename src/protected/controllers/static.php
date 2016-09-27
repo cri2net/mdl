@@ -1,4 +1,7 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 try {
     switch ($__route_result['values']['type']) {
         case 'payment':

@@ -1,5 +1,7 @@
 <?php
 
+use cri2net\php_pdo_db\PDO_DB;
+
 class Flat
 {
     const TABLE = DB_TBL_FLATS;

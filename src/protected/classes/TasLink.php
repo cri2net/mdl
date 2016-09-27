@@ -1,5 +1,7 @@
 <?php
 
+use cri2net\php_pdo_db\PDO_DB;
+
 class TasLink
 {
     const PASSWORD_INIT_SESSION = 'TASLINK_ORDER_REQ';

@@ -1,4 +1,7 @@
 <?php
+
+    use cri2net\php_pdo_db\PDO_DB;
+    
     if (!Authorization::isLogin()) {
         define('SHOW_NEED_AUTH_MESSAGE', true);
         return require_once(ROOT . '/protected/pages/cabinet/login.php');

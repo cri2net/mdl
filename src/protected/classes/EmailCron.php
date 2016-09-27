@@ -1,5 +1,7 @@
 <?php
 
+use cri2net\php_pdo_db\PDO_DB;
+
 class EmailCron
 {
     const TABLE = DB_TBL_EMAIL_CRON;

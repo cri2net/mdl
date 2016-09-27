@@ -1,4 +1,7 @@
 <?php
+
+    use cri2net\php_pdo_db\PDO_DB;
+    
     $__is_email_mode = isset($_GET['email_mode']);
     $__is_text_mode = isset($_GET['text_mode']);
     $__img_path = BASE_URL . '/pic/email/';
