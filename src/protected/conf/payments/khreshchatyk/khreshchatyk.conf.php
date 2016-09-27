@@ -1,2 +1,0 @@
-<?php
-define('KHRESHCHATYK_MIN_PAYMENT_SUMM', 5);
