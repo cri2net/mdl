@@ -2,7 +2,7 @@ content {
     .inner.page_cabinet {
         .h1-line {
             display:block; position:relative; margin-top:37px;
-            .already-have { text-align: right; line-height:22px; font-size:16px; color:#02989d; position:absolute; right:18px; top:17px; font-weight:bold; }
+            .already-have { margin-top: 20px;text-align: right; line-height:22px; font-size:14px; text-transform: lowercase;  position:absolute; right:18px; top:17px; font-weight:normal; }
         }
     }
 
@@ -35,7 +35,7 @@ content {
 
             &.secure {
                 width:100%;
-                background-color:#01b671;
+                background-color:#83b67b;
             }
         }
 
@@ -44,14 +44,15 @@ content {
         }
     } 
 
-    .registration, .cabinet-objects, .cabinet-settings {
+    .registration, .cabinet-objects, .cabinet-settings, .page_cabinet {
         .form-block {
-            width:50%; float:left; display:inline-block; margin-top:27px;
+            width:50%; float:left; display:inline-block; margin-top: 0px;
             .input {
-                display:inline-block; width:319px; position:relative;
-                label { font-size:16px; }
+                &:not(.with-btn) { display:inline-block; }
+                width:319px; position:relative;
+                label { font-size:14px !important; }
                 input {
-                    margin-top:12px; margin-bottom:18px; color:#01b671;
+                    margin-top:5px; margin-bottom:18px; color:#83b67b;
                 }
                 &.pass {
                     input {
@@ -59,7 +60,7 @@ content {
                     }
                 }
                 .eye { 
-                    display:block; .size(27, 16); position:absolute; right:8px; top:41px; 
+                    display:block; .size(27, 16); position:absolute; right:30px; top:29px; 
                     cursor:pointer; background-image:data-uri("@{images}/pages/cabinet/registration/__eye.png"); 
                     &:hover { background-position:0 -16px; }
                     &.stroked {
@@ -69,7 +70,7 @@ content {
                 }
                 .hint { color:#888; font-size:12px; }
                 .btn {
-                    font-size: 24px; line-height:41px; margin-top:8px; width:100%;
+                    font-size: 16px; line-height:10px; margin-top:8px; width:100%;
                 }
 
                 // тут стили для страницы авторизации
@@ -83,8 +84,8 @@ content {
                         text-align:center;
                         padding:51px 0;
                         position:absolute;
-                        right:-41px;
-                        top:48px;
+                        right:-24px;
+                        top:29px;
                         .size(36, 20);
                         background-repeat:no-repeat;
                         background-position:left center;
@@ -96,7 +97,7 @@ content {
         .info-block {
             width:50%; display:inline-block;
             .block-inner {
-                padding:26px 25px 29px 27px; background-color:#01b671; color:#fff; margin-right:18px; margin-top:55px;
+                padding:26px 25px 29px 27px; background-color:#83b67b; color:#fff; margin-right:18px; margin-top:55px;
                 .title { font-weight:bold; font-size:24px; margin-bottom:25px; font-family:Arial; }
                 .item {
                     font-family:Arial; font-family:16px; min-height:25px; line-height:19px; margin-bottom:11px; padding-left:31px; background-repeat:no-repeat; background-position:left 3px;
