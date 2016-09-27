@@ -712,3 +712,65 @@ DROP TABLE gioc_text_errors;
 DROP TABLE gioc_useful_links;
 DROP TABLE gioc_user_cards;
 DROP TABLE gioc_video;
+
+DROP TABLE gioc_cities;
+DROP TABLE gioc_streets;
+DROP TABLE gioc_flat;
+DROP TABLE gioc_houses;
+
+RENAME TABLE `gioc_email_cron` TO `cks_email_cron`; 
+RENAME TABLE `gioc_email_cron_part` TO `cks_email_cron_part`; 
+RENAME TABLE `gioc_payment` TO `cks_payment`; 
+RENAME TABLE `gioc_text` TO `cks_text`; 
+RENAME TABLE `gioc_payment_services` TO `cks_payment_services`; 
+RENAME TABLE `gioc_user_codes` TO `cks_user_codes`; 
+RENAME TABLE `gioc_user_flats` TO `cks_user_flats`; 
+RENAME TABLE `gioc_users` TO `cks_users`; 
+
+
+CREATE TABLE IF NOT EXISTS `cks_cities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name_ua` varchar(500) NOT NULL,
+  `name_ru` varchar(500) NOT NULL,
+  `name_en` varchar(500) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `pos` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_active` (`is_active`),
+  KEY `pos` (`pos`)
+) ENGINE=InnoDB AUTO_INCREMENT=448 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `cks_flats` (
+  `city_id` int(11) NOT NULL,
+  `street_id` int(11) NOT NULL,
+  `house_id` int(11) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `flat_number` varchar(20) NOT NULL,
+  `need_del_after_rebuild` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`object_id`),
+  KEY `need_del_after_rebuild` (`need_del_after_rebuild`),
+  KEY `city_id` (`city_id`),
+  KEY `street_id` (`street_id`),
+  KEY `house_id` (`house_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `cks_houses` (
+  `house_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `street_id` int(11) NOT NULL,
+  `house_number` varchar(20) NOT NULL,
+  PRIMARY KEY (`house_id`),
+  KEY `city_id_2` (`city_id`),
+  KEY `street_id` (`street_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `cks_streets` (
+  `street_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `name_ua` varchar(500) DEFAULT NULL,
+  `name_ru` varchar(500) DEFAULT NULL,
+  `name_en` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`street_id`),
+  KEY `city_id` (`city_id`),
+  KEY `name_ru` (`name_ru`(30))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
