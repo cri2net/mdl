@@ -34,25 +34,35 @@ var CSS_MASK = ['./src/{js,css}/**/*.css'];
 gulp.task('less', function () {
     gulp.src('./src/less/style.less')
         .pipe(less({
+            compress: false
+        })
+        .on('error', gutil.log)
+        .on('error', gutil.beep))
+        .pipe(gulp.dest('./public/css/'))
+});
+
+gulp.task('less_site', function () {
+    gulp.src('./src/less/style_site.less')
+        .pipe(less({
             compress: true
         })
         .on('error', gutil.log)
         .on('error', gutil.beep))
-        .pipe(gulp.dest('./public/style/'))
+        .pipe(gulp.dest('./public/css/'))
 });
 
 /* TASK: Compile LESS files in no-compress CSS file */
 gulp.task('less_nocompress', function () {
     gulp.src('./src/less/no-compress.less')
         .pipe(less({}))
-        .pipe(gulp.dest('./public/style/'))
+        .pipe(gulp.dest('./public/css/'))
 });
 
 /* TASK: Create webserver for LiveReload */
 gulp.task('connect', function () {
     connect.server({
         root: ['public'],
-        host: 'gioc.dev',
+        host: 'localhost',
         port: 8009
     });
 });
@@ -89,40 +99,14 @@ gulp.task('fonts', function(){
         .pipe(gulp.dest('./public'))
 })
 
-/* TASK: Watching changes in all-source & images */
 gulp.task('watch', function(){
-    livereload.listen();
-
-    // watch(['./src/**/*.less'], ['less']).on('change', stackReload);
-    // watch(WEBPAGES_MASK, ['webpages']).on('change', stackReload);
-    // watch(IMAGES_MASK, ['images']).on('change', stackReload);
-    // watch(CSS_ENCODED_IMAGES_MASK, ['less'] ).on('change', stackReload);
-    // watch('./src/**/*.js', ['js']).on('change', stackReload);
-    gulp.watch(['./src/**/*.less'], ['less', 'less_nocompress']).on('change', stackReload);
-    gulp.watch(WEBPAGES_MASK, ['webpages']).on('change', stackReload);
-    gulp.watch(IMAGES_MASK, ['images']).on('change', stackReload);
-    gulp.watch(CSS_ENCODED_IMAGES_MASK, ['less'] ).on('change', stackReload);
-    gulp.watch('./src/**/*.js', ['js']).on('change', stackReload);
-
-    var timer = null; // a timeout variable
-
-    // actual reload function
-    function stackReload() {
-        var reload_args = arguments;
-
-        // Stop timeout function to run livereload if this function is ran within the last 250ms
-        if (timer) {
-            clearTimeout(timer);
-        }
-
-        // Check if any gulp task is still running
-        if (!gulp.isRunning) {
-            timer = setTimeout(function() {
-                livereload.changed.apply(null, reload_args);
-            }, 350);
-        }
-    }
+    gulp.watch(WEBPAGES_MASK, ['webpages']);
+    gulp.watch(['./src/less/**/*.less'], ['less']);
+    gulp.watch(IMAGES_MASK, ['images']);
+    gulp.watch('./src/css/*.css', ['css']);
+    gulp.watch(JS_MASK, ['js']);
 });
+
 
 gulp.task('cleanup', function(){
     gulp.src(PUBLIC_CLEANUP_MASK, { read:false })
@@ -130,4 +114,4 @@ gulp.task('cleanup', function(){
 });
 
 /* DEFAULT TASK, running needed tasks */
-gulp.task('default', ['connect', 'webpages', 'less', 'less_nocompress', 'images', 'fonts', 'js', 'css', 'watch']);
+gulp.task('default', ['connect', 'webpages', 'less', 'images', 'fonts', 'js', 'css', 'watch']);

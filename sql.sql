@@ -693,3 +693,22 @@ ALTER TABLE `gioc_page_views`
 ALTER TABLE `gioc_page_views`
   DROP COLUMN `user_agent_string`;
 
+-- ============================= CSK
+
+-- 2016.09.27
+DROP TABLE gioc_auth_code;
+DROP TABLE gioc_chief;
+DROP TABLE gioc_feedback;
+DROP TABLE gioc_hot_news;
+DROP TABLE gioc_menus;
+DROP TABLE gioc_news;
+DROP TABLE gioc_pages;
+DROP TABLE gioc_pages_links;
+DROP TABLE gioc_page_views;
+DROP TABLE gioc_page_views_user_agents;
+DROP TABLE gioc_social;
+DROP TABLE gioc_subscribers;
+DROP TABLE gioc_text_errors;
+DROP TABLE gioc_useful_links;
+DROP TABLE gioc_user_cards;
+DROP TABLE gioc_video;
