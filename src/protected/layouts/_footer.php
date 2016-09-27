@@ -1,13 +1,4 @@
         </div>
-        <?php
-            if (!defined('HAVE_SIDEBAR') || HAVE_SIDEBAR) {
-                ?>
-                <div class="sidebar">
-                    <?php require_once(ROOT . '/protected/scripts/sidebar.php'); ?>
-                </div>
-                <?php
-            }
-        ?>
     </content>
     <footer>
     </footer>

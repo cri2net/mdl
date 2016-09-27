@@ -192,79 +192,7 @@ header {
     .top-line {
         & > .inner {
             .inner-global; height:@header-height;
-            .logo {
-                .size(367, 67);
-                background-image: url("@{images}/logo-header.png");
-                left: 33px;
-                position: absolute;
-                top: 5px;
-            }
             
-            .phone-block {
-                display: block;
-                left: 540px;
-                padding-left: 38px;
-                position: absolute;
-                top: 18px;
-                
-                .phone-icon { display:block; left:0; top:5px; position:absolute; .size(27); z-index:9; background-image:data-uri("@{images}/h/__phone.png"); }
-                .tel {
-                    text-decoration:none;
-                    color:inherit;
-                    font-size:20px;
-                    font-weight: bold;
-                    color:#000;
-                }
-                .number {
-                    position:relative;
-                    .border-radius(4px);
-                    height:26px;
-                    padding:8px 43px 3px 9px;
-                    z-index:9;
-                    .box-shadow(inset 0 0 4px 0 rgba(0, 0, 0, 0.2));
-                    .darr-border {
-                        .size(1, 37);
-                        display:block;
-                        position:absolute;
-                        top: 0;
-                        right:35px;
-                        border-right:1px dotted #ccc;
-                    }
-                    .darr {
-                        background-image:data-uri("@{images}/h/__phone-darr.png");
-                        .size(12, 6);
-                        position:absolute;
-                        right:11px;
-                        top:16px;
-                    }
-                }
-                &:hover {
-                    .number { .box-shadow(none); }
-                    .darr-border { display:none; }
-                    .full-phone-box { display:block; }
-                    .darr { background-image:data-uri("@{images}/h/__phone-darr-grey.png"); }
-                }
-                .full-phone-box {
-                    display:none;
-                    background-color:#fff;
-                    width:100%;
-                    padding-right:30px;
-                    position:absolute;
-                    top:-11px;
-                    padding-top:52px;
-                    padding-bottom:21px;
-                    left:-16px;
-                    .box-shadow(0 0 10px 0 rgba(0, 0, 0, 0.3));
-                    .border-radius(5);
-                    z-index:8;
-                    .tel { margin-left:63px; margin-bottom:15px; display:inline-block; }
-                    .work {
-                        border-top:1px dotted #ccc; padding-right:30px; width:100%;
-                        .work-content { padding-left:66px; margin-top:11px; background-position:16px 1px; background-repeat:no-repeat; background-image:data-uri("@{images}/h/__clock.png"); }
-                    }
-                }
-            }
-
             .account-link,
             .account-link .account-open .head-line .avatar .default-avatar { background-image:data-uri("@{images}/h/__account.png"); }
             .account-link .account-open .head-line {
@@ -453,37 +381,6 @@ content {
                 }
             }
             .phone-line { line-height:24px; }
-            .map-block { margin-top:43px; margin-bottom:45px; }
-            .feedback-form {
-
-                width: 860px;
-
-                .field-group {
-
-                    .txt-full { width: 500px !important; }
-                    select.txt-full { width: 515px !important; }
-
-                    .txt { color:#83b67b; margin-top:12px; margin-bottom:25px; width:290px; }
-                    select.txt { width: 304px; height: 35px; }
-                    textarea.txt { .size(655, 216); }
-
-
-                    .btn { margin-top:8px; font-size:16px; width:317px; padding:0 0 5px; height:36px; }
-
-                    &.group-2col {
-
-                        display: inline-block; float: left; margin-right: 130px;
-                    }
-
-                    &.full-width {
-
-                        input.txt {
-
-                            width: 724px;
-                        }
-                    }
-                }
-            }
         }
 
         .btn-more {

@@ -28,8 +28,8 @@ require_once(PROTECTED_DIR . "/conf/browser.php");
 
 switch (USER_REAL_IP) {
     case '127.0.0.1':
-        define('COOKIE_DOMAIN', '.gioc.dev');
-        define('BASE_URL', 'http://gioc.dev');
+        define('COOKIE_DOMAIN', '.cks.dev');
+        define('BASE_URL', 'http://frame.cks.dev');
         define('HAVE_ACCESS_TO_API', true);
         break;
     
@@ -46,13 +46,11 @@ switch (USER_REAL_IP) {
         define('HAVE_ACCESS_TO_API', true);
 }
 
-define('EMAIL_FROM', 'info@gioc.kiev.ua');
-define('EMAIL_HOST', 'gioc.kiev.ua');
-define('EMAIL_FROM_NAME', 'КП «ГіОЦ»');
-define('SITE_NAME', 'КП «ГіОЦ»'); // for rss, etc
-define('SITE_DESCRIPTION', 'Головний інформаційно-обчислювальний центр'); // for rss, etc
-define('SITE_DOMAIN', 'gioc.kiev.ua');
-define('REMEMBER_COOKIE_NAME', '__giocudata');
+define('EMAIL_FROM', 'info@cks.kiev.ua');
+define('EMAIL_HOST', 'cks.kiev.ua');
+define('EMAIL_FROM_NAME', 'КК ЦКС');
+define('SITE_DOMAIN', 'cks.kiev.ua');
+define('REMEMBER_COOKIE_NAME', '__cksudata');
 
 Authorization::check_login();
 if (Authorization::isLogin()) {

@@ -23,14 +23,4 @@ if (file_exists($file)) {
     }
 }
 
-switch ($__route_result['action']) {
-    case 'news-item':
-        StaticPage::logView($__news_item['id'], 'news');
-        News::incrementViews($__news_item['id']);
-        break;
-    
-    default:
-        StaticPage::logView($page_id_to_log, 'other');
-}
-
 require_once(PROTECTED_DIR . '/layouts/_footer.php');
