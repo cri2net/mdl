@@ -20,18 +20,8 @@
                 </route>
             </route>
         </route>
-        <route match="news" controller="page" action="news">
-            <route match="{page|num}" controller="page" action="news" />
-            <route match="{title}_{news_id|num}" controller="page" action="news-item" />
-        </route>
         <route match="payment-status" controller="error" action="404">
             <route match="{payment_id|num}" controller="page" action="payment-status" />
-        </route>
-        <route match="about" controller="error" action="404">
-            <route match="chief" controller="page" action="chief" />
-            <route match="media" controller="error" action="404">
-                <route match="video" controller="page" action="media" />
-            </route>
         </route>
         <route match="static" controller="error" action="404">
             <route match="pdf" controller="error" action="404">
@@ -43,14 +33,7 @@
             </route>
         </route>
 
-        <route match="feed" controller="rss" action="rss" />
         <route match="checkout" controller="page" action="checkout" />
-        <route match="tender" controller="page" action="tender" />
-        <route match="search" controller="page" action="search" />
-        <route match="contacts" controller="page" action="contacts" />
-        <route match="foruser" controller="page" action="foruser" />
-        <route match="calc-devices" controller="page" action="calc-devices" />
-        <route match="calc-subsidies" controller="page" action="calc-subsidies" />
         
         <route match="invoice" controller="invoice" action="" />
         <route match="barcode" controller="barcode" action="">

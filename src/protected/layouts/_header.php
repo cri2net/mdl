@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<link rel="apple-touch-icon" sizes="57x57" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="<?= BASE_URL; ?>/pic/favicon/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="<?= BASE_URL; ?>/pic/favicon/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_URL; ?>/pic/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="<?= BASE_URL; ?>/pic/favicon/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="<?= BASE_URL; ?>/pic/favicon/favicon-16x16.png">
-<link rel="manifest" href="<?= BASE_URL; ?>/manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="<?= BASE_URL; ?>/pic/favicon/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!--[if lt IE 9]><style> input.txt, textarea.txt, select.txt { border:1px solid #444 !important; }</style><![endif]-->
@@ -53,21 +36,8 @@
     }
 ?>
 <script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
-<meta name="google-site-verification" content="0UGlupvvEO3lxBitGmrsRE3uxascX123gKbj9O5k-KY" />
-<meta name="google-site-verification" content="ba0Oq4krG43JMDsAVoNBcrMm7qYzTbClU1emrsqcKYw" />
 </head>
 <body>
-	<!-- Google Tag Manager -->
-	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-W9F58S"
-	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-W9F58S');</script>
-	<!-- End Google Tag Manager -->
-	
-	<?php require_once(ROOT . '/protected/scripts/browser-warning.php'); ?>
 	<div class="main-conteiner">
 		<header>
 			<div class="top-line">
@@ -132,33 +102,7 @@
 					?>
 				</div>
 			</div>
-			<div class="menu-block">
-				<div class="inner">
-					<?php require_once(ROOT . '/protected/scripts/menu.php'); ?>
-					<div class="calc-btn">
-						<span class="title">Онлайн-калькулятор</span>
-						<div class="icon"></div>
-						<div class="darr"></div>
-						<div class="calc-open">
-							<div class="item">
-								<a href="<?= BASE_URL ?>/calc-subsidies/">Орієнтовний онлайн розрахунок субсидій</a>
-							</div>
-							<div class="item">
-								<a href="<?= BASE_URL ?>/calc-devices/">Розрахунок за показаннями квартирних приладів обліку</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</header>
 		<content>
 			<div class="inner <?= (defined('HAVE_SIDEBAR') && !HAVE_SIDEBAR) ? 'wo-sidebar' : ''; ?> <?= $__route_result['controller'] . '_' . $__route_result['action']; ?>">
-				<?php
-					switch ($__route_result['controller'] . "/" . $__route_result['action']) {
-						case 'page/news':
-						case 'page/news-item':
-							require_once(ROOT . '/protected/scripts/slider.php');
-							break;
-					}
-				?>
 				<?php require_once(ROOT . '/protected/scripts/breadcrumbs.php'); ?>

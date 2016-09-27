@@ -2,7 +2,7 @@
 switch (USER_REAL_IP) {
     case '127.0.0.111':
         define('DB_HOST', 'localhost');
-        define('DB_NAME', 'gioc_site');
+        define('DB_NAME', 'cks');
         define('DB_USER', 'root');
         define('DB_PASSWORD', 'root');
 
@@ -15,29 +15,18 @@ switch (USER_REAL_IP) {
         define('DB_USER', 'giocwww');
         define('DB_PASSWORD', 'skjdgiougKPs8d69t3bhLJGFIOugtlsd');
         
-        // define('API_URL', 'https://bank.gioc.kiev.ua');
-        // define('API_URL', 'http://10.12.2.201');
         define('API_URL', 'http://10.12.2.201:8888');
 }
 
-define('TABLE_PREFIX', 'gioc_');
+define('TABLE_PREFIX', 'cks_');
 
-define('DB_TBL_CHIEF', 'gioc_chief');
-define('DB_TBL_CITIES', 'gioc_cities');
-define('DB_TBL_EMAIL_CRON', 'gioc_email_cron');
-define('DB_TBL_FLATS', 'gioc_flat');
-define('DB_TBL_HOUSES', 'gioc_houses');
-define('DB_TBL_NEWS', 'gioc_news');
-define('DB_TBL_PAGE_VIEWS', 'gioc_page_views');
-define('DB_TBL_PAGES', 'gioc_pages');
-define('DB_TBL_PAGES_LINKS', 'gioc_pages_links');
-define('DB_TBL_PAYMENT', 'gioc_payment');
-define('DB_TBL_PAYMENT_SERVICES', 'gioc_payment_services');
-define('DB_TBL_STREETS', 'gioc_streets');
-define('DB_TBL_SUBSCRIBES', 'gioc_subscribers');
-define('DB_TBL_USER_FLATS', 'gioc_user_flats');
-define('DB_TBL_USER_CODES', 'gioc_user_codes');
-define('DB_TBL_USERS', 'gioc_users');
-define('DB_TBL_MENUS', 'gioc_menus');
-
-define('DB_TBL_AUTH_CODE', 'gioc_auth_code');
+define('DB_TBL_CITIES',           TABLE_PREFIX . 'cities');
+define('DB_TBL_EMAIL_CRON',       TABLE_PREFIX . 'email_cron');
+define('DB_TBL_FLATS',            TABLE_PREFIX . 'flat');
+define('DB_TBL_HOUSES',           TABLE_PREFIX . 'houses');
+define('DB_TBL_PAYMENT',          TABLE_PREFIX . 'payment');
+define('DB_TBL_PAYMENT_SERVICES', TABLE_PREFIX . 'payment_services');
+define('DB_TBL_STREETS',          TABLE_PREFIX . 'streets');
+define('DB_TBL_USER_FLATS',       TABLE_PREFIX . 'user_flats');
+define('DB_TBL_USER_CODES',       TABLE_PREFIX . 'user_codes');
+define('DB_TBL_USERS',            TABLE_PREFIX . 'users');
