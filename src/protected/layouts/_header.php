@@ -27,3 +27,6 @@
 <script src="<?= BASE_URL; ?>/js/zxcvbn.js"></script>
 </head>
 <body>
+<content>
+    <div class="inner <?= $__route_result['controller'] . '_' . $__route_result['action']; ?>">
+        <?php require_once(ROOT . '/protected/scripts/breadcrumbs.php'); ?>

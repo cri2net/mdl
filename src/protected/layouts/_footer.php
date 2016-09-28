@@ -1,3 +1,4 @@
+</div>
 <script>
     var BASE_URL = '<?= BASE_URL ?>';
 </script>
