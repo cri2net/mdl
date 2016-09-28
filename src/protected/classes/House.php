@@ -4,39 +4,27 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class House
 {   
+    const HOUSES_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity33&street_id=';
     const TABLE = DB_TBL_HOUSES;
     
     public static function cron()
     {
-        set_time_limit(0);
-        self::rebuild();
-    }
-
-    public static function get_API_URL($key)
-    {
-        $urls = [];
-
-        if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
-            $urls['HOUSE_URL'] = '/reports/rwservlet?report=/site/dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
-        } else {
-            $urls['HOUSE_URL'] = '/reports/rwservlet?report=dic_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
+        $list = PDO_DB::table_list(TABLE_PREFIX . 'cities');
+        foreach ($list as $city) {
+            set_time_limit(0);
+            self::rebuild($city['id']);
         }
-
-        return $urls[$key];
     }
-    
+
     /**
      * Получение номера дома по его id и id города
      * 
      * @param  integer $house_id
-     * @param  integer $city_id. OPTIONAL
      * @return string номер дома
      */
-    public static function getHouseName($house_id, $city_id = Street::KIEV_ID)
+    public static function getHouseName($house_id)
     {
-        $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT house_number FROM ". self::TABLE . " WHERE city_id=? AND house_id=? LIMIT 1");
-        $stm->execute(array($city_id, $house_id));
+        $stm = PDO_DB::prepare("SELECT house_number FROM ". self::TABLE . " WHERE house_id=? LIMIT 1", [$house_id]);
         $name = $stm->fetchColumn();
         
         if ($name === false) {
@@ -46,40 +34,31 @@ class House
         return 'буд. ' . $name;
     }
 
-    public static function get($street_id, $city_id = Street::KIEV_ID)
+    public static function get($street_id)
     {
-        $pdo = PDO_DB::getPDO();
-        $table = self::TABLE;
-        $city_id = $pdo->quote($city_id);
-        $street_id = $pdo->quote($street_id);
-        
-        $res = $pdo->query("SELECT * FROM $table WHERE city_id=$city_id AND street_id=$street_id ORDER BY house_number ASC");
-        return $res->fetchAll();
+        $stm = PDO_DB::prepare("SELECT * FROM " . self::TABLE . " WHERE street_id=? ORDER BY house_number ASC", [$street_id]);
+        return $stm->fetchAll();
     }
 
-    public static function rebuild()
+    public static function rebuild($city_id)
     {
         $pdo = PDO_DB::getPDO();
-        $streets = Street::get('');
+        $streets = Street::get('', $city_id);
         $stm_insert = $pdo->prepare("INSERT IGNORE INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, house_number=?");
         
-        $stm = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=?");
-        $stm->execute([Street::KIEV_ID]);
+        PDO_DB::prepare("DELETE FROM " . self::TABLE . " WHERE city_id=?", [$city_id]);
         
         for ($i=0; $i < count($streets); $i++) {
-            $data = Http::fgets(API_URL . self::get_API_URL('HOUSE_URL') . $streets[$i]['street_id']);
+            $data = Http::fgets(self::HOUSES_URL . $streets[$i]['street_id']);
             $data = iconv('CP1251', 'UTF-8', $data);
             $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
             $xml = @simplexml_load_string($data);
 
             if ($xml !== false) {
                 for ($j=0; $j<count($xml->ROW); $j++) {
-                    $stm_insert->execute([Street::KIEV_ID, $streets[$i]['street_id'], $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM]);
+                    $stm_insert->execute([$city_id, $streets[$i]['street_id'], $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM]);
                 }
             }
         }
-        
-        $stm = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=? AND street_id NOT IN (SELECT street_id FROM ". Street::TABLE ." WHERE city_id=?)");
-        $stm->execute([Street::KIEV_ID, Street::KIEV_ID]);
     }
 }

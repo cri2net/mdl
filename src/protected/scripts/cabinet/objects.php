@@ -1,6 +1,5 @@
 <div class="h1-line-cabinet">
     <h1 class="big-title">Об’єкти</h1>
-    <div class="secure">особистий кабінет</div>
 </div>
 <?php
     if (isset($_SESSION['objects-auth']['status']) && !$_SESSION['objects-auth']['status']) {
@@ -13,46 +12,45 @@
 
     try {
         $user_id = Authorization::getLoggedUserId();
-        $houses = Flat::getUserFlats($user_id);
+        $flats = Flat::getUserFlats($user_id);
         $debt = new KomDebt();
         
-        for ($i=0; $i < count($houses); $i++) {
+        for ($i=0; $i < count($flats); $i++) {
 
             try {
-                $debtData = $debt->getData($houses[$i]['flat_id'], null, 0);
+                $debtData = $debt->getData($flats[$i]['flat_id'], null, 0);
                 $dateBegin = date('1.m.Y', $debtData['timestamp']);
-                $houses[$i]['timestamp'] = $debtData['timestamp'];
+                $flats[$i]['timestamp'] = $debtData['timestamp'];
                 
                 // Оплаты за месяц надо запрашивать, передавая dbegin на 1 число след. след. месяца от dbegin оплат
                 // Чтобы было: начисления за ноябрь, dbegin = 1.10, а оплаты dbegin оплат = 1.12
                 $oplat_timestamp = strtotime('first day of next month', $debtData['timestamp']);
                 $oplat_timestamp = strtotime('first day of next month', $oplat_timestamp);
 
-                $houses[$i]['debt_sum'] = $debtData['full_dept'];
+                $flats[$i]['debt_sum'] = $debtData['full_dept'];
                 
-                $houses[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];
-                $houses[$i]['date'] = $debtData['date'];
+                $flats[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];
+                $flats[$i]['date'] = $debtData['date'];
 
                 try {
-                    $oplat = $debt->getPayOnThisMonth($houses[$i]['flat_id'], date('1.m.Y', $oplat_timestamp));
+                    $oplat = $debt->getPayOnThisMonth($flats[$i]['flat_id'], date('1.m.Y', $oplat_timestamp));
                 } catch (Exception $e) {
                     $oplat = '0,00';
                 }
 
                 $tmp_oplat = (double)str_replace(',', '.', $oplat);
-                $tmp_debt_summ = (double)str_replace(',', '.', $houses[$i]['debt_sum']);
+                $tmp_debt_summ = (double)str_replace(',', '.', $flats[$i]['debt_sum']);
 
-                $houses[$i]['payed'] = (($tmp_oplat > 0) && ($tmp_oplat >= $tmp_debt_summ))?'bbox-green':'';
-                $houses[$i]['oplat_this_month'] = $oplat;
-                $houses[$i]['oplat_this_month_str'] = substr($oplat, 0, strlen($oplat) - 3);
-                $houses[$i]['oplat_this_month_str'] .= '<span class="small">'.substr($oplat, strlen($oplat) - 3).' <span class="currency">грн</span></span>';
+                $flats[$i]['payed'] = (($tmp_oplat > 0) && ($tmp_oplat >= $tmp_debt_summ))?'bbox-green':'';
+                $flats[$i]['oplat_this_month'] = $oplat;
+                $flats[$i]['oplat_this_month_str'] = substr($oplat, 0, strlen($oplat) - 3);
+                $flats[$i]['oplat_this_month_str'] .= '<span class="small">'.substr($oplat, strlen($oplat) - 3).' <span class="currency">грн</span></span>';
 
-                $houses[$i]['debt_sum_str'] = '<span class="right">'.substr($houses[$i]['debt_sum'], 0, strlen($houses[$i]['debt_sum']) - 3);
-                $houses[$i]['debt_sum_str'] .= '<span class="small">'.substr($houses[$i]['debt_sum'], strlen($houses[$i]['debt_sum']) - 3).' <span class="currency">грн</span></span>';
-                $houses[$i]['debt_sum_str'] .= '</span>';
-                $houses[$i]['icon'] = ($houses[$i]['kvartira'] > 0) ? 'flat' : '';
+                $flats[$i]['debt_sum_str'] = '<span class="right">'.substr($flats[$i]['debt_sum'], 0, strlen($flats[$i]['debt_sum']) - 3);
+                $flats[$i]['debt_sum_str'] .= '<span class="small">'.substr($flats[$i]['debt_sum'], strlen($flats[$i]['debt_sum']) - 3).' <span class="currency">грн</span></span>';
+                $flats[$i]['debt_sum_str'] .= '</span>';
             } catch (Exception $e) {
-                $houses[$i]['error'] = 1;
+                $flats[$i]['error'] = 1;
             }
         }
     } catch (Exception $e) {
@@ -62,46 +60,44 @@
 ?>
 <div class="cabinet-objects">
     <?php
-        if (count($houses) > 0) {
+        if (count($flats) > 0) {
             ?>
             <div class="houses_line">
                 <?php
-                    for ($i=0; $i < count($houses); $i++) {
-                        $house = $houses[$i];
+                    for ($i=0; $i < count($flats); $i++) {
+                        $flat = $flats[$i];
 
                         if (($i % 2 == 0) && ($i > 0)) {
                             ?></div><div class="houses_line"><?php
                         }
-
                         ?>
-                        <div class="house_item <?= $house['payed']; ?> <?= $house['icon']; ?>">
+                        <div class="house_item <?= $flat['payed']; ?>">
                             <div class="payed-icon"></div>
                             <div class="title">
-                                <div class="icon"></div>
                                 <?php
-                                    if ($house['title']) {
-                                        echo htmlspecialchars($house['title']);
+                                    if ($flat['title']) {
+                                        echo htmlspecialchars($flat['title']);
                                         ?>
-                                        <div class="address"><?= $house['address']; ?></div>
+                                        <div class="address"><?= $flat['address']; ?></div>
                                         <?php
                                     } else {
-                                        $street_name = ($house['street_name'] !== $house['street_name_full'])
-                                            ? $street_name = '<span title="'. $house['street_name_full'] .'">' . $house['street_name'] . '</span>'
-                                            : $house['street_name'];
+                                        $street_name = ($flat['street_name'] !== $flat['street_name_full'])
+                                            ? $street_name = '<span title="'. $flat['street_name_full'] .'">' . $flat['street_name'] . '</span>'
+                                            : $flat['street_name'];
                                         ?>
-                                        Київ, <br> <?= $street_name; ?> <br> <?= $house['detail_address']['house']; ?> кв. <?= $house['detail_address']['flat']; ?>
+                                        <?= $flat['detail_address']['city']; ?>, <br> <?= $street_name; ?> <br> <?= $flat['detail_address']['house']; ?> кв. <?= $flat['detail_address']['flat']; ?>
                                         <?php
                                     }
 
-                                    if (!$house['error']) {
+                                    if (!$flat['error']) {
                                         ?>
-                                        <div class="bydate">рахунок за <?= $MONTHS_NAME[date('n', $house['timestamp'])]['ua']['small']; ?> <?= date('Y', $house['timestamp']); ?> року</div>
+                                        <div class="bydate">рахунок за <?= $MONTHS_NAME[date('n', $flat['timestamp'])]['ua']['small']; ?> <?= date('Y', $flat['timestamp']); ?> року</div>
                                         <?php
                                     }
                                 ?>
                             </div>
                             <?php
-                                if ($house['error']) {
+                                if ($flat['error']) {
                                     ?>
                                     <div class="values align-center">
                                         <b style="color:#900;">Виникла тимчасова помилка</b>
@@ -114,14 +110,14 @@
                                             <div class="value-title">Сума до сплати</div>
                                             <div class="align-right">
                                                 <div class="value-border"></div>
-                                                <div class="value"><?= $house['debt_sum_str']; ?></div>
+                                                <div class="value"><?= $flat['debt_sum_str']; ?></div>
                                             </div>
                                         </div>
                                         <div class="value-line small-line">
-                                            <div class="value-title">Сплачено за <?= $house['on_this_month']; ?></div>
+                                            <div class="value-title">Сплачено за <?= $flat['on_this_month']; ?></div>
                                             <div class="align-right">
                                                 <div class="value-border"></div>
-                                                <div class="value"><?= $house['oplat_this_month_str']; ?></div>
+                                                <div class="value"><?= $flat['oplat_this_month_str']; ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +125,7 @@
                                 }
                             ?>
                             <div class="align-center">
-                                <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $house['id']; ?>/" class="btn green bold">Перейти до об’єкту</a>
+                                <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="btn green bold">Перейти до об’єкту</a>
                             </div>
                         </div>
                         <?php
@@ -140,11 +136,12 @@
         }
     ?>
 
+    <br>
     <div class="btn green bold big add-new" onclick="$('#add-object-form').slideToggle(300);"><div class="icon-objects"></div>Додати новий будинок або квартиру</div>
 
     <div id="add-object-form" class="add-object-form" style="display:none;">
         <form class="form-block" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
-            <?php require_once(ROOT . '/protected/scripts/cabinet/objects-add-form.php'); ?>
+            <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
         </form>
     </div>
 </div>

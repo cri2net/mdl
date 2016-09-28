@@ -5,31 +5,17 @@ use cri2net\php_pdo_db\PDO_DB;
 class Flat
 {
     const TABLE = DB_TBL_FLATS;
-    const TABLE_AUTH_CODE = DB_TBL_AUTH_CODE;
+    const FLATS_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity33&house_id=';
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
     const MAX_USER_FLATS = 4;
 
     public static function cron()
     {
-        set_time_limit(0);
-        self::rebuild();
-    }
-
-    public static function get_API_URL($key)
-    {
-        $urls = [];
-
-        if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
-            $urls['FLAT_URL']                = '/reports/rwservlet?report=/site/dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
-            $urls['FLAT_ID_BY_PLATCODE_URL'] = '/reports/rwservlet?report=/site/g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
-            $urls['FLAT_PIN_BY_ID_URL']      = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-        } else {
-            $urls['FLAT_URL']                = '/reports/rwservlet?report=dic_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
-            $urls['FLAT_ID_BY_PLATCODE_URL'] = '/reports/rwservlet?report=g_jek_abc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&pc=';
-            $urls['FLAT_PIN_BY_ID_URL']      = '/reports/rwservlet?report=g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+        $list = PDO_DB::table_list(TABLE_PREFIX . 'cities');
+        foreach ($list as $city) {
+            set_time_limit(0);
+            self::rebuild($city['id']);
         }
-
-        return $urls[$key];
     }
 
     /**
@@ -89,12 +75,12 @@ class Flat
         }
 
         $data = [
-            'user_id' => $user_id,
-            'city_id' => $city_id,
-            'street_id' => $flat['street_id'],
-            'house_id' => $flat['house_id'],
-            'flat_id' => $flat_id,
-            'timestamp' => microtime(true),
+            'user_id'    => $user_id,
+            'city_id'    => $flat['city_id'],
+            'street_id'  => $flat['street_id'],
+            'house_id'   => $flat['house_id'],
+            'flat_id'    => $flat_id,
+            'created_at' => microtime(true),
         ];
         $record_id = PDO_DB::insert($data, self::USER_FLATS_TABLE);
         
@@ -146,11 +132,9 @@ class Flat
         $stm->execute(array($title, $flat_id, $user_id));
     }
     
-    public static function getFlatById($object_id, $city_id = Street::KIEV_ID)
+    public static function getFlatById($object_id)
     {
-        $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM ". self::TABLE ." WHERE city_id=? AND object_id=? LIMIT 1");
-        $stm->execute(array($city_id, $object_id));
+        $stm = PDO_DB::prepare("SELECT * FROM ". self::TABLE ." WHERE object_id=? LIMIT 1", [$object_id]);
         $flat = $stm->fetch();
         
         if ($flat === false) {
@@ -160,26 +144,21 @@ class Flat
         return $flat;
     }
 
-    public static function getAddressString($flat_id, $city_id = Street::KIEV_ID, &$explode = [])
+    public static function getAddressString($flat_id, &$explode = [])
     {
-        $flat = self::getFlatById($flat_id, $city_id);
+        $flat = self::getFlatById($flat_id);
         if ($flat == null){
             return '';
         }
 
-        $address = '';
+        $city = City::getCityById($flat['city_id']);
 
-        if ($city_id == Street::KIEV_ID) {
-            $address .= 'Київ, ';
-            $explode['city'] = 'Київ';
-        }
-
-        $explode['street'] = Street::getStreetName($flat['street_id'], $city_id);
-        $explode['house'] = House::getHouseName($flat['house_id'], $city_id);
-        $explode['flat'] = $flat['flat_number'];
+        $explode['city']   = $city['name_ua'];
+        $explode['street'] = Street::getStreetName($flat['street_id']);
+        $explode['house']  = House::getHouseName($flat['house_id']);
+        $explode['flat']   = $flat['flat_number'];
         
-        $address .= "{$explode['street']}, {$explode['house']}, кв. {$flat['flat_number']}";
-        return $address;
+        return "{$city['name_ua']}, {$explode['street']}, д. {$explode['house']}, кв. {$flat['flat_number']}";
     }
 
     public static function getUserFlats($user_id)
@@ -188,7 +167,7 @@ class Flat
         $table = self::USER_FLATS_TABLE;
         $streets_table = Street::TABLE;
 
-        $query = "SELECT c.*, s.name_ua AS street_name_full, SUBSTRING(s.name_ua, 1, 14) AS street_name
+        $query = "SELECT c.*, s.name_ru AS street_name_full, SUBSTRING(s.name_ru, 1, 14) AS street_name
                   FROM $table c
                   LEFT OUTER JOIN $streets_table s ON c.street_id=s.street_id
                   WHERE user_id=$user_id
@@ -201,7 +180,7 @@ class Flat
             if ($arr[$i]['street_name'] !== $arr[$i]['street_name_full']) {
                 $arr[$i]['street_name'] .= "...";
             }
-            $arr[$i]['address'] = self::getAddressString($arr[$i]['flat_id'], $arr[$i]['city_id'], $arr[$i]['detail_address']);
+            $arr[$i]['address'] = self::getAddressString($arr[$i]['flat_id'], $arr[$i]['detail_address']);
             $arr[$i]['kvartira'] = 1; // пока не знаю как получить признак, что это частный дом
             $arr[$i]['error'] = 0;
         }
@@ -220,7 +199,7 @@ class Flat
         $pdo = PDO_DB::getPDO();
 
         $stm = $pdo->prepare(
-            "SELECT c.*, s.name_ua AS street_name_full, SUBSTRING(s.name_ua, 1, 14) AS street_name
+            "SELECT c.*, s.name_ru AS street_name_full, SUBSTRING(s.name_ru, 1, 14) AS street_name
              FROM $table c
              LEFT OUTER JOIN $streets_table s ON c.street_id=s.street_id
              WHERE c.id = ? AND c.user_id=?
@@ -245,113 +224,70 @@ class Flat
     /**
      * Получение списка квартир в доме
      * 
-     * @param  int     $city_id
-     * @param  int     $street_id
-     * @param  int     $house_id
+     * @param  integer $city_id
+     * @param  integer $street_id
+     * @param  integer $house_id
      * @param  boolean $from_reports Нужно ли брать данные с oracle reports server, или же можно воспользоваться локальной базой
      * @return array
      */
-    public static function get($house_id, $street_id, $city_id = Street::KIEV_ID, $from_reports = false)
+    public static function get($house_id, $street_id, $city_id, $from_reports = false)
     {
-        $city_id = (int)$city_id;
-        $street_id = (int)$street_id;
-        $house_id = (int)$house_id;
+        $city_id = intval($city_id);
+        $street_id = intval($street_id);
+        $house_id = intval($house_id);
 
         if (!$from_reports) {
-            return PDO_DB::table_list(self::TABLE, "city_id='$city_id' AND street_id='$street_id' AND house_id='$house_id'", 'flat_number ASC');
+            return PDO_DB::table_list(self::TABLE, "house_id='$house_id'", 'flat_number ASC');
         }
 
         $result = [];
-        $data = Http::fgets(API_URL . self::get_API_URL('FLAT_URL') . $house_id);
+        $data = Http::fgets(self::FLATS_URL . $house_id);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);
 
-        if ($xml !== false) {
-            for ($i=0; $i<count($xml->ROW); $i++) {
-                $result[] = [
-                    'city_id' => $city_id,
-                    'street_id' => $street_id,
-                    'house_id' => $house_id,
-                    'object_id' => $xml->ROW[$i]->ID_OBJ,
-                    'flat_number' => $xml->ROW[$i]->NKW
-                ];
-            }
-        } else {
-            return PDO_DB::table_list(self::TABLE, "city_id='$city_id' AND street_id='$street_id' AND house_id='$house_id'", 'flat_number ASC');
+        if ($xml === false) {
+            return PDO_DB::table_list(self::TABLE, "house_id='$house_id'", 'flat_number ASC');
+        }
+
+        for ($i=0; $i<count($xml->ROW); $i++) {
+            $result[] = [
+                'city_id'     => $city_id,
+                'street_id'   => $street_id,
+                'house_id'    => $house_id,
+                'object_id'   => $xml->ROW[$i]->KVART_ID . '',
+                'flat_number' => $xml->ROW[$i]->NAME_KVART . '',
+            ];
         }
 
         return $result;
     }
 
-    /**
-     * Получение квартиры по платёжному коду.
-     * Платёжный код = шифр_ЖЭО * 1000000 + лицевой_счёт
-     * 
-     * @param  int     $plat_code
-     * @param  boolean $from_reports Нужно ли брать данные с oracle reports server, или же можно воспользоваться локальной базой
-     * @return array
-     */
-    public static function getFlatByPlatCode($plat_code)
-    {
-        $data = Http::fgets(API_URL . self::get_API_URL('FLAT_ID_BY_PLATCODE_URL') . $plat_code);
-        $data = iconv('CP1251', 'UTF-8', $data);
-        $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
-        $xml = @simplexml_load_string($data);
-
-        if ($xml == false) {
-            return false;
-        }
-
-        return self::getFlatById($xml->ROW->ID_OBJ);
-    }
-    
-    
-    /**
-     * Получение PIN ЖЭО * 1000000 + лицевой_счёт по квартире.
-     *
-     * @param  int     $flatID
-     * @return array
-     */
-    public static function getFlatPINByID($flatID)
-    {
-        $data = Http::fgets(API_URL . self::get_API_URL('FLAT_PIN_BY_ID_URL') . $flatID."&dbegin=1.09.2015&dend=1.10.2015");
-        $data = iconv('CP1251', 'UTF-8', $data);
-        $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
-        $xml = @simplexml_load_string($data);
-    
-        if ($xml == false) {
-            return false;
-        }
-    
-        return (string)$xml->ROW[0]->PLAT_CODE; // self::getFlatById($xml->ROW->ID_OBJ);
-    }
-
-    public static function rebuild()
+    public static function rebuild($city_id)
     {
         $pdo = PDO_DB::getPDO();
         $stm_del = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=? AND house_id=?");
         $stm_insert = $pdo->prepare("INSERT IGNORE INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, object_id=?, flat_number=?");
-        $pdo->query("UPDATE " . self::TABLE . " SET need_del_after_rebuild=1");
+        PDO_DB::prepare("UPDATE " . self::TABLE . " SET need_del_after_rebuild=1 WHERE city_id=?", [$city_id]);
         
         $stm = $pdo->prepare("SELECT * FROM ". House::TABLE ." WHERE city_id=?");
-        $stm->execute([Street::KIEV_ID]);
+        $stm->execute([$city_id]);
 
         while ($row = $stm->fetch()) {
-            $data = Http::fgets(API_URL . self::get_API_URL('FLAT_URL') . $row['house_id']);
+            $data = Http::fgets(self::FLATS_URL . $row['house_id']);
             $data = iconv('CP1251', 'UTF-8', $data);
             $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
             $xml = @simplexml_load_string($data);
 
             if ($xml !== false) {
-                $stm_del->execute([Street::KIEV_ID, $row['house_id']]);
+                $stm_del->execute([$city_id, $row['house_id']]);
                 for ($i=0; $i<count($xml->ROW); $i++) {
-                    $stm_insert->execute(array(Street::KIEV_ID, $row['street_id'], $row['house_id'], $xml->ROW[$i]->ID_OBJ, $xml->ROW[$i]->NKW));
+                    $stm_insert->execute([$city_id, $row['street_id'], $row['house_id'], $xml->ROW[$i]->KVART_ID . '', $xml->ROW[$i]->NAME_KVART . '']);
                 }
             }
         }
 
-        $stm = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE need_del_after_rebuild=1");
+        PDO_DB::prepare("DELETE FROM " . self::TABLE . " WHERE need_del_after_rebuild=1 AND city_id=?", [$city_id]);
     }
 
     /**

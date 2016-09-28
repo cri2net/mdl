@@ -22,4 +22,4 @@ for ($i=0; $i < count($arr); $i++) {
     $houses[] = ['label' => $arr[$i]['house_number'], 'id' => $arr[$i]['house_id']];
 }
 
-echo json_encode($houses);
+echo json_encode($houses, JSON_UNESCAPED_UNICODE);

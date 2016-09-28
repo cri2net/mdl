@@ -5,42 +5,30 @@ use cri2net\php_pdo_db\PDO_DB;
 class Street
 {   
     const TABLE = DB_TBL_STREETS;
-    const KIEV_ID = 100;
+    const ODESSA_ID = 1;
+    const KIEV_ID = 447;
+    const STREET_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_street.rep&destype=Cache&Desformat=xml&cmdkey=gsity&sity_id=';
     
     public static function cron()
     {
-        set_time_limit(0);
-        self::rebuild();
-    }
-
-    public static function get_API_URL($key)
-    {
-        $urls = [];
-
-        if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
-            $urls['STREET_URL'] = '/reports/rwservlet?report=/site/dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
-        } else {
-            $urls['STREET_URL'] = '/reports/rwservlet?report=dic_streets.rep&destype=Cache&Desformat=xml&cmdkey=gsity';
+        $list = PDO_DB::table_list(TABLE_PREFIX . 'cities');
+        foreach ($list as $city) {
+            set_time_limit(0);
+            self::rebuild($city['id']);
         }
-
-        return $urls[$key];
     }
-    
-    public static function getStreetName($street_id, $city_id = self::KIEV_ID)
+
+    public static function getStreetName($street_id)
     {
-        $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT name_ua FROM ". self::TABLE . " WHERE city_id=? AND street_id=? LIMIT 1");
-        $stm->execute(array($city_id, $street_id));
-        $name = $stm->fetchColumn();
-        
-        if ($name === false) {
+        $street = PDO_DB::row_by_id(self::TABLE, $street_id, 'street_id');
+        if ($street === null) {
             return '';
         }
         
-        return $name;
+        return $street['name_ru'];
     }
 
-    public static function get($q, $city_id = self::KIEV_ID, $limit=0)
+    public static function get($q, $city_id, $limit = 0)
     {
         $pdo = PDO_DB::getPDO();
         $limit = (int)$limit;
@@ -49,13 +37,14 @@ class Street
         $city_id = $pdo->quote($city_id);
         $q = $pdo->quote(trim($q) . '%');
         
-        $res = $pdo->query("SELECT * FROM $table WHERE city_id=$city_id AND name_ua LIKE $q ORDER BY name_ua ASC $limit");
+        $res = $pdo->query("SELECT * FROM $table WHERE city_id=$city_id AND name_ru LIKE $q ORDER BY name_ru ASC $limit");
         return $res->fetchAll();
     }
 
-    public static function rebuild()
+    public static function rebuild($city_id)
     {
-        $data = Http::fgets(API_URL . self::get_API_URL('STREET_URL'));
+        $url = self::STREET_URL . $city_id;
+        $data = Http::fgets($url);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);
@@ -64,13 +53,13 @@ class Street
             return false;
         }
 
-        PDO_DB::query("DELETE FROM ". self::TABLE ." WHERE city_id=" . self::KIEV_ID);
+        PDO_DB::prepare("DELETE FROM ". self::TABLE ." WHERE city_id=?", [$city_id]);
 
         for ($i=0; $i<count($xml->ROW); $i++) {
             $street = [
-                'city_id' => self::KIEV_ID,
+                'city_id'   => $city_id,
                 'street_id' => $xml->ROW[$i]->STREET_ID,
-                'name_ua' => $xml->ROW[$i]->NAME_STREET
+                'name_ru'   => $xml->ROW[$i]->NAME_STREET
             ];
             PDO_DB::insert($street, self::TABLE, true);
         }

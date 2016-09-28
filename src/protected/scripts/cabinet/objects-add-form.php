@@ -1,3 +1,21 @@
+<?php
+    use cri2net\php_pdo_db\PDO_DB;
+
+    $cities = PDO_DB::table_list(DB_TBL_CITIES, '', 'pos ASC');
+?>
+<div class="input">
+    <label>Виберіть місто *: <br>
+        <select class="txt" name="city" id="select_city_id">
+            <?php
+                foreach ($cities as $city) {
+                    ?>
+                    <option value="<?= $city['id']; ?>"><?= htmlspecialchars($city['name_ua']); ?></option>
+                    <?php
+                }
+            ?>
+        </select>
+    </label>
+</div>
 <div class="input">
     <label>Виберіть вулицю: <br>
         <input required="required" autofocus="autofocus" class="txt form-txt-input" type="text" name="street" id="add_obj_street" value="">
@@ -42,7 +60,10 @@
                 $.ajax({
                     url: '<?= BASE_URL; ?>/ajax/json/streets',
                     type: "GET",
-                    data: {request: request.term},
+                    data: {
+                        request: request.term,
+                        city_id: $('#select_city_id').val()
+                    },
                     dataType: "json",
                     success: function(data) {
                         response(data);
@@ -60,8 +81,9 @@
                     dataType: "json",
                     success: function(data) {
                         var select_options = '';
-                        for (var i = 0; i < data.length; i++)
+                        for (var i = 0; i < data.length; i++) {
                             select_options += '<option value="'+ data[i].id +'">'+ data[i].label +'</option>';
+                        }
                         $('#add_obj_house').html(select_options).attr('disabled', false).change();
                     },
                 });
@@ -72,12 +94,17 @@
             $.ajax({
                 url: '<?= BASE_URL; ?>/ajax/json/flats',
                 type: "GET",
-                data: {street_id: _selected_street_id, house_id: $("#add_obj_house").val()},
+                data: {
+                    street_id: _selected_street_id,
+                    house_id: $("#add_obj_house").val(),
+                    city_id: $('#select_city_id').val()
+                },
                 dataType: "json",
                 success: function(data) {
                     var select_options = '';
-                    for (var i = 0; i < data.length; i++)
+                    for (var i = 0; i < data.length; i++) {
                         select_options += '<option value="'+ data[i].id +'">'+ data[i].label +'</option>';
+                    }
                     $('#add_obj_flat').html(select_options).attr('disabled', false);
                 },
             });

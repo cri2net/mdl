@@ -31,7 +31,7 @@
     $paybill_link   = BASE_URL . '/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2;
     $online_version = BASE_URL . '/invoice/?uid=' . $__userData['id'] . '&f=' . $house['id'] . '&hash2=' . $hash2;
 
-    $address = Flat::getAddressString($house['flat_id'], Street::KIEV_ID, $address_detail);
+    $address = Flat::getAddressString($house['flat_id'], $address_detail);
     
     $flat_number = '';
     if ($address_detail['flat'] != 0) {
