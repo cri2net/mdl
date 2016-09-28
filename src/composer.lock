@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "adb22007b06d88aa37feb83c2e223e0f",
-    "content-hash": "b1914aa2e8d1ca710e92574942bd2bfe",
+    "hash": "471074d28fd3ccd2f1dc754f48d86482",
+    "content-hash": "9f4adab340e74284dad3ba1ce0fdd4df",
     "packages": [
         {
             "name": "cri2net/php-pdo-db",
@@ -241,62 +241,6 @@
                 "xlsx"
             ],
             "time": "2015-05-01 07:00:55"
-        },
-        {
-            "name": "sinergi/browser-detector",
-            "version": "5.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sinergi/php-browser-detector.git",
-                "reference": "47806b0ec01048b002abdb062fea51a17d554dec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sinergi/php-browser-detector/zipball/47806b0ec01048b002abdb062fea51a17d554dec",
-                "reference": "47806b0ec01048b002abdb062fea51a17d554dec",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "5.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Sinergi\\BrowserDetector\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Schuld",
-                    "email": "chris@chrisschuld.com",
-                    "homepage": "http://chrisschuld.com"
-                },
-                {
-                    "name": "Gabriel Bull",
-                    "email": "me@gabrielbull.com"
-                }
-            ],
-            "description": "Detecting the user's browser, operating system and language.",
-            "keywords": [
-                "browser",
-                "detection",
-                "language",
-                "operating system",
-                "os"
-            ],
-            "time": "2016-01-08 19:53:07"
         }
     ],
     "packages-dev": [],
