@@ -1,44 +1,9 @@
 <?php
     $breadcrumbs = [
-        ['title' => 'ГіОЦ', 'link' => '/']
+        ['title' => 'ЦКС', 'link' => '/']
     ];
 
     switch ($__route_result['controller'] . "/" . $__route_result['action']) {
-        case 'page/index':
-            $breadcrumbs[] = ['title' => 'Головна'];
-            break;
-
-        case 'page/search':
-            $breadcrumbs[] = ['title' => 'Результати пошуку'];
-            break;
-        case 'page/tender':
-            $breadcrumbs[] = ['title' => 'Тендерні закупівлі'];
-            break;
-        case 'page/about':
-            $breadcrumbs[] = ['title' => 'Про ГіOЦ'];
-            break;
-        case 'page/media':
-            $breadcrumbs[] = ['title' => 'Про ГіОЦ', 'link' => '/about/'];
-            $breadcrumbs[] = ['title' => 'Медіа', 'link' => '/about/media/'];
-            $breadcrumbs[] = ['title' => 'Відеоматеріали'];
-            break;
-
-        case 'page/foruser':
-            $breadcrumbs[] = ['title' => 'Споживачу'];
-            break;
-
-        case 'page/chief':
-            $breadcrumbs[] = ['title' => 'Керівництво'];
-            break;
-
-        case 'page/calc-devices':
-            $breadcrumbs[] = ['title' => 'Розрахунок за показаннями квартирних приладів обліку'];
-            break;
-        case 'page/calc-subsidies':
-            $breadcrumbs[] = ['title' => 'Орієнтовний онлайн розрахунок субсидій'];
-            break;
-
-
         case 'page/cabinet':
             $breadcrumbs[] = ['title' => 'Особистий кабінет', 'link' => '/cabinet/'];
 
@@ -141,32 +106,8 @@
 
             break;
 
-
-        case 'page/contacts':
-            $breadcrumbs[] = ['title' => 'Контакти'];
-            break;
-
-        case 'page/news':
-            $breadcrumbs[] = ['title' => 'Новини'];
-            break;
         case 'page/payment-status':
             $breadcrumbs[] = ['title' => 'Статус транзакції'];
-            break;
-        case 'page/news-item':
-            $breadcrumbs[] = ['title' => 'Новини', 'link' => '/news/'];
-            $breadcrumbs[] = [
-                'title' => date('d ', $__news_item['created_at'])
-                           . $MONTHS[date('n', $__news_item['created_at'])]['ua']
-                           . date(' Y', $__news_item['created_at'])
-            ];
-            break;
-
-        case 'static_page/index':
-            $link = '/';
-            for ($i=0; $i < count($__static_pages_array); $i++) {
-                $link .= $__static_pages_array[$i]['key'] . '/';
-                $breadcrumbs[] = ['title' => $__static_pages_array[$i]['breadcrumb'], 'link' => $link];
-            }
             break;
 
         case 'error/404':
