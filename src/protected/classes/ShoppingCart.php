@@ -25,28 +25,13 @@ class ShoppingCart
     {
         $urls = [];
 
-        if (self::useBalancer()) {
-            $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-            $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-            $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-            $urls['KASS_STATUS']       = '/reports/rwservlet?report=/gioc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
-            $urls['KASS_OPEN']         = '/reports/rwservlet?report=/gioc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
-        } else {
-            $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-            $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-            $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/home/oracle/reports/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-            
-            // не уверен, что тут правильно указаны параметры report=
-            $urls['KASS_STATUS']       = '/reports/rwservlet?report=/home/oracle/reports/gioc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
-            $urls['KASS_OPEN']         = '/reports/rwservlet?report=/home/oracle/reports/gioc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
-        }
+        $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+        $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+        $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+        $urls['KASS_STATUS']       = '/reports/rwservlet?report=/gioc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        $urls['KASS_OPEN']         = '/reports/rwservlet?report=/gioc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
 
         return $urls[$key];
-    }
-
-    public static function useBalancer()
-    {
-        return (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206'));
     }
 
     /**
@@ -377,26 +362,17 @@ class ShoppingCart
             case 'gai':
                 Gai::pppGetCashierByKassId($login, $password);
 
-                $report = ($payment['status'] == 'success') ? 'prov_gai.rep' : 'pacq50_gai.rep';
-                if (self::useBalancer()) {
-                    $report = ($payment['status'] == 'success') ? '/site_api/prov_gai.rep' : '/site_api/pacq50_gai.rep';
-                }
+                $report = ($payment['status'] == 'success') ? '/site_api/prov_gai.rep' : '/site_api/pacq50_gai.rep';
                 break;
 
             case 'kinders':
                 self::pppGetCashierByKassId(self::KASS_ID_TAS, $login, $password);
 
-                $report = ($payment['status'] == 'success') ? 'api_prov.rep' : 'api_pacq50.rep';
-                if (self::useBalancer()) {
-                    $report = ($payment['status'] == 'success') ? '/gioc_api/api_prov.rep' : '/gioc_api/api_pacq50.rep';
-                }
+                $report = ($payment['status'] == 'success') ? '/gioc_api/api_prov.rep' : '/gioc_api/api_pacq50.rep';
                 break;
 
             case 'komdebt':
-                $report = ($payment['status'] == 'success') ? 'prov_gkom.rep' : 'pacq50_gkom.rep';
-                if (self::useBalancer()) {
-                    $report = ($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep';
-                }
+                $report = ($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep';
                 break;
         }
 
@@ -695,7 +671,7 @@ class ShoppingCart
         $xml .= "</rowset>";
 
         $xml = iconv('UTF-8', 'WINDOWS-1251', $xml);
-        $report = (self::useBalancer()) ? '/site_api/pnew_gkom.rep' : 'pnew_gkom.rep';
+        $report = '/site_api/pnew_gkom.rep';
         $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode($report) . '&destype=Cache&Desformat=xml&cmdkey=rep';
         $url .= '&in_xml=' . rawurlencode($xml);
         $res = Http::fgets($url);

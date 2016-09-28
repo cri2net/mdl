@@ -1,6 +1,3 @@
-<?php
-    use cri2net\php_pdo_db\PDO_DB;
-?>
 <div class="form-block">
     <div class="form-subtitle">Зміна логіну</div>
     <div class="input">
@@ -23,25 +20,6 @@
             </span>
         </label>
     </div>
-    <?php
-        $cards = PDO_DB::table_list(TABLE_PREFIX . 'user_cards', "user_id='{$__userData['id']}'", 'pos ASC');
-        if (count($cards) > 0) {
-            ?>
-            <div class="form-subtitle">Управління підключенними картками</div>
-            <?php
-
-            foreach ($cards as $card) {
-                ?>
-                <div class="card-item" id="user_card_<?= $card['id']; ?>">
-                    <div class="icon-logo <?= $card['type']; ?>"></div>
-                    <?= substr($card['pan'], 0, 4) . '********' . substr($card['pan'], 12); ?>
-                    <div class="icon-remove" onclick="remove_user_card_popup('<?= $card['id']; ?>');"></div>
-                </div>
-                <div class="clear"></div>
-                <?php
-            }
-        }
-    ?>
     <div class="form-subtitle delete-profile">Видалення профілю</div>
     <div class="check-box-line">
         <span class="niceCheck" id="confirm_delete_profile"><input type="checkbox"></span>
@@ -55,9 +33,9 @@
     </div>
 </div>
 <script>
-$(document).ready(function(){
-    $(".niceCheck").click(function() {
-        changeCheck($(this), 'check-group');
+    $(document).ready(function(){
+        $(".niceCheck").click(function() {
+            changeCheck($(this), 'check-group');
+        });
     });
-});
 </script>

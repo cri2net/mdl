@@ -1,14 +1,13 @@
 <?php
     if (!Authorization::isLogin()) {
         define('SHOW_NEED_AUTH_MESSAGE', true);
-        return require_once(ROOT . '/protected/pages/cabinet/login.php');
+        return require_once(PROTECTED_DIR . '/pages/cabinet/login.php');
     }
 
     $current_section = $__route_result['values']['section'];
 ?>
 <div class="h1-line-cabinet">
     <h1 class="big-title">Налаштування профілю</h1>
-    <div class="secure">особистий кабінет</div>
 </div>
 <div class="cabinet-settings">
     <div class="page-tabs">

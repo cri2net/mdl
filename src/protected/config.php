@@ -29,7 +29,6 @@ switch (USER_REAL_IP) {
     case '127.0.0.1':
         define('COOKIE_DOMAIN', '.cks.dev');
         define('BASE_URL', 'http://frame.cks.dev');
-        define('HAVE_ACCESS_TO_API', true);
         break;
     
     default:
@@ -42,7 +41,6 @@ switch (USER_REAL_IP) {
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'http';
         }
         define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST']);
-        define('HAVE_ACCESS_TO_API', true);
 }
 
 define('EMAIL_FROM', 'info@cks.kiev.ua');

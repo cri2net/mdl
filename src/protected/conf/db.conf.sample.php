@@ -6,7 +6,7 @@ switch (USER_REAL_IP) {
         define('DB_USER', 'root');
         define('DB_PASSWORD', 'root');
 
-        define('API_URL', 'https://bank.gioc.kiev.ua');
+        define('API_URL', 'https://ppp.gerc.ua:4445');
         break;
     
     default:
@@ -15,7 +15,7 @@ switch (USER_REAL_IP) {
         define('DB_USER', 'giocwww');
         define('DB_PASSWORD', 'skjdgiougKPs8d69t3bhLJGFIOugtlsd');
         
-        define('API_URL', 'http://10.12.2.201:8888');
+        define('API_URL', 'https://ppp.gerc.ua:4445');
 }
 
 define('TABLE_PREFIX', 'cks_');

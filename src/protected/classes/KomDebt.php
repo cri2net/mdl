@@ -2,12 +2,9 @@
 
 class KomDebt
 {
-    const ANSWERS_PATH = '/protected/conf/testing/';
-    
-    public $testing = false;
     protected $cache = [];
-    protected $komplat_URL;
-    protected $debt_URL;
+    protected $komplat_URL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+    protected $debt_URL = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
 
     private $months;
     private $monthsFullName;
@@ -17,33 +14,14 @@ class KomDebt
     public function __construct()
     {
         global $MONTHS, $MONTHS_NAME;
-        $this->testing = !HAVE_ACCESS_TO_API;
         $this->months = $MONTHS;
         $this->monthsFullName = $MONTHS_NAME;
-
-        if (stristr(API_URL, 'bank.gioc') || stristr(API_URL, '10.12.2.206')) {
-            $this->komplat_URL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-            $this->debt_URL = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-        } else {
-            $this->komplat_URL = '/reports/rwservlet?report=g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-            $this->debt_URL = '/reports/rwservlet?report=g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-        }
     }
     
     private function getXML($url, $obj_id, $dateBegin = null)
     {
         try {
             $dateData = $this->getDatePeriod($dateBegin);
-            
-            if ($this->testing) {
-                // в режиме тестирования мы не можем обращаться к API (скорее всего), так что берём шаблоны ответов
-                if ($url == $this->debt_URL) {
-                    return file_get_contents(ROOT . self::ANSWERS_PATH . 'DEBTURL.xml');
-                } else {
-                    return file_get_contents(ROOT . self::ANSWERS_PATH . 'KOMPLATURL.xml');
-                }
-            }
-
             $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
 
             if (!isset($this->cache[md5($url)])) {
@@ -154,7 +132,7 @@ class KomDebt
             $data['LGOTA']     = (isset($xml->ROW[0]->LGOTA))     ? $xml->ROW[0]->LGOTA     . '' : null;
             $data['PL_POL']    = (isset($xml->ROW[0]->PL_POL))    ? $xml->ROW[0]->PL_POL    . '' : null;
             $data['PLAT_CODE'] = (isset($xml->ROW[0]->PLAT_CODE)) ? $xml->ROW[0]->PLAT_CODE . '' : null;
-            // Такие вещи, как PLAT_CODE и OUT_KEY доступны только в истории начислений
+            // Такие вещи, как PLAT_CODE доступны только в истории начислений
             
             $fullDept = 0;
             $data['list'] = [];

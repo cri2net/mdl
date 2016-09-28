@@ -171,7 +171,7 @@ class Flat
                   FROM $table c
                   LEFT OUTER JOIN $streets_table s ON c.street_id=s.street_id
                   WHERE user_id=$user_id
-                  ORDER BY c.`timestamp`";
+                  ORDER BY c.created_at";
 
         $stm = PDO_DB::query($query);
         $arr = $stm->fetchAll();

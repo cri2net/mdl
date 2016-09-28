@@ -8,18 +8,12 @@ class Kinders
     {
         $urls = [];
 
-        if (ShoppingCart::useBalancer()) {
-
-            $urls['PPP_URL_INSTITUTION'] = '/reports/rwservlet?report=gioc_api/dic_rono_sad.rep&cmdkey=rep&destype=cache&Desformat=xml&id_firme=';
-            $urls['PPP_URL_CLASSES']     = '/reports/rwservlet?report=gioc_api/dic_rono_group&cmdkey=rep&destype=cache&Desformat=xml&id_sad=';
-            $urls['PPP_URL_CHILDREN']    = '/reports/rwservlet?report=gioc_api/dic_rono_child&cmdkey=rep&destype=cache&Desformat=xml&id_rono_group=';
-            $urls['PPP_URL_DEBT']        = '/reports/rwservlet?report=gioc_api/get_rono_debt&cmdkey=rep&destype=cache&Desformat=xml&login=';
-            $urls['PPP_URL_FIRME']       = '/reports/rwservlet?report=gioc_api/dic_rono_firme.rep&cmdkey=rep&destype=cache&Desformat=xml&id_area=';
-            $urls['PPP_URL_CREATE']      = '/reports/rwservlet?report=gioc_api/api_pnew_rono.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
-        } else {
-
-            throw new Exception('Ссылки без использования балансировщика не указаны');
-        }
+        $urls['PPP_URL_INSTITUTION'] = '/reports/rwservlet?report=gioc_api/dic_rono_sad.rep&cmdkey=rep&destype=cache&Desformat=xml&id_firme=';
+        $urls['PPP_URL_CLASSES']     = '/reports/rwservlet?report=gioc_api/dic_rono_group&cmdkey=rep&destype=cache&Desformat=xml&id_sad=';
+        $urls['PPP_URL_CHILDREN']    = '/reports/rwservlet?report=gioc_api/dic_rono_child&cmdkey=rep&destype=cache&Desformat=xml&id_rono_group=';
+        $urls['PPP_URL_DEBT']        = '/reports/rwservlet?report=gioc_api/get_rono_debt&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        $urls['PPP_URL_FIRME']       = '/reports/rwservlet?report=gioc_api/dic_rono_firme.rep&cmdkey=rep&destype=cache&Desformat=xml&id_area=';
+        $urls['PPP_URL_CREATE']      = '/reports/rwservlet?report=gioc_api/api_pnew_rono.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
 
         return $urls[$key];
     }

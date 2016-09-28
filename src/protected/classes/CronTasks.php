@@ -4,107 +4,10 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class CronTasks
 {
-    public static function findBrokenEmails()
-    {
-        $hostname = '{mail.gioc:110/pop3/novalidate-cert}INBOX';
-        $username = 'no.reply@gioc.kiev.ua';
-        $password = 'N3p12Q';
-
-        /* try to connect */
-        $inbox = imap_open($hostname, $username, $password) or die('Cannot connect: ' . imap_last_error());
-        $emails = imap_search($inbox, 'UNDELETED'); // grab emails
-
-        if ($emails) {
-            rsort($emails); // put the newest emails on top
-
-            $pdo = PDO_DB::getPDO();
-            $stm_upd = $pdo->prepare("UPDATE " . User::TABLE . " SET broken_email=1 WHERE email=? AND deleted=0 LIMIT 1");
-            $stm_upd_subs = $pdo->prepare("UPDATE " . User::SUBSCRIBE_TABLE . " SET broken_email=1 WHERE email=? LIMIT 1");
-            
-            foreach ($emails as $email_number) {
-                $overview = imap_fetch_overview($inbox, $email_number, 0);
-
-                if (stristr($overview[0]->subject, '-- NOT SEND TO:')) {
-                    $email = end(self::extractEmailAddress($overview[0]->subject));
-                    $stm_upd->execute([$email]);
-                    $stm_upd_subs->execute([$email]);
-                    imap_delete($inbox, $email_number);
-                }
-
-                if (stristr($overview[0]->from, 'quarantine@i.ua')) {
-                    // это письмо с просьбой перейти по ссылке, чтоб письмо попало во входящие
-                    $message = imap_body($inbox, $email_number);
-                    $links = self::extractLinks($message);
-                    if (isset($links[0])) {
-                        imap_delete($inbox, $email_number);
-                        @file_get_contents($links[0]);
-                    }
-                }
-            }
-        }
-
-        imap_expunge($inbox);
-        imap_close($inbox); // close the connection
-    }
-
-    private static function extractEmailAddress($string)
-    {
-        foreach (preg_split('/\s/', $string) as $token) {
-            $email = filter_var(filter_var($token, FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
-            if ($email !== false) {
-                $emails[] = $email;
-            }
-        }
-        return $emails;
-    }
-
-    private static function extractLinks($string)
-    {
-        $regex = "((https?|ftp)\:\/\/)?"; // SCHEME
-        $regex .= "([a-z0-9+!*(),;?&=\$_.-]+(\:[a-z0-9+!*(),;?&=\$_.-]+)?@)?"; // User and Pass
-        $regex .= "([a-z0-9-.]*)\.([a-z]{2,4})"; // Host or IP
-        $regex .= "(\:[0-9]{2,5})?"; // Port
-        $regex .= "(\/([a-z0-9+\$_-]\.?)+)*\/?"; // Path
-        $regex .= "(\?[a-z+&\$_.-][a-z0-9;:@&%=+\/\$_.-]*)?"; // GET Query
-        $regex .= "(#[a-z_.-][a-z0-9+\$_.-]*)?"; // Anchor
-
-        preg_match_all("/$regex/", $string, $matches); 
-
-        return array_values(array_unique($matches[0]));
-    }
-
-    public static function sendFeedbackAnswer()
-    {
-        $list = PDO_DB::table_list(TABLE_PREFIX . 'feedback', 'answer_need_send=1');
-
-        foreach ($list as $item) {
-            
-            if (!isset($email)) {
-                $email = new Email();
-                // $email->From = 'secretary@gioc-kmda.kiev.ua';
-            }
-
-            $email->clearAllRecipients();
-            // $email->changeMXToQuick();
-
-            $email->send(
-                [$item['email'], "{$item['name']} {$item['fathername']}"],
-                $item['subject'],
-                '',
-                'feedback_answer',
-                [
-                    'answer' => $item['answer'],
-                    'request' => nl2br(htmlspecialchars($item['text']))
-                ]
-            );
-            PDO_DB::update(['answer_need_send' => 0], TABLE_PREFIX . 'feedback', $item['id']);
-        }
-    }
-
     public static function sendReportAboutTasLink($time_from, $time_to)
     {
         $pdo = PDO_DB::getPDO();
-        $to_emails = ['saifudinova@gerc.ua', 'cri2net@gmail.com', 'di.yarovoy@gmail.com'];
+        $to_emails = ['saifudinova@gerc.ua', 'cri2net@gmail.com'];
 
         $payment_systems = [
             'visa'          => 'Аваль Visa',
@@ -119,7 +22,7 @@ class CronTasks
         $objPHPExcel = new PHPExcel(); // Create new PHPExcel object
 
         // Set properties
-        $objPHPExcel->getProperties()->setTitle("GIOC. Платежи через ТасЛинк за " . date('Y-m-d', $time_from));
+        $objPHPExcel->getProperties()->setTitle("CKS. Платежи через ТасЛинк за " . date('Y-m-d', $time_from));
         $objPHPExcel->setActiveSheetIndex(0);
 
         $abc = "ABCDEFGHIJLKLMNOP";
@@ -223,7 +126,7 @@ class CronTasks
         }
 
         // Rename sheet
-        $objPHPExcel->getActiveSheet()->setTitle('GIOC');
+        $objPHPExcel->getActiveSheet()->setTitle('CKS');
 
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $objPHPExcel->setActiveSheetIndex(0);
@@ -236,8 +139,8 @@ class CronTasks
         ob_end_clean();
 
         $email = new Email();
-        $email->addStringAttachment($xls, "GIOC-Taslink-report " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to) . '.xls');
-        $email->Subject = "GIOC. Платежи через ТасЛинк за " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to);
+        $email->addStringAttachment($xls, "CKS-Taslink-report " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to) . '.xls');
+        $email->Subject = "CKS. Платежи через ТасЛинк за " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to);
         
         foreach ($to_emails as $to_email) {
             $email->clearAllRecipients();
