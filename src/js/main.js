@@ -3,37 +3,6 @@ function is_int(input)
     return typeof(input)=='number'&&parseInt(input)==input;
 };
 
-function htmlspecialchars (string, reverse)
-{
-    var specialChars = {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-        }, x;
-
-    if (typeof(reverse) != "undefined") {
-        reverse = [];
-        for (x in specialChars) {
-            reverse.push(x);
-        }
-        reverse.reverse();
-
-        for (x = 0; x < reverse.length; x++) {
-            string = string.replace(new RegExp(specialChars[reverse[x]], "g"), reverse[x]);
-        }
-
-        return string;
-    }
-    
-    for (x in specialChars) {
-        string = string.replace(new RegExp(x, "g"), specialChars[x]);
-    }
-
-    return string;
-};
-
 function removeSpaces(string)
 {
     if((string === undefined) || (string.length == 0)) {
@@ -344,132 +313,6 @@ function recount_counter_summ(key, tarif, counter_no) {
     }
 };
 
-function close_all_header_submenu(submenu_id)
-{
-    for (var i=0; i < have_main_submenu_item.length; i++) {
-        if (have_main_submenu_item[i] != submenu_id) {
-            $('#header_submenu_'+have_main_submenu_item[i]).css('display', '');
-            $('header_down_'+have_main_submenu_item[i]).css('display', '');
-            $('#header_submenu_'+have_main_submenu_item[i]).stopTime('header_submenu_'+have_main_submenu_item[i]);
-        }
-    }
-    // может быть избыточный код
-    $('.open-submenu').removeClass('open-submenu');
-    $('.a-element-box.open').removeClass('open');
-};
-
-function show_header_submenu(submenu_id)
-{
-    close_all_header_submenu(submenu_id);
-
-    var submenu = $('#header_submenu_'+submenu_id);
-    var down = $('#header_down_'+submenu_id);
-    var visible = $(submenu).is(':visible');
-    var item = $('#header_top_item_'+submenu_id);
-
-    $(submenu).fadeIn(200);
-    $(down).css('display', 'block');
-    $(submenu).stopTime('header_submenu_'+submenu_id);
-    $('.open-submenu').removeClass('open-submenu');
-    $('.a-element-box.open').removeClass('open');
-    $(item).addClass('open-submenu').find('.a-element-box').addClass('open');
-    
-    $(submenu).oneTime(700, 'header_submenu_'+submenu_id, function(){
-        $(submenu).fadeOut(200);
-        $(down).css('display', '');
-    });
-    
-    $(submenu).mouseout(function(){
-        $(submenu).everyTime(700, 'header_submenu_'+submenu_id, function(){
-            $(submenu).fadeOut(200);
-            $(down).css('display', '');
-        });
-    });
-    
-    $(submenu).mouseover(function(){
-        $(submenu).stopTime('header_submenu_'+submenu_id);
-    });
-    
-    $(item).mouseout(function(){
-        $(submenu).stopTime('header_submenu_'+submenu_id);
-        $(submenu).everyTime(700, 'header_submenu_'+submenu_id, function(){
-            $(submenu).fadeOut(200);
-            $(down).css('display', '');
-            $(item).removeClass('open-submenu').find('.a-element-box').removeClass('open');;
-        });
-    });
-    
-    $(item).mouseover(function(){
-        $(submenu).stopTime('header_submenu_'+submenu_id);
-    });
-};
-
-var current_slide = 0;
-function next_slide_rotate_index()
-{
-    var next = current_slide + 1;
-    if (next >= slide_count) {
-        next = 0;
-    }
-    for (var i = 0; i < slide_count; i++) {
-        $('#slide_'+i).css('display', 'none');
-        $('#bullet_'+i).removeClass('active');
-    };
-    $('#slide_'+next).css('display', 'block');
-
-    $('#bullet_'+next).addClass('active');
-    current_slide++;
-    if (current_slide >= slide_count) {
-        current_slide = 0;
-    }
-};
-
-function prev_slide_rotate_index()
-{
-    var prev = current_slide - 1;
-    if (prev < 0) {
-        prev = slide_count - 1;
-    }
-    for (var i = 0; i < slide_count; i++) {
-        $('#slide_'+i).css('display', 'none');
-        $('#bullet_'+i).removeClass('active');
-    };
-    $('#slide_'+prev).css('display', 'block');
-
-    $('#bullet_'+prev).addClass('active');
-    current_slide--;
-    if (current_slide < 0) {
-        current_slide = slide_count - 1;
-    }
-    $('.bullets').stopTime('slider_bullets');
-    $('.bullets').everyTime(4000, 'slider_bullets', function() {
-        next_slide_rotate_index();
-    });
-};
-
-function jump_to_slide(next)
-{
-    if (current_slide == next) {
-        return;
-    }
-    for (var i = 0; i < slide_count; i++) {
-        $('#slide_'+i).css('display', 'none');
-        $('#bullet_'+i).removeClass('active');
-    };
-    $('#slide_'+next).css('display', 'block');
-
-    $('#bullet_'+next).addClass('active');
-    current_slide++;
-    if (current_slide >= slide_count) {
-        current_slide = 0;
-    }
-
-    $('.bullets').stopTime('slider_bullets');
-    $('.bullets').everyTime(4000, 'slider_bullets', function() {
-        next_slide_rotate_index();
-    });
-};
-
 function registration_show_password()
 {
     var element = $('#reg-password');
@@ -571,33 +414,6 @@ function changeCheck(element, group_class)
     }
 };
 
-function open_feedback_msg(chief_id)
-{
-    $('body').addClass('popup-open').append('<div id="global-owerlay"><div id="popup-box" class="popup-box"><div class="popup-content"></div></div></div>');
-    $('#popup-box .popup-content').html(chief_empty_form);
-    $('#chief_id').val(chief_id);
-};
-
-function close_feedback_msg()
-{
-    $('#global-owerlay').remove();
-    $('body').removeClass('popup-open');
-};
-
-function open_video_frame(element, youtube_id)
-{
-    current_youtube_id = 'ytplayer-' + youtube_id;
-    $('body').addClass('popup-open').append('<div id="global-owerlay" onclick="close_feedback_msg();" class="youtube"><div id="popup-box" class="popup-box"><div class="popup-content"></div></div></div>');
-    $('#popup-box .popup-content').html('<div id="'+ current_youtube_id +'"></div>');
-
-    player = new YT.Player(current_youtube_id, {
-        playerVars: { 'autoplay': 1, 'controls': 1, 'autohide':1, 'wmode':'opaque'},
-        videoId: youtube_id,
-        width: '460',
-        height: '344',
-    });
-};
-
 function check_delete_profile()
 {
     return ($('#confirm_delete_profile input').is(':checked'));
@@ -615,55 +431,6 @@ function wait_ok_message_timeout(message, elem, counter, interval)
     }
     $(elem).html(message);
     setTimeout(function(){wait_ok_message_timeout(original_message, elem, counter, interval);}, interval);
-};
-
-function show_more_news(loader_icon_id)
-{
-    var img = $('#' + loader_icon_id);
-    var elem = img.parent();
-    if ($(elem).hasClass('rotation')) {
-        return;
-    }
-
-    $(elem).addClass('rotation');
-    image_rotation($(elem).find('img'), 'rotation');
-
-    var data = {
-        action: 'load_more',
-        news_on_page: news_on_page,
-        news_current_page: news_current_page
-    };
-
-    $.ajax({
-        dataType: 'json',
-        data: data,
-        type: 'POST',
-        url : BASE_URL + '/ajax/json/news',
-        success : function(response){
-            $(elem).removeClass('rotation');
-            if (response.status) {
-                $('<div class="news-list-slidedown" style="display:none;">' + response.html + '</div>').insertBefore('#mews-insert-before');
-                news_current_page++;
-                if (news_pages_cont == news_current_page) {
-                    $('#btn-more-block').fadeOut(400).remove();
-                }
-                $('.news-list-slidedown').slideDown(400).removeClass('news-list-slidedown');
-                var pages = $('.ruler a.current + a:last').addClass('current');
-            }
-        }
-    });
-};
-
-function image_rotation(elem, need_class)
-{
-    if ($(elem).parent().hasClass(need_class)) {
-        $(elem).rotate({
-            angle: 0,
-            animateTo: 360,
-            duration: 1500,
-            callback: function(){ image_rotation(elem, need_class); }
-        });
-    }
 };
 
 function isNumberKey(evt)
@@ -684,30 +451,6 @@ function isNumberKeyPlusDot(evt)
         return true;
     }
     return false;
-};
-
-function subscribe_by_email()
-{
-    var email = $('#subscribe_by_email').val();
-    
-    if (!email.length) {
-        return;
-    }
-
-    $.ajax({
-        dataType: 'json',
-        data: {email: email},
-        type: 'POST',
-        url : BASE_URL + '/ajax/json/subscribe',
-        success : function(response){
-            if (response.status) {
-                $('#subscribe_by_email').parent().html('<span class="thx">Дякуємо за підписку!</span>');
-            } else {
-                $('#subscribe_by_email').css('color', "#e00").css('cursor', "help").attr('title', response.text);
-                setTimeout(function(){ $('#subscribe_by_email').css('color', "").css('cursor', ""); }, 1200);
-            }
-        }
-    });
 };
 
 function send_activation_code(element)
@@ -780,47 +523,6 @@ function add_new_counters(key, abcounter, tarif)
     $(html).insertBefore('#new_counters_for_' + key);
 };
 
-function add_card()
-{
-    var data = {
-        action: 'addcard',
-        birthday: $('#addcard_birthday').val(),
-        pasp_number: $('#addcard_pasp-number').val(),
-        card_number: $('#addcard_card-number').val()
-    };
-
-    $.ajax({
-        dataType: 'json',
-        data: data,
-        type: 'POST',
-        url : BASE_URL + '/ajax/json/add_card',
-        success : function(response) {
-            if (response.status) {
-                $('.card-error-no-cards').remove();
-                $('#addcard_error').html('').fadeOut(0);
-
-                var new_html = 
-                    '<div class="paybill-ps-card-item">' +
-                        '<span id="khreshchatyk-card-' + response.card_id + '" class="niceCheck radio"><input value="' + response.card_id + '" type="radio" name="khreshchatyk-card" /></span>' +
-                        '<label onclick="$(\'#khreshchatyk-card-' + response.card_id + '\').click();">' +
-                            '<span class="text-label">' + response.card_number + '</span>' +
-                        '</label>' +
-                    '</div>';
-
-                $('.paybill-ps-cards').prepend(new_html);
-                $('.add-card-form').slideToggle();
-                $(".niceCheck").click(function() {
-                    changeCheck($(this), 'check-group');
-                });
-                
-                $('#khreshchatyk-card-' + response.card_id).click();
-            } else {
-                $('#addcard_error').html(response.text).fadeIn(0);
-            }
-        }
-    });
-};
-
 function increment_counter(key)
 {
     var data = {
@@ -835,39 +537,6 @@ function increment_counter(key)
         type: 'POST',
         url : BASE_URL + '/ajax/json/counter'
     });
-};
-
-function remove_user_card(card_id)
-{
-    var data = {
-        action: 'remove_card',
-        card_id: card_id
-    };
-
-    $.ajax({
-        dataType: 'json',
-        data: data,
-        type: 'POST',
-        url : BASE_URL + '/ajax/json/add_card',
-        success : function(response) {
-            close_feedback_msg();
-            $('#user_card_'+card_id).remove();
-        }
-    });
-};
-
-function remove_user_card_popup(card_id)
-{
-    $('body').addClass('popup-open').append('<div id="global-owerlay"><div id="popup-box" class="popup-box"><div class="popup-content"></div></div></div>');
-    var popup_html =
-        '<h3 class="page-subtitle border-top">Дійсно хочете видалити картку?</h3>' + 
-        '<div style="height: 130px; text-align: left;">Цю дію неможливо відмінити</div>' +
-        '<div class="field-group buttons-here">' +
-            '<button class="btn bold cancel-btn" onclick="close_feedback_msg(); return false;">Скасувати</button>' +
-            '<button class="btn green bold success-btn" onclick="remove_user_card(\'' + card_id + '\');">Видалити</button>' +
-        '</div>';
-    
-    $('#popup-box .popup-content').html(popup_html);
 };
 
 function tas_frame_load()
@@ -885,17 +554,6 @@ function tas_frame_load()
 
 $(document).ready(function(){
     (function(){
-        $('.spoiler-title').click(function(){
-            var par = $(this).parent();
-            if ($(par).hasClass('open')) {
-                $(par).removeClass('open').find('.spoiler-text').first().slideUp(400);
-            } else {
-                $(par).addClass('open').find('.spoiler-text').first().slideDown(400);
-            }
-        });
-        $('.spoiler-close').click(function(){
-            $(this).parent().parent().find('.spoiler-title').click();
-        });
 
         $('#reg-password, #reg-password-replica').keyup(function(){
             function clearGauge() { 

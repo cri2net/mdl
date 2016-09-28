@@ -24,7 +24,6 @@ require_once(PROTECTED_DIR . "/conf/errors.php");
 require_once(PROTECTED_DIR . "/conf/lang.php");
 require_once(PROTECTED_DIR . "/lib/func.lib.php");
 require_once(PROTECTED_DIR . "/vendor/autoload.php");
-require_once(PROTECTED_DIR . "/conf/browser.php");
 
 switch (USER_REAL_IP) {
     case '127.0.0.1':
