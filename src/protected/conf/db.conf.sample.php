@@ -22,7 +22,7 @@ define('TABLE_PREFIX', 'cks_');
 
 define('DB_TBL_CITIES',           TABLE_PREFIX . 'cities');
 define('DB_TBL_EMAIL_CRON',       TABLE_PREFIX . 'email_cron');
-define('DB_TBL_FLATS',            TABLE_PREFIX . 'flat');
+define('DB_TBL_FLATS',            TABLE_PREFIX . 'flats');
 define('DB_TBL_HOUSES',           TABLE_PREFIX . 'houses');
 define('DB_TBL_PAYMENT',          TABLE_PREFIX . 'payment');
 define('DB_TBL_PAYMENT_SERVICES', TABLE_PREFIX . 'payment_services');

@@ -41,8 +41,8 @@
         <form method="post" action="<?= BASE_URL; ?>/post/cabinet/restore/">
             <div class="input login-form-email">
                 <div class="bracket">або</div>
-                <label><span style="cursor:help;" title="Ви можете використовувати обліковий запис (логін, пароль) який ви використовували на personal-account.kiev.ua">Електронна пошта / логін </span> <br>
-                    <input class="txt form-txt-input" type="text" name="email" value="<?= $_email; ?>" style="cursor:help;" title="Ви можете використовувати обліковий запис (логін, пароль) який ви використовували на personal-account.kiev.ua">
+                <label><span>Електронна пошта / логін </span> <br>
+                    <input class="txt form-txt-input" type="text" name="email" value="<?= $_email; ?>">
                 </label>
             </div>
             <div class="input">
@@ -55,5 +55,5 @@
             </div>
         </form>
     </div>
-    <?php require_once(ROOT . '/protected/scripts/cabinet/info-block.php'); ?>
+    <?php require_once(PROTECTED_DIR . '/scripts/cabinet/info-block.php'); ?>
 </div>

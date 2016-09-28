@@ -6,13 +6,13 @@
 <!--[if lt IE 9]><style> input.txt, textarea.txt, select.txt { border:1px solid #444 !important; }</style><![endif]-->
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 <link href="<?= BASE_URL; ?>/css/style.css?m=<?= (is_readable(ROOT . "/css/style.css")) ? filemtime(ROOT . "/css/style.css") : ''; ?>" rel="stylesheet" type="text/css" />
-<title><?php require_once(ROOT . "/protected/scripts/seo/title.php"); ?></title>
+<title><?php require_once(PROTECTED_DIR . '/scripts/seo/title.php'); ?></title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&amp;subset=latin,cyrillic">
 <?php
     if (USER_REAL_IP === '127.0.0.1') {
         ?><script type="text/javascript" src="http://localhost:35729/livereload.js"></script> <?php
     } else {
-        require_once(ROOT . '/protected/scripts/google-analytics.php');
+        require_once(PROTECTED_DIR . '/scripts/google-analytics.php');
     }
 ?>
 <script src="<?= BASE_URL; ?>/js/jquery-1.7.2.min.js"></script>
@@ -29,4 +29,4 @@
 <body>
 <content>
     <div class="inner <?= $__route_result['controller'] . '_' . $__route_result['action']; ?>">
-        <?php require_once(ROOT . '/protected/scripts/breadcrumbs.php'); ?>
+        <?php require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php'); ?>
