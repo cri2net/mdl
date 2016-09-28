@@ -81,14 +81,9 @@
             </tr>
             <?php
                 $row_counter = 0;
-                $platcode = null;
 
                 foreach ($debtData['list'] as $key => $item) {
                     $row_counter++;
-
-                    if (str_replace(' ', '', $item['firm_name']) == 'КПГIОЦ') {
-                        $platcode = $item['PLAT_CODE'];
-                    }
                     ?>
                     <tr class="item-row <?= ($row_counter % 2 == 0) ? 'even' : 'odd'; ?>">
                         <td class="first">
@@ -149,7 +144,7 @@
                                         new_counter_no.k<?= $key; ?> = <?= count($item['counterData']['counters']); ?>;
                                     </script>
                                     <div id="new_counters_for_<?= $key; ?>"></div>
-                                    <label style="color:#00979c; display:inline-block; margin-top:20px;" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>);">додати лічильник</label>
+                                    <label class="add-counter" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>);">додати лічильник</label>
                                     <?php
                                 }
                             ?>
@@ -234,36 +229,14 @@
                     <b class="hint-star">**</b> — з врахуванням заборгованності <br>
                 </td>
             </tr>
-            <?php
-                if ($platcode !== null) {
-                    ?>
-                    <tr class="item-row">
-                        <td class="first">
-                            <?php
-                                $link = 'http://mars.givc-kgga.kiev.ua/cks.user.input/';
-                                $link .= '?platcode=' . rawurlencode($platcode);
-                                $link .= '&email=' . rawurlencode($__userData['email']);
-                                $link .= '&user_id=' . $__userData['id'];
-                                $link .= '&hash=' . md5(strtoupper(strrev($platcode) . strrev($__userData['email']) . strrev($__userData['id']) . strrev('GIOC_UKRAINE_IN_KIEV' . date('Ymd'))));
-                            ?>
-                            <a target="_blank" href="<?= $link; ?>">
-                                <img alt="" src="<?= BASE_URL; ?>/pic/pages/cabinet/objects/counters.png" />
-                            </a>
-                        </td>
-                    </tr>
-                    <?php
-                }
-            ?>
         </tbody>
     </table>
 </form>
 
-
-
 <script>
-$(document).ready(function(){
-    $(".niceCheck").click(function() {
-        changeCheck($(this), 'check-group');
+    $(document).ready(function(){
+        $(".niceCheck").click(function() {
+            changeCheck($(this), 'check-group');
+        });
     });
-});
 </script>

@@ -163,12 +163,12 @@ function billPageUpdateTotalSumm()
     $('#total_debt').html(strTotal);
 };
 
-function selectService(chechboxId, inputId)
+function selectService(checkboxId, inputId)
 {
-    var chechbox = $('#'+chechboxId);
+    var checkbox = $('#'+checkboxId);
     var currVal = $('#'+inputId).val().replace(',', '.');
 
-    if ($(chechbox).attr('checked')) {
+    if ($(checkbox).is(':checked')) {
         $('#'+inputId).removeAttr('disabled');
     } else {
         $('#'+inputId).attr('disabled', 'disabled');

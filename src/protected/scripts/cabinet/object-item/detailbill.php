@@ -111,7 +111,7 @@
                 <th rowspan="2" class="td-sum">Заборг. / переплата на <?= date('d.m', date_timestamp_get($prev_month)); ?>, грн</th>
                 <th rowspan="2">Тариф, грн</th>
                 <th rowspan="2">Нараховано за <?= $debtData['previous_month']; ?>, грн *</th>
-                <th colspan="2" style="text-align:center; border-bottom: solid 1px #fff;">Субсидія,&nbsp;грн</th>
+                <th colspan="2" style="text-align:center; border-bottom: solid 1px #004b00;">Субсидія,&nbsp;грн</th>
                 <th rowspan="2">До сплати за <?= $debtData['previous_month']; ?>, грн</th>
                 <th rowspan="2" class="td-sum">Сплачено у <?= $prev_month_when; ?>, грн **</th>
             </tr>

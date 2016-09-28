@@ -774,3 +774,7 @@ CREATE TABLE IF NOT EXISTS `cks_streets` (
   KEY `city_id` (`city_id`),
   KEY `name_ru` (`name_ru`(30))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2016.09.28
+ALTER TABLE `cks_user_flats`
+  CHANGE `timestamp` `created_at` DOUBLE NOT NULL;

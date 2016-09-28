@@ -26,9 +26,9 @@
     </form>
 </div>
 <script>
-$(document).ready(function(){
-    $(".niceCheck").click(function() {
-        changeCheck($(this), 'check-group');
+    $(document).ready(function(){
+        $(".niceCheck").click(function() {
+            changeCheck($(this), 'check-group');
+        });
     });
-});
 </script>
