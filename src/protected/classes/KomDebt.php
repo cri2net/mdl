@@ -162,11 +162,6 @@ class KomDebt
             foreach ($xml->xpath("//ROW") as $row) {
                 $list = [];
 
-                $auth_key = (isset($row->OUT_KEY)) ? ($row->OUT_KEY . '') : null;
-                if ($auth_key) {
-                    Flat::addAuthKey($auth_key, $obj_id);
-                }
-
                 $tmp_keys = ['CODE_FIRME', 'CODE_PLAT', 'ID_PLAT', 'ABCOUNT', 'PLAT_CODE', 'DATE_D', 'FIO', 'TLF', 'R_COUNT', 'NAME_BANKS'];
                 foreach ($tmp_keys as $tmp_key) {
                     $list[$tmp_key] = trim($row->$tmp_key . '');

@@ -23,7 +23,6 @@ define('ERROR_EMPTY_BILL', 'Нарахування за даний місяць 
 define('ERROR_EMPTY_HISTORYBILL', 'Платежі за даний місяць відсутні.');
 define('ERROR_OLD_REQUEST', 'Ваш сеанс застарів, будь ласка, повторіть ваш запит');
 define('ERROR_GET_FLAT', 'Помилка при отриманні квартири.');
-define('ERROR_FLAT_INVALID_AUTH_KEY', 'Ключ авторизації не є дійсний');
 define('ERROR_GET_PAYMENT', 'Помилка при отриманні платежу.');
 define('ERROR_GET_PAYMENT_PDF', 'Помилка при отриманні квитанції.');
 define('ERROR_SHOW_PAYMENT', 'Неможливо показати деталі платежу');

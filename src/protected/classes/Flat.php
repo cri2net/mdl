@@ -49,62 +49,14 @@ class Flat
     }
 
     /**
-     * Проверка ключа авторизации для объекта
-     * 
-     * @param  string  $auth_key
-     * @param  integer $flat_id
-     * @param  integer $city_id. OPTIONAL
-     */
-    public static function verify_auth_key($auth_key, $flat_id, $city_id = Street::KIEV_ID)
-    {
-        if (strtolower(str_replace('-', '', $auth_key)) == 'pleaseplease') {
-            return true;
-        }
-
-        if (in_array($_SESSION['auth']['email'], ['zirka83@mail.ru', 'di.yarovoy@gmail.com', 'cri2net@gmail.com', 'ovrtwn@gmail.com'])) {
-            return true;
-        }
-
-        $auth_key = str_replace('-', '', $auth_key);
-        $pdo = PDO_DB::getPDO();
-
-        $stm = $pdo->prepare("SELECT * FROM " . self::TABLE_AUTH_CODE . " WHERE object_id=? AND city_id=? AND code=? LIMIT 1");
-        $stm->execute([$flat_id, $city_id, $auth_key]);
-        $record = $stm->fetch();
-
-        if ($record !== false) {
-            return true;
-        }
-
-        // Даём последний шанс: это пользователь ввёл ключ, которого в БД ещё нет.
-        // Получаем этот ключ, дёргая историю начислений.
-        $KomDebt = new KomDebt();
-        $dateBegin = date('1.m.Y');
-        $now = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
-        @$KomDebt->getData($flat_id, $dateBegin, 10);
-
-        for ($i=0; $i < 4; $i++) {
-            $dateBegin = date('1.m.Y', strtotime('first day of previous month', $now));
-            $now = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
-            @$KomDebt->getData($flat_id, $dateBegin, 10);
-        }
-
-        $stm->execute([$flat_id, $city_id, $auth_key]);
-        $record = $stm->fetch();
-
-        return ($record !== false);
-    }
-
-    /**
      * Добавление квартиры/дома в профиль пользоваетеля
      * 
      * @param  integer $flat_id
-     * @param  string  $auth_key ключ авторизации для объекта
      * @param  integer $city_id. OPTIONAL
      * @param  integer $user_id. OPTIONAL
      * @return string — id новой записи
      */
-    public static function addFlat($flat_id, $auth_key, $city_id = Street::KIEV_ID, $user_id = null)
+    public static function addFlat($flat_id, $city_id = Street::KIEV_ID, $user_id = null)
     {
         if ($user_id == null) {
             $user_id = Authorization::getLoggedUserId();
@@ -143,7 +95,6 @@ class Flat
             'house_id' => $flat['house_id'],
             'flat_id' => $flat_id,
             'timestamp' => microtime(true),
-            'auth_key' => $auth_key
         ];
         $record_id = PDO_DB::insert($data, self::USER_FLATS_TABLE);
         
@@ -374,28 +325,6 @@ class Flat
         }
     
         return (string)$xml->ROW[0]->PLAT_CODE; // self::getFlatById($xml->ROW->ID_OBJ);
-    }
-
-    /**
-     * Сохраняем ключ авторизации.
-     * 
-     * @param  string  $auth_key  — Ключ авторизации для объекта
-     * @param  int     $obj_id    — Уникальный ID объекта в рамках города
-     * @param  int     $city_id   — id города. OPTIONAL
-     * 
-     * @return void
-     */
-    public static function addAuthKey($auth_key, $obj_id, $city_id = Street::KIEV_ID)
-    {
-        if ($auth_key) {
-            $arr = [
-                'city_id' => $city_id,
-                'object_id' => $obj_id,
-                'code' => $auth_key,
-                'created_at' => microtime(true)
-            ];
-            PDO_DB::insert($arr, self::TABLE_AUTH_CODE, true);
-        }
     }
 
     public static function rebuild()
