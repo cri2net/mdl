@@ -14,7 +14,6 @@
             $('#tas_frame_error').fadeIn(200);
             $('#tas_frame').css('display', 'none');
             tas_frame_not_load = true;
-            increment_counter('TAS_FRAME_NOT_LOAD');
         }, 3500);
     });
 

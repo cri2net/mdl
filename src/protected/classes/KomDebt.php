@@ -140,7 +140,7 @@ class KomDebt
             foreach ($xml->xpath("//ROW") as $row) {
                 $list = [];
 
-                $tmp_keys = ['CODE_FIRME', 'CODE_PLAT', 'ID_PLAT', 'ABCOUNT', 'PLAT_CODE', 'DATE_D', 'FIO', 'TLF', 'R_COUNT', 'NAME_BANKS'];
+                $tmp_keys = ['CODE_FIRME', 'CODE_PLAT', 'ID_FIRME', 'ID_PLAT', 'ABCOUNT', 'PLAT_CODE', 'DATE_D', 'FIO', 'TLF', 'R_COUNT', 'NAME_BANKS'];
                 foreach ($tmp_keys as $tmp_key) {
                     $list[$tmp_key] = trim($row->$tmp_key . '');
                 }

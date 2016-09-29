@@ -466,12 +466,6 @@ function send_activation_code(element)
     });
 };
 
-function searchSubmit()
-{
-    var s = $('search').val();
-    return (s.length > 0);
-};
-
 function translite(str)
 {
     var arr = {'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ж':'g', 'з':'z', 'и':'i', 'й':'y', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o', 'п':'p', 'р':'r', 'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'ы':'i', 'э':'e', 'А':'A', 'Б':'B', 'В':'V', 'Г':'G', 'Д':'D', 'Е':'E', 'Ж':'G', 'З':'Z', 'И':'I', 'Й':'Y', 'К':'K', 'Л':'L', 'М':'M', 'Н':'N', 'О':'O', 'П':'P', 'Р':'R', 'С':'S', 'Т':'T', 'У':'U', 'Ф':'F', 'Ы':'I', 'Э':'E', 'ё':'yo', 'х':'h', 'ц':'ts', 'ч':'ch', 'ш':'sh', 'щ':'shch', 'ъ':'', 'ь':'', 'ю':'yu', 'я':'ya', 'Ё':'Yo', 'Х':'H', 'Ц':'Ts', 'Ч':'Ch', 'Ш':'Sh', 'Щ':'Shch', 'Ъ':'', 'Ь':'', 'Ю':'Yu', 'Я':'Ya', 'ь':''};
@@ -523,33 +517,11 @@ function add_new_counters(key, abcounter, tarif)
     $(html).insertBefore('#new_counters_for_' + key);
 };
 
-function increment_counter(key)
-{
-    var data = {
-        action: 'increment',
-        key: key,
-        order_id: current_order_id
-    };
-
-    $.ajax({
-        dataType: 'json',
-        data: data,
-        type: 'POST',
-        url : BASE_URL + '/ajax/json/counter'
-    });
-};
-
 function tas_frame_load()
 {
     $('#tas_frame_error').css('display', 'none');
     $('#tas_frame').css('display', '');
     clearTimeout(tas_timeout_id);
-    
-    if (tas_frame_not_load) {
-        increment_counter('TAS_FRAME_LOAD_SLOW');
-    } else {
-        increment_counter('TAS_FRAME_LOAD');
-    }
 };
 
 $(document).ready(function(){

@@ -186,7 +186,7 @@
                                 }
 
                                 // htmlspecialchars не делаем, так как эти данные уже должны быть обработаны
-                                $tmp_value  =      $item['CODE_FIRME'];
+                                $tmp_value  =      $item['ID_FIRME'];
                                 $tmp_value .= '_'. $item['CODE_PLAT'];
                                 $tmp_value .= '_'. $item['ABCOUNT'];
                                 $tmp_value .= '_'. $item['PLAT_CODE'];

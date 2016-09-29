@@ -7,9 +7,8 @@ class ShoppingCart
     const TABLE = DB_TBL_PAYMENT;
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
     const KASS_ID_TAS  = 1080;
-    const KASS_ID_AVAL = 1028;
-    const KASS_ID_OSCHAD_MYCARD = 1142;
-    const KASS_ID_OSCHADBANK = 1344;
+    const KASS_ID_AVAL = 12033;
+    const KASS_ID_OSCHADBANK = 10024;
     const REPORT_BASE_URL   = '/reports/rwservlet';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
@@ -26,8 +25,8 @@ class ShoppingCart
         $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
         $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
         $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-        $urls['KASS_STATUS']       = '/reports/rwservlet?report=/gioc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
-        $urls['KASS_OPEN']         = '/reports/rwservlet?report=/gioc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        $urls['KASS_STATUS']       = '/reports/rwservlet?report=/gerc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        $urls['KASS_OPEN']         = '/reports/rwservlet?report=/gerc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
 
         return $urls[$key];
     }
@@ -43,29 +42,19 @@ class ShoppingCart
     public static function pppGetCashierByKassId($kass_id, &$login, &$password)
     {
         switch ($kass_id) {
-            case 1028:
-                $login    = 'UPJG_SITE';
-                $password = '4ED9C35810216E6A9322716762D93CE0D483497E';
-                break;
-
-            case 1048:
-                $login    = 'UIWL_SITE';
-                $password = '084E600EEB2A7D9E255DCFB2736674DB91F00CB4';
+            case 12033:
+                $login    = 'CKS_SITE_RB';
+                $password = '0206E088B06597C2A4565293639B4CABB2BB48B9';
                 break;
 
             case 1080:
-                $login    = 'GIOCKIEVUA';
-                $password = '7D107006F752860E6FAEBD84156A676B8852C439';
+                $login    = 'GERCUA';
+                $password = 'B7300BFB9411B748A291A37F4E815809D81AB8FA';
                 break;
 
-            case 1142:
-                $login    = 'OSCH_SITE_MYCARD';
-                $password = 'EB35DBDC5AB7AA5662BCEBDE3C6DBAF6989F45A0';
-                break;
-
-            case 1344:
-                $login    = 'osch_site_allcards';
-                $password = strtoupper(sha1('osch_site_allcards123'));
+            case 10024:
+                $login    = 'CKS_SITE_OB';
+                $password = '6E02899B8C1379C7D417BF3229AFB3BE5EF565DE';
                 break;
         }
     }
@@ -177,13 +166,15 @@ class ShoppingCart
                 return self::KASS_ID_TAS;
 
             case 'oschad_mycard':
-                return self::KASS_ID_OSCHAD_MYCARD;
-
             case 'oschadbank':
                 return self::KASS_ID_OSCHADBANK;
+            
+            case 'visa':
+            case 'mastercard':
+                return self::KASS_ID_AVAL;
 
             default:
-                return self::KASS_ID_AVAL;
+                throw new Exception("Unknow processing");
         }
     }
 
@@ -284,7 +275,7 @@ class ShoppingCart
             $serviceDataTmp = explode("_", $data[$item."_data"]);
 
             $kombebt_data = [
-                'kode_firme' => $serviceDataTmp[0],
+                'id_firme'   => $serviceDataTmp[0],
                 'kode_plat'  => $serviceDataTmp[1],
                 'abcount'    => $serviceDataTmp[2],
                 'platcode'   => $serviceDataTmp[3],
@@ -358,7 +349,7 @@ class ShoppingCart
                 break;
 
             case 'komdebt':
-                $report = ($payment['status'] == 'success') ? '/site_api/prov_gkom.rep' : '/site_api/pacq50_gkom.rep';
+                $report = ($payment['status'] == 'success') ? '/gerc_api/prov_gkom.rep' : '/gerc_api/pacq50_gkom.rep';
                 break;
         }
 
@@ -571,11 +562,15 @@ class ShoppingCart
             return;
         }
 
+        $kass_id = self::getKassID($payment['processing']);
+        self::pppGetCashierByKassId($kass_id, $login, $password);
+
         $services = PDO_DB::table_list(self::SERVICE_TABLE, "payment_id='{$payment['id']}'", 'id ASC', $payment['count_services'] . '');
 
         $xml = '<?xml version="1.0" encoding="windows-1251" ?>';
         $xml .= "<rowset>";
-        $xml .= "<id_kass>". self::getKassID($payment['processing']) ."</id_kass>";
+        $xml .= "<login>{$login}</login>";
+        $xml .= "<pwd>{$password}</pwd>";
         $xml .= "<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>";
         $xml .= "<idsiteuser>{$payment['user_id']}</idsiteuser>";
         $xml .= "<uniqid>". md5(uniqid(rand(), 1)) ."</uniqid>";
@@ -589,7 +584,7 @@ class ShoppingCart
 
             $xml .= "<plat_code>{$data['platcode']}</plat_code>";
             $xml .= "<abcount>{$data['abcount']}</abcount>";
-            $xml .= "<id_firme>{$data['kode_firme']}</id_firme>";
+            $xml .= "<id_firme>{$data['id_firme']}</id_firme>";
             $xml .= "<id_plat>{$data['id_pat']}</id_plat>";
             $xml .= "<summ_plat>". ($services[$i]['sum'] * 100) ."</summ_plat>";
 
@@ -626,7 +621,7 @@ class ShoppingCart
         $xml .= "</rowset>";
 
         $xml = iconv('UTF-8', 'WINDOWS-1251', $xml);
-        $report = '/site_api/pnew_gkom.rep';
+        $report = '/gerc_api/pnew_gkom.rep';
         $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode($report) . '&destype=Cache&Desformat=xml&cmdkey=rep';
         $url .= '&in_xml=' . rawurlencode($xml);
         $res = Http::fgets($url);

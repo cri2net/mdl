@@ -46,6 +46,7 @@ class TasLink
         switch ($this->payment_type) {
             case 'komdebt': return 'TE0020';
             case 'budget':  return 'TE0021';
+            case 'other':   return 'TE0022';
         }
     }
 
@@ -57,7 +58,6 @@ class TasLink
      */
     public function initSession($payment_id, $type = 'Purchase')
     {
-        $payment_id = "gioc-$payment_id";
         $this->payment_id = $payment_id;
         $termname = $this->getTermname();
         $str_to_sign = strrev($payment_id) . strrev($termname) . strrev($type);
@@ -84,7 +84,7 @@ class TasLink
             'processing_data' => json_encode($processing_data)
         ];
 
-        PDO_DB::update($arr, ShoppingCart::TABLE, str_replace('gioc-', '', $payment_id));
+        PDO_DB::update($arr, ShoppingCart::TABLE, $payment_id);
         $this->session_id = $session_id;
         return $session_id;
     }
