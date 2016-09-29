@@ -52,7 +52,7 @@
             $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $id);
             $payment_id = $_payment['id'];
         
-            $file = ROOT . "/protected/conf/payments/tas/tas";
+            $file = PROTECTED_DIR . "/conf/payments/tas/tas";
             if (file_exists($file . ".conf.php")) {
                 require_once($file . ".conf.php");
             }

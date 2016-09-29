@@ -5,12 +5,11 @@ use cri2net\php_pdo_db\PDO_DB;
 class User
 {
     const TABLE = DB_TBL_USERS;
-    const SUBSCRIBE_TABLE = DB_TBL_SUBSCRIBES;
 
     public static function getUserIdByEmail($email)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT id FROM ". DB_TBL_USERS ." WHERE email=? AND deleted=0 LIMIT 1");
+        $stm = $pdo->prepare("SELECT id FROM ". self::TABLE ." WHERE email=? AND deleted=0 LIMIT 1");
         $stm->execute([$email]);
         $column = $stm->fetchColumn();
         if ($column === false) {
@@ -22,7 +21,7 @@ class User
     public static function getUserIdByPhone($phone)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT id FROM ". DB_TBL_USERS ." WHERE mob_phone=? AND deleted=0 LIMIT 1");
+        $stm = $pdo->prepare("SELECT id FROM ". self::TABLE ." WHERE mob_phone=? AND deleted=0 LIMIT 1");
         $stm->execute([$phone]);
         $column = $stm->fetchColumn();
         if ($column === false) {
@@ -57,39 +56,13 @@ class User
     public static function getUserByEmail($email)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE email=? AND deleted=0 LIMIT 1");
+        $stm = $pdo->prepare("SELECT * FROM ". self::TABLE ." WHERE email=? AND deleted=0 LIMIT 1");
         $stm->execute([$email]);
         $user = $stm->fetch();
         if ($user === false) {
             return null;
         }
         return $user;
-    }
-
-    /**
-     * Получение карты пользователя
-     * @param  integer $card_id id карты в БД сайта
-     * @param  integer $user_id id пользователя, у которого ищем карту. OPTIONAL
-     * @return assoc array | null данные карты
-     */
-    public static function getUserCard($card_id, $user_id = null)
-    {
-        if ($user_id == null) {
-            $user_id = Authorization::getLoggedUserId();
-        }
-        $pdo = PDO_DB::getPDO();
-
-        $stm = $pdo->prepare("SELECT * FROM ". TABLE_PREFIX ."user_cards WHERE id=? AND user_id=? LIMIT 1");
-        $stm->execute([$card_id, $user_id]);
-        $card = $stm->fetch();
-        
-        if ($card === false) {
-            return null;
-        }
-
-        $card['additional'] = (array)(@json_decode($card['additional']));
-
-        return $card;
     }
 
     /**
@@ -102,7 +75,7 @@ class User
     private static function getUserByColumn($column, $value)
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM ". DB_TBL_USERS ." WHERE $column=? AND deleted=0 LIMIT 1");
+        $stm = $pdo->prepare("SELECT * FROM ". self::TABLE ." WHERE $column=? AND deleted=0 LIMIT 1");
         $stm->execute([$value]);
         $user = $stm->fetch();
         if ($user === false) {
@@ -200,30 +173,4 @@ class User
             ]
         );
     }
-
-    /**
-     * Осуществляем подписку по email. Сознательно не делаем никакой связи с таблицей пользователей.
-     * @param  string $email
-     * @return integer        id записи.
-     */
-    public static function subscribeByEmail($email)
-    {
-        $pdo = PDO_DB::getPDO();
-        $_email = $pdo->quote($email);
-        $subscriber = PDO_DB::first(self::SUBSCRIBE_TABLE, "email=$_email");
-        $time = microtime(true);
-
-        if (empty($subscriber)) {
-            $insert = [
-                'email' => $email,
-                'created_at' => $time,
-                'updated_at' => $time
-            ];
-            return PDO_DB::insert($insert, self::SUBSCRIBE_TABLE);
-        }
-
-        PDO_DB::update(['updated_at' => $time, 'subscribe' => 1], self::SUBSCRIBE_TABLE, $subscriber['id']);
-        return $subscriber['id'];
-    }
-
 }

@@ -1,9 +1,51 @@
 <?php
-    $plat_list = CKS::getPlatList();
-    $districts = CKS::getDistricts();
+    use cri2net\php_pdo_db\PDO_DB;
 ?>
 <h1 class="big-title">Сплата послуг ЦКС</h1>
+<?php
+    try {
+        $plat_list = CKS::getPlatList();
+        $districts = CKS::getDistricts();
 
+        if (!isset($_SESSION['instant-payments-cks']['step'])) {
+            $_SESSION['instant-payments-cks']['step'] = 'region';
+        }
+    } catch (Exception $e) {
+        $_SESSION['instant-payments-cks']['status'] = false;
+        $_SESSION['instant-payments-cks']['error']['text'] = $e->getMessage();
+        $_SESSION['instant-payments-cks']['step'] = 'region';
+    }
+
+    if (isset($_SESSION['instant-payments-cks']['status']) && !$_SESSION['instant-payments-cks']['status']) {
+        ?>
+        <br>
+        <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
+        <div class="error-description"><?= $_SESSION['instant-payments-cks']['error']['text']; ?></div>
+        <?php
+        unset($_SESSION['instant-payments-cks']['status']);
+    }
+
+    if ($_SESSION['instant-payments-cks']['step'] == 'frame') {
+        $id = $_SESSION['instant-payments-cks']['cks_last_payment_id'];
+        $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $id);
+        $payment_id = $_payment['id'];
+    
+        $file = PROTECTED_DIR . "/conf/payments/tas/tas";
+        if (file_exists($file . ".conf.php")) {
+            require_once($file . ".conf.php");
+        }
+        if (file_exists($file . ".process.php")) {
+            require_once($file . ".process.php");
+        }
+        if (file_exists($file . ".payform.php")) {
+            require_once($file . ".payform.php");
+        }
+
+        $_SESSION['instant-payments-cks']['step'] = 'region';
+
+        return;
+    }
+?>
 <form class="feedback-form" method="post" action="<?= BASE_URL; ?>/post/cabinet/instant-payments/cks/">
     <div style="display: inline-block; float: none; width: 100%;">
         <div class="field-group">
