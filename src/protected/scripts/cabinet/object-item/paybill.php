@@ -80,7 +80,7 @@
                     <span id="checkbox_percent_oschad_2" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $oschad_mycardSum; ?>" data-paysystem-key="oschad_mycard"></span>
                     <label onclick="$('#checkbox_percent_oschad_2').click();">
                         <img alt="" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
-                        <span style="color:#f00;" class="text-label"><b>Ощадбанк (Моя Картка)</b></span>
+                        <span class="text-label"><b>Ощадбанк (Моя Картка)</b></span>
                     </label>
                 </div>
                 <?php
