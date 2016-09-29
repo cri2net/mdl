@@ -26,15 +26,7 @@ class Kinders
     public static function getFirmeList($id_area = 233)
     {
         $url = API_URL . self::get_API_URL('PPP_URL_FIRME') . $id_area;
-
-        $xml_string = Http::fgets($url);
-        $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
-        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
-        $xml = @simplexml_load_string($xml_string);
-        
-        if (($xml === false) || ($xml === null)) {
-            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
-        }
+        $xml = Http::getXmlByUrl($url);
 
         $result = [];
         $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
@@ -135,14 +127,7 @@ class Kinders
     public static function getInstitutionList($id_firme)
     {
         $url = API_URL . self::get_API_URL('PPP_URL_INSTITUTION') . $id_firme;
-        $xml_string = Http::fgets($url);
-        $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
-        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
-        $xml = @simplexml_load_string($xml_string);
-        
-        if (($xml === false) || ($xml === null)) {
-            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
-        }
+        $xml = Http::getXmlByUrl($url);
 
         $list = [];
         $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;

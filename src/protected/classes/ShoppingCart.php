@@ -127,9 +127,9 @@ class ShoppingCart
         $xml_string = Http::fgets($url);
     }
     
-    public static function logRequestToReports($message, $payment_id, $success = true, $type = 'new')
+    public static function logRequestToReports($message, $payment_id, $success = true, $type = 'new', $folder = 'reports_new')
     {
-        $dir = ROOT . "/protected/logs/reports/$type/" . date('Y/m/d/');
+        $dir = PROTECTED_DIR . "/logs/$folder/$type/" . date('Y/m/d/');
 
         if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
@@ -139,7 +139,7 @@ class ShoppingCart
         error_log($message . "\r\n\r\n", 3, $file);
 
         if (!$success) {
-            $file = ROOT . "/protected/logs/reports/$type/with_error.txt";
+            $file = PROTECTED_DIR . "/logs/$folder/$type/with_error.txt";
             error_log("payment_id = $payment_id\r\n" . $message . "\r\n\r\n", 3, $file);
         }
     }

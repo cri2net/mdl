@@ -5,7 +5,7 @@ use cri2net\php_pdo_db\PDO_DB;
 class Flat
 {
     const TABLE = DB_TBL_FLATS;
-    const FLATS_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity33&house_id=';
+    const FLATS_URL = '/reports/rwservlet?report=/gerc_api/spr_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity33&house_id=';
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
     const MAX_USER_FLATS = 4;
 
@@ -241,7 +241,7 @@ class Flat
         }
 
         $result = [];
-        $data = Http::fgets(self::FLATS_URL . $house_id);
+        $data = Http::fgets(API_URL . self::FLATS_URL . $house_id);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);
@@ -274,7 +274,7 @@ class Flat
         $stm->execute([$city_id]);
 
         while ($row = $stm->fetch()) {
-            $data = Http::fgets(self::FLATS_URL . $row['house_id']);
+            $data = Http::fgets(API_URL . self::FLATS_URL . $row['house_id']);
             $data = iconv('CP1251', 'UTF-8', $data);
             $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
             $xml = @simplexml_load_string($data);

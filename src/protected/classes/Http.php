@@ -143,4 +143,17 @@ class Http
         return @file_get_contents($url, false, $context);
     }
 
+    public static function getXmlByUrl($url)
+    {
+        $xml_string = self::fgets($url);
+        $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
+        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
+        $xml = @simplexml_load_string($xml_string);
+        
+        if (($xml === false) || ($xml === null)) {
+            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
+        }
+
+        return $xml;
+    }
 }

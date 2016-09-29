@@ -778,3 +778,7 @@ CREATE TABLE IF NOT EXISTS `cks_streets` (
 -- 2016.09.28
 ALTER TABLE `cks_user_flats`
   CHANGE `timestamp` `created_at` DOUBLE NOT NULL;
+
+-- 2016.09.29
+ALTER TABLE `cks_payment`
+  CHANGE `type` `type` ENUM('gai','kinders','komdebt','cks') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt'  NOT NULL;
