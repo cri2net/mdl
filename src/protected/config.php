@@ -33,14 +33,16 @@ switch (USER_REAL_IP) {
     
     default:
         if (!isset($_SERVER['HTTP_HOST']) || !$_SERVER['HTTP_HOST']) {
-            $_SERVER['HTTP_HOST'] = 'www.gioc.kiev.ua';
+            $_SERVER['HTTP_HOST'] = 'www.gerc.ua';
         }
 
-        define('COOKIE_DOMAIN', '.gioc.kiev.ua');
+        define('COOKIE_DOMAIN', '.gerc.ua');
         if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'http';
         }
-        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST']);
+        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST'] . '/cks');
+
+        $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 4);
 }
 
 define('EMAIL_FROM', 'info@cks.kiev.ua');

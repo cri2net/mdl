@@ -11,9 +11,9 @@ switch (USER_REAL_IP) {
     
     default:
         define('DB_HOST', 'localhost');
-        define('DB_NAME', 'gioc_site');
-        define('DB_USER', 'giocwww');
-        define('DB_PASSWORD', 'skjdgiougKPs8d69t3bhLJGFIOugtlsd');
+        define('DB_NAME', 'gercnew');
+        define('DB_USER', 'komna');
+        define('DB_PASSWORD', 'rbbx35W');
         
         define('API_URL', 'https://ppp.gerc.ua:4445');
 }
