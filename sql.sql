@@ -785,3 +785,6 @@ ALTER TABLE `cks_payment`
 
 ALTER TABLE `cks_payment`
   CHANGE `processing` `processing` ENUM('mastercard','visa','webmoney','khreshchatyk','tas','oschad_mycard','oschadbank') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+ALTER TABLE `cks_payment`
+  CHANGE `processing` `processing` ENUM('mastercard','visa','webmoney','tas','oschad_mycard','oschadbank') CHARSET utf8 COLLATE utf8_general_ci NULL;

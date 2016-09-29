@@ -13,10 +13,7 @@ class CronTasks
             'visa'          => 'Аваль Visa',
             'mastercard'    => 'Аваль Mastercard',
             'tas'           => 'ТасКомБанк',
-            'khreshchatyk'  => 'Картка Киянина (Крещатик)',
-            'oschad'        => 'Картка Киянина (Ощадбанк)',
             'oschad_mycard' => 'Моя Картка (Ощадбанк)',
-            '_test_upc'     => 'UPC/тестовий',
         ];
 
         $objPHPExcel = new PHPExcel(); // Create new PHPExcel object

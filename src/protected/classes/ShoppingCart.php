@@ -10,13 +10,12 @@ class ShoppingCart
     const KASS_ID_AVAL = 1028;
     const KASS_ID_OSCHAD_MYCARD = 1142;
     const KASS_ID_OSCHADBANK = 1344;
-    const KASS_ID_KHRESHCHATYK = 1048;
     const REPORT_BASE_URL   = '/reports/rwservlet';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['khreshchatyk', 'tas', 'visa', 'mastercard', 'oschad_mycard', 'oschadbank']
+            ? ['tas', 'visa', 'mastercard', 'oschad_mycard', 'oschadbank']
             : ['tas', 'visa', 'mastercard', 'oschad_mycard', 'oschadbank'];
     }
 
@@ -146,7 +145,6 @@ class ShoppingCart
             'visa'          => ['percent' => 2, 'min' => 2],
             'tas'           => ['percent' => 2, 'min' => 2],
             'mastercard'    => ['percent' => 2, 'min' => 2],
-            'khreshchatyk'  => ['percent' => 0, 'min' => 0],
             'oschad_mycard' => ['percent' => 0, 'min' => 0],
             'oschadbank'    => ['percent' => 0, 'min' => 0],
         ];
@@ -175,9 +173,6 @@ class ShoppingCart
     public static function getKassID($processing)
     {
         switch ($processing) {
-            case 'khreshchatyk':
-                return self::KASS_ID_KHRESHCHATYK;
-
             case 'tas':
                 return self::KASS_ID_TAS;
 
@@ -442,7 +437,6 @@ class ShoppingCart
                         $url .= '&p14=0';
                         break;
 
-                    case 'oschad':
                     case 'oschad_mycard':
                     case 'oschadbank':
                         $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
@@ -473,36 +467,6 @@ class ShoppingCart
                         $url .= '&p13='          . rawurlencode($osc_first->P_SIGN);
                         $url .= '&p14=0';
                         $to_update['trancode'] = $actual_osc_data['RC'];
-                        break;
-
-                    case 'khreshchatyk':
-                        $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
-                        $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
-                        $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
-                        $last = (array)$payment['processing_data']['requests'][count($payment['processing_data']['requests']) - 1];
-
-                        $url = API_URL . self::REPORT_BASE_URL;
-
-                        $url .= '?report='       . rawurlencode($report);
-                        $url .= '&destype='      . rawurlencode('Cache');
-                        $url .= '&Desformat='    . rawurlencode('xml');
-                        $url .= '&cmdkey='       . rawurlencode('rep');
-                        $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
-                        $url .= '&p1='           . rawurlencode($last['MerchantID']);
-                        $url .= '&p2='           . rawurlencode($last['TerminalID']);
-                        $url .= '&p3='           . rawurlencode($last['TotalAmount']);
-                        $url .= '&p4='           . rawurlencode($last['Currency']);
-                        $url .= '&p5=';
-                        $url .= '&p6='           . rawurlencode($last['OrderID']);
-                        $url .= '&p7=';
-                        $url .= '&p8=';
-                        $url .= '&p9=';
-                        $url .= '&p10='          . rawurlencode($last['Rrn']);
-                        $url .= '&p11='          . rawurlencode($last['ProxyPan']);
-                        $url .= '&p12='          . rawurlencode($last['TranCode']);
-                        $url .= '&p13=';
-                        $url .= '&p14=0';
-                        $to_update['trancode'] = $last['TranCode'];
                         break;
 
                     default:
@@ -868,18 +832,13 @@ class ShoppingCart
             case '_test_upc':
             case 'mastercard':
             case 'visa':
-
                 return UPC::get_upc_error($trancode);
-                break;
-
-            case 'khreshchatyk':
                 break;
 
             case 'tas':
                 return TasLink::getErrorDescription($trancode);
                 break;
 
-            case 'oschad':
             case 'oschad_mycard':
             case 'oschadbank':
                 return Oschad::getErrorDescription($trancode);

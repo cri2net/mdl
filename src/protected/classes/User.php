@@ -92,35 +92,6 @@ class User
         return $card;
     }
 
-    public static function updateUserCardData($card_id)
-    {
-        $card = self::getUserCard($card_id);
-        if (!$card) {
-            return;
-        }
-
-        if ($card['type'] == 'khreshchatyk') {
-            $khreshchatyk = new Khreshchatyk;
-            $actual_card_data = $khreshchatyk->getCardData($card['pan']);
-            $additional = $card['additional'];
-            
-            if ($actual_card_data) {
-                $additional['acc_bank'] = $actual_card_data['acc_bank'];
-                $additional['card_state_id'] = $actual_card_data['card_state_id'];
-
-                $arr = [
-                    'updated_at' => microtime(true),
-                    'additional' => json_encode($additional)
-                ];
-                if ($actual_card_data['card_state_id'] != 5) {
-                    $arr['is_work'] = 0;
-                }
-
-                PDO_DB::update($arr, TABLE_PREFIX . 'user_cards', $card['id']);
-            }
-        }
-    }
-
     /**
      * Приватный! метод для получения записи о пользователе по одному из полей.
      * Рекомендуется указывать те поля, которые уникальны

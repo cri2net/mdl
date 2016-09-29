@@ -41,36 +41,6 @@ try {
     ];
    
     PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
-
-    if ($pay_system == 'khreshchatyk') {
-        require_once(ROOT . '/protected/conf/payments/khreshchatyk/khreshchatyk.conf.php');
-        if (KHRESHCHATYK_MIN_PAYMENT_SUMM > $totalAmount) {
-            throw new Exception(ERROR_KKK_MIN_PAYMENT_SUMM);
-        }
-
-        $user_card_id = $_POST['khreshchatyk-card'];
-
-        // проверяем, выбрана ли карта
-        if (!$user_card_id) {
-            throw new Exception(ERROR_CARD_NO_SELECT_CARD);
-        }
-
-        // проверяем, принадлежит ли карта пользователю
-        $card = User::getUserCard($user_card_id);
-        if (!$card) {
-            throw new Exception(ERROR_GET_CARD);
-        }
-
-        // проверяем, активна ли карта, обновляем информацию о ней
-        if (microtime(true) - $card['updated_at'] > 86400) {
-            User::updateUserCardData($card['id']);
-        }
-
-        if (preg_match('/^2625/', $card['additional']['acc_bank'])) {
-            throw new Exception(ERROR_ADD_CARD_NOT_KKK);
-        }
-    }
-
     ShoppingCart::send_payment_to_reports($_payment['id']);
 
     // go_to_payment_time обновляю только если успешно отправили запрос на оракл.
@@ -78,11 +48,7 @@ try {
     $cdata = ['go_to_payment_time' => microtime(true)];
     PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
     
-    if ($pay_system == 'khreshchatyk') {
-        unset($_SESSION['paybill'], $_SESSION['paybill-post-flag']);
-        require_once(ROOT . '/protected/conf/payments/khreshchatyk/khreshchatyk.process.php');
-        return BASE_URL . "/payment-status/{$_payment['id']}/";
-    } elseif ($pay_system == 'tas') {
+    if ($pay_system == 'tas') {
         $TasLink = new TasLink('komdebt');
         $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_payment['id']); // в БД теперь правильная комиссия, которую вернул reports
         $tas_session_id = $TasLink->initSession($_payment['id']);
