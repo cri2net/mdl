@@ -27,17 +27,50 @@ try {
         throw new Exception(ERROR_INVALID_ZERO_PAYMENT);
     }
 
-    if (Authorization::isLogin()) {
-        $user_id = Authorization::getLoggedUserId();
-        $user = User::getUserById($user_id);
-        $fio = "{$user['lastname']} {$user['name']} {$user['fathername']}";
-    } else {
-        $user_id = 1;
-        $fio = 'cks';
+
+
+    $tmp_keys = [
+        'penalty_user_lastname'   => 'Прізвище',
+        'penalty_user_name'       => 'Ім’я',
+        'penalty_user_fathername' => 'По-батькові',
+        'penalty_user_address'    => 'Адреса',
+        'penalty_user_email'      => 'E-Mail',
+    ];
+
+    foreach ($tmp_keys as $key => $title) {
+        $$key = trim(stripslashes($_POST[$key]));
+        $_SESSION['instant-payments-cks']['columns'][$key] = $$key;
     }
-    $address = 'Київ';
-    
-    $_payment = CKS::createPayment($plat_list, $firme_id, round($sum * 100), $fio, $address);
+
+    foreach ($tmp_keys as $key => $title) {
+        if (empty($$key) && !in_array($key, ['penalty_user_fathername'])) {
+            $err = str_ireplace('{FIELD}', $title, ERROR_FIELD_EMPTY_ERROR_MSG);
+            throw new Exception($err);
+        }
+    }
+
+
+    if (!Authorization::isLogin()) {
+        $user = User::getUserByEmail($_SESSION['instant-payments-cks']['columns']['penalty_user_email']);
+
+        if ($user !== null) {
+            $user_id = $user['id'];
+        } else {
+            $user_id = User::registerFromPayment(
+                $_SESSION['instant-payments-cks']['columns']['penalty_user_email'],
+                $_SESSION['instant-payments-cks']['columns']['penalty_user_lastname'],
+                $_SESSION['instant-payments-cks']['columns']['penalty_user_name'],
+                $_SESSION['instant-payments-cks']['columns']['penalty_user_fathername']
+            );
+        }
+
+    } else {
+        $user_id = Authorization::getLoggedUserId();
+    }
+
+    $fio = "$penalty_user_lastname $penalty_user_name $penalty_user_fathername";
+
+    $_payment = CKS::createPayment($plat_list, $firme_id, round($sum * 100), $fio, $penalty_user_address, $user_id);
     $_SESSION['instant-payments-cks']['cks_last_payment_id'] = $_payment['id'];
 
     if ($_payment['processing'] == 'tas') {

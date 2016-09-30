@@ -139,7 +139,11 @@ class User
         ];
 
         $user_id = PDO_DB::insert($data, self::TABLE);
-        self::sendRegLetter($user_id, $password, 'auto_reg_letter');
+        try {
+            self::sendRegLetter($user_id, $password, 'auto_reg_letter');
+        } catch (Exception $e) {
+        }
+        
         return $user_id;
     }
 

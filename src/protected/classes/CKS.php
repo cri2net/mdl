@@ -89,10 +89,11 @@ class CKS
      * @param  integer $sum       Общая сумма в копейках
      * @param  string  $username  ФИО плательщика
      * @param  string  $address   Адрес плательщика
+     * @param  integer $user_id   ID пользователя
      * 
      * @return array new payment
      */
-    public static function createPayment(array $plat_list, $firme_id, $sum, $username, $address)
+    public static function createPayment(array $plat_list, $firme_id, $sum, $username, $address, $user_id)
     {
         $all_plat_list  = self::getPlatList();
         $all_firme_list = self::getFirmeList($all_plat_list[0]['id']);
@@ -111,7 +112,7 @@ class CKS
         $url .= '&id_firme=' . $firme_id;
         $url .= '&id_plat=' . $plat_id;
         $url .= '&summ=' . $sum;
-        $url .= '&idsiteuser=' . Authorization::getLoggedUserId();
+        $url .= '&idsiteuser=' . rawurlencode($user_id);
         $url .= '&r1=' . rawurlencode(iconv('UTF-8', 'CP1251', $username));
         $url .= '&r2=' . rawurlencode(iconv('UTF-8', 'CP1251', $address));
 
@@ -150,7 +151,7 @@ class CKS
         ShoppingCart::logRequestToReports($message_to_log, '', true, 'new', 'reports_new/cks');
 
         $insert = [
-            'user_id'                 => Authorization::getLoggedUserId(),
+            'user_id'                 => $user_id,
             'acq'                     => $row_elem->ACQ.'',
             'timestamp'               => $time,
             'type'                    => 'cks',

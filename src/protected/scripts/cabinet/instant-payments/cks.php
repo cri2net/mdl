@@ -7,6 +7,23 @@
         $plat_list = CKS::getPlatList();
         $districts = CKS::getDistricts();
 
+        if (is_array($_SESSION['instant-payments-cks']['columns'])) {
+            foreach ($_SESSION['instant-payments-cks']['columns'] as $key => $value) {
+                $$key = $value;
+            }
+        }
+
+        $penalty_user_email      = (isset($__userData['email']))      ? $__userData['email'] : '';
+        $penalty_user_name       = (isset($__userData['name']))       ? $__userData['name'] : '';
+        $penalty_user_fathername = (isset($__userData['fathername'])) ? $__userData['fathername'] : '';
+        $penalty_user_lastname   = (isset($__userData['lastname']))   ? $__userData['lastname'] : '';
+        
+        $penalty_user_email      = (isset($_SESSION['instant-payments-cks']['columns']['penalty_user_email']))      ? $_SESSION['instant-payments-cks']['columns']['penalty_user_email']      : $penalty_user_email;
+        $penalty_user_name       = (isset($_SESSION['instant-payments-cks']['columns']['penalty_user_name']))       ? $_SESSION['instant-payments-cks']['columns']['penalty_user_name']       : $penalty_user_name;
+        $penalty_user_fathername = (isset($_SESSION['instant-payments-cks']['columns']['penalty_user_fathername'])) ? $_SESSION['instant-payments-cks']['columns']['penalty_user_fathername'] : $penalty_user_fathername;
+        $penalty_user_lastname   = (isset($_SESSION['instant-payments-cks']['columns']['penalty_user_lastname']))   ? $_SESSION['instant-payments-cks']['columns']['penalty_user_lastname']   : $penalty_user_lastname;
+
+
         if (!isset($_SESSION['instant-payments-cks']['step'])) {
             $_SESSION['instant-payments-cks']['step'] = 'region';
         }
@@ -119,7 +136,7 @@
                         <td class="first">
                             <div class="check-box-line">
                                 <span class="niceCheck check-group" id="bill_item_<?= $item['id']; ?>">
-                                    <input onchange="selectService('bill_checkbox_<?= $item['id']; ?>', 'inp_<?= $item['id']; ?>');" id="bill_checkbox_<?= $item['id']; ?>" value="inp_<?= $item['id']; ?>" name="items[]" type="checkbox">
+                                    <input onclick="$('#bill_item_<?= $item['id']; ?>').click();" onchange="selectService('bill_checkbox_<?= $item['id']; ?>', 'inp_<?= $item['id']; ?>');" id="bill_checkbox_<?= $item['id']; ?>" value="inp_<?= $item['id']; ?>" name="items[]" type="checkbox">
                                 </span>
                                 <label onclick="$('#bill_item_<?= $item['id']; ?>').click();">
                                     <span><?= htmlspecialchars($item['name']); ?></span>
@@ -137,6 +154,63 @@
                 <td class="first align-right">Усього, грн:</td>
                 <td class="total-sum" id="total_debt">0,00</td>
             </tr>
+
+
+
+
+
+
+
+
+            <h3>Платник</h3>
+
+            <div style="display: inline-block; float: none; width: 100%;">
+                <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
+                    <label>
+                        Прізвище <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_lastname, ENT_QUOTES); ?>" type="text" name="penalty_user_lastname" class="txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+
+                <div class="field-group" style="display: inline-block;">
+                    <label>
+                        Ім’я <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_name, ENT_QUOTES); ?>" type="text" name="penalty_user_name" class="txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+            </div>
+            <div style="display: inline-block; float: none; width: 100%;">
+                <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
+                    <label>
+                        По-батькові <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_fathername, ENT_QUOTES); ?>" type="text" name="penalty_user_fathername" class="txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+                <div class="field-group" style="display: inline-block;">
+                    <label>
+                        Електронна пошта <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_email, ENT_QUOTES); ?>" type="email" name="penalty_user_email" class="txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+            </div>
+            
+            <div style="display: inline-block; float: none; width: 100%;">
+                <div class="field-group full-width">
+                    <label>
+                        Адреса <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input style="width: 655px;" onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_address, ENT_QUOTES); ?>" type="text" name="penalty_user_address" class="txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+            </div>
+
+
+
+
             <tr>
                 <td class="align-center" colspan="4">
                     <button disabled="disabled" class="btn green bold big" id="pay_button">Сплатити</button>

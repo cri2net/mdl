@@ -144,6 +144,10 @@
                 <td class="first" colspan="1">ПІБ</td>
                 <td colspan="4"><?= htmlspecialchars($services[0]['data']->r1); ?></td>
             </tr>
+            <tr class="item-row odd">
+                <td class="first" colspan="1">Місце проживання</td>
+                <td colspan="4"><?= htmlspecialchars($services[0]['data']->r2); ?></td>
+            </tr>
         </tbody>
         <thead>
             <tr>
