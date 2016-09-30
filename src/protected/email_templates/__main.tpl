@@ -39,8 +39,8 @@
 <table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td>
     <table width="100%" style="background-color:#eeeeee;" cellspacing="0" cellpadding="10" border="0"><tbody>
         <tr>
-            <td height="34" style="vertical-align:top; padding-top:6px; padding-right:0px; padding-bottom:0px; padding-left:20px;" align="left"><strong><a style="text-decoration:none; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia; color:#004444; font-size:14px;" href="tel:+380442388025">(044) 238 80 25</a></strong></td>
-            <td height="34" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="color:#00979c; font-size:14px; line-height:14px; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia;" href="{{base_url}}/">www.gioc.kiev.ua</a></td>
+            <td height="34" style="vertical-align:top; padding-top:6px; padding-right:0px; padding-bottom:0px; padding-left:20px;" align="left"><strong><a style="text-decoration:none; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia; color:#004444; font-size:14px;" href="tel:+380442474040">(044) 247 40 40</a></strong></td>
+            <td height="34" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="color:#00979c; font-size:14px; line-height:14px; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia;" href="http://cks.kiev.ua">cks.kiev.ua</a></td>
         </tr>
     </tbody></table>
     <table width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -65,21 +65,19 @@
                     <tbody><tr>
                         <td>&nbsp;</td>
                         <td width="93" align="left" style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;">
-                            <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="tel:+380442388025">(044)&nbsp;238&nbsp;80&nbsp;25</a> <br>
-                            <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="mailto:{{email_from}}" target="_blank">{{email_from}}</a>
+                            <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="tel:+380442474040">(044)&nbsp;247&nbsp;40&nbsp;40</a> <br>
+                            <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="mailto:info@cks.kiev.ua" target="_blank">info@cks.kiev.ua</a>
                         </td>
                     </tr></tbody>
                 </table></td>
             </tr>
             <tr>
                 <td valign="bottom" colspan="2" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px; padding-left:11px;">
-                    <span style="font-weight:bold; line-height:18px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:14px;">КП «ГіОЦ» <br></span>
+                    <span style="font-weight:bold; line-height:18px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:14px;">КК ЦКС <br></span>
                     Головний  iнформаційно-<br>обчислювальний центр <br><br>
-                    1963—{{year}} © <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="{{base_url}}" target="_blank">{{SITE_DOMAIN}}</a>
+                    1963—{{year}} © <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="http://cks.kiev.ua" target="_blank">{{SITE_DOMAIN}}</a>
                 </td>
                 <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px" align="right">
-                    <a style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="{{base_url}}/help/offers/" target="_blank">Згода користувача</a> &nbsp;&nbsp;&nbsp;
-                    <a style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="{{base_url}}/help/offers/" target="_blank">Згода на збір та обробку персональних даних</a>
                 </td>
             </tr>
         </tbody></table>

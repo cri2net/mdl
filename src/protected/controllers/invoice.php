@@ -18,7 +18,7 @@
 
     if (!Authorization::isLogin() || !$house || ($house['user_id'] != $__userData['id'])) {
         header("HTTP/1.1 404 Not Found");
-        header("Location: " . BASE_URL);
+        header("Location: http://cks.kiev.ua/");
         exit();
     }
 
@@ -59,8 +59,8 @@
 
         echo $say_good_day, "\r\n",
              'Доступний рахунок на сплату ЖКП для Київ, ', trim($house['street_name_full']), ', ', $address_detail['house'], $_flat_number, "\r\n",
-             'Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ» або роздрукувати рахунок та сплатити у найближчій касі банку.', "\r\n\r\n",
-             "Сплатити на сайті КП «ГіОЦ»: $paybill_link\r\n\r\n",
+             'Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КК ЦКС або роздрукувати рахунок та сплатити у найближчій касі банку.', "\r\n\r\n",
+             "Сплатити на сайті КК ЦКС: $paybill_link\r\n\r\n",
              $info_block_plain_text,
              "Онлайн версія листа: $online_version\r\n";
         exit();
@@ -152,7 +152,7 @@
 <table <?= $_table_attr; ?>><tbody><tr><td>
     <table width="100%" background="<?= $__img_path; ?>top-line.png" style="background-position:top; background-repeat:repeat-x; background-color:#ffffff;" cellspacing="0" cellpadding="10" border="0"><tbody>
         <tr>
-            <td height="34" width="140" style="vertical-align:top; padding-top:6px; padding-right:0px; padding-bottom:0px; padding-left:20px;" align="left"><strong><a style="text-decoration:none; font-weight:bold; <?= $_ff; ?> color:#004444; font-size:14px;" href="tel:+380442388025">(044) 238 80 25</a></strong></td>
+            <td height="34" width="140" style="vertical-align:top; padding-top:6px; padding-right:0px; padding-bottom:0px; padding-left:20px;" align="left"><strong><a style="text-decoration:none; font-weight:bold; <?= $_ff; ?> color:#004444; font-size:14px;" href="tel:+380442474040">(044) 247 40 40</a></strong></td>
             <td height="40" style="padding:0;" align="center">
                 <a href="<?= htmlspecialchars($online_version); ?>" target="_blank">
                     <img width="160" height="40" hspace="0" vspace="0" border="0" src="<?= $__img_path; ?>online-version.png" alt="online-version">
@@ -165,7 +165,7 @@
         <tr><td colspan="4" height="52">&nbsp;</td></tr>
         <tr>
             <td width="24">&nbsp;</td>
-            <td height="90" width="196" style="min-width:196px;"><img src="<?= $__img_path; ?>logo.png" hspace="0" border="0" vspace="0" alt="КП ГіОЦ" height="90" width="196"></td>
+            <td height="90" width="196" style="min-width:196px;"><img src="<?= $__img_path; ?>logo.png" hspace="0" border="0" vspace="0" alt="" height="90" width="196"></td>
             <td align="center"><table width="308" cellspacing="0" cellpadding="0" border="0">
                 <tbody>
                     <tr><td height="40" colspan="3" align="center" valign="top" style="vertical-align:top; <?= $_text_color; ?> <?= $_ff; ?> font-weight:bold; font-size:24px; line-height:20px;">Рахунок-повідомлення</td></tr>
@@ -236,7 +236,7 @@
     <table width="100%" cellspacing="0" cellpadding="18" border="0"><tbody><tr>
         <td style="line-height:24px; <?= $_ff; ?> font-size:14px; color:#000000;" height="10">
             <span style="line-height:38px; font-size:18px; <?= $_ff; ?> font-weight:bold;"><?= $say_good_day; ?></span><br>
-            Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КП «ГіОЦ».
+            Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КК ЦКС.
             <?php
                 if ($info_block['text']) {
                     echo '<br><br>', $info_block['text'];
@@ -424,22 +424,16 @@
                     <tbody><tr>
                         <td>&nbsp;</td>
                         <td width="93" align="left" style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;">
-                            <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="tel:+380442388025">(044)&nbsp;238&nbsp;80&nbsp;25</a> <br>
-                            <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="mailto:<?= EMAIL_FROM; ?>" target="_blank"><?= EMAIL_FROM; ?></a>
+                            <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="tel:+380442474040">(044)&nbsp;247&nbsp;40&nbsp;40</a> <br>
+                            <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="mailto:<?= EMAIL_TO; ?>" target="_blank"><?= EMAIL_TO; ?></a>
                         </td>
                     </tr></tbody>
                 </table></td>
             </tr>
             <tr>
-                <td valign="bottom" colspan="2" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
-                    <span style="font-weight:bold; line-height:18px; color:#ffffff; <?= $_ff; ?> font-size:14px;">КП «ГіОЦ» <br></span>
-                    Головний  iнформаційно-<br>обчислювальний центр <br><br>
-                    1963—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="<?= BASE_URL; ?>" target="_blank"><?= SITE_DOMAIN; ?></a>
-                </td>
-                <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px" align="right">
-                    <a style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="<?= BASE_URL; ?>/cabinet/settings/notifications/?uid=<?= $__userData['id']; ?>&amp;hash2=<?= $hash2; ?>" target="_blank">Відписатися</a> &nbsp;&nbsp;&nbsp;
-                    <a style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="<?= BASE_URL; ?>/help/offers/" target="_blank">Угода користувача</a> &nbsp;&nbsp;&nbsp;
-                    <a style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;" href="<?= BASE_URL; ?>/help/offers/" target="_blank">Згода на збір даних</a>
+                <td valign="bottom" colspan="3" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
+                    <span style="font-weight:bold; line-height:18px; color:#ffffff; <?= $_ff; ?> font-size:14px;">КК ЦКС <br></span>
+                    1963—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="http://cks.kiev.ua/" target="_blank">http://cks.kiev.ua/</a>
                 </td>
             </tr>
         </tbody></table>
