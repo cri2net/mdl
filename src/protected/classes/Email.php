@@ -15,10 +15,14 @@ class Email
         $this->From          = EMAIL_FROM;
         $this->FromName      = EMAIL_FROM_NAME;
         $this->ReturnPath    = EMAIL_FROM;
-        $this->Hostname      = EMAIL_HOST;
+        $this->Hostname      = 'cks.kiev.ua';
         $this->AllowEmpty    = true;
         $this->XMailer       = ' ';
         $this->SMTPKeepAlive = true;
+        $this->SMTPDebug = 4;
+        $this->Debugoutput = function($str, $level) {
+            error_log($str, 3, PROTECTED_DIR . '/logs/mail.txt');
+        };
         
 
         //////////////////////////////////////////////////
@@ -27,12 +31,13 @@ class Email
         
         $this->isSMTP();
 
-        $this->Host       = 'xrelay.givc-kgga.kiev.ua'; //'mail.gioc.kiev.ua'; // SMTP hosts.
-        $this->Port       = 25; // The default SMTP server port.
-        $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
-        $this->SMTPAuth   = false; //true;
-        $this->Username   = ''; // SMTP username.
-        $this->Password   = ''; // SMTP password.
+        $this->Host        = EMAIL_HOST;
+        $this->Port        = 25; // The default SMTP server port.
+        $this->SMTPSecure  = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
+        $this->SMTPAuth    = true;
+        $this->SMTPAutoTLS = false;
+        $this->Username    = 'no-reply@cks.kiev.ua';
+        $this->Password    = 'Cc9090Vv';
     }
 
     public function __set($name, $value)
@@ -58,12 +63,6 @@ class Email
 
     public function changeMXToQuick()
     {
-        $this->Host       = 'mail.gioc.kiev.ua'; // SMTP hosts.
-        $this->Port       = 25; // The default SMTP server port.
-        $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
-        $this->SMTPAuth   = false; //true;
-        $this->Username   = ''; // SMTP username.
-        $this->Password   = ''; // SMTP password.
     }
 
     public function call_phpmailer_send()

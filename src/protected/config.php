@@ -38,15 +38,16 @@ switch (USER_REAL_IP) {
 
         define('COOKIE_DOMAIN', '.gerc.ua');
         if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
-            $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'http';
+            $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
         }
         define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST'] . '/cks');
 
         $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 4);
 }
 
-define('EMAIL_FROM', 'info@cks.kiev.ua');
-define('EMAIL_HOST', 'cks.kiev.ua');
+define('EMAIL_FROM', 'no-reply@cks.kiev.ua');
+define('EMAIL_TO', 'zvernennya@src.kiev.ua');
+define('EMAIL_HOST', '91.200.41.117');
 define('EMAIL_FROM_NAME', 'КК ЦКС');
 define('SITE_DOMAIN', 'cks.kiev.ua');
 define('REMEMBER_COOKIE_NAME', '__cksudata');
@@ -63,5 +64,5 @@ $route_path = (strpos($_SERVER['REQUEST_URI'], '?') !== false)
 $__route_result = $router->get($route_path);
 
 require_once(PROTECTED_DIR . "/headers/location.php");
-require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
+// require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
 // require_once(PROTECTED_DIR."/headers/content-security-policy.php");

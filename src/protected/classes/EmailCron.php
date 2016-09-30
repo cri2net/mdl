@@ -148,57 +148,6 @@ class EmailCron
                         }
                     }
                 }
-            } elseif ($cron['type'] == 'newsletter_for_subscribers') {
-                $stm = $pdo->prepare("SELECT * FROM " . User::SUBSCRIBE_TABLE . " WHERE subscribe=1 AND broken_email=0 AND id>=? AND id<=? ORDER BY id ASC");
-                $stm->execute([$start_user_id, $finish_user_id]);
-
-                while ($row = $stm->fetch()) {
-                    
-                    $start_user_id = $row['id'];
-                    $stm_update->execute([microtime(true), $start_user_id, $cron_part['id']]);
-                    $this->checkCronIsActive($stm_count_part_get, $cron_part['id']);
-
-                    $email->clearAttachments();
-                    $email->clearAllRecipients();
-                    $email->clearCustomHeaders();
-                    
-                    $message = $this->loadStaticAttach($email, $cron['content']);
-                    $message = $email->wrapText($message, 80);
-
-                    $email->addCustomHeader('Precedence', 'bulk');
-                    $email->AddAddress($row['email']);
-
-                    $email->Body = $message;
-                    if (!empty($cron['plain_text'])) {
-                        $email->AltBody = $email->wrapText($email->normalizeBreaks($cron['plain_text']), 80);
-                    } else {
-                        $email->AltBody = $email->wrapText($email->normalizeBreaks($email->html2text($message)), 80);
-                    }
-                    $email->Subject = $cron['subject'];
-
-
-                    $mailSent = false;
-                    $shots = 5;
-                    while (($shots >= 0) && !$mailSent) {
-                        $mailSent = $email->call_phpmailer_send();
-                        $shots--;
-                    }
-
-                    if ($mailSent) {
-                        $email_in_connection++;
-                        echo date('Y.m.d H:i:s '), "TO: {$row['email']}, subscriber_id={$row['id']}\r\n";
-                    } else {
-                        echo date('Y.m.d H:i:s '), "ERROR TO: {$row['email']}, subscriber_id={$row['id']}", $email->ErrorInfo, "\r\n";
-                    }
-
-                    if ($email_in_connection >= $this->email_in_connection) {
-                        $email->smtpClose();
-                        $email_in_connection = 0;
-                    }
-
-                    $stm_update_count->execute([$cron['id']]);
-                    $stm_update_count_part->execute([$cron_part['id']]);
-                }
             } elseif ($cron['type'] == 'newsletter') {
                 $stm = $pdo->prepare("SELECT * FROM " . User::TABLE . " WHERE notify_email=1 AND broken_email=0 AND deleted=0 AND id>=? AND id<=? ORDER BY id ASC");
                 $stm->execute([$start_user_id, $finish_user_id]);

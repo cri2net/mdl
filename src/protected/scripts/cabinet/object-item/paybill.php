@@ -74,7 +74,7 @@
                 <?php
             }
 
-            if ($object['city_id'] == Street::KIEV_ID) {
+            if (false && ($object['city_id'] == Street::KIEV_ID)) {
                 ?>
                 <div class="check-box-line">
                     <span id="checkbox_percent_oschad_2" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $oschad_mycardSum; ?>" data-paysystem-key="oschad_mycard"></span>
