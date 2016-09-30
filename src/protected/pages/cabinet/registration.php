@@ -99,6 +99,6 @@
 
 <script type="text/javascript">
 $(function($){
-    $("#reg-phone").mask("+999(99)999-99-99").val('<?= $_reg_phone; ?>');
+    $("#reg-phone").mask("+999(99)999-99-99", {autoclear: false}).val('<?= $_reg_phone; ?>');
 });
 </script>

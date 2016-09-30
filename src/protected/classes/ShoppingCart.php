@@ -335,19 +335,19 @@ class ShoppingCart
         $url = API_URL . self::REPORT_BASE_URL;
         $to_update = [];
 
+        $kass_id = self::getKassID($payment['processing']);
+        self::pppGetCashierByKassId($kass_id, $login, $password);
+
         switch ($payment['type']) {
             case 'gai':
-                Gai::pppGetCashierByKassId($login, $password);
-
                 $report = ($payment['status'] == 'success') ? '/site_api/prov_gai.rep' : '/site_api/pacq50_gai.rep';
                 break;
 
             case 'kinders':
-                self::pppGetCashierByKassId(self::KASS_ID_TAS, $login, $password);
-
                 $report = ($payment['status'] == 'success') ? '/gioc_api/api_prov.rep' : '/gioc_api/api_pacq50.rep';
                 break;
 
+            case 'cks':
             case 'komdebt':
                 $report = ($payment['status'] == 'success') ? '/gerc_api/prov_gkom.rep' : '/gerc_api/pacq50_gkom.rep';
                 break;
@@ -357,6 +357,7 @@ class ShoppingCart
             case 'gai':
             case 'kinders':
             case 'komdebt':
+            case 'cks':
 
                 switch ($payment['processing']) {
 
@@ -374,13 +375,6 @@ class ShoppingCart
                         $url .= '&destype='      . rawurlencode('Cache');
                         $url .= '&Desformat='    . rawurlencode('xml');
                         $url .= '&cmdkey='       . rawurlencode('rep');
-
-                        if ($payment['type'] == 'gai') {
-                            $url .= '&login=' . $login;
-                        } elseif ($payment['type'] == 'kinders') {
-                            $url .= '&login=' . $login;
-                            $url .= '&pwd=' . $password;
-                        }
 
                         $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
                         $url .= '&p1='           . rawurlencode($actual_upc_data['MerchantID']);
@@ -472,6 +466,9 @@ class ShoppingCart
                 return false;
         }
 
+        $url .= '&login=' . $login;
+        $url .= '&pwd=' . $password;
+
         $res = Http::fgets($url);
 
         $date = date('Y-m-d H:i:s');
@@ -521,8 +518,8 @@ class ShoppingCart
         $to_update['send_payment_status_to_reports'] = 1;
 
         PDO_DB::update($to_update, self::TABLE, $payment['id']);
-        self::sendFirstPDF($payment['id']);
         self::logRequestToReports($message_to_log, $payment['id'], true, 'status');
+        self::sendFirstPDF($payment['id']);
         return true;
     }
 

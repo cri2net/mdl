@@ -1,14 +1,13 @@
 <?php
     if (!Authorization::isLogin()) {
         define('SHOW_NEED_AUTH_MESSAGE', true);
-        return require_once(ROOT . '/protected/pages/cabinet/login.php');
+        return require_once(PROTECTED_DIR . '/pages/cabinet/login.php');
     }
 
     $current_section = $__route_result['values']['section'];
 ?>
 <div class="h1-line-cabinet">
     <h1 class="big-title">Мої платежі</h1>
-    <div class="secure">особистий кабінет</div>
 </div>
 <div class="cabinet-settings cabinet-payments">
     <?php
@@ -54,7 +53,7 @@
             unset($_SESSION['cabinet-settings']);
         }
 
-        $file = ROOT . "/protected/scripts/cabinet/payments/$current_section.php";
+        $file = PROTECTED_DIR . "/scripts/cabinet/payments/$current_section.php";
         if (file_exists($file)) {
             require_once($file);
         }

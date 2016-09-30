@@ -94,6 +94,9 @@ class CKS
      */
     public static function createPayment(array $plat_list, $firme_id, $sum, $username, $address)
     {
+        $all_plat_list  = self::getPlatList();
+        $all_firme_list = self::getFirmeList($all_plat_list[0]['id']);
+
         $plat_id = '';
         foreach ($plat_list as $plat_item) {
             $plat_id .= $plat_item['id'] . ',';
@@ -168,10 +171,19 @@ class CKS
         $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
 
         $data = [
-            'firme_id' => $firme_id,
-            'r1'       => $username,
-            'r2'       => $address,
+            'firme_id'   => $firme_id,
+            'firme_name' => $firme_id,
+            'r1'         => $username,
+            'r2'         => $address,
         ];
+
+        foreach ($all_firme_list as $item) {
+            if ($item['id'] == $firme_id) {
+                $data['firme_item'] = $item;
+                break;
+            }
+        }
+
         $xml_fields = ['OUTBANK', 'NAME_OWNER_BANK', 'NAME_BANK', 'NAME_PLAT', 'DST_NAME', 'DST_MFO', 'DST_OKPO', 'DST_RCOUNT', 'DST_NAME_BANK', 'DEST'];
 
         for ($i=0; $i < count($xml_fields); $i++) {
@@ -184,6 +196,13 @@ class CKS
         foreach ($plat_list as $plat_item) {
 
             $data['plat_id'] = $plat_item['id'];
+
+            foreach ($all_plat_list as $item) {
+                if ($item['id'] == $plat_item['id']) {
+                    $data['plat_item'] = $item;
+                    break;
+                }
+            }
 
             $service = [
                 'payment_id' => $payment['id'],

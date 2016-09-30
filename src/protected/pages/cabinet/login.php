@@ -62,6 +62,6 @@
 
 <script type="text/javascript">
 $(function($){
-    $("#login-phone").mask("+999(99)999-99-99").val('<?= $_phone; ?>');
+    $("#login-phone").mask("+999(99)999-99-99", {autoclear: false}).val('<?= $_phone; ?>');
 });
 </script>
