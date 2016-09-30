@@ -86,14 +86,14 @@ class CKS
      * 
      * @param  array   $plat_list Массив с услугами
      * @param  integer $firme_id  ID получателя
-     * @param  integer $sum       Общая сумма в копейках
+     * @param  string  $sum_list  Список сум за каждую услугу через запятую
      * @param  string  $username  ФИО плательщика
      * @param  string  $address   Адрес плательщика
      * @param  integer $user_id   ID пользователя
      * 
      * @return array new payment
      */
-    public static function createPayment(array $plat_list, $firme_id, $sum, $username, $address, $user_id)
+    public static function createPayment(array $plat_list, $firme_id, $sum_list, $username, $address, $user_id)
     {
         $all_plat_list  = self::getPlatList();
         $all_firme_list = self::getFirmeList($all_plat_list[0]['id']);
@@ -111,7 +111,7 @@ class CKS
         $url .= '&pwd=' . self::CASHIER_PASSWORD;
         $url .= '&id_firme=' . $firme_id;
         $url .= '&id_plat=' . $plat_id;
-        $url .= '&summ=' . $sum;
+        $url .= '&summ=' . $sum_list;
         $url .= '&idsiteuser=' . rawurlencode($user_id);
         $url .= '&r1=' . rawurlencode(iconv('UTF-8', 'CP1251', $username));
         $url .= '&r2=' . rawurlencode(iconv('UTF-8', 'CP1251', $address));

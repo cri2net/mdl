@@ -6,6 +6,7 @@ try {
 
     $firme_id = $_POST['firme'];
     $sum = 0;
+    $sum_str = '';
     $plat_list = [];
 
     $_POST['items'] = (array)$_POST['items'];
@@ -21,13 +22,14 @@ try {
         ];
 
         $sum += $item_sum;
+        $sum_str .= round($item_sum * 100) . ',';
     }
 
     if ($sum <= 0) {
         throw new Exception(ERROR_INVALID_ZERO_PAYMENT);
     }
 
-
+    $sum_str = trim($sum_str, ',');
 
     $tmp_keys = [
         'penalty_user_lastname'   => 'Прізвище',
@@ -70,7 +72,7 @@ try {
 
     $fio = "$penalty_user_lastname $penalty_user_name $penalty_user_fathername";
 
-    $_payment = CKS::createPayment($plat_list, $firme_id, round($sum * 100), $fio, $penalty_user_address, $user_id);
+    $_payment = CKS::createPayment($plat_list, $firme_id, $sum_str, $fio, $penalty_user_address, $user_id);
     $_SESSION['instant-payments-cks']['cks_last_payment_id'] = $_payment['id'];
 
     if ($_payment['processing'] == 'tas') {
