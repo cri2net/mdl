@@ -120,7 +120,7 @@
             if ($i < count($breadcrumbs) - 1) {
                 ?>
                 <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                    <a itemprop="item" href="<?= BASE_URL . $breadcrumbs[$i]['link']; ?>"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
+                    <a itemprop="item" href="<?= EXT_BASE_URL . $breadcrumbs[$i]['link']; ?>" target="_top"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
                     <meta itemprop="position" content="<?= $i + 1; ?>" />
                 </span>&nbsp;&rarr;&nbsp;
                 <?php

@@ -142,6 +142,9 @@ class Email
         if (defined('BASE_URL') && !isset($data['base_url'])) {
             $data['base_url'] = BASE_URL;
         }
+        if (defined('EXT_BASE_URL') && !isset($data['ext_base_url'])) {
+            $data['ext_base_url'] = EXT_BASE_URL;
+        }
         if (defined('EMAIL_FROM') && !isset($data['email_from'])) {
             $data['email_from'] = EMAIL_FROM;
         }

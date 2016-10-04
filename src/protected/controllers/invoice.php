@@ -28,7 +28,7 @@
     $hash2 = Authorization::get_auth_hash2($__userData['id'], $hash1);
     $debt = new KomDebt();
 
-    $paybill_link   = BASE_URL . '/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2;
+    $paybill_link   = EXT_BASE_URL . '/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2;
     $online_version = BASE_URL . '/invoice/?uid=' . $__userData['id'] . '&f=' . $house['id'] . '&hash2=' . $hash2;
 
     $address = Flat::getAddressString($house['flat_id'], $address_detail);
@@ -158,7 +158,7 @@
                     <img width="160" height="40" hspace="0" vspace="0" border="0" src="<?= $__img_path; ?>online-version.png" alt="online-version">
                 </a>
             </td>
-            <td height="34" width="140" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="<?= $_text_color; ?> font-size:14px; line-height:14px; font-weight:bold; <?= $_ff; ?>" href="<?= BASE_URL; ?>/">www.gioc.kiev.ua</a></td>
+            <td height="34" width="140" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="<?= $_text_color; ?> font-size:14px; line-height:14px; font-weight:bold; <?= $_ff; ?>" href="http://cks.kiev.ua/">cks.kiev.ua</a></td>
         </tr>
     </tbody></table>
     <table <?= $_table_attr; ?>><tbody>

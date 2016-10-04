@@ -44,5 +44,5 @@
             </div>
         </form>
     </div>
-    <?php require_once(ROOT . '/protected/scripts/cabinet/info-block.php'); ?>
+    <?php require_once(PROTECTED_DIR . '/scripts/cabinet/info-block.php'); ?>
 </div>

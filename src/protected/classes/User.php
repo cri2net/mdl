@@ -158,7 +158,7 @@ class User
 
         $subject = 'Реєстрація на ' . strtoupper(SITE_DOMAIN);
         $verify_code = Authorization::generateUserCode($user['id'], 'verify_email');
-        $verify_link = BASE_URL . '/cabinet/verify-email/' . $verify_code . '/';
+        $verify_link = EXT_BASE_URL . '/cabinet/verify-email/' . $verify_code . '/';
 
         PDO_DB::query("UPDATE " . self::TABLE . " SET send_reg_letter=1 WHERE id='$user_id' LIMIT 1");
         $email = new Email();
@@ -173,7 +173,7 @@ class User
                 'username'    => htmlspecialchars("{$user['name']} {$user['fathername']}"),
                 'email'       => $user['email'],
                 'password'    => htmlspecialchars($password),
-                'verify_link' => $verify_link
+                'verify_link' => $verify_link,
             ]
         );
     }

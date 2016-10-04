@@ -61,7 +61,7 @@
             unset($_SESSION['object-item']);
         }
 
-        $file = ROOT . "/protected/scripts/cabinet/object-item/$current_section.php";
+        $file = PROTECTED_DIR . "/scripts/cabinet/object-item/$current_section.php";
         if (file_exists($file)) {
             require_once($file);
         }

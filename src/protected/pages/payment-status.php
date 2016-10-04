@@ -4,7 +4,7 @@
     
     if (!Authorization::isLogin()) {
         define('SHOW_NEED_AUTH_MESSAGE', true);
-        return require_once(ROOT . '/protected/pages/cabinet/login.php');
+        return require_once(PROTECTED_DIR . '/pages/cabinet/login.php');
     }
 
     try {
@@ -53,7 +53,6 @@ if ($success) {
         <p>
             На Вашу електронну скриньку також було надіслано лист з підтвердженням оплати.<br>
             Повторно підтвердження платежу можна завантажити в особистому кабінеті. <br>
-            Якщо у Вас виникнуть які-небудь питання звертайтеся <a href="<?= BASE_URL; ?>/contacts/">в службу підтримки</a>.
         </p>
     </div>
     <?php
@@ -66,7 +65,7 @@ if ($success) {
         }
     ?>
     <div>
-        Транзакція не була здійснена. Перевірте правильність введення даних або зверніться <a href="<?= BASE_URL; ?>/contacts/">в службу підтримки</a>.
+        Транзакція не була здійснена. Перевірте правильність введення даних або зверніться в службу підтримки.
     </div>
     <?php
 }

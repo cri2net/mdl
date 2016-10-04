@@ -21,7 +21,6 @@
 <script src="<?= BASE_URL; ?>/js/jquery-ui.1.10.4.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery_extends.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.maskedinput-1.4.1.js"></script>
-<script src="<?= BASE_URL; ?>/js/jqueryrotate.2.1.js" defer></script>
 <script src="<?= BASE_URL; ?>/js/jquery.easydropdown.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.tooltipster.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/zxcvbn.js"></script>
