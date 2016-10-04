@@ -6,7 +6,7 @@ class ShoppingCart
 {
     const TABLE = DB_TBL_PAYMENT;
     const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
-    const KASS_ID_TAS  = 1080;
+    const KASS_ID_TAS  = 10020;
     const KASS_ID_AVAL = 12033;
     const KASS_ID_OSCHADBANK = 10024;
     const REPORT_BASE_URL   = '/reports/rwservlet';
@@ -47,9 +47,9 @@ class ShoppingCart
                 $password = '0206E088B06597C2A4565293639B4CABB2BB48B9';
                 break;
 
-            case 1080:
-                $login    = 'GERCUA';
-                $password = 'B7300BFB9411B748A291A37F4E815809D81AB8FA';
+            case 10020:
+                $login    = 'cks_site';
+                $password = '53DA2E14D3C162C23CD8485E67D7F30298604209';
                 break;
 
             case 10024:

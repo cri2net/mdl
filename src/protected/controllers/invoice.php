@@ -5,7 +5,7 @@
     $__is_email_mode = isset($_GET['email_mode']);
     $__is_text_mode = isset($_GET['text_mode']);
     $__img_path = BASE_URL . '/pic/email/';
-    $_text_color = 'color:#00979c;';
+    $_text_color = 'color:#83b67b;';
 
     // тут отображаем счёт для текущего авторизованного пользователя, если в ссылке не передан другой id
     // то есть на сайте ссылки сюда смогут быть без user_id.
@@ -413,7 +413,7 @@
         <td width="111" bgcolor="#eeeeee" style="padding-bottom:27px; padding-top:27px; padding-left:18px; padding-right:11px;"><img src="<?= $__img_path; ?>paysystems.png" alt="ми приймаємо до сплати" height="25" width="111" hspace="0" vspace="0" border="0"></td>
         <td valign="middle" bgcolor="#eeeeee" style="color:#888888; font-style:italic; font-size:14px; <?= $_ff; ?> line-height:18px;">—&nbsp;&nbsp;ми приймаємо до сплати</td>
     </tr></tbody></table>
-    <table <?= $_table_attr; ?>><tbody><tr><td style="padding-top:20px; padding-left:18px; padding-right:18px; padding-bottom:0px;" bgcolor="#00979c">
+    <table <?= $_table_attr; ?>><tbody><tr><td style="padding-top:20px; padding-left:18px; padding-right:18px; padding-bottom:0px;" bgcolor="#83b67b">
         <table <?= $_table_attr; ?>><tbody>
             <tr>
                 <td width="151" style="padding:0px; padding-bottom:18px;" height="69"><table background="<?= $__img_path; ?>logo-footer.png" <?= $_table_attr; ?>>

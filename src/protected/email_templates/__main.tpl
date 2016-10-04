@@ -40,7 +40,7 @@
     <table width="100%" style="background-color:#eeeeee;" cellspacing="0" cellpadding="10" border="0"><tbody>
         <tr>
             <td height="34" style="vertical-align:top; padding-top:6px; padding-right:0px; padding-bottom:0px; padding-left:20px;" align="left"><strong><a style="text-decoration:none; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia; color:#004444; font-size:14px;" href="tel:+380442474040">(044) 247 40 40</a></strong></td>
-            <td height="34" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="color:#00979c; font-size:14px; line-height:14px; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia;" href="http://cks.kiev.ua">cks.kiev.ua</a></td>
+            <td height="34" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="color:#83b67b; font-size:14px; line-height:14px; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia;" href="http://cks.kiev.ua">cks.kiev.ua</a></td>
         </tr>
     </tbody></table>
     <table width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -54,12 +54,10 @@
     <table width="100%" cellspacing="0" cellpadding="0" border="0">
         <tbody><tr><td style="padding:0px; line-height:23px;" height="23">&nbsp;</td></tr></tbody>
     </table>
-    <table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td style="padding-top:20px; padding-left:18px; padding-right:18px; padding-bottom:0px;" bgcolor="#00979c">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td style="padding-top:20px; padding-left:18px; padding-right:18px; padding-bottom:0px;" bgcolor="#83b67b">
         <table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody>
             <tr>
-                <td width="151" style="padding:0px; padding-bottom:18px;" height="69"><table background="{{base_url}}/pic/email/logo-footer.png" width="100%" cellspacing="0" cellpadding="0" border="0">
-                    <tbody><tr><td style="padding:0px; line-height:73px;" height="69">&nbsp;</td></tr></tbody>
-                </table></td>
+                <td width="151" style="padding:0px; padding-bottom:18px;"></td>
                 <td>&nbsp;</td>
                 <td valign="top" width="50%" align="right" style="vertical-align:top;"><table width="100%" cellspacing="0" cellpadding="0" border="0">
                     <tbody><tr>
@@ -74,8 +72,8 @@
             <tr>
                 <td valign="bottom" colspan="2" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px; padding-left:11px;">
                     <span style="font-weight:bold; line-height:18px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:14px;">КК ЦКС <br></span>
-                    Головний  iнформаційно-<br>обчислювальний центр <br><br>
-                    1963—{{year}} © <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="http://cks.kiev.ua" target="_blank">{{SITE_DOMAIN}}</a>
+                    Центр комунального сервісу <br><br>
+                    2014-{{year}} © <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="http://cks.kiev.ua" target="_blank">{{SITE_DOMAIN}}</a>
                 </td>
                 <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px" align="right">
                 </td>
