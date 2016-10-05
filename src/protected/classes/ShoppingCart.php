@@ -10,6 +10,9 @@ class ShoppingCart
     const KASS_ID_AVAL = 12033;
     const KASS_ID_OSCHADBANK = 10024;
     const REPORT_BASE_URL   = '/reports/rwservlet';
+    const PDF_FIRST_URL     = '/reports/rwservlet?report=ppp/ekv9_all.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
@@ -22,11 +25,8 @@ class ShoppingCart
     {
         $urls = [];
 
-        $urls['PDF_FIRST_URL']     = '/reports/rwservlet?report=/ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-        $urls['PDF_TODAY_URL']     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-        $urls['PDF_NOT_TODAY_URL'] = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-        $urls['KASS_STATUS']       = '/reports/rwservlet?report=/gerc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
-        $urls['KASS_OPEN']         = '/reports/rwservlet?report=/gerc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        $urls['KASS_STATUS'] = '/reports/rwservlet?report=/gerc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        $urls['KASS_OPEN']   = '/reports/rwservlet?report=/gerc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
 
         return $urls[$key];
     }
@@ -308,16 +308,16 @@ class ShoppingCart
     public static function getPDF($payment_id, $first = false)
     {
         $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
-        if ($payment === null) {
+        if (($payment === null) || ($payment['status'] != 'success')) {
             return;
         }
 
         if ($first) {
-            return Http::fgets(API_URL . self::get_API_URL('PDF_FIRST_URL') . $payment['reports_id_pack']);
+            return Http::fgets(API_URL . self::PDF_FIRST_URL . $payment['reports_id_pack']);
         }
 
-        $pdf1_url = API_URL . self::get_API_URL('PDF_TODAY_URL')     . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
-        $pdf2_url = API_URL . self::get_API_URL('PDF_NOT_TODAY_URL') . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
+        $pdf1_url = API_URL . self::PDF_TODAY_URL     . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
+        $pdf2_url = API_URL . self::PDF_NOT_TODAY_URL . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
 
         $pdf1 = Http::fgets($pdf1_url);
         $pdf2 = Http::fgets($pdf2_url);
