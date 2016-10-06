@@ -89,7 +89,7 @@
                         <td class="first">
                             <div class="check-box-line">
                                 <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>">
-                                    <input checked="checked" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
+                                    <input onclick="$('#bill_item_<?= $key; ?>').click();" checked="checked" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
                                 </span>
                                 <label onclick="$('#bill_item_<?= $key; ?>').click();">
                                     <span><?= $item['name_plat']; ?></span>
