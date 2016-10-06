@@ -2,12 +2,8 @@
 
 use cri2net\php_pdo_db\PDO_DB;
 
+Flat::rebuildHouse($_GET['city_id'], $_GET['street_id'], $_GET['house_id']);
 $arr = Flat::get($_GET['house_id'], $_GET['street_id'], $_GET['city_id']);
-
-if (empty($arr)) {
-    Flat::rebuildHouse($_GET['city_id'], $_GET['street_id'], $_GET['house_id']);
-    $arr = Flat::get($_GET['house_id'], $_GET['street_id'], $_GET['city_id']);
-}
 
 // делаем умную сортировку.
 // правильный порядок: 1, 2, 10

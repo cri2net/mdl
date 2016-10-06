@@ -51,14 +51,10 @@ class House
         $stm_insert = $pdo->prepare("INSERT IGNORE INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, house_number=?");
 
         if ($xml !== false) {
+            PDO_DB::prepare("DELETE FROM " . self::TABLE . " WHERE street_id=?", [$street_id]);
+            
             for ($j=0; $j<count($xml->ROW); $j++) {
                 $stm_insert->execute([$city_id, $street_id, $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM]);
-            }
-        }
-
-        if ($xml !== false) {
-            for ($j=0; $j<count($xml->ROW); $j++) {
-                $stm_insert->execute([$city_id, $streets[$i]['street_id'], $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM]);
             }
         }
     }
@@ -66,7 +62,6 @@ class House
     public static function rebuild($city_id)
     {
         $streets = Street::get('', $city_id);
-        PDO_DB::prepare("DELETE FROM " . self::TABLE . " WHERE city_id=?", [$city_id]);
         
         for ($i=0; $i < count($streets); $i++) {
             self::rebuildStreet($city_id, $streets[$i]['street_id']);
