@@ -1,5 +1,14 @@
 <?php
+
+use cri2net\php_pdo_db\PDO_DB;
+
 $arr = House::get($_GET['street_id']);
+
+if (empty($arr)) {
+    $street = PDO_DB::row_by_id(Street::TABLE, $_GET['street_id'], 'street_id');
+    House::rebuildStreet($street['city_id'], $_GET['street_id']);
+    $arr = House::get($_GET['street_id']);
+}
 
 // делаем умную сортировку.
 // правильный порядок: 1, 2, 10

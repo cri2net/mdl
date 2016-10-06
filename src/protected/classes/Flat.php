@@ -5,7 +5,7 @@ use cri2net\php_pdo_db\PDO_DB;
 class Flat
 {
     const TABLE = DB_TBL_FLATS;
-    const FLATS_URL = '/reports/rwservlet?report=/gerc_api/spr_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity33&house_id=';
+    const FLATS_URL = '/reports/rwservlet?report=/gerc_api/spr_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
     const MAX_USER_FLATS = 4;
 
@@ -263,28 +263,36 @@ class Flat
         return $result;
     }
 
-    public static function rebuild($city_id)
+    public static function rebuildHouse($city_id, $street_id, $house_id)
     {
         $pdo = PDO_DB::getPDO();
         $stm_del = $pdo->prepare("DELETE FROM " . self::TABLE . " WHERE city_id=? AND house_id=?");
         $stm_insert = $pdo->prepare("INSERT IGNORE INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, object_id=?, flat_number=?");
+
+
+        $data = Http::fgets(API_URL . self::FLATS_URL . $house_id);
+        $data = iconv('CP1251', 'UTF-8', $data);
+        $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
+        $xml = @simplexml_load_string($data);
+
+        if ($xml !== false) {
+            $stm_del->execute([$city_id, $house_id]);
+            for ($i=0; $i<count($xml->ROW); $i++) {
+                $stm_insert->execute([$city_id, $street_id, $house_id, $xml->ROW[$i]->KVART_ID . '', $xml->ROW[$i]->NAME_KVART . '']);
+            }
+        }
+    }
+
+    public static function rebuild($city_id)
+    {
+        $pdo = PDO_DB::getPDO();
         PDO_DB::prepare("UPDATE " . self::TABLE . " SET need_del_after_rebuild=1 WHERE city_id=?", [$city_id]);
         
         $stm = $pdo->prepare("SELECT * FROM ". House::TABLE ." WHERE city_id=?");
         $stm->execute([$city_id]);
 
         while ($row = $stm->fetch()) {
-            $data = Http::fgets(API_URL . self::FLATS_URL . $row['house_id']);
-            $data = iconv('CP1251', 'UTF-8', $data);
-            $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
-            $xml = @simplexml_load_string($data);
-
-            if ($xml !== false) {
-                $stm_del->execute([$city_id, $row['house_id']]);
-                for ($i=0; $i<count($xml->ROW); $i++) {
-                    $stm_insert->execute([$city_id, $row['street_id'], $row['house_id'], $xml->ROW[$i]->KVART_ID . '', $xml->ROW[$i]->NAME_KVART . '']);
-                }
-            }
+            self::rebuildHouse($city_id, $row['street_id'], $row['house_id']);
         }
 
         PDO_DB::prepare("DELETE FROM " . self::TABLE . " WHERE need_del_after_rebuild=1 AND city_id=?", [$city_id]);

@@ -4,7 +4,7 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class House
 {   
-    const HOUSES_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity33&street_id=';
+    const HOUSES_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
     const TABLE = DB_TBL_HOUSES;
     
     public static function cron()
@@ -40,25 +40,36 @@ class House
         return $stm->fetchAll();
     }
 
+    public static function rebuildStreet($city_id, $street_id)
+    {
+        $data = Http::fgets(self::HOUSES_URL . $street_id);
+        $data = iconv('CP1251', 'UTF-8', $data);
+        $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
+        $xml = @simplexml_load_string($data);
+
+        $pdo = PDO_DB::getPDO();
+        $stm_insert = $pdo->prepare("INSERT IGNORE INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, house_number=?");
+
+        if ($xml !== false) {
+            for ($j=0; $j<count($xml->ROW); $j++) {
+                $stm_insert->execute([$city_id, $street_id, $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM]);
+            }
+        }
+
+        if ($xml !== false) {
+            for ($j=0; $j<count($xml->ROW); $j++) {
+                $stm_insert->execute([$city_id, $streets[$i]['street_id'], $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM]);
+            }
+        }
+    }
+
     public static function rebuild($city_id)
     {
-        $pdo = PDO_DB::getPDO();
         $streets = Street::get('', $city_id);
-        $stm_insert = $pdo->prepare("INSERT IGNORE INTO " . self::TABLE . " SET city_id=?, street_id=?, house_id=?, house_number=?");
-        
         PDO_DB::prepare("DELETE FROM " . self::TABLE . " WHERE city_id=?", [$city_id]);
         
         for ($i=0; $i < count($streets); $i++) {
-            $data = Http::fgets(self::HOUSES_URL . $streets[$i]['street_id']);
-            $data = iconv('CP1251', 'UTF-8', $data);
-            $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
-            $xml = @simplexml_load_string($data);
-
-            if ($xml !== false) {
-                for ($j=0; $j<count($xml->ROW); $j++) {
-                    $stm_insert->execute([$city_id, $streets[$i]['street_id'], $xml->ROW[$j]->HOUSE_ID, $xml->ROW[$j]->NDOM]);
-                }
-            }
+            self::rebuildStreet($city_id, $streets[$i]['street_id']);
         }
     }
 }
