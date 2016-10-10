@@ -3,7 +3,6 @@
     <div class="already-have">
         <a href="<?= BASE_URL; ?>/cabinet/login/">У мене вже є аккаунт</a> <br>
         <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a> <br>
-        <a href="<?= BASE_URL; ?>/help/faq/">Як зареєструватись?</a>
     </div>
 </div>
 <?php
@@ -82,11 +81,6 @@
                 <div id="password-strength-container">
                     <div class="gauge"></div>
                     <div class="title"></div>
-                </div>
-            </div>
-            <div class="input" style="height:40px; line-height:15px; font-size:12px; color:#444;">
-                <div style="position:absolute; width:750px;">
-                    Реєструючись, Ви підтверджуєте свою згоду на обробку персональних даних, а також підтверджуєте те, що ознайомились та погоджуєтесь з <a href="<?= BASE_URL; ?>/help/offers/">Угодою користувача</a> та <a href="<?= BASE_URL; ?>/help/offers/">Згодою на збір та обробку персональних даних</a>
                 </div>
             </div>
             <div class="input">

@@ -25,7 +25,7 @@
     </div>
 </div>
 <div class="input house-input">
-    <label>Номер будинку <br> <div class="hint-blue"><a href="<?= BASE_URL; ?>/help/faq_cabinet/">Немає номера будинку у списку?</a></div>
+    <label>Номер будинку <br>
         <select class="txt" name="house" disabled="disabled" id="add_obj_house">
             <option>-- виберіть --</option>
         </select>
