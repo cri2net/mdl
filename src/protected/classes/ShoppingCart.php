@@ -5,10 +5,11 @@ use cri2net\php_pdo_db\PDO_DB;
 class ShoppingCart
 {
     const TABLE = DB_TBL_PAYMENT;
-    const SERVICE_TABLE = DB_TBL_PAYMENT_SERVICES;
-    const KASS_ID_TAS  = 10020;
-    const KASS_ID_AVAL = 12033;
-    const KASS_ID_OSCHADBANK = 10024;
+    const SERVICE_TABLE          = DB_TBL_PAYMENT_SERVICES;
+    const KASS_ID_TAS            = 10020;
+    const KASS_ID_AVAL           = 12033;
+    const KASS_ID_OSCHADBANK     = 10024;
+    const KASS_ID_OSCHADBANK_ALL = 10074;
     const REPORT_BASE_URL   = '/reports/rwservlet';
     const PDF_FIRST_URL     = '/reports/rwservlet?report=ppp/ekv9_all.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
     const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
@@ -17,8 +18,8 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['tas', 'visa', 'mastercard', 'oschad_mycard', 'oschadbank']
-            : ['tas', 'visa', 'mastercard', 'oschad_mycard', 'oschadbank'];
+            ? ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank']
+            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank'];
     }
 
     public static function get_API_URL($key)
@@ -54,7 +55,12 @@ class ShoppingCart
 
             case 10024:
                 $login    = 'CKS_SITE_OB';
-                $password = '6E02899B8C1379C7D417BF3229AFB3BE5EF565DE';
+                $password = strtoupper(sha1('cks_site_ob123'));
+                break;
+
+            case 10074:
+                $login    = 'cks_site_ob2';
+                $password = strtoupper(sha1('cks_site_ob2123'));
                 break;
         }
     }
@@ -134,8 +140,9 @@ class ShoppingCart
             'visa'          => ['percent' => 2, 'min' => 2],
             'tas'           => ['percent' => 2, 'min' => 2],
             'mastercard'    => ['percent' => 2, 'min' => 2],
+            'oschad'        => ['percent' => 0, 'min' => 0],
             'oschad_mycard' => ['percent' => 0, 'min' => 0],
-            'oschadbank'    => ['percent' => 0, 'min' => 0],
+            'oschadbank'    => ['percent' => 2, 'min' => 2],
         ];
 
         if ($pay_system) {
@@ -165,9 +172,12 @@ class ShoppingCart
             case 'tas':
                 return self::KASS_ID_TAS;
 
+            case 'oschad':
             case 'oschad_mycard':
-            case 'oschadbank':
                 return self::KASS_ID_OSCHADBANK;
+            
+            case 'oschadbank':
+                return self::KASS_ID_OSCHADBANK_ALL;
             
             case 'visa':
             case 'mastercard':

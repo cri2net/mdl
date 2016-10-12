@@ -66,5 +66,5 @@ $route_path = (strpos($_SERVER['REQUEST_URI'], '?') !== false)
 $__route_result = $router->get($route_path);
 
 require_once(PROTECTED_DIR . "/headers/location.php");
-// require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
+require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
 // require_once(PROTECTED_DIR."/headers/content-security-policy.php");

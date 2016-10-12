@@ -1,15 +1,15 @@
 <?php
 $oschad_merchant_settings = [
     'CURRENCY'   => 'UAH',
-    'MERCH_NAME' => 'GIOC KIEV 2',
-    'MERCH_URL'  => 'gioc.kiev.ua',
+    'MERCH_NAME' => 'CKS',
+    'MERCH_URL'  => 'http://cks.kiev.ua/',
     'MERCHANT'   => '20904509',
     'TERMINAL'   => '20907449',
-    'EMAIL'      => 'mistakes@gioc.kiev.ua',
+    'EMAIL'      => 'zvernennya@src.kiev.ua',
     'COUNTRY'    => 'UA',
     'MERCH_GMT'  => '+2',
 ];
 
 $payment_form_action = 'https://3ds.oschadnybank.com/cgi-bin/cgi_link';
 $oschad_sign_key = '152ecd633f2919e430c745f791850be3';
-$payment_form_target = '_self';
+$payment_form_target = '_top';

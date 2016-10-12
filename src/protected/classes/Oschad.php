@@ -389,7 +389,6 @@ class Oschad
         $this->set_reversal($pid, $actual_osc_data->AMOUNT, $actual_osc_data->RRN, $actual_osc_data->INT_REF);
         $this->sign($oschad_sign_key);
 
-        return [$payment_form_action, $this->fields, false];
         $res = Http::HttpPost($payment_form_action, $this->fields, false);
         return $res;
     }

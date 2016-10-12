@@ -788,3 +788,10 @@ ALTER TABLE `cks_payment`
 
 ALTER TABLE `cks_payment`
   CHANGE `processing` `processing` ENUM('mastercard','visa','webmoney','tas','oschad_mycard','oschadbank') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+-- 2016.10.12
+ALTER TABLE `cks_payment`
+  CHANGE `processing` `processing` ENUM('mastercard','visa','webmoney','tas','oschad','oschad_mycard','oschadbank') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+ALTER TABLE `cks_payment`
+  AUTO_INCREMENT=1000000001;
