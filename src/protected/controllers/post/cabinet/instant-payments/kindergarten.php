@@ -19,22 +19,48 @@ try {
         return BASE_URL . '/cabinet/instant-payments/kindergarten/';
     }
 
+    $cities = Kinders::getCitiesList();
+    $cities = $cities['list'];
+    $city_id = $cities[0]['id'];
 
-    $districts = Kinders::getFirmeList();
-    $kindergartens_list = [];
+    $city_id = (int)$_POST['city_id'];
+    $kindergarten = (int)$_POST['kindergarten'];
 
-    foreach ($districts as $item) {
-       
-        $tmp = Kinders::getInstitutionList($item['id']);
-       
-        for ($i=0; $i < count($tmp); $i++) {
-            $kindergarten = $tmp[$i];
-            $kindergarten['IDAREA'] = 233;
-            $kindergarten['ID_DISTRICT'] = $item['id'];
-            $kindergarten['FIRME'] = $item['id'];
-            
-            $kindergartens_list[] = $kindergarten;
+    // город
+    $city_ok = false;
+    foreach ($cities as $city_item) {
+        if ($city_item['id'] == $city_id) {
+            $city_ok = true;
         }
+    }
+    if (!$city_ok) {
+        throw new Exception('Обрано недоступне місто');
+    }
+
+    // район
+    $id_district = intval($_POST['id_district']);
+    $district_ok = false;
+    $districts = Kinders::getDistrictList($city_id);
+    $districts = $districts['list'];
+
+    foreach ($districts as $district_item) {
+        if ($district_item['id'] == $id_district) {
+            $district_ok = true;
+        }
+    }
+    if (!$district_ok) {
+        throw new Exception('РОАМ не обрано');
+    }
+
+    $kindergarten_ok = false;
+    $institutions = Kinders::getInstitutionList($id_district);
+    foreach ($institutions as $kindergarten_item) {
+        if ($kindergarten_item['R101'] == $kindergarten) {
+            $kindergarten_ok = true;
+        }
+    }
+    if (!$kindergarten_ok) {
+        throw new Exception('Установу не обрано');
     }
 
     $tmp_keys = [
@@ -77,17 +103,6 @@ try {
         $child_fio = $real_child_fio['list'][0]['id'];
     }
     
-    $kindergarten_ok = false;
-    foreach ($kindergartens_list as $item) {
-        if ($item['R101'] == $kindergarten['R101']) {
-            $kindergarten_item = $item;
-            $kindergarten_ok = true;
-        }
-    }
-
-    if (!$kindergarten_ok) {
-        throw new Exception('Установа не вказана');
-    }
 
     $_SESSION['instant-payments-kinders']['step'] = 'details';
     $_SESSION['instant-payments-kinders']['columns']['R101'] = $kindergarten['R101'];
@@ -114,8 +129,8 @@ try {
     $fio = "$penalty_user_lastname $penalty_user_name $penalty_user_fathername";
     
     $record = Kinders::pppCreatePayment(
-        $kindergarten_item['IDAREA'],
-        $kindergarten_item['FIRME'],
+        $city_id,
+        $id_district,
         $summ,
         $user_id,
         $fio,

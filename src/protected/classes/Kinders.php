@@ -8,14 +8,69 @@ class Kinders
     {
         $urls = [];
 
-        $urls['PPP_URL_INSTITUTION'] = '/reports/rwservlet?report=gioc_api/dic_rono_sad.rep&cmdkey=rep&destype=cache&Desformat=xml&id_firme=';
-        $urls['PPP_URL_CLASSES']     = '/reports/rwservlet?report=gioc_api/dic_rono_group&cmdkey=rep&destype=cache&Desformat=xml&id_sad=';
-        $urls['PPP_URL_CHILDREN']    = '/reports/rwservlet?report=gioc_api/dic_rono_child&cmdkey=rep&destype=cache&Desformat=xml&id_rono_group=';
-        $urls['PPP_URL_DEBT']        = '/reports/rwservlet?report=gioc_api/get_rono_debt&cmdkey=rep&destype=cache&Desformat=xml&login=';
-        $urls['PPP_URL_FIRME']       = '/reports/rwservlet?report=gioc_api/dic_rono_firme.rep&cmdkey=rep&destype=cache&Desformat=xml&id_area=';
-        $urls['PPP_URL_CREATE']      = '/reports/rwservlet?report=gioc_api/api_pnew_rono.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        $urls['PPP_URL_INSTITUTION'] = '/reports/rwservlet?report=site_api/dic_rono_sad.rep&cmdkey=api_test&destype=cache&Desformat=xml&id_firme=';
+        $urls['PPP_URL_CLASSES']     = '/reports/rwservlet?report=site_api/dic_rono_group&cmdkey=api_test&destype=cache&Desformat=xml&id_sad=';
+        $urls['PPP_URL_CHILDREN']    = '/reports/rwservlet?report=site_api/dic_rono_child&cmdkey=api_test&destype=cache&Desformat=xml&id_rono_group=';
+        $urls['PPP_URL_DEBT']        = '/reports/rwservlet?report=gerc_api/get_rono_debt&cmdkey=api_test&destype=cache&Desformat=xml&login=';
+        $urls['PPP_URL_CITY']        = '/reports/rwservlet?report=site_api/dic_rono_sity.rep&cmdkey=api_test&destype=cache&Desformat=xml';
+        $urls['PPP_URL_FIRME']       = '/reports/rwservlet?report=site_api/dic_rono_firme.rep&cmdkey=api_test&destype=cache&Desformat=xml&id_sity=';
+        $urls['PPP_URL_CREATE']      = '/reports/rwservlet?report=gerc_api/api_pnew_rono.rep&cmdkey=api_test&destype=cache&Desformat=xml&login=';
 
         return $urls[$key];
+    }
+
+    /**
+     * Получаем список городов
+     * @return array
+     */
+    public static function getCitiesList()
+    {
+        $url = API_URL . self::get_API_URL('PPP_URL_CITY');
+        try {
+            $xml = Http::getXmlByUrl($url);
+        } catch (Exception $e) {
+            return ['list' => []];
+        }
+
+        $list = [];
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
+
+        for ($i=0; $i < count($row_elem); $i++) {
+            $list[] = [
+                'name_ru' => $row_elem[$i]->NAME_SITY_RU . '',
+                'name_ua' => $row_elem[$i]->NAME_SITY_UKR . '',
+                'id'      => $row_elem[$i]->ID_SITY . '',
+            ];
+        }
+
+        return ['list' => $list];
+    }
+
+    /**
+     * Список РОАМ (типа районов) города
+     * @param  integer $city_id ID города
+     * @return array
+     */
+    public static function getDistrictList($city_id)
+    {
+        $url = API_URL . self::get_API_URL('PPP_URL_FIRME') . $city_id;
+        try {
+            $xml = Http::getXmlByUrl($url);
+        } catch (Exception $e) {
+            return ['list' => []];
+        }
+
+        $list = [];
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
+
+        for ($i=0; $i < count($row_elem); $i++) {
+            $list[] = [
+                'name' => $row_elem[$i]->NAME_FIRME . '',
+                'id'   => $row_elem[$i]->ID_FIRME . ''
+            ];
+        }
+
+        return ['list' => $list];
     }
 
     /**
@@ -152,8 +207,7 @@ class Kinders
         $summ = str_replace('.', ',', $summ);
         $timestamp = microtime(true);
 
-        $TAS_KASS_ID = 1080;
-        ShoppingCart::pppGetCashierByKassId($TAS_KASS_ID, $login, $password);
+        ShoppingCart::pppGetCashierByKassId(ShoppingCart::KASS_ID_TAS, $login, $password);
 
         $url .= $login;
         $url .= '&pwd=' . $password;
@@ -171,20 +225,30 @@ class Kinders
         $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = @simplexml_load_string($xml_string);
-        
-        if (($xml === false) || ($xml === null)) {
-            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
-            return false;
-        }
 
+        $message_to_log = var_export(
+            [
+                'date'        => date('Y-m-d H:i:s'),
+                'timestamp'   => microtime(true),
+                'reports_url' => $url,
+                'answer'      => $xml_string,
+            ],
+            true
+        );
+
+        if (($xml === null) || ($xml === false)) {
+            ShoppingCart::logRequestToReports($message_to_log, '', false, 'new', 'reports/kinders');
+            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
+        }
+        
         $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
         $err = $row_elem->ERR.'';
 
         if ($err != '0') {
+            ShoppingCart::logRequestToReports($message_to_log, '', false, 'new', 'reports/kinders');
             throw new Exception(UPC::get_error($err));
-            return false;
         }
-
+        
         $insert = [
             'user_id'                  => $user_id,
             'acq'                      => $row_elem->ACQ.'',
@@ -205,6 +269,7 @@ class Kinders
 
         $payment_id = PDO_DB::insert($insert, ShoppingCart::TABLE);
         $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
+        ShoppingCart::logRequestToReports($message_to_log, $payment_id, true, 'new', 'reports/kinders');
 
         $data = [
             'r1'     => $r1,

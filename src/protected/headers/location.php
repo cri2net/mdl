@@ -27,8 +27,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
             $new_location = BASE_URL . '/cabinet/settings/info/';
         } elseif (isset($__route_result['values']['subpage']) && ($__route_result['values']['subpage'] == 'payments') && !isset($__route_result['values']['section'])) {
             $new_location = BASE_URL . '/cabinet/payments/history/';
-        } elseif (isset($__route_result['values']['subpage']) && ($__route_result['values']['subpage'] == 'instant-payments') && !isset($__route_result['values']['section'])) {
-            $new_location = BASE_URL . '/cabinet/instant-payments/cks/';
         } elseif (
             isset($__route_result['values']['subpage'])
             && ($__route_result['values']['subpage'] == 'objects')

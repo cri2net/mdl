@@ -1,7 +1,7 @@
 <?php
     use cri2net\php_pdo_db\PDO_DB;
 ?>
-<h1 class="big-title">Дитячі садки м.Київ (харчування)</h1>
+<h1 class="big-title">Дитячі садки (харчування)</h1>
 <br><br>
 
 <?php
@@ -82,14 +82,21 @@
                 <div style="display: inline-block; float: none; width: 100%;">
                     <div class="field-group" style="display: inline-block;">
                         <label>
-                            Район міста <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                            <select class="txt" required="required" id="id_district" name="id_district" onchange="kinders_district_onchange(this);" onblur="registration_ckeck_empty_fileld(this);">
+                            Місто <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <select onchange="kinders_city_onchange(this);" class="txt" required="required" id="city_id" name="city_id">
+                                <option value="<?= Street::KIEV_ID; ?>">Київ</option>
+                                <option value="<?= Street::ODESSA_ID; ?>">Одеса</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="display: inline-block; float: none; width: 100%;">
+                    <div class="field-group" style="display: inline-block;">
+                        <label>
+                            РОАМ <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                            <select onchange="kinders_district_onchange(this);" class="txt" required="required" id="id_district" name="id_district" onblur="registration_ckeck_empty_fileld(this);">
                                 <option value="">-- Будь ласка, оберіть --</option>
-                                <?php
-                                    foreach ($districts as $item) {
-                                        ?><option <?= ($id_district == $item['id']) ? 'selected="selected"' : ''; ?> value="<?= $item['id']; ?>"><?= htmlspecialchars($item['name']); ?></option> <?php
-                                    }
-                                ?>
                             </select>
                         </label>
                         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
@@ -98,27 +105,11 @@
 
                 <div style="display: inline-block; float: none; width: 100%;">
                     <div class="field-group" style="display: inline-block;">
-                        <input type="hidden" id="final_kindergarten" name="kindergarten" value="<?= $R101; ?>" />
                         <label>
                             Установа <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                            <?php
-                                foreach ($districts as $item) {
-                                    ?>
-                                    <select class="txt kindergarten_select" required="required" onchange="$('#final_kindergarten').val($(this).val()).trigger('change');" onblur="registration_ckeck_empty_fileld(this);" style="display:<?= ($id_district == $item['id']) ? 'inline-block' : 'none'; ?>;" id="kindergarten_<?= $item['id']; ?>">
-                                        <option value="0">-- Будь ласка, оберіть --</option>
-                                        <?php
-                                            $list = Kinders::getInstitutionList($item['id']);
-                                            
-                                            foreach ($list as $list_key => $list_item) {
-                                                ?>
-                                                <option <?= ($R101 == $list_item['R101']) ? 'selected="selected"' : ''; ?> value="<?= $list_item['R101']; ?>"><?= $list_item['NAME_SAD']; ?></option>
-                                                <?php
-                                            }
-                                        ?>
-                                    </select>
-                                    <?php
-                                }
-                            ?>
+                            <select class="txt kindergarten_select" id="final_kindergarten" name="kindergarten" required="required">
+                                <option value="">-- Будь ласка, оберіть --</option>
+                            </select>
                         </label>
                         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
                     </div>
@@ -203,6 +194,11 @@
                     <button id="submitOrder" class="btn green bold">Далі</button>
                 </div>
             </form>
+            <script type="text/javascript">
+                $(function(){
+                    $('#city_id').trigger('change');
+                });
+            </script>
             <?php
     }
 
@@ -278,21 +274,47 @@
         });
     });
 
-    var id_district = <?= $id_district; ?>;
     function kinders_district_onchange(el)
     {
-        var tmp_id_district = $(el).val();
+        $.ajax({
+            dataType: 'json',
+            data: {
+                action: 'get_institution_list',
+                id_district: $(el).val()
+            },
+            type: 'POST',
+            url : BASE_URL + '/ajax/json/kindergarten',
+            success : function(response) {
+                var html = '';
+                for (var i = 0; i < response.list.length; i++) {
+                    html += '<option value="'+ response.list[i].id +'">'+ response.list[i].name +'</option>';
+                };
+                $('#final_kindergarten').html(html).removeAttr('disabled').trigger('change');
+            }
+        });
 
-        $('.kindergarten_select').hide();
-        $('#kindergarten_'+tmp_id_district).css('display', 'inline-block');
-        $('#kindergarten_label').attr('for', 'kindergarten_'+tmp_id_district);
-
-        var first_option = '<option value="">-- Будь ласка, оберіть --</option>';
+        var first_option = '<option value="">-- Выберите группу/класс --</option>';
         $('#kindergarten_class_select').html(first_option).attr('disabled', 'disabled').trigger('change');
         $('#kindergarten_fio_select').val('').attr('disabled', 'disabled');
-
-        id_district = tmp_id_district;
     }
 
-    $('#id_district').trigger('change');
+    function kinders_city_onchange(el)
+    {
+        $.ajax({
+            dataType: 'json',
+            data: {
+                action: 'get_district_list',
+                city_id: $(el).val()
+            },
+            type: 'POST',
+            url : BASE_URL + '/ajax/json/kindergarten',
+            success : function(response) {
+                var html = '';
+                for (var i = 0; i < response.list.length; i++) {
+                    html += '<option value="'+ response.list[i].id +'">'+ response.list[i].name +'</option>';
+                };
+                $('#id_district').html(html).removeAttr('disabled').trigger('change');
+            }
+        });
+    }
 </script>
