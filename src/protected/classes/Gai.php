@@ -4,42 +4,11 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class Gai
 {
-    const PPP_URL        = '/reports/rwservlet?report=site_api/pnew_gai.rep&destype=Cache&Desformat=xml&cmdkey=rep';
+    const PPP_URL        = '/reports/rwservlet?report=gerc_api/api_pnew_gai_fine.rep&destype=Cache&Desformat=xml&cmdkey=rep';
     const PPP_URL_REGION = '/reports/rwservlet?report=gerc_api/spr_firme_661.rep&destype=Cache&Desformat=xml&cmdkey=rep';
     
     public static function getRegions()
     {
-        return [
-            ['NAME_STATE' => 'м.Київ',                    'NAME_FIRM' => 'ГУК у м.Києві/м.Київ/',           'ID_AREA' => 40],
-            ['NAME_STATE' => 'Київська область',          'NAME_FIRM' => 'ГУК у Київ.обл./Київ.обл./',      'ID_AREA' => 233],
-            ['NAME_STATE' => 'Вінницька область',         'NAME_FIRM' => 'ГУК у Вінницькій обл./Він.обл/',  'ID_AREA' => 72],
-            ['NAME_STATE' => 'Волинська область',         'NAME_FIRM' => 'ГУК у Волин.обл/Волинська.обл/',  'ID_AREA' => 100],
-            ['NAME_STATE' => 'Дніпропетровська область',  'NAME_FIRM' => 'ГУК у Днiпр-кiй обл/Дн-ка об/',   'ID_AREA' => 117],
-            ['NAME_STATE' => 'Донецька область',          'NAME_FIRM' => 'Донецьке УК/Дон.Обл./',           'ID_AREA' => 140],
-            ['NAME_STATE' => 'Житомирська область',       'NAME_FIRM' => 'ГУК у Житомир обл/Житомир обл/',  'ID_AREA' => 159],
-            ['NAME_STATE' => 'Закарпатська область',      'NAME_FIRM' => 'ГУК у Закарп.обл/Закарп. обл./',  'ID_AREA' => 183],
-            ['NAME_STATE' => 'Запорізька область',        'NAME_FIRM' => 'ГУК у Зап.обл./Зап.обл./',        'ID_AREA' => 197],
-            ['NAME_STATE' => 'Івано-Франківська область', 'NAME_FIRM' => 'ГУК в Iв.-Франк.об/Iв.-Фран.о/',  'ID_AREA' => 218],
-            ['NAME_STATE' => 'Кіровоградська область',    'NAME_FIRM' => 'ГУК у Кіров.обл./Кіров.обл./',    'ID_AREA' => 259],
-            ['NAME_STATE' => 'Луганська область',         'NAME_FIRM' => 'ГУК у Луг.обл./Луганська обл./',  'ID_AREA' => 281],
-            ['NAME_STATE' => 'Львівська область',         'NAME_FIRM' => 'ГУК у Львiв. обл./Львів. обл/',   'ID_AREA' => 300],
-            ['NAME_STATE' => 'Миколаївська область',      'NAME_FIRM' => 'Миколаївське ГУК/Микол.обл./',    'ID_AREA' => 321],
-            ['NAME_STATE' => 'Одеська область',           'NAME_FIRM' => 'ГУК в Од.обл./',                  'ID_AREA' => 1],
-            ['NAME_STATE' => 'Полтавська область',        'NAME_FIRM' => 'ГУК Полтав.обл/Полтавська/',      'ID_AREA' => 341],
-            ['NAME_STATE' => 'Рівненська область',        'NAME_FIRM' => 'ГУК у Рівнен.обл./Рівнен.обл./',  'ID_AREA' => 367],
-            ['NAME_STATE' => 'Сумська область',           'NAME_FIRM' => 'ГУК у Сумській обл/Сумська обл/', 'ID_AREA' => 384],
-            ['NAME_STATE' => 'Тернопільська область',     'NAME_FIRM' => 'ГУК у Терноп.обл./Терноп.обл./',  'ID_AREA' => 403],
-            ['NAME_STATE' => 'Харківська область',        'NAME_FIRM' => 'ГУК Харківськ обл/Харкiвобл/',    'ID_AREA' => 421],
-            ['NAME_STATE' => 'Херсонська область',        'NAME_FIRM' => 'ГУК у Херсон обл/Херсон обл/',    'ID_AREA' => 449],
-            ['NAME_STATE' => 'Хмельницька область',       'NAME_FIRM' => 'ГУК у Хмельниц.обл/Хмел.обл/',    'ID_AREA' => 468],
-            ['NAME_STATE' => 'Черкаська область',         'NAME_FIRM' => 'ГУК у Черк.обл./Черкаська обл/',  'ID_AREA' => 489],
-            ['NAME_STATE' => 'Чернівецька область',       'NAME_FIRM' => 'Чернівецьке ГУК/Чернiв.обл/',     'ID_AREA' => 510],
-            ['NAME_STATE' => 'Чернігівська область',      'NAME_FIRM' => 'ГУК у Чернігів.обл/Черніг.обл/',  'ID_AREA' => 522],
-        ];
-
-        // что-то в API написано так, как не работает на самом деле.
-        // Так что пока работаю по этому массиву, а не в онлайне с оракла его беру
-
         $url = API_URL . self::PPP_URL_REGION;
         try {
             $xml = Http::getXmlByUrl($url);
@@ -56,6 +25,12 @@ class Gai
                 'NAME_FIRME' => $row_elem[$i]->NAME_FIRME . '',
                 'ID_AREA'    => $row_elem[$i]->ID_FIRME . '',
             ];
+
+            // ГУК для киевской области и г. Киев имеет одинаковое поле NAME_STATE
+            // хардкодно меняю его, чтоб люди не путались
+            if ($row_elem[$i]->NAME_FIRME == 'ГУК у м.Києві/м.Київ/') {
+                $list[count($list) - 1]['NAME_STATE'] .= ' (м.Київ)';
+            }
         }
 
         return $list;
@@ -78,7 +53,7 @@ class Gai
      * @param string $r9   — ДАТА ПРОТОК.
      * @param string $r10  — ДАТА ПОСТАНОВ.
     */
-    public static function set_request_to_ppp($idarea, $summ, $user_id, $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10)
+    public static function set_request_to_ppp($id_firme, $summ, $user_id, $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10)
     {
         $url = API_URL . self::PPP_URL;
         $timestamp = microtime(true);
@@ -89,7 +64,8 @@ class Gai
         ShoppingCart::pppGetCashierByKassId(ShoppingCart::KASS_ID_TAS, $login, $password);
 
         $url .= '&login=' . $login;
-        $url .= '&idarea=' . $idarea;
+        $url .= '&pwd=' . $password;
+        $url .= '&id_firme=' . $id_firme;
         $url .= '&summ=' . $summ;
         $url .= '&idsiteuser=' . $user_id;
         $url .= '&r1=' . rawurlencode(iconv('UTF-8', 'CP1251', $r1));
@@ -153,17 +129,17 @@ class Gai
         ShoppingCart::logRequestToReports($message_to_log, $payment_id, true, 'new', 'reports/gai');
 
         $data = [
-            'r1'     => $r1,
-            'r2'     => $r2,
-            'r3'     => $r3,
-            'r4'     => $r4,
-            'r5'     => $r5,
-            'r6'     => $r6,
-            'r7'     => $r7,
-            'r8'     => $r8,
-            'r9'     => $r9,
-            'r10'    => $r10,
-            'idarea' => $idarea,
+            'r1'       => $r1,
+            'r2'       => $r2,
+            'r3'       => $r3,
+            'r4'       => $r4,
+            'r5'       => $r5,
+            'r6'       => $r6,
+            'r7'       => $r7,
+            'r8'       => $r8,
+            'r9'       => $r9,
+            'r10'      => $r10,
+            'id_firme' => $id_firme,
         ];
         $xml_fields = ['OUTBANK', 'NAME_OWNER_BANK', 'NAME_BANK', 'NAME_PLAT', 'DST_NAME', 'DST_MFO', 'DST_OKPO', 'DST_RCOUNT', 'DST_NAME_BANK', 'DEST'];
 
