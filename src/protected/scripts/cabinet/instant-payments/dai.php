@@ -14,7 +14,6 @@
             }
         }
 
-        $Gai = new Gai();
         $penalty_user_email      = (isset($__userData['email']))      ? $__userData['email'] : '';
         $penalty_user_name       = (isset($__userData['name']))       ? $__userData['name'] : '';
         $penalty_user_fathername = (isset($__userData['fathername'])) ? $__userData['fathername'] : '';

@@ -22,7 +22,6 @@ try {
 
 
     $regions = Gai::getRegions();
-    $Gai = new Gai();
 
     $tmp_keys = [
         'region'                  => 'Область',
@@ -92,7 +91,7 @@ try {
     }
 
     $fio = "$penalty_user_lastname $penalty_user_name $penalty_user_fathername";
-    $record = $Gai->set_request_to_ppp($region, $protocol_summ, $user_id, $fio, $penalty_user_address, '', '', '', '', $postanova_series, $postanova_number, '', $protocol_date);
+    $record = Gai::set_request_to_ppp($region, $protocol_summ, $user_id, $fio, $penalty_user_address, '', '', '', '', $postanova_series, $postanova_number, '', $protocol_date);
     
     $_SESSION['instant-payments-dai']['record_id'] = $record['id'];
     $_SESSION['instant-payments-dai']['dai_last_payment_id'] = $record['id'];

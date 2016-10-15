@@ -4,18 +4,9 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class Gai
 {
-    public $bank;
-
-    private $ppp_url           = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=site_api/pnew_gai.rep&destype=Cache&Desformat=xml&cmdkey=rep';
-    private $ppp_url_pdf       = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep';
-    private $ppp_history_url   = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep';
-    private $ppp_url_pdf_first = 'https://bank.gioc.kiev.ua/reports/rwservlet?report=ppp/kv9_pack.rep&destype=cache&Desformat=pdf&cmdkey=rep';
+    const PPP_URL        = '/reports/rwservlet?report=site_api/pnew_gai.rep&destype=Cache&Desformat=xml&cmdkey=rep';
+    const PPP_URL_REGION = '/reports/rwservlet?report=gerc_api/spr_firme_661.rep&destype=Cache&Desformat=xml&cmdkey=rep';
     
-    public function __construct($bank = 'tas')
-    {
-        $this->bank = $bank;
-    }
-
     public static function getRegions()
     {
         return [
@@ -45,23 +36,29 @@ class Gai
             ['NAME_STATE' => 'Чернівецька область',       'NAME_FIRM' => 'Чернівецьке ГУК/Чернiв.обл/',     'ID_AREA' => 510],
             ['NAME_STATE' => 'Чернігівська область',      'NAME_FIRM' => 'ГУК у Чернігів.обл/Черніг.обл/',  'ID_AREA' => 522],
         ];
-    }
 
-    /**
-     * По ID кассы получаем логин и хеш пароля кассира
-     * @param  string  $login    Логин кассира (SHA1, кажется)
-     * @param  string  $password Хеш пароля кассира
-     * 
-     * @return void
-     */
-    public static function pppGetCashierByKassId(&$login, &$password)
-    {
-        // switch ($this->bank) {
-        //     case 'tas':
-                $login    = 'GIOCKIEVUA';
-                $password = '7D107006F752860E6FAEBD84156A676B8852C439';
-                // break;
-        // }
+        // что-то в API написано так, как не работает на самом деле.
+        // Так что пока работаю по этому массиву, а не в онлайне с оракла его беру
+
+        $url = API_URL . self::PPP_URL_REGION;
+        try {
+            $xml = Http::getXmlByUrl($url);
+        } catch (Exception $e) {
+            return ['list' => []];
+        }
+
+        $list = [];
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
+
+        for ($i=0; $i < count($row_elem); $i++) {
+            $list[] = [
+                'NAME_STATE' => $row_elem[$i]->NAME_STATE . '',
+                'NAME_FIRME' => $row_elem[$i]->NAME_FIRME . '',
+                'ID_AREA'    => $row_elem[$i]->ID_FIRME . '',
+            ];
+        }
+
+        return $list;
     }
 
     /**
@@ -81,15 +78,15 @@ class Gai
      * @param string $r9   — ДАТА ПРОТОК.
      * @param string $r10  — ДАТА ПОСТАНОВ.
     */
-    public function set_request_to_ppp($idarea, $summ, $user_id, $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10)
+    public static function set_request_to_ppp($idarea, $summ, $user_id, $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10)
     {
-        $url = $this->ppp_url;
+        $url = API_URL . self::PPP_URL;
         $timestamp = microtime(true);
 
         $summ .= '';
         $summ = str_replace('.', ',', $summ);
 
-        self::pppGetCashierByKassId($login, $password);
+        ShoppingCart::pppGetCashierByKassId(ShoppingCart::KASS_ID_TAS, $login, $password);
 
         $url .= '&login=' . $login;
         $url .= '&idarea=' . $idarea;
@@ -110,39 +107,50 @@ class Gai
         $xml_string = iconv('CP1251', 'UTF-8', $xml_string);
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = @simplexml_load_string($xml_string);
+
+        $message_to_log = var_export(
+            [
+                'date'        => date('Y-m-d H:i:s'),
+                'timestamp'   => microtime(true),
+                'reports_url' => $url,
+                'answer'      => $xml_string,
+            ],
+            true
+        );
         
-        if ($xml === false) {
+        if (($xml === null) || ($xml === false)) {
+            ShoppingCart::logRequestToReports($message_to_log, '', false, 'new', 'reports/gai');
             throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
-            return false;
         }
 
         $err = $xml->ROW->ERR.'';
 
         if ($err != '0') {
+            ShoppingCart::logRequestToReports($message_to_log, '', false, 'new', 'reports/gai');
             throw new Exception(UPC::get_error($err));
-            return false;
         }
 
         $insert = [
-            'user_id'                  => $user_id,
-            'acq'                      => $xml->ROW->ACQ.'',
-            'timestamp'                => $timestamp,
-            'type'                     => 'gai',
-            'count_services'           => 1,
-            'processing'               => $this->bank,
-            'summ_komis'               => floatval($xml->ROW->SUMM_KOMIS.'') / 100,
-            'summ_plat'                => floatval($xml->ROW->SUMM_PLAT.'')  / 100,
-            'summ_total'               => floatval($xml->ROW->SUMM_TOTAL.'') / 100,
-            'reports_id_pack'          => $xml->ROW->ID_PACK.'',
-            'reports_num_kvit'         => $xml->ROW->NUM_KVIT.'',
-            'reports_id_plat_klient'   => $xml->ROW->ID_PLAT_KLIENT.'',
-            'send_payment_to_reports'  => 1,
-            'ip'                       => USER_REAL_IP,
-            'user_agent_string'        => HTTP_USER_AGENT,
+            'user_id'                 => $user_id,
+            'acq'                     => $xml->ROW->ACQ.'',
+            'timestamp'               => $timestamp,
+            'type'                    => 'gai',
+            'count_services'          => 1,
+            'processing'              => 'tas',
+            'summ_komis'              => floatval($xml->ROW->SUMM_KOMIS.'') / 100,
+            'summ_plat'               => floatval($xml->ROW->SUMM_PLAT.'')  / 100,
+            'summ_total'              => floatval($xml->ROW->SUMM_TOTAL.'') / 100,
+            'reports_id_pack'         => $xml->ROW->ID_PACK.'',
+            'reports_num_kvit'        => $xml->ROW->NUM_KVIT.'',
+            'reports_id_plat_klient'  => $xml->ROW->ID_PLAT_KLIENT.'',
+            'send_payment_to_reports' => 1,
+            'ip'                      => USER_REAL_IP,
+            'user_agent_string'       => HTTP_USER_AGENT,
         ];
 
         $payment_id = PDO_DB::insert($insert, ShoppingCart::TABLE);
         $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
+        ShoppingCart::logRequestToReports($message_to_log, $payment_id, true, 'new', 'reports/gai');
 
         $data = [
             'r1'     => $r1,

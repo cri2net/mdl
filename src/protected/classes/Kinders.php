@@ -96,11 +96,9 @@ class Kinders
         return $result;
     }
 
-
     public static function getDebt($child_id, &$debt_date = null)
     {
-        $TAS_KASS_ID = 1080;
-        ShoppingCart::pppGetCashierByKassId($TAS_KASS_ID, $login, $password);
+        ShoppingCart::pppGetCashierByKassId(ShoppingCart::KASS_ID_TAS, $login, $password);
 
         $url = API_URL . self::get_API_URL('PPP_URL_DEBT') . $login . '&pwd=' . $password . '&id_rono_child=' . $child_id;
         $xml_string = file_get_contents($url);
