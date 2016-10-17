@@ -132,7 +132,7 @@ class User
             'login'        => '',
             'lastname'     => $lastname,
             'name'         => $name,
-            'fathername'   => $fathername,
+            'fathername'   => $fathername . '',
             'created_at'   => microtime(true),
             'mob_phone'    => '',
             'auto_reg'     => 1,

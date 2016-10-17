@@ -39,9 +39,7 @@
             </div>
             <?php
         }
-    ?>
-    
-    <?php
+
         if (isset($_SESSION['cabinet-settings']['status']) && !$_SESSION['cabinet-settings']['status']) {
             ?>
             <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>

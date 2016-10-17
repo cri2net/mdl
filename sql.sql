@@ -795,3 +795,7 @@ ALTER TABLE `cks_payment`
 
 ALTER TABLE `cks_payment`
   AUTO_INCREMENT=1000000001;
+
+-- 2016.10.18
+ALTER TABLE `cks_payment`
+  CHANGE `type` `type` ENUM('gai','kinders','komdebt','cks','budget') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt'  NOT NULL;

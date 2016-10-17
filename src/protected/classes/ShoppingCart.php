@@ -4,7 +4,7 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class ShoppingCart
 {
-    const TABLE = DB_TBL_PAYMENT;
+    const TABLE                  = DB_TBL_PAYMENT;
     const SERVICE_TABLE          = DB_TBL_PAYMENT_SERVICES;
     const KASS_ID_TAS            = 10020;
     const KASS_ID_AVAL           = 12033;

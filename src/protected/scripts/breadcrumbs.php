@@ -68,6 +68,7 @@
                             'cards'        => 'Перекази з карти на карту',
                             'phone'        => 'Поповнення рахунку на мобільному',
                             'cks'          => 'Сплата послуг ЦКС',
+                            'budget'       => 'Платежі до бюджету',
                         ];
                         $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                     }

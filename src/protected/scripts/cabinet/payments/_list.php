@@ -57,6 +57,10 @@
                                     case 'cks':
                                         echo 'Послуги ЦКС';
                                         break;
+
+                                    case 'budget':
+                                        echo 'До бюджету';
+                                        break;
                                 }
                             ?>
                         </td>

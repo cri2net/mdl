@@ -24,6 +24,9 @@
 <script src="<?= BASE_URL; ?>/js/jquery.easydropdown.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/jquery.tooltipster.min.js"></script>
 <script src="<?= BASE_URL; ?>/js/zxcvbn.js"></script>
+<script src="<?= BASE_URL; ?>/js/dependent-dropdown/js/dependent-dropdown.js" type="text/javascript"></script>
+<script src="<?= BASE_URL; ?>/js/dependent-dropdown/js/depdrop_locale_ru.js"></script>
+<link href="<?= BASE_URL; ?>/js/dependent-dropdown/css/dependent-dropdown.css" media="all" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <content>
