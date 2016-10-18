@@ -22,7 +22,7 @@
     </div>
     <div class="form-subtitle delete-profile">Видалення профілю</div>
     <div class="check-box-line">
-        <span class="niceCheck" id="confirm_delete_profile"><input type="checkbox"></span>
+        <span class="niceCheck" id="confirm_delete_profile"><input onclick="$('#confirm_delete_profile').click();" type="checkbox"></span>
         <label onclick="$('#confirm_delete_profile').click();">
             Я розумію наслідки видалення профілю
         </label>

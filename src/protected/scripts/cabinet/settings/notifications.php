@@ -1,6 +1,6 @@
 <div class="form-block full-width">
     <div class="check-box-line">
-        <span class="niceCheck <?= ($__userData['notify_email']) ? 'checked' : ''; ?>" id="checkbox_notify_email"><input type="checkbox" <?= ($__userData['notify_email']) ? 'checked' : ''; ?> name="notify_email"></span>
+        <span class="niceCheck <?= ($__userData['notify_email']) ? 'checked' : ''; ?>" id="checkbox_notify_email"><input onclick="$('#checkbox_notify_email').click();" type="checkbox" <?= ($__userData['notify_email']) ? 'checked' : ''; ?> name="notify_email"></span>
         <label onclick="$('#checkbox_notify_email').click();">
             Отримувати листи з новинами
         </label>
@@ -16,7 +16,7 @@
             ?>
             <div class="all-objects-checkbox">
                 <div class="check-box-line">
-                    <span class="niceCheck check-group-rule <?= ($have_checked_object) ? 'checked' : ''; ?>" id="check-group-rule"><input <?= ($have_checked_object) ? 'checked' : ''; ?> type="checkbox"></span>
+                    <span class="niceCheck check-group-rule <?= ($have_checked_object) ? 'checked' : ''; ?>" id="check-group-rule"><input onclick="$('#check-group-rule').click();" <?= ($have_checked_object) ? 'checked' : ''; ?> type="checkbox"></span>
                     <label onclick="$('#check-group-rule').click();">
                         Отримувати листи з рахунками-повідомленнями для усіх об’єктів
                     </label>
@@ -26,7 +26,7 @@
                         foreach ($houses as $house) {
                             ?>
                             <div class="check-box-line">
-                                <span class="niceCheck check-group <?= ($house['notify']) ? 'checked' : ''; ?>" id="checkbox_notify_object_<?= $house['id']; ?>"><span class="dotted-line"></span><input <?= ($house['notify']) ? 'checked' : ''; ?> type="checkbox" name="notify_object_<?= $house['id']; ?>"></span>
+                                <span class="niceCheck check-group <?= ($house['notify']) ? 'checked' : ''; ?>" id="checkbox_notify_object_<?= $house['id']; ?>"><span class="dotted-line"></span><input <?= ($house['notify']) ? 'checked' : ''; ?> type="checkbox" name="notify_object_<?= $house['id']; ?>" onclick="$('#checkbox_notify_object_<?= $house['id']; ?>').click();"></span>
                                 <label onclick="$('#checkbox_notify_object_<?= $house['id']; ?>').click();">
                                     <?php
                                         if ($house['title']) {
