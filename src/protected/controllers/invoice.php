@@ -28,7 +28,7 @@
     $hash2 = Authorization::get_auth_hash2($__userData['id'], $hash1);
     $debt = new KomDebt();
 
-    $paybill_link   = EXT_BASE_URL . '/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2;
+    $paybill_link   = EXT_BASE_URL . rawurlencode('/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2);
     $online_version = BASE_URL . '/invoice/?uid=' . $__userData['id'] . '&f=' . $house['id'] . '&hash2=' . $hash2;
 
     $address = Flat::getAddressString($house['flat_id'], $address_detail);
@@ -162,10 +162,9 @@
         </tr>
     </tbody></table>
     <table <?= $_table_attr; ?>><tbody>
-        <tr><td colspan="4" height="52">&nbsp;</td></tr>
+        <tr><td colspan="3">&nbsp;</td></tr>
         <tr>
             <td width="24">&nbsp;</td>
-            <td height="90" width="196" style="min-width:196px;"><img src="<?= $__img_path; ?>logo.png" hspace="0" border="0" vspace="0" alt="" height="90" width="196"></td>
             <td align="center"><table width="308" cellspacing="0" cellpadding="0" border="0">
                 <tbody>
                     <tr><td height="40" colspan="3" align="center" valign="top" style="vertical-align:top; <?= $_text_color; ?> <?= $_ff; ?> font-weight:bold; font-size:24px; line-height:20px;">Рахунок-повідомлення</td></tr>
@@ -185,9 +184,6 @@
                 </tbody>
             </table></td>
             <td width="20">&nbsp;</td>
-            <td width="200" align="center" valign="top" style="vertical-align:top; padding-top:7px; padding-left:20px;">
-                <img hspace="0" vspace="0" border="0" style="width:180px; height:50px; line-height:normal;" width="180" height="50" src="<?= BASE_URL; ?>/barcode/barcode.gif?code=<?= $debtData['PLAT_CODE']; ?>" alt="barcode"><br>
-            </td>
         </tr>
     </tbody></table>
     <table <?= $_table_attr; ?>>
@@ -386,7 +382,7 @@
     ?>
     <table <?= $_table_attr; ?>><tbody><tr>
         <td align="left" width="370" style="line-height:18px; padding-left:69px; padding-top:11px;">
-            <a href="<?= BASE_URL ?>/cabinet/objects/<?= $house['id']; ?>/detailbill/?uid=<?= $__userData['id'].'&amp;hash2='. $hash2; ?>" target="_blank"><img hspace="0" vspace="0" width="229" height="35" src="<?= $__img_path; ?>subsidy.png" alt="докладніше про нарахування"></a>
+            <a href="<?= EXT_BASE_URL . rawurlencode('/cabinet/objects/' . $house['id'] . '/detailbill/?uid=' . $__userData['id'] . '&amp;hash2=' . $hash2); ?>" target="_blank"><img hspace="0" vspace="0" width="229" height="35" src="<?= $__img_path; ?>subsidy.png" alt="докладніше про нарахування"></a>
         </td>
         <td align="right" style="color:#282828; font-size:18px; <?= $_ff; ?> line-height:24px; padding-top:20px; padding-right:38px; padding-bottom:20px;">
             Разом до сплати:
@@ -416,10 +412,10 @@
     <table <?= $_table_attr; ?>><tbody><tr><td style="padding-top:20px; padding-left:18px; padding-right:18px; padding-bottom:0px;" bgcolor="#83b67b">
         <table <?= $_table_attr; ?>><tbody>
             <tr>
-                <td width="151" style="padding:0px; padding-bottom:18px;" height="69"><table background="<?= $__img_path; ?>logo-footer.png" <?= $_table_attr; ?>>
-                    <tbody><tr><td style="padding:0px; line-height:73px;" height="69">&nbsp;</td></tr></tbody>
-                </table></td>
-                <td>&nbsp;</td>
+                <td valign="top" colspan="3" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
+                    <span style="font-weight:bold; line-height:18px; color:#ffffff; <?= $_ff; ?> font-size:14px;">КК ЦКС <br></span>
+                    2014—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="http://cks.kiev.ua/" target="_blank">http://cks.kiev.ua/</a>
+                </td>
                 <td valign="top" width="50%" align="right" style="vertical-align:top;"><table <?= $_table_attr; ?>>
                     <tbody><tr>
                         <td>&nbsp;</td>
@@ -429,12 +425,6 @@
                         </td>
                     </tr></tbody>
                 </table></td>
-            </tr>
-            <tr>
-                <td valign="bottom" colspan="3" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
-                    <span style="font-weight:bold; line-height:18px; color:#ffffff; <?= $_ff; ?> font-size:14px;">КК ЦКС <br></span>
-                    1963—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="http://cks.kiev.ua/" target="_blank">http://cks.kiev.ua/</a>
-                </td>
             </tr>
         </tbody></table>
     </td></tr></tbody></table>
