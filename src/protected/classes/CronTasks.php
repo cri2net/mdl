@@ -88,6 +88,10 @@ class CronTasks
                     $type = 'Садики (питание)';
                     break;
                 
+                case 'budget':
+                    $type = 'В бюджет';
+                    break;
+                
                 default:
                     $type = $row['type'];
             }

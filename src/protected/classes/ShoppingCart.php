@@ -364,7 +364,7 @@ class ShoppingCart
                 break;
 
             case 'kinders':
-                $report = ($payment['status'] == 'success') ? '/gioc_api/api_prov.rep' : '/gioc_api/api_pacq50.rep';
+                $report = ($payment['status'] == 'success') ? '/gerc_api/api_prov.rep' : '/gerc_api/api_pacq50.rep';
                 break;
 
             case 'cks':

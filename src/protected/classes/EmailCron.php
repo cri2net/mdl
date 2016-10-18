@@ -114,7 +114,7 @@ class EmailCron
                     $content = Http::HttpGet($url, false, false);
 
                     if (strlen($content) > 250) {
-                        $address = Flat::getAddressString($row['flat_id'], $row['city_id']);
+                        $address = Flat::getAddressString($row['flat_id']);
                         $subject = str_replace('{ADDRESS}', $address, $cron['subject']);
                         $plain_text = Http::HttpGet($online_version . '&text_mode', false, false);
                         
