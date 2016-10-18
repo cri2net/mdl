@@ -436,6 +436,7 @@ class ShoppingCart
                 $url .= '&p14=0';
                 break;
 
+            case 'oschad':
             case 'oschad_mycard':
             case 'oschadbank':
                 $payment['processing_data'] = (array)(json_decode($payment['processing_data']));

@@ -27,6 +27,7 @@
 <script src="<?= BASE_URL; ?>/js/dependent-dropdown/js/dependent-dropdown.js" type="text/javascript"></script>
 <script src="<?= BASE_URL; ?>/js/dependent-dropdown/js/depdrop_locale_ru.js"></script>
 <link href="<?= BASE_URL; ?>/js/dependent-dropdown/css/dependent-dropdown.css" media="all" rel="stylesheet" type="text/css" />
+<script src="http://cks.kiev.ua/iframe_height.js"></script>
 </head>
 <body>
 <content>

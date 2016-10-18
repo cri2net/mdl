@@ -69,7 +69,7 @@
             <tr class="bank-name title">
                 <td class="first">
                     <div class="check-box-line">
-                        <span id="check_all_services" class="niceCheck check-group-rule checked"><input onchange="checkAllServices($('#check_all_services-elem'));" id="check_all_services-elem" type="checkbox" checked="checked"></span>
+                        <span id="check_all_services" class="niceCheck check-group-rule checked"><input onclick="$('#check_all_services').click();" onchange="checkAllServices($('#check_all_services-elem'));" id="check_all_services-elem" type="checkbox" checked="checked"></span>
                         <label onclick="$('#check_all_services').click();">
                             Назва послуги /<br>одержувач коштів
                         </label>
