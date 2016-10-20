@@ -4,13 +4,8 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class ShoppingCart
 {
-    const TABLE                  = DB_TBL_PAYMENT;
-    const SERVICE_TABLE          = DB_TBL_PAYMENT_SERVICES;
-    const KASS_ID_TAS            = 10020;
-    const KASS_ID_AVAL           = 12033;
-    const KASS_ID_WEBMONEY       = 10021;
-    const KASS_ID_OSCHADBANK     = 10024;
-    const KASS_ID_OSCHADBANK_ALL = 10074;
+    const TABLE             = DB_TBL_PAYMENT;
+    const SERVICE_TABLE     = DB_TBL_PAYMENT_SERVICES;
     const REPORT_BASE_URL   = '/reports/rwservlet';
     const PDF_FIRST_URL     = '/reports/rwservlet?report=ppp/ekv9_all.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
     const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
@@ -34,51 +29,57 @@ class ShoppingCart
     }
 
     /**
-     * По ID кассы получаем логин и хеш пароля кассира
-     * @param  integer $kass_id  ID кассы в оракле
-     * @param  string  $login    Логин кассира (SHA1, кажется)
-     * @param  string  $password Хеш пароля кассира
+     * Получаем логин и хеш пароля кассира
+     * @param  string $processing Ключ процессинга
+     * @param  string $login      Логин кассира (SHA1, кажется)
+     * @param  string $password   Хеш пароля кассира
      * 
      * @return void
      */
-    public static function pppGetCashierByKassId($kass_id, &$login, &$password)
+    public static function pppGetCashierByProcessing($processing, &$login, &$password)
     {
-        switch ($kass_id) {
-            case 12033:
+        switch ($processing) {
+            case 'visa':
+            case 'mastercard':
                 $login    = 'CKS_SITE_RB';
                 $password = '0206E088B06597C2A4565293639B4CABB2BB48B9';
                 break;
 
-            case 10020:
+            case 'tas':
                 $login    = 'cks_site';
                 $password = '53DA2E14D3C162C23CD8485E67D7F30298604209';
                 break;
 
-            case 10021:
+            case 'webmoney':
                 $login    = 'cks_site_wm';
                 $password = strtoupper(sha1('cks_site_wm123'));
                 break;
 
-            case 10024:
+            case 'oschad_mycard':
                 $login    = 'CKS_SITE_OB';
                 $password = strtoupper(sha1('cks_site_ob123'));
                 break;
 
-            case 10074:
+            case 'oschadbank':
                 $login    = 'cks_site_ob2';
                 $password = strtoupper(sha1('cks_site_ob2123'));
+                break;
+
+            case 'oschad':
+                $login    = 'cks_site_ob3';
+                $password = strtoupper(sha1('cks_site_ob3123'));
                 break;
         }
     }
 
     /**
-     * Метод проверяет открыта ли касса в оракле по её id
-     * @param  штеупук $kass_id
+     * Метод проверяет открыта ли касса в оракле
+     * @param  string $processing
      * @return boolean
      */
-    public static function pppCheckOpenKass($kass_id)
+    public static function pppCheckOpenKass($processing)
     {
-        self::pppGetCashierByKassId($kass_id, $login, $password);
+        self::pppGetCashierByProcessing($processing, $login, $password);
 
         $url = API_URL . self::get_API_URL('KASS_STATUS');
         $url .= rawurlencode($login);
@@ -105,13 +106,13 @@ class ShoppingCart
 
     /**
      * Метод пробует открыть кассу в оракле
-     * @param  integer $kass_id ID кассы в оракле
+     * @param  integer $processing
      * @param  integer $shift   Смена кассы: 0 = дневная, 1 = вечерняя. OPTIONAL
      * @return void
      */
-    public static function pppOpenKass($kass_id, $shift = 0)
+    public static function pppOpenKass($processing, $shift = 0)
     {
-        self::pppGetCashierByKassId($kass_id, $login, $password);
+        self::pppGetCashierByProcessing($processing, $login, $password);
 
         $url = API_URL . self::get_API_URL('KASS_OPEN');
         $url .= rawurlencode($login);
@@ -171,31 +172,6 @@ class ShoppingCart
         }
 
         return $rules;
-    }
-
-    public static function getKassID($processing)
-    {
-        switch ($processing) {
-            case 'tas':
-                return self::KASS_ID_TAS;
-
-            case 'webmoney':
-                return self::KASS_ID_WEBMONEY;
-
-            case 'oschad':
-            case 'oschad_mycard':
-                return self::KASS_ID_OSCHADBANK;
-            
-            case 'oschadbank':
-                return self::KASS_ID_OSCHADBANK_ALL;
-            
-            case 'visa':
-            case 'mastercard':
-                return self::KASS_ID_AVAL;
-
-            default:
-                throw new Exception("Unknow processing");
-        }
     }
 
     public static function getPercentSum($sum, $type)
@@ -355,14 +331,10 @@ class ShoppingCart
         $url = API_URL . self::REPORT_BASE_URL;
         $to_update = [];
 
-        $kass_id = self::getKassID($payment['processing']);
-        self::pppGetCashierByKassId($kass_id, $login, $password);
+        self::pppGetCashierByProcessing($payment['processing'], $login, $password);
 
         switch ($payment['type']) {
             case 'gai':
-                $report = ($payment['status'] == 'success') ? '/site_api/prov_gai.rep' : '/site_api/pacq50_gai.rep';
-                break;
-
             case 'kinders':
                 $report = ($payment['status'] == 'success') ? '/gerc_api/api_prov.rep' : '/gerc_api/api_pacq50.rep';
                 break;
@@ -567,8 +539,7 @@ class ShoppingCart
             return;
         }
 
-        $kass_id = self::getKassID($payment['processing']);
-        self::pppGetCashierByKassId($kass_id, $login, $password);
+        self::pppGetCashierByProcessing($payment['processing'], $login, $password);
 
         $services = PDO_DB::table_list(self::SERVICE_TABLE, "payment_id='{$payment['id']}'", 'id ASC', $payment['count_services'] . '');
 

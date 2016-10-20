@@ -61,7 +61,7 @@ class Gai
         $summ .= '';
         $summ = str_replace('.', ',', $summ);
 
-        ShoppingCart::pppGetCashierByKassId(ShoppingCart::KASS_ID_TAS, $login, $password);
+        ShoppingCart::pppGetCashierByProcessing('tas', $login, $password);
 
         $url .= '&login=' . $login;
         $url .= '&pwd=' . $password;
@@ -114,7 +114,6 @@ class Gai
             'count_services'          => 1,
             'processing'              => 'tas',
             'summ_komis'              => floatval($xml->ROW->SUMM_KOMIS.'') / 100,
-            'summ_plat'               => floatval($xml->ROW->SUMM_PLAT.'')  / 100,
             'summ_total'              => floatval($xml->ROW->SUMM_TOTAL.'') / 100,
             'reports_id_pack'         => $xml->ROW->ID_PACK.'',
             'reports_num_kvit'        => $xml->ROW->NUM_KVIT.'',
@@ -123,6 +122,7 @@ class Gai
             'ip'                      => USER_REAL_IP,
             'user_agent_string'       => HTTP_USER_AGENT,
         ];
+        $insert['summ_plat'] = $insert['summ_total'] - $insert['summ_komis'];
 
         $payment_id = PDO_DB::insert($insert, ShoppingCart::TABLE);
         $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);

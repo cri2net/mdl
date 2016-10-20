@@ -20,7 +20,7 @@ class Budget
             $url = str_ireplace('{' . $key . '}', $value, $url);
         }
 
-        ShoppingCart::pppGetCashierByKassId(ShoppingCart::KASS_ID_TAS, $login, $password);
+        ShoppingCart::pppGetCashierByProcessing('tas', $login, $password);
 
         $url .= '&login=' . $login;
         $url .= '&pwd=' . $password;

@@ -98,7 +98,7 @@ class Kinders
 
     public static function getDebt($child_id, &$debt_date = null)
     {
-        ShoppingCart::pppGetCashierByKassId(ShoppingCart::KASS_ID_TAS, $login, $password);
+        ShoppingCart::pppGetCashierByProcessing('tas', $login, $password);
 
         $url = API_URL . self::get_API_URL('PPP_URL_DEBT') . $login . '&pwd=' . $password . '&id_rono_child=' . $child_id;
         $xml_string = file_get_contents($url);
@@ -205,7 +205,7 @@ class Kinders
         $summ = str_replace('.', ',', $summ);
         $timestamp = microtime(true);
 
-        ShoppingCart::pppGetCashierByKassId(ShoppingCart::KASS_ID_TAS, $login, $password);
+        ShoppingCart::pppGetCashierByProcessing('tas', $login, $password);
 
         $url .= $login;
         $url .= '&pwd=' . $password;
