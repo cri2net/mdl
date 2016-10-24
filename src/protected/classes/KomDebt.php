@@ -22,7 +22,17 @@ class KomDebt
     {
         try {
             $dateData = $this->getDatePeriod($dateBegin);
-            $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
+            $quertString  = "&dbegin=".$dateData['begin']."&dend=".$dateData['end'];
+
+            if (strlen($obj_id) > 16) {
+                if ($url == $this->debt_URL) {
+                    $url = "https://ppp.gerc.ua/reports/rwservlet?report=site/komdebt2.rep&cmdkey=gsity&destype=Cache&Desformat=xml&plat_code=" . $obj_id . $quertString;
+                } else {
+                    $url = "https://ppp.gerc.ua/reports/rwservlet?report=site/komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&plat_code=" . $obj_id . $quertString;
+                }
+            } else {
+                $url = API_URL . $url . $obj_id . $quertString;
+            }
 
             if (!isset($this->cache[md5($url)])) {
                 $this->cache[md5($url)] = Http::fgets($url);
@@ -36,6 +46,25 @@ class KomDebt
     public function clearCache()
     {
         $this->cache = [];
+    }
+
+    /**
+     * получает данные об объекте, какие есть: платкод и id
+     * и выбирает какой из этих параметров использовать
+     * @param  integer $flat_id  ID квартиры в оракле
+     * @param  string  $platcode платёжный код герца
+     * @param  integer $city_id  ID города
+     * @return integer | string
+     */
+    public static function getFlatIdOrPlatcode($flat_id, $platcode, $city_id)
+    {
+        if (strlen($platcode) > 16) {
+            if (in_array($city_id, [Street::ODESSA_ID, Street::KIEV_ID])) {
+                return $platcode;
+            }
+        }
+
+        return $flat_id;
     }
     
     private function getDatePeriod($dateBegin = null)

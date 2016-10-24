@@ -20,11 +20,13 @@
             $_need_year = (int)$_GET['year'];
         }
 
+        $plat_code = KomDebt::getFlatIdOrPlatcode($object['flat_id'], $object['plat_code'], $object['city_id']);
+
         if (isset($_need_month) && isset($_need_year)) {
             $dateBegin = "1.".$_need_month.".".$_need_year;
-            $debtData = $debt->getHistoryBillData($object['flat_id'], $dateBegin, 100);
+            $debtData = $debt->getHistoryBillData($plat_code, $dateBegin, 100);
         } else {
-            $debtData = $debt->getHistoryBillData($object['flat_id'], null, 0, $real_timestamp);
+            $debtData = $debt->getHistoryBillData($plat_code, null, 0, $real_timestamp);
             $dateBegin = date('1.m.Y', $real_timestamp);
             $_need_month = date('m', $real_timestamp);
             $_need_year = date('Y', $real_timestamp);

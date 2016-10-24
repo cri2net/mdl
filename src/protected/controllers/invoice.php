@@ -67,7 +67,8 @@
     }
 
     $depth = ($__is_email_mode) ? 10 : 0;
-    $debtData = $debt->getData($house['flat_id'], null, $depth);
+    $plat_code = KomDebt::getFlatIdOrPlatcode($house['flat_id'], $house['plat_code'], $house['city_id']);
+    $debtData = $debt->getData($plat_code, null, $depth);
     if (empty($debtData['list']) && $__is_email_mode) {
         exit();
     }
@@ -81,7 +82,7 @@
     $house['date'] = '1 ' . $MONTHS[$this_month]['ua'] . ' ' . $this_year;
 
 
-    $oplat = $debt->getPayOnThisMonth($house['flat_id'], $dateBegin);
+    $oplat = $debt->getPayOnThisMonth($plat_code, $dateBegin);
 
     $tmp_oplat = (double)str_replace(',', '.', $oplat);
     $tmp_debt_summ = (double)str_replace(',', '.', $house['debt_sum']);

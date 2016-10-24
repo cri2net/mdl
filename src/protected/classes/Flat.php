@@ -26,7 +26,6 @@ class Flat
      */
     public static function getTenantList($object_id)
     {
-
         $xml = Http::getXmlByUrl(API_URL . self::TENANT_URL . $object_id);
 
         $list = [];
@@ -76,12 +75,20 @@ class Flat
             }
         }
 
+        $pdo = PDO_DB::getPDO();
+
         $user_id = (int)$user_id;
         $flat_id = (int)$flat_id;
         $city_id = (int)$city_id;
 
-        $records = PDO_DB::table_list(self::USER_FLATS_TABLE, "user_id=$user_id AND flat_id=$flat_id AND city_id=$city_id", null, '1');
-        if (count($records) > 0) {
+        if ($platcode == null) {
+            $add_where = 'AND plat_code IS NULL';
+        } else {
+            $add_where = "AND plat_code = " . $pdo->quote($platcode);
+        }
+
+        $record = PDO_DB::first(self::USER_FLATS_TABLE, "user_id=$user_id AND flat_id=$flat_id $add_where AND city_id=$city_id");
+        if ($record !== null) {
             throw new Exception(ERROR_ADDRESS_ALREADY_EXIST);
             return false;
         }
@@ -107,7 +114,11 @@ class Flat
             'plat_code'  => $platcode,
             'created_at' => microtime(true),
         ];
-        $record_id = PDO_DB::insert($data, self::USER_FLATS_TABLE);
+
+        try {
+            $record_id = PDO_DB::insert($data, self::USER_FLATS_TABLE);
+        } catch (Exception $e) {
+        }
         
         return $record_id;
     }

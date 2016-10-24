@@ -14,7 +14,8 @@
         }
         
         $debt = new KomDebt();
-        $debtData = $debt->getData($flatData['flat_id']);
+        $plat_code = KomDebt::getFlatIdOrPlatcode($flatData['flat_id'], $flatData['plat_code'], $flatData['city_id']);
+        $debtData = $debt->getData($plat_code);
         
         if (empty($debtData['list'])) {
             throw new Exception(ERROR_EMPTY_BILL);

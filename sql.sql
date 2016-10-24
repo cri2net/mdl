@@ -807,3 +807,7 @@ ALTER TABLE `cks_payment`
 -- 2016.10.24
 ALTER TABLE `cks_user_flats`
   ADD COLUMN `plat_code` VARCHAR(100) NULL AFTER `auth_key`;
+
+ALTER TABLE `cks_user_flats`
+  DROP INDEX `flat`,
+  ADD  UNIQUE INDEX `flat` (`user_id`, `flat_id`, `city_id`, `plat_code`);

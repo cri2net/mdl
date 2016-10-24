@@ -23,6 +23,8 @@
             $_need_year = (int)$_GET['year'];
         }
 
+        $plat_code = KomDebt::getFlatIdOrPlatcode($object['flat_id'], $object['plat_code'], $object['city_id']);
+
 
         // Если мы смотрим начисления с 1.10 по 1.11, то отдадутся за сентябрь, а не за октябрь!!!
         // И это типа правильно.
@@ -35,15 +37,15 @@
             $time = strtotime('first day of next month', date_timestamp_get($time));
             $dateBegin = date('j.m.Y', $time);
 
-            $firmData = $debt->getUniqueFirmName($object['flat_id'], $dateBegin, 100);
+            $firmData = $debt->getUniqueFirmName($plat_code, $dateBegin, 100);
         } else {
-            $firmData = $debt->getUniqueFirmName($object['flat_id'], null, 0, $real_timestamp);
+            $firmData = $debt->getUniqueFirmName($plat_code, null, 0, $real_timestamp);
             $dateBegin = date('1.m.Y', $real_timestamp);
             $_need_month = date('m', strtotime('first day of previous month', $real_timestamp));
             $_need_year = date('Y', strtotime('first day of previous month', $real_timestamp));
         }
         
-        $debtData = $debt->getUniqueFirm($object['flat_id'], $_need_firm, $dateBegin, $filter);
+        $debtData = $debt->getUniqueFirm($plat_code, $_need_firm, $dateBegin, $filter);
 
         if (empty($debtData['data'])) {
             throw new Exception(ERROR_EMPTY_BILL);
