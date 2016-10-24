@@ -50,6 +50,11 @@ class ShoppingCart
                 $password = '53DA2E14D3C162C23CD8485E67D7F30298604209';
                 break;
 
+            case 'marfin':
+                $login    = 'cks_site_mb';
+                $password = strtoupper(sha1('cks_site_mb123'));
+                break;
+
             case 'webmoney':
                 $login    = 'cks_site_wm';
                 $password = strtoupper(sha1('cks_site_wm123'));

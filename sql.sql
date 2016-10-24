@@ -799,3 +799,7 @@ ALTER TABLE `cks_payment`
 -- 2016.10.18
 ALTER TABLE `cks_payment`
   CHANGE `type` `type` ENUM('gai','kinders','komdebt','cks','budget') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt'  NOT NULL;
+
+-- 2016.10.23
+ALTER TABLE `cks_payment`
+  CHANGE `processing` `processing` ENUM('mastercard','visa','webmoney','tas','oschad','oschad_mycard','oschadbank','marfin') CHARSET utf8 COLLATE utf8_general_ci NULL;
