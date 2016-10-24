@@ -803,3 +803,7 @@ ALTER TABLE `cks_payment`
 -- 2016.10.23
 ALTER TABLE `cks_payment`
   CHANGE `processing` `processing` ENUM('mastercard','visa','webmoney','tas','oschad','oschad_mycard','oschadbank','marfin') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+-- 2016.10.24
+ALTER TABLE `cks_user_flats`
+  ADD COLUMN `plat_code` VARCHAR(100) NULL AFTER `auth_key`;

@@ -38,6 +38,12 @@
         </select>
     </label>
 </div>
+<div class="input" id="tenant_div" style="display: none;">
+    <label>Наймач <br>
+        <select class="txt" style="width: 350px;" name="tenant" id="tenant">
+        </select>
+    </label>
+</div>
 <?php
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));
 ?>
@@ -84,7 +90,7 @@
                         for (var i = 0; i < data.length; i++) {
                             select_options += '<option value="'+ data[i].id +'">'+ data[i].label +'</option>';
                         }
-                        $('#add_obj_house').html(select_options).attr('disabled', false).change();
+                        $('#add_obj_house').html(select_options).attr('disabled', false).trigger('change');
                     },
                 });
             },
@@ -105,7 +111,41 @@
                     for (var i = 0; i < data.length; i++) {
                         select_options += '<option value="'+ data[i].id +'">'+ data[i].label +'</option>';
                     }
-                    $('#add_obj_flat').html(select_options).attr('disabled', false);
+                    $('#add_obj_flat').html(select_options).attr('disabled', false).trigger('change');
+                },
+            });
+        });
+
+        $("#add_obj_flat").change(function(){
+
+            var flat = $("#add_obj_flat").val();
+            if ((flat == '') || (flat == '0')) {
+                $('#tenant').html('');
+                $('#tenant_div').css('display', 'none');
+                return;
+            }
+
+            $.ajax({
+                url: '<?= BASE_URL; ?>/ajax/json/tenants/',
+                type: "GET",
+                data: {
+                    flat_id: $("#add_obj_flat").val(),
+                },
+                dataType: "json",
+                success: function(response) {
+
+                    if (response.list.length > 1) {
+                        var select_options = '';
+                        for (var i = 0; i < response.list.length; i++) {
+                            select_options += '<option value="'+ response.list[i].platcode +'">'+ response.list[i].name +'</option>';
+                        }
+                        $('#tenant').html(select_options).attr('disabled', false);
+                        $('#tenant_div').css('display', '');
+
+                    } else {
+                        $('#tenant').html('');
+                        $('#tenant_div').css('display', 'none');
+                    }
                 },
             });
         });

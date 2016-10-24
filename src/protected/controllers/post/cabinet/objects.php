@@ -6,7 +6,7 @@ try {
         throw new Exception(ERROR_GET_FLAT);
     }
 
-    $flat = Flat::addFlat($_POST['flat']);
+    $flat = Flat::addFlat($_POST['flat'], $_POST['tenant']);
 
     if (!$flat) {
         throw new Exception(ERROR_NOT_FIND_FLAT);

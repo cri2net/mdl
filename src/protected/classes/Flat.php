@@ -6,6 +6,7 @@ class Flat
 {
     const TABLE = DB_TBL_FLATS;
     const FLATS_URL = '/reports/rwservlet?report=/gerc_api/spr_kvartira.rep&destype=Cache&Desformat=xml&cmdkey=gsity&house_id=';
+    const TENANT_URL = '/reports/rwservlet?report=gerc_api/spr_nanimatel.rep&destype=cache&Desformat=xml&cmdkey=rep&kvart_id=';
     const USER_FLATS_TABLE = DB_TBL_USER_FLATS;
     const MAX_USER_FLATS = 4;
 
@@ -16,6 +17,29 @@ class Flat
             set_time_limit(0);
             self::rebuild($city['id']);
         }
+    }
+
+    /**
+     * Получение списка нанимателей (для коммунальных квартир)
+     * @param  integer $object_id ID квартиры
+     * @return array
+     */
+    public static function getTenantList($object_id)
+    {
+
+        $xml = Http::getXmlByUrl(API_URL . self::TENANT_URL . $object_id);
+
+        $list = [];
+        $row_elem = (isset($xml->ROWSET->ROW)) ? $xml->ROWSET->ROW : $xml->ROW;
+
+        for ($i=0; $i < count($row_elem); $i++) {
+            $list[] = [
+                'name'     => $row_elem[$i]->NAMES . '',
+                'platcode' => $row_elem[$i]->PLAT_CODE . '',
+            ];
+        }
+
+        return $list;
     }
 
     /**
@@ -42,7 +66,7 @@ class Flat
      * @param  integer $user_id. OPTIONAL
      * @return string — id новой записи
      */
-    public static function addFlat($flat_id, $city_id = Street::KIEV_ID, $user_id = null)
+    public static function addFlat($flat_id, $platcode = null, $city_id = Street::KIEV_ID, $user_id = null)
     {
         if ($user_id == null) {
             $user_id = Authorization::getLoggedUserId();
@@ -80,6 +104,7 @@ class Flat
             'street_id'  => $flat['street_id'],
             'house_id'   => $flat['house_id'],
             'flat_id'    => $flat_id,
+            'plat_code'  => $platcode,
             'created_at' => microtime(true),
         ];
         $record_id = PDO_DB::insert($data, self::USER_FLATS_TABLE);
