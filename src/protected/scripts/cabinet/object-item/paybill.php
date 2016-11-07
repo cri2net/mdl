@@ -53,10 +53,10 @@
                         <span class="text-label">Карта MasterCard, Maestro</span>
                     </label>
                 </div>
-                <div class="paybill-ps-item paybill-ps-item-mastercard paybill-ps-item-tas_mc paybill-ps-item-mastercard_box" style="display: none;">
+                <div class="paybill-ps-item paybill-ps-item-mastercard paybill-ps-item-oschadbank paybill-ps-item-mastercard_box" style="display: none;">
                     <div class="paybill-ps-sub-items">
                         <div class="check-box-line">
-                            <span id="checkbox_percent_mastercard_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_mc"></span>
+                            <span id="checkbox_percent_mastercard_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
                             <label onclick="$('#checkbox_percent_mastercard_1').click();">
                                 <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
                                 <span class="text-label">Інші банки</span>
@@ -84,7 +84,7 @@
                     </label>
                 </div>
 
-                <div class="paybill-ps-item paybill-ps-item-oschad paybill-ps-item-oschad_mycard paybill-ps-item-oschadbank paybill-ps-item-oschad_box" style="display: none;">
+                <div class="paybill-ps-item paybill-ps-item-oschad paybill-ps-item-oschad_mycard paybill-ps-item-oschad_box" style="display: none;">
                     <div class="paybill-ps-sub-items">
                         <div class="check-box-line">
                             <span id="checkbox_percent_oschad_1" class="niceCheck radio checked"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" checked="checked" data-paysystem-key="oschad"></span>
@@ -98,13 +98,6 @@
                             <label onclick="$('#checkbox_percent_oschad_2').click();">
                                 <img alt="" style="width: 0; height: 32px;" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
                                 <span style="left: -25px;" class="text-label">Моя Картка</span>
-                            </label>
-                        </div>
-                        <div class="check-box-line">
-                            <span id="checkbox_percent_oschad_3" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
-                            <label onclick="$('#checkbox_percent_oschad_3').click();">
-                                <img alt="" style="width: 0; height: 32px;" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
-                                <span style="left: -25px;" class="text-label">Інші картки</span>
                             </label>
                         </div>
                     </div>
