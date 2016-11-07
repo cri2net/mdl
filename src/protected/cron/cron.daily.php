@@ -10,13 +10,8 @@ if (date('d') == '01') {
     $first_day = new DateTime('first day of this month 00:00:00');
 }
 
-$today = new DateTime('today');
-CronTasks::sendReportAboutTasLink(date_timestamp_get($first_day), date_timestamp_get($today) - 1);
-
+Street::cron();
 Authorization::cron();
 
-$start = microtime(true);
-
-Street::cron();
-
-echo "finish after " . (microtime(true) - $start) . " seconds\r\n";
+$today = new DateTime('today');
+CronTasks::sendReportAboutTasLink(date_timestamp_get($first_day), date_timestamp_get($today) - 1);
