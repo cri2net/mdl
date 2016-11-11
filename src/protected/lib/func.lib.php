@@ -195,3 +195,29 @@ function getUkraineDate($format, $timestamp)
     $format = str_replace(['n', 'm'], [$month, $month], $format);
     return date($format, $timestamp);
 }
+
+function sort_for_address($item1, $item2)
+{
+    if ($item1['label'] === $item2['label']) {
+        return 0;
+    }
+
+    $int_item1 = (int)$item1['label'];
+    $int_item2 = (int)$item2['label'];
+
+    if ($int_item1 == $int_item2) {
+        if ($item1['label'] > $item2['label']) {
+            return 1;
+        }
+        if ($item1['label'] < $item2['label']) {
+            return -1;
+        }
+    } else {
+        if ($int_item1 > $int_item2) {
+            return 1;
+        }
+        if ($int_item1 < $int_item2) {
+            return -1;
+        }
+    }
+}
