@@ -2,6 +2,8 @@
 if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
     $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
 }
+ini_set('max_execution_time', 0);
+ini_set('memory_limit', -1);
 
 define('CRON_MODE', true);
 
