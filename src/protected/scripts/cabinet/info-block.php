@@ -1,4 +1,7 @@
 <div class="info-block">
+    <div style="margin-top: 25px; margin-bottom: -30px;">
+        <iframe width="426" height="305" src="https://www.youtube.com/embed/bA1BxCdJ-04" frameborder="0" allowfullscreen></iframe>
+    </div>
     <div class="block-inner">
         <div class="title">Особистий кабінет &mdash; це:</div>
         <div class="item like">можливість оплати комунальних послуг зручно, швидко, безпечно</div>
