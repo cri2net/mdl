@@ -38,7 +38,7 @@
 ?>
 <div class="registration">
     <div class="form-block">
-        <form onsubmit="registration_form_submit();" method="post" action="<?= BASE_URL; ?>/post/cabinet/registration/">
+        <form onsubmit="registration_form_submit(); top.postMessage('sendform', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/registration/">
             <input type="text" name="country" value="" style="display:none;">
             <div class="input">
                 <label>Прізвище <span class="star-required" title="обов'язкове поле">*</span><br>
