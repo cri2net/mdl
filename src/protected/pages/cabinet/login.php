@@ -31,7 +31,7 @@
 ?>
 <div class="registration">
     <div class="form-block">
-        <form onsubmit="registration_form_submit();" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
+        <form onsubmit="registration_form_submit(); top.postMessage('login-form-send', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
             <div class="input login-form-email">
                 <div class="bracket">або</div>
                 <label><span>Електронна пошта / логін </span> <br>
