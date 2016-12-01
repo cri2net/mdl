@@ -69,6 +69,7 @@
                             'phone'        => 'Поповнення рахунку на мобільному',
                             'cks'          => 'Сплата послуг ЦКС',
                             'budget'       => 'Платежі до бюджету',
+                            'volia'        => 'Воля-Кабель',
                         ];
                         $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                     }
