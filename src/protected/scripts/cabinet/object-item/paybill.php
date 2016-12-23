@@ -47,9 +47,9 @@
             if ($_SESSION['payment_' . $payment_id . '_has_electricity']) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_percent_mc" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_mc"></span>
+                    <span id="checkbox_percent_mc" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
                     <label onclick="$('#checkbox_percent_mc').click();">
-                        <img alt="visa" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
+                        <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
                         <span class="text-label">Карта MasterCard, Maestro</span>
                     </label>
                 </div>
