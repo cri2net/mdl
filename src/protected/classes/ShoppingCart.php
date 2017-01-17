@@ -546,7 +546,7 @@ class ShoppingCart
     public static function send_payment_to_reports($payment_id)
     {
         $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
-        if (($payment === null) || $payment['send_payment_to_reports']) {
+        if ($payment === null) {
             return;
         }
 
