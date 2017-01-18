@@ -7,9 +7,9 @@ class ShoppingCart
     const TABLE             = DB_TBL_PAYMENT;
     const SERVICE_TABLE     = DB_TBL_PAYMENT_SERVICES;
     const REPORT_BASE_URL   = '/reports/rwservlet';
-    const PDF_FIRST_URL     = '/reports/rwservlet?report=ppp/ekv9_all.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
+    const PDF_FIRST_URL     = '/reports/rwservlet?report=/ppp/kv_cks_all.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
     const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kvdbl9hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kv_cks_dbl_hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
