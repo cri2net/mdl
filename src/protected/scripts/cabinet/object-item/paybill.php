@@ -44,93 +44,78 @@
                 <?php
             }
 
-            if ($_SESSION['payment_' . $payment_id . '_has_electricity']) {
+            if (in_array('mastercard', $pay_systems) || in_array('tas', $pay_systems)) {
                 ?>
                 <div class="check-box-line">
-                    <span id="checkbox_percent_mc" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
-                    <label onclick="$('#checkbox_percent_mc').click();">
+                    <span id="checkbox_percent_mastercard" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="mastercard_box"></span>
+                    <label onclick="$('#checkbox_percent_mastercard').click();">
                         <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
                         <span class="text-label">Карта MasterCard, Maestro</span>
                     </label>
                 </div>
-                <?php
-            } else {
-
-
-                if (in_array('mastercard', $pay_systems) || in_array('tas', $pay_systems)) {
-                    ?>
-                    <div class="check-box-line">
-                        <span id="checkbox_percent_mastercard" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="mastercard_box"></span>
-                        <label onclick="$('#checkbox_percent_mastercard').click();">
-                            <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
-                            <span class="text-label">Карта MasterCard, Maestro</span>
-                        </label>
-                    </div>
-                    <div class="paybill-ps-item paybill-ps-item-mastercard paybill-ps-item-oschadbank paybill-ps-item-mastercard_box" style="display: none;">
-                        <div class="paybill-ps-sub-items">
-                            <div class="check-box-line">
-                                <span id="checkbox_percent_mastercard_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
-                                <label onclick="$('#checkbox_percent_mastercard_1').click();">
-                                    <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
-                                    <span class="text-label">Інші банки</span>
-                                </label>
-                            </div>
-                            <div class="check-box-line">
-                                <span id="checkbox_percent_mastercard_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
-                                <label onclick="$('#checkbox_percent_mastercard_2').click();">
-                                    <img alt="Аваль" src="<?= BASE_URL; ?>/images/paysystems/aval.png" />
-                                    <span class="text-label">Райффайзен Банк Аваль</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                }
-
-                if ($object['city_id'] == Street::KIEV_ID) {
-                    ?>
-                    <div class="check-box-line">
-                        <span id="checkbox_percent_oschad" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="oschad_box"></span>
-                        <label onclick="$('#checkbox_percent_oschad').click();">
-                            <img alt="visa" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
-                            <span class="text-label">Ощадбанк</span>
-                        </label>
-                    </div>
-
-                    <div class="paybill-ps-item paybill-ps-item-oschad paybill-ps-item-oschad_mycard paybill-ps-item-oschad_box" style="display: none;">
-                        <div class="paybill-ps-sub-items">
-                            <div class="check-box-line">
-                                <span id="checkbox_percent_oschad_1" class="niceCheck radio checked"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" checked="checked" data-paysystem-key="oschad"></span>
-                                <label onclick="$('#checkbox_percent_oschad_1').click();">
-                                    <img alt="" style="width: 0; height: 32px;" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
-                                    <span style="left: -25px;" class="text-label">Картка Киянина</span>
-                                </label>
-                            </div>
-                            <div class="check-box-line">
-                                <span id="checkbox_percent_oschad_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschad_mycardSum; ?>" data-paysystem-key="oschad_mycard"></span>
-                                <label onclick="$('#checkbox_percent_oschad_2').click();">
-                                    <img alt="" style="width: 0; height: 32px;" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
-                                    <span style="left: -25px;" class="text-label">Моя Картка</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                } elseif ($object['city_id'] == Street::ODESSA_ID) {
-                    if (in_array('webmoney', $pay_systems)) {
-                        ?>
+                <div class="paybill-ps-item paybill-ps-item-mastercard paybill-ps-item-oschadbank paybill-ps-item-mastercard_box" style="display: none;">
+                    <div class="paybill-ps-sub-items">
                         <div class="check-box-line">
-                            <span id="checkbox_percent_webmoney" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $webmoneySum; ?>" data-paysystem-key="webmoney"></span>
-                            <label onclick="$('#checkbox_percent_webmoney').click();">
-                                <img alt="webmoney" src="<?= BASE_URL; ?>/images/paysystems/wm-logo.png" />
-                                <span class="text-label">WebMoney</span>
+                            <span id="checkbox_percent_mastercard_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
+                            <label onclick="$('#checkbox_percent_mastercard_1').click();">
+                                <img alt="mastercard" src="<?= BASE_URL; ?>/images/paysystems/mastercard-logo.png" />
+                                <span class="text-label">Інші банки</span>
                             </label>
                         </div>
-                        <?php
-                    }
+                        <div class="check-box-line">
+                            <span id="checkbox_percent_mastercard_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
+                            <label onclick="$('#checkbox_percent_mastercard_2').click();">
+                                <img alt="Аваль" src="<?= BASE_URL; ?>/images/paysystems/aval.png" />
+                                <span class="text-label">Райффайзен Банк Аваль</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+
+            if ($object['city_id'] == Street::KIEV_ID) {
+                ?>
+                <div class="check-box-line">
+                    <span id="checkbox_percent_oschad" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="oschad_box"></span>
+                    <label onclick="$('#checkbox_percent_oschad').click();">
+                        <img alt="visa" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
+                        <span class="text-label">Ощадбанк</span>
+                    </label>
+                </div>
+
+                <div class="paybill-ps-item paybill-ps-item-oschad paybill-ps-item-oschad_mycard paybill-ps-item-oschad_box" style="display: none;">
+                    <div class="paybill-ps-sub-items">
+                        <div class="check-box-line">
+                            <span id="checkbox_percent_oschad_1" class="niceCheck radio checked"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" checked="checked" data-paysystem-key="oschad"></span>
+                            <label onclick="$('#checkbox_percent_oschad_1').click();">
+                                <img alt="" style="width: 0; height: 32px;" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
+                                <span style="left: -25px;" class="text-label">Картка Киянина</span>
+                            </label>
+                        </div>
+                        <div class="check-box-line">
+                            <span id="checkbox_percent_oschad_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschad_mycardSum; ?>" data-paysystem-key="oschad_mycard"></span>
+                            <label onclick="$('#checkbox_percent_oschad_2').click();">
+                                <img alt="" style="width: 0; height: 32px;" src="<?= BASE_URL; ?>/images/paysystems/oschadbank.png" />
+                                <span style="left: -25px;" class="text-label">Моя Картка</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            } elseif ($object['city_id'] == Street::ODESSA_ID) {
+                if (in_array('webmoney', $pay_systems)) {
+                    ?>
+                    <div class="check-box-line">
+                        <span id="checkbox_percent_webmoney" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $webmoneySum; ?>" data-paysystem-key="webmoney"></span>
+                        <label onclick="$('#checkbox_percent_webmoney').click();">
+                            <img alt="webmoney" src="<?= BASE_URL; ?>/images/paysystems/wm-logo.png" />
+                            <span class="text-label">WebMoney</span>
+                        </label>
+                    </div>
+                    <?php
                 }
             }
-            
         ?>
     </div>
 

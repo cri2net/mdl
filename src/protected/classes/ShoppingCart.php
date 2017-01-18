@@ -8,7 +8,7 @@ class ShoppingCart
     const SERVICE_TABLE     = DB_TBL_PAYMENT_SERVICES;
     const REPORT_BASE_URL   = '/reports/rwservlet';
     const PDF_FIRST_URL     = '/reports/rwservlet?report=/ppp/kv_cks_all.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kvdbl9.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kv_cks_dbl.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
     const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kv_cks_dbl_hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
@@ -242,7 +242,6 @@ class ShoppingCart
         ];
 
         $payment_id = PDO_DB::insert($payment_data, self::TABLE);
-        $_SESSION['payment_' . $payment_id . '_has_electricity'] = false;
 
         foreach ($real_servises as $item) {
             $servicePostSum = str_replace(",", ".", $data[$item."_sum"]);
@@ -292,10 +291,6 @@ class ShoppingCart
                 'firm_name'  => $data[$item.'_firm_name'],
                 'code_firme' => $data[$item.'_code_firme'],
             ];
-
-            if (in_array($kombebt_data['code_firme'], [5001, 5002, 5003])) {
-                $_SESSION['payment_' . $payment_id . '_has_electricity'] = true;
-            }
 
             $serviceData = [
                 'sum'          => $servicePostSum,
