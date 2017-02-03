@@ -83,6 +83,13 @@
                     <div class="title"></div>
                 </div>
             </div>
+            <div class="input" style="margin-bottom: 20px;">
+                <span class="hint">
+                    Реєструючись, Ви підтверджуєте свою згоду на обробку персональних даних, а також підтверджуєте те,
+                    що ознайомились та погоджуєтесь з <a href="http://cks.kiev.ua/docs/ugoda_korustuvacha.pdf" target="_blank">Угодою&nbsp;користувача</a>
+                    та <a href="http://cks.kiev.ua/docs/zgoda_na_obrobku_danih.pdf" target="_blank">Згодою на збір та обробку персональних даних</a>
+                </span>
+            </div>
             <div class="input">
                 <button class="btn green bold">Зареєструватися</button>
             </div>
