@@ -4,21 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "471074d28fd3ccd2f1dc754f48d86482",
     "content-hash": "9f4adab340e74284dad3ba1ce0fdd4df",
     "packages": [
         {
             "name": "cri2net/php-pdo-db",
-            "version": "1.1.2",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/cri2net/php-pdo-db.git",
-                "reference": "be67689290d51a50719c89e1947c6de79f2cefdb"
+                "reference": "2767ded054e44ebb84c76c4389fbcb441078de44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/be67689290d51a50719c89e1947c6de79f2cefdb.zip",
-                "reference": "be67689290d51a50719c89e1947c6de79f2cefdb",
+                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/2767ded054e44ebb84c76c4389fbcb441078de44.zip",
+                "reference": "2767ded054e44ebb84c76c4389fbcb441078de44",
                 "shasum": ""
             },
             "require": {
@@ -42,7 +41,7 @@
                 }
             ],
             "description": "PHP Class to work with the database using PDO",
-            "time": "2016-08-23 17:35:11"
+            "time": "2017-02-01T14:02:49+00:00"
         },
         {
             "name": "cri2net/php-singleton",
@@ -78,7 +77,7 @@
                 }
             ],
             "description": "PHP Trait Singleton",
-            "time": "2016-01-30 00:37:39"
+            "time": "2016-01-30T00:37:39+00:00"
         },
         {
             "name": "jbdemonte/barcode",
@@ -123,20 +122,20 @@
                 "fpdf",
                 "gd"
             ],
-            "time": "2014-04-14 16:15:39"
+            "time": "2014-04-14T16:15:39+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v5.2.16",
+            "version": "v5.2.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "1d85f9ef3ecfc42bbc4f3c70d5e37ca9a65f629a"
+                "reference": "b18cb98131bd83103ccb26a888fdfe3177b8a663"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/1d85f9ef3ecfc42bbc4f3c70d5e37ca9a65f629a",
-                "reference": "1d85f9ef3ecfc42bbc4f3c70d5e37ca9a65f629a",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/b18cb98131bd83103ccb26a888fdfe3177b8a663",
+                "reference": "b18cb98131bd83103ccb26a888fdfe3177b8a663",
                 "shasum": ""
             },
             "require": {
@@ -183,7 +182,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2016-06-06 09:09:37"
+            "time": "2017-01-09T09:33:47+00:00"
         },
         {
             "name": "phpoffice/phpexcel",
@@ -240,7 +239,7 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2015-05-01 07:00:55"
+            "time": "2015-05-01T07:00:55+00:00"
         }
     ],
     "packages-dev": [],
