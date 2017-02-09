@@ -700,6 +700,16 @@ class ShoppingCart
                 $taslink->checkStatus($payment['id']);
                 break;
 
+            case '':
+            case 'masterpass':
+            case 'oschad':
+            case 'oschad_mycard':
+            case 'oschadbank':
+                if (microtime(true) - $payment['go_to_payment_time'] > 3600) {
+                    $to_update['status'] = 'timeout';
+                }
+                break;
+
             case 'visa':
             case 'mastercard':
 
