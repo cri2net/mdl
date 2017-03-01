@@ -249,7 +249,6 @@ class KomDebt
             }
 
             $data['list'] = $this->msort($data['list'], 'counter', true);
-            $list['SUMM_OBL_PAY'] = str_replace(".", ",", sprintf('%.2f', $list['SUMM_OBL_PAY']));
             $data['full_dept'] = sprintf('%.2f',((float)$fullDept)/100);
         } else {
             $data = [];
@@ -277,7 +276,7 @@ class KomDebt
         
         $data['full_dept'] = str_replace(".", ",", $data['full_dept']);
 
-        if ($data['list'][0]['DBEGIN_XML']) {
+        if (!empty($data['list'][0]['DBEGIN_XML'])) {
             $date = @DateTime::createFromFormat('Y-m-d', $data['list'][0]['DBEGIN_XML']);
             $data['date'] = $date->format('j ') . $this->months[$date->format('n')]['ua'] . $date->format(' Y');
         } else {
@@ -362,6 +361,7 @@ class KomDebt
         }
         
         $summ = .0;
+        $have_data = false;
         foreach ($xml->xpath("//ROW") as $row) {
             $have_data = true;
             $summ += (float)($row->SUMM)/100;

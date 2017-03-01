@@ -1,5 +1,5 @@
 <?php
-$sections = ['dai', 'kindergarten', 'cards', 'phone', 'budget', 'cks', 'volia'];
+$sections = ['dai', 'kindergarten', 'cards', 'phone', 'budget', 'cks', 'volia', 'secret-service'];
 $current_section = (isset($__route_result['values']['section'])) ? ($__route_result['values']['section']) : false;
 
 if ($current_section && in_array($current_section, $sections)) {
