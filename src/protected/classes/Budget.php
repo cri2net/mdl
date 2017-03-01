@@ -246,7 +246,6 @@ class Budget
             'user_agent_string'      => HTTP_USER_AGENT,
             'reports_id_pack'        => $row_elem->ID_PACK . '',
             'reports_id_plat_klient' => $row_elem->ID_PLAT_KLIENT . '',
-            'reports_num_kvit'       => $row_elem->NUM_KVIT . '',
         ];
         
         $xml_fields = array('SUMM_KOMIS', 'SUMM_TOTAL', 'ACQ');

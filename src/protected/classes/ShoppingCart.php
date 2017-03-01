@@ -7,9 +7,8 @@ class ShoppingCart
     const TABLE             = DB_TBL_PAYMENT;
     const SERVICE_TABLE     = DB_TBL_PAYMENT_SERVICES;
     const REPORT_BASE_URL   = '/reports/rwservlet';
-    const PDF_FIRST_URL     = '/reports/rwservlet?report=/ppp/kv_cks_all.rep&destype=cache&Desformat=pdf&cmdkey=rep&id_p=';
-    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kv_cks_dbl.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
-    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kv_cks_dbl_hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kv_www_all.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_p=';
+    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kv_www_hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
@@ -314,14 +313,14 @@ class ShoppingCart
             return;
         }
 
+        $pdf1_url = API_URL . self::PDF_TODAY_URL     . $payment['reports_id_pack'];
+        $pdf1 = Http::fgets($pdf1_url);
+
         if ($first) {
-            return Http::fgets(API_URL . self::PDF_FIRST_URL . $payment['reports_id_pack']);
+            return $pdf1;
         }
 
-        $pdf1_url = API_URL . self::PDF_TODAY_URL     . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
-        $pdf2_url = API_URL . self::PDF_NOT_TODAY_URL . $payment['reports_id_plat_klient'] . '&num_group=' . $payment['reports_num_kvit'];
-
-        $pdf1 = Http::fgets($pdf1_url);
+        $pdf2_url = API_URL . self::PDF_NOT_TODAY_URL . $payment['reports_id_plat_klient'];
         $pdf2 = Http::fgets($pdf2_url);
 
         return (strlen($pdf1) > strlen($pdf2)) ? $pdf1 : $pdf2;
@@ -497,7 +496,6 @@ class ShoppingCart
             return false;
         }
 
-        $to_update['reports_num_kvit']               = $row_elem->NUM_KVIT.'';
         $to_update['acq']                            = ($row_elem->ACQ.'')            ? $row_elem->ACQ.''            : $payment['acq'];
         $to_update['reports_id_pack']                = ($row_elem->ID_PACK.'')        ? $row_elem->ID_PACK.''        : $payment['reports_id_pack'];
         $to_update['reports_id_plat_klient']         = ($row_elem->ID_PLAT_KLIENT.'') ? $row_elem->ID_PLAT_KLIENT.'' : $payment['reports_id_plat_klient'];
@@ -650,7 +648,6 @@ class ShoppingCart
         $to_update['summ_total']              = floatval($xml->ROW->SUMM_TOTAL.'') / 100;
 
         $to_update['reports_id_pack']         = $xml->ROW->ID_PACK.'';
-        $to_update['reports_num_kvit']        = $xml->ROW->NUM_KVIT.'';
         $to_update['reports_id_plat_klient']  = $xml->ROW->ID_PLAT_KLIENT.'';
         $to_update['send_payment_to_reports'] = 1;
 

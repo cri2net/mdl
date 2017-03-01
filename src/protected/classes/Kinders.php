@@ -257,7 +257,6 @@ class Kinders
             'summ_komis'               => floatval($row_elem->SUMM_KOMIS.'') / 100,
             'summ_total'               => floatval($row_elem->SUMM_TOTAL.'') / 100,
             'reports_id_pack'          => $row_elem->ID_PACK.'',
-            'reports_num_kvit'         => $row_elem->NUM_KVIT.'',
             'reports_id_plat_klient'   => $row_elem->ID_PLAT_KLIENT.'',
             'send_payment_to_reports'  => 1,
             'ip'                       => USER_REAL_IP,

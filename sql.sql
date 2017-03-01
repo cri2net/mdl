@@ -811,3 +811,7 @@ ALTER TABLE `cks_user_flats`
 ALTER TABLE `cks_user_flats`
   DROP INDEX `flat`,
   ADD  UNIQUE INDEX `flat` (`user_id`, `flat_id`, `city_id`, `plat_code`);
+
+-- 2017.03.01
+ALTER TABLE `cks_payment`
+  DROP COLUMN `reports_num_kvit`;

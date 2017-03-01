@@ -116,7 +116,6 @@ class Gai
             'summ_komis'              => floatval($xml->ROW->SUMM_KOMIS.'') / 100,
             'summ_total'              => floatval($xml->ROW->SUMM_TOTAL.'') / 100,
             'reports_id_pack'         => $xml->ROW->ID_PACK.'',
-            'reports_num_kvit'        => $xml->ROW->NUM_KVIT.'',
             'reports_id_plat_klient'  => $xml->ROW->ID_PLAT_KLIENT.'',
             'send_payment_to_reports' => 1,
             'ip'                      => USER_REAL_IP,
