@@ -233,7 +233,7 @@
 <?php
     if ($payment['status'] == 'success') {
         ?>
-        <a class="btn green big" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/GIOC-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
+        <a class="btn green big" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/CKS-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
         <?php
     } elseif ($payment['status'] != 'new') {
         ?>

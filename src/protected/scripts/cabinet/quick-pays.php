@@ -8,6 +8,7 @@
     <a href="<?= BASE_URL; ?>/cabinet/instant-payments/cards/" class="cards">Перекази з карти на карту</a>
     <a href="<?= BASE_URL; ?>/cabinet/instant-payments/phone/" class="phone">Сплата за телефон та інтернет</a>
     <a href="<?= BASE_URL; ?>/cabinet/instant-payments/budget/" class="budget">Платежі до бюджету</a>
+    <a href="<?= BASE_URL; ?>/cabinet/instant-payments/requisites/" class="requisites">Платежі за реквізитами</a>
     <a href="<?= BASE_URL; ?>/cabinet/instant-payments/volia/" class="volia">Поповнення рахунку ВОЛЯ (телебачення та інтернету)</a>
     <a href="<?= BASE_URL; ?>/cabinet/instant-payments/secret-service/" class="ss">Державна служба охорони</a>
 </div>

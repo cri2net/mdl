@@ -88,8 +88,12 @@ class CronTasks
                     $type = 'Садики (питание)';
                     break;
                 
+                case 'direct':
+                    $type = 'Платежі за реквізитами';
+                    break;
+
                 case 'budget':
-                    $type = 'В бюджет';
+                    $type = 'Платежі до бюджету';
                     break;
                 
                 default:

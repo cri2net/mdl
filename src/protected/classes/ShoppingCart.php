@@ -341,6 +341,8 @@ class ShoppingCart
         switch ($payment['type']) {
             case 'gai':
             case 'kinders':
+            case 'direct':
+            case 'budget':
                 $report = ($payment['status'] == 'success') ? '/gerc_api/api_prov.rep' : '/gerc_api/api_pacq50.rep';
                 break;
 

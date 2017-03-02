@@ -815,3 +815,10 @@ ALTER TABLE `cks_user_flats`
 -- 2017.03.01
 ALTER TABLE `cks_payment`
   DROP COLUMN `reports_num_kvit`;
+
+ALTER TABLE `cks_payment`
+  CHANGE `reports_id_pack` `reports_id_pack` INT(11) NULL,
+  CHANGE `reports_id_plat_klient` `reports_id_plat_klient` INT(11) NULL;
+
+ALTER TABLE `cks_payment`
+  CHANGE `type` `type` ENUM('gai','kinders','komdebt','cks','budget','direct') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt'  NOT NULL;

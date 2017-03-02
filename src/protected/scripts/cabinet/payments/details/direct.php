@@ -1,9 +1,6 @@
 <?php
     $_service = $services[0];
-
-    for ($i=0; $i < count($services); $i++) {
-        $services[$i]['data'] = @json_decode($services[$i]['data']);
-    }
+    $_service['data'] = @json_decode($_service['data']);
 ?>
 <div class="real-full-width-block">
     <table class="full-width-table datailbill-table no-border">
@@ -15,7 +12,7 @@
         <tbody>
             <tr class="item-row even">
                 <td colspan="1" class="first">Тип платежу</td>
-                <td colspan="4" class="">Послуги ЦКС</td>
+                <td colspan="4" class="">За реквізитами</td>
             </tr>
             <tr class="item-row odd">
                 <td colspan="1" class="first">Статус</td>
@@ -28,7 +25,7 @@
                                 break;
 
                             case 'success':
-                                echo 'Успішний';
+                                echo 'Сплачено';
                                 break;
 
                             case 'error':
@@ -111,17 +108,13 @@
         <tbody>
             <tr class="item-row odd">
                 <td class="first" colspan="1">Одержувач платежу</td>
-                <td colspan="4"><?= $services[0]['data']->dst_name; ?></td>
+                <td colspan="4"><?= $_service['data']->dst_name; ?></td>
             </tr>
             <tr class="item-row even">
                 <td class="first" colspan="1">Призначення платежу</td>
-                <td colspan="4"><?= $services[0]['data']->dest; ?></td>
+                <td colspan="4"><?= $_service['data']->dest; ?></td>
             </tr>
             <tr class="item-row odd">
-                <td class="first" colspan="1">Адреса відділення</td>
-                <td colspan="4"><?= $services[0]['data']->firme_item->name; ?></td>
-            </tr>
-            <tr class="item-row even">
                 <td class="first" colspan="1">Сума платежу</td>
                 <td colspan="4">
                     <?php
@@ -142,39 +135,12 @@
         <tbody>
             <tr class="item-row even">
                 <td class="first" colspan="1">ПІБ</td>
-                <td colspan="4"><?= htmlspecialchars($services[0]['data']->r1); ?></td>
+                <td colspan="4"><?= htmlspecialchars($_service['data']->r1); ?></td>
             </tr>
             <tr class="item-row odd">
                 <td class="first" colspan="1">Місце проживання</td>
-                <td colspan="4"><?= htmlspecialchars($services[0]['data']->r2); ?></td>
+                <td colspan="4"><?= htmlspecialchars($_service['data']->r2); ?></td>
             </tr>
-        </tbody>
-        <thead>
-            <tr>
-                <th colspan="5" class="first">Послуги</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                $i = 0;
-
-                foreach ($services as $_service) {
-
-                    $summ = explode('.', number_format($_service['sum'], 2));
-                    ?>
-                    <tr class="item-row <?= ($i % 2 == 0) ? 'even' : 'odd'; ?>">
-                        <td class="first" colspan="4"><?= htmlspecialchars($_service['data']->plat_item->name); ?></td>
-                        <td>
-                            <span class="item-summ">
-                                <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                            </span>
-                            грн
-                        </td>
-                    </tr>
-                    <?php
-                    $i++;
-                }
-            ?>
         </tbody>
     </table>
 </div>

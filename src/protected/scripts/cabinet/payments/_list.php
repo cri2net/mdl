@@ -61,6 +61,10 @@
                                     case 'budget':
                                         echo 'До бюджету';
                                         break;
+
+                                    case 'direct':
+                                        echo 'Платежі за реквізитами';
+                                        break;
                                 }
                             ?>
                         </td>

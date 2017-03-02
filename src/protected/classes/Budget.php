@@ -241,6 +241,7 @@ class Budget
             'timestamp'              => microtime(true),
             'summ_plat'              => $summ / 100,
             'type'                   => 'budget',
+            'count_services'         => 1,
             'processing'             => 'tas',
             'ip'                     => USER_REAL_IP,
             'user_agent_string'      => HTTP_USER_AGENT,

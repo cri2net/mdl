@@ -24,7 +24,7 @@ try {
 
             $filename = (isset($__route_result['values']['filename']))
                 ? basename($__route_result['values']['filename'])
-                : "GIOC-Invoice-{$payment['id']}.pdf";
+                : "CKS-Invoice-{$payment['id']}.pdf";
 
             header('Content-Description: File Transfer');
             header('Content-Type: application/pdf');
@@ -36,7 +36,6 @@ try {
             header('Content-Length: ' . strlen($pdf));
 
             echo $pdf;
-
             break;
     }
 
