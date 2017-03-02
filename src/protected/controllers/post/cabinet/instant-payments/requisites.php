@@ -58,6 +58,10 @@ try {
         }
     }
 
+    if (!DirectPayments::checkMfo($mfo, $account)) {
+        throw new Exception('Помилка у МФО або розрахунковому рахунку');
+    }
+
     if ($summ <= 0) {
         throw new Exception(ERROR_INVALID_ZERO_PAYMENT);
     }

@@ -5,6 +5,65 @@ use cri2net\php_pdo_db\PDO_DB;
 class DirectPayments
 {
     const PPP_URL_CREATE = '/reports/rwservlet?report=gerc_api/api_pnew_one_plat.rep&cmdkey=api_test';
+    const CHECK_MFO = '1371337137137137137';
+
+    /**
+     * Проверка соответсвия МФО и расчётного счёта
+     * @param  string $mfo    МФО - число
+     * @param  string $rcount Расчётный счёт - число
+     * @return boolean
+     */
+    public static function checkMfo($mfo, $rcount)
+    {
+        $mfo = preg_replace('/[^0-9]/', '', $mfo);
+        $rcount = preg_replace('/[^0-9]/', '', $rcount);
+        
+        if (strlen($rcount) > 14) {
+            return false;
+        }
+        
+        $const = self::CHECK_MFO;
+        $sum = 0;
+
+        // строка для проверки
+        $check_str = substr($mfo, 0, 5) . $rcount;
+
+        for ($i=0; $i < min(strlen($check_str), strlen($const)); $i++) {
+            
+            // цифра контрольного разряда не участвует
+            if ($i <> 9) {
+
+                // перемножаем поразрядно
+                $tmp = $check_str[$i] * $const[$i];
+
+                if ($tmp > 9) {
+                    // учитываем только последний разряд
+                    $tmp = substr($tmp, 1);
+                }
+
+                // складываем перемноженное
+                $sum += $tmp;
+            }
+        }
+
+
+        // добавляем длину расчётного счёта
+        $sum += strlen($rcount);
+
+
+        // берём последний разряд суммы
+        $sum .= '';
+        $sum = $sum[strlen($sum) - 1];
+
+        // всегда умножаем на 7
+        $sum *= 7;
+
+        // последний разряд - проверочный
+        $sum .= '';
+        $res = $sum[strlen($sum) - 1];
+
+        return ($res == substr($rcount, 4, 1));
+    }
     
     /**
      * Создание платежа в оракле на разовый ручной платёж
