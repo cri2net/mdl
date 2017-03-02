@@ -1,8 +1,11 @@
 <?php
-
-use cri2net\php_pdo_db\PDO_DB;
-
-echo '<h1 class="big-title">Платежі до бюджету</h1> <br><br>';
+    use cri2net\php_pdo_db\PDO_DB;
+?>
+<div class="h1-line-cabinet">
+    <h1 class="big-title">Платежі до бюджету</h1>
+    <div style="display: inline-block; margin-top: 17px; font-size: 14px;"><a href="<?= BASE_URL; ?>/cabinet/instant-payments/requisites/">довільні реквізити</a></div>
+</div>
+<?php
 
 $pay_frame_width = 840;
 
@@ -141,8 +144,13 @@ switch ($_SESSION['instant-payments-budget']['step']) {
                         <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($address, ENT_QUOTES); ?>" name="address" class="txt txt-full" required="required" type="text">
                     </label>
                     <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
-                </div>     
-                <div class="field-group">
+                </div>
+                <?php
+                    $display_email = (isset($__userData['email']) && filter_var($email, FILTER_VALIDATE_EMAIL))
+                        ? 'display: none;'
+                        : '';
+                ?>
+                <div class="field-group" style="<?= $display_email; ?>">
                     <label>
                         E-Mail <span class="star-required" title="Обов’язкове поле">*</span> <br>
                         <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($email, ENT_QUOTES); ?>" name="email" class="txt txt-full" required="required" type="text">

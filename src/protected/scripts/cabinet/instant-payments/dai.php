@@ -156,7 +156,12 @@
                         </label>
                         <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
                     </div>
-                    <div class="field-group" style="display: inline-block;">
+                    <?php
+                        $display_email = (isset($__userData['email']) && filter_var($penalty_user_email, FILTER_VALIDATE_EMAIL))
+                            ? 'display: none;'
+                            : 'display: inline-block;';
+                    ?>
+                    <div class="field-group" style="<?= $display_email; ?>">
                         <label>
                             Електронна пошта <span class="star-required" title="Обов’язкове поле">*</span> <br>
                             <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_email, ENT_QUOTES); ?>" type="email" name="penalty_user_email" class="txt" required="required">
