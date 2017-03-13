@@ -107,14 +107,30 @@ content .inner {
         .cabinet-settings {
 
             .page-tabs {
+
                 display: inline-block; height:56px; width:100%; margin-top:-5px; margin-bottom: 0px;
+                
                 .tab {
-                    width:250px; float:left; display:block; background-color:@green; color:#fff; font-size:14px; text-align:center; line-height:20px; padding:12px 0;
+                
+                    width: 250px;
+                    float: left;
+                    display: block;
+                    background-color: #ededed;
+                    color: #222;
+                    font-size: 14px;
+                    text-align: center;
+                    line-height: 20px;
+                    padding:12px 0;
                     margin-right: 5px;
                     text-decoration: none;
+
                     &:hover,
-                    &.current { background-color:@green-dark; color:#fff; text-decoration: none; }
-                    &.last { width:250px; }
+                    &.current {
+                        background-color: @green-dark;
+                        color: #fff;
+                        text-decoration: none;
+                    }
+                    &.last { width: 250px; }
                 }
                 &.page-tabs-4 {
                     .tab {
@@ -344,7 +360,7 @@ content .inner {
                 }
      
                 select.dotted-select {
-                    border: 2px solid #83b67b;
+                    border: 2px solid #01b671;
                     display: inline-block;
                     color:@green-dark;
                     font-size:14px;
@@ -378,10 +394,10 @@ content .inner {
         .datailbill-table {
             margin-top:22px; width: 100%;
             thead tr {
-                background-color: @green;
-                color: #000;
+                background-color: #01b671;
+                color: #fff;
                 th {
-                    vertical-align:middle; text-align:left; color:#000; font-family:"Opensans", Arial; font-size:14px; line-height:19px; padding-top:10px; padding-bottom:8px;
+                    vertical-align:middle; text-align:left; color:#fff; font-family:"Opensans", Arial; font-size:14px; line-height:19px; padding-top:10px; padding-bottom:8px;
                     &.counters-th { text-align:center; border-bottom:2px solid #fff; }
                 }
             }
