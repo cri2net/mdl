@@ -79,6 +79,7 @@
         default:
             ?>
             <form id="kindergarten-form" class="feedback-form" method="post" action="<?= BASE_URL; ?>/post/cabinet/instant-payments/kindergarten/">
+                <div id="tmp-error-description" style="display: none;" class="error-description">Почніть вводити прізвище учня та обов’язково виберіть учня зі списку</div>
                 <div style="display: inline-block; float: none; width: 100%;">
                     <div class="field-group" style="display: inline-block;">
                         <label>
@@ -259,6 +260,11 @@
         });
 
         $('#kindergarten-form').submit(function() {
+            if (kinder_selected) {
+                $('#tmp-error-description').hide(400);
+            } else {
+                $('#tmp-error-description').show(400);
+            }
             return kinder_selected;
         });
 
