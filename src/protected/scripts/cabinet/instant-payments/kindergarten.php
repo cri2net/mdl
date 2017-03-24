@@ -78,7 +78,7 @@
         case 'region':
         default:
             ?>
-            <form class="feedback-form" method="post" action="<?= BASE_URL; ?>/post/cabinet/instant-payments/kindergarten/">
+            <form id="kindergarten-form" class="feedback-form" method="post" action="<?= BASE_URL; ?>/post/cabinet/instant-payments/kindergarten/">
                 <div style="display: inline-block; float: none; width: 100%;">
                     <div class="field-group" style="display: inline-block;">
                         <label>
@@ -211,10 +211,14 @@
 
 <script type="text/javascript">
     $(function(){
+
+        kinder_selected = false;
+
         $("#kindergarten_fio_select").autocomplete({
             source: function(request, response){
 
                 var val = $('#kindergarten_class_select').val();
+                kinder_selected = false;
 
                 $.ajax({
                     url : BASE_URL + '/ajax/json/kindergarten',
@@ -235,6 +239,9 @@
                         }));
                     },
                 });
+            },
+            select: function (a, b) {
+                kinder_selected = true;
             }
         });
 
@@ -244,13 +251,19 @@
 
             if (val == '') {
                 $('#kindergarten_fio_select').val('').attr('disabled', 'disabled');
+                kinder_selected = false;
                 return;
             }
 
             $('#kindergarten_fio_select').removeAttr('disabled');
         });
 
+        $('#kindergarten-form').submit(function() {
+            return kinder_selected;
+        });
+
         $('#final_kindergarten').change(function() {
+            kinder_selected = false;
             var val = $('#final_kindergarten').val();
             var first_option = '<option value="">-- Будь ласка, оберіть --</option>';
             $('#kindergarten_class_select').html(first_option).attr('disabled', 'disabled').trigger('change');
@@ -281,6 +294,7 @@
 
     function kinders_district_onchange(el)
     {
+        kinder_selected = false;
         $.ajax({
             dataType: 'json',
             data: {
@@ -305,6 +319,7 @@
 
     function kinders_city_onchange(el)
     {
+        kinder_selected = false;
         $.ajax({
             dataType: 'json',
             data: {
