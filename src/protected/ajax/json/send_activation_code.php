@@ -5,7 +5,7 @@ try {
     }
     
     $verify_code = Authorization::generateUserCode($__userData['id'], 'verify_email');
-    $verify_link = EXT_BASE_URL . '/cabinet/verify-email/' . $verify_code . '/';
+    $verify_link = BASE_URL . '/cabinet/verify-email/' . $verify_code . '/';
     
     $email = new Email();
     $email->changeMXToQuick();

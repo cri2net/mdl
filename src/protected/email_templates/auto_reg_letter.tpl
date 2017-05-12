@@ -1,5 +1,5 @@
 <font size="2" face="Arial">Добрий день, {{username}}!<br><br>
-    Ви зареєструвалися на сайті <a href="{{ext_base_url}}">{{site_domain}}</a> для миттєвої оплати послуг.<br>
+    Ви зареєструвалися на сайті <a href="{{base_url}}">{{site_domain}}</a> для миттєвої оплати послуг.<br>
     <br>
     Логін: {{email}}<br>
     Пароль: {{password}}<br>

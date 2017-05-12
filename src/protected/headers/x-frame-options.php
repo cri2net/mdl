@@ -1,3 +1,3 @@
 <?php
-// header('X-Frame-Options: sameorigin');
-header('Access-Control-Allow-Origin: *');
+header('X-Frame-Options: sameorigin');
+// header('Access-Control-Allow-Origin: *');

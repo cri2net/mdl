@@ -488,27 +488,6 @@ function send_activation_code(element)
     });
 };
 
-function translite(str)
-{
-    var arr = {'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ж':'g', 'з':'z', 'и':'i', 'й':'y', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o', 'п':'p', 'р':'r', 'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'ы':'i', 'э':'e', 'А':'A', 'Б':'B', 'В':'V', 'Г':'G', 'Д':'D', 'Е':'E', 'Ж':'G', 'З':'Z', 'И':'I', 'Й':'Y', 'К':'K', 'Л':'L', 'М':'M', 'Н':'N', 'О':'O', 'П':'P', 'Р':'R', 'С':'S', 'Т':'T', 'У':'U', 'Ф':'F', 'Ы':'I', 'Э':'E', 'ё':'yo', 'х':'h', 'ц':'ts', 'ч':'ch', 'ш':'sh', 'щ':'shch', 'ъ':'', 'ь':'', 'ю':'yu', 'я':'ya', 'Ё':'Yo', 'Х':'H', 'Ц':'Ts', 'Ч':'Ch', 'Ш':'Sh', 'Щ':'Shch', 'Ъ':'', 'Ь':'', 'Ю':'Yu', 'Я':'Ya', 'ь':''};
-    var replacer = function(a){return arr[a]||a};
-    return str.replace(/[А-яёЁ]/g,replacer);
-};
-
-function strtolower(str)
-{
-    var arr = {'A':'a', 'B':'b', 'C':'c', 'D':'d', 'E':'e', 'F':'f', 'G':'g', 'H':'h', 'I':'i', 'J':'j', 'K':'k', 'L':'l', 'M':'m', 'N':'n', 'O':'o', 'P':'p', 'Q':'q', 'R':'r', 'S':'s', 'T':'t', 'U':'u', 'V':'v', 'W':'w', 'X':'x', 'Y':'y', 'Z':'z'};
-    var replacer=function(a){return arr[a]||a};
-    return str.replace(/[A-z]/g,replacer);
-};
-
-function strtoupper(str)
-{
-    var arr = {'a':'A', 'b':'B', 'c':'C', 'd':'D', 'e':'E', 'f':'F', 'g':'G', 'h':'H', 'i':'I', 'j':'J', 'k':'K', 'l':'L', 'm':'M', 'n':'N', 'o':'O', 'p':'P', 'q':'Q', 'r':'R', 's':'S', 't':'T', 'u':'U', 'v':'V', 'w':'W', 'x':'X', 'y':'Y', 'z':'Z'};
-    var replacer=function(a){return arr[a]||a};
-    return str.replace(/[A-z]/g,replacer);
-};
-
 function add_new_counters(key, abcounter, tarif)
 {
     new_counter_no['k' + key]++;
@@ -547,59 +526,6 @@ function tas_frame_load()
 };
 
 $(document).ready(function(){
-    (function(){
-
-        $('#reg-password, #reg-password-replica').keyup(function(){
-            function clearGauge() { 
-                gauge.removeClass('weak');
-                gauge.removeClass('medium');
-                gauge.removeClass('strong');
-                gauge.removeClass('secure');
-            }
-
-            var gauge = $('#password-strength-container .gauge');
-            var title = $('#password-strength-container .title');
-            // var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).*$", "g");
-            // var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
-            var enoughRegex = new RegExp("(?=.{6,}).*", "g");
-            var pwd = $(this).val();
-
-            var score = zxcvbn(pwd).score;
-
-            $('#password-strength-container').width($(this).outerWidth());
-
-            if (pwd.length==0) {
-                gauge.hide();
-                title.html('');
-            } else if (false == enoughRegex.test(pwd)) {
-                gauge.hide();
-                title.html('Введіть не менше 6 символів');
-            } else if (score == 4) {
-                clearGauge();
-                gauge.addClass('secure');
-                gauge.show();
-                title.html('Відмінний пароль');
-            } else if (score == 3) {
-                clearGauge();
-                gauge.addClass('strong');
-                gauge.show();
-                title.html('Гарний пароль');
-            } else if (score == 2) {
-                clearGauge();
-                gauge.addClass('medium');
-                gauge.show();
-                title.html('Пароль середньої безпечності');
-            } else {
-                clearGauge();
-                gauge.addClass('weak');
-                gauge.show();
-                title.html('Поганий пароль');
-            }
-
-            return true;
-        });
-
-    })();
 
     // украинизация jquery.ui.datepicker
     $.datepicker.regional['ua'] = {
@@ -618,3 +544,14 @@ $(document).ready(function(){
     };
     $.datepicker.setDefaults($.datepicker.regional['ua']);
 });
+
+
+(function ($) {
+    "use strict";
+
+    $.fn.depdropLocales['ua'] = {
+        loadingText: 'завантаження ...',
+        placeholder: 'Обрати ...',
+        emptyMsg: 'Дані не знайдено'
+    };
+})(window.jQuery);

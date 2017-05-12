@@ -822,3 +822,34 @@ ALTER TABLE `cks_payment`
 
 ALTER TABLE `cks_payment`
   CHANGE `type` `type` ENUM('gai','kinders','komdebt','cks','budget','direct') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt'  NOT NULL;
+
+-- 2017.04.25
+CREATE TABLE IF NOT EXISTS `cks_news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `is_actual` tinyint(1) NOT NULL DEFAULT '1',
+  `title` varchar(1000) NOT NULL,
+  `created_at` double NOT NULL,
+  `updated_at` double NOT NULL,
+  `announce` text NOT NULL,
+  `text` mediumtext,
+  `views` int(11) NOT NULL DEFAULT '0' COMMENT 'count views',
+  `seo_title` varchar(500) DEFAULT NULL,
+  `seo_description` varchar(500) DEFAULT NULL,
+  `seo_keywords` varchar(500) DEFAULT NULL,
+  `old_site_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_active` (`is_actual`),
+  KEY `created_at` (`created_at`),
+  KEY `is_actual_2` (`is_actual`,`title`(50))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2017.05.05
+CREATE TABLE IF NOT EXISTS `cks_news_images` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `news_id` int(11) NOT NULL,
+  `is_main` tinyint(1) NOT NULL,
+  `pos` int(11) NOT NULL,
+  `filename` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

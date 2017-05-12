@@ -1,67 +1,50 @@
-<div class="h1-line">
-    <h1>Вхід</h1>
-    <div class="already-have">
-        <a href="<?= BASE_URL; ?>/cabinet/registration/">Зареєструватися</a> <br>
-        <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a>
-    </div>
-</div>
 <?php
-    if (defined('SHOW_NEED_AUTH_MESSAGE') && SHOW_NEED_AUTH_MESSAGE) {
-        ?><h2 class="big-error-message">Для доступу до сторінки необхідно увійти до системи</h2> <?php
-    }
-
-    if (isset($_SESSION['login']['status']) && !$_SESSION['login']['status']) {
-        ?>
-        <h2 class="big-error-message">Під час авторизації виникла помилка:</h2>
-        <div class="error-description"><?= $_SESSION['login']['error']['text']; ?></div>
-        <?php
-        unset($_SESSION['login']['status']);
-    }
-
-    if (Authorization::isLogin()) {
-        ?><h2 class="big-success-message">Ви вже увійшли в систему</h2> <?php
-        return;
-    }
-
-    $_email = (isset($_SESSION['login']['email'])) ? $_SESSION['login']['email'] : '';
-    $_phone = (isset($_SESSION['login']['phone'])) ? $_SESSION['login']['phone'] : '';
-
-    $_email = htmlspecialchars($_email, ENT_QUOTES);
-    $_phone = htmlspecialchars($_phone, ENT_QUOTES);
+    define('SHORT_FOOTER', true);
 ?>
-<div class="registration">
-    <div class="form-block">
-        <form onsubmit="registration_form_submit(); top.postMessage('login-form-send', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
-            <div class="input login-form-email">
-                <div class="bracket">або</div>
-                <label><span>Електронна пошта / логін </span> <br>
-                    <input class="txt form-txt-input" type="text" name="email" value="<?= $_email; ?>">
-                </label>
-            </div>
-            <div class="input">
-                <label>Телефон <br>
-                    <input class="txt form-txt-input" placeholder="+380" type="text" name="phone" id="login-phone" value="<?= $_phone; ?>">
-                </label>
-            </div>
-            <div class="input pass">
-                <label>Пароль <span class="hint">(не менше 6 символів)</span> <br>
-                    <span class="eye" onclick="registration_show_password();"></span>
-                    <span id="registration-password-box">
-                        <input style="display:block;" onblur="registration_ckeck_empty_fileld_password(this);" required="required" class="txt form-txt-input" id="reg-password" type="password" name="password">
-                        <input style="display:none;" onblur="registration_ckeck_empty_fileld_password(this);" class="txt form-txt-input" id="reg-password-replica" type="text" autocomplete="off">
-                    </span>
-                </label>
-            </div>
-            <div class="input">
-                <button class="btn green bold">Увійти в систему</button>
-            </div>
-        </form>
-    </div>
-    <?php require_once(PROTECTED_DIR . '/scripts/cabinet/info-block.php'); ?>
-</div>
+<body class="login-bg">
 
-<script type="text/javascript">
-$(function($){
-    $("#login-phone").mask("+999(99)999-99-99", {autoclear: false}).val('<?= $_phone; ?>');
-});
-</script>
+<div class="container">
+    <content>
+        <div class="logo-large">
+            <img src="<?= BASE_URL; ?>/assets/images/logo-large.png">
+        </div>
+
+        <form class="form-welcome" onsubmit="top.postMessage('login-form-send', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
+            <!--<a href="#" class="close">&times;</a>-->
+            <?php
+                if (defined('SHOW_NEED_AUTH_MESSAGE') && SHOW_NEED_AUTH_MESSAGE) {
+                    ?><div>Для доступу до сторінки необхідно увійти до системи</div> <?php
+                }
+
+                if (isset($_SESSION['login']['status']) && !$_SESSION['login']['status']) {
+                    ?>
+                    <div><?= $_SESSION['login']['error']['text']; ?></div>
+                    <?php
+                    unset($_SESSION['login']['status']);
+                }
+
+                $login = (isset($_SESSION['login']['login'])) ? $_SESSION['login']['login'] : '';
+                $login = htmlspecialchars($login, ENT_QUOTES);
+
+                if (Authorization::isLogin()) {
+                    ?><div>Ви вже увійшли в систему</div> <?php
+                } else {
+                    ?>
+                    <div class="form-group">
+                        <input class="form-txt" autofocus placeholder="Введіть телефон або пошту" name="email" value="<?= $login; ?>" type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-txt" placeholder="Ваш пароль" name="password" value="" type="password">
+                        <span class="eye" onclick="registration_show_password();"></span>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-green-bordered">Вхід</button>
+                        <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a>
+                    </div>
+                    <?php
+                }
+            ?>
+        </form>
+        <a href="<?= BASE_URL; ?>/cabinet/registration/" class="btn btn-white-bordered">Зареєструватися у системі</a>
+    </content>
+</div>

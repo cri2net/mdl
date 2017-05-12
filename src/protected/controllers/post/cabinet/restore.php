@@ -23,7 +23,7 @@ try {
     if ($user !== null) {
         // пользователь найден.
         $restore_code = Authorization::generateUserCode($user['id']);
-        $href = EXT_BASE_URL . '/cabinet/restore/' . $restore_code . '/';
+        $href = BASE_URL . '/cabinet/restore/' . $restore_code . '/';
         
         $mail->send(
             [$user['email'], "{$user['name']} {$user['fathername']}"],
@@ -58,7 +58,7 @@ try {
 
     } elseif (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         // пользователь не найден, но у нас есть его email
-        $href = EXT_BASE_URL . '/cabinet/registration/';
+        $href = BASE_URL . '/cabinet/registration/';
         
         $mail->send(
             $email,

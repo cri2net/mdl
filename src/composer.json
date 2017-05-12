@@ -10,12 +10,11 @@
         "cri2net/php-pdo-db": "^1.1"
     },
     "config": {
-        "vendor-dir": "protected/vendor",
-        "optimize-autoloader": true
+        "vendor-dir": "protected/vendor"
     },
     "autoload": {
-        "classmap" : [
-            "protected/classes"
-        ]
+        "psr-4": {
+            "": "protected/classes"
+        }
     }
 }

@@ -45,8 +45,6 @@ switch (USER_REAL_IP) {
         $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 4);
 }
 
-define('EXT_BASE_URL', 'http://cks.kiev.ua/service-cks/?get-page=');
-
 define('EMAIL_FROM', 'no-reply@cks.kiev.ua');
 define('EMAIL_TO', 'zvernennya@src.kiev.ua');
 define('EMAIL_HOST', '91.200.41.117');

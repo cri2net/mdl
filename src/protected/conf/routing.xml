@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <system>
-        <route match="index" controller="page" action="cabinet" />
+        <route match="index" controller="page" action="index" />
         <route match="forbidden" controller="error" action="403" />
         <route match="not_found" controller="error" action="404" />
     </system>
@@ -20,6 +20,17 @@
                 </route>
             </route>
         </route>
+        <route match="photos" controller="error" action="404">
+            <route match="{type}" controller="error" action="404">
+                <route match="{size}" controller="error" action="404">
+                    <route match="{photo_id}.jpg" controller="photos" action="index" />
+                </route>
+            </route>
+        </route>
+        <route match="news" controller="page" action="news">
+            <route match="{page|num}" controller="page" action="news" />
+            <route match="{title}_{news_id|num}" controller="page" action="news-item" />
+        </route>
         <route match="payment-status" controller="error" action="404">
             <route match="{payment_id|num}" controller="page" action="payment-status" />
         </route>
@@ -34,6 +45,7 @@
         </route>
 
         <route match="checkout" controller="page" action="checkout" />
+        <route match="about" controller="page" action="about" />
         
         <route match="invoice" controller="invoice" action="" />
         <route match="barcode" controller="barcode" action="">

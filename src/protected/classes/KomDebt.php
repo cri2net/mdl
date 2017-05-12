@@ -307,13 +307,14 @@ class KomDebt
             $data['bank'][(string)$row->PUNKT_ID]['KASSA'] = (string)$row->KASSA;
             
             $dataArray = [
-                'NAME_FIRME' => (string)$row->NAME_FIRME,
-                'NAME_PLAT'  => $this->getNamePlat($row->NAME_PLAT),
-                'SUMM'       => str_replace('.', ',', sprintf('%.2f',((float)$row->SUMM)/100)),
-                'PDATE'      => date("d.m.y H:i:s", strtotime((string)$row->PDATE)),
-                'ABCOUNT'    => (string)$row->ABCOUNT,
-                'DBEGIN'     => (string)$row->DBEGIN1,
-                'DEND'       => (string)$row->DEND1
+                'NAME_FIRME'     => (string)$row->NAME_FIRME,
+                'NAME_PLAT'      => $this->getNamePlat($row->NAME_PLAT),
+                'SUMM'           => str_replace('.', ',', sprintf('%.2f',((float)$row->SUMM)/100)),
+                'PDATE'          => date("d.m.y H:i:s", strtotime((string)$row->PDATE)),
+                'ID_PLAT_KLIENT' => (isset($row->ID_PLAT_KLIENT)) ? $row->ID_PLAT_KLIENT . '' : null,
+                'ABCOUNT'        => (string)$row->ABCOUNT,
+                'DBEGIN'         => (string)$row->DBEGIN1,
+                'DEND'           => (string)$row->DEND1,
             ];
 
             if ($row->CNTR->CNTR_ITEM) {

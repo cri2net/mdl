@@ -28,7 +28,7 @@
     $hash2 = Authorization::get_auth_hash2($__userData['id'], $hash1);
     $debt = new KomDebt();
 
-    $paybill_link   = EXT_BASE_URL . rawurlencode('/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2);
+    $paybill_link   = BASE_URL . rawurlencode('/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2);
     $online_version = BASE_URL . '/invoice/?uid=' . $__userData['id'] . '&f=' . $house['id'] . '&hash2=' . $hash2;
 
     $address = Flat::getAddressString($house['flat_id'], $address_detail);
@@ -383,7 +383,7 @@
     ?>
     <table <?= $_table_attr; ?>><tbody><tr>
         <td align="left" width="370" style="line-height:18px; padding-left:69px; padding-top:11px;">
-            <a href="<?= EXT_BASE_URL . rawurlencode('/cabinet/objects/' . $house['id'] . '/detailbill/?uid=' . $__userData['id'] . '&amp;hash2=' . $hash2); ?>" target="_blank"><img hspace="0" vspace="0" width="229" height="35" src="<?= $__img_path; ?>subsidy.png" alt="докладніше про нарахування"></a>
+            <a href="<?= BASE_URL . rawurlencode('/cabinet/objects/' . $house['id'] . '/detailbill/?uid=' . $__userData['id'] . '&amp;hash2=' . $hash2); ?>" target="_blank"><img hspace="0" vspace="0" width="229" height="35" src="<?= $__img_path; ?>subsidy.png" alt="докладніше про нарахування"></a>
         </td>
         <td align="right" style="color:#282828; font-size:18px; <?= $_ff; ?> line-height:24px; padding-top:20px; padding-right:38px; padding-bottom:20px;">
             Разом до сплати:

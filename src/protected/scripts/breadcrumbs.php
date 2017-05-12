@@ -113,24 +113,30 @@
             $breadcrumbs[] = ['title' => 'Статус транзакції'];
             break;
 
+        case 'page/about':
+            $breadcrumbs[] = ['title' => 'Про нас'];
+            break;
+
         case 'error/404':
             $breadcrumbs[] = ['title' => 'Помилка 404'];
             break;
     }
 ?>
-<breadcrumbs itemscope itemtype="http://schema.org/BreadcrumbList">
-    <?php
-        for ($i=0; $i < count($breadcrumbs); $i++) {
-            if ($i < count($breadcrumbs) - 1) {
-                ?>
-                <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                    <a itemprop="item" href="<?= EXT_BASE_URL . $breadcrumbs[$i]['link']; ?>" target="_top"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
-                    <meta itemprop="position" content="<?= $i + 1; ?>" />
-                </span>&nbsp;&rarr;&nbsp;
-                <?php
-            } else {
-                ?><span class="current"><?= $breadcrumbs[$i]['title']; ?></span><?php
+<div class="container">
+    <breadcrumbs itemscope itemtype="http://schema.org/BreadcrumbList">
+        <?php
+            for ($i=0; $i < count($breadcrumbs); $i++) {
+                if ($i < count($breadcrumbs) - 1) {
+                    ?>
+                    <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemprop="item" href="<?= BASE_URL . $breadcrumbs[$i]['link']; ?>" target="_top"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
+                        <meta itemprop="position" content="<?= $i + 1; ?>" />
+                    </span>&nbsp;&rarr;&nbsp;
+                    <?php
+                } else {
+                    ?><span class="current"><?= $breadcrumbs[$i]['title']; ?></span><?php
+                }
             }
-        }
-    ?>
-</breadcrumbs>
+        ?>
+    </breadcrumbs>
+</div>

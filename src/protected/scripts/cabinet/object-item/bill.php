@@ -1,7 +1,7 @@
 <?php
     if (!Authorization::isLogin()) {
         define('SHOW_NEED_AUTH_MESSAGE', true);
-        return require_once(ROOT . '/protected/pages/cabinet/login.php');
+        return require_once(PROTECTED_DIR . '/pages/cabinet/login.php');
     }
 
     $flat_id = $__route_result['values']['id'];
@@ -40,205 +40,244 @@
         return;
     }
 ?>
-
 <script>
     var new_counter_no = {};
 </script>
-<form class="real-full-width-block" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
-    <table class="full-width-table datailbill-table no-border">
-        <thead>
-            <tr>
-                <th class="first align-center counters-th" colspan="4">
-                    Рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?> р.
-                </th>
-            </tr>
-            <tr>
-                <th class="first align-center" colspan="4">
-                    <span><?= $object['address']; ?></span><br>
-                    Загальна площа: <b><?= $debtData['PL_OB']; ?> м<sup>2</sup></b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м<sup>2</sup></b>, проживаючих: <b><?= $debtData['PEOPLE']; ?></b>
-                    <?php
-                        if (isset($debtData['LGOTA']) && $debtData['LGOTA']) {
-                            ?>
-                            <br>Пільги: <?= $debtData['LGOTA']; ?>
-                            <?php
-                        }
-                    ?>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="bank-name title">
-                <td class="first">
-                    <div class="check-box-line">
-                        <span id="check_all_services" class="niceCheck check-group-rule checked"><input onclick="$('#check_all_services').click();" onchange="checkAllServices($('#check_all_services-elem'));" id="check_all_services-elem" type="checkbox" checked="checked"></span>
-                        <label onclick="$('#check_all_services').click();">
-                            Назва послуги /<br>одержувач коштів
-                        </label>
-                    </div>
-                </td>
-                <td style="white-space:nowrap;">Заборгованість /<br>переплата, грн</td>
-                <td style="white-space:nowrap;">Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']['small']; ?>, грн *</td>
-                <td style="white-space:nowrap;">До сплати,<br>грн **</td>
-            </tr>
-            <?php
-                $row_counter = 0;
-
-                foreach ($debtData['list'] as $key => $item) {
-                    $row_counter++;
-                    ?>
-                    <tr class="item-row <?= ($row_counter % 2 == 0) ? 'even' : 'odd'; ?>">
-                        <td class="first">
-                            <div class="check-box-line">
-                                <span class="niceCheck check-group checked" id="bill_item_<?= $key; ?>">
-                                    <input onclick="$('#bill_item_<?= $key; ?>').click();" checked="checked" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" type="checkbox" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" name="items[]">
-                                </span>
-                                <label onclick="$('#bill_item_<?= $key; ?>').click();">
-                                    <span><?= $item['name_plat']; ?></span>
-                                    <br>
-                                    <?= $item['firm_name']; ?>
+<div class="container">
+    <content>
+        <div class="cabinet-settings object-item object-item-bill">
+            <form class="real-full-width-block" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
+                <div class="thead-bg">
+                    <div class="head-green"></div>
+                    <div class="head-green-lighter"></div>
+                    <div class="head-gray"></div>
+                </div>
+                <div class="table-responsive">
+                    <table class="full-width-table datailbill-table no-border" id="data-table">
+                        <thead>
+                            <tr class="head-green">
+                                <th class="first align-center" colspan="6">
+                                    Рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?> р.
+                                </th>
+                            </tr>
+                            <tr class="head-green-lighter">
+                                <th>Обрати<br>все</th>
+                                <th>Відкрити<br>лічильники</th>
+                                <th colspan="4" class="align-right">
+                                    <strong><span><?= $object['address']; ?></span><br>
+                                    Загальна площа: <b><?= $debtData['PL_OB']; ?> м<sup>2</sup></b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м<sup>2</sup></b>, проживаючих: <b><?= $debtData['PEOPLE']; ?></b>
                                     <?php
-                                        if (!empty($item['counterData']['NAIM_LG'])) {
+                                        if (isset($debtData['LGOTA']) && $debtData['LGOTA']) {
                                             ?>
-                                            <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> <br>
-                                            <span class="small">Льготи: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
+                                            <br>Пільги: <?= $debtData['LGOTA']; ?>
                                             <?php
                                         }
                                     ?>
-                                    <span class="small"><br><?= htmlspecialchars($item['FIO']); ?> (о.р.<?= $item['ABCOUNT']; ?>)</span> 
-                                </label>
-                            </div>
+                                </th>
+                            </tr>
+                            <tr class="head-gray">
+                                <th class="align-center">
+                                    <label class="checkbox no-label gray">
+                                        <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox" class="check-all"><span></span>
+                                    </label>
+                                </th>
+                                <th class="align-center"><span class="counter counter-open"></span></th>
+                                <th class="th-header">Назва послуги /<br>одержувач коштів</th>
+                                <th>Заборгованість /<br>переплата, грн</th>
+                                <th>Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']['small']; ?>, грн*</th>
+                                <th>До сплати,<br>грн**</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <?php
-                                if ($item['counter'] != 0) {
+                                $row_counter = 0;
 
-                                    // $item['to_pay'] = str_replace('.', ',', sprintf('%.2f', $item['SUMM_OBL_PAY']));
-
-                                    foreach ($item['counterData']['counters'] as $counter) {
-                                        ?>
-                                        <div class="counter-data">
-                                            <br>
-                                            
-                                            Показання лічильника №<?= $counter['COUNTER_NO']; ?> : <br>
-                                            <div style="margin-top:5px; margin-bottom:5px;">
-                                                <label for="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Попередні:</label>
-                                                <input style="width: 60px;" value="<?= $counter['OLD_VALUE']; ?>" id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
-                                            </div>
-                                            <div style="margin-bottom:5px;">
-                                                <label for="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Поточні:</label>
-                                                <input style="width: 60px;" class="inp_<?= $key; ?>_new_count" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
-                                            </div>
-                                            <div style="margin-bottom:5px;">
-                                                <label for="cur_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">поточні на дату сплати:</label>
-                                                <input style="width: 60px;" type="text" id="cur_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_cur_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);">
-                                            </div>
-                                            <div style="margin-bottom:5px;">
-                                                <label for="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" style="width:100px; display:inline-block;">Заводський номер:</label>
-                                                <input style="width: 60px;" type="text" id="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
-                                            </div>
-                                            
-                                            <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
-                                            До сплати: ( <div style="display:inline-block;" id="newval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>">поточне&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_<?= $key; ?>_<?= $counter['COUNTER_NO']; ?>"><?= $counter['OLD_VALUE']; ?></span>)&nbsp;*&nbsp;<?= $item['counterData']['real_tarif']; ?>&nbsp;грн
-                                        </div>
-                                        <?php
-                                    }
+                                foreach ($debtData['list'] as $key => $item) {
+                                    $row_counter++;
                                     ?>
-                                    <script>
-                                        new_counter_no.k<?= $key; ?> = <?= count($item['counterData']['counters']); ?>;
-                                    </script>
-                                    <div id="new_counters_for_<?= $key; ?>"></div>
-                                    <label class="add-counter" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>);">додати лічильник</label>
+
+                                    <tr class="item-row">
+                                        <td class="align-center">
+                                            <label class="checkbox no-label green"><input checked="checked" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" name="items[]" type="checkbox" class="check-toggle"><span></span></label>
+                                        </td>
+                                        <td class="align-center">
+                                            <a class="counter counter-open"></a>
+                                        </td>
+                                        <td class="border-bottom">
+                                            <label class="header">
+                                                <?= $item['name_plat']; ?><br>
+                                                <?= $item['firm_name']; ?><br>
+                                                <?php
+                                                    if (!empty($item['counterData']['NAIM_LG'])) {
+                                                        ?>
+                                                        <span class="small">(о.р.<?= $item['ABCOUNT']; ?>)</span> <br>
+                                                        <span class="small">Льготи: <?= $item['counterData']['NAIM_LG']; ?>, <?= $item['counterData']['PROC_LG']; ?>% (кількість пільговиків: <?= $item['counterData']['KOL_LGOT']; ?>)</span>
+                                                        <?php
+                                                    }
+                                                ?>
+                                                <?= htmlspecialchars($item['FIO']); ?> (о.р.<?= $item['ABCOUNT']; ?>)
+                                            </label>
+                                        </td>
+                                        <td class="border-bottom">
+                                            <?php
+                                                if ($item['debt'] == '-') {
+                                                    echo '—';
+                                                } else {
+                                                    $summ = explode(',', $item['debt']);
+                                                    ?>
+                                                    <span class="item-summ">
+                                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                                    </span>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </td>
+                                        <td class="border-bottom">
+                                            <?php
+                                                if ($item['SUMM_MONTH'] == '-') {
+                                                    echo '—';
+                                                } else {
+                                                    $summ = explode(',', $item['SUMM_MONTH']);
+                                                    ?>
+                                                    <span class="item-summ">
+                                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                                    </span>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </td>
+                                        <td class="border-bottom">
+                                            <?php
+                                                $attrs = '';
+                                                if ($item['SUMM_OBL_PAY'] > 0) {
+                                                    $attrs .= 'data-obl-pay="'. sprintf('%.2f', $item['SUMM_OBL_PAY']) .'" ';
+                                                    $attrs .= 'title="Обов’язковий платіж по субсидії '. $item['SUMM_OBL_PAY'] .' грн" ';
+                                                }
+
+                                                // htmlspecialchars не делаем, так как эти данные уже должны быть обработаны
+                                                $tmp_value  =      $item['ID_FIRME'];
+                                                $tmp_value .= '_'. $item['CODE_PLAT'];
+                                                $tmp_value .= '_'. $item['ABCOUNT'];
+                                                $tmp_value .= '_'. $item['PLAT_CODE'];
+                                                $tmp_value .= '_'. $item['NAME_BANKS'];
+                                                $tmp_value .= '_'. $item['BANK_CODE'];
+                                                $tmp_value .= '_'. $item['DBEGIN_XML'];
+                                                $tmp_value .= '_'. $item['DEND_XML'];
+                                                $tmp_value .= '_'. $item['FIO'];
+                                            ?>
+                                            <input <?= $attrs; ?> class="bill-summ-input txt num-short form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>">
+                                            <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $tmp_value; ?>">
+                                            <input type="hidden" name="inp_<?= $key; ?>_name_plat" value="<?= htmlspecialchars($item['name_plat'], ENT_QUOTES); ?>">
+                                            <input type="hidden" name="inp_<?= $key; ?>_firm_name" value="<?= htmlspecialchars($item['firm_name'], ENT_QUOTES); ?>">
+                                            <input type="hidden" name="inp_<?= $key; ?>_code_firme" value="<?= htmlspecialchars($item['CODE_FIRME'], ENT_QUOTES); ?>">
+                                            <input type="hidden" name="inp_<?= $key; ?>_date_d" value="<?= htmlspecialchars($item['DATE_D'], ENT_QUOTES); ?>">
+                                            <input type="hidden" name="inp_<?= $key; ?>_id_pat" value="<?= htmlspecialchars($item['ID_PLAT'], ENT_QUOTES); ?>">
+                                        </td>
+                                    </tr>
+                                    <?php
+                                        if ($item['counter'] != 0) {
+
+                                            // $item['to_pay'] = str_replace('.', ',', sprintf('%.2f', $item['SUMM_OBL_PAY']));
+
+                                            foreach ($item['counterData']['counters'] as $counter) {
+                                                ?>
+
+                                                <tr class="item-counter">
+                                                    <td colspan="6">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="counter-field">
+                                                                    <input class="inp_<?= $key; ?>_new_count" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
+                                                                    <span class="edit"></span>
+                                                                </div>
+                                                                <div class="counter-label">поточні</div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="counter-field">
+                                                                    <input name="inp_<?= $key; ?>_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');" id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" value="<?= $counter['OLD_VALUE']; ?>">
+                                                                    <span class="edit"></span>
+                                                                </div>
+                                                                <div class="counter-label">минулі</div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="counter-field">
+                                                                    <input type="text" id="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
+                                                                    <a data-id="<?= $counter['ABCOUNTER']; ?>" class="delete counter-delete" data-toggle="modal" data-target="#modalCounterConfirm">&times;</a>
+                                                                </div>
+                                                                <div class="counter-label">№ лічильника</div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="add-new btn btn-lg btn-green" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>);"><span>додати лічильник</span></a>
+                                                        <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
+                                                        <script>
+                                                            new_counter_no.k<?= $key; ?> = <?= count($item['counterData']['counters']); ?>;
+                                                        </script>
+                                                    </td>
+                                                </tr>
+                                                <!-- <div id="new_counters_for_<?= $key; ?>"></div> -->
+                                                <?php
+                                            }
+                                            ?>
+                                            <?php
+                                        }
+                                    ?>
                                     <?php
                                 }
                             ?>
-                        </td>
-                        <td>
-                            <?php
-                                if ($item['debt'] == '-') {
-                                    echo '—';
-                                } else {
-                                    $summ = explode(',', $item['debt']);
-                                    ?>
-                                    <span class="item-summ">
-                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                    </span>
-                                    <?php
-                                }
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                                if ($item['SUMM_MONTH'] == '-') {
-                                    echo '—';
-                                } else {
-                                    $summ = explode(',', $item['SUMM_MONTH']);
-                                    ?>
-                                    <span class="item-summ">
-                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                    </span>
-                                    <?php
-                                }
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                                $attrs = '';
-                                if ($item['SUMM_OBL_PAY'] > 0) {
-                                    $attrs .= 'data-obl-pay="'. sprintf('%.2f', $item['SUMM_OBL_PAY']) .'" ';
-                                    $attrs .= 'title="Обов’язковий платіж по субсидії '. $item['SUMM_OBL_PAY'] .' грн" ';
-                                }
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-summ">
+                                <td class="align-right" colspan="6">
+                                    Всього:<br><span id="total_debt"><?= $debtData['full_dept']; ?></span> &#8372;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-right" colspan="6">
+                                    <input type="hidden" name="dbegin" value="<?= $dateBegin; ?>">
+                                    <input type="hidden" name="dend" value="<?= $dateEnd; ?>">
+                                    <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
+                                    <button class="btn btn-blue btn-md" id="pay_button">Сплатити</button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
 
-                                // htmlspecialchars не делаем, так как эти данные уже должны быть обработаны
-                                $tmp_value  =      $item['ID_FIRME'];
-                                $tmp_value .= '_'. $item['CODE_PLAT'];
-                                $tmp_value .= '_'. $item['ABCOUNT'];
-                                $tmp_value .= '_'. $item['PLAT_CODE'];
-                                $tmp_value .= '_'. $item['NAME_BANKS'];
-                                $tmp_value .= '_'. $item['BANK_CODE'];
-                                $tmp_value .= '_'. $item['DBEGIN_XML'];
-                                $tmp_value .= '_'. $item['DEND_XML'];
-                                $tmp_value .= '_'. $item['FIO'];
-                            ?>
-                            <input <?= $attrs; ?> class="bill-summ-input txt num-short green bold form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>">
-                            <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $tmp_value; ?>">
-                            <input type="hidden" name="inp_<?= $key; ?>_name_plat" value="<?= htmlspecialchars($item['name_plat'], ENT_QUOTES); ?>">
-                            <input type="hidden" name="inp_<?= $key; ?>_firm_name" value="<?= htmlspecialchars($item['firm_name'], ENT_QUOTES); ?>">
-                            <input type="hidden" name="inp_<?= $key; ?>_code_firme" value="<?= htmlspecialchars($item['CODE_FIRME'], ENT_QUOTES); ?>">
-                            <input type="hidden" name="inp_<?= $key; ?>_date_d" value="<?= htmlspecialchars($item['DATE_D'], ENT_QUOTES); ?>">
-                            <input type="hidden" name="inp_<?= $key; ?>_id_pat" value="<?= htmlspecialchars($item['ID_PLAT'], ENT_QUOTES); ?>">
-                        </td>
-                    </tr>
-                    <?php
-                }
-            ?>
-            <tr class="total-summ-tr">
-                <td class="first align-right" colspan="3">Усього, грн:</td>
-                <td class="total-sum" id="total_debt"><?= $debtData['full_dept']; ?></td>
-            </tr>
-            <tr>
-                <td class="align-center" colspan="4">
-                    <input type="hidden" name="dbegin" value="<?= $dateBegin; ?>">
-                    <input type="hidden" name="dend" value="<?= $dateEnd; ?>">
-                    <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
-                    <button class="btn green bold big" id="pay_button">Сплатити</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="full-width-table datailbill-table no-border hints-table">
-        <tbody>
-            <tr class="item-row">
-                <td class="first">
-                    <b class="hint-star">*</b> — з врахуванням пільг, субсидій та перерахунків <br>
-                    <b class="hint-star">**</b> — з врахуванням заборгованності <br>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</form>
 
-<script>
-    $(document).ready(function(){
-        $(".niceCheck").click(function() {
-            changeCheck($(this), 'check-group');
-        });
-    });
-</script>
+                    <!-- <table class="full-width-table datailbill-table no-border hints-table">
+                        <tbody>
+                            <tr class="item-row">
+                                <td class="first">
+                                    <b class="hint-star">*</b> — з врахуванням пільг, субсидій та перерахунків <br>
+                                    <b class="hint-star">**</b> — з врахуванням заборгованності <br>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+                </div>
+            </form>
+        </div>
+    </content>
+</div>
+
+<div class="modal fade" id="modalCounterConfirm" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Видалити лічильник?</h3>
+      </div>
+      <div class="modal-body">
+        <p>видалений лічильник неможливо відновити</p>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-green btn-full btn-md" data-dismiss="modal">Назад</button>
+            </div>
+            <div class="col-sm-6">
+                <button type="button" id="counter-delete-confirm" data-id="" class="btn btn-green-lighter btn-full btn-md">Видалити</button>
+            </div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
