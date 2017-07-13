@@ -34,6 +34,8 @@
         </route>
 
         <route match="checkout" controller="page" action="checkout" />
+        <route match="http-test" controller="page" action="http-test" />
+        <route match="csv-users" controller="page" action="csv-users" />
         
         <route match="invoice" controller="invoice" action="" />
         <route match="barcode" controller="barcode" action="">

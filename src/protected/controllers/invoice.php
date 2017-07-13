@@ -66,7 +66,7 @@
         exit();
     }
 
-    $depth = ($__is_email_mode) ? 10 : 0;
+    $depth = 0; //($__is_email_mode) ? 10 : 0;
     $plat_code = KomDebt::getFlatIdOrPlatcode($house['flat_id'], $house['plat_code'], $house['city_id']);
     $debtData = $debt->getData($plat_code, null, $depth);
     if (empty($debtData['list']) && $__is_email_mode) {

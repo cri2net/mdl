@@ -6,6 +6,20 @@ class User
 {
     const TABLE = DB_TBL_USERS;
 
+    /**
+     * Получаем список всех пользователей
+     * @param  integer $limit - Кол-во пользователей, используется только для отладки скрипта. OPTIONAL
+     * @return array
+     */
+        
+    public static function getUsersList($limit = 0) {
+        $pdo = PDO_DB::getPDO();
+        $stm = $pdo->prepare("SELECT * FROM " . self::TABLE . " LIMIT 100");
+        $stm->execute();
+
+        return $stm->fetchAll();
+    }
+
     public static function getUserIdByEmail($email)
     {
         $pdo = PDO_DB::getPDO();

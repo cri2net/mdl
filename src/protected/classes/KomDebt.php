@@ -205,8 +205,8 @@ class KomDebt
                     $list['counterData']['FIRM_NAME'] = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
                     $list['counterData']['CODE_FIRME'] = (int)$row->CODE_FIRME;
                     $list['counterData']['date'] = " 01.".date("n").".".date("y");
-                    $list['counterData']['tarif'] = str_replace('.', ',', sprintf('%.2f',((float)$row->TARIF)/100));
-                    $list['counterData']['real_tarif'] = (float)($row->TARIF/100);
+                    $list['counterData']['tarif'] = str_replace('.', ',', sprintf('%.3f',((float)str_replace(',', '.', $row->TARIF))/100));
+                    $list['counterData']['real_tarif'] = (((float)str_replace(',', '.', $row->TARIF))/100);
                     $list['counterData']['NAME_PLAT'] = $this->getNamePlat($row->NAME_PLAT);
                     $list['counterData']['NAIM_LG'] = (string)$row->NAIM_LG;
                     $list['counterData']['PROC_LG'] = (string)$row->PROC_LG;
