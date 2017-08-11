@@ -40,9 +40,7 @@ switch (USER_REAL_IP) {
         if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
         }
-        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST'] . '/cks');
-
-        $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 4);
+        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST']);
 }
 
 define('EMAIL_FROM', 'no-reply@cks.kiev.ua');

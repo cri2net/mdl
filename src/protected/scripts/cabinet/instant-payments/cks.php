@@ -1,7 +1,11 @@
 <?php
     use cri2net\php_pdo_db\PDO_DB;
 ?>
-<h1 class="big-title">Сплата послуг ЦКС</h1>
+<body>
+
+<?php require_once(PROTECTED_DIR . '/layouts/navbar_inner.php'); ?>
+<?php require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php'); ?>
+
 <?php
     try {
         $plat_list = CKS::getPlatList();
@@ -35,11 +39,17 @@
 
     if (isset($_SESSION['instant-payments-cks']['status']) && !$_SESSION['instant-payments-cks']['status']) {
         ?>
-        <br>
-        <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
-        <div class="error-description"><?= $_SESSION['instant-payments-cks']['error']['text']; ?></div>
+        <div class="container" >
+            <content>
+                <div class="portlet" >
+                <h3 class="big-error-message">Під час виконання запиту виникла помилка:</h3>
+                <div class="alert alert-danger"><?= $_SESSION['instant-payments-cks']['error']['text']; ?></div>
+                </div>
+            </content>
+        </div>
         <?php
         unset($_SESSION['instant-payments-cks']['status']);
+        return;
     }
 
     if ($_SESSION['instant-payments-cks']['step'] == 'frame') {
@@ -63,151 +73,157 @@
         return;
     }
 ?>
-<form class="feedback-form" method="post" action="<?= BASE_URL; ?>/post/cabinet/instant-payments/cks/">
-    <div style="display: inline-block; float: none; width: 100%;">
-        <div class="field-group">
-            <label>
-                Оберіть район м. Київ <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                <select class="txt" required="required" id="district">
-                    <option value="">-- виберіть --</option>
-                    <?php
-                        $i = 0;
-                        foreach ($districts as $item) {
+<div class="container">
+    <content>
+        <div class="portlet">
+        <form class="feedback-form" method="post" action="<?= BASE_URL; ?>/post/cabinet/instant-payments/cks/">
+            <h3>Район та підрозділ</h3>
+            <div style="display: inline-block; float: none; width: 100%;">
+                <div class="form-group">
+                    <label>
+                        Оберіть район м. Київ <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <select class="txt" required="required" id="district">
+                            <option value="">-- виберіть --</option>
+                            <?php
+                                $i = 0;
+                                foreach ($districts as $item) {
+                                    ?>
+                                    <option value="<?= ++$i; ?>"><?= htmlspecialchars($item['name']); ?></option>
+                                    <?php
+                                }
                             ?>
-                            <option value="<?= ++$i; ?>"><?= htmlspecialchars($item['name']); ?></option>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Оберіть підрозділ <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <select class="txt" required="required" id="firme" name="firme">
+                            <option id="firme_empty" value="">-- виберіть --</option>
+                            <?php
+                                $i = 0;
+                                
+                                foreach ($districts as $item) {
+                                    
+                                    $i++;
+
+                                    foreach ($item['firme_list'] as $firme_item) {
+                                        ?>
+                                        <option data-number="<?= $i; ?>" value="<?= $firme_item['id']; ?>"><?= htmlspecialchars($firme_item['name']); ?></option>
+                                        <?php
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <h3>Платник</h3>
+
+            <div style="display: inline-block; float: none; width: 100%;">
+                <div class="form-group" style="display: inline-block; float: left; margin-right: 61px;">
+                    <label>
+                        Прізвище <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_lastname, ENT_QUOTES); ?>" type="text" name="penalty_user_lastname" class="form-txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+
+                <div class="form-group" style="display: inline-block;">
+                    <label>
+                        Ім’я <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_name, ENT_QUOTES); ?>" type="text" name="penalty_user_name" class="form-txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+            </div>
+            <div style="display: inline-block; float: none; width: 100%;">
+                <div class="form-group" style="display: inline-block; float: left; margin-right: 61px;">
+                    <label>
+                        По-батькові <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_fathername, ENT_QUOTES); ?>" type="text" name="penalty_user_fathername" class="form-txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+                <?php
+                    $display_email = (isset($__userData['email']) && filter_var($penalty_user_email, FILTER_VALIDATE_EMAIL))
+                        ? 'display: none;'
+                        : 'display: inline-block;';
+                ?>
+                <div class="form-group" style="<?= $display_email; ?>">
+                    <label>
+                        Електронна пошта <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_email, ENT_QUOTES); ?>" type="email" name="penalty_user_email" class="form-txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+            </div>
+            
+            <div style="display: inline-block; float: none; width: 100%;">
+                <div class="form-group full-width">
+                    <label>
+                        Адреса <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        <input style="width: 655px;" onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_address, ENT_QUOTES); ?>" type="text" name="penalty_user_address" class="form-txt" required="required">
+                    </label>
+                    <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
+                </div>
+            </div>
+
+            <h3>Оберіть послуги до сплати</h3>
+            <table class="full-width-table datailbill-table no-border">
+                <thead>
+                    <tr class="head-green-lighter">
+                        <td class="first">
+                            Послуга
+                        </td>
+                        <td style="white-space:nowrap;">До сплати, грн</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php
+                        $row_counter = 0;
+
+                        foreach ($plat_list as $item) {
+                            $row_counter++;
+                            ?>
+                            <tr class="item-row <?= ($row_counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                                <td class="first border-bottom">
+                                    <div class="check-box-line">
+                                        <span class="niceCheck check-group" id="bill_item_<?= $item['id']; ?>">
+                                            <input class="cks-service-checkbox" onclick="$('#bill_item_<?= $item['id']; ?>').click();" onchange="selectOneService('bill_checkbox_<?= $item['id']; ?>', 'inp_<?= $item['id']; ?>');" id="bill_checkbox_<?= $item['id']; ?>" value="inp_<?= $item['id']; ?>" name="items[]" type="checkbox">
+                                        </span>
+                                        <label onclick="$('#bill_item_<?= $item['id']; ?>').click();">
+                                            <span><?= htmlspecialchars($item['name']); ?></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="border-bottom" >
+                                    <input disabled="disabled" readonly="readonly" class="bill-summ-input txt num-short green bold form-txt-input" name="inp_<?= $item['id']; ?>_sum" size="20" value="<?= str_replace('.', ',', sprintf('%.2f', $item['sum'])); ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $item['id']; ?>" type="text">
+                                </td>
+                            </tr>
                             <?php
                         }
                     ?>
-                </select>
-            </label>
+                    <tfoot>
+                        <tr class="total-summ">
+                            <td class="align-center" colspan="6">
+                                Всього:&nbsp;<span id="total_debt"><b>0,00</b></span> &#8372;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-center" colspan="4">
+                                <button disabled="disabled" class="btn btn-blue btn-md" id="pay_button">Сплатити</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </tbody>
+            </table>
+        </form>
         </div>
-        <div class="field-group">
-            <label>
-                Оберіть підрозділ <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                <select class="txt" required="required" id="firme" name="firme">
-                    <option id="firme_empty" value="">-- виберіть --</option>
-                    <?php
-                        $i = 0;
-                        
-                        foreach ($districts as $item) {
-                            
-                            $i++;
-
-                            foreach ($item['firme_list'] as $firme_item) {
-                                ?>
-                                <option data-number="<?= $i; ?>" value="<?= $firme_item['id']; ?>"><?= htmlspecialchars($firme_item['name']); ?></option>
-                                <?php
-                            }
-                        }
-                    ?>
-                </select>
-            </label>
-        </div>
-    </div>
-
-    <h3>Платник</h3>
-
-    <div style="display: inline-block; float: none; width: 100%;">
-        <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
-            <label>
-                Прізвище <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_lastname, ENT_QUOTES); ?>" type="text" name="penalty_user_lastname" class="txt" required="required">
-            </label>
-            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
-        </div>
-
-        <div class="field-group" style="display: inline-block;">
-            <label>
-                Ім’я <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_name, ENT_QUOTES); ?>" type="text" name="penalty_user_name" class="txt" required="required">
-            </label>
-            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
-        </div>
-    </div>
-    <div style="display: inline-block; float: none; width: 100%;">
-        <div class="field-group" style="display: inline-block; float: left; margin-right: 61px;">
-            <label>
-                По-батькові <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_fathername, ENT_QUOTES); ?>" type="text" name="penalty_user_fathername" class="txt" required="required">
-            </label>
-            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
-        </div>
-        <?php
-            $display_email = (isset($__userData['email']) && filter_var($penalty_user_email, FILTER_VALIDATE_EMAIL))
-                ? 'display: none;'
-                : 'display: inline-block;';
-        ?>
-        <div class="field-group" style="<?= $display_email; ?>">
-            <label>
-                Електронна пошта <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_email, ENT_QUOTES); ?>" type="email" name="penalty_user_email" class="txt" required="required">
-            </label>
-            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
-        </div>
-    </div>
-    
-    <div style="display: inline-block; float: none; width: 100%;">
-        <div class="field-group full-width">
-            <label>
-                Адреса <span class="star-required" title="Обов’язкове поле">*</span> <br>
-                <input style="width: 655px;" onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_address, ENT_QUOTES); ?>" type="text" name="penalty_user_address" class="txt" required="required">
-            </label>
-            <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>
-        </div>
-    </div>
-
-    <table class="full-width-table datailbill-table no-border">
-        <thead>
-            <tr>
-                <th class="first align-center counters-th" colspan="4">
-                    Оберіть послуги до сплати
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="bank-name title">
-                <td class="first">
-                    Послуга
-                </td>
-                <td style="white-space:nowrap;">До сплати, грн</td>
-            </tr>
-
-            <?php
-                $row_counter = 0;
-
-                foreach ($plat_list as $item) {
-                    $row_counter++;
-                    ?>
-                    <tr class="item-row <?= ($row_counter % 2 == 0) ? 'even' : 'odd'; ?>">
-                        <td class="first">
-                            <div class="check-box-line">
-                                <span class="niceCheck check-group" id="bill_item_<?= $item['id']; ?>">
-                                    <input class="cks-service-checkbox" onclick="$('#bill_item_<?= $item['id']; ?>').click();" onchange="selectOneService('bill_checkbox_<?= $item['id']; ?>', 'inp_<?= $item['id']; ?>');" id="bill_checkbox_<?= $item['id']; ?>" value="inp_<?= $item['id']; ?>" name="items[]" type="checkbox">
-                                </span>
-                                <label onclick="$('#bill_item_<?= $item['id']; ?>').click();">
-                                    <span><?= htmlspecialchars($item['name']); ?></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td>
-                            <input disabled="disabled" readonly="readonly" class="bill-summ-input txt num-short green bold form-txt-input" name="inp_<?= $item['id']; ?>_sum" size="20" value="<?= str_replace('.', ',', sprintf('%.2f', $item['sum'])); ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $item['id']; ?>" type="text">
-                        </td>
-                    </tr>
-                    <?php
-                }
-            ?>
-            <tr class="total-summ-tr">
-                <td class="first align-right">Усього, грн:</td>
-                <td class="total-sum" id="total_debt">0,00</td>
-            </tr>
-            <tr>
-                <td class="align-center" colspan="4">
-                    <button disabled="disabled" class="btn green bold big" id="pay_button">Сплатити</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</form>
+    </content>
+</div>
 
 <script>
     $(document).ready(function(){

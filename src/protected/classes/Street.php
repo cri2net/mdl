@@ -7,7 +7,7 @@ class Street
     const TABLE = DB_TBL_STREETS;
     const ODESSA_ID = 1;
     const KIEV_ID = 447;
-    const STREET_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_street.rep&destype=Cache&Desformat=xml&cmdkey=gsity&sity_id=';
+    const STREET_URL = 'http://ppp.gerc.ua:80/reports/rwservlet?report=/gerc_api/spr_street.rep&destype=Cache&Desformat=xml&cmdkey=gsity&sity_id=';
     
     public static function cron()
     {

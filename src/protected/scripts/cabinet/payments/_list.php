@@ -6,12 +6,14 @@
         return;
     }
 ?>
-<div class="check-box-line" style="margin-top: 20px;">
-    <span class="niceCheck checked" id="payments_only_success"><input type="checkbox" checked="checked"></span>
+<div class="valign-center" style="margin-top: 20px;">
+    <label class="checkbox no-label green" id="payments_only_success"><input name="service[<?= $key ?>]" type="checkbox" class="check-toggle" checked ><span></span></label>&nbsp;<span>Тільки успішні платежі</span>
+<!--     <span class="niceCheck checked" id="payments_only_success"><input type="checkbox" checked="checked"></span>
     <label style="position: relative; top:-3px; left:10px;" onclick="$('#payments_only_success').click();">
         Тільки успішні платежі
     </label>
-</div>
+ --></div>
+<br/>
 <div class="real-full-width-block">
     <table class="full-width-table datailbill-table no-border">
         <thead>
@@ -32,14 +34,14 @@
                     $time = ($item['go_to_payment_time']) ? $item['go_to_payment_time'] : $item['timestamp'];
                     ?>
                     <tr style="<?= ($item['status'] == 'success') ? '' : 'display: none;'; ?>" class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?> item-payment-status item-payment-status-<?= $item['status']; ?>">
-                        <td class="first">
+                        <td class="first border-bottom">
                             <a href="<?= BASE_URL; ?>/cabinet/payments/details/<?= $item['id']; ?>/"><?= $item['id']; ?></a>
                         </td>
-                        <td>
+                        <td class="border-bottom" >
                             <span class="date-day"><?= getUkraineDate('j m Y', $time); ?></span><br>
                             <span class="date-time"><?= date('H:i:s', $time); ?></span>
                         </td>
-                        <td>
+                        <td class="border-bottom" >
                             <?php
                                 switch ($item['type']) {
                                     case 'komdebt':
@@ -68,7 +70,7 @@
                                 }
                             ?>
                         </td>
-                        <td>
+                        <td class="border-bottom">
                             <?php
                                 $summ = explode('.', number_format($item['summ_total'], 2));
                             ?>
@@ -76,7 +78,7 @@
                                 <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
                             </span>
                         </td>
-                        <td>
+                        <td class="border-bottom">
                             <?php
                                 switch ($item['status']) {
                                     case 'new':

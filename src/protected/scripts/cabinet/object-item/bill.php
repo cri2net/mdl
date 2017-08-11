@@ -36,7 +36,7 @@
         $dateEnd = $debtData['dbegin'];
 
     } catch(Exception $e) {
-        ?><h2 class="big-error-message"><?= $e->getMessage(); ?></h2> <?php
+        ?><div class="container" ><h2 class="big-error-message"><?= $e->getMessage(); ?></h2></div> <?php
         return;
     }
 ?>

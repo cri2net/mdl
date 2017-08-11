@@ -201,6 +201,9 @@ function selectOneService(checkboxId, inputId)
 
 function getShoppingCartTotal(total, percentSum, cctype)
 {
+    console.log(total);
+    console.log(percentSum);
+    console.log(cctype);
     var fTotal = parseFloat(total.replace(',', '.'));
     var fPercent = parseFloat(percentSum.replace(',', '.'));
     var total = fTotal + fPercent;

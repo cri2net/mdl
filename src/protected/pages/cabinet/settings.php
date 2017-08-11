@@ -3,38 +3,18 @@
         define('SHOW_NEED_AUTH_MESSAGE', true);
         return require_once(PROTECTED_DIR . '/pages/cabinet/login.php');
     }
-
+    define('NAVBAR_FOR_SETTINGS', true);
     $current_section = $__route_result['values']['section'];
 ?>
-<div class="h1-line-cabinet">
-    <h1 class="big-title">Налаштування профілю</h1>
-</div>
+<body>
+<?php
+    require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
+    require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
+?>
+<div class="container" >
+<content>
 <div class="cabinet-settings">
-    <div class="page-tabs">
-        <?php
-            $sections = [
-                'info' => 'Персональні дані',
-                'notifications' => 'Налаштування повідомлень',
-                'rule' => 'Управління профілем',
-            ];
-            $i = 0;
-            
-            foreach ($sections as $key => $value) {
-                $i++;
-                $current = ($current_section == $key);
-                $class = 'tab';
-                $class .= ($current) ? ' current' : '';
-                $class .= ($i == count($sections)) ? ' last' : '';
-
-                if ($current) {
-                    ?><div class="<?= $class; ?>"><?= $value; ?></div><?php
-                } else {
-                    ?><a class="<?= $class; ?>" href="<?= BASE_URL; ?>/cabinet/settings/<?= $key; ?>/"><?= $value; ?></a><?php
-                }
-            }
-        ?>
-    </div>
-    
+   
     <?php
         if (isset($_SESSION['cabinet-settings']['status']) && !$_SESSION['cabinet-settings']['status']) {
             ?>
@@ -56,4 +36,6 @@
             }
         ?>
     </form>
+</div>
+</content>
 </div>

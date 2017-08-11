@@ -117,6 +117,40 @@
             $breadcrumbs[] = ['title' => 'Про нас'];
             break;
 
+        case 'page/services-list':
+            $breadcrumbs[] = ['title' => 'Перелік послуг'];
+            break;
+
+        case 'page/service-centers':
+            $breadcrumbs[] = ['title' => 'Сервісні центри'];
+            break;
+        case 'page/news':
+            $breadcrumbs[] = ['title' => 'Новини'];
+            break;
+        case 'page/feedback':
+            $breadcrumbs[] = ['title' => 'Питання до фахівця'];
+            break;
+        case 'page/news-item':
+            $breadcrumbs[] = ['title' => 'Новини', 'link' => '/news/'];
+            $breadcrumbs[] = [
+                'title' => date('d ', $__news_item['created_at'])
+                           . $MONTHS[date('n', $__news_item['created_at'])]['ua']
+                           . date(' Y', $__news_item['created_at'])
+            ];
+            break;
+        case 'page/request-services':
+            $breadcrumbs[] = ['title' => 'Додаткові платні послуги', 'link' => '/services/'];
+            $breadcrumbs[] = ['title' => 'Оформлення заявки'];
+            break;
+        case 'static_page/index':
+            $link = '/';
+            for ($i=0; $i < count($__static_pages_array); $i++) {
+                $link .= $__static_pages_array[$i]['key'] . '/';
+                $breadcrumbs[] = ['title' => $__static_pages_array[$i]['breadcrumb'], 'link' => $link];
+            }
+            break;
+            
+
         case 'error/404':
             $breadcrumbs[] = ['title' => 'Помилка 404'];
             break;
@@ -131,7 +165,7 @@
                     <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
                         <a itemprop="item" href="<?= BASE_URL . $breadcrumbs[$i]['link']; ?>" target="_top"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
                         <meta itemprop="position" content="<?= $i + 1; ?>" />
-                    </span>&nbsp;&rarr;&nbsp;
+                    </span>
                     <?php
                 } else {
                     ?><span class="current"><?= $breadcrumbs[$i]['title']; ?></span><?php

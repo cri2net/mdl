@@ -6,19 +6,19 @@
 <div class="container">
     <content>
         <div class="logo-large">
-            <img src="<?= BASE_URL; ?>/assets/images/logo-large.png">
+            <a href="<?= BASE_URL ?>" ><img src="<?= BASE_URL; ?>/assets/images/logo-large.png"></a>
         </div>
 
         <form class="form-welcome" onsubmit="top.postMessage('login-form-send', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
             <!--<a href="#" class="close">&times;</a>-->
             <?php
                 if (defined('SHOW_NEED_AUTH_MESSAGE') && SHOW_NEED_AUTH_MESSAGE) {
-                    ?><div>Для доступу до сторінки необхідно увійти до системи</div> <?php
+                    ?><div class="alert alert-warning" >Для доступу до сторінки необхідно увійти до системи</div> <?php
                 }
 
                 if (isset($_SESSION['login']['status']) && !$_SESSION['login']['status']) {
                     ?>
-                    <div><?= $_SESSION['login']['error']['text']; ?></div>
+                    <div class="alert alert-danger" ><?= $_SESSION['login']['error']['text']; ?></div>
                     <?php
                     unset($_SESSION['login']['status']);
                 }
@@ -27,7 +27,7 @@
                 $login = htmlspecialchars($login, ENT_QUOTES);
 
                 if (Authorization::isLogin()) {
-                    ?><div>Ви вже увійшли в систему</div> <?php
+                    ?><div class="alert alert-success" >Ви вже увійшли в систему</div> <?php
                 } else {
                     ?>
                     <div class="form-group">

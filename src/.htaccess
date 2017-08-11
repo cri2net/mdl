@@ -9,6 +9,7 @@ Order Allow,Deny
 Allow from all
 Deny from env=bad_bot 
 
+
 Options -Indexes
 Options +FollowSymLinks
 
@@ -31,8 +32,8 @@ Options +FollowSymLinks
 
 <IfModule mod_rewrite.c>
   RewriteEngine on
-  RewriteCond %{HTTP_HOST} ^www.gioc.kiev.ua$ [NC]
-  RewriteRule ^(.*)$ http://gioc.kiev.ua/$1 [L,R=301]
+  RewriteCond %{HTTP_HOST} ^www.cks.com.ua$ [NC]
+  RewriteRule ^(.*)$ http://cks.com.ua/$1 [L,R=301]
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

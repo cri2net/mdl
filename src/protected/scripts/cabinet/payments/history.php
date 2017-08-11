@@ -8,4 +8,6 @@ $payments = PDO_DB::table_list(
     "id DESC"
 );
 
+?><div class="portlet" ><?php
 require_once(PROTECTED_DIR . '/scripts/cabinet/payments/_list.php');
+?></div><?php

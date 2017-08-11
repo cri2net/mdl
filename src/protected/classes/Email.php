@@ -31,12 +31,12 @@ class Email
         
         $this->isSMTP();
 
-        $this->Host       = 'smtp.yandex.ru';
+        $this->Host       = 'mail.cks.kiev.ua';
         $this->Port       = 25; // The default SMTP server port.
-        $this->SMTPSecure = 'tls'; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
+//        $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
         $this->SMTPAuth   = true;
         $this->Username   = 'no-reply@cks.kiev.ua';
-        $this->Password   = 'gKy72etS3k8G';
+        $this->Password   = 'krP32%$me';
     }
 
     public function __set($name, $value)

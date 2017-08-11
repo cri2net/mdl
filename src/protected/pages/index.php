@@ -8,7 +8,7 @@
 
 <nav class="navbar navbar-fixed-top">
     <div class="container">
-        <a class="logo" href="index.php"><img src="<?= BASE_URL; ?>/assets/images/logo.png" alt="ЦКС"></a>
+        <a class="logo" href="<?= BASE_URL; ?>"><img src="<?= BASE_URL; ?>/assets/images/logo.png" alt="ЦКС"></a>
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
@@ -26,10 +26,10 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="<?= BASE_URL; ?>/about/">Про нас</a></li>
-                <li><a href="#">Перелік послуг</a></li>
-                <li><a href="#">Сервісні центри</a></li>
-                <li><a href="#">Сплатити за послуги</a></li>
-                <li><a href="#" class="bordered">Увійти в особистий кабінет</a></li>
+                <li><a href="<?= BASE_URL; ?>/services-list/">Перелік послуг</a></li>
+                <li><a href="<?= BASE_URL; ?>/service-centers/">Сервісні центри</a></li>
+                <li><a href="<?= BASE_URL; ?>/cabinet/instant-payments/">Сплатити за послуги</a></li>
+                <li><a href="<?= BASE_URL; ?>/cabinet/" class="bordered">Особистий кабінет</a></li>
             </ul>
         </div>
     </div>
@@ -39,8 +39,8 @@
         <h1>Центр<br>комунального<br>сервісу</h1>
         <p class="descr">Сплачуй  комуналку легко!</p>
         <div class="social pull-right">
-            <a href="#" class="fa fa-facebook"></a>
-            <a href="#" class="fa fa-youtube"></a>
+            <a href="https://www.facebook.com/cks.kiev.ua/" target="_blank" class="fa fa-facebook"></a>
+            <a href="https://www.youtube.com/channel/UCBZgKIDjq4AOOpYYKIK40kQ" target="_blank" class="fa fa-youtube"></a>
             <p>Ми поруч</p>
         </div>
     </div>
@@ -53,16 +53,16 @@
                     <img src="<?= BASE_URL; ?>/assets/images/notebook.png" class="notebook" alt="Notebook">
                 </div>
                 <div class="col-md-6">
-                    <div class="text">Швидко та зручно<br> сплачуйте послуги жкх<br> онлайн</div>
+                    <div class="text">Швидко та зручно<br> сплачуйте послуги ЖКГ<br> онлайн</div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="block-white">
+    <div class="block-white grey">
         <div class="container">
             <h2>Перейти до особистого кабінету ?</h2>
             <a href="<?= BASE_URL; ?>/cabinet/" class="btn btn-yellow btn-lg">Увійти<span class="arrow-right"></span></a>
-            <br><span class="gray">або</span> <a href="#" class="underline">Переглянути довідку</a>
+            <br><span class="gray">або</span> <a href="<?= BASE_URL ?>/main_help/cabinet_faq/" class="underline">Переглянути довідку</a>
         </div>
     </div>
 </section>
@@ -85,22 +85,28 @@
                             $date .= date(' Y', $news[$i]['created_at']);
                         }
 
-                        if (mb_strlen($news[$i]['title'], 'UTF-8') > 50) {
-                            $news[$i]['title'] = mb_substr($news[$i]['title'], 0, 50, 'UTF-8') . '...';
-                        }
+                        // if (mb_strlen($news[$i]['title'], 'UTF-8') > 50) {
+                        //     $news[$i]['title'] = mb_substr($news[$i]['title'], 0, 50, 'UTF-8') . '...';
+                        // }
 
                         $last = ($i == count($news) - 1);
                         $news[$i]['image'] = PDO_DB::first(News::IMAGES_TABLE, "news_id='{$news[$i]['id']}'", "is_main DESC, pos ASC");
 
                         ?>
                         <div class="<?= ($last) ? 'col-md-8 col-sm-12' : 'col-md-4 col-sm-6'; ?>">
-                            <a href="<?= BASE_URL; ?>/news/<?= composeURLKey($news[$i]['title']); ?>_<?= $news[$i]['id']; ?>/" class="matchHeight">
+                            <a href="<?= BASE_URL; ?>/news/<?= composeURLKey($news[$i]['title']); ?>_<?= $news[$i]['id']; ?>/" class="<?= $large ? 'item-large' : '' ?> item-<?= $news[$i]['color'] ?> matchHeight">
                                 <?php
                                     if ($news[$i]['image']) {
                                         ?>
-                                        <img src="<?= BASE_URL; ?>/photos/news/<?= ($last) ? '795x266' : '410x274'; ?>/<?= $news[$i]['image']['id']; ?>.jpg" class="full-width" alt="">
+                                        <img src="<?= BASE_URL; ?>/photos/news/<?= ($last) ? '795x266fc' : '387x266fc'; ?>/<?= $news[$i]['image']['id']; ?>.jpg" class="full-width" alt="">
                                         <?php
                                     }
+                                    else {
+                                        ?>
+                                        <img src="<?= BASE_URL ?>/assets/images/news/nophoto-<?= ($last) ? '795x266' : '387x266'; ?>.jpg" alt="cks" />
+                                        <?php 
+                                    }
+
                                 ?>
                                 <div class="descr">
                                     <h4><?= htmlspecialchars($news[$i]['title']); ?></h4>
@@ -132,14 +138,15 @@
         </div>
         <div class="row list">
             <div class="col-md-1 col-md-offset-1 visible-md visible-lg"><span class="num">1</span></div>
-            <div class="col-md-6 descr"><span class="hidden-md hidden-lg">1. </span>Перевірити список абонентів, що мають заборгованість</div>
-            <div class="col-md-4"><a href="#" class="btn btn-yellow-bordered btn-lg pull-right">Перевірити <span class="arrow-right"></span></a></div>
+            <div class="col-md-6 descr"><span class="hidden-md hidden-lg">1. </span>Питання та відповіді щодо заборгованості</div>
+            <div class="col-md-4"><a href="https://goo.gl/UmV3oe" target="_blank" class="btn btn-yellow-bordered btn-lg pull-right">Переглянути <span class="arrow-right"></span></a></div>
         </div>
 
         <div class="row list">
             <div class="col-md-1 col-md-offset-1 visible-md visible-lg"><span class="num">2</span></div>
             <div class="col-md-6 descr"><span class="hidden-md hidden-lg">2. </span>Заповніть форму для укладання договору про реструктуризацію боргу</div>
-            <div class="col-md-4"><a href="#" class="btn btn-yellow-bordered btn-lg pull-right">Заповнити <span class="arrow-right"></span></a></div>
+            <div class="col-md-4"><a href="https://docs.google.com/forms/d/1bJ1IMKQTp1Ssyj-u4yf9yW4dSpYcnb2Tqw5MUfJKhDA/viewform?edit_requested=true 
+" target="_blank" class="btn btn-yellow-bordered btn-lg pull-right">Заповнити <span class="arrow-right"></span></a></div>
         </div>
 
         <div class="row list">
@@ -172,16 +179,41 @@
                 </div>
             </div>
         </div>
-        <a href="#" class="btn btn-yellow btn-lg aligncenter black">Знайти своЄ відділення</a>
+        <a href="<?= BASE_URL ?>/service-centers/" class="btn btn-yellow btn-lg aligncenter black">Знайти своЄ відділення</a>
     </div>
 </section>
+<section id="services-1" class="parallax">
+    <div class="container">
+        <h2>Додатковий сервіс</h2>
+        <div class="row items">
+            <div class="col-md-5ths item item-1">
+                Сантенхнічні<br>послуги
+            </div>
+            <div class="col-md-5ths item item-2">
+                Послуги з<br>електрики
+            </div>
+            <div class="col-md-5ths item item-3">
+                Прибирання<br>приміщень
+            </div>
+            <div class="col-md-5ths item item-4">
+                Ремонтно-підготовчі<br>послуги
+            </div>
+            <div class="col-md-5ths item item-5">
+                Послуги для<br>ОСББ та ЖБК
+            </div>
+        </div>
+        <h3>Найкращі спеціалісти, сертифіковані матеріали,<br>гарантія якості</h3>
+
+        <div><a href="<?= BASE_URL ?>/services/" class="btn btn-yellow btn-lg">Детальніше</a></div>
+    </div>
+</section>  
 <section id="home-comfort">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
                 <div class="header">Навчальний центр<br>“Платформа комфорту”</div>
                 <p>Центр навчання «Платформа комфорту» створений навесні 2016 року при КК «Центр комунального сервісу» для проведення роз’яснювальної роботи направленої на підвищення правової обізнаності мешканців у частині діючого законодавства у вигляді лекцій, семінарів, практикумів, круглих столів.</p>
-                <a href="#" class="btn btn-yellow btn-lg">Детальніше <span class="arrow-right"></span></a>
+                <a href="http://edu.cks.kiev.ua/ " target="_blank" class="btn btn-yellow btn-lg">Детальніше <span class="arrow-right"></span></a>
             </div>
         </div>
     </div>
@@ -192,7 +224,7 @@
             <div class="col-xs-12">
                 <div class="header">Соціальний проект<br>“Комунальна вікіпедія”</div>
                 <p>Проект в якому кожен бажаючий має можливість задати питання стосовно сплати послуг, субсидій, ОСББ, тощо та отримати на нього кваліфіковану відповідь і все це абсолютно безкоштовно.</p>
-                <a href="#" class="btn btn-yellow btn-lg">Детальніше <span class="arrow-right"></span></a>
+                <a href="http://wiki.1551.gov.ua/pages/viewpage.action?pageId=3507952" target="_blank" class="btn btn-yellow btn-lg">Детальніше <span class="arrow-right"></span></a>
             </div>
         </div>
     </div>

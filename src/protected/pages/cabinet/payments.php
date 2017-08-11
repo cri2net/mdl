@@ -4,41 +4,18 @@
         return require_once(PROTECTED_DIR . '/pages/cabinet/login.php');
     }
 
+    define('NAVBAR_FOR_PAYMENTS', true);
     $current_section = $__route_result['values']['section'];
 ?>
-<div class="h1-line-cabinet">
-    <h1 class="big-title">Мої платежі</h1>
-</div>
+<body>
+<?php
+    require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
+    require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
+?>
+<div class="container" >
+<content>
 <div class="cabinet-settings cabinet-payments">
     <?php
-        if ($current_section != 'details') {
-            ?>
-            <div class="page-tabs">
-                <?php
-                    $sections = [
-                        'history' => 'Історія платежів',
-                        'komdebt' => 'ЖКГ платежі',
-                        'instant' => 'Миттєві платежі',
-                    ];
-                    $i = 0;
-                    
-                    foreach ($sections as $key => $value) {
-                        $i++;
-                        $current = ($current_section == $key);
-                        $class = 'tab';
-                        $class .= ($current) ? ' current' : '';
-                        $class .= ($i == count($sections)) ? ' last' : '';
-
-                        if ($current) {
-                            ?><div class="<?= $class; ?>"><?= $value; ?></div><?php
-                        } else {
-                            ?><a class="<?= $class; ?>" href="<?= BASE_URL; ?>/cabinet/payments/<?= $key; ?>/"><?= $value; ?></a><?php
-                        }
-                    }
-                ?>
-            </div>
-            <?php
-        }
 
         if (isset($_SESSION['cabinet-settings']['status']) && !$_SESSION['cabinet-settings']['status']) {
             ?>
@@ -56,4 +33,6 @@
             require_once($file);
         }
     ?>
+</div>
+</content>
 </div>

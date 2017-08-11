@@ -4,7 +4,7 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class House
 {   
-    const HOUSES_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
+    const HOUSES_URL = 'http://ppp.gerc.ua:80/reports/rwservlet?report=/gerc_api/spr_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
     const TABLE = DB_TBL_HOUSES;
     
     public static function cron()

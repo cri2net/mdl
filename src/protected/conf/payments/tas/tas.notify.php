@@ -3,7 +3,7 @@
 use cri2net\php_pdo_db\PDO_DB;
 
 $date = date('d-m-Y H:i:s');
-$mess = "$date\r\nHTTP_RAW_POST_DATA: ".var_export(@$HTTP_RAW_POST_DATA, true)."\r\n\r\n\r\n";
+$mess = "$date\r\nPOST: ".var_export(@$_POST, true)."\r\n\r\n\r\n";
 
 $dir = PROTECTED_DIR . "/logs/paysystems/$paysystem/";
 if (!file_exists($dir)) {

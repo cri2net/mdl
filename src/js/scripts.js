@@ -3,6 +3,7 @@
 $(document).on('ready', function() { 
 
 	initScrollAnimation();
+    initParallax();
 	initMap();
 	initSwiper();
 	initEvents();
@@ -258,4 +259,13 @@ function initMap(mapEl) {
 		  map: map
 		});
 	}
+}
+
+function initParallax() {
+
+  if (/Mobi/.test(navigator.userAgent)) return false;
+  $('.parallax').each(function() {
+    
+    $(this).parallax("50%", 0.5);    
+  });
 }

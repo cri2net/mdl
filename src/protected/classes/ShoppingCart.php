@@ -40,38 +40,38 @@ class ShoppingCart
         switch ($processing) {
             case 'visa':
             case 'mastercard':
-                $login    = 'CKS_SITE_RB';
-                $password = '0206E088B06597C2A4565293639B4CABB2BB48B9';
+                $login    = 'CKS_SITE_COM_RB';
+                $password = '592F95260CBC0CAC0A5A71A4C3753497AD32D310';
                 break;
 
             case 'tas':
-                $login    = 'cks_site';
-                $password = '53DA2E14D3C162C23CD8485E67D7F30298604209';
+                $login    = 'cks_site_com';
+                $password = '0168F38DC7806216FB81C0CEAEF044713A1397BE';
                 break;
 
             case 'marfin':
-                $login    = 'cks_site_mb';
-                $password = strtoupper(sha1('cks_site_mb123'));
+                $login    = 'cks_site_com_mb';
+                $password = strtoupper(sha1('cks_site_com_mb123'));
                 break;
 
             case 'webmoney':
-                $login    = 'cks_site_wm';
-                $password = strtoupper(sha1('cks_site_wm123'));
+                $login    = 'cks_site_com_wm';
+                $password = strtoupper(sha1('cks_site_com_wm123'));
                 break;
 
             case 'oschad_mycard':
-                $login    = 'CKS_SITE_OB';
-                $password = strtoupper(sha1('cks_site_ob123'));
+                $login    = 'CKS_SITE_COM_OB';
+                $password = strtoupper(sha1('cks_site_com_ob123'));
                 break;
 
             case 'oschadbank':
-                $login    = 'cks_site_ob2';
-                $password = strtoupper(sha1('cks_site_ob2123'));
+                $login    = 'cks_site_com_ob2';
+                $password = strtoupper(sha1('cks_site_com_ob2123'));
                 break;
 
             case 'oschad':
-                $login    = 'cks_site_ob3';
-                $password = strtoupper(sha1('cks_site_ob3123'));
+                $login    = 'cks_site_com_ob3';
+                $password = strtoupper(sha1('cks_site_com_ob3123'));
                 break;
         }
     }

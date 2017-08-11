@@ -11,7 +11,7 @@ switch ($_type) {
 
     case 'news':
         $img = PDO_DB::row_by_id(TABLE_PREFIX . "{$_type}_images", $_id);
-        $good_size = in_array($_size, ['50x50', '100x100fc', '795x266', '410x274']);
+        $good_size = in_array($_size, ['50x50', '100x100fc', '795x266', '410x274', '795x266fc', '387x266fc', '1101x620fc']);
         $img_path = ROOT . "/db_pic/$_type/$folder/{$img['filename']}.jpg";
         $root_image = ROOT . "/db_pic/$_type/original/{$img['filename']}.jpg";
         break;

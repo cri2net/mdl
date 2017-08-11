@@ -27,6 +27,9 @@
         return;
     }
 ?>
+<div class="container" >
+<content>
+<div class="portlet" >
 <div class="form-subtitle subtitle-bg-green">Оберіть, будь ласка, спосіб сплати:</div>
 <form class="form-block full-width" action="<?= BASE_URL; ?>/post/cabinet/object-item/checkout/" method="post">
     <div class="paysystems">
@@ -141,6 +144,9 @@
         <input type="hidden" value="1" name="checkout_submited">
     </div>
 </form>
+</div>
+</content>
+</div>
 <script type="text/javascript">
     $(document).ready(function(){
         getShoppingCartTotal('<?= $total_sum; ?>', '<?= $tasSum; ?>', 'tas_visa');
@@ -162,6 +168,7 @@
             var checked_el = $("input[name=percent]:checked");
             var ps_key = $(checked_el).attr('data-paysystem-key');
             var ps_sum = $(checked_el).attr('data-paysystem-sum');
+            console.log(checked_el);
             getShoppingCartTotal('<?= $total_sum; ?>', ps_sum, ps_key);
         });
     });

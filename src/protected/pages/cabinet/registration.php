@@ -6,7 +6,7 @@
 <div class="container">
     <content>
         <div class="logo-large">
-            <img src="<?= BASE_URL; ?>/assets/images/logo-large.png">
+            <a href="<?= BASE_URL ?>" ><img src="<?= BASE_URL; ?>/assets/images/logo-large.png"></a>
         </div>
         <form class="form-welcome" onsubmit="top.postMessage('register-form-send', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/registration/">
             <a href="<?= BASE_URL; ?>/cabinet/login/" class="close">&times;</a>
@@ -62,8 +62,8 @@
                     <div class="form-group align-left" style="margin-bottom: 20px;">
                         <span class="hint">
                             Реєструючись, Ви підтверджуєте свою згоду на обробку персональних даних, а також підтверджуєте те,
-                            що ознайомились та погоджуєтесь з <a href="http://cks.kiev.ua/docs/ugoda_korustuvacha.pdf" target="_blank">Угодою&nbsp;користувача</a>
-                            та <a href="http://cks.kiev.ua/docs/zgoda_na_obrobku_danih.pdf" target="_blank">Згодою на збір та обробку персональних даних</a>
+                            що ознайомились та погоджуєтесь з <a href="<?= BASE_URL ?>/services_list_and_docs/docs/user_agreement/" target="_blank">Угодою&nbsp;користувача</a>
+                            та <a href="<?= BASE_URL ?>/services_list_and_docs/docs/personal_data/" target="_blank">Згодою на збір та обробку персональних даних</a>
                         </span>
                     </div>
                     <div class="form-group">

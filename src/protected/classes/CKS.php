@@ -7,8 +7,8 @@ class CKS
     const PLAT_LIST        = '/reports/rwservlet?report=gerc_api/spr_plat_49.rep&cmdkey=rep&destype=Cache&Desformat=xml';
     const FIRME_LIST       = '/reports/rwservlet?report=gerc_api/spr_firme_49.rep&cmdkey=rep&destype=Cache&Desformat=xml&id_plat=';
     const CREATE_PAYMENT   = '/reports/rwservlet?report=gerc_api/api_pnew_cks.rep&cmdkey=rep&destype=Cache&Desformat=xml&login=';
-    const CASHIER_LOGIN    = 'cks_site';
-    const CASHIER_PASSWORD = '53DA2E14D3C162C23CD8485E67D7F30298604209';
+    const CASHIER_LOGIN    = 'cks_site_com';
+    const CASHIER_PASSWORD = '0168F38DC7806216FB81C0CEAEF044713A1397BE';
 
     /**
      * Отдаёт список районов, в которых есть отделения ЦКС

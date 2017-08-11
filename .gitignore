@@ -1,5 +1,6 @@
 node_modules/
 public/
+backup/
 *.sublime-project
 *.sublime-workspace
 src/protected/vendor/

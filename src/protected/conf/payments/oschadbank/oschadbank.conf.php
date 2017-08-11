@@ -2,7 +2,7 @@
 $oschad_merchant_settings = [
     'CURRENCY'   => 'UAH',
     'MERCH_NAME' => 'CKS',
-    'MERCH_URL'  => 'http://cks.kiev.ua/',
+    'MERCH_URL'  => 'https://cks.com.ua',
     'MERCHANT'   => '20904510',
     'TERMINAL'   => '20907450',
     'EMAIL'      => 'zvernennya@src.kiev.ua',
