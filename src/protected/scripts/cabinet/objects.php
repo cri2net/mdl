@@ -135,13 +135,25 @@
             <?php
         }
     ?>
-
     <br>
-    <div class="btn green bold big add-new" onclick="$('#add-object-form').slideToggle(300);"><div class="icon-objects"></div>Додати новий будинок або квартиру</div>
-
-    <div id="add-object-form" class="add-object-form" style="display:none;">
-        <form class="form-block" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
-            <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
-        </form>
-    </div>
+    <?php
+        $verifiedEmail = (int)($_SESSION['auth']['verified_email']) == 1;
+        if($verifiedEmail) {
+        ?>
+        <div class="btn green bold big add-new" onclick="$('#add-object-form').slideToggle(300);"><div class="icon-objects"></div>Додати новий будинок або квартиру</div>
+        <div id="add-object-form" class="add-object-form" style="display:none;">
+            <form class="form-block" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
+                <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
+            </form>
+        </div>
+        <?php
+        } else {
+        ?>
+        <div style="border:solid 1px #f00; text-align:center; padding:2em;" >
+        Щоб додати об'єкт до системи, <a href="<?= BASE_URL ?>/cabinet/verify-email/" >підтвердіть</a> адресу Вашої електроної пошти
+        </div>
+        <?php
+        }
+    ?>
+    
 </div>

@@ -1,11 +1,20 @@
 <?php
+use cri2net\php_pdo_db\PDO_DB;
+
 try {
     $_SESSION['objects-auth'] = [];
 
     if (!isset($_POST['flat']) || !$_POST['flat']) {
         throw new Exception(ERROR_GET_FLAT);
     }
+    $_idFlat = (int)$_POST['flat'];
 
+    $pins = PDO_DB::table_list(TABLE_PREFIX . 'flats_pin', "`id_user`={$__userData['id']} && `id_flat`=$_idFlat", "`created_at` DESC", 1);
+    $pin = $pins[0];
+    if($pin['pin'] != $_POST['pin']) {
+        throw new Exception(ERROR_FLAT_PIN);
+    }
+    
     $flat = Flat::addFlat($_POST['flat'], $_POST['tenant']);
 
     if (!$flat) {
