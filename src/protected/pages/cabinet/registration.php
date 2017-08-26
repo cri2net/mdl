@@ -84,11 +84,18 @@
                 </div>
             </div>
             <div class="input" style="margin-bottom: 20px;">
+                <span><input type="checkbox" name="agree[1]" required="required" checked /></span>
                 <span class="hint">
                     Реєструючись, Ви підтверджуєте свою згоду на обробку персональних даних, а також підтверджуєте те,
                     що ознайомились та погоджуєтесь з <a href="http://cks.kiev.ua/docs/ugoda_korustuvacha.pdf" target="_blank">Угодою&nbsp;користувача</a>
                     та <a href="http://cks.kiev.ua/docs/zgoda_na_obrobku_danih.pdf" target="_blank">Згодою на збір та обробку персональних даних</a>
                 </span>
+            </div>
+            <div class="input" style="margin-bottom: 20px;">
+                <span><input type="checkbox" name="agree[2]" required="required" checked /></span>
+                <span class="hint">
+                Реєструючись у особистому кабінеті та отримуючи інформацію про об’єкт (особовий рахунок) Ви підтверджуєте, що маєте право на отримання такої інформації по даному об’єкту, а також усвідомлюєте свою персональну відповідальність за її незаконне отримання. 
+                Звертаємо Вашу увагу, що статтею 182 кримінального кодексу України встановлено відповідальність за незаконне збирання, зберігання та поширення конфіденційної інформації про особу</span>
             </div>
             <div class="input">
                 <button class="btn green bold">Зареєструватися</button>
