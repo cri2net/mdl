@@ -30,7 +30,7 @@ else {
 		        'pin'       => $data['pin']
 		    ]
 		);
-		$res = ['result' => 'ok', 'data' => $__userData];
+		$res = ['result' => 'ok'];
 	} catch(Exception $e) {
 		$res = ['result' => 'error', 'msg' => $e->getMessage];
 	}

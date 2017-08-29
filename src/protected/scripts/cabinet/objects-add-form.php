@@ -171,7 +171,7 @@
                 success: function(response) {
                     switch(response.result) {
                         case 'ok':
-                            $("#pin-code").slideDown(function(){ $("#pin-code input").attr('required', 'required')});
+                            
                             PIN_SENT = true;
                             return false;
                             break;
@@ -182,6 +182,8 @@
                     
                 }
             });
+
+            $("#pin-code").slideDown(function(){ $("#pin-code input").attr('required', 'required')});
             return false;
             
         });
