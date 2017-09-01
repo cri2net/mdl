@@ -4,6 +4,7 @@
 
         if (!defined('SHORT_FOOTER') || !SHORT_FOOTER) {
             ?>
+            <a href="<?= BASE_URL; ?>/feedback/" id="help"></a>
             <footer>
                 <div class="container">
 

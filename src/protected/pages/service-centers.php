@@ -1,3 +1,6 @@
+<?php
+    use cri2net\php_pdo_db\PDO_DB;
+?>
 <body>
 
 <?php require_once(PROTECTED_DIR . '/layouts/navbar_inner.php'); ?>
@@ -64,7 +67,7 @@
                                 </th>
                             </tr>
                             <tr class="head-gray-2">
-                                <th>Назва</th>
+                                <th>Район</th>
                                 <th>Адреса</th>
                                 <th>Графік роботи</th>
                                 <th>Додаткові функції</th>
@@ -72,38 +75,46 @@
                         
                         </thead>
                         <tbody>
+                        <?php
+                            $list = PDO_DB::table_list(TABLE_PREFIX . 'service_centers', null, "`id_region` ASC");
+
+                            foreach($list as $item) {
+                            $region = PDO_DB::row_by_id(TABLE_PREFIX . 'dict_regions', $item['id_region']);
+                            $phone = strlen(trim($item['phone'])) < 3 ? '(044) 247-40-40' : trim($item['phone']);
+                            $isWebcam = strlen(trim($item['webcam'])) > 0;
+                            ?>
                             <tr class="item-row">
                                 <td class="">     
-                                    Головний офіс #1
+                                    <?= $region['title']; ?>
                                     <div class="phone-more">
-                                        <span class="phone">(044) 247-40-40</span>
+                                        <span class="phone"><?= $phone; ?></span>
                                         Дякуємо за звернення
                                     </div>
                                 </td>
                                 <td class="center">
-                                    Кловський увіз, 24
+                                    <?= $item['address']; ?>
                                 </td>
                                 <td class="center">
-                                    <div class="dropdown">
-                                      <button class="select-white no-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        8:00 - 20:00
-                                        <span class="caret"></span>
-                                      </button>
-                                      <ul class="dropdown-menu disabled">
-                                        <li><a href="#">пн 8:00 - 20:00</a></li>
-                                        <li><a href="#">вт 8:00 - 20:00</a></li>
-                                        <li><a href="#">ср 8:00 - 20:00</a></li>
-                                        <li><a href="#">чт 8:00 - 20:00</a></li>
-                                        <li><a href="#">пт 8:00 - 20:00</a></li>
-                                        <li><a href="#">сб 8:00 - 20:00</a></li>
-                                        <li><a href="#">вс 8:00 - 17:00</a></li>
-                                      </ul>
-                                    </div>                                      
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?= $item['id'] ?>" ><i class="fa fa-calendar"></i></button>
+                                    <div class="modal fade" id="myModal<?= $item['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Розклад роботи</h4>
+                                          </div>
+                                          <div class="modal-body" style="text-align: left;" ><?= nl2br($item['worktime']) ?></div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                 </td>
                                 <td class="center">
                                     <a href="#" class="icon icon-phone"></a>
-                                    <a href="#" class="icon icon-map" data-id="1"></a>
-                                    <a href="#" class="icon icon-webcam"></a>
+                                    <a href="#" class="icon icon-map" data-id="<?= $item['id'] ?>"></a>
+                                    <?php if($isWebcam){?><a href="#" class="icon icon-webcam"></a><?}?>
                                 </td>
                             </tr>
                             <tr class="item-map">
@@ -111,13 +122,13 @@
                                     <div class="div-shadow">
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <div class="map-service matchHeight" id="map-service-1" data-lat="50.4359167" data-lng="30.5420269" data-zoom="17"></div>
+                                                <div class="map-service matchHeight" id="map-service-<?= $item['id'] ?>" data-lat="<?= $item['latitude'] ?>" data-lng="<?= $item['longtitude'] ?>" data-zoom="17"></div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="info matchHeight">
                                                     <a href="#" class="close">&times;</a>
-                                                    <span>03190, м. Київ, вул. Кирпоноса, 10/8<br>
-                                                    Телефон:    (044) 247-40-40</span>
+                                                    <span><?= $item['address'] ?><br>
+                                                    Телефон:    <?= $phone ?></span>
 
                                                     <a href="#" class="icon-href icon-trace">Прокласти маршрут до відділення</a>
                                                     <a href="#" class="icon-href icon-web">Переглянути веб камеру у відділенні</a>
@@ -131,14 +142,12 @@
                                 <td colspan="4">
                                     <div class="div-shadow">
                                         <div class="row">
-                                            <div class="col-md-8 matchHeight">
-                                                <img src="<?= BASE_URL ?>/assets/images/_webcam.jpg" class="full-width">
-                                            </div>
+                                            <div class="col-md-8 matchHeight"><?= $item['webcam'] ?></div>
                                             <div class="col-md-4">
                                                 <div class="info matchHeight">
                                                     <a href="#" class="close">&times;</a>
-                                                    <span>03190, м. Київ, вул. Кирпоноса, 10/8<br>
-                                                    Телефон: (044) 247-40-40</span>
+                                                    <span><?= $item['address'] ?><br>
+                                                    Телефон: <?= $phone ?></span>
 
                                                     <a href="#" class="icon-href icon-feedback"><span class="short">Залишити відгук</span></a>
                                                     <a href="#" class="icon-href icon-marker"><span class="short">Перейти до мапи</span></a>
@@ -147,83 +156,10 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr>                            
-                            <tr class="item-row">
-                                <td class="">     
-                                    Головний офіс #2
-                                    <div class="phone-more">
-                                        <span class="phone">(044) 247-40-40</span>
-                                        Дякуємо за звернення
-                                    </div>                                    
-                                </td>
-                                <td class="center">
-                                    вул. Кирпоноса, 10/8
-                                </td>
-                                <td class="center">
-                                    <div class="dropdown">
-                                      <button class="select-white no-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        8:00 - 19:00
-                                        <span class="caret"></span>
-                                      </button>
-                                      <ul class="dropdown-menu disabled">
-                                        <li><a href="#">пн 8:00 - 20:00</a></li>
-                                        <li><a href="#">вт 8:00 - 20:00</a></li>
-                                        <li><a href="#">ср 8:00 - 20:00</a></li>
-                                        <li><a href="#">чт 8:00 - 20:00</a></li>
-                                        <li><a href="#">пт 8:00 - 20:00</a></li>
-                                        <li><a href="#">сб 8:00 - 20:00</a></li>
-                                        <li><a href="#">вс 8:00 - 20:00</a></li>
-                                      </ul>
-                                    </div>  
-                                </td>
-                                <td class="center">
-                                    <a href="#" class="icon icon-phone"></a>
-                                    <a href="#" class="icon icon-map" data-id="2"></a>
-                                    <a href="#" class="icon icon-webcam"></a>
-                                </td>
-                            </tr>
-                            <tr class="item-map">
-                                <td colspan="4">
-                                    <div class="div-shadow">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <div class="map-service matchHeight" id="map-service-2" data-lat="50.4359167" data-lng="30.5420269" data-zoom="17"></div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="info matchHeight">
-                                                    <a href="#" class="close">&times;</a>
-                                                    <span>03190, м. Київ, вул. Кирпоноса, 10/8<br>
-                                                    Телефон:    (044) 247-40-40</span>
-
-                                                    <a href="#" class="icon-href icon-trace">Прокласти маршрут до відділення</a>
-                                                    <a href="#" class="icon-href icon-web">Переглянути веб камеру у відділенні</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="item-web">
-                                <td colspan="4">
-                                    <div class="div-shadow">
-                                        <div class="row">
-                                            <div class="col-md-8 matchHeight">
-                                                <img src="<?= BASE_URL ?>/assets/images/_webcam.jpg" class="full-width">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="info matchHeight">
-                                                    <a href="#" class="close">&times;</a>
-                                                    <span>03190, м. Київ, вул. Кирпоноса, 10/8<br>
-                                                    Телефон: (044) 247-40-40</span>
-
-                                                    <a href="#" class="icon-href icon-feedback"><span class="short">Залишити відгук</span></a>
-                                                    <a href="#" class="icon-href icon-marker"><span class="short">Перейти до мапи</span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>                              
+                            </tr>                                                     
+                            <?
+                            }
+                        ?>   
                         </tbody>
                     </table>
                 </div>
