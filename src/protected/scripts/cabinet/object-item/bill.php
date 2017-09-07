@@ -84,7 +84,7 @@
                                 <th class="align-center"><span class="counter counter-open"></span></th>
                                 <th class="th-header">Назва послуги /<br>одержувач коштів</th>
                                 <th>Заборгованість /<br>переплата, грн</th>
-                                <th>Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']['small']; ?>, грн*</th>
+                                <th>Нараховано за<br><?= $MONTHS_NAME[$debtMonth]['ua']['small']; ?>, грн*</th>
                                 <th>До сплати,<br>грн**</th>
                             </tr>
                         </thead>
