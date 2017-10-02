@@ -77,7 +77,7 @@
                     </div>
                 </td>
                 <td style="white-space:nowrap;">Заборгованість /<br>переплата, грн</td>
-                <td style="white-space:nowrap;">Нараховано за<br><?= $MONTHS_NAME[$previousMonth]['ua']['small']; ?>, грн *</td>
+                <td style="white-space:nowrap;">Нараховано за<br><?= $MONTHS_NAME[$debtMonth]['ua']['small']; ?>, грн *</td>
                 <td style="white-space:nowrap;">До сплати,<br>грн **</td>
             </tr>
             <?php
