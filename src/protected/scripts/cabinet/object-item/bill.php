@@ -21,7 +21,7 @@
             throw new Exception(ERROR_EMPTY_BILL);
         }
 
-        $debtMonth = date("n", strtotime($debtData['dbegin']));
+        $debtMonth = date("n", $debtData['timestamp']);
 
         if ($debtMonth == 1) {
             $previousMonth = 12;
