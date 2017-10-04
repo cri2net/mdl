@@ -28,7 +28,15 @@ try {
     unset($_SESSION['paybill']['payment_id'], $_SESSION['paybill-post-flag']);
 } catch (Exception $e) {
     $error = $e->getMessage();
-    ?><h2 class="big-error-message"><?= $error; ?></h2><?php
+    ?>
+    <div class="container">
+        <content>
+            <div class="text">
+                <h2 class="big-error-message"><?= $error; ?></h2>
+            </div>
+        </content>
+    </div>
+    <?php
     return;
 }
 if (file_exists($file . ".payform.php")) {

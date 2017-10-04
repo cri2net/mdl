@@ -9,6 +9,6 @@ $oschad_merchant_settings = [
     'COUNTRY'    => 'UA',
     'MERCH_GMT'  => '+2',
 ];
-$payment_form_action = 'https://3ds.oschadnybank.com/cgi-bin/cgi_link';
+$payment_form_action = 'https://3ds.oschadbank.ua/cgi-bin/cgi_link';
 $oschad_sign_key = '58102f462425c6e829ac878e6dd0ea61';
 $payment_form_target = '_top';

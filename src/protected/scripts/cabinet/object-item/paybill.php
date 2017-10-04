@@ -22,7 +22,15 @@
     }
 
     if ($error) {
-        ?><h2 class="big-error-message"><?= $error; ?></h2><?php
+        ?>
+        <div class="container">
+            <content>
+                <div class="text">
+                    <h2 class="big-error-message"><?= $error; ?></h2>
+                </div>
+            </content>
+        </div>
+        <?php
         unset($_SESSION['paybill']);
         return;
     }
