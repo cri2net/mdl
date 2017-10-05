@@ -10,5 +10,5 @@ $oschad_merchant_settings = [
     'MERCH_GMT'  => '+2',
 ];
 $payment_form_action = 'https://3ds.oschadbank.ua/cgi-bin/cgi_link';
-$oschad_sign_key = '58102f462425c6e829ac878e6dd0ea61';
+$oschad_sign_key = '5b92a523a45862f233ca2bec5de2651d';
 $payment_form_target = '_top';
