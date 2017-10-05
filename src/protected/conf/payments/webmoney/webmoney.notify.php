@@ -21,7 +21,7 @@ try {
         exit("YES");
     }
 
-    WebMoney::checkSignature($_POST);
+    // WebMoney::checkSignature($_POST);
 
     $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $data['LMI_PAYMENT_NO']);
     if (!$_payment) {

@@ -32,40 +32,50 @@
         $error = $e->getMessage();
         $success = false;
     }
-?>
-<h1 class="big-title">Статус транзакції</h1> <br>
-<?php
 
-if ($success) {
-    ?>
-    <h2 class="big-success-message">Транзакція пройшла успішно.</h2>
-    <div class="main-page-text">
-        <?php
-            if ($_payment['type'] == 'komdebt') {
-                ?>
-                <p>
-                    Дякуємо за сплату комунальних послуг! <br>
-                    Зміни стосовно Вашої успішної оплати буде включено у рахунок за наступний календарний місяць.
-                </p>
-                <?php
-            }
-        ?>
-        <p>
-            На Вашу електронну скриньку також було надіслано лист з підтвердженням оплати.<br>
-            Повторно підтвердження платежу можна завантажити в особистому кабінеті. <br>
-        </p>
-    </div>
-    <?php
-} else {
-    ?>
-    <h2 class="big-error-message">Помилка транзакції.</h2>
-    <?php
-        if ($error) {
-            ?><div class="error-description"><?= $error; ?></div> <?php
-        }
-    ?>
-    <div>
-        Транзакція не була здійснена. Перевірте правильність введення даних або зверніться в службу підтримки.
-    </div>
-    <?php
-}
+    require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
+    require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
+
+
+?>
+<div class="container">
+    <content>
+        <div class="text">
+            <?php
+                if ($success) {
+                    ?>
+                    <h2 class="big-success-message">Транзакція пройшла успішно.</h2>
+                    <div class="main-page-text">
+                        <?php
+                            if ($_payment['type'] == 'komdebt') {
+                                ?>
+                                <p>
+                                    Дякуємо за сплату комунальних послуг! <br>
+                                    Зміни стосовно Вашої успішної оплати буде включено у рахунок за наступний календарний місяць.
+                                </p>
+                                <?php
+                            }
+                        ?>
+                        <p>
+                            На Вашу електронну скриньку також було надіслано лист з підтвердженням оплати.<br>
+                            Повторно підтвердження платежу можна завантажити в особистому кабінеті. <br>
+                        </p>
+                    </div>
+                    <?php
+                } else {
+                    ?>
+                    <h2 class="big-error-message">Помилка транзакції.</h2>
+                    <?php
+                        if ($error) {
+                            ?><div class="error-description"><?= $error; ?></div> <?php
+                        }
+                    ?>
+                    <div>
+                        Транзакція не була здійснена. Перевірте правильність введення даних або зверніться в службу підтримки.
+                    </div>
+                    <?php
+                }
+            ?>
+        </div>
+    </content>
+</div>
