@@ -278,7 +278,7 @@
                                 $summ = explode('.', $item['list'][$i]['sum']);
                                 $is_bold = (count($item['list']) - 1 == $i);
                                 ?>
-                                <tr style="<?= ($is_bold) ? 'border-bottom-width: 3px;' : ''; ?>" class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                                <tr style="<?= ($is_bold) ? 'border-bottom-width: 3px; border-bottom-style: solid;' : ''; ?>" class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
                                     <td class="first" style="<?= ($is_bold) ? 'font-weight: bold;' : ''; ?>"><?= $item['list'][$i]['NAME']; ?></td>
                                     <td><?= $item['DBEGIN']; ?></td>
                                     <td><?= $item['DEND']; ?></td>
@@ -295,7 +295,7 @@
                             $recalc_total_summ /= 2;
                             $summ = explode('.', $recalc_total_summ);
                             ?>
-                            <tr style="border-bottom-width: 3px;" class="item-row odd">
+                            <tr style="border-bottom-width: 3px; border-bottom-style: solid;" class="item-row odd">
                                 <td colspan="3" class="first" style="font-weight: bold;">Всього за всі періоди</td>
                                 <td>
                                     <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
