@@ -83,6 +83,8 @@
 
 
     $oplat = $debt->getPayOnThisMonth($plat_code, $dateBegin);
+    $recalcData = $debt->getReCalc($house['flat_id'], date('01.m.Y', $debtData['timestamp'] + 86400 * 35));
+    $have_recalc = !empty($recalcData);
 
     $tmp_oplat = (double)str_replace(',', '.', $oplat);
     $tmp_debt_summ = (double)str_replace(',', '.', $house['debt_sum']);
@@ -342,7 +344,27 @@
                     </td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $prev_month_debt; ?></td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $tarif; ?></td>
-                    <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $summ_month; ?></td>
+                    <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30">
+                        <?= $summ_month; ?>
+                        <?php
+                            if ($have_recalc && strstr($debtData_item['name_plat'], 'УТРИМАННЯ')) {
+
+                                $summ = 0;
+                                foreach ($recalcData as $item) {
+                                    foreach ($item['list'] as $list_item) {
+                                        $summ += $list_item['sum'];
+                                    }
+                                }
+
+                                // в xml есть поле "Всього по о/рахунку(по періоду)", где дублирутеся общая сумма.
+                                // То есть надо на два поделить то, что выше в цикле просуммировано
+                                $summ /= 2;
+                                ?>
+                                <span style="font-size: 28px; font-style: italic; color: #00b86c; font-family: Times; cursor: help;" title="Перерахунок <?= $summ; ?> грн">&nbsp;i</span>
+                                <?php
+                            }
+                        ?>
+                    </td>
                     <td bgcolor="<?= $bg_color; ?>" align="left" style="color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px;" height="30"><?= $to_pay; ?></td>
                     <td bgcolor="<?= $bg_color; ?>" align="right" style="border-right:1px solid #eeeeee; color:#000000; <?= $_ff; ?> font-size:14px; padding:0px; line-height:18px; padding-bottom:2px; padding-right:30px;" height="30"><?= $oplat; ?></td>
                     <td style="padding:0px; line-height:10px;" width="18">&nbsp;</td>

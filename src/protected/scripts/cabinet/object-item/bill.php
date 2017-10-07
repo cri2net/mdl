@@ -4,6 +4,8 @@
         return require_once(ROOT . '/protected/pages/cabinet/login.php');
     }
 
+    define('IS_ONLINE_REP', true);
+
     $flat_id = $__route_result['values']['id'];
     
     try {
@@ -13,7 +15,6 @@
             throw new Exception(ERROR_NOT_FIND_FLAT);
         }
         
-        $debt = new KomDebt();
         $plat_code = KomDebt::getFlatIdOrPlatcode($flatData['flat_id'], $flatData['plat_code'], $flatData['city_id']);
         $debtData = $debt->getData($plat_code);
         
@@ -33,6 +34,8 @@
             $dateBegin = "1.".$previousMonth.".".$previousYear;
         }
         
+        $recalcData = $debt->getReCalc($flatData['flat_id'], date('01.m.Y', $debtData['timestamp'] + 86400 * 35));
+        $have_recalc = !empty($recalcData);
         $dateEnd = $debtData['dbegin'];
 
     } catch(Exception $e) {
@@ -174,6 +177,23 @@
                                     <span class="item-summ">
                                         <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
                                     </span>
+                                    <?php
+                                }
+
+                                if ($have_recalc && strstr($item['name_plat'], 'УТРИМАННЯ')) {
+
+                                    $summ = 0;
+                                    foreach ($recalcData as $tmp_item) {
+                                        foreach ($tmp_item['list'] as $list_item) {
+                                            $summ += $list_item['sum'];
+                                        }
+                                    }
+
+                                    // в xml есть поле "Всього по о/рахунку(по періоду)", где дублирутеся общая сумма.
+                                    // То есть надо на два поделить то, что выше в цикле просуммировано
+                                    $summ /= 2;
+                                    ?>
+                                    <span style="font-size: 28px; font-style: italic; color: #00b86c; font-family: Times; cursor: help;" title="Перерахунок <?= $summ; ?> грн">&nbsp;i</span>
                                     <?php
                                 }
                             ?>

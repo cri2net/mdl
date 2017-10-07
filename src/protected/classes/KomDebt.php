@@ -3,8 +3,9 @@
 class KomDebt
 {
     protected $cache = [];
+    const RECALC_URL   = '/reports/rwservlet?report=site/g_komdebt_recalc_online.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
     protected $komplat_URL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
-    protected $debt_URL = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+    protected $debt_URL    = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
 
     private $months;
     private $monthsFullName;
@@ -23,7 +24,7 @@ class KomDebt
         try {
             $dateData = $this->getDatePeriod($dateBegin);
             $quertString  = "&dbegin=".$dateData['begin']."&dend=".$dateData['end'];
-
+            
             if (strlen($obj_id) > 16) {
                 if ($url == $this->debt_URL) {
                     $url = "https://ppp.gerc.ua/reports/rwservlet?report=site/komdebt2.rep&cmdkey=gsity&destype=Cache&Desformat=xml&plat_code=" . $obj_id . $quertString;
@@ -39,10 +40,10 @@ class KomDebt
             }
             return $this->cache[md5($url)];
         } catch (Exception $e) {
-            throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
-        }
-    }
-    
+                    throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
+                }
+            }
+
     public function clearCache()
     {
         $this->cache = [];
@@ -61,9 +62,9 @@ class KomDebt
         if (strlen($platcode) > 16) {
             if (in_array($city_id, [Street::ODESSA_ID, Street::KIEV_ID])) {
                 return $platcode;
-            }
         }
-
+    }
+    
         return $flat_id;
     }
     
@@ -207,6 +208,7 @@ class KomDebt
                     $list['counterData']['date'] = " 01.".date("n").".".date("y");
                     $list['counterData']['tarif'] = str_replace('.', ',', sprintf('%.3f',((float)str_replace(',', '.', $row->TARIF))/100));
                     $list['counterData']['real_tarif'] = (((float)str_replace(',', '.', $row->TARIF))/100);
+                    $list['counterData']['original_tarif'] = $row->TARIF;
                     $list['counterData']['NAME_PLAT'] = $this->getNamePlat($row->NAME_PLAT);
                     $list['counterData']['NAIM_LG'] = (string)$row->NAIM_LG;
                     $list['counterData']['PROC_LG'] = (string)$row->PROC_LG;
@@ -216,7 +218,7 @@ class KomDebt
                     foreach ($row->COUNTERS->COUNTERS_ITEM as $counter) {
                         $list['counterData']['counters'][] = [
                             'COUNTER_NO' => (int)$counter->COUNTER_NO,
-                            'OLD_VALUE' => (int)$counter->OLD_VALUE,
+                            'OLD_VALUE' => floatval(str_replace(",", ".", $counter->OLD_VALUE)),
                             'ABCOUNTER' => (string)$counter->ABCOUNTER,
                         ];
                     }
@@ -307,13 +309,14 @@ class KomDebt
             $data['bank'][(string)$row->PUNKT_ID]['KASSA'] = (string)$row->KASSA;
             
             $dataArray = [
-                'NAME_FIRME' => (string)$row->NAME_FIRME,
-                'NAME_PLAT'  => $this->getNamePlat($row->NAME_PLAT),
-                'SUMM'       => str_replace('.', ',', sprintf('%.2f',((float)$row->SUMM)/100)),
-                'PDATE'      => date("d.m.y H:i:s", strtotime((string)$row->PDATE)),
-                'ABCOUNT'    => (string)$row->ABCOUNT,
-                'DBEGIN'     => (string)$row->DBEGIN1,
-                'DEND'       => (string)$row->DEND1
+                'NAME_FIRME'     => (string)$row->NAME_FIRME,
+                'NAME_PLAT'      => $this->getNamePlat($row->NAME_PLAT),
+                'SUMM'           => str_replace('.', ',', sprintf('%.2f',((float)$row->SUMM)/100)),
+                'PDATE'          => date("d.m.y H:i:s", strtotime((string)$row->PDATE)),
+                'ID_PLAT_KLIENT' => (isset($row->ID_PLAT_KLIENT)) ? $row->ID_PLAT_KLIENT . '' : null,
+                'ABCOUNT'        => (string)$row->ABCOUNT,
+                'DBEGIN'         => (string)$row->DBEGIN1,
+                'DEND'           => (string)$row->DEND1,
             ];
 
             if ($row->CNTR->CNTR_ITEM) {
@@ -388,6 +391,57 @@ class KomDebt
         }
         
         return str_replace(".", ",", sprintf('%.2f', $summ));
+    }
+    
+    public function getReCalc($obj_id, $dateBegin = null)
+    {
+        if (Authorization::getLoggedUserId() != 4) {
+            return [];
+        }
+
+        $xmlString = $this->getXML(self::RECALC_URL, $obj_id);
+
+        $xmlString = str_replace("&nbsp;", "", $xmlString);
+        $xml = @new SimpleXMLElement($xmlString);
+
+        if (!empty($xml->ROW[0]->KOM_ERROR)) {
+            return [];
+        }
+
+        $keys = ['PLAT_CODE', 'ABCOUNT', 'DBEGIN', 'DEND', 'DATE_D', 'ID_OBJ'];
+
+        $result = [];
+        
+        foreach ($xml->xpath("//ROW") as $row) {
+
+            if ($dateBegin !== null) {
+                if ($row->DATE_D . '' != $dateBegin) {
+                    continue;
+                }
+            }
+
+            $arr = ['list' => []];
+
+            foreach ($keys as $key) {
+                $arr[$key] = (isset($row->$key)) ? $row->$key . '' : '';
+            }
+
+            for ($i=0; $i < count($row->LIST_RECALC->SUMM_RECALC); $i++) {
+
+                $tmp = $row->LIST_RECALC->SUMM_RECALC[$i];
+                $tmp_arr = [];
+
+                foreach ($tmp->attributes() as $attr_name => $attr_value) {
+                    $tmp_arr[$attr_name . ''] = $attr_value . '';
+                }
+                $tmp_arr['sum'] = intval($tmp . '') / 100;
+                $arr['list'][] = $tmp_arr;
+            }
+
+            $result[] = $arr;
+        }
+
+        return $result;
     }
     
     public function getUniqueFirmName($obj_id, $dateBegin = null, $depth = 0, &$real_timestamp = null, $first_real_timestamp = null)

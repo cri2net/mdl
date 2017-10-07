@@ -10,6 +10,9 @@
         if (!$object || ($object['user_id'] != $user_id)) {
             throw new Exception(ERROR_GET_FLAT);
         }
+
+        $debt = new KomDebt();
+        
     } catch (Exception $e) {
         ?><h2 class="big-error-message"><?= $e->getMessage(); ?></h2> <?php
         return;

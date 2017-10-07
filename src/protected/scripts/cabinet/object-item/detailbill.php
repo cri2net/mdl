@@ -2,7 +2,6 @@
     try {
         $currMonth = date("n");
         $years = [];
-        $debt = new KomDebt();
         
         for ($i=date("Y"); $i>=2012; $i--) {
             $years[] = $i;
@@ -46,6 +45,7 @@
         }
         
         $debtData = $debt->getUniqueFirm($plat_code, $_need_firm, $dateBegin, $filter);
+        $recalcData = $debt->getReCalc($object['flat_id'], '0' . $dateBegin);
 
         if (empty($debtData['data'])) {
             throw new Exception(ERROR_EMPTY_BILL);
@@ -104,6 +104,8 @@
         ?><h2 class="big-error-message"><?= $error; ?></h2> <?php
         return;
     }
+
+    $have_recalc = !empty($recalcData);
 ?>
 <div class="real-full-width-block">
     <table class="full-width-table datailbill-table no-border">
@@ -113,6 +115,13 @@
                 <th rowspan="2" class="td-sum">Заборг. / переплата на <?= date('d.m', date_timestamp_get($prev_month)); ?>, грн</th>
                 <th rowspan="2">Тариф, грн</th>
                 <th rowspan="2">Нараховано за <?= $debtData['previous_month']; ?>, грн *</th>
+                <?php
+                    if ($have_recalc) {
+                        ?>
+                        <th rowspan="2">Перерахунок</th>
+                        <?php
+                    }
+                ?>
                 <th colspan="2" style="text-align:center; border-bottom: solid 1px #00979c;">Субсидія,&nbsp;грн</th>
                 <th rowspan="2">До сплати за <?= $debtData['previous_month']; ?>, грн</th>
                 <th rowspan="2" class="td-sum">Сплачено у <?= $prev_month_when; ?>, грн **</th>
@@ -130,7 +139,7 @@
                     $firm_counter++;
                     ?>
                     <tr class="bank-name">
-                        <td class="first" colspan="8">
+                        <td class="first" colspan="<?= ($have_recalc) ? 9 : 8; ?>">
                             <span class="name-plat">
                                 <?= $debtData['firm'][$key]['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>
                             </span>
@@ -183,6 +192,36 @@
                                     ?>
                                     <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                 </td>
+                                <?php
+                                    if ($have_recalc) {
+                                        ?>
+                                        <td>
+                                            <?php
+                                                if (strstr($item['NAME_PLAT'], 'УТРИМАННЯ')) {
+                                                    
+                                                    $summ = 0;
+                                                    foreach ($recalcData as $tmp_item) {
+                                                        foreach ($tmp_item['list'] as $list_item) {
+                                                            $summ += $list_item['sum'];
+                                                        }
+                                                    }
+
+                                                    // в xml есть поле "Всього по о/рахунку(по періоду)", где дублирутеся общая сумма.
+                                                    // То есть надо на два поделить то, что выше в цикле просуммировано
+                                                    $summ /= 2;
+
+                                                    $summ = explode('.', $summ);
+                                                    ?>
+                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                    <?php
+                                                } else {
+                                                    echo '—';
+                                                }
+                                            ?>
+                                        </td>
+                                        <?php
+                                    }
+                                ?>
                                 <td><?= $item['SUBS']; ?></td>
                                 <td><?= $item['SUMM_OBL_PAY']; ?></td>
                                 <td>
@@ -207,4 +246,67 @@
             </tr>
         </tbody>
     </table>
+    <?php
+
+        if (!empty($recalcData)) {
+            ?>
+            <table class="full-width-table datailbill-table no-border">
+                <thead>
+                    <tr>
+                        <th colspan="4" class="first">Деталі перерахунку</th>
+                    </tr>
+                    <tr>
+                        <th class="first">Назва послуги</th>
+                        <th>Начало періоду</th>
+                        <th>Кінец періоду</th>
+                        <th>Сума</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $counter = 0;
+                        $recalc_total_summ = 0;
+                        
+                        foreach ($recalcData as $item) {
+
+                            for ($i=0; $i < count($item['list']); $i++) {
+
+                                $counter++;
+                                $recalc_total_summ += $item['list'][$i]['sum'];
+
+                                $no_border = (($counter == count($recalcData)) && ($firm_counter < count($debtData['data'])));
+                                $summ = explode('.', $item['list'][$i]['sum']);
+                                $is_bold = (count($item['list']) - 1 == $i);
+                                ?>
+                                <tr style="<?= ($is_bold) ? 'border-bottom-width: 3px;' : ''; ?>" class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                                    <td class="first" style="<?= ($is_bold) ? 'font-weight: bold;' : ''; ?>"><?= $item['list'][$i]['NAME']; ?></td>
+                                    <td><?= $item['DBEGIN']; ?></td>
+                                    <td><?= $item['DEND']; ?></td>
+                                    <td>
+                                        <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        }
+
+                        if (count($recalcData) > 1) {
+                            
+                            $recalc_total_summ /= 2;
+                            $summ = explode('.', $recalc_total_summ);
+                            ?>
+                            <tr style="border-bottom-width: 3px;" class="item-row odd">
+                                <td colspan="3" class="first" style="font-weight: bold;">Всього за всі періоди</td>
+                                <td>
+                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+        }
+    ?>
 </div>
