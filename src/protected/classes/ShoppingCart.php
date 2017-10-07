@@ -358,6 +358,7 @@ class ShoppingCart
             case 'mastercard':
             case 'visa':
             case 'tas':
+			case 'webmoney':
                 $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                 $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
                 $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
