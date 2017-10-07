@@ -3,15 +3,23 @@
 
     $list = PDO_DB::table_list(TABLE_PREFIX . 'service_centers');
     $markers = [];
-    foreach($list as $sc) {
+    
+    foreach ($list as $sc) {
+
         $id = $sc['id'];
         $region = PDO_DB::row_by_id(TABLE_PREFIX . 'dict_regions', $sc['id_region']);
         $latitude = $sc['latitude'];
         $longtitude = $sc['longtitude'];
         $title = htmlspecialchars($region['title']) . ' р-н';
         $address = str_replace("'", "\'", $sc['address']);
-        if($latitude&&$longtitude)
-            $markers[]="createMarker('$latitude', '$longtitude'," . ($sc['is_online'] ? 'true' : 'false') . " ,'$title', '<div style=\"max-width:350px;\"><h3>$title</h3>$address</div>')";
+        
+        if (!isset($sc['is_online'])) {
+            $sc['is_online'] = false;
+        }
+
+        if ($latitude && $longtitude) {
+            $markers[] = "createMarker('$latitude', '$longtitude'," . ($sc['is_online'] ? 'true' : 'false') . " ,'$title', '<div style=\"max-width:350px;\"><h3>$title</h3>$address</div>')";
+        }
     }
 ?>
 <body>
@@ -45,28 +53,30 @@
                 </div>
                 <div class="col-md-4">
                     <div class="info matchHeight">
-                        <div class="dropdown">
-                          <button class="input-green no-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Оберіть район
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu disabled">
-                            <li><a href="#">Район 1</a></li>
-                            <li><a href="#">Район 2</a></li>
-                            <li><a href="#">Район 3</a></li>
-                          </ul>
-                        </div>  
-                        <input type="text" class="input-green" placeholder="Ваша адреса"> 
-                        <label class="checkbox black black-label">
-                            <input checked="checked" value="inp_0" name="items[]" type="checkbox" class="">
-                            <span>Веб камера</span>
-                        </label>
-                        <label class="checkbox black black-label">
-                            <input checked="checked" value="inp_0" name="items[]" type="checkbox" class="">
-                            <span>Термінал для сплати</span>
-                        </label>
-                        <input type="submit" class="btn btn-green btn-green-white" value="Пошук відділень">
-                        <a href="#" class="all">перейти до списку всіх відділень</a>
+                        <form action="<?= BASE_URL; ?>/service-centers/" method="get">
+                            
+                            <!-- <div class="dropdown">
+                              <button class="input-green no-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Оберіть район
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu disabled">
+                                <li><a href="#">Район 1</a></li>
+                                <li><a href="#">Район 2</a></li>
+                                <li><a href="#">Район 3</a></li>
+                              </ul>
+                            </div> -->
+                            <label class="checkbox black black-label">
+                                <input checked="checked" name="has_webcam" type="checkbox" class="">
+                                <span>Веб камера</span>
+                            </label>
+                            <label class="checkbox black black-label">
+                                <input checked="checked" name="has_terminal" type="checkbox" class="">
+                                <span>Термінал для сплати</span>
+                            </label>
+                            <input type="submit" class="btn btn-green btn-green-white" value="Пошук відділень">
+                            <a href="<?= BASE_URL; ?>/service-centers/" class="all">перейти до списку всіх відділень</a>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@
 <section id="home-1" class="parallax">
     <div class="container">
         <h1>Центр<br>комунального<br>сервісу</h1>
-        <p class="descr">Сплачуй  комуналку легко!</p>
+        <p class="descr">Ваш експерт в сфері житлово-комунальних послуг</p>
         <div class="social pull-right">
             <a href="https://www.facebook.com/cks.kiev.ua/" target="_blank" class="fa fa-facebook"></a>
             <a href="https://www.youtube.com/channel/UCBZgKIDjq4AOOpYYKIK40kQ" target="_blank" class="fa fa-youtube"></a>
@@ -139,7 +139,7 @@
         <div class="row list">
             <div class="col-md-1 col-md-offset-1 visible-md visible-lg"><span class="num">1</span></div>
             <div class="col-md-6 descr"><span class="hidden-md hidden-lg">1. </span>Питання та відповіді щодо заборгованості</div>
-            <div class="col-md-4"><a href="https://goo.gl/UmV3oe" target="_blank" class="btn btn-yellow-bordered btn-lg pull-right">Переглянути <span class="arrow-right"></span></a></div>
+            <div class="col-md-4"><a href="<?= BASE_URL; ?>/informatsiya-dlya-borzhnikiv" class="btn btn-yellow-bordered btn-lg pull-right">Переглянути <span class="arrow-right"></span></a></div>
         </div>
 
         <div class="row list">

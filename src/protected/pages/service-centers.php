@@ -35,9 +35,9 @@
                                               </ul>
                                             </div>                                            
                                         </div>
-                                        <div class="col-lg-3 col-md-4 col-sm-12">                                        
+                                        <!-- <div class="col-lg-3 col-md-4 col-sm-12">
                                             <input type="text" placeholder="Ваша адреса" class="address input-white">
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-3 col-md-4 col-sm-12">
                                             <div class="dropdown">
                                               <button class="select-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-company">
@@ -50,7 +50,7 @@
                                                 <li><a href="#" data-value="3">ДП КИЇВГАЗЕНЕРДЖИ</a></li>
                                               </ul>
                                             </div>                                           
-                                            <a href="#" class="reset hidden-md hidden-sm hidden-ms hidden-xs">&times;</a>
+                                            <!-- <a href="#" class="reset hidden-md hidden-sm hidden-ms hidden-xs">&times;</a> -->
                                         </div>
                                         <div class="col-lg-4 col-md-12 align-center">  
                                             <label class="checkbox black">

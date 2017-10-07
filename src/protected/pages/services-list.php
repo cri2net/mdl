@@ -41,8 +41,8 @@
             </td>
             <td style="text-align: center;">7 хв.</td>
             <td style="text-align: left;">
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -51,8 +51,8 @@
             </td>
             <td style="text-align: center;">5-7 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -61,8 +61,8 @@
             </td>
             <td style="text-align: center;">2-10 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -71,8 +71,8 @@
             </td>
             <td style="text-align: center;">3-10 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             </tbody>
@@ -92,8 +92,8 @@
             </td>
             <td style="text-align: center;">2 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -102,7 +102,7 @@
             </td>
             <td style="text-align: center;">від 10 хв.</td>
             <td>
-            <p><a href="/kontakti"><img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"><img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -111,8 +111,8 @@
             </td>
             <td style="text-align: center;">5 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -121,8 +121,8 @@
             </td>
             <td style="text-align: center;">5 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -131,8 +131,8 @@
             </td>
             <td style="text-align: center;">3 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -141,8 +141,8 @@
             </td>
             <td style="text-align: center;">3-7 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -151,8 +151,8 @@
             </td>
             <td style="text-align: center;">2-5 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -161,9 +161,9 @@
             </td>
             <td style="text-align: center;">7 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
-            <p><a href="http://wiki.cks.kiev.ua/"> <img src="/assets/images/system/centry/www2.png" alt="" />сайт</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="http://wiki.1551.gov.ua/pages/viewpage.action?pageId=3511493"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/www2.png" alt="" />сайт</a></p>
             </td>
             </tr>
             </tbody>
@@ -183,7 +183,7 @@
             </td>
             <td style="text-align: center;">3 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -192,7 +192,7 @@
             </td>
             <td style="text-align: center;">3-7 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -201,7 +201,7 @@
             </td>
             <td style="text-align: center;">3 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -210,7 +210,7 @@
             </td>
             <td style="text-align: center;">5 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -219,7 +219,7 @@
             </td>
             <td style="text-align: center;">4 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -228,7 +228,7 @@
             </td>
             <td style="text-align: center;">7 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -237,7 +237,7 @@
             </td>
             <td style="text-align: center;">від 10 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -246,7 +246,7 @@
             </td>
             <td style="text-align: center;">від 10 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -255,7 +255,7 @@
             </td>
             <td style="text-align: center;">3 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             </tbody>
@@ -275,7 +275,7 @@
             </td>
             <td style="text-align: center;">3-15 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -284,7 +284,7 @@
             </td>
             <td style="text-align: center;">3-7 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -293,7 +293,7 @@
             </td>
             <td style="text-align: center;">3-7 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             </tbody>
@@ -313,8 +313,8 @@
             </td>
             <td style="text-align: center;">5-10 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -323,9 +323,9 @@
             </td>
             <td style="text-align: center;">3-5 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
-            <p><a href="http://wiki.cks.kiev.ua/"> <img src="/assets/images/system/centry/www2.png" alt="" />сайт</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="http://wiki.1551.gov.ua/pages/viewpage.action?pageId=3511493#id-Тарифи-2.Гарячеводопостачання(ГВП)"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/www2.png" alt="" />сайт</a></p>
             </td>
             </tr>
             </tbody>
@@ -345,9 +345,9 @@
             </td>
             <td style="text-align: center;">4 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
-            <p><a href="http://wiki.cks.kiev.ua/"> <img src="/assets/images/system/centry/www2.png" alt="" />сайт</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="http://wiki.1551.gov.ua/pages/viewpage.action?pageId=3507966"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/www2.png" alt="" />сайт</a></p>
             </td>
             </tr>
             </tbody>
@@ -365,7 +365,7 @@
             </td>
             <td style="text-align: center;">від 10 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -374,7 +374,7 @@
             </td>
             <td style="text-align: center;">від 10 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -383,7 +383,7 @@
             </td>
             <td style="text-align: center;">від 10 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             </tbody>
@@ -401,7 +401,7 @@
             </td>
             <td style="text-align: center;">6 хв.</td>
             <td>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -410,9 +410,8 @@
             </td>
             <td style="text-align: center;">від 10 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
-            <p><a href="http://wiki.cks.kiev.ua/"> <img src="/assets/images/system/centry/www2.png" alt="" />сайт</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             <tr>
@@ -421,9 +420,8 @@
             </td>
             <td style="text-align: center;">7 хв.</td>
             <td>
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya"> <img src="/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
-            <p><a href="/kontakti"> <img src="/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
-            <p><a href="http://wiki.cks.kiev.ua/"> <img src="/assets/images/system/centry/www2.png" alt="" />сайт</a></p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" />контактний центр</a></p>
+            <p><a href="<?= BASE_URL; ?>/kontakti"> <img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" />особистий візит</a></p>
             </td>
             </tr>
             </tbody>
@@ -441,21 +439,21 @@
             <td>&nbsp;- технічне обслуговування внутрішньо-будинкових мереж</td>
             <td>&nbsp;від 10 хв</td>
             <td>&nbsp;
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="<?= BASE_URL; ?>/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
             </td>
             </tr>
             <tr>
             <td>&nbsp;- прибирання МЗК (місця загального користування) та прибудинкової території</td>
             <td>&nbsp;від 10 хв</td>
             <td>&nbsp;
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="<?= BASE_URL; ?>/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
             </td>
             </tr>
             <tr>
             <td>&nbsp;- зберігання та ведення картотеки. видача довідок</td>
             <td>&nbsp;від 10 хв</td>
             <td>&nbsp;
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="<?= BASE_URL; ?>/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
             </td>
             </tr>
             <tr>
@@ -464,7 +462,7 @@
             </td>
             <td>&nbsp;від 10 хв</td>
             <td>&nbsp;
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="<?= BASE_URL; ?>/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
             </td>
             </tr>
             <tr>
@@ -473,7 +471,7 @@
             </td>
             <td>&nbsp;від 15 хв</td>
             <td>&nbsp;
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продажу <br /><a href="<?= BASE_URL; ?>/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит у відділ продажу</p>
             </td>
             </tr>
             <tr style="background-color: #83b67b;">
@@ -485,9 +483,9 @@
             <td>&nbsp;- Всі види робіт: сантехнічні, електромонтажні, столярні, малярні</td>
             <td>&nbsp;від 3-15 хв</td>
             <td rowspan="2">&nbsp;
-            <p><a href="/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продаж</p>
-            <p><a href="/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит</p>
-            <p><a href="http://wiki.cks.kiev.ua/" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/www2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>сайт</p>
+            <p><a href="<?= BASE_URL; ?>/viddil-distantsijnogo-obslugovuvannya" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/image12.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>за телефоном відділу продаж</p>
+            <p><a href="<?= BASE_URL; ?>/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит</p>
+            <p><a href="http://wiki.cks.kiev.ua/" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/www2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>сайт</p>
             </td>
             </tr>
             <tr>
@@ -498,8 +496,8 @@
             <td>&nbsp;<strong>Оплата житлово-комунальних послуг та додаткових послуг за допомогою пластикової картки (через POS-термінал в сервісних центрах та на сайті в "ОСОБИСТОМУ КАБІНЕТІ" ).</strong></td>
             <td>&nbsp;від 2-15 хв</td>
             <td>&nbsp;
-            <p><a href="/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит</p>
-            <p><a href="http://wiki.cks.kiev.ua/" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="/assets/images/system/centry/www2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>сайт</p>
+            <p><a href="<?= BASE_URL; ?>/kontakti" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/vizit2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>особистий візит</p>
+            <p><a href="http://wiki.cks.kiev.ua/" style="background-color: #ffffff; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;"><img src="<?= BASE_URL; ?>/assets/images/system/centry/www2.png" alt="" style="width: 30px; margin: 0px 10px;" /></a>сайт</p>
             </td>
             </tr>
             </tbody>
@@ -511,19 +509,19 @@
             <div id="documents">
             <h2>Шаблони документів</h2>
             <ol>
-            <li><a href="/images/documents/1.doc">Заява щодо своєчасної оплати за ЖКП (в квитанції зазначена заборгованість)</a></li>
-            <li><a href="/images/documents/2.doc">Заява з проханням виконати перерахунок за тарифами до 20 числа місяця</a></li>
-            <li><a href="/images/documents/3.doc">Заява щодо надання актів взаєморозрахунків</a></li>
-            <li><a href="/images/documents/4.doc">Заява щодо роз’яснення щодо нарахувань житлово-комунальних послуг з врахуванням пільги</a></li>
-            <li><a href="/images/documents/5.doc">Заява щодо зміни площі квартири згідно технічного паспорту</a></li>
-            <li><a href="/images/documents/6.doc">Заява щодо зміни власника особового рахунку</a></li>
-            <li><a href="/images/documents/7.doc">Заява щодо зняття нарахування з послуги газопостачання згідно довідки ПАТ «Київгаз»</a></li>
-            <li><a href="/images/documents/8.doc">Заява щодо проведення перерахунку за період тимчасової відсутності</a></li>
-            <li><a href="/images/documents/9.doc">Заява щодо нарахування комунальних послуг за період тимчасової відсутності</a></li>
-            <li><a href="/images/documents/10.doc">Заява про надання роз’яснень щодо проведених перерахунків</a></li>
-            <li><a href="/images/documents/11.doc">Заява щодо відкриття особового рахунку</a></li>
-            <li><a href="/images/documents/12.doc">Заява щодо розділу особового рахунку</a></li>
-            <li><a href="/images/documents/13.doc">Шаблон заяви загальний</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/1.doc">Заява щодо своєчасної оплати за ЖКП (в квитанції зазначена заборгованість)</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/2.doc">Заява з проханням виконати перерахунок за тарифами до 20 числа місяця</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/3.doc">Заява щодо надання актів взаєморозрахунків</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/4.doc">Заява щодо роз’яснення щодо нарахувань житлово-комунальних послуг з врахуванням пільги</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/5.doc">Заява щодо зміни площі квартири згідно технічного паспорту</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/6.doc">Заява щодо зміни власника особового рахунку</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/7.doc">Заява щодо зняття нарахування з послуги газопостачання згідно довідки ПАТ «Київгаз»</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/8.doc">Заява щодо проведення перерахунку за період тимчасової відсутності</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/9.doc">Заява щодо нарахування комунальних послуг за період тимчасової відсутності</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/10.doc">Заява про надання роз’яснень щодо проведених перерахунків</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/11.doc">Заява щодо відкриття особового рахунку</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/12.doc">Заява щодо розділу особового рахунку</a></li>
+            <li><a href="<?= BASE_URL; ?>/images/documents/13.doc">Шаблон заяви загальний</a></li>
             </ol></div>
             <div>
             <p><small>&nbsp;* Детальний перелік послуг, що надаються в кожному відділенні, дивись в розділі "Контакти"</small></p>
@@ -531,8 +529,8 @@
             <div id="agreement">
             <h2>Угоди користувача сайту</h2>
             <ol>
-            <li><a href="/./docs/ugoda_korustuvacha.pdf" target="_blank">Угода користувача</a></li>
-            <li><a href="/./docs/zgoda_na_obrobku_danih.pdf" target="_blank">Згода на збiр та обробку персональних даних</a></li>
+            <li><a href="<?= BASE_URL; ?>/./docs/ugoda_korustuvacha.pdf" target="_blank">Угода користувача</a></li>
+            <li><a href="<?= BASE_URL; ?>/./docs/zgoda_na_obrobku_danih.pdf" target="_blank">Згода на збiр та обробку персональних даних</a></li>
             </ol>
             </div>
 

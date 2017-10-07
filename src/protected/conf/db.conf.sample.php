@@ -30,3 +30,6 @@ define('DB_TBL_STREETS',          TABLE_PREFIX . 'streets');
 define('DB_TBL_USER_FLATS',       TABLE_PREFIX . 'user_flats');
 define('DB_TBL_USER_CODES',       TABLE_PREFIX . 'user_codes');
 define('DB_TBL_USERS',            TABLE_PREFIX . 'users');
+define('DB_TBL_PAGE_VIEWS',       TABLE_PREFIX . 'page_views');
+define('DB_TBL_PAGES',            TABLE_PREFIX . 'pages');
+define('DB_TBL_PAGES_LINKS',      TABLE_PREFIX . 'pages_links');
