@@ -82,7 +82,7 @@
                 </form>
                 <div><a class="btn btn-yellow btn-lg submit-request">Оформити заявку</a></div>
 
-                <a href="<?= BASE_URL ?>/feedback/" class="italic">Наші менеджери проконсультують вас</a>            
+                <a href="<?= BASE_URL ?>/feedback/" class="italic"><u>Наші менеджери проконсультують вас</u></a>            
             </div>
         </div>
     </section>      
@@ -131,7 +131,7 @@
             <div class="alignCenter">
                 <!-- <div><a href="" class="btn btn-yellow btn-lg submit-request">Оформити заявку</a></div> -->
 
-                <a href="<?= BASE_URL ?>/feedback/" class="italic">Наші менеджери проконсультують вас</a>            
+                <a href="<?= BASE_URL ?>/feedback/" class="italic"><u>Наші менеджери проконсультують вас</u></a>            
             </div>          
         </div>
     </section>      
