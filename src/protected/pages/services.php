@@ -26,8 +26,8 @@
                     </form>
                 </div>                              
                 <ul class="nav navbar-nav">
-                    <li><a href="<?= BASE_URL ?>/about/">Про нас</a></li>
-                    <li><a href="<?= BASE_URL ?>/services-list/">Перелік послуг</a></li>
+                    <li><a href="<?= BASE_URL ?>/about_cks/">Про нас</a></li>
+                    <li><a href="<?= BASE_URL ?>/services_list_and_docs/">Перелік послуг</a></li>
                     <li><a href="#how">Алгоритм надання послуг</a></li>
                     <li><a href="<?= BASE_URL ?>/service-centers/">Розклад роботи</a></li>
                     <li><a class="bordered submit-request">Оформити заявку</a></li>
@@ -82,7 +82,7 @@
                 </form>
                 <div><a class="btn btn-yellow btn-lg submit-request">Оформити заявку</a></div>
 
-                <a href="<?= BASE_URL ?>/feedback/" class="italic">Наші менеджери проконсуьтують вас</a>            
+                <a href="<?= BASE_URL ?>/feedback/" class="italic">Наші менеджери проконсультують вас</a>            
             </div>
         </div>
     </section>      
@@ -131,7 +131,7 @@
             <div class="alignCenter">
                 <!-- <div><a href="" class="btn btn-yellow btn-lg submit-request">Оформити заявку</a></div> -->
 
-                <a href="<?= BASE_URL ?>/feedback/" class="italic">Наші менеджери проконсуьтують вас</a>            
+                <a href="<?= BASE_URL ?>/feedback/" class="italic">Наші менеджери проконсультують вас</a>            
             </div>          
         </div>
     </section>      

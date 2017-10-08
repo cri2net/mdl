@@ -14,7 +14,7 @@
                             <img src="<?= BASE_URL; ?>/assets/images/logo.png" class="logo" alt="ЦКС">
                             <div class="copyright pull-right">
                                 Залишились питання?<br>
-                                зателефонуйте нам<br>
+                                Зателефонуйте нам<br>
                                 <div class="phone">(044) 247 40 40</div>
                                 <a href="mailto:zvernenya@src.kiev.ua">zvernennya@src.kiev.ua</a>
                             </div>

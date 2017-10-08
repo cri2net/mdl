@@ -118,6 +118,7 @@
             break;
 
         case 'page/services-list':
+        case 'page/services-list_and_docs':
             $breadcrumbs[] = ['title' => 'Перелік послуг'];
             break;
 
