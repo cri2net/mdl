@@ -23,7 +23,7 @@ try {
 
     WebMoney::checkSignature($_POST);
 
-    $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $data['LMI_PAYMENT_NO']);
+    $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_POST['LMI_PAYMENT_NO']);
     if (!$_payment) {
         throw new Exception(ERROR_GET_PAYMENT);
     }
