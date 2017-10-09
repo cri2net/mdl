@@ -4,6 +4,8 @@
         return require_once(PROTECTED_DIR . '/pages/cabinet/login.php');
     }
 
+    define('IS_ONLINE_REP', true);
+
     $flat_id = $__route_result['values']['id'];
     
     try {
@@ -33,9 +35,11 @@
             $dateBegin = "1.".$previousMonth.".".$previousYear;
         }
         
+        $recalcData = $debt->getReCalc($flatData['flat_id'], date('01.m.Y', $debtData['timestamp'] + 86400 * 35));
+        $have_recalc = !empty($recalcData);
         $dateEnd = $debtData['dbegin'];
 
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         ?><div class="container" ><h2 class="big-error-message"><?= $e->getMessage(); ?></h2></div> <?php
         return;
     }
@@ -142,6 +146,23 @@
                                                     <span class="item-summ">
                                                         <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
                                                     </span>
+                                                    <?php
+                                                }
+
+                                                if ($have_recalc && strstr($item['name_plat'], 'УТРИМАННЯ')) {
+
+                                                    $summ = 0;
+                                                    foreach ($recalcData as $tmp_item) {
+                                                        foreach ($tmp_item['list'] as $list_item) {
+                                                            $summ += $list_item['sum'];
+                                                        }
+                                                    }
+
+                                                    // в xml есть поле "Всього по о/рахунку(по періоду)", где дублирутеся общая сумма.
+                                                    // То есть надо на два поделить то, что выше в цикле просуммировано
+                                                    $summ /= 2;
+                                                    ?>
+                                                    <span style="font-size: 28px; font-style: italic; color: #00b86c; font-family: Times; cursor: help;" title="Перерахунок <?= $summ; ?> грн">&nbsp;i</span>
                                                     <?php
                                                 }
                                             ?>

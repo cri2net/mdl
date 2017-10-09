@@ -11,6 +11,8 @@ try {
     if (!$object || ($object['user_id'] != $user_id)) {
         throw new Exception(ERROR_GET_FLAT);
     }
+
+    $debt = new KomDebt();
     
     require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
     require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
