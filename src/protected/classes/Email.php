@@ -37,6 +37,13 @@ class Email
         $this->SMTPAuth   = true;
         $this->Username   = 'no-reply@cks.kiev.ua';
         $this->Password   = 'krP32%$me';
+        $this->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            )
+        );
     }
 
     public function __set($name, $value)
