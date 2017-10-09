@@ -73,13 +73,13 @@
                                 <span class="text-label">Інші банки</span>
                             </label>
                         </div>
-                        <div class="check-box-line">
+                       <!--  <div class="check-box-line">
                             <span id="checkbox_percent_mastercard_2" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $mastercardSum; ?>" data-paysystem-key="mastercard"></span>
                             <label onclick="$('#checkbox_percent_mastercard_2').click();">
                                 <img alt="Аваль" src="<?= BASE_URL; ?>/assets/images/paysystems/aval.png" />
                                 <span class="text-label">Райффайзен Банк Аваль</span>
                             </label>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <?php
