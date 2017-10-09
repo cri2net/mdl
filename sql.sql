@@ -853,3 +853,27 @@ CREATE TABLE IF NOT EXISTS `cks_news_images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- 2017.10.09
+CREATE TABLE IF NOT EXISTS `cks_feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `to` int(11) NOT NULL DEFAULT '0',
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL,
+  `surname` varchar(255) NOT NULL,
+  `fathername` varchar(255) NOT NULL,
+  `timestamp` double NOT NULL,
+  `ip` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `text` text NOT NULL,
+  `status` enum('new','spam','deleted','processed') NOT NULL DEFAULT 'new',
+  `answer` text,
+  `answer_time` double DEFAULT NULL,
+  `answer_need_send` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'for cron task',
+  `answerer` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
