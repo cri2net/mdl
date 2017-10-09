@@ -396,10 +396,6 @@ class KomDebt
     
     public function getReCalc($obj_id, $dateBegin = null)
     {
-        if (Authorization::getLoggedUserId() != 4) {
-            return [];
-        }
-
         $xmlString = $this->getXML(self::RECALC_URL, $obj_id);
 
         $xmlString = str_replace("&nbsp;", "", $xmlString);
