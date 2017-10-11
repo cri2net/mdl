@@ -54,16 +54,18 @@
                 <div class="col-md-4">
                     <div class="info matchHeight">
                         <form action="<?= BASE_URL; ?>/service-centers/" method="get">
-                            
                             <!-- <div class="dropdown">
                               <button class="input-green no-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 Оберіть район
                                 <span class="caret"></span>
                               </button>
                               <ul class="dropdown-menu disabled">
-                                <li><a href="#">Район 1</a></li>
-                                <li><a href="#">Район 2</a></li>
-                                <li><a href="#">Район 3</a></li>
+                                <?php
+                                    $regions = PDO_DB::table_list(TABLE_PREFIX . 'dict_regions');
+                                    foreach ($regions as $r) {
+                                        ?><li><a data-value="<?= $r['id'] ?>"><?= $r['title'] ?></a></li><?php
+                                    }
+                                ?>
                               </ul>
                             </div> -->
                             <label class="checkbox black black-label">

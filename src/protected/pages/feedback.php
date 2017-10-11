@@ -11,15 +11,24 @@
         <div class="portlet">
             <h2>Питання до фахівця</h2><br/>
             <?php
-                switch(@$_POST['action']) {
-                    case 'request-service':
-                        /* Add request processing */
-                        require_once(PROTECTED_DIR . '/pages/feedback/result.php');
-                        break;
-                    default:
-                        require_once(PROTECTED_DIR . '/pages/feedback/form.php');
-                        break;
+                if (isset($_SESSION['feedback']['status']) && $_SESSION['feedback']['status']) {
+                    ?>
+                    <div class="alert alert-success">
+                        Питання успiшно вiдправлено. Наш фахiвець незабаром вiдповiсть.
+                    </div>
+                    <?php
+                    unset($_SESSION['feedback']);
+                } elseif (isset($_SESSION['feedback']['status'])) {
+                    ?>
+                    <div class="alert alert-success">
+                        Під час надсилання повідомлення виникла помилка: <br>
+                        <?= $_SESSION['feedback']['error']['text']; ?>
+                    </div>
+                    <?php
+                    unset($_SESSION['feedback']['status']);
                 }
+
+                require_once(PROTECTED_DIR . '/pages/feedback/form.php');
             ?>
         </div>
     </content>

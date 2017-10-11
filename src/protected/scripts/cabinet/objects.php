@@ -95,7 +95,7 @@
                                                 }
                                             ?>
                                         </div>
-                                        <a onclick="$('#remove_object_id').val('<?= $house['id']; ?>').parent().submit();" class="remove">&times;</a>
+                                        <a onclick="$('#remove_object_id').val('<?= $flat['id']; ?>').parent().submit();" class="remove">&times;</a>
                                         <?php
                                             if ($flat['error']) {
                                                 ?>
@@ -137,13 +137,20 @@
                 }
             ?>
         </div>
-        <a class="btn btn-gray btn-lg add-new" onclick="$('#add-object-form').slideToggle(300);"><span>Додати об'ект</span></a>
 
-        <div id="add-object-form" class="add-object-form" style="display:none;">
-            <form class="form-block" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
-                <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
-            </form>
-        </div>
+        <?php
+            if ((Authorization::isLogin() && (Flat::getFlatCount() < Flat::getMaxUserFlats()))) {
+                ?>
+                <a class="btn btn-gray btn-lg add-new" onclick="$('#add-object-form').slideToggle(300);"><span>Додати об'ект</span></a>
+
+                <div id="add-object-form" class="add-object-form" style="display:none;">
+                    <form class="form-block" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
+                        <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
+                    </form>
+                </div>
+                <?php
+            }
+        ?>
     </content>
 </div>
 
