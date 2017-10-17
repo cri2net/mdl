@@ -9,7 +9,7 @@
             <a href="<?= BASE_URL ?>" ><img src="<?= BASE_URL; ?>/assets/images/logo-large.png"></a>
         </div>
 
-        <form class="form-welcome" onsubmit="top.postMessage('login-form-send', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
+        <form class="form-welcome" onsubmit="top.postMessage('login-form-send', 'http://cks.com.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
             <!--<a href="#" class="close">&times;</a>-->
             <?php
                 if (defined('SHOW_NEED_AUTH_MESSAGE') && SHOW_NEED_AUTH_MESSAGE) {

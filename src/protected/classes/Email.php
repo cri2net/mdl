@@ -35,7 +35,7 @@ class Email
         $this->Port       = 25; // The default SMTP server port.
 //        $this->SMTPSecure = ''; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
         $this->SMTPAuth   = true;
-        $this->Username   = 'no-reply@cks.kiev.ua';
+        $this->Username   = 'no-reply@cks.com.ua';
         $this->Password   = 'krP32%$me';
         $this->SMTPOptions = array(
             'ssl' => array(

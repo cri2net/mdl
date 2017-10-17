@@ -8,7 +8,7 @@
         <div class="logo-large">
             <a href="<?= BASE_URL ?>" ><img src="<?= BASE_URL; ?>/assets/images/logo-large.png"></a>
         </div>
-        <form class="form-welcome" onsubmit="top.postMessage('register-form-send', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/registration/">
+        <form class="form-welcome" onsubmit="top.postMessage('register-form-send', 'http://cks.com.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/registration/">
             <a href="<?= BASE_URL; ?>/cabinet/login/" class="close">&times;</a>
 
             <?php

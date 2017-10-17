@@ -8,7 +8,7 @@
             <a href="<?= BASE_URL ?>" ><img src="<?= BASE_URL; ?>/assets/images/logo-large.png"></a>
         </div>
 
-        <form class="form-welcome" onsubmit="top.postMessage('login-form-send', 'http://cks.kiev.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/restore/">
+        <form class="form-welcome" onsubmit="top.postMessage('login-form-send', 'http://cks.com.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/restore/">
             <?php
                 if (isset($__route_result['values']['section'])) {
                     // на самом деле это код сброса, а не section

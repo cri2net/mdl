@@ -43,11 +43,11 @@ switch (USER_REAL_IP) {
         define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST']);
 }
 
-define('EMAIL_FROM', 'no-reply@cks.kiev.ua');
-define('EMAIL_TO', 'zvernennya@src.kiev.ua');
+define('EMAIL_FROM', 'no-reply@cks.com.ua');
+define('EMAIL_TO', 'zvernennya@src.com.ua');
 define('EMAIL_HOST', '91.200.41.117');
 define('EMAIL_FROM_NAME', 'КК ЦКС');
-define('SITE_DOMAIN', 'cks.kiev.ua');
+define('SITE_DOMAIN', 'cks.com.ua');
 define('REMEMBER_COOKIE_NAME', '__cksudata');
 
 Authorization::check_login();
