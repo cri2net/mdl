@@ -7,16 +7,16 @@
         <div class="logo-large">
             <a href="<?= BASE_URL ?>" ><img src="<?= BASE_URL; ?>/assets/images/logo-large.png"></a>
         </div>
-
+        <?php
+            if (isset($__route_result['values']['section'])) {
+                // на самом деле это код сброса, а не section
+                $restore_code = $__route_result['values']['section'];
+                require_once(ROOT . '/protected/scripts/cabinet/restore/second-step.php');
+                return;
+            }
+        ?>
         <form class="form-welcome" onsubmit="top.postMessage('login-form-send', 'http://cks.com.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/restore/">
-            <?php
-                if (isset($__route_result['values']['section'])) {
-                    // на самом деле это код сброса, а не section
-                    $restore_code = $__route_result['values']['section'];
-                    require_once(ROOT . '/protected/scripts/cabinet/restore/second-step.php');
-                    return;
-                }
-                
+            <?php    
                 if (isset($_SESSION['restore']['status']) && !$_SESSION['restore']['status']) {
                     ?>
                     <div class="alert alert-danger"><?= $_SESSION['restore']['error']['text']; ?></div>
