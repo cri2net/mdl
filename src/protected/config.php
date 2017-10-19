@@ -55,6 +55,10 @@ if (Authorization::isLogin()) {
     $__userData = User::getUserById(Authorization::getLoggedUserId());
 }
 
+if (!isset($_SERVER['REQUEST_URI'])) {
+    $_SERVER['REQUEST_URI'] = '';
+}
+
 $router = new Routing(PROTECTED_DIR . '/conf/routing.xml');
 $route_path = (strpos($_SERVER['REQUEST_URI'], '?') !== false)
     ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
