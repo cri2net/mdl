@@ -6,8 +6,8 @@
     require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
     require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
 
-    $is_terminal = true;
-    $is_webcam   = true;
+    $is_terminal = false;
+    $is_webcam   = false;
     $companies   = PDO_DB::table_list(TABLE_PREFIX . 'dict_companies', null, 'pos ASC');
     $regions     = PDO_DB::table_list(TABLE_PREFIX . 'dict_regions', null, 'pos ASC');
     $_company    = 0;
@@ -49,10 +49,11 @@
                                                 <input type="hidden" id="service-centers-region" value="<?= $_region; ?>" name="region" />
                                                 <div class="dropdown">
                                                   <button class="select-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-office" name="office" value="1">
-                                                    <?= ($_region > 0) ? htmlspecialchars($current_region['title']) : 'Оберить офіс'; ?>
+                                                    <?= ($_region > 0) ? htmlspecialchars($current_region['title']) : 'Оберіть офіс'; ?>
                                                     <span class="caret"></span>
                                                   </button>
                                                     <ul class="dropdown-menu" aria-labelledby="select-office">
+                                                        <li><a id="service-centers-region-a-0" onclick="$('#service-centers-region').val('0');" data-value="0">Оберіть офіс</a></li>
                                                         <?php
                                                             foreach ($regions as $region) {
                                                                 ?>
@@ -79,6 +80,7 @@
                                                   </button>
                                                   <input type="hidden" id="service-centers-company" value="<?= $_company; ?>" name="company" />
                                                     <ul class="dropdown-menu" aria-labelledby="select-company">
+                                                        <li><a id="service-centers-company-a-0" onclick="$('#service-centers-company').val('0');" data-value="0">Оберіть компанію</a></li>
                                                         <?php
                                                             foreach ($companies as $company) {
                                                                 ?>
