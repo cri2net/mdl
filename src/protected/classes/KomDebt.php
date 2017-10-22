@@ -3,7 +3,8 @@
 class KomDebt
 {
     protected $cache = [];
-    const RECALC_URL   = '/reports/rwservlet?report=site/g_komdebt_recalc_online.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+    const RECALC_URL_ONLINE = '/reports/rwservlet?report=site/g_komdebt_recalc_online.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+    const RECALC_URL        = '/reports/rwservlet?report=site/g_komdebt_recalc.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
     protected $komplat_URL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
     protected $debt_URL    = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
 
@@ -33,6 +34,12 @@ class KomDebt
                 }
             } else {
                 $url = API_URL . $url . $obj_id . $quertString;
+            }
+
+            if ($url == self::RECALC_URL) {
+                $url = API_URL . $url . $obj_id . "&d_begin=" . $dateData['begin'] . "&d_end=" . $dateData['end'];
+            } else {
+                $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
             }
 
             if (!isset($this->cache[md5($url)])) {
@@ -395,7 +402,7 @@ class KomDebt
     
     public function getReCalc($obj_id, $dateBegin = null)
     {
-        $xmlString = $this->getXML(self::RECALC_URL, $obj_id);
+        $xmlString = $this->getXML(self::RECALC_URL, $obj_id, $dateBegin);
 
         $xmlString = str_replace("&nbsp;", "", $xmlString);
         $xml = @new SimpleXMLElement($xmlString);
