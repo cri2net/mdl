@@ -43,6 +43,10 @@ class KomDebt
                 $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
             }
 
+            if (defined('IS_ONLINE_REP')) {
+                $url = str_replace('g_komdebt.rep', 'g_komdebt_online.rep', $url);
+            }
+
             if (!isset($this->cache[md5($url)])) {
                 $this->cache[md5($url)] = Http::fgets($url);
             }

@@ -67,6 +67,9 @@
     }
 
     $depth = ($__is_email_mode) ? 10 : 0;
+    if ($__is_email_mode) {
+        define('IS_ONLINE_REP', true);
+    }
     $plat_code = KomDebt::getFlatIdOrPlatcode($house['flat_id'], $house['plat_code'], $house['city_id']);
     $debtData = $debt->getData($plat_code, null, $depth);
     if (empty($debtData['list']) && $__is_email_mode) {

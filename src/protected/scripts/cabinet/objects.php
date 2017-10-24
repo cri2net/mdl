@@ -14,6 +14,7 @@
             }
 
             try {
+                define('IS_ONLINE_REP', true);
                 $user_id = Authorization::getLoggedUserId();
                 $flats = Flat::getUserFlats($user_id);
                 $debt = new KomDebt();
