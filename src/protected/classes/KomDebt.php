@@ -23,6 +23,7 @@ class KomDebt
     private function getXML($url, $obj_id, $dateBegin = null)
     {
         try {
+            $_url = $url;
             $dateData = $this->getDatePeriod($dateBegin);
             $quertString  = "&dbegin=".$dateData['begin']."&dend=".$dateData['end'];
             
@@ -36,10 +37,13 @@ class KomDebt
                 $url = API_URL . $url . $obj_id . $quertString;
             }
 
-            if ($url == self::RECALC_URL) {
-                $url = API_URL . $url . $obj_id . "&d_begin=" . $dateData['begin'] . "&d_end=" . $dateData['end'];
-            } else {
-                $url = API_URL . $url . $obj_id . "&dbegin=" . $dateData['begin'] . "&dend=" . $dateData['end'];
+            if ($_url == self::RECALC_URL) {
+                $url = str_replace('dbegin', 'd_begin', $url);
+                $url = str_replace('dend', 'd_end', $url);
+            }
+
+            if (defined('IS_ONLINE_REP')) {
+                $url = str_replace('g_komdebt.rep', 'g_komdebt_online.rep', $url);
             }
 
             if (!isset($this->cache[md5($url)])) {
