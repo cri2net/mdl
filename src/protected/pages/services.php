@@ -109,21 +109,21 @@
                     <div class=" item item-blue matchHeight">
                         <h4>3</h4>
                         <h5>Виконання<br>робіт</h5>
-                        <blockquote>гарантуємо. що роботу буде виконано швидко та якісно </blockquote>
+                        <blockquote>гарантуємо, що роботу буде виконано швидко та якісно </blockquote>
                     </div>
                 </div>      
                 <div class="col-md-5ths">
                     <div class=" item item-blue matchHeight">
                         <h4>4</h4>
                         <h5>Сплата за послуги</h5>
-                        <blockquote>сплачуйте будь яким зручним для вас способом</blockquote>
+                        <blockquote>сплачуйте будь-яким зручним для вас способом</blockquote>
                     </div>
                 </div>      
                 <div class="col-md-5ths">
                     <div class=" item item-green matchHeight">
                         <h4>5</h4>
                         <h5>Акт виконаних робіт та гарантія</h5>
-                        <blockquote>сплачуйте будь яким зручним для вас способом</blockquote>
+                        <blockquote>отримайте акт та гарантії</blockquote>
                     </div>
                 </div>
             </div>
