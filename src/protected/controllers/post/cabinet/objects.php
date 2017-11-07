@@ -6,6 +6,10 @@ try {
         throw new Exception(ERROR_GET_FLAT);
     }
 
+    if (in_array($_POST['flat'], $prohibided_flats)) {
+        throw new Exception('Щоб додати даний об’єкт, зверніться до адміністрації сайту за адресою zvernennya@src.kiev.ua');
+    }
+
     $flat = Flat::addFlat($_POST['flat'], $_POST['tenant']);
 
     if (!$flat) {

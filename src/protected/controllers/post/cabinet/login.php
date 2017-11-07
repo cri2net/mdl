@@ -6,6 +6,10 @@ try {
     $_SESSION['login'] = [
         'login' => $login,
     ];
+
+    if (in_array($_POST['email'], $banned_user)) {
+        throw new Exception('Аккаунт користувача заблоковано');
+    }
     
     // на форме не отрисовано, но ставим пока "запомнить меня"
     Authorization::login($login, $password, false, true);
