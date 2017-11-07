@@ -68,3 +68,6 @@ $__route_result = $router->get($route_path);
 require_once(PROTECTED_DIR . "/headers/location.php");
 require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
 // require_once(PROTECTED_DIR."/headers/content-security-policy.php");
+
+$banned_user = ['dashast93@gmail.com', 'kolesnichenkotetyana@gmail.com', 'srt7revenger@ukr.net', 'glibovet@gmail.com', 'tut.tozhe@net.proverki'];
+$prohibided_flats = [987202, 1418852];

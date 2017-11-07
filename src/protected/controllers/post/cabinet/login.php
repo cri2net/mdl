@@ -8,6 +8,10 @@ try {
         'email' => $email,
         'phone' => $phone,
     ];
+
+    if (in_array($_POST['email'], $banned_user)) {
+        throw new Exception('Аккаунт користувача заблоковано');
+    }
     
     if (filter_var($email, FILTER_VALIDATE_EMAIL) || (strlen($email) >= 3)) {
         $login = $email;

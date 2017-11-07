@@ -9,6 +9,10 @@ try {
     foreach ($fields as $key => $value) {
         $_SESSION['registration'][$key] = trim(stripslashes($_POST[$key]));
     }
+
+    if (in_array($_POST['email'], $banned_user)) {
+        throw new Exception('Аккаунт користувача заблоковано');
+    }
        
     // все ли поля заполнены
     foreach ($fields as $key => $title) {
