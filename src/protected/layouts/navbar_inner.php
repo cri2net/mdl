@@ -81,12 +81,12 @@
             </div>      
         </div>
     </nav>
-    <div class="container">
+    <!-- <div class="container">
         <form id="search">
             <input type="text" placeholder="Швидкий пошук послуг">
             <input type="submit" value="Искать">
         </form>
-    </div>  
+    </div> -->
     <nav class="navbar navbar-blue">
         <div class="container">
             <?php
