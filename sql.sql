@@ -876,4 +876,15 @@ CREATE TABLE IF NOT EXISTS `cks_feedback` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- 2017.11.09
+ALTER TABLE `cks_flats`
+  CHANGE `street_id` `street_id` BIGINT(20) NOT NULL,
+  CHANGE `house_id` `house_id` BIGINT(20) NOT NULL,
+  CHANGE `object_id` `object_id` BIGINT(20) NOT NULL;
 
+ALTER TABLE `cks_houses`
+  CHANGE `street_id` `street_id` BIGINT(20) NOT NULL,
+  CHANGE `house_id` `house_id` BIGINT(20) NOT NULL;
+
+ALTER TABLE `cks_streets`
+  CHANGE `street_id` `street_id` BIGINT(20) NOT NULL;

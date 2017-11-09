@@ -12,6 +12,7 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
             'kindergarten' => '/cabinet/instant-payments/kindergarten/',
             'phone'        => '/cabinet/instant-payments/phone/',
             'cards'        => '/cabinet/instant-payments/cards/',
+            'index.php'    => '/',
         ];
 
         if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {

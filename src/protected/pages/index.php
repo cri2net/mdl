@@ -39,7 +39,7 @@
         <h1>Центр<br>комунального<br>сервісу</h1>
         <p class="descr">Ваш експерт в сфері житлово-комунальних послуг</p>
         <div class="social pull-right">
-            <a href="https://www.facebook.com/cks.kiev.ua/" target="_blank" class="fa fa-facebook"></a>
+            <a href="https://www.facebook.com/cks.com.ua/" target="_blank" class="fa fa-facebook"></a>
             <a href="https://www.youtube.com/channel/UCBZgKIDjq4AOOpYYKIK40kQ" target="_blank" class="fa fa-youtube"></a>
             <p>Ми поруч</p>
         </div>
