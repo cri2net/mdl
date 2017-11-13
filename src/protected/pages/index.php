@@ -139,7 +139,7 @@
         <div class="row list">
             <div class="col-md-1 col-md-offset-1 visible-md visible-lg"><span class="num">1</span></div>
             <div class="col-md-6 descr"><span class="hidden-md hidden-lg">1. </span>Питання та відповіді щодо заборгованості</div>
-            <div class="col-md-4"><a href="<?= BASE_URL; ?>/informatsiya-dlya-borzhnikiv" class="btn btn-yellow-bordered btn-lg pull-right">Переглянути <span class="arrow-right"></span></a></div>
+            <div class="col-md-4"><a href="<?= BASE_URL; ?>/main_help/faq/" class="btn btn-yellow-bordered btn-lg pull-right">Переглянути <span class="arrow-right"></span></a></div>
         </div>
 
         <div class="row list">
