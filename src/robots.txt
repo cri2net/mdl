@@ -1,0 +1,4 @@
+User-agent: *
+
+Host: https://cks.com.ua
+Sitemap: https://cks.com.ua/sitemap.xml

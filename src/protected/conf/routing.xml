@@ -52,6 +52,7 @@
         </route>
         <route match="service-centers" controller="page" action="service-centers" />
         <route match="feedback" controller="page" action="feedback" />
+        <route match="sitemap.xml" controller="sitemap" />
         
         <route match="invoice" controller="invoice" action="" />
         <route match="barcode" controller="barcode" action="">
