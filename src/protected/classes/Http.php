@@ -64,7 +64,9 @@ class Http
             CURLOPT_URL => $url,
             CURLOPT_HEADER => false,
             CURLOPT_HTTPGET => true,
-            CURLOPT_RETURNTRANSFER => true
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
         );
 
         curl_setopt_array($ch, $options);
