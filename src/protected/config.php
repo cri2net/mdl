@@ -33,10 +33,10 @@ switch (USER_REAL_IP) {
     
     default:
         if (!isset($_SERVER['HTTP_HOST']) || !$_SERVER['HTTP_HOST']) {
-            $_SERVER['HTTP_HOST'] = 'www.gerc.ua';
+            $_SERVER['HTTP_HOST'] = 'cks.com.ua';
         }
 
-        define('COOKIE_DOMAIN', '.gerc.ua');
+        define('COOKIE_DOMAIN', '.cks.com.ua');
         if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
         }
