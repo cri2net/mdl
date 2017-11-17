@@ -157,7 +157,7 @@
                         <h4>Залиште свій телефон, ми допоможемо</h4>
 
                         <div class="form-group">
-                            <input type="text" name="phone" class="phone" placeholder="(xxx) xx - xx - xxx">
+                            <input type="text" name="phone" class="phone" placeholder="+380" id="reg-phone">
                             <input type="submit" class="btn btn-yellow hidden-xs" value="зателефонуйте мені">
                             <input type="submit" class="btn btn-yellow visible-xs" value="зателефонуйте">
                         </div>
@@ -176,6 +176,7 @@
             $(this).toggleClass('checked');
         });
 
+        $("#reg-phone").mask("+999(99)999-99-99", {autoclear: false}).val('<?= htmlspecialchars(@$__userData['mob_phone'], ENT_QUOTES); ?>');
         $('.submit-request').click(function(){ $('#request-form').submit() })
     });
     </script>
