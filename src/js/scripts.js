@@ -2,239 +2,263 @@
 
 $(document).on('ready', function() { 
 
-	initScrollAnimation();
+    initScrollAnimation();
     initParallax();
-	initMap();
-	initSwiper();
-	initEvents();
-	theadBg();
+    initMap();
+    initSwiper();
+    initEvents();
+    theadBg();
 
-	$(function() { $('.matchHeight').matchHeight(); });	
+    $(function() { $('.matchHeight').matchHeight(); }); 
 
-	/*
-	$('.navbar-affix').affix({
-	      offset: {
-	        top: $('#top-bar').height(),
-	      }
-	});
-	*/
+    /*
+    $('.navbar-affix').affix({
+          offset: {
+            top: $('#top-bar').height(),
+          }
+    });
+    */
 });
 
 $(window).on('scroll', function (event) {
 
-	checkNavbar();
+    checkNavbar();
 }).scroll();
 
 
 $(window).on('resize', function(){
 
-	theadBg();
+    theadBg();
 });
 
 $(window).on('load', function(){
 
-	theadBg();
+    theadBg();
 });
 
 // Генерируем заголовки на всю ширину
 function theadBg() {
 
-	if ($('.thead-bg').length) {
+    if ($('.thead-bg').length) {
 
-		var headGreen = $('.datailbill-table .head-green'),
-			headGreenLighter = $('.datailbill-table .head-green-lighter'),
-			headGray =  $('.datailbill-table .head-gray'),
-			headGray2 =  $('.datailbill-table .head-gray-2'),
-			headGreen2 =  $('.datailbill-table .head-green-2');
+        var headGreen = $('.datailbill-table .head-green'),
+            headGreenLighter = $('.datailbill-table .head-green-lighter'),
+            headGray =  $('.datailbill-table .head-gray'),
+            headGray2 =  $('.datailbill-table .head-gray-2'),
+            headGreen2 =  $('.datailbill-table .head-green-2');
 
-		if (headGreen.length) $('.thead-bg .head-green').css('height', headGreen[0].getBoundingClientRect().height + 'px');
-		if (headGreenLighter.length) $('.thead-bg .head-green-lighter').css('height', headGreenLighter[0].getBoundingClientRect().height + 'px');
-		if (headGreen2.length) $('.thead-bg .head-green-2').css('height', headGreen2[0].getBoundingClientRect().height + 'px');
-		if (headGray.length) $('.thead-bg .head-gray').css('height', headGray[0].getBoundingClientRect().height + 'px');
-		if (headGray2.length) $('.thead-bg .head-gray-2').css('height', headGray2[0].getBoundingClientRect().height + 'px');
-	}
+        if (headGreen.length) $('.thead-bg .head-green').css('height', headGreen[0].getBoundingClientRect().height + 'px');
+        if (headGreenLighter.length) $('.thead-bg .head-green-lighter').css('height', headGreenLighter[0].getBoundingClientRect().height + 'px');
+        if (headGreen2.length) $('.thead-bg .head-green-2').css('height', headGreen2[0].getBoundingClientRect().height + 'px');
+        if (headGray.length) $('.thead-bg .head-gray').css('height', headGray[0].getBoundingClientRect().height + 'px');
+        if (headGray2.length) $('.thead-bg .head-gray-2').css('height', headGray2[0].getBoundingClientRect().height + 'px');
+    }
 }
 
 /* All keyboard and mouse events */
 function initEvents() {
 
-	// Показываем блок с счетчиком
-	$('#data-table').on('click', 'a.counter', function() {
+    // Показываем блок со счетчиком
+    $('#data-table').on('click', 'a.counter', function() {
 
-		$(this).toggleClass('counter-close').closest("tr").toggleClass('border-no').next('tr.item-counter').toggle();
-		return false;
-	});
+        if (!$(this).hasClass('counter-all')) {
+            var number = $(this).closest("tr").data('number');
+            // alert(number);
+            $(this).toggleClass('counter-close').closest("tr").toggleClass('border-no')
+            // .next('tr.item-counter').toggle();
+            $('tr.item-counter-' + number).toggle();
+        }
 
-	// Выбираем все галочки в таблице
-	$('#data-table').on('click change', 'input.check-all', function() {
+        return false;
+    });
 
-		if (!$(this).data('checked')) {
 
-			$(this).closest('table').find('.check-toggle').prop('checked', 'checked');
-			$(this).data('checked', true);
-		}
-			else {
+    $('#data-table').on('click', 'a.counter-all', function() {
+        
+        if ($('a.counter-all').hasClass('counter-close')) {
+            $('tr.item-counter').hide();
+            $('a.counter').removeClass('counter-close');
+            $(this).addClass('counter-close');
+        } else {
+            $('tr.item-counter').show();
+            $('a.counter').addClass('counter-close');
+            $(this).removeClass('counter-close');
+        }
 
-			$(this).closest('table').find('.check-toggle').prop('checked', '');
-			$(this).data('checked', false);
-		}
-		return false;
-	});
+        $('a.counter-all').toggleClass('counter-close');
+        return false;
+    });
 
-	// При нажатии на удалениче счетчика - передаем в модальное окно кнопке его ID
-	$('.counter-delete').on('click', function($e) {
+    // Выбираем все галочки в таблице
+    $('#data-table').on('click change', 'input.check-all', function() {
 
-		$e.preventDefault();
-		var id = $(this).data('id');
-		$('#counter-delete-confirm').data('id', id);
-	});
+        if (!$(this).data('checked')) {
 
-	// При подтверждении удаления делаем запрос
-	$('#counter-delete-confirm').on('click', function() {
+            $(this).closest('table').find('.check-toggle').prop('checked', 'checked');
+            $(this).data('checked', true);
+        }
+            else {
 
-		var id = $(this).data('id');
-		$('#counter-delete-confirm').data('id', id);
+            $(this).closest('table').find('.check-toggle').prop('checked', '');
+            $(this).data('checked', false);
+        }
+        return false;
+    });
 
-		// ajax request ...
-	});
+    // При нажатии на удалениче счетчика - передаем в модальное окно кнопке его ID
+    $('.counter-delete').on('click', function($e) {
 
-	// Эмулируем выбор метода оплаты
-	$('#payment-items').on('click', 'a', function($e) {
+        $e.preventDefault();
+        var id = $(this).data('id');
+        $('#counter-delete-confirm').data('id', id);
+    });
 
-		$e.preventDefault();
-		$('#payment-items a').removeClass('active');
-		$(this).addClass('active');
-		$('#payment-type').value($(this).val());
+    // При подтверждении удаления делаем запрос
+    $('#counter-delete-confirm').on('click', function() {
 
-		return false;
-	});
+        var id = $(this).data('id');
+        $('#counter-delete-confirm').data('id', id);
 
-	// Эмулируем выпадающий список с помощью bootstrap dropdown
-	$(".dropdown-menu li a").click(function($e){
+        // ajax request ...
+    });
 
-		$e.preventDefault();
-		$(this).parents(".dropdown").find('button').html($(this).text() + ' <span class="caret"></span>');
-		$(this).parents(".dropdown").find('button').val($(this).data('value'));
-	});
+    // Эмулируем выбор метода оплаты
+    $('#payment-items').on('click', 'a', function($e) {
 
-	$("#service-table .icon-phone").mouseenter(function() {
+        $e.preventDefault();
+        $('#payment-items a').removeClass('active');
+        $(this).addClass('active');
+        $('#payment-type').value($(this).val());
 
-		$(this).closest('tr').find('.phone-more').fadeIn();
-	}).mouseleave(function() {
+        return false;
+    });
 
-		$(this).closest('tr').find('.phone-more').fadeOut();
-	});
+    // Эмулируем выпадающий список с помощью bootstrap dropdown
+    $(".dropdown-menu li a").click(function($e){
 
-	$('#service-table').on('click', '.icon-map', function() {
+        $e.preventDefault();
+        $(this).parents(".dropdown").find('button').html($(this).text() + ' <span class="caret"></span>');
+        $(this).parents(".dropdown").find('button').val($(this).data('value'));
+    });
 
-		$(this).closest('tr').next('.item-map').show().next().hide();
-		initMap($('#map-service-' + $(this).data('id')));
-		$('.matchHeight').matchHeight();
-		return false;
-	});
+    $("#service-table .icon-phone").mouseenter(function() {
 
-	$('#service-table').on('click', '.icon-webcam', function() {
+        $(this).closest('tr').find('.phone-more').fadeIn();
+    }).mouseleave(function() {
 
-		$(this).closest('tr').next().hide().next('.item-web').show();
-		$('.matchHeight').matchHeight();
-		return false;
-	});
+        $(this).closest('tr').find('.phone-more').fadeOut();
+    });
 
-	$('#service-table').on('click', '.close', function() {
+    $('#service-table').on('click', '.icon-map', function() {
 
-		$(this).closest('tr').hide();
-		return false;
-	});	
+        $(this).closest('tr').next('.item-map').show().next().hide();
+        initMap($('#map-service-' + $(this).data('id')));
+        $('.matchHeight').matchHeight();
+        return false;
+    });
+
+    $('#service-table').on('click', '.icon-webcam', function() {
+
+        $(this).closest('tr').next().hide().next('.item-web').show();
+        $('.matchHeight').matchHeight();
+        return false;
+    });
+
+    $('#service-table').on('click', '.close', function() {
+
+        $(this).closest('tr').hide();
+        return false;
+    }); 
 }
 
 /* Scroll animation used for landing page */
 function initScrollAnimation() {
 
-	window.sr = ScrollReveal();
+    window.sr = ScrollReveal();
 
-	var scrollZoomIn = {
-		duration: 500,
-		scale    : 0.8,
-		afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
-	};
+    var scrollZoomIn = {
+        duration: 500,
+        scale    : 0.8,
+        afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
+    };
 
-	var scrollTextFade = {
-		duration: 400,
-		afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
-	}
+    var scrollTextFade = {
+        duration: 400,
+        afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
+    }
 
-	var scrollTextLeft = {
-		duration: 600,
-		distance: '50%',
-		origin: 'left',
-		afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
-	}
+    var scrollTextLeft = {
+        duration: 600,
+        distance: '50%',
+        origin: 'left',
+        afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
+    }
 
-	var scrollTextRight = {
-		duration: 600,
-		distance: '50%',
-		origin: 'right',
-		afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
-	}
+    var scrollTextRight = {
+        duration: 600,
+        distance: '50%',
+        origin: 'right',
+        afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
+    }
 
-	var scrollSliderFull = {
-		duration: 500,
-		scale : 1,
-		easing   : 'ease-in-out',
-		distance : '0px',
-		afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
-	}
+    var scrollSliderFull = {
+        duration: 500,
+        scale : 1,
+        easing   : 'ease-in-out',
+        distance : '0px',
+        afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
+    }
 
-	/* Every element initialized once */
-/*	if ($('#home-1').length) sr.reveal('#home-1 h1, #home-1 p, #home-1 .social', scrollSliderFull, 200);*/
-	if ($('#home-1').length) sr.reveal('#home-1 h1, #home-1 p, #home-1 .social', scrollTextLeft, 200);
-	if ($('#home-1').length) sr.reveal('#home-1 .social', scrollTextRight, 200);
-	if ($('#home-debt').length) sr.reveal('#home-debt .list', scrollTextLeft, 200);
-	if ($('#home-debt').length) sr.reveal('#home-debt .header', scrollTextFade, 200);
-	if ($('#home-service').length) sr.reveal('#home-service .icons > div', scrollZoomIn, 100);
-	if ($('#home-service').length) sr.reveal('#home-service .header', scrollTextFade, 200);
+    /* Every element initialized once */
+/*  if ($('#home-1').length) sr.reveal('#home-1 h1, #home-1 p, #home-1 .social', scrollSliderFull, 200);*/
+    if ($('#home-1').length) sr.reveal('#home-1 h1, #home-1 p, #home-1 .social', scrollTextLeft, 200);
+    if ($('#home-1').length) sr.reveal('#home-1 .social', scrollTextRight, 200);
+    if ($('#home-debt').length) sr.reveal('#home-debt .list', scrollTextLeft, 200);
+    if ($('#home-debt').length) sr.reveal('#home-debt .header', scrollTextFade, 200);
+    if ($('#home-service').length) sr.reveal('#home-service .icons > div', scrollZoomIn, 100);
+    if ($('#home-service').length) sr.reveal('#home-service .header', scrollTextFade, 200);
 
-	if ($('#home-comfort').length) sr.reveal('#home-comfort .header, #home-comfort p, #home-comfort .btn', scrollTextLeft, 200);
-	if ($('#home-wiki').length) sr.reveal('#home-wiki .header, #home-wiki p, #home-wiki .btn', scrollTextLeft, 200);
-	if ($('#home-account .block-white').length) sr.reveal('#home-account .block-white .btn', scrollZoomIn, 20);
+    if ($('#home-comfort').length) sr.reveal('#home-comfort .header, #home-comfort p, #home-comfort .btn', scrollTextLeft, 200);
+    if ($('#home-wiki').length) sr.reveal('#home-wiki .header, #home-wiki p, #home-wiki .btn', scrollTextLeft, 200);
+    if ($('#home-account .block-white').length) sr.reveal('#home-account .block-white .btn', scrollZoomIn, 20);
 }
 
 /* Swiper slider initialization */
 function initSwiper() {
 
     var newsSwiper = new Swiper('.news-slider', {
-		direction   : 'horizontal',
+        direction   : 'horizontal',
 
-		speed		: 1000,
-		nextButton	: '.arrow-right',
-		prevButton	: '.arrow-left',
-	
-		autoplay    : 7000,
-		autoplayDisableOnInteraction	: false,
+        speed       : 1000,
+        nextButton  : '.arrow-right',
+        prevButton  : '.arrow-left',
+    
+        autoplay    : 7000,
+        autoplayDisableOnInteraction    : false,
     });
 
 /*
-	$(window).on('resize', function(){
+    $(window).on('resize', function(){
 
-		var ww = $(window).width()
-		if ($('#testimonials-slider').length) {
+        var ww = $(window).width()
+        if ($('#testimonials-slider').length) {
 
-			if (ww > 1000) { clientsSwiper.params.slidesPerView = 3; }
-			if (ww <= 1000) { clientsSwiper.params.slidesPerView = 2; }
-			if (ww <= 479) { clientsSwiper.params.slidesPerView = 1; }		
-		
-			clientsSwiper.update();			
-		}
-	}).resize();
+            if (ww > 1000) { clientsSwiper.params.slidesPerView = 3; }
+            if (ww <= 1000) { clientsSwiper.params.slidesPerView = 2; }
+            if (ww <= 479) { clientsSwiper.params.slidesPerView = 1; }      
+        
+            clientsSwiper.update();         
+        }
+    }).resize();
 */
 }
 
 /* Navbar is set darker on main page on scroll */
 function checkNavbar() {
 
-	var scroll = $(window).scrollTop(),
-    	navBar = $('nav.navbar'),
-	    slideDiv = $('.slider-full');
+    var scroll = $(window).scrollTop(),
+        navBar = $('nav.navbar'),
+        slideDiv = $('.slider-full');
 
     if (scroll > 1) navBar.addClass('dark'); else navBar.removeClass('dark');
 }
@@ -242,23 +266,23 @@ function checkNavbar() {
 /* Google maps init */
 function initMap(mapEl) {
 
-	mapEl = typeof mapEl !== 'undefined' ? mapEl : $('#map');
-	if (mapEl.length) {
+    mapEl = typeof mapEl !== 'undefined' ? mapEl : $('#map');
+    if (mapEl.length) {
 
-		var uluru = {lat: mapEl.data('lat'), lng: mapEl.data('lng')};
-		var map = new google.maps.Map(document.getElementById(mapEl.attr('id')), {
-		  zoom: mapEl.data('zoom'),
-		  center: uluru,
-		  scrollwheel: false,
-		  styles: mapStyles
-		});
+        var uluru = {lat: mapEl.data('lat'), lng: mapEl.data('lng')};
+        var map = new google.maps.Map(document.getElementById(mapEl.attr('id')), {
+          zoom: mapEl.data('zoom'),
+          center: uluru,
+          scrollwheel: false,
+          styles: mapStyles
+        });
 
-		var marker = new google.maps.Marker({
-		  position: uluru,
-/*		  icon: base_href + 'assets/images/location-black.png',*/
-		  map: map
-		});
-	}
+        var marker = new google.maps.Marker({
+          position: uluru,
+/*        icon: base_href + 'assets/images/location-black.png',*/
+          map: map
+        });
+    }
 }
 
 function initParallax() {

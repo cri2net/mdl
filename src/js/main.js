@@ -493,30 +493,44 @@ function send_activation_code(element)
 
 function add_new_counters(key, abcounter, tarif)
 {
+    // максимум пять счётчиков
+    if (new_counter_no['k' + key] >= 5) {
+        return;
+    }
+    
     new_counter_no['k' + key]++;
     var new_counter_numnber = new_counter_no['k' + key];
-    
-    var html = '<div class="counter-data"><br> Показання лічильника №'+ new_counter_numnber +' : <br>' +
-        '<div style="margin-top:5px; margin-bottom:5px;">' +
-            '<label for="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Попередні:</label>' +
-            '<input style="width: 60px;" value="0" id="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
-        '</div>' +
-        '<div style="margin-bottom:5px;">' +
-            '<label for="inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Поточні:</label>' +
-            '<input style="width: 60px;" class="inp_'+ key +'_new_count" type="text" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
-        '</div>' +
-        '<div style="margin-bottom:5px;">' +
-            '<label for="cur_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">поточні на дату сплати:</label>' +
-            '<input style="width: 60px;" type="text" id="cur_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_cur_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);">' +
-        '</div>' +
-        '<div style="margin-bottom:5px;">' +
-            '<label for="num_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Заводський номер:</label>' +
-            '<input style="width: 60px;" type="text" id="num_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_abcounter[]" value="'+ abcounter +'">' +
-        '</div>' +
 
-        '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
-        'До сплати: ( <div style="display:inline-block;" id="newval_counter_'+ key +'_'+ new_counter_numnber +'">поточне&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_'+ key +'_'+ new_counter_numnber +'">0</span>)&nbsp;*&nbsp;'+ tarif +'&nbsp;грн' +
-    '</div>';
+    var html = 
+        '<tr id="item-counter-'+ key + '-' + new_counter_numnber +'" data-number="'+ key +'" class="item-counter item-counter-'+ key +'" style="display: table-row;">' +
+            '<td colspan="6">' +
+                '<div class="row">' +
+                    '<div class="col-md-4">' +
+                        '<div class="counter-field">' +
+                            '<input class="inp_'+ key +'_new_count" type="text" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
+                            '<span class="edit"></span>' +
+                        '</div>' +
+                        '<div class="counter-label">поточні</div>' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                        '<div class="counter-field">' +
+                            '<input name="inp_'+ key +'_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');" id="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'">' +
+                            '<span class="edit"></span>' +
+                        '</div>' +
+                        '<div class="counter-label">минулі</div>' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                        '<div class="counter-field">' +
+                            '<input type="text" id="num_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_abcounter[]" value="'+ abcounter +'">' + 
+                            '<a data-id="'+ abcounter +'" class="delete counter-delete" onclick="$(\'#item-counter-'+ key + '-' + new_counter_numnber + '\').remove(); new_counter_no[\'k' + key + '\']--;">&times;</a>' +
+                            // '<a data-id="'+ abcounter +'" class="delete counter-delete" data-toggle="modal" data-target="#modalCounterConfirm">&times;</a>' +
+                        '</div>' +
+                        '<div class="counter-label">№ лічильника</div>' +
+                    '</div>' +
+                '</div>' +
+                '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
+            '</td>' +
+        '</tr>';
 
     $(html).insertBefore('#new_counters_for_' + key);
 };

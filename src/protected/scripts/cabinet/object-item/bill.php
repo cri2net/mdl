@@ -85,7 +85,7 @@
                                         <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox" class="check-all"><span></span>
                                     </label>
                                 </th>
-                                <th class="align-center"><span class="counter counter-open"></span></th>
+                                <th class="align-center"><a class="counter counter-open counter-all"></a></th>
                                 <th class="th-header">Назва послуги /<br>одержувач коштів</th>
                                 <th>Заборгованість /<br>переплата, грн</th>
                                 <th>Нараховано за<br><?= $MONTHS_NAME[$debtMonth]['ua']['small']; ?>, грн*</th>
@@ -100,12 +100,18 @@
                                     $row_counter++;
                                     ?>
 
-                                    <tr class="item-row">
+                                    <tr class="item-row" data-number="<?= $key; ?>">
                                         <td class="align-center">
                                             <label class="checkbox no-label green"><input checked="checked" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" name="items[]" type="checkbox" class="check-toggle"><span></span></label>
                                         </td>
                                         <td class="align-center">
-                                            <a class="counter counter-open"></a>
+                                            <?php
+                                                if (!empty($item['counterData'])) {
+                                                    ?>
+                                                    <a class="counter counter-open"></a>
+                                                    <?php
+                                                }
+                                            ?>
                                         </td>
                                         <td class="border-bottom">
                                             <label class="header">
@@ -201,9 +207,9 @@
                                             // $item['to_pay'] = str_replace('.', ',', sprintf('%.2f', $item['SUMM_OBL_PAY']));
 
                                             foreach ($item['counterData']['counters'] as $counter) {
+                                                
                                                 ?>
-
-                                                <tr class="item-counter">
+                                                <tr id="item-counter-<?= $key; ?>-0" data-number="<?= $key; ?>" class="item-counter item-counter-<?= $key; ?>">
                                                     <td colspan="6">
                                                         <div class="row">
                                                             <div class="col-md-4">
@@ -223,22 +229,27 @@
                                                             <div class="col-md-4">
                                                                 <div class="counter-field">
                                                                     <input type="text" id="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
-                                                                    <a data-id="<?= $counter['ABCOUNTER']; ?>" class="delete counter-delete" data-toggle="modal" data-target="#modalCounterConfirm">&times;</a>
+                                                                    <a data-id="<?= $counter['ABCOUNTER']; ?>" class="delete counter-delete" onclick="$('#item-counter-<?= $key; ?>-0').remove(); new_counter_no.k<?= $key; ?>--;">&times;</a>
                                                                 </div>
                                                                 <div class="counter-label">№ лічильника</div>
                                                             </div>
                                                         </div>
-                                                        <a class="add-new btn btn-lg btn-green" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>);"><span>додати лічильник</span></a>
                                                         <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
-                                                        <script>
-                                                            new_counter_no.k<?= $key; ?> = <?= count($item['counterData']['counters']); ?>;
-                                                        </script>
                                                     </td>
                                                 </tr>
-                                                <!-- <div id="new_counters_for_<?= $key; ?>"></div> -->
                                                 <?php
                                             }
                                             ?>
+                                            <tr id="new_counters_for_<?= $key; ?>" class="item-counter item-counter-<?= $key; ?>" data-number="<?= $key; ?>">
+                                                <td colspan="6">
+                                                    <div class="row">
+                                                        <a class="add-new btn btn-lg btn-green" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>);"><span>додати лічильник</span></a>
+                                                        <script>
+                                                            new_counter_no.k<?= $key; ?> = <?= count($item['counterData']['counters']); ?>;
+                                                        </script>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             <?php
                                         }
                                     ?>
