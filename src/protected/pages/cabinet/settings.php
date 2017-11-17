@@ -11,19 +11,23 @@
     require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
     require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
 ?>
-<div class="container" >
+<div class="container">
 <content>
 <div class="cabinet-settings">
-   
     <?php
         if (isset($_SESSION['cabinet-settings']['status']) && !$_SESSION['cabinet-settings']['status']) {
             ?>
-            <h2 class="big-error-message">Під час виконання запиту виникла помилка:</h2>
-            <div class="error-description"><?= $_SESSION['cabinet-settings']['error']['text']; ?></div>
+            <div class="alert alert-danger">
+                <?= $_SESSION['cabinet-settings']['error']['text']; ?>
+            </div>
             <?php
             unset($_SESSION['cabinet-settings']['status']);
         } elseif (isset($_SESSION['cabinet-settings']['status'])) {
-            ?><h2 class="big-success-message"><?= $_SESSION['cabinet-settings']['text']; ?></h2> <?php
+            ?>
+            <div class="alert alert-success">
+                <?= $_SESSION['cabinet-settings']['text']; ?>
+            </div>
+            <?php
             unset($_SESSION['cabinet-settings']);
         }
     ?>
