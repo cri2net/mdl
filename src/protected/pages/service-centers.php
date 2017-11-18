@@ -2,6 +2,7 @@
     use cri2net\php_pdo_db\PDO_DB;
 ?>
 <body>
+    <script src="https://webcams.ks.ua/js/vendor/uppod.js"></script>
 <?php
     require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
     require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
@@ -196,7 +197,7 @@
                                     <td colspan="4">
                                         <div class="div-shadow">
                                             <div class="row">
-                                                <div class="col-md-8 matchHeight"><?= $item['webcam'] ?></div>
+                                                <div class="col-md-8 matchHeight"><div id="cks<?= $item['id'] ?>" ></div></div>
                                                 <div class="col-md-4">
                                                     <div class="info matchHeight">
                                                         <a href="#" class="close">&times;</a>
@@ -244,3 +245,14 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+<?php
+    foreach ($list as $key => $sc)
+        if(strlen(trim($sc['webcam'])) > 3)
+        {
+        ?>
+        new Uppod({m:"video",uid:"cks<?= $sc['id']; ?>",file:"<?= $sc['webcam'] ?>",onReady: function(uppod){uppod.Play();}});
+        <?php
+        }
+?>
+</script>
