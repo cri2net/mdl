@@ -67,7 +67,7 @@
 <div class="container">
     <content>
         <div class="cabinet-settings object-item object-item-bill">
-            <form class="real-full-width-block" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/detailbill/" method="get">
+            <form class="real-full-width-block" id="object-item-detailbill-form" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/detailbill/" method="get">
                 <div class="thead-bg">
                     <div class="head-green"></div>
                     <div class="head-gray"></div>
@@ -78,47 +78,56 @@
                     <table class="full-width-table datailbill-table no-border" id="data-table">
                         <thead>
                             <tr class="head-green">
-                                <th colspan="6" class="align-left">
+                                <th colspan="5" class="align-left">
                                     <div class="calendar">
                                         <div class="dropdown">
                                             <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-month" value="1">
                                                 <?= $MONTHS_NAME[(int)$_need_month]['ua']['small']; ?>
                                                 <span class="caret"></span>
                                             </button>
+                                            <input type="hidden" id="detailbill-filter-month" value="<?= $_need_month; ?>" name="month" />
                                             <!-- <?= ($_need_month == $key) ? 'selected' : ''; ?> -->
                                             <ul class="dropdown-menu" aria-labelledby="select-month">
                                                 <?php
                                                     foreach ($MONTHS_NAME as $key => $month) {
                                                         ?>
-                                                        <li><a data-value="<?= strtolower($month['en']); ?>"><?= $month['ua']['small']; ?></a></li>
+                                                        <li><a onclick="$('#detailbill-filter-month').val('<?= strtolower($month['en']); ?>');" id="detailbill-filter-month-a-<?= strtolower($month['en']); ?>" data-value="<?= strtolower($month['en']); ?>"><?= $month['ua']['small']; ?></a></li>
                                                         <?php
                                                     }
                                                 ?>
                                             </ul>
+                                            <script>
+                                                $(document).ready(function(){
+                                                    $('#detailbill-filter-month-a-<?= $_need_month; ?>').click();
+                                                });
+                                            </script>
                                         </div>
                                         <div class="dropdown">
                                             <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-year" value="<?= $_need_year; ?>">
                                                 <?= $_need_year; ?>
                                                 <span class="caret"></span>
                                             </button>
+                                            <input type="hidden" id="detailbill-filter-year" value="<?= $_need_year; ?>" name="year" />
                                             <ul class="dropdown-menu" aria-labelledby="select-month">
                                                 <?php
                                                     foreach ($years as $year) {
                                                         ?>
                                                         <!-- <?= ($_need_year == $year) ? 'selected' : ''; ?> -->
-                                                        <li><a data-value="<?= $year; ?>"><?= $year; ?></a></li>
+                                                        <li><a onclick="$('#detailbill-filter-year').val('<?= $year; ?>');" id="detailbill-filter-year-a-<?= $year; ?>" data-value="<?= $year; ?>"><?= $year; ?></a></li>
                                                         <?php
                                                     }
                                                 ?>
                                             </ul>
+                                            <script>
+                                                $(document).ready(function(){
+                                                    $('#detailbill-filter-year-a-<?= $_need_year; ?>').click();
+                                                });
+                                            </script>
                                         </div>
                                     </div>
-
-
-
-
                                     <div class="company">
                                         <div class="dropdown">
+                                            <input type="hidden" id="detailbill-filter-service" value="<?= $_need_firm; ?>" name="service" />
                                             <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-company">
                                                 <?php
                                                     $have_firme = false;
@@ -141,18 +150,27 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="select-company">
+                                                <li><a id="detailbill-filter-sevice-a-0" onclick="$('#detailbill-filter-service').val('0');" data-value="0">Оберіть компанію</a></li>
                                                 <?php
                                                     if (!empty($firmData)) {
                                                         foreach ($firmData as $key => $firm) {
                                                             ?>
-                                                            <li><a data-value="<?= $key; ?>" <?= ($_need_firm == $key) ? 'selected' : ''; ?>><?= $firm['name']; ?></a></li>
+                                                            <li><a id="detailbill-filter-sevice-a-<?= $key; ?>" data-value="<?= $key; ?>" onclick="$('#detailbill-filter-service').val('<?= $key; ?>');" <?= ($_need_firm == $key) ? 'selected' : ''; ?>><?= $firm['name']; ?></a></li>
                                                             <?php
                                                         }
                                                     }
                                                 ?>
                                             </ul>
+                                            <script>
+                                                $(document).ready(function(){
+                                                    $('#detailbill-filter-sevice-a-<?= $_need_firm; ?>').click();
+                                                });
+                                            </script>
                                         </div>
                                     </div>
+                                </th>
+                                <th>
+                                    <a onclick="$('#object-item-detailbill-form').submit();" class="icon-settings"></a>
                                 </th>
                             </tr>
                             <tr class="head-gray">
@@ -207,7 +225,7 @@
                                         foreach ($firm as $item) {
                                             ?>
                                             <tr class="item-row">
-                                                <td class="border-bottom header header-big">
+                                                <td class="border-bottom header">
                                                     <?= $item['NAME_PLAT']; ?>
                                                 </td>
                                                 <td class="border-bottom">
@@ -301,62 +319,64 @@
 
                         if (!empty($recalcData)) {
                             ?>
-                            <table class="full-width-table datailbill-table no-border">
-                                <thead>
-                                    <tr>
-                                        <th colspan="4" class="first">Деталі перерахунку</th>
-                                    </tr>
-                                    <tr>
-                                        <th class="first">Назва послуги</th>
-                                        <th>Початок періоду</th>
-                                        <th>Кінець періоду</th>
-                                        <th>Сума</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                        $counter = 0;
-                                        $recalc_total_summ = 0;
-                                        
-                                        foreach ($recalcData as $item) {
+                            <div class="table-responsive" style="margin-top: 40px;">
+                                <table class="full-width-table datailbill-table no-border">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4" class="first">Деталі перерахунку</th>
+                                        </tr>
+                                        <tr class="head-gray-2">
+                                            <th class="first">Назва послуги</th>
+                                            <th>Початок періоду</th>
+                                            <th>Кінець періоду</th>
+                                            <th>Сума</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            $counter = 0;
+                                            $recalc_total_summ = 0;
+                                            
+                                            foreach ($recalcData as $item) {
 
-                                            for ($i=0; $i < count($item['list']); $i++) {
+                                                for ($i=0; $i < count($item['list']); $i++) {
 
-                                                $counter++;
-                                                $recalc_total_summ += $item['list'][$i]['sum'];
+                                                    $counter++;
+                                                    $recalc_total_summ += $item['list'][$i]['sum'];
 
-                                                $no_border = (($counter == count($recalcData)) && ($firm_counter < count($debtData['data'])));
-                                                $summ = explode('.', $item['list'][$i]['sum']);
-                                                $is_bold = (count($item['list']) - 1 == $i);
+                                                    $no_border = (($counter == count($recalcData)) && ($firm_counter < count($debtData['data'])));
+                                                    $summ = explode('.', $item['list'][$i]['sum']);
+                                                    $is_bold = (count($item['list']) - 1 == $i);
+                                                    ?>
+                                                    <tr style="<?= ($is_bold) ? 'border-bottom-width: 3px;' : ''; ?>" class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                                                        <td class="first" style="<?= ($is_bold) ? 'font-weight: bold;' : ''; ?>"><?= $item['list'][$i]['NAME']; ?></td>
+                                                        <td><?= $item['DBEGIN']; ?></td>
+                                                        <td><?= $item['DEND']; ?></td>
+                                                        <td>
+                                                            <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+
+                                            if (count($recalcData) > 1) {
+                                                
+                                                $recalc_total_summ /= 2;
+                                                $summ = explode('.', $recalc_total_summ);
                                                 ?>
-                                                <tr style="<?= ($is_bold) ? 'border-bottom-width: 3px;' : ''; ?>" class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
-                                                    <td class="first" style="<?= ($is_bold) ? 'font-weight: bold;' : ''; ?>"><?= $item['list'][$i]['NAME']; ?></td>
-                                                    <td><?= $item['DBEGIN']; ?></td>
-                                                    <td><?= $item['DEND']; ?></td>
+                                                <tr style="border-bottom-width: 3px;" class="item-row odd">
+                                                    <td colspan="3" class="first" style="font-weight: bold;">Всього за всі періоди</td>
                                                     <td>
                                                         <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                                     </td>
                                                 </tr>
                                                 <?php
                                             }
-                                        }
-
-                                        if (count($recalcData) > 1) {
-                                            
-                                            $recalc_total_summ /= 2;
-                                            $summ = explode('.', $recalc_total_summ);
-                                            ?>
-                                            <tr style="border-bottom-width: 3px;" class="item-row odd">
-                                                <td colspan="3" class="first" style="font-weight: bold;">Всього за всі періоди</td>
-                                                <td>
-                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                                </td>
-                                            </tr>
-                                            <?php
-                                        }
-                                    ?>
-                                </tbody>
-                            </table>
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                             <?php
                         }
                     ?>
