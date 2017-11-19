@@ -85,7 +85,7 @@
                                                 <?= $MONTHS_NAME[(int)$_need_month]['ua']['small']; ?>
                                                 <span class="caret"></span>
                                             </button>
-                                            <input type="hidden" id="detailbill-filter-month" value="<?= $_need_month; ?>" name="month" />
+                                            <input type="hidden" id="detailbill-filter-month" value="<?= strtolower($MONTHS_NAME[(int)$_need_month]['en']); ?>" name="month" />
                                             <!-- <?= ($_need_month == $key) ? 'selected' : ''; ?> -->
                                             <ul class="dropdown-menu" aria-labelledby="select-month">
                                                 <?php
