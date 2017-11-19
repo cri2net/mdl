@@ -888,3 +888,14 @@ ALTER TABLE `cks_houses`
 
 ALTER TABLE `cks_streets`
   CHANGE `street_id` `street_id` BIGINT(20) NOT NULL;
+
+
+-- 2017.11.19
+CREATE TABLE IF NOT EXISTS `cks_flats_pin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_flat` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `created_at` double NOT NULL,
+  `pin` varchar(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
