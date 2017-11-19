@@ -16,6 +16,7 @@ define('ERROR_EMAIL_DOESNOT_EXIST', 'Користувач з такою адре
 define('ERROR_EMAIL_ALREADY_EXIST', 'Користувач з такою адресою електронної пошти вже існує.');
 define('ERROR_PHONE_ALREADY_EXIST', 'Користувач з таким номером мобільного телефону вже існує.');
 define('ERROR_LOGIN_ALREADY_EXIST', 'Користувач з таким логіном вже існує.');
+define('ERROR_FLAT_PIN', 'Невірно введений перевірочний код');
 define('ERROR_SET_NEWPASSWORD', 'Неможливо задати новий пароль.');
 define('ERROR_SENDING_MAIL', 'Неможливо відправити повідомлення.');
 define('ERROR_DATE', 'Помилка дати.');

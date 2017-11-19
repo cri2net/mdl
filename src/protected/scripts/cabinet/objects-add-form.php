@@ -44,6 +44,12 @@
         </select>
     </label>
 </div>
+<div class="input" id="pin-code" style="display: none">
+    <label>Перевірочний код<br/>
+        <input name="pin" class="txt" />
+    </label>
+    <div class="hint-blue">Введіть перевірочний PIN-код, який ми відправили Вам на пошту</div>
+</div>
 <?php
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));
 ?>
@@ -60,6 +66,7 @@
     }
 ?>
 <script type="text/javascript">
+    var PIN_SENT = false;
     $(document).ready(function() {
         $("#add_obj_street").autocomplete({
             source: function(request, response) {
@@ -148,6 +155,36 @@
                     }
                 },
             });
+        });
+
+        $("#add-object-form>form").on('submit', function(){
+            if (PIN_SENT == true) {
+                return true;
+            }
+
+            $.ajax({
+                url: '<?= BASE_URL ?>/ajax/json/flat-pin/',
+                type: "POST",
+                data: {
+                    id_flat: $("#add_obj_flat").val()
+                },
+                dataType: "json",
+                success: function(response) {
+                    switch(response.result) {
+                        case 'ok':
+                            
+                            PIN_SENT = true;
+                            return false;
+                            break;
+                        case 'error':
+                            alert(response.msg);
+                            break;
+                    }
+                }
+            });
+
+            $("#pin-code").slideDown(function(){ $("#pin-code input").attr('required', 'required')});
+            return false;
         });
     });
 </script>
