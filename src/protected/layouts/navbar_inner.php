@@ -50,7 +50,7 @@
                                 <ul>
                                     <li class="item-1"><a href="<?= BASE_URL; ?>/cabinet/objects/">Об’єкти</a></li>
                                     <li class="item-2"><a href="<?= BASE_URL; ?>/cabinet/payments/">Мої платежі</a></li>
-                                    <li class="item-3"><a href="#">Онлайн довідка</a></li>
+                                    <li class="item-3"><a href="<?= BASE_URL; ?>/main_help/cabinet_faq/">Онлайн довідка</a></li>
                                     <li class="item-4"><a href="<?= BASE_URL; ?>/cabinet/settings/">Редагувати профіль</a></li>
                                     <li class="item-5"><a href="<?= BASE_URL; ?>/post/cabinet/logout/">Вихід</a></li>
                                 </ul>
