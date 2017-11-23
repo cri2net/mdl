@@ -58,7 +58,7 @@
                                                         <?php
                                                             foreach ($regions as $region) {
                                                                 ?>
-                                                                <li><a id="service-centers-region-a-<?= $company['id']; ?>" onclick="$('#service-centers-region').val('<?= $region['id']; ?>');" data-value="<?= $region['id']; ?>"><?= htmlspecialchars($region['title']); ?></a></li>
+                                                                <li><a id="service-centers-region-a-<?= $region['id']; ?>" onclick="$('#service-centers-region').val('<?= $region['id']; ?>');" data-value="<?= $region['id']; ?>"><?= htmlspecialchars($region['title']); ?></a></li>
                                                                 <?php
                                                             }
                                                         ?>

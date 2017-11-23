@@ -153,4 +153,30 @@ class CronTasks
             $email->call_phpmailer_send();
         }
     }
+
+    public static function sendFeedbackAnswer()
+    {
+        $list = PDO_DB::table_list(TABLE_PREFIX . 'feedback', 'answer_need_send=1');
+
+        foreach ($list as $item) {
+            
+            if (!isset($email)) {
+                $email = new Email();
+            }
+
+            $email->clearAllRecipients();
+
+            $email->send(
+                [$item['email'], "{$item['name']} {$item['fathername']}"],
+                $item['subject'],
+                '',
+                'feedback_answer',
+                [
+                    'answer' => $item['answer'],
+                    'request' => nl2br(htmlspecialchars($item['text']))
+                ]
+            );
+            PDO_DB::update(['answer_need_send' => 0], TABLE_PREFIX . 'feedback', $item['id']);
+        }
+    }
 }

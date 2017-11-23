@@ -94,7 +94,7 @@
 
                         ?>
                         <div class="<?= ($last) ? 'col-md-8 col-sm-12' : 'col-md-4 col-sm-6'; ?>">
-                            <a href="<?= BASE_URL; ?>/news/<?= composeURLKey($news[$i]['title']); ?>_<?= $news[$i]['id']; ?>/" class="<?= $large ? 'item-large' : '' ?> item-<?= $news[$i]['color'] ?> matchHeight">
+                            <a href="<?= BASE_URL; ?>/news/<?= composeURLKey($news[$i]['title']); ?>_<?= $news[$i]['id']; ?>/" class="<?= (false) ? 'item-large' : '' ?> item-<?= $news[$i]['color'] ?> matchHeight">
                                 <?php
                                     if ($news[$i]['image']) {
                                         ?>

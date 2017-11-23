@@ -146,20 +146,34 @@
 
             <p><strong>E-mail:</strong>  <a href="#">savchuk.s@src.kiev.ua</a></p>
 
-            <p><strong>Менеджер з продажу:</strong>   (044) 591-56-82</p>
+            <p><strong>Менеджер з продажу:</strong> (044) 591-56-82</p>
         </div>
 
-        <div class="form">
+        <div class="form" id="callback-form">
             <div class="container">
-                <form>
-                    <h4>Залиште свій телефон, ми допоможемо</h4>
+                <?php
+                    if (isset($_SESSION['services-callback']['status'])) {
+                        if ($_SESSION['services-callback']['status']) {
+                            ?><h4>Ваш запит отримано</h4><?php
+                        } else {
+                            ?><h4><?= $_SESSION['services-callback']['error']['text']; ?></h4><?php
+                        }
 
-                    <div class="form-group">
-                        <input type="text" name="phone" class="phone" placeholder="+380" id="reg-phone">
-                        <input type="submit" class="btn btn-yellow hidden-xs" value="зателефонуйте мені">
-                        <input type="submit" class="btn btn-yellow visible-xs" value="зателефонуйте">
-                    </div>
-                </form>
+                        unset($_SESSION['services-callback']);
+                    } else {
+                        ?>
+                        <form method="post" action="<?= BASE_URL; ?>/post/callback/">
+                            <h4>Залиште свій телефон, ми допоможемо</h4>
+
+                            <div class="form-group">
+                                <input type="text" name="phone" class="phone" placeholder="+380" id="reg-phone">
+                                <input type="submit" class="btn btn-yellow hidden-xs" value="зателефонуйте мені">
+                                <input type="submit" class="btn btn-yellow visible-xs" value="зателефонуйте">
+                            </div>
+                        </form>
+                        <?php
+                    }
+                ?>
             </div>
         </div>
 

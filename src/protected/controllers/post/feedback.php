@@ -5,7 +5,7 @@ use cri2net\php_pdo_db\PDO_DB;
 try {
     $_SESSION['feedback'] = [];
     $fields = [
-        'surname'    => 'Прізвище',
+        'surname'     => 'Прізвище',
         'name'        => 'Ім’я',
         'fathername'  => 'По-батькові',
         'region'      => 'Район',
