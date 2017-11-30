@@ -16,7 +16,7 @@
                                 Залишились питання?<br>
                                 Зателефонуйте нам<br>
                                 <div class="phone">(044) 247 40 40</div>
-                                <a href="mailto:zvernenya@src.kiev.ua">zvernennya@src.kiev.ua</a>
+                                <a href="mailto:zvernennya@src.kiev.ua">zvernennya@src.kiev.ua</a>
                             </div>
                             <?php
                         } else {
@@ -53,7 +53,7 @@
                                     <div class="copyright pull-right">
                                         <h2>Ми на зв’язку</h2>
                                         <div class="phone">(044) 247-40-40</div>
-                                        <a href="mailto:zvernenya@src.kiev.ua">zvernennya@src.kiev.ua</a>
+                                        <a href="mailto:zvernennya@src.kiev.ua">zvernennya@src.kiev.ua</a>
                                     </div>
                                 </div>
                             </div>
