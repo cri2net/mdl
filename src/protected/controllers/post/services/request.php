@@ -26,7 +26,7 @@ try {
             'phones'    => htmlspecialchars($_POST['phones']),
             'worktypes' => nl2br(htmlspecialchars($_POST['worktypes'])),
             'workadd'   => nl2br(htmlspecialchars($_POST['workadd'])),
-            'services'  => ,
+            'services'  => implode(', ', $checked_services),
         ]
     );
 

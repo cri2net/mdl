@@ -246,7 +246,14 @@ function getShoppingCartTotal(total, percentSum, cctype)
     }
 
     $('#totalBillSum').html(totalStr + ' грн');
-    $('#comission_sum').html(PercentStr + ' грн');
+    // $('#comission_sum').html(PercentStr + ' грн');
+
+    if (percentSum > 0) {
+        $('#comission_sum').html('<span style="font-size: 14px;" id="comission_sum">2%, але не менше 5грн у розрізі постачальника послуг</span>');
+    } else {
+        $('#comission_sum').html('0,00 грн');
+    }
+
     $('#cctype').val(cctype);
 };
 

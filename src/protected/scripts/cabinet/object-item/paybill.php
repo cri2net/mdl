@@ -131,16 +131,12 @@
     </div>
 
     <div class="input">
-        <div class="pay-item">Сплата комунальних послуг (<b>Код: <?= $payment_id; ?></b>)</div>
+        <div class="pay-item" style="float: none;">Сплата комунальних послуг (<b>Код: <?= $payment_id; ?></b>)</div>
         <span class="total-sum"><?= $total_sum; ?> грн</span>
     </div>
     <div class="input">
-        <div class="pay-item">Комісія</div>
+        <div class="pay-item" style="float: none;">Комісія</div>
         <span class="total-sum"><span id="comission_sum"></span></span>
-    </div>
-    <div class="input">
-        <div class="pay-item">Разом до сплати:</div>
-        <div class="total-sum" id="totalBillSum"><?= $totalBillSum; ?> грн</div>
     </div>
 
     <div class="input align-center">
