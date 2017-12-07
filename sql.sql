@@ -899,3 +899,13 @@ CREATE TABLE IF NOT EXISTS `cks_flats_pin` (
   `pin` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2017.12.07
+ALTER TABLE `cks_payment`
+  CHANGE `flat_id` `flat_id` BIGINT(20) NULL   COMMENT 'for komdebt';
+
+ALTER TABLE `cks_flats_pin`
+  CHANGE `id_flat` `id_flat` BIGINT(20) NOT NULL;
+
+ALTER TABLE `cks_user_flats`
+  CHANGE `flat_id` `flat_id` BIGINT(20) NOT NULL;
