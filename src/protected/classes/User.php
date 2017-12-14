@@ -116,7 +116,7 @@ class User
         ];
 
         $user_id = PDO_DB::insert($data, self::TABLE);
-        self::sendRegLetter($user_id, $password, 'registration');
+        self::sendRegLetter($user_id, $data['password'], 'registration');
         return $user_id;
     }
 
