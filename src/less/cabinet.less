@@ -13,6 +13,7 @@
 
 @import "plugins/jquery-ui-1.8.7.custom.less";
 @import "plugins/jquery.autocomplete_2.less";
+@import "plugins/prettyPhoto.less";
 
 
 /* 2. Global classes */
@@ -350,6 +351,7 @@ nav.navbar {
 				ul {
 
 					.opacity(0);
+					display: none;
 					position: absolute;
 					right: 0;
 					top: 36px;
@@ -361,7 +363,8 @@ nav.navbar {
 				&:hover {
 
 					ul {
-
+						
+						display: block;
 						min-width: 220px;
 						.opacity(1);
 						list-style: none;

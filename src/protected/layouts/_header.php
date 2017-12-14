@@ -35,9 +35,9 @@
 
 <link href="https://fonts.googleapis.com/css?family=Fjalla+One%7COpen+Sans:300,400,600,700" rel="stylesheet">
 <script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/modernizr-2.6.2.min.js"></script>
-<script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/plugins.js"></script>
+<script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/plugins.min.js"></script>
 <script>
-    $(function() { var scroll = new SmoothScroll('a[href*="#"]', {speed: 500}));
+    $(function() { var scroll = new SmoothScroll('a[href*="#"]', {speed: 500})});
 </script>
 
 

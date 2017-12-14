@@ -1,4 +1,3 @@
-
     <?php
         use cri2net\php_pdo_db\PDO_DB;
 
@@ -53,14 +52,18 @@
                                     <div class="copyright pull-right">
                                         <h2>Ми на зв’язку</h2>
                                         <div class="phone">(044) 247-40-40</div>
-                                        <a href="mailto:zvernennya@src.kiev.ua">zvernennya@src.kiev.ua</a>
+                                        <a href="mailto:zvernennya@src.kiev.ua">zvernennya@src.kiev.ua</a> <br>
+
+                                        <div class="social pull-right">
+                                            <a href="https://www.facebook.com/cks.com.ua/" class="fa fa-facebook"></a>
+                                            <a href="https://www.youtube.com/channel/UCBZgKIDjq4AOOpYYKIK40kQ" class="fa fa-youtube"></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <?php
                         }
                     ?>
-
                 </div>
             </footer>
             <?php

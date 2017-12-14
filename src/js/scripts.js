@@ -18,6 +18,29 @@ $(document).on('ready', function() {
           }
     });
     */
+   
+    $("a[rel^='prettyPhoto']").prettyPhoto({
+        showTitle: false,
+        deeplinking: false,
+        slideshow: false,
+        animation_speed: 0,
+        theme: 'facebook',
+        show_title:false,
+        overlay_gallery:false,
+        social_tools: ''
+    });
+    $('a').each(function() {
+        var a = new RegExp('/' + window.location.host + '/');
+        if (!a.test(this.href) && this.href.length && (this.href != '#')) {
+            if ($(this).attr('rel') !== 'prettyPhoto') {
+                $(this).click(function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    window.open(this.href, '_blank');
+                });
+            }
+        }
+    });
 });
 
 $(window).on('scroll', function (event) {

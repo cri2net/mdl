@@ -83,7 +83,7 @@
                             <tr class="head-gray">
                                 <th class="align-center">
                                     <label class="checkbox no-label gray">
-                                        <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox" class="check-all"><span></span>
+                                        <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox"><span></span>
                                     </label>
                                 </th>
                                 <th class="align-center"><a class="counter counter-open counter-all"></a></th>
