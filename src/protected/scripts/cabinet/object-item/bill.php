@@ -24,6 +24,7 @@
         }
 
         $debtMonth = date("n", $debtData['timestamp']);
+        $next_month = strtotime('next month', $debtData['timestamp']);
 
         if ($debtMonth == 1) {
             $previousMonth = 12;
@@ -60,14 +61,14 @@
                     <table class="full-width-table datailbill-table no-border" id="data-table">
                         <thead>
                             <tr class="head-green">
-                                <th class="first align-center" colspan="6">
+                                <th class="first align-center" colspan="7">
                                     Рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?> р.
                                 </th>
                             </tr>
                             <tr class="head-green-lighter">
                                 <th>Обрати<br>все</th>
                                 <th>Відкрити<br>лічильники</th>
-                                <th colspan="4" class="align-right">
+                                <th colspan="5" class="align-right">
                                     <strong><span><?= $object['address']; ?></span><br>
                                     Загальна площа: <b><?= $debtData['PL_OB']; ?> м<sup>2</sup></b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м<sup>2</sup></b>, проживаючих: <b><?= $debtData['PEOPLE']; ?></b>
                                     <?php
@@ -89,7 +90,8 @@
                                 <th class="th-header">Назва послуги /<br>одержувач коштів</th>
                                 <th>Заборгованість /<br>переплата, грн</th>
                                 <th>Нараховано за<br><?= $MONTHS_NAME[$debtMonth]['ua']['small']; ?>, грн*</th>
-                                <th>До сплати,<br>грн**</th>
+                                <th style="white-space:nowrap;">Сплачено у<br><?= $MONTHS_WHEN[date('n', $next_month)]['ua']; ?> **</th>
+                                <th style="white-space:nowrap; max-width: 166px;">До сплати,<br>грн ***</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -175,6 +177,14 @@
                                         </td>
                                         <td class="border-bottom">
                                             <?php
+                                                $summ = explode(',', $item['SUMM_PLAT']);
+                                            ?>
+                                            <span class="item-summ">
+                                                <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                            </span>
+                                        </td>
+                                        <td class="border-bottom">
+                                            <?php
                                                 $attrs = '';
                                                 if ($item['SUMM_OBL_PAY'] > 0) {
                                                     $attrs .= 'data-obl-pay="'. sprintf('%.2f', $item['SUMM_OBL_PAY']) .'" ';
@@ -210,7 +220,7 @@
                                                 
                                                 ?>
                                                 <tr id="item-counter-<?= $key; ?>-0" data-number="<?= $key; ?>" class="item-counter item-counter-<?= $key; ?>">
-                                                    <td colspan="6">
+                                                    <td colspan="7">
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="counter-field">
@@ -241,7 +251,7 @@
                                             }
                                             ?>
                                             <tr id="new_counters_for_<?= $key; ?>" class="item-counter item-counter-<?= $key; ?>" data-number="<?= $key; ?>">
-                                                <td colspan="6">
+                                                <td colspan="7">
                                                     <div class="row">
                                                         <a class="add-new btn btn-lg btn-green" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>);"><span>додати лічильник</span></a>
                                                         <script>
@@ -259,12 +269,12 @@
                         </tbody>
                         <tfoot>
                             <tr class="total-summ">
-                                <td class="align-right" colspan="6">
+                                <td class="align-right" colspan="7">
                                     Всього:<br><span id="total_debt"><?= $debtData['full_dept']; ?></span> &#8372;
                                 </td>
                             </tr>
                             <tr>
-                                <td class="align-right" colspan="6">
+                                <td class="align-right" colspan="7">
                                     <input type="hidden" name="dbegin" value="<?= $dateBegin; ?>">
                                     <input type="hidden" name="dend" value="<?= $dateEnd; ?>">
                                     <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
@@ -275,16 +285,17 @@
                     </table>
 
 
-                    <!-- <table class="full-width-table datailbill-table no-border hints-table">
+                    <table class="full-width-table datailbill-table no-border hints-table">
                         <tbody>
                             <tr class="item-row">
                                 <td class="first">
-                                    <b class="hint-star">*</b> — з врахуванням пільг, субсидій та перерахунків <br>
-                                    <b class="hint-star">**</b> — з врахуванням заборгованності <br>
+                                    <b class="hint-star">*</b> — з врахуванням пільг, субсидій та перерахунків поточного періоду<br>
+                                    <b class="hint-star">**</b> — сума інформативна та не бере участь у загальній калькуляції за послугою; оновлюється протягом 1-3 банківських днів після сплати <br>
+                                    <b class="hint-star">***</b> — з врахуванням заборгованності <br>
                                 </td>
                             </tr>
                         </tbody>
-                    </table> -->
+                    </table>
                 </div>
             </form>
         </div>

@@ -166,15 +166,22 @@ class KomDebt
             if (!empty($error)) {
                 throw new Exception(ERROR_GETTING_DEBT);
             }
+
             
             $data['dbegin']    = $this->beginDate;
             $data['dend']      = $this->endDate;
-            $data['PEOPLE']    = (isset($xml->ROW[0]->PEOPLE))    ? $xml->ROW[0]->PEOPLE    . '' : null;
-            $data['PL_OB']     = (isset($xml->ROW[0]->PL_OB))     ? $xml->ROW[0]->PL_OB     . '' : null;
-            $data['LGOTA']     = (isset($xml->ROW[0]->LGOTA))     ? $xml->ROW[0]->LGOTA     . '' : null;
-            $data['PL_POL']    = (isset($xml->ROW[0]->PL_POL))    ? $xml->ROW[0]->PL_POL    . '' : null;
+            $data['total_pay'] = 0;
             $data['PLAT_CODE'] = (isset($xml->ROW[0]->PLAT_CODE)) ? $xml->ROW[0]->PLAT_CODE . '' : null;
-            // Такие вещи, как PLAT_CODE доступны только в истории начислений
+
+            // игнорируем определённый перечень ЖЕКов как поставщиков данных
+            $without_recalc = require(PROTECTED_DIR . '/conf/without_recalc.php');
+            $index = (in_array(floor($data['PLAT_CODE'] / 1000000), $without_recalc)) ? 1 : 0;
+
+            $data['PEOPLE'] = (isset($xml->ROW[$index]->PEOPLE)) ? $xml->ROW[$index]->PEOPLE . '' : null;
+            $data['PL_OB']  = (isset($xml->ROW[$index]->PL_OB))  ? $xml->ROW[$index]->PL_OB  . '' : null;
+            $data['LGOTA']  = (isset($xml->ROW[$index]->LGOTA))  ? $xml->ROW[$index]->LGOTA  . '' : null;
+            $data['PL_POL'] = (isset($xml->ROW[$index]->PL_POL)) ? $xml->ROW[$index]->PL_POL . '' : null;
+            // Такие вещи, как PLAT_CODE и OUT_KEY доступны только в истории начислений
             
             $fullDept = 0;
             $data['list'] = [];
@@ -182,7 +189,7 @@ class KomDebt
             foreach ($xml->xpath("//ROW") as $row) {
                 $list = [];
 
-                $tmp_keys = ['CODE_FIRME', 'CODE_PLAT', 'ID_FIRME', 'ID_PLAT', 'ABCOUNT', 'PLAT_CODE', 'DATE_D', 'FIO', 'TLF', 'R_COUNT', 'NAME_BANKS'];
+                $tmp_keys = ['CODE_FIRME', 'CODE_PLAT', 'ID_PLAT', 'ABCOUNT', 'PLAT_CODE', 'DATE_D', 'FIO', 'TLF', 'R_COUNT', 'NAME_BANKS', 'ID_FIRME', 'SUMM_PLAT'];
                 foreach ($tmp_keys as $tmp_key) {
                     $list[$tmp_key] = trim($row->$tmp_key . '');
                 }
@@ -200,6 +207,8 @@ class KomDebt
                 $list['SUMM_OBL_PAY'] = ($row->SUMM_OBL_PAY.'') / 100;
                 
                 $list['OPLAT']      = str_replace(".", ",", sprintf('%.2f', $list['OPLAT']));
+                $list['SUMM_PLAT']  = $list['SUMM_PLAT'] / 100;
+                $data['total_pay'] += $list['SUMM_PLAT'];
 
                 $SUMM_MONTH = ((float)$row->SUMM_MONTH)/100;
                 if ($SUMM_MONTH <= 0) {
@@ -231,6 +240,7 @@ class KomDebt
                         $list['counterData']['counters'][] = [
                             'COUNTER_NO' => (int)$counter->COUNTER_NO,
                             'OLD_VALUE' => floatval(str_replace(",", ".", $counter->OLD_VALUE)),
+                            'PRE_VALUE' => floatval(str_replace(",", ".", $counter->PRE_VALUE)),
                             'ABCOUNTER' => (string)$counter->ABCOUNTER,
                         ];
                     }
@@ -244,7 +254,9 @@ class KomDebt
                 // Если была переплата за прошлый месяц, то к оплате сумма за месяц (как будто нет переплаты)
                 // Если есть счётчик и обязательный платёж, платим обязательный.
                 $to_pay = ((float)$row->SUMM_DOLG)/100;
-                
+                $to_pay -= $list['SUMM_PLAT'];
+
+                $list['SUMM_PLAT'] = str_replace(".", ",", sprintf('%.2f', $list['SUMM_PLAT']));
                 $list['debt'] = sprintf('%.2f', $debt);
                 $list['debt'] = str_replace(".", ",", $list['debt']);
                 $list['to_pay'] = str_replace(".", ",", sprintf('%.2f', $to_pay));
