@@ -211,7 +211,7 @@ class KomDebt
                 $data['total_pay'] += $list['SUMM_PLAT'];
 
                 $SUMM_MONTH = ((float)$row->SUMM_MONTH)/100;
-                if ($SUMM_MONTH <= 0) {
+                if ($SUMM_MONTH == 0) {
                     $list['SUMM_MONTH'] = '-';
                 } else {
                     $list['SUMM_MONTH'] = sprintf('%.2f', $SUMM_MONTH);
