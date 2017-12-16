@@ -18,12 +18,6 @@
             </button>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <div id="search">
-                <form>
-                    <div class="input-div"><input type="text" name="search" value="" placeholder="Пошук"></div>
-                    <a href="#" class="search-icon fa fa-search"></a>
-                </form>
-            </div>
             <ul class="nav navbar-nav">
                 <li><a href="<?= BASE_URL; ?>/about_cks/">Про нас</a></li>
                 <li><a href="<?= BASE_URL; ?>/services_list_and_docs/">Перелік послуг</a></li>
@@ -113,7 +107,6 @@
                                     <p><?= ($news[$i]['announce']); ?></p>
                                     <div class="info">
                                         <span class="date"><?= $date; ?></span>
-                                        <span class="views"><?= $news[$i]['views']; ?></span>
                                     </div>
                                 </div>
                             </a>

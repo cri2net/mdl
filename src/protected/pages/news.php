@@ -53,7 +53,6 @@
 			                                <p><?= ($news[$i]['announce']); ?></p>
 			                                <div class="info">
 			                                    <span class="date"><?= $date; ?></span>
-			                                    <span class="views"><?= $news[$i]['views']; ?></span>
 			                                </div>
 			                            </div>
 			                        </a>

@@ -28,7 +28,7 @@
     $hash2 = Authorization::get_auth_hash2($__userData['id'], $hash1);
     $debt = new KomDebt();
 
-    $paybill_link   = BASE_URL . rawurlencode('/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2);
+    $paybill_link   = BASE_URL . '/cabinet/objects/' . $house['id'] . '/bill/?uid=' . $__userData['id'] . '&hash2=' . $hash2;
     $online_version = BASE_URL . '/invoice/?uid=' . $__userData['id'] . '&f=' . $house['id'] . '&hash2=' . $hash2;
 
     $address = Flat::getAddressString($house['flat_id'], $address_detail);
