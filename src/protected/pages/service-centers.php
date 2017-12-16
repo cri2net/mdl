@@ -218,6 +218,10 @@
                         </tbody>
                     </table>
                 </div>
+                <br><br>
+                <?php
+                    require_once(PROTECTED_DIR . '/scripts/map-form.php');
+                ?>
             </div>
         </div>
     </content>
