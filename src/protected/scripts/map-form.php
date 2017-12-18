@@ -30,6 +30,7 @@
         <div class="col-md-4">
             <div class="info matchHeight">
                 <form action="<?= BASE_URL; ?>/service-centers/" method="get">
+                    <input type="hidden" name="by" value="filter">
                     <!-- <div class="dropdown">
                       <button class="input-green no-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Оберіть район
@@ -45,11 +46,11 @@
                       </ul>
                     </div> -->
                     <label class="checkbox black black-label">
-                        <input checked="checked" name="has_webcam" type="checkbox" class="">
+                        <input checked="checked" name="is_webcam" value="1" type="checkbox" class="">
                         <span>Веб камера</span>
                     </label>
                     <label class="checkbox black black-label">
-                        <input checked="checked" name="has_terminal" type="checkbox" class="">
+                        <input checked="checked" name="is_terminal" value="1" type="checkbox" class="">
                         <span>Термінал для сплати</span>
                     </label>
                     <input type="submit" class="btn btn-green btn-green-white" value="Пошук відділень">

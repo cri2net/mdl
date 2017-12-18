@@ -176,7 +176,7 @@ function initEvents() {
 
         $(this).closest('tr').next('.item-map').show().next().hide();
         initMap($('#map-service-' + $(this).data('id')));
-        $('.matchHeight').matchHeight();
+        // $('.matchHeight').matchHeight();
         return false;
     });
 

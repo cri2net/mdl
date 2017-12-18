@@ -166,10 +166,10 @@
                                           </div>
                                         </div>
                                     </td>
-                                    <td class="center">
-                                        <a href="#" class="icon icon-phone"></a>
-                                        <a href="#" class="icon icon-map" data-id="<?= $item['id'] ?>"></a>
-                                        <?php if($isWebcam){?><a href="#" class="icon icon-webcam"></a><?}?>
+                                    <td class="center" nowrap="nowrap">
+                                        <a class="icon icon-phone"></a>
+                                        <a class="icon icon-map" data-id="<?= $item['id'] ?>"></a>
+                                        <?php if($isWebcam){?><a class="icon icon-webcam"></a><?}?>
                                     </td>
                                 </tr>
                                 <tr class="item-map">

@@ -27,11 +27,6 @@ $news_timestamp = $stm->fetchColumn();
     <lastmod><?= date("Y-m-d", $news_timestamp); ?></lastmod>
 </url>
 <url>
-    <loc><?= BASE_URL; ?>/about/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-</url>
-<url>
     <loc><?= BASE_URL; ?>/services-list/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

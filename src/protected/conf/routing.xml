@@ -45,7 +45,7 @@
         </route>
 
         <route match="checkout" controller="page" action="checkout" />
-        <route match="about" controller="page" action="about" />
+        <route match="about_cks" controller="page" action="about_cks" />
         <route match="services-list" controller="page" action="services-list" />
         <route match="services" controller="page" action="services" >
             <route match="request" controller="page" action="request-services" />

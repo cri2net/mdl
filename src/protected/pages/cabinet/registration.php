@@ -69,6 +69,9 @@
                     <div class="form-group">
                         <button class="btn btn-green-bordered">Зареєструватися</button>
                     </div>
+                    <div class="form-group">
+                        <a href="<?= BASE_URL; ?>/cabinet/login/">У мене вже є аккаунт</a>
+                    </div>
                     <?php
                 }
             ?>
@@ -77,6 +80,6 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#reg-phone").mask("+999(99)999-99-99", {autoclear: false});
+        $("#reg-phone").mask("+389(99)999-99-99", {autoclear: false});
     });
 </script>

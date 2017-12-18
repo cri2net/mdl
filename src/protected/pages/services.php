@@ -182,7 +182,7 @@ $(function(){
         $(this).toggleClass('checked');
     });
 
-    $("#reg-phone").mask("+999(99)999-99-99", {autoclear: false}).val('<?= htmlspecialchars(@$__userData['mob_phone'], ENT_QUOTES); ?>');
+    $("#reg-phone").mask("+389(99)999-99-99", {autoclear: false}).val('<?= htmlspecialchars(@$__userData['mob_phone'], ENT_QUOTES); ?>');
     $('.submit-request').click(function(){ $('#request-form').submit() })
 });
 </script>
