@@ -7,7 +7,7 @@ try {
     $fields = [
         'surname'     => 'Прізвище',
         'name'        => 'Ім’я',
-        'fathername'  => 'По-батькові',
+        'fathername'  => 'По батькові',
         'region'      => 'Район',
         // 'address'     => 'Адреса',
         'email'       => 'Електронна пошта',

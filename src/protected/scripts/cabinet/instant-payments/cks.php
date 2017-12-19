@@ -141,7 +141,7 @@
             <div style="display: inline-block; float: none; width: 100%;">
                 <div class="form-group" style="display: inline-block; float: left; margin-right: 61px;">
                     <label>
-                        По-батькові <span class="star-required" title="Обов’язкове поле">*</span> <br>
+                        По батькові <span class="star-required" title="Обов’язкове поле">*</span> <br>
                         <input onblur="registration_ckeck_empty_fileld(this);" value="<?= htmlspecialchars($penalty_user_fathername, ENT_QUOTES); ?>" type="text" name="penalty_user_fathername" class="form-txt" required="required">
                     </label>
                     <div style="display:none;" class="error-text"><div class="error-icon"></div> поле не повинно бути порожнім</div>

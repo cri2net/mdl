@@ -31,7 +31,7 @@ try {
         'protocol_summ'           => 'Сума штрафу',
         'penalty_user_lastname'   => 'Прізвище платника',
         'penalty_user_name'       => 'Ім’я платника',
-        'penalty_user_fathername' => 'По-батькові платника',
+        'penalty_user_fathername' => 'По батькові платника',
         'penalty_user_address'    => 'Адреса платника',
         'penalty_user_email'      => 'E-Mail',
     ];

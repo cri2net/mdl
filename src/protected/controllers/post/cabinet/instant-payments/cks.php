@@ -34,7 +34,7 @@ try {
     $tmp_keys = [
         'penalty_user_lastname'   => 'Прізвище',
         'penalty_user_name'       => 'Ім’я',
-        'penalty_user_fathername' => 'По-батькові',
+        'penalty_user_fathername' => 'По батькові',
         'penalty_user_address'    => 'Адреса',
         'penalty_user_email'      => 'E-Mail',
     ];

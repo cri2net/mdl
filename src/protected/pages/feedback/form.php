@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-              <label >По-батькові</label>
+              <label >По батькові</label>
               <input name="fathername" value="<?= (isset($_SESSION['feedback']['fathername'])) ? htmlspecialchars($_SESSION['feedback']['fathername'], ENT_QUOTES) : ''; ?>" required="required" type="text" class="form-control" placeholder="">
             </div>
         </div>

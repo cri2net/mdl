@@ -47,7 +47,7 @@
                         <input class="form-txt" required="required" placeholder="Ім’я" name="name" value="<?= $_reg_name; ?>" type="text">
                     </div>
                     <div class="form-group">
-                        <input class="form-txt" placeholder="По-батькові" name="fathername" value="<?= $_reg_fathername; ?>" type="text">
+                        <input class="form-txt" placeholder="По батькові" name="fathername" value="<?= $_reg_fathername; ?>" type="text">
                     </div>
                     <div class="form-group">
                         <input class="form-txt" required="required" placeholder="Електронна пошта" name="email" value="<?= $_reg_email; ?>" type="email">

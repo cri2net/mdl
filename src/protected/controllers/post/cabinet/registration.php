@@ -2,7 +2,7 @@
 try {
     $_SESSION['registration'] = [];
     $_POST['phone'] = '+' . preg_replace('/[^0-9]/', '', $_POST['phone']);
-    $fields = ['name' => 'Ім’я', 'fathername' => 'По-батькові', 'lastname' => 'Прізвище', 'email' => 'Електронна пошта', 'phone' => 'Телефон', 'password' => 'Пароль'];
+    $fields = ['name' => 'Ім’я', 'fathername' => 'По батькові', 'lastname' => 'Прізвище', 'email' => 'Електронна пошта', 'phone' => 'Телефон', 'password' => 'Пароль'];
     
 
     // переганяем данные в сессию, чтобы можно было их подставить обратно на форму
