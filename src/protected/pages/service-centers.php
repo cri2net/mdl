@@ -93,7 +93,7 @@
                                                 </div>                                           
                                                 <!-- <a href="#" class="reset hidden-md hidden-sm hidden-ms hidden-xs">&times;</a> -->
                                             </div>
-                                            <div class="col-lg-4 col-md-12 align-center">
+                                            <div class="col-lg-5 col-md-12 align-center">
                                                 <label class="checkbox black">
                                                     <input <?= ($is_webcam) ? 'checked="checked"' : ''; ?> value="1" name="is_webcam" type="checkbox" class="">
                                                     <span>веб камера</span>
@@ -101,8 +101,8 @@
                                                 <label class="checkbox black">
                                                     <input <?= ($is_terminal) ? 'checked="checked"' : ''; ?> value="1" name="is_terminal" type="checkbox" class="">
                                                     <span>термінал</span>
-                                                </label>
-                                                <a onclick="$('#service-centers-filter-form').submit();" class="icon-settings"></a>
+                                                </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a onclick="$('#service-centers-filter-form').submit();">Фільтрувати</a>
                                             </div>
                                         </form>
                                     </div>
@@ -130,6 +130,8 @@
                             if ($_region > 0) {
                                 $where .= " AND id_region = '$_region'";
                             }
+
+                            $__service_centers_where = $where;
                             $list = PDO_DB::table_list(TABLE_PREFIX . 'service_centers', $where, "id_region ASC");
 
                             foreach ($list as $item) {

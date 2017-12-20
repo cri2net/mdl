@@ -2,6 +2,19 @@
 $_lSEO = 'TITLES';
 
 switch ($__route_result['controller'] . "/" . $__route_result['action']) {
+
+    case 'static_page/index':
+        if ($static_page['seo_title']) {
+            $seo_str = @$static_page['seo_title'];
+        } else {
+            $seo_str = @$static_page['h1'];
+        }
+        break;
+
+    case 'error/404':
+        $seo_str = "ЦКС — Помилка 404";
+        break;
+    
     case 'page/cabinet':
         $seo_str = 'Особистий кабінет';
 
@@ -59,19 +72,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
                     $seo_str = getTextVariableValueByName($_lSEO."_NEWS_ITEM");
                     $seo_str = str_ireplace('{TITLE}', $__news_item['title'], $seo_str);
                 }
-                break;
-
-            case 'static_page/index':
-                $page_item = $__static_pages_array[count($__static_pages_array) - 1];
-                if ($page_item['seo_title']) {
-                    $seo_str = @$page_item['seo_title'];
-                } else {
-                    $seo_str = @$page_item['h1'];
-                }
-                break;
-
-            case 'error/404':
-                $seo_str = "ЦКС — Помилка 404";
                 break;
 
             case 'instant-payments':

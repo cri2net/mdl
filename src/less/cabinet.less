@@ -3434,7 +3434,14 @@ img.aligncenter {
 	}
 
 	.subtitle-item {
-		padding: 1em 0;
+		
+		padding: 1em 0 1em 96px;
+	    background-repeat: no-repeat;
+	    display: inline-block;
+	    margin-top: 16px;
+	    background-position: left top;
+	    margin-bottom: 14px;
+		
 		a {
 			color:#08c;
 			&:hover {
@@ -3443,9 +3450,16 @@ img.aligncenter {
 		}
 		.desc {
 			font-size: 0.8em !important;
+	        color:#000; line-height:15px;
+	        p { text-indent:0; padding:0; margin:0; }
 		}
+	    &.with-icon { min-height: 68px; }
+	    .title {
+	        font-weight:bold; font-size:20px; margin-bottom:18px; display:inline-block;
+	    }
 	}
 }
+
 
 .valign-center {
 	vertical-align:middle;

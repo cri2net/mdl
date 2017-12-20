@@ -1,7 +1,18 @@
 <?php
     use cri2net\php_pdo_db\PDO_DB;
 
-    $list = PDO_DB::table_list(TABLE_PREFIX . 'service_centers');
+
+    $is_terminal = false;
+    $is_webcam   = false;
+
+    if (isset($_GET['by']) && ($_GET['by'] == 'filter')) {
+        
+        $is_terminal = isset($_GET['is_terminal']);
+        $is_webcam   = isset($_GET['is_webcam']);
+    }
+
+    $where = (isset($__service_centers_where)) ? $__service_centers_where : '';
+    $list = PDO_DB::table_list(TABLE_PREFIX . 'service_centers', $where);
     $markers = [];
     
     foreach ($list as $sc) {
@@ -46,11 +57,11 @@
                       </ul>
                     </div> -->
                     <label class="checkbox black black-label">
-                        <input checked="checked" name="is_webcam" value="1" type="checkbox" class="">
+                        <input <?= ($is_webcam) ? 'checked="checked"' : ''; ?> name="is_webcam" value="1" type="checkbox" class="">
                         <span>Веб камера</span>
                     </label>
                     <label class="checkbox black black-label">
-                        <input checked="checked" name="is_terminal" value="1" type="checkbox" class="">
+                        <input <?= ($is_terminal) ? 'checked="checked"' : ''; ?> name="is_terminal" value="1" type="checkbox" class="">
                         <span>Термінал для сплати</span>
                     </label>
                     <input type="submit" class="btn btn-green btn-green-white" value="Пошук відділень">
