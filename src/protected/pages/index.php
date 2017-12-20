@@ -22,7 +22,19 @@
                 <li><a href="<?= BASE_URL; ?>/about_cks/">Про нас</a></li>
                 <li><a href="<?= BASE_URL; ?>/services_list_and_docs/">Перелік послуг</a></li>
                 <li><a href="<?= BASE_URL; ?>/service-centers/">Сервісні центри</a></li>
-                <li><a href="<?= BASE_URL; ?>/cabinet/instant-payments/">Сплатити за послуги</a></li>
+                <li>
+                    <div class="dropdown">
+                      <a href="<?= BASE_URL ?>/cabinet/instant-payments/" class="dropbtn">Сплатити за послуги <i class="fa fa-caret-down"></i></a>
+                      <div class="dropdown-content">
+                        <a href="<?= BASE_URL ?>/cabinet/instant-payments/cks/">Сплата послуг ЦКС</a>
+                        <a href="<?= BASE_URL ?>/cabinet/instant-payments/dai/">Штрафи за порушення ПДР</a>
+                        <a href="<?= BASE_URL ?>/cabinet/instant-payments/kindergarten/">Сплата за дитячий садок</a>
+                        <a href="<?= BASE_URL ?>/cabinet/instant-payments/cards/">Перекази з карти на карту</a>
+                        <a href="<?= BASE_URL ?>/cabinet/instant-payments/phone/">Телефон та інтернет</a>
+                        <a href="<?= BASE_URL ?>/cabinet/instant-payments/volia/">ВОЛЯ TV & internet</a>
+                      </div>
+                    </div>                    
+                </li>
                 <li><a href="<?= BASE_URL; ?>/cabinet/" class="bordered">Особистий кабінет</a></li>
             </ul>
         </div>

@@ -230,6 +230,40 @@ nav.navbar {
 					.border-radius(16px);
 				}
 
+				.dropbtn {
+				    border: none;
+				    cursor: pointer;
+				}
+
+				.dropdown {
+				    position: relative;
+				    top: 2px;
+				    display: inline-block;
+				    padding: 0;
+				}
+
+				.dropdown-content {
+				    display: none;
+				    position: absolute;
+				    background-color: #f9f9f9;
+				    min-width: 160px;
+				    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+				    z-index: 1;
+				}
+
+				.dropdown-content a {
+				    color: black;
+				    padding: 12px 16px;
+				    text-decoration: none;
+				    display: block;
+				}
+
+				.dropdown-content a:hover {background-color: #f1f1f1}
+
+				.dropdown:hover .dropdown-content {
+				    display: block;
+				}
+
 				& > li > a {
 
 
@@ -2162,4 +2196,9 @@ a.item-service {
 
 a.submit-request {
 	cursor:pointer;
+}
+
+@media @sm-and-less {
+   nav.navbar #navbar ul.navbar-nav .dropdown i { display: none !important; }
+   nav.navbar #navbar ul.navbar-nav .dropdown-content { display: none !important; }
 }
