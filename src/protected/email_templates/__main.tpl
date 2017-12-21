@@ -70,10 +70,13 @@
                 </table></td>
             </tr>
             <tr>
-                <td valign="bottom" colspan="2" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px; padding-left:11px;">
+                <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px; padding-left:11px;">
                     <span style="font-weight:bold; line-height:18px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:14px;">КК ЦКС <br></span>
                     Центр комунального сервісу <br><br>
                     2014-{{year}} © <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="http://cks.com.ua" target="_blank">{{SITE_DOMAIN}}</a>
+                </td>
+                <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px; padding-left:11px;">
+                    Управління підписками <a style="text-decoration:underline; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="{{base_url}}/cabinet/settings/notifications/" target="_blank">на цій сторінці</a>
                 </td>
                 <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px" align="right">
                 </td>

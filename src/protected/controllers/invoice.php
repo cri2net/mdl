@@ -18,7 +18,7 @@
 
     if (!Authorization::isLogin() || !$house || ($house['user_id'] != $__userData['id'])) {
         header("HTTP/1.1 404 Not Found");
-        header("Location: http://cks.com.ua/");
+        header("Location: https://cks.com.ua/");
         exit();
     }
 
@@ -164,7 +164,7 @@
                     <img width="160" height="40" hspace="0" vspace="0" border="0" src="<?= $__img_path; ?>online-version.png" alt="online-version">
                 </a>
             </td>
-            <td height="34" width="140" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="<?= $_text_color; ?> font-size:14px; line-height:14px; font-weight:bold; <?= $_ff; ?>" href="http://cks.com.ua/">cks.com.ua</a></td>
+            <td height="34" width="140" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="<?= $_text_color; ?> font-size:14px; line-height:14px; font-weight:bold; <?= $_ff; ?>" href="https://cks.com.ua/">cks.com.ua</a></td>
         </tr>
     </tbody></table>
     <table <?= $_table_attr; ?>><tbody>
@@ -440,9 +440,13 @@
             <tr>
                 <td valign="top" colspan="3" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
                     <span style="font-weight:bold; line-height:18px; color:#ffffff; <?= $_ff; ?> font-size:14px;">КК ЦКС <br></span>
-                    2014—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="http://cks.com.ua/" target="_blank">http://cks.com.ua/</a>
+                    2014—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="https://cks.com.ua/" target="_blank">https://cks.com.ua/</a>
                 </td>
-                <td valign="top" width="50%" align="right" style="vertical-align:top;"><table <?= $_table_attr; ?>>
+                <td valign="top" colspan="3" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
+                    Лист містить дані для доступу до особистого кабінету, не передавайте його третім особам. <br>
+                    Ви отримали цей лист оскільки бажаєте сплачувати за житлово-комунальні послуги одним платежем. Щоб відписатись, <a style="text-decoration:underline; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="<?= BASE_URL; ?>/cabinet/settings/notifications/" target="_blank">натисніть тут</a>
+                </td>
+                <td valign="top" width="20%" align="right" style="vertical-align:top;"><table <?= $_table_attr; ?>>
                     <tbody><tr>
                         <td>&nbsp;</td>
                         <td width="93" align="left" style="color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:18px;">
