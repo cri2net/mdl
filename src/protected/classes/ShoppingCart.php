@@ -68,6 +68,11 @@ class ShoppingCart
                 $login    = 'cks_site_com_ob3';
                 $password = strtoupper(sha1('cks_site_com_ob3123'));
                 break;
+
+            case 'masterpass':
+                $login    = 'MASTERPASS_CKSCOMUA';
+                $password = 'CC8FE019D808CE541C40518049042AFB069BCA98';
+                break;
         }
     }
 
