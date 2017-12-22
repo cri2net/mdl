@@ -192,6 +192,25 @@ function initEvents() {
         $(this).closest('tr').hide();
         return false;
     }); 
+
+    // Спойлер отделения
+    $('#service-table').on('click', '.region-spoiler', function() {
+
+        var rid = $(this).data('rid');
+        $(this).toggleClass('opened');
+        if ($(this).children('.fa').hasClass('fa-plus')) {
+
+            $(this).children('.fa').removeClass('fa-plus').addClass('fa-minus');
+        }
+            else {
+
+            $(this).children('.fa').removeClass('fa-minus').addClass('fa-plus');
+        }
+
+        $('.item-rid-' + rid).toggleClass('item-row-spoiler-visible');
+
+        return false;
+    });    
 }
 
 /* Scroll animation used for landing page */
