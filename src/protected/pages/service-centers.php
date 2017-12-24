@@ -50,11 +50,12 @@
                                     <div class="row">
                                         <form id="service-centers-filter-form" action="<?= BASE_URL; ?>/service-centers/">
                                             <input type="hidden" name="by" value="filter">
+
                                             <div class="col-lg-3 col-md-4 col-sm-12">
                                                 <input type="hidden" id="service-centers-region" value="<?= $_region; ?>" name="region" />
                                                 <div class="dropdown">
                                                   <button class="select-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-office" name="office" value="1">
-                                                    <?= ($_region > 0) ? htmlspecialchars($current_region['title']) : 'Оберіть офіс'; ?>
+                                                    <?= ($_region > 0) ? htmlspecialchars($current_region['title']) : 'Оберіть район'; ?>
                                                     <span class="caret"></span>
                                                   </button>
                                                     <ul class="dropdown-menu" aria-labelledby="select-office">
@@ -77,6 +78,7 @@
                                             <!-- <div class="col-lg-3 col-md-4 col-sm-12">
                                                 <input type="text" placeholder="Ваша адреса" class="address input-white">
                                             </div> -->
+                                            <?php /*
                                             <div class="col-lg-3 col-md-4 col-sm-12">
                                                 <div class="dropdown">
                                                   <button class="select-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-company">
@@ -97,7 +99,8 @@
                                                 </div>                                           
                                                 <!-- <a href="#" class="reset hidden-md hidden-sm hidden-ms hidden-xs">&times;</a> -->
                                             </div>
-                                            <div class="col-lg-5 col-md-12 align-center">
+                                            */ ?>
+                                            <div class="col-lg-9 col-md-12">
                                                 <label class="checkbox black">
                                                     <input <?= ($is_webcam) ? 'checked="checked"' : ''; ?> value="1" name="is_webcam" type="checkbox" class="">
                                                     <span>веб камера</span>
@@ -106,7 +109,7 @@
                                                     <input <?= ($is_terminal) ? 'checked="checked"' : ''; ?> value="1" name="is_terminal" type="checkbox" class="">
                                                     <span>термінал</span>
                                                 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a onclick="$('#service-centers-filter-form').submit();">Фільтрувати</a>
+                                                <a onclick="$('#service-centers-filter-form').submit();" class="btn btn-xs btn-white-bordered"><strong>Фільтрувати</strong></a>
                                             </div>
                                         </form>
                                     </div>
@@ -119,6 +122,14 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td colspan="3">
+                                    <br><br>
+                                    <?php
+                                        require_once(PROTECTED_DIR . '/scripts/map-form.php');
+                                    ?>                                
+                                </td>
+                            </tr>
                         <?php
                             $where = '1';
                             if ($is_terminal) {
@@ -237,10 +248,6 @@
                         </tbody>
                     </table>
                 </div>
-                <br><br>
-                <?php
-                    require_once(PROTECTED_DIR . '/scripts/map-form.php');
-                ?>
             </div>
         </div>
     </content>
