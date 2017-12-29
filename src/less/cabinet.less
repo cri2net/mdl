@@ -1389,7 +1389,34 @@ footer {
 	}
 }
 
+.services-map {
+
+	margin: -30px 0 80px;
+}
+
 #service-table {
+
+	.th-address {
+
+	}
+
+	form {
+
+		.btn-white-bordered {
+
+			margin: 0 !important;
+			padding: 6px 20px !important;
+			font-size: 16px !important;
+
+			&:hover {
+
+/*				color: @blue !important;*/
+				background: @white !important;
+				color: @green !important;
+				border-color: @white !important;
+			}
+		}
+	}
 
 	.dropdown { display: block; margin-left: 5px; margin-top: 0px; }
 
@@ -1475,6 +1502,36 @@ footer {
 
 	tbody {
 
+		tr.region-row {
+
+			td {
+
+				padding: 20px 15px 0;
+				font-size: 22px;
+				font-weight: bold;
+			}
+
+			.region-spoiler {
+
+				span {
+
+					padding: 0px 0 5px 10px;
+					display: inline-block;
+					font-size: 16px;
+				}
+			}
+		}
+
+		tr.item-row-spoiler {
+
+			display: none;
+
+			&.item-row-spoiler-visible {
+
+				display: table-row;
+			}
+		}
+
 		tr.item-row {
 			
 			border-bottom: 3px solid #E6E8E7;
@@ -1485,6 +1542,11 @@ footer {
 				font-size: 20px;
 				font-weight: 600;
 				position: relative;
+
+				.btn {
+
+					margin-bottom: 0;
+				}
 
 				.phone-more {
 
@@ -1998,6 +2060,13 @@ ul.inline {
 	font-size: 20px;
 	p { font-size: 20px; line-height: 1.8em; }
 
+	li { font-size: 20px; line-height: 1.8em; }
+
+	p + ul {
+
+		margin-top: -32px;
+	}
+
 	a {
 		&, &:visited { color: #08c; }
 		text-decoration: underline;
@@ -2012,6 +2081,12 @@ ul.inline {
 	@media @sm-and-less {
 
 		p { font-size: 16px; }
+		li { font-size: 16px; }
+
+		p + ul {
+
+			margin-top: -26px;
+		}		
 	}
 
 	.date {
@@ -2095,6 +2170,15 @@ ul.inline {
 	}
 
 	@media @sm-and-less {
+
+		table {
+			tr{
+				th, td {
+
+					padding: 0.75em;
+				}
+			}
+		}
 
 		h1 {
 
@@ -2570,6 +2654,11 @@ label.checkbox {
 				}
 			}
 		}
+	}
+
+	&.btn-inline {
+
+		display: inline-block;
 	}
 
 	&.btn-xs {

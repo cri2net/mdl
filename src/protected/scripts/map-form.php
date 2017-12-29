@@ -64,6 +64,31 @@
                         <input <?= ($is_terminal) ? 'checked="checked"' : ''; ?> name="is_terminal" value="1" type="checkbox" class="">
                         <span>Термінал для сплати</span>
                     </label>
+
+                    <input type="hidden" id="service-centers-region" value="<?= $_region; ?>" name="region" />
+                    <div class="dropdown">
+                      <button class="select-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-office" name="office" value="1">
+                        <?= ($_region > 0) ? htmlspecialchars($current_region['title']) : 'Оберіть район'; ?>
+                        <span class="caret"></span>
+                      </button>
+                        <ul class="dropdown-menu" aria-labelledby="select-office">
+                            <li><a id="service-centers-region-a-0" onclick="$('#service-centers-region').val('0');" data-value="0">Оберіть офіс</a></li>
+                            <?php
+                                foreach ($regions as $region) {
+                                    ?>
+                                    <li><a id="service-centers-region-a-<?= $region['id']; ?>" onclick="$('#service-centers-region').val('<?= $region['id']; ?>');" data-value="<?= $region['id']; ?>"><?= htmlspecialchars($region['title']); ?></a></li>
+                                    <?php
+                                }
+                            ?>
+                        </ul>
+                        <script>
+                            $(document).ready(function(){
+                                $('#service-centers-region-a-<?= $_company; ?>').click();
+                            });
+                        </script>
+                    </div>
+
+
                     <input type="submit" class="btn btn-green btn-green-white" value="Пошук відділень">
                     <a href="<?= BASE_URL; ?>/service-centers/" class="all">перейти до списку всіх відділень</a>
                 </form>
