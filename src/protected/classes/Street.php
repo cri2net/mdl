@@ -7,7 +7,7 @@ class Street
     const TABLE = DB_TBL_STREETS;
     const ODESSA_ID = 1;
     const KIEV_ID = 447;
-    const STREET_URL = 'http://ppp.gerc.ua:80/reports/rwservlet?report=/gerc_api/spr_street.rep&destype=Cache&Desformat=xml&cmdkey=gsity&sity_id=';
+    const STREET_URL = '/reports/rwservlet?report=/gerc_api/spr_street.rep&destype=Cache&Desformat=xml&cmdkey=gsity&sity_id=';
     
     public static function cron()
     {
@@ -43,7 +43,7 @@ class Street
 
     public static function rebuild($city_id)
     {
-        $url = self::STREET_URL . $city_id;
+        $url = API_URL . self::STREET_URL . $city_id;
         $data = Http::fgets($url);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);

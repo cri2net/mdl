@@ -150,6 +150,9 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
     case 'page/request-services':
         $seo_str = 'Оформлення заявки';
         break;
+
+    default:
+        $seo_str = '';
 }
 
 if ($seo_str == '') {

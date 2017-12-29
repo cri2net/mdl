@@ -29,9 +29,9 @@ class KomDebt
             
             if (strlen($obj_id) > 16) {
                 if ($url == $this->debt_URL) {
-                    $url = "http://ppp.gerc.ua/reports/rwservlet?report=site/komdebt2.rep&cmdkey=gsity&destype=Cache&Desformat=xml&plat_code=" . $obj_id . $quertString;
+                    $url = API_URL . "/reports/rwservlet?report=site/komdebt2.rep&cmdkey=gsity&destype=Cache&Desformat=xml&plat_code=" . $obj_id . $quertString;
                 } else {
-                    $url = "http://ppp.gerc.ua/reports/rwservlet?report=site/komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&plat_code=" . $obj_id . $quertString;
+                    $url = API_URL . "/reports/rwservlet?report=site/komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&plat_code=" . $obj_id . $quertString;
 
                 }
             } else {
