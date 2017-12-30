@@ -173,6 +173,38 @@ header {
 	margin-bottom: 16px;
 }
 
+.spoiler-box {
+    padding:17px 20px 0; margin-right:18px; position:relative; font-family:"Ubuntu", Arial; margin-bottom:10px;
+    &.open {
+        background-color:#eee;
+        > .spoiler-text + .spoiler-text { display:block; }
+    }
+    .spoiler-title {
+        cursor:pointer; display:inline-block; padding-right:18px; background-position:right 13px; background-repeat:no-repeat;
+        &:hover { background-image:data-uri("@{images-path}/pages/__spoiler-darr.png"); }
+        .icon {
+            float:left; margin-right:20px;
+            img { .border-radius(50%); }
+        }
+        .title-text {
+            font-weight:bold; color:#00979c; border-bottom:1px dotted #00979c; display:inline-block;
+            &:hover { color:#01b671; border-bottom-color: #01b671; }
+        }
+    }
+    .spoiler-text {
+        display:none; font-size:14px; padding-bottom:25px;
+        .spoiler-close { cursor:pointer; position:absolute; top:20px; right:20px; display:block; .size(14); background-image:data-uri("@{images-path}/pages/__spoiler-close.png"); }
+    }
+}
+
+.with-spoiler {
+    cursor:pointer; display:inline-block; padding-right:18px; background-position: right 9px; background-repeat:no-repeat;
+
+    &:hover {
+        background-image:data-uri("@{images-path}/pages/__spoiler-darr.png");
+    }
+}
+
 .page-header {
 
     background: @green-darker;

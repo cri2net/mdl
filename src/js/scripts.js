@@ -42,6 +42,18 @@ $(document).on('ready', function() {
         }
     });
 
+    $('.spoiler-title').click(function(){
+        var par = $(this).parent();
+        if ($(par).hasClass('open')) {
+            $(par).removeClass('open').find('.spoiler-text').first().slideUp(400);
+        } else {
+            $(par).addClass('open').find('.spoiler-text').first().slideDown(400);
+        }
+    });
+    $('.spoiler-close').click(function(){
+        $(this).parent().parent().find('.spoiler-title').click();
+    });
+
     $(".maps-route-start").keyup(function (e) {
         if (e.keyCode == 13) {
             $('#google-maps-route-start').val($(this).val());
