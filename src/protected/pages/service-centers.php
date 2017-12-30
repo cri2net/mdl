@@ -28,6 +28,29 @@
             $current_region = PDO_DB::row_by_id(TABLE_PREFIX . 'dict_regions', $_region);
         }
     }
+
+    $where = '1';
+    if ($is_terminal) {
+        $where .= ' AND is_terminal=1';
+    }
+    if ($is_webcam) {
+        $where .= " AND webcam IS NOT NULL AND webcam <> ''";
+    }
+    if ($_company > 0) {
+        $where .= " AND id_company = '$_company'";
+    }
+    if ($_region > 0) {
+        $where .= " AND id_region = '$_region'";
+    }
+
+    $__service_centers_where = $where;
+    $list = PDO_DB::table_list(TABLE_PREFIX . 'service_centers', $where, "id_region ASC");
+
+    $list_regions = array();
+    foreach ($list as $item) {
+
+        $list_regions[$item['id_region']][$item['id']] = $item;
+    }
 ?>
 <div class="container">
     <content>
@@ -55,41 +78,16 @@
                             <tbody>
                                 <tr>
                                     <td colspan="3">
-
                                     </td>
                                 </tr>
                             <?php
-                                $where = '1';
-                                if ($is_terminal) {
-                                    $where .= ' AND is_terminal=1';
-                                }
-                                if ($is_webcam) {
-                                    $where .= " AND webcam IS NOT NULL AND webcam <> ''";
-                                }
-                                if ($_company > 0) {
-                                    $where .= " AND id_company = '$_company'";
-                                }
-                                if ($_region > 0) {
-                                    $where .= " AND id_region = '$_region'";
-                                }
-
-                                $__service_centers_where = $where;
-                                $list = PDO_DB::table_list(TABLE_PREFIX . 'service_centers', $where, "id_region ASC");
-
-                                $list_regions = array();
-                                foreach ($list as $item) {
-
-                                    $list_regions[$item['id_region']][$item['id']] = $item;
-                                }
-
                                 foreach ($list_regions as $rid => $items) {
 
                                     $region = PDO_DB::row_by_id(TABLE_PREFIX . 'dict_regions', $rid);
-
                                     ?>
                                     <tr class="region-row">
                                         <td colspan="3">
-                                            <a href="#" class="region-spoiler" data-rid="<?= $rid; ?>"><?= $region['title']; ?> <span class="fa  fa-plus"></span></a>
+                                            <a class="region-spoiler" data-rid="<?= $rid; ?>"><?= $region['title']; ?> <span class="fa fa-plus"></span></a>
                                         </td>
                                     </tr>
                                     <?php
@@ -115,7 +113,7 @@
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title" id="myModalLabel">Розклад роботи</h4>
                                                       </div>
-                                                      <div class="modal-body" style="text-align: left;" ><?= nl2br($item['worktime']) ?></div>
+                                                      <div class="modal-body" style="text-align: left;"><?= nl2br($item['worktime']) ?></div>
                                                       <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
                                                       </div>
@@ -125,8 +123,8 @@
                                             </td>
                                             <td class="center" nowrap="nowrap">
                                                 <a class="icon icon-phone"></a>
-                                                <a class="icon icon-map" data-id="<?= $item['id'] ?>"></a>
-                                                <?php if($isWebcam){?><a class="icon icon-webcam"></a><?}?>
+                                                <a class="icon icon-map" id="icon-map-<?= $item['id']; ?>" data-id="<?= $item['id'] ?>"></a>
+                                                <?php if($isWebcam){?><a class="icon icon-webcam" id="icon-webcam-<?= $item['id']; ?>"></a><?}?>
                                             </td>
                                         </tr>
                                         <tr class="item-map">
@@ -142,8 +140,10 @@
                                                                 <span><?= $item['address'] ?><br>
                                                                 Телефон:    <?= $phone ?></span>
 
-                                                                <a href="#" class="icon-href icon-trace">Прокласти маршрут до відділення</a>
-                                                                <a href="#" class="icon-href icon-web">Переглянути веб камеру у відділенні</a>
+
+                                                                <input class="txt form-txt-input maps-route-start" placeholder="Початок маршруту" type="text" name="address" onkeypress="$('#google-maps-route-start').val($(this).val()); $('#google-maps-route-end').val('<?= htmlspecialchars($item['address'], ENT_QUOTES); ?>');" />
+                                                                <a onclick="$('#google-maps-route-end').val('<?= htmlspecialchars($item['address'], ENT_QUOTES); ?>'); calculateAndDisplayRoute();" class="icon-href icon-trace">Прокласти маршрут до відділення</a>
+                                                                <a onclick="$('#icon-webcam-<?= $item['id']; ?>').trigger('click');" class="icon-href icon-web">Переглянути веб камеру у відділенні</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -161,8 +161,8 @@
                                                                 <span><?= $item['address'] ?><br>
                                                                 Телефон: <?= $phone ?></span>
 
-                                                                <a href="#" class="icon-href icon-feedback"><span class="short">Залишити відгук</span></a>
-                                                                <a href="#" class="icon-href icon-marker"><span class="short">Перейти до мапи</span></a>
+                                                                <a class="icon-href icon-feedback"><span class="short">Залишити відгук</span></a>
+                                                                <a onclick="$('#icon-map-<?= $item['id']; ?>').trigger('click');" class="icon-href icon-marker"><span class="short">Перейти до мапи</span></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -208,7 +208,7 @@
     foreach ($list as $key => $sc) {
         if (strlen(trim($sc['webcam'])) > 3) {
             ?>
-            new Uppod({m:"video",uid:"cks<?= $sc['id']; ?>",file:"<?= $sc['webcam'] ?>",onReady: function(uppod){uppod.Play();}});
+            new Uppod({m:"video",uid:"cks<?= $sc['id']; ?>",file:"<?= addslashes($sc['webcam']) ?>",onReady: function(uppod){uppod.Play();}});
             <?php
         }
     }

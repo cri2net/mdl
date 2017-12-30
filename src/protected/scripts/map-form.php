@@ -33,6 +33,8 @@
         }
     }
 ?>
+<input type="hidden" id="google-maps-route-end" />
+<input type="hidden" id="google-maps-route-start" />
 <div class="about-form">
     <div class="row">
         <div class="col-md-8">
@@ -107,38 +109,39 @@
             mapTypeControl: false
         }
         map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    function createMarker(lat, lon, online, title, html) {
-        var newmarker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, lon),
-            map: map,
-            //icon: online ? '/pic/placemark-online.png' : '/pic/placemark-offline.png',
-            title: title
-        });
-        newmarker['infowindow'] = new google.maps.InfoWindow({
-                content: html
+
+        function createMarker(lat, lon, online, title, html) {
+            var newmarker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, lon),
+                map: map,
+                //icon: online ? '/pic/placemark-online.png' : '/pic/placemark-offline.png',
+                title: title
             });
-        google.maps.event.addListener(newmarker, 'click', function() {
-            this['infowindow'].open(map, this);
-            if (typeof currentInfoWindow == "object") {
-                currentInfoWindow.close();
-            }
-            currentInfoWindow = this['infowindow'];
+            newmarker['infowindow'] = new google.maps.InfoWindow({
+                    content: html
+                });
+            google.maps.event.addListener(newmarker, 'click', function() {
+                this['infowindow'].open(map, this);
+                if (typeof currentInfoWindow == "object") {
+                    currentInfoWindow.close();
+                }
+                currentInfoWindow = this['infowindow'];
 
-        });
-        return newmarker;
-    }
-     //Add a marker clusterer to manage the markers.
-     var markers = [<?= implode(",", $markers); ?>];
-     var bounds = new google.maps.LatLngBounds();
-     for (var i = 0; i < markers.length; i++) {
-      bounds.extend(markers[i].getPosition());
-     }
+            });
+            return newmarker;
+        }
 
-     map.fitBounds(bounds);
+        //Add a marker clusterer to manage the markers.
+        var markers = [<?= implode(",", $markers); ?>];
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < markers.length; i++) {
+            bounds.extend(markers[i].getPosition());
+        }
+
+        map.fitBounds(bounds);
     }
 
     $(function(){
         initSCMap();
     });
-
 </script>

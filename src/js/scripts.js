@@ -41,6 +41,13 @@ $(document).on('ready', function() {
             }
         }
     });
+
+    $(".maps-route-start").keyup(function (e) {
+        if (e.keyCode == 13) {
+            $('#google-maps-route-start').val($(this).val());
+            calculateAndDisplayRoute();
+        }
+    });
 });
 
 $(window).on('scroll', function (event) {
@@ -305,6 +312,35 @@ function checkNavbar() {
     if (scroll > 1) navBar.addClass('dark'); else navBar.removeClass('dark');
 }
 
+var directionsService, directionsDisplay;
+function calculateAndDisplayRoute()
+{
+    if (directionsDisplay != null) {
+        directionsDisplay.setMap(null);
+        directionsDisplay = null;
+    }
+
+    directionsService = new google.maps.DirectionsService;
+    directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay.setMap(map);
+
+    directionsService.route(
+        {
+            origin: document.getElementById('google-maps-route-start').value,
+            destination: document.getElementById('google-maps-route-end').value,
+            travelMode: 'DRIVING'
+        },
+        function(response, status) {
+            if (status === 'OK') {
+                directionsDisplay.setDirections(response);
+            } else {
+                console.log('Directions request failed due to ' + status);
+            }
+        }
+    );
+}
+
+var map;
 /* Google maps init */
 function initMap(mapEl) {
 
@@ -312,17 +348,17 @@ function initMap(mapEl) {
     if (mapEl.length) {
 
         var uluru = {lat: mapEl.data('lat'), lng: mapEl.data('lng')};
-        var map = new google.maps.Map(document.getElementById(mapEl.attr('id')), {
-          zoom: mapEl.data('zoom'),
-          center: uluru,
-          scrollwheel: false,
-          styles: mapStyles
+        map = new google.maps.Map(document.getElementById(mapEl.attr('id')), {
+            zoom: mapEl.data('zoom'),
+            center: uluru,
+            scrollwheel: false,
+            styles: mapStyles
         });
 
         var marker = new google.maps.Marker({
-          position: uluru,
-/*        icon: base_href + 'assets/images/location-black.png',*/
-          map: map
+            position: uluru,
+            // icon: base_href + 'assets/images/location-black.png',
+            map: map
         });
     }
 }
