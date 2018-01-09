@@ -11,14 +11,14 @@ switch (USER_REAL_IP) {
     
     default:
         define('DB_HOST', 'localhost');
-        define('DB_NAME', 'gercnew');
+        define('DB_NAME', 'kmda');
         define('DB_USER', 'komna');
         define('DB_PASSWORD', 'rbbx35W');
         
         define('API_URL', 'https://ppp.gerc.ua:4445');
 }
 
-define('TABLE_PREFIX', 'cks_');
+define('TABLE_PREFIX', 'kmda_');
 
 define('DB_TBL_CITIES',           TABLE_PREFIX . 'cities');
 define('DB_TBL_EMAIL_CRON',       TABLE_PREFIX . 'email_cron');

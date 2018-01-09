@@ -27,8 +27,8 @@ require_once(PROTECTED_DIR . "/vendor/autoload.php");
 
 switch (USER_REAL_IP) {
     case '127.0.0.1':
-        define('COOKIE_DOMAIN', '.cks.dev');
-        define('BASE_URL', 'http://frame.cks.dev');
+        define('COOKIE_DOMAIN', '.kmda.local');
+        define('BASE_URL', 'http://kmda.local');
         break;
     
     default:
@@ -36,19 +36,20 @@ switch (USER_REAL_IP) {
             $_SERVER['HTTP_HOST'] = 'cks.com.ua';
         }
 
-        define('COOKIE_DOMAIN', '.cks.com.ua');
+        define('COOKIE_DOMAIN', '.gerc.ua');
         if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
         }
         define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST']);
 }
 
+define('EXT_BASE_URL', 'https://www.gerc.ua/kmda');
 define('EMAIL_FROM', 'no-reply@cks.com.ua');
 define('EMAIL_TO', 'zvernennya@src.com.ua');
 define('EMAIL_HOST', '91.200.41.117');
-define('EMAIL_FROM_NAME', 'КК ЦКС');
+define('EMAIL_FROM_NAME', 'КМДА');
 define('SITE_DOMAIN', 'cks.com.ua');
-define('REMEMBER_COOKIE_NAME', '__cksudata');
+define('REMEMBER_COOKIE_NAME', '__kmdaudata');
 
 Authorization::check_login();
 if (Authorization::isLogin()) {

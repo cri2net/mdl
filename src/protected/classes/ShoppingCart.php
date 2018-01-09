@@ -13,8 +13,8 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank', 'webmoney']
-            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank', 'webmoney'];
+            ? ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank']
+            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank'];
     }
 
     public static function get_API_URL($key)
@@ -47,11 +47,6 @@ class ShoppingCart
             case 'tas':
                 $login    = 'cks_site_com';
                 $password = '0168F38DC7806216FB81C0CEAEF044713A1397BE';
-                break;
-
-            case 'webmoney':
-                $login    = 'cks_site_com_wm';
-                $password = strtoupper(sha1('cks_site_com_wm123'));
                 break;
 
             case 'oschad_mycard':
@@ -154,7 +149,6 @@ class ShoppingCart
             'oschad'        => ['percent' => 0, 'min' => 0],
             'oschad_mycard' => ['percent' => 0, 'min' => 0],
             'oschadbank'    => ['percent' => 2, 'min' => 2],
-            'webmoney'      => ['percent' => 2, 'min' => 2],
         ];
 
         if ($pay_system) {
@@ -358,7 +352,6 @@ class ShoppingCart
             case 'mastercard':
             case 'visa':
             case 'tas':
-            case 'webmoney':
                 $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                 $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
                 $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];

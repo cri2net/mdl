@@ -909,3 +909,30 @@ ALTER TABLE `cks_flats_pin`
 
 ALTER TABLE `cks_user_flats`
   CHANGE `flat_id` `flat_id` BIGINT(20) NOT NULL;
+
+-- 2018.01.09
+RENAME TABLE `cks_cities` TO `kmda_cities`;
+RENAME TABLE `cks_dict_companies` TO `kmda_dict_companies`;
+RENAME TABLE `cks_dict_feedback_themes` TO `kmda_dict_feedback_themes`;
+RENAME TABLE `cks_dict_regions` TO `kmda_dict_regions`;
+RENAME TABLE `cks_email_cron_part` TO `kmda_email_cron_part`;
+RENAME TABLE `cks_email_cron` TO `kmda_email_cron`;
+RENAME TABLE `cks_feedback` TO `kmda_feedback`;
+RENAME TABLE `cks_flats_pin` TO `kmda_flats_pin`;
+RENAME TABLE `cks_flats` TO `kmda_flats`;
+RENAME TABLE `cks_houses` TO `kmda_houses`;
+RENAME TABLE `cks_news_images` TO `kmda_news_images`;
+RENAME TABLE `cks_news` TO `kmda_news`;
+RENAME TABLE `cks_page_views_user_agents` TO `kmda_page_views_user_agents`;
+RENAME TABLE `cks_page_views` TO `kmda_page_views`;
+RENAME TABLE `cks_pages_links` TO `kmda_pages_links`;
+RENAME TABLE `cks_pages` TO `kmda_pages`;
+RENAME TABLE `cks_payment_services` TO `kmda_payment_services`;
+RENAME TABLE `cks_payment` TO `kmda_payment`;
+RENAME TABLE `cks_service_centers` TO `kmda_service_centers`;
+RENAME TABLE `cks_streets` TO `kmda_streets`;
+RENAME TABLE `cks_text` TO `kmda_text`;
+RENAME TABLE `cks_useful_links` TO `kmda_useful_links`;
+RENAME TABLE `cks_user_codes` TO `kmda_user_codes`;
+RENAME TABLE `cks_user_flats` TO `kmda_user_flats`;
+RENAME TABLE `cks_users` TO `kmda_users`;
