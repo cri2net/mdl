@@ -269,19 +269,6 @@ function initScrollAnimation() {
         distance : '0px',
         afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
     }
-
-    /* Every element initialized once */
-/*  if ($('#home-1').length) sr.reveal('#home-1 h1, #home-1 p, #home-1 .social', scrollSliderFull, 200);*/
-    if ($('#home-1').length) sr.reveal('#home-1 h1, #home-1 p, #home-1 .social', scrollTextLeft, 200);
-    if ($('#home-1').length) sr.reveal('#home-1 .social', scrollTextRight, 200);
-    if ($('#home-debt').length) sr.reveal('#home-debt .list', scrollTextLeft, 200);
-    if ($('#home-debt').length) sr.reveal('#home-debt .header', scrollTextFade, 200);
-    if ($('#home-service').length) sr.reveal('#home-service .icons > div', scrollZoomIn, 100);
-    if ($('#home-service').length) sr.reveal('#home-service .header', scrollTextFade, 200);
-
-    if ($('#home-comfort').length) sr.reveal('#home-comfort .header, #home-comfort p, #home-comfort .btn', scrollTextLeft, 200);
-    if ($('#home-wiki').length) sr.reveal('#home-wiki .header, #home-wiki p, #home-wiki .btn', scrollTextLeft, 200);
-    if ($('#home-account .block-white').length) sr.reveal('#home-account .block-white .btn', scrollZoomIn, 20);
 }
 
 /* Swiper slider initialization */

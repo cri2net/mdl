@@ -3,7 +3,6 @@
 
         if (!defined('SHORT_FOOTER') || !SHORT_FOOTER) {
             ?>
-            <a href="<?= BASE_URL; ?>/feedback/" id="help"></a>
             <footer>
                 <div class="container">
 
@@ -43,7 +42,6 @@
                                                 <li><img src="<?= BASE_URL; ?>/assets/images/logo-inner.png" class="logo-footer" alt="ЦКС"></li>
                                                 <li><a href="<?= BASE_URL ?>/services_list_and_docs/docs/user_agreement/">Угода користувача</a></li>
                                                 <li><a href="<?= BASE_URL ?>/services_list_and_docs/docs/personal_data/">Згода на обробку особистих даних</a></li>
-                                                <li><a href="<?= BASE_URL ?>/feedback/">Питання до фахівця</a></li>
                                             </ul>
                                         </div>
                                     </nav>

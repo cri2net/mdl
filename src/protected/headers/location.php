@@ -18,8 +18,11 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
         if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {
             $new_location = BASE_URL . $uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')];
         }
-
     break;
+
+    case 'page/index':
+        $new_location = BASE_URL . '/cabinet/';
+        break;
 
     case 'page/cabinet':
         if (!isset($__route_result['values']['subpage']) && Authorization::isLogin()) {
@@ -44,19 +47,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
             $new_location = BASE_URL . "/cabinet/payments/";
         }
         break;
-        case 'page/news-item':
-            // проверка, существует ли новость
-            // в целях оптимизации потом будем использовать эту переменную, так что выделяем её подчёркиваниями
-            $__news_item = PDO_DB::row_by_id(News::TABLE, $__route_result['values']['news_id']);
-            if (!$__news_item) {
-                // Новость не существует, перекидываем на список новостей
-                $new_location = BASE_URL . '/news/';
-            } elseif (strcmp(composeUrlKey($__news_item['title']), $__route_result['values']['title']) !== 0) {
-                // проверяем ЧПУ новости
-                $new_location = News::getNewsURL($__news_item['id']);
-            }
-            break;
-        
 }
 
 if (isset($new_location) && $new_location) {

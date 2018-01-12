@@ -11,9 +11,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="<?= BASE_URL ?>/about_cks/">Про нас</a></li>
                     <li><a href="<?= BASE_URL ?>/services_list_and_docs/">Перелік послуг</a></li>
-                    <li><a href="<?= BASE_URL ?>/service-centers/">Сервісні центри</a></li>
                     <li><a href="<?= BASE_URL ?>/main_help/cabinet_faq/">Як сплачувати онлайн?</a></li>
                 </ul>
 

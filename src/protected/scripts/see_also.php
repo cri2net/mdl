@@ -11,12 +11,6 @@ if (count($see_also) > 0) {
                 $item = StaticPage::getById($see_also_item['page_id']);
                 $title = $item['h1'];
                 break;
-
-            case 'news':
-                $url = News::getNewsURL($see_also_item['page_id']);
-                $item = PDO_DB::row_by_id(News::TABLE, $see_also_item['page_id']);
-                $title = $item['title'];
-                break;
         }
 
         $bg = '';

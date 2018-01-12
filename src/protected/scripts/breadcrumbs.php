@@ -9,20 +9,8 @@
 
             switch ($__route_result['values']['subpage']) {
 
-                case 'registration':
-                    $breadcrumbs[] = ['title' => 'Реєстрація'];
-                    break;
-
                 case 'verify-email':
                     $breadcrumbs[] = ['title' => 'Підтвердження електронної пошти'];
-                    break;
-
-                case 'login':
-                    $breadcrumbs[] = ['title' => 'Вхід'];
-                    break;
-
-                case 'restore':
-                    $breadcrumbs[] = ['title' => 'Відновлення доступу'];
                     break;
 
                 case 'objects':
@@ -56,7 +44,6 @@
                         }
                     }
                     break;
-
 
                 case 'instant-payments':
                     $breadcrumbs[] = ['title' => 'Миттєві платежі', 'link' => '/cabinet/instant-payments/'];
@@ -113,36 +100,6 @@
             $breadcrumbs[] = ['title' => 'Статус транзакції'];
             break;
 
-        case 'page/about':
-            $breadcrumbs[] = ['title' => 'Про нас'];
-            break;
-
-        case 'page/services-list':
-        case 'page/services-list_and_docs':
-            $breadcrumbs[] = ['title' => 'Перелік послуг'];
-            break;
-
-        case 'page/service-centers':
-            $breadcrumbs[] = ['title' => 'Сервісні центри'];
-            break;
-        case 'page/news':
-            $breadcrumbs[] = ['title' => 'Новини'];
-            break;
-        case 'page/feedback':
-            $breadcrumbs[] = ['title' => 'Питання до фахівця'];
-            break;
-        case 'page/news-item':
-            $breadcrumbs[] = ['title' => 'Новини', 'link' => '/news/'];
-            $breadcrumbs[] = [
-                'title' => date('d ', $__news_item['created_at'])
-                           . $MONTHS[date('n', $__news_item['created_at'])]['ua']
-                           . date(' Y', $__news_item['created_at'])
-            ];
-            break;
-        case 'page/request-services':
-            $breadcrumbs[] = ['title' => 'Додаткові платні послуги', 'link' => '/services/'];
-            $breadcrumbs[] = ['title' => 'Оформлення заявки'];
-            break;
         case 'static_page/index':
             $link = '/';
             for ($i=0; $i < count($__static_pages_array); $i++) {
@@ -151,7 +108,6 @@
             }
             break;
             
-
         case 'error/404':
             $breadcrumbs[] = ['title' => 'Помилка 404'];
             break;

@@ -20,20 +20,8 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
 
         switch ($__route_result['values']['subpage']) {
 
-            case 'registration':
-                $seo_str = 'Реєстрація';
-                break;
-
             case 'verify-email':
                 $seo_str = 'Підтвердження електронної пошти';
-                break;
-
-            case 'login':
-                $seo_str = 'Вхід';
-                break;
-
-            case 'restore':
-                $seo_str = 'Відновлення доступу';
                 break;
 
             case 'objects':
@@ -62,15 +50,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
                             $seo_str = $sections[$__route_result['values']['section']];
                         }
                     }
-                }
-                break;
-
-            case 'page/news-item':
-                if ($__news_item['seo_title']) {
-                    $seo_str = $__news_item['seo_title'];
-                } else {
-                    $seo_str = getTextVariableValueByName($_lSEO."_NEWS_ITEM");
-                    $seo_str = str_ireplace('{TITLE}', $__news_item['title'], $seo_str);
                 }
                 break;
 
@@ -128,37 +107,14 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
         $seo_str = 'Статус транзакції';
         break;
 
-    case 'page/about_cks':
-    case 'page/about':
-        $seo_str = 'Про нас';
-        break;
-
-    case 'page/services-list':
-    case 'page/services-list_and_docs':
-        $seo_str = 'Перелік послуг';
-        break;
-
-    case 'page/service-centers':
-        $seo_str = 'Сервісні центри';
-        break;
-    case 'page/news':
-        $seo_str = 'Новини';
-        break;
-    case 'page/feedback':
-        $seo_str = 'Питання до фахівця';
-        break;
-    case 'page/request-services':
-        $seo_str = 'Оформлення заявки';
-        break;
-
     default:
         $seo_str = '';
 }
 
 if ($seo_str == '') {
-    $seo_str = 'ЦКС';
+    $seo_str = 'КМДА';
 } else {
-    $seo_str .= ' | ЦКС';
+    $seo_str .= ' | КМДА';
 }
 
 echo htmlspecialchars($seo_str, ENT_QUOTES);

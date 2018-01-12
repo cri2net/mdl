@@ -936,3 +936,8 @@ RENAME TABLE `cks_useful_links` TO `kmda_useful_links`;
 RENAME TABLE `cks_user_codes` TO `kmda_user_codes`;
 RENAME TABLE `cks_user_flats` TO `kmda_user_flats`;
 RENAME TABLE `cks_users` TO `kmda_users`;
+
+-- 2018.01.12
+DROP TABLE `kmda_news`;
+DROP TABLE `kmda_news_images`;
+DROP TABLE `kmda_feedback`;
