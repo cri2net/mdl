@@ -941,3 +941,9 @@ RENAME TABLE `cks_users` TO `kmda_users`;
 DROP TABLE `kmda_news`;
 DROP TABLE `kmda_news_images`;
 DROP TABLE `kmda_feedback`;
+
+-- 2018.01.19
+ALTER TABLE `kmda_users`
+  ADD COLUMN `openid_id` INT(11) NULL AFTER `max_objects`,
+  ADD COLUMN `openid_data` TEXT NULL AFTER `openid_id`, 
+  ADD INDEX (`openid_id`, `deleted`);
