@@ -22,7 +22,7 @@ class OpenId
     
     public $scopes = [
         'openid',
-        // 'email',
+        'email',
         // 'address',
         // 'profile',
         // 'phone',
