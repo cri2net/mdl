@@ -7,7 +7,7 @@
 <?php require_once(PROTECTED_DIR . '/layouts/navbar_inner.php'); ?>
 <?php require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php'); ?>
 
-<div class="container">
+<div class="container-fluid">
     <content>
         <div class="text">
             <h1 class="big-title"><?= htmlspecialchars($static_page['h1']); ?></h1>

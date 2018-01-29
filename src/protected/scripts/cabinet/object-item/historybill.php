@@ -46,84 +46,62 @@
         $error = $e->getMessage();
     }
 ?>
-<div class="container">
-    <content>
         <div class="cabinet-settings object-item object-item-bill">
             <form  id="object-item-historybill-form" class="real-full-width-block" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/historybill/" method="get">
-                <div class="thead-bg">
-                    <div class="head-green"></div>
-                    <div class="head-gray"></div>
+                <div class="row table-caption">
+                    <div class="calendar col-lg-12">
+                        <div class="dropdown">
+                            <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-month" value="1">
+                                <?= $MONTHS_NAME[(int)$_need_month]['ua']['small']; ?>
+                                <span class="caret"></span>
+                            </button>
+                            <input type="hidden" id="detailbill-filter-month" value="<?= strtolower($MONTHS_NAME[(int)$_need_month]['en']); ?>" name="month" />
+                            <!-- <?= ($_need_month == $key) ? 'selected' : ''; ?> -->
+                            <ul class="dropdown-menu" aria-labelledby="select-month">
+                                <?php
+                                    foreach ($MONTHS_NAME as $key => $month) {
+                                        ?>
+                                        <li><a onclick="$('#detailbill-filter-month').val('<?= strtolower($month['en']); ?>');" id="detailbill-filter-month-a-<?= strtolower($month['en']); ?>" data-value="<?= strtolower($month['en']); ?>"><?= $month['ua']['small']; ?></a></li>
+                                        <?php
+                                    }
+                                ?>
+                            </ul>
+                            <script>
+                                $(document).ready(function(){
+                                    $('#detailbill-filter-month-a-<?= $_need_month; ?>').click();
+                                });
+                            </script>
+                        </div>
+                        <div class="dropdown">
+                            <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-year" value="<?= $_need_year; ?>">
+                                <?= $_need_year; ?>
+                                <span class="caret"></span>
+                            </button>
+                            <input type="hidden" id="detailbill-filter-year" value="<?= $_need_year; ?>" name="year" />
+                            <ul class="dropdown-menu" aria-labelledby="select-month">
+                                <?php
+                                    foreach ($years as $year) {
+                                        ?>
+                                        <!-- <?= ($_need_year == $year) ? 'selected' : ''; ?> -->
+                                        <li><a onclick="$('#detailbill-filter-year').val('<?= $year; ?>');" id="detailbill-filter-year-a-<?= $year; ?>" data-value="<?= $year; ?>"><?= $year; ?></a></li>
+                                        <?php
+                                    }
+                                ?>
+                            </ul>
+                            <script>
+                                $(document).ready(function(){
+                                    $('#detailbill-filter-year-a-<?= $_need_year; ?>').click();
+                                });
+                            </script>
+                        </div>
+                        <a onclick="$('#object-item-historybill-form').submit();" class="btn btn-xs"><span class="fa  fa-calendar"></span> Показати</a>             
+                    </div>
                 </div>
+                <div class="clearfix"></div>
 
-                <div class="table-responsive">
+                <div class="table-responsive border-top">
                     <table class="full-width-table datailbill-table no-border" id="data-table">
                         <thead>
-                            <tr class="head-green">
-                                <th colspan="4" class="align-left">
-                                    <div class="calendar">
-                                        <div class="dropdown">
-                                            <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-month" value="1">
-                                                <?= $MONTHS_NAME[(int)$_need_month]['ua']['small']; ?>
-                                                <span class="caret"></span>
-                                            </button>
-                                            <input type="hidden" id="detailbill-filter-month" value="<?= strtolower($MONTHS_NAME[(int)$_need_month]['en']); ?>" name="month" />
-                                            <!-- <?= ($_need_month == $key) ? 'selected' : ''; ?> -->
-                                            <ul class="dropdown-menu" aria-labelledby="select-month">
-                                                <?php
-                                                    foreach ($MONTHS_NAME as $key => $month) {
-                                                        ?>
-                                                        <li><a onclick="$('#detailbill-filter-month').val('<?= strtolower($month['en']); ?>');" id="detailbill-filter-month-a-<?= strtolower($month['en']); ?>" data-value="<?= strtolower($month['en']); ?>"><?= $month['ua']['small']; ?></a></li>
-                                                        <?php
-                                                    }
-                                                ?>
-                                            </ul>
-                                            <script>
-                                                $(document).ready(function(){
-                                                    $('#detailbill-filter-month-a-<?= $_need_month; ?>').click();
-                                                });
-                                            </script>
-                                        </div>
-                                        <div class="dropdown">
-                                            <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-year" value="<?= $_need_year; ?>">
-                                                <?= $_need_year; ?>
-                                                <span class="caret"></span>
-                                            </button>
-                                            <input type="hidden" id="detailbill-filter-year" value="<?= $_need_year; ?>" name="year" />
-                                            <ul class="dropdown-menu" aria-labelledby="select-month">
-                                                <?php
-                                                    foreach ($years as $year) {
-                                                        ?>
-                                                        <!-- <?= ($_need_year == $year) ? 'selected' : ''; ?> -->
-                                                        <li><a onclick="$('#detailbill-filter-year').val('<?= $year; ?>');" id="detailbill-filter-year-a-<?= $year; ?>" data-value="<?= $year; ?>"><?= $year; ?></a></li>
-                                                        <?php
-                                                    }
-                                                ?>
-                                            </ul>
-                                            <script>
-                                                $(document).ready(function(){
-                                                    $('#detailbill-filter-year-a-<?= $_need_year; ?>').click();
-                                                });
-                                            </script>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="company">
-                                        <div class="dropdown">
-                                          <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-company">
-                                            Оберіть компанію
-                                            <span class="caret"></span>
-                                          </button>
-                                          <ul class="dropdown-menu" aria-labelledby="select-company">
-                                            <li><a href="#" data-value="1">ПАТ КИЇВЕНЕРГО</a></li>
-                                            <li><a href="#" data-value="2">КП ГІОЦ</a></li>
-                                            <li><a href="#" data-value="3">ДП КИЇВГАЗЕНЕРДЖИ</a></li>
-                                          </ul>
-                                        </div>
-                                    </div> -->
-                                </th>
-                                <th>
-                                    <a onclick="$('#object-item-historybill-form').submit();" class="icon-settings"></a>
-                                </th>
-                            </tr>
                             <tr class="head-gray">
                                 <th>Номер<br>операції</th>
                                 <th class="th-header">Назва послуги /<br>одержувач коштів</th>
@@ -170,7 +148,7 @@
                                                     </td>
                                                     <td class="border-bottom">
                                                         <label class="header header-big">
-                                                            <?= $item['NAME_PLAT']; ?> <br>
+                                                            <strong class="green"><?= $item['NAME_PLAT']; ?></strong> <br>
                                                             <?= $item['NAME_FIRME']; ?>
                                                             (о.р. <?= $item['ABCOUNT']; ?>) <br>
                                                         </label>
@@ -216,5 +194,3 @@
                 ?><h2 class="big-error-message"><?= $error; ?></h2> <?php
             }
         ?>
-    </content>
-</div>
