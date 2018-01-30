@@ -2678,6 +2678,33 @@ ul.inline {
 	}
 }
 
+.table-pay-details {
+
+	thead:not(:first-child) th {
+
+		padding-top: 40px;
+	}
+
+	thead th {
+
+		text-transform: uppercase;
+		border-bottom-color: @green-darker;
+	}
+
+	tbody {
+
+		th {
+
+			font-weight: bold;
+			font-size: 14px;
+			border-bottom: 2px solid @gray-dark;
+
+			&:not(:last-child) { border-right: 1px solid @gray-dark; }
+		}
+	}
+
+}
+
 .news-slider {
 
 	position: relative;

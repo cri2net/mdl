@@ -29,6 +29,6 @@ if (isset($_SESSION['payments-repay']['status']) && !$_SESSION['payments-repay']
     unset($_SESSION['payments-repay']);
 }
 
-?><div class="portlet" ><?php
+?><div class="" ><?php
 require_once($file);
 ?></div><?php
