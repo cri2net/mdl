@@ -37,6 +37,11 @@ try {
     if (!empty($token)) {
     
         $decoded = @MyJwt::decode($token->id_token, $OpenId->secret, ['RS256']);
+        $headers = [
+            "Authorization: Bearer {$token->access_token}",
+        ];
+        $userinfo = Http::httpGet(OpenId::USERINFO_URL, false, true, $headers);
+        $userinfo = json_decode($userinfo);
 
         if (!empty($decoded)) {
 
@@ -62,18 +67,19 @@ try {
                 $password = generateCode(40);
 
                 $data = [
-                    'email'        => @$decoded->email . '',
-                    'password'     => Authorization::generate_db_password($password, $password_key),
-                    'password_key' => $password_key,
-                    'login'        => '',
-                    'lastname'     => '',
-                    'name'         => @$decoded->name . '',
-                    'fathername'   => '',
-                    'created_at'   => microtime(true),
-                    'mob_phone'    => '',
-                    'auto_reg'     => 1,
-                    'openid_id'    => $decoded->sub,
-                    'openid_data'  => json_encode($decoded, JSON_UNESCAPED_UNICODE),
+                    'email'          => @$userinfo->email . '',
+                    'password'       => Authorization::generate_db_password($password, $password_key),
+                    'password_key'   => $password_key,
+                    'verified_email' => (($userinfo->email_verified) ? 1 : 0),
+                    'login'          => '',
+                    'lastname'       => '',
+                    'name'           => @$decoded->name . '',
+                    'fathername'     => '',
+                    'created_at'     => microtime(true),
+                    'mob_phone'      => '',
+                    'auto_reg'       => 1,
+                    'openid_id'      => $decoded->sub,
+                    'openid_data'    => json_encode([$decoded, $userinfo], JSON_UNESCAPED_UNICODE),
                 ];
 
                 $user_id = PDO_DB::insert($data, User::TABLE);
