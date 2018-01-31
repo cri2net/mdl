@@ -7,9 +7,6 @@
 <div class="block block-quick-pays-short">
     <div class="row">
         <div class="col-md-4" >
-            <a class="item cks" href="<?= BASE_URL; ?>/cabinet/instant-payments/cks/" class="cks">Сплата послуг ЦКС</a>
-        </div>
-        <div class="col-md-4" >
             <a href="<?= BASE_URL; ?>/cabinet/instant-payments/dai/" class="item police">Штрафи за порушення ПДР</a>
         </div>
         <div class="col-md-4" >

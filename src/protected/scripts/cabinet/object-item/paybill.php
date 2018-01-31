@@ -114,18 +114,6 @@
                     </div>
                 </div>
                 <?php
-            } elseif ($object['city_id'] == Street::ODESSA_ID) {
-                if (in_array('webmoney', $pay_systems)) {
-                    ?>
-                    <div class="check-box-line">
-                        <span id="checkbox_percent_webmoney" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $webmoneySum; ?>" data-paysystem-key="webmoney"></span>
-                        <label onclick="$('#checkbox_percent_webmoney').click();">
-                            <img alt="webmoney" src="<?= BASE_URL; ?>/assets/images/paysystems/wm-logo.png" />
-                            <span class="text-label">WebMoney</span>
-                        </label>
-                    </div>
-                    <?php
-                }
             }
         ?>
     </div>

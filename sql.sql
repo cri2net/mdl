@@ -947,3 +947,6 @@ ALTER TABLE `kmda_users`
   ADD COLUMN `openid_id` INT(11) NULL AFTER `max_objects`,
   ADD COLUMN `openid_data` TEXT NULL AFTER `openid_id`, 
   ADD INDEX (`openid_id`, `deleted`);
+
+-- 2018.01.31
+DROP TABLE kmda_service_centers;

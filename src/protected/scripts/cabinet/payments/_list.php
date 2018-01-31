@@ -50,10 +50,6 @@
                                         echo 'Дитячі садки (харчування)';
                                         break;
 
-                                    case 'cks':
-                                        echo 'Послуги ЦКС';
-                                        break;
-
                                     case 'budget':
                                         echo 'До бюджету';
                                         break;
