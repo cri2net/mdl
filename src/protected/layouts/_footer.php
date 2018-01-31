@@ -39,7 +39,7 @@
                                     <nav class="navbar navbar-footer">
                                         <div id="navbar-footer" class="navbar-collapse collapse">
                                             <ul class="nav navbar-nav">
-                                                <li><img src="<?= BASE_URL; ?>/assets/images/logo-inner.png" class="logo-footer" alt="ЦКС"></li>
+                                                <li><img src="<?= BASE_URL; ?>/assets/images/logo-inner.png" class="logo-footer" alt=""></li>
                                                 <li><a href="<?= BASE_URL ?>/services_list_and_docs/docs/user_agreement/">Угода користувача</a></li>
                                                 <li><a href="<?= BASE_URL ?>/services_list_and_docs/docs/personal_data/">Згода на обробку особистих даних</a></li>
                                             </ul>

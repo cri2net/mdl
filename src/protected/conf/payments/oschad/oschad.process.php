@@ -3,7 +3,7 @@
 use cri2net\php_pdo_db\PDO_DB;
 
 $oschad = new Oschad();
-$oschad_merchant_settings['BACKREF'] = BASE_URL . '/payment-status/' . $_payment['id'] . '/';
+$oschad_merchant_settings['BACKREF'] = EXT_BASE_URL . '/payment-status/' . $_payment['id'] . '/';
 $oschad->set_merchant($oschad_merchant_settings);
 
 $oschad->set_order(round($totalAmountKop / 100, 2) . '', $_payment['id'], 'Splata komunalnyh poslug');

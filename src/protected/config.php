@@ -25,6 +25,10 @@ require_once(PROTECTED_DIR . "/conf/lang.php");
 require_once(PROTECTED_DIR . "/lib/func.lib.php");
 require_once(PROTECTED_DIR . "/vendor/autoload.php");
 
+if (!isset($_SERVER['REQUEST_URI'])) {
+    $_SERVER['REQUEST_URI'] = '';
+}
+
 switch (USER_REAL_IP) {
     case '127.0.0.1':
         define('COOKIE_DOMAIN', '.kmda.local');
@@ -33,31 +37,29 @@ switch (USER_REAL_IP) {
     
     default:
         if (!isset($_SERVER['HTTP_HOST']) || !$_SERVER['HTTP_HOST']) {
-            $_SERVER['HTTP_HOST'] = 'cks.com.ua';
+            $_SERVER['HTTP_HOST'] = 'gerc.ua';
         }
 
         define('COOKIE_DOMAIN', '.gerc.ua');
         if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
         }
-        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST']);
+        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://gerc.ua/kmda');
+
+        $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen('/kmda'));
 }
 
-define('EXT_BASE_URL', 'https://www.gerc.ua/kmda');
+define('EXT_BASE_URL', 'https://cabinet.kyivcity.gov.ua/catalog/payments/gerc/?page=');
 define('EMAIL_FROM', 'no-reply@cks.com.ua');
 define('EMAIL_TO', 'zvernennya@src.com.ua');
 define('EMAIL_HOST', '91.200.41.117');
 define('EMAIL_FROM_NAME', 'КМДА');
-define('SITE_DOMAIN', 'cks.com.ua');
+define('SITE_DOMAIN', 'kyivcity.gov.ua');
 define('REMEMBER_COOKIE_NAME', '__kmdaudata');
 
 Authorization::check_login();
 if (Authorization::isLogin()) {
     $__userData = User::getUserById(Authorization::getLoggedUserId());
-}
-
-if (!isset($_SERVER['REQUEST_URI'])) {
-    $_SERVER['REQUEST_URI'] = '';
 }
 
 $router = new Routing(PROTECTED_DIR . '/conf/routing.xml');

@@ -15,7 +15,7 @@
                 return;
             }
         ?>
-        <form class="form-welcome" onsubmit="top.postMessage('login-form-send', 'http://cks.com.ua');" method="post" action="<?= BASE_URL; ?>/post/cabinet/restore/">
+        <form class="form-welcome" method="post" action="<?= BASE_URL; ?>/post/cabinet/restore/">
             <?php    
                 if (isset($_SESSION['restore']['status']) && !$_SESSION['restore']['status']) {
                     ?>
