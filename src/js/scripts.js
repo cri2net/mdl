@@ -7,7 +7,7 @@ $(document).on('ready', function() {
     initMap();
     initSwiper();
     initEvents();
-    theadBg();
+    //theadBg();
 
     $(function() { $('.matchHeight').matchHeight(); }); 
 
@@ -81,6 +81,8 @@ $(window).on('load', function(){
 // Генерируем заголовки на всю ширину
 function theadBg() {
 
+    return false;
+
     if ($('.thead-bg').length) {
 
         var headGreen = $('.datailbill-table .head-green'),
@@ -99,6 +101,31 @@ function theadBg() {
 
 /* All keyboard and mouse events */
 function initEvents() {
+
+    $('.add-new-object').on('click', function() {
+
+        $('#modal-object-add').modal('show');
+        return false;
+    }); 
+
+    // Управление удалением объекта
+    $('.remove-object').on('click', function() {
+
+        $('#remove_object_id').val($(this).data('object-id')).parent().submit();
+        return false;
+    });
+
+    $('.remove-object-check').on('click', function() {
+
+        $(this).parent().parent().find('.info-section').fadeOut();
+        $(this).parent().parent().find('.remove-section').fadeIn();
+    });
+
+    $('.remove-object-cancel').on('click', function() {
+
+        $(this).parent().parent().find('.info-section').fadeIn();
+        $(this).parent().parent().find('.remove-section').fadeOut();
+    });     
 
     // Показываем блок со счетчиком
     $('#data-table').on('click', 'a.counter', function() {

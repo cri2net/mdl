@@ -508,7 +508,27 @@ function add_new_counters(key, abcounter, tarif)
     new_counter_no['k' + key]++;
     var new_counter_numnber = new_counter_no['k' + key];
 
+
     var html = 
+        '<div class="row row-counter item-counter-'+ key +'"  id="item-counter-'+ key +'-0">'
++ '            <div class="col-md-12">'
++ '                <div class="counter-field">'
++ '                    <label>поточні</label>'
++ '                    <input class="inp_' + key + '_new_count" type="text" id="inp_' + key + '_new_count_' + new_counter_numnber + '" name="inp_' + key + '_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\'' + key + '\', ' + tarif + ', \'' + new_counter_numnber + '\');">'
++ '                </div>'
++ '                <div class="counter-field">'
++ '                    <label>минулі</label>'
++ '                    <input name="inp_' + key + '_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\'' + key + '\', ' + tarif + ', \'' + new_counter_numnber + '\');" id="old_inp_' + key + '_new_count_' + new_counter_numnber + '" value="">'
++ '                </div>'
++ '                <div class="counter-field">'
++ '                    <label>№ лічильника</label>'
++ '                    <input type="text" id="num_inp_' + key + '_new_count_' + new_counter_numnber + '" name="inp_' + key + '_abcounter[]" value="' + abcounter + '">'
++ '                    <a data-id="' + abcounter + '" class="delete counter-delete" onclick="$(\'#item-counter-\'' + key + '-0\').remove(); new_counter_no[\'k' + key + '\']--;">&times;</a>'
++ '                </div>'
++ '            </div>'
++ '            <input type="hidden" name="inp_' + key + '_count_number[]" value="' + new_counter_numnber + '">'
++ '        </div>';
+/*    
         '<tr id="item-counter-'+ key + '-' + new_counter_numnber +'" data-number="'+ key +'" class="item-counter item-counter-'+ key +'" style="display: table-row;">' +
             '<td colspan="6">' +
                 '<div class="row">' +
@@ -538,8 +558,9 @@ function add_new_counters(key, abcounter, tarif)
                 '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
             '</td>' +
         '</tr>';
+*/        
 
-    $(html).insertBefore('#new_counters_for_' + key);
+    $(html).insertBefore('.counter-container-' + key + ' .row-add-counter');
 };
 
 function tas_frame_load()

@@ -11,7 +11,7 @@
     require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
     require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
 ?>
-<div class="container">
+<div class="container-fluid">
 <content>
 <div class="cabinet-settings">
     <?php

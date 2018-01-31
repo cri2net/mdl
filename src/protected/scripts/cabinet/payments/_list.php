@@ -6,16 +6,10 @@
         return;
     }
 ?>
-<div class="valign-center" style="margin-top: 20px;">
-    <label class="checkbox no-label green" id="payments_only_success"><input name="service[<?= $key ?>]" type="checkbox" class="check-toggle" checked ><span></span></label>&nbsp;<span>Тільки успішні платежі</span>
-<!--     <span class="niceCheck checked" id="payments_only_success"><input type="checkbox" checked="checked"></span>
-    <label style="position: relative; top:-3px; left:10px;" onclick="$('#payments_only_success').click();">
-        Тільки успішні платежі
-    </label>
- --></div>
-<br/>
-<div class="real-full-width-block">
-    <table class="full-width-table datailbill-table no-border">
+<label class="checkbox green" id="payments_only_success"><input name="service[<?= $key ?>]" type="checkbox" class="check-toggle" checked ><span>Тільки успішні платежі</span></label>
+
+<div class="real-full-width-block table-responsive border-top">
+    <table class="full-width-table datailbill-table">
         <thead>
             <tr>
                 <th class="first">Номер</th>
@@ -107,6 +101,49 @@
         </tbody>
     </table>
 </div>
+
+<div class="pagination">
+    <ul>
+        <li class="found">Знайдено: 30</li>
+        <li><a href="#" class="page prev">&lt;</a></li>
+        <li><a href="#" class="page current">1</a></li>
+        <li><a href="#" class="page">2</a></li>
+        <li><a href="#" class="page">3</a></li>
+        <li><a href="#" class="page">4</a></li>
+        <li><a href="#" class="page">5</a></li>
+        <li><a href="#" class="page next">&gt;</a></li>
+        <li class="pp">
+            <div class="dropdown">
+                <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-per-page" value="1">
+                    25 / на сторинці
+                    <span class="caret"></span>
+                </button>
+                <input type="hidden" id="per-page" value="25" name="per-page" />
+                <ul class="dropdown-menu" aria-labelledby="select-per-page">
+                    <?php
+                        foreach (array(
+                                25 => '25 / на сторинці',
+                                50 => '50 / на сторинці',
+                                100 => '100 / на сторинці'
+                            ) as $pk => $pp) {
+                            ?>
+                            <li><a onclick="" id="pp-<?php echo $pk; ?>" data-value=""><?php echo $pp; ?></a></li>
+                            <?php
+                        }
+                    ?>
+                </ul>      
+                <script>
+                /*
+                    $(document).ready(function(){
+                        $('#pp-50').click();
+                    });
+                */                        
+                </script>                    
+            </div>          
+        </li>
+    </ul>
+</div>
+
 <script>
 $(document).ready(function(){
     $(".niceCheck").click(function() {

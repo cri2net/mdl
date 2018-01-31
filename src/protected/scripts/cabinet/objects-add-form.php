@@ -3,6 +3,7 @@
 
     $cities = PDO_DB::table_list(DB_TBL_CITIES, '', 'pos ASC');
 ?>
+
 <div class="input">
     <label>Виберіть місто *: <br>
         <select class="txt" name="city" id="select_city_id">
@@ -53,8 +54,8 @@
 <?php
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));
 ?>
-<div class="input">
-    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue btn-md">Додати об’єкт</button>
+<div class="input align-center">
+    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue"><span class="fa fa-check"></span>Додати об’єкт</button>
 </div>
 <?php
     if ($disabled) {
@@ -65,6 +66,7 @@
         <?php
     }
 ?>
+ 
 <script type="text/javascript">
     var PIN_SENT = false;
     $(document).ready(function() {
