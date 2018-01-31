@@ -19,7 +19,7 @@ class CronTasks
         $objPHPExcel = new PHPExcel(); // Create new PHPExcel object
 
         // Set properties
-        $objPHPExcel->getProperties()->setTitle("CKS. Платежи через ТасЛинк за " . date('Y-m-d', $time_from));
+        $objPHPExcel->getProperties()->setTitle("KMDA. Платежи через ТасЛинк за " . date('Y-m-d', $time_from));
         $objPHPExcel->setActiveSheetIndex(0);
 
         $abc = "ABCDEFGHIJLKLMNOP";
@@ -131,7 +131,7 @@ class CronTasks
         }
 
         // Rename sheet
-        $objPHPExcel->getActiveSheet()->setTitle('CKS');
+        $objPHPExcel->getActiveSheet()->setTitle('KMDA');
 
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $objPHPExcel->setActiveSheetIndex(0);
@@ -144,8 +144,8 @@ class CronTasks
         ob_end_clean();
 
         $email = new Email();
-        $email->addStringAttachment($xls, "CKS-Taslink-report " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to) . '.xls');
-        $email->Subject = "CKS. Платежи через ТасЛинк за " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to);
+        $email->addStringAttachment($xls, "KMDA-Taslink-report " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to) . '.xls');
+        $email->Subject = "KMDA. Платежи через ТасЛинк за " . date('Y-m-d_', $time_from) . date('Y-m-d', $time_to);
         
         foreach ($to_emails as $to_email) {
             $email->clearAllRecipients();

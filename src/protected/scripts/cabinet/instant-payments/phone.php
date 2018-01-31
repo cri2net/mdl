@@ -9,7 +9,7 @@
     <content>
         <div class="portlet">
 		<center>	
-		<iframe src="https://www.gerc.ua/mobile.gerc.php?owner=cks" frameborder="0" style="width:500px; height:995px;"></iframe>
+		<iframe src="https://www.gerc.ua/mobile.gerc.php?owner=kmda" frameborder="0" style="width:500px; height:995px;"></iframe>
 		</center>
 		</div>
 	</content>

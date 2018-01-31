@@ -10,7 +10,7 @@
     <content>
         <div class="portlet">
 		<center>
-		<iframe src="https://www.gerc.ua/paygate.php?service=volia&owner=cks&locale=ua&email=<?= $email; ?>" frameborder="0" style="width:820px; height:888px;"></iframe></center>
+		<iframe src="https://www.gerc.ua/paygate.php?service=volia&owner=kmda&locale=ua&email=<?= $email; ?>" frameborder="0" style="width:820px; height:888px;"></iframe></center>
 		</div>
 	</content>
 </div>
