@@ -53,8 +53,8 @@
                                         <a href="mailto:zvernennya@src.kiev.ua">zvernennya@src.kiev.ua</a> <br>
 
                                         <div class="social pull-right">
-                                            <a href="https://www.facebook.com/cks.com.ua/" class="fa fa-facebook"></a>
-                                            <a href="https://www.youtube.com/channel/UCBZgKIDjq4AOOpYYKIK40kQ" class="fa fa-youtube"></a>
+                                            <a href="" class="fa fa-facebook"></a>
+                                            <a href="" class="fa fa-youtube"></a>
                                         </div>
                                     </div>
                                 </div>
