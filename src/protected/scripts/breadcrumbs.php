@@ -1,6 +1,6 @@
 <?php
     $breadcrumbs = [
-        ['title' => 'ЦКС', 'link' => '/']
+        ['title' => 'КМДА', 'link' => '/']
     ];
 
     switch ($__route_result['controller'] . "/" . $__route_result['action']) {
@@ -54,7 +54,6 @@
                             'kindergarten'   => 'Дитячий садок',
                             'cards'          => 'Перекази з карти на карту',
                             'phone'          => 'Сплата за телефон та інтернет',
-                            'cks'            => 'Сплата послуг ЦКС',
                             'budget'         => 'Платежі до бюджету',
                             'requisites'     => 'Платежі за реквізитами',
                             'volia'          => 'Воля',

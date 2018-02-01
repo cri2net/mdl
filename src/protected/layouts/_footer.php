@@ -2,66 +2,50 @@
         use cri2net\php_pdo_db\PDO_DB;
 
         if (!defined('SHORT_FOOTER') || !SHORT_FOOTER) {
+            
+            $useful_links = PDO_DB::table_list(TABLE_PREFIX . 'useful_links', "is_active=1", "pos ASC");
             ?>
             <footer>
                 <div class="container">
-
-                    <?php
-                        if (defined('INDEX_FOOTER') && INDEX_FOOTER) {
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <?php
+                                if(count($useful_links)) {
+                                ?>
+                                <h2>Корисні посилання</h2>
+                                <div class="logos">
+                                <?php
+                                    foreach($useful_links as $ul) {
+                                    ?><a href="<?= $ul['link'] ?>" target="_blank"><img src="<?= BASE_URL; ?>/db_pic/useful-links/<?= $ul['filename'] ?>.jpg" alt="<?= htmlspecialchars($ul['title']) ?>" title="<?= htmlspecialchars($ul['title']) ?>"></a> <?php
+                                    }
+                                ?>
+                                </div>
+                                <?php
+                                }
                             ?>
-                            <img src="<?= BASE_URL; ?>/assets/images/logo.png" class="logo" alt="ЦКС">
+                            <nav class="navbar navbar-footer">
+                                <div id="navbar-footer" class="navbar-collapse collapse">
+                                    <ul class="nav navbar-nav">
+                                        <li><img src="<?= BASE_URL; ?>/assets/images/logo-inner.png" class="logo-footer" alt=""></li>
+                                        <li><a href="<?= BASE_URL ?>/services_list_and_docs/docs/user_agreement/">Угода користувача</a></li>
+                                        <li><a href="<?= BASE_URL ?>/services_list_and_docs/docs/personal_data/">Згода на обробку особистих даних</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-lg-2">
                             <div class="copyright pull-right">
-                                Залишились питання?<br>
-                                Зателефонуйте нам<br>
-                                <div class="phone">(044) 247 40 40</div>
-                                <a href="mailto:zvernennya@src.kiev.ua">zvernennya@src.kiev.ua</a>
-                            </div>
-                            <?php
-                        } else {
-                            $useful_links = PDO_DB::table_list(TABLE_PREFIX . 'useful_links', "`is_active`=1", "`pos` ASC");
-                            ?>
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <?php
-                                        if(count($useful_links)) {
-                                        ?>
-                                        <h2>Корисні посилання</h2>
-                                        <div class="logos">
-                                        <?php
-                                            foreach($useful_links as $ul) {
-                                            ?><a href="<?= $ul['link'] ?>" target="_blank"><img src="<?= BASE_URL; ?>/db_pic/useful-links/<?= $ul['filename'] ?>.jpg" alt="<?= htmlspecialchars($ul['title']) ?>" title="<?= htmlspecialchars($ul['title']) ?>"></a> <?php
-                                            }
-                                        ?>
-                                        </div>
-                                        <?php
-                                        }
-                                    ?>
-                                    <nav class="navbar navbar-footer">
-                                        <div id="navbar-footer" class="navbar-collapse collapse">
-                                            <ul class="nav navbar-nav">
-                                                <li><img src="<?= BASE_URL; ?>/assets/images/logo-inner.png" class="logo-footer" alt=""></li>
-                                                <li><a href="<?= BASE_URL ?>/services_list_and_docs/docs/user_agreement/">Угода користувача</a></li>
-                                                <li><a href="<?= BASE_URL ?>/services_list_and_docs/docs/personal_data/">Згода на обробку особистих даних</a></li>
-                                            </ul>
-                                        </div>
-                                    </nav>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="copyright pull-right">
-                                        <h2>Ми на зв’язку</h2>
-                                        <div class="phone">(044) 247-40-40</div>
-                                        <a href="mailto:zvernennya@src.kiev.ua">zvernennya@src.kiev.ua</a> <br>
+                                <h2>Ми на зв’язку</h2>
+                                <div class="phone">(044) 247-40-40</div>
+                                <a href="mailto:zvernennya@src.kiev.ua">zvernennya@src.kiev.ua</a> <br>
 
-                                        <div class="social pull-right">
-                                            <a href="" class="fa fa-facebook"></a>
-                                            <a href="" class="fa fa-youtube"></a>
-                                        </div>
-                                    </div>
+                                <div class="social pull-right">
+                                    <a href="" class="fa fa-facebook"></a>
+                                    <a href="" class="fa fa-youtube"></a>
                                 </div>
                             </div>
-                            <?php
-                        }
-                    ?>
+                        </div>
+                    </div>
                 </div>
             </footer>
             <?php

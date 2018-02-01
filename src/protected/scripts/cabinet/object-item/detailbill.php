@@ -154,7 +154,7 @@
                                 });
                             </script>
                         </div>                        
-                        <a onclick="$('#object-item-historybill-form').submit();" class="btn btn-xs"><span class="fa  fa-calendar"></span> Показати</a>             
+                        <a onclick="$('#object-item-detailbill-form').submit();" class="btn btn-xs"><span class="fa  fa-calendar"></span> Показати</a>
                     </div>
                 </div>
                 <div class="clearfix"></div>

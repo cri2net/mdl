@@ -41,7 +41,7 @@
         $dateEnd = $debtData['dbegin'];
 
     } catch (Exception $e) {
-        ?><div class="container-fluid" ><h2 class="big-error-message"><?= $e->getMessage(); ?></h2></div> <?php
+        ?><div class="container-fluid"><h2 class="big-error-message"><?= $e->getMessage(); ?></h2></div> <?php
         return;
     }
 ?>
@@ -56,7 +56,7 @@
                         <div>
                             <span class="fa fa-calendar"></span>
                             Рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?> р.  
-                        </div>                 
+                        </div>
                     </div>
                     <div class="col-md-6 right matchHeight">
                         <strong><span class="green"><?= $object['address']; ?></span><br>
@@ -67,9 +67,9 @@
                                 <br>Пільги: <?= $debtData['LGOTA']; ?>
                                 <?php
                             }
-                        ?>    
-                        </strong></span>                
-                    </div>                    
+                        ?>
+                        </strong></span>
+                    </div>
                 </div>
                 <div class="clearfix"></div>
                 <div class="table-responsive border-top">
@@ -214,7 +214,7 @@
                                                 $tmp_value .= '_'. $item['DEND_XML'];
                                                 $tmp_value .= '_'. $item['FIO'];
                                             ?>
-                                            <input <?= $attrs; ?> class="bill-summ-input txt form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc();" id="inp_<?= $key; ?>">
+                                            <input <?= $attrs; ?> class="bill-summ-input txt form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc(); return checkForDouble(this)" id="inp_<?= $key; ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $tmp_value; ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_name_plat" value="<?= htmlspecialchars($item['name_plat'], ENT_QUOTES); ?>">
                                             <input type="hidden" name="inp_<?= $key; ?>_firm_name" value="<?= htmlspecialchars($item['firm_name'], ENT_QUOTES); ?>">
@@ -235,7 +235,7 @@
                                                     <td></td>
                                                     <td colspan="6">
                                                         <div class="counter-container counter-container-<?= $key; ?>">
-                                                            <div class="row row-counter item-counter-<?= $key; ?>"  id="item-counter-<?= $key; ?>-0" data-number="<?= $key; ?>">
+                                                            <div class="row row-counter item-counter-<?= $key; ?>"  id="item-counter-<?= $key; ?>-<?= $counter['COUNTER_NO']; ?>" data-number="<?= $key; ?>">
                                                                 <div class="col-md-12">
                                                                     <div class="counter-field">
                                                                         <label>поточні</label>
@@ -248,10 +248,10 @@
                                                                     <div class="counter-field">
                                                                         <label>№ лічильника</label>
                                                                         <input type="text" id="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
-                                                                        <a data-id="<?= $counter['ABCOUNTER']; ?>" class="delete counter-delete" onclick="$('#item-counter-<?= $key; ?>-0').remove(); new_counter_no.k<?= $key; ?>--;">&times;</a>
+                                                                        <a data-id="<?= $counter['ABCOUNTER']; ?>" class="delete counter-delete" onclick="$('#item-counter-<?= $key; ?>-<?= $counter['COUNTER_NO']; ?>').remove(); new_counter_no.k<?= $key; ?>--;">&times;</a>
                                                                     </div>
                                                                 </div>
-                                                                <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">                                                                
+                                                                <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
                                                             </div>
                                                             <div class="row row-add-counter">
                                                                 <div class="col-lg-12">

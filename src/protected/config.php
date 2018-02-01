@@ -54,7 +54,7 @@ define('EMAIL_FROM', 'no-reply@cks.com.ua');
 define('EMAIL_TO', 'zvernennya@src.com.ua');
 define('EMAIL_HOST', '91.200.41.117');
 define('EMAIL_FROM_NAME', 'КМДА');
-define('SITE_DOMAIN', 'kyivcity.gov.ua');
+define('SITE_DOMAIN', 'cabinet.kyivcity.gov.ua');
 define('REMEMBER_COOKIE_NAME', '__kmdaudata');
 
 Authorization::check_login();

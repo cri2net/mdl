@@ -39,13 +39,13 @@ try {
 ?>
 <div class="container-fluid">
     <content>
-<?php
-require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
+        <?php
+            require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
 
-$file = PROTECTED_DIR . "/scripts/cabinet/object-item/$current_section.php";
-if (file_exists($file)) {
-    require_once($file);
-}
-?>
+            $file = PROTECTED_DIR . "/scripts/cabinet/object-item/$current_section.php";
+            if (file_exists($file)) {
+                require_once($file);
+            }
+        ?>
     </content>
 </div>

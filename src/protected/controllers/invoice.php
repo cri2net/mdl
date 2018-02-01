@@ -59,8 +59,8 @@
 
         echo $say_good_day, "\r\n",
              'Доступний рахунок на сплату ЖКП для Київ, ', trim($house['street_name_full']), ', ', $address_detail['house'], $_flat_number, "\r\n",
-             'Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КК ЦКС або роздрукувати рахунок та сплатити у найближчій касі банку.', "\r\n\r\n",
-             "Сплатити на сайті КК ЦКС: $paybill_link\r\n\r\n",
+             'Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КМДА або роздрукувати рахунок та сплатити у найближчій касі банку.', "\r\n\r\n",
+             "Сплатити на сайті КМДА: $paybill_link\r\n\r\n",
              $info_block_plain_text,
              "Онлайн версія листа: $online_version\r\n";
         exit();
@@ -238,7 +238,7 @@
     <table width="100%" cellspacing="0" cellpadding="18" border="0"><tbody><tr>
         <td style="line-height:24px; <?= $_ff; ?> font-size:14px; color:#000000;" height="10">
             <span style="line-height:38px; font-size:18px; <?= $_ff; ?> font-weight:bold;"><?= $say_good_day; ?></span><br>
-            Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КК ЦКС.
+            Ви маєте можливість сплатити за комунальні послуги прямо зараз на сайті КМДА.
             <?php
                 if ($info_block['text']) {
                     echo '<br><br>', $info_block['text'];
@@ -439,8 +439,8 @@
         <table <?= $_table_attr; ?>><tbody>
             <tr>
                 <td valign="top" colspan="3" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
-                    <span style="font-weight:bold; line-height:18px; color:#ffffff; <?= $_ff; ?> font-size:14px;">КК ЦКС <br></span>
-                    2014—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="https://cks.com.ua/" target="_blank">https://cks.com.ua/</a>
+                    <span style="font-weight:bold; line-height:18px; color:#ffffff; <?= $_ff; ?> font-size:14px;">КМДА <br></span>
+                    2014—<?= date('Y'); ?> © <a style="text-decoration:none; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px;" href="https://<?= SITE_DOMAIN; ?>/" target="_blank"><?= SITE_DOMAIN; ?></a>
                 </td>
                 <td valign="top" colspan="3" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; <?= $_ff; ?> font-size:12px; line-height:15px; padding-left:11px;">
                     Лист містить дані для доступу до особистого кабінету, не передавайте його третім особам. <br>

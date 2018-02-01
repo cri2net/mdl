@@ -12,7 +12,7 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
         break;
 
     case 'error/404':
-        $seo_str = "ЦКС — Помилка 404";
+        $seo_str = "КМДА — Помилка 404";
         break;
     
     case 'page/cabinet':

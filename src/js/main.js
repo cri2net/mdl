@@ -510,7 +510,7 @@ function add_new_counters(key, abcounter, tarif)
 
 
     var html = 
-        '<div class="row row-counter item-counter-'+ key +'"  id="item-counter-'+ key +'-0">'
+        '<div class="row row-counter item-counter-'+ key +'" id="item-counter-'+ key +'-' + new_counter_numnber + '">'
 + '            <div class="col-md-12">'
 + '                <div class="counter-field">'
 + '                    <label>поточні</label>'
@@ -523,7 +523,7 @@ function add_new_counters(key, abcounter, tarif)
 + '                <div class="counter-field">'
 + '                    <label>№ лічильника</label>'
 + '                    <input type="text" id="num_inp_' + key + '_new_count_' + new_counter_numnber + '" name="inp_' + key + '_abcounter[]" value="' + abcounter + '">'
-+ '                    <a data-id="' + abcounter + '" class="delete counter-delete" onclick="$(\'#item-counter-\'' + key + '-0\').remove(); new_counter_no[\'k' + key + '\']--;">&times;</a>'
++ '                    <a data-id="' + abcounter + '" class="delete counter-delete" onclick="$(\'#item-counter-' + key + '-' + new_counter_numnber + '\').remove(); new_counter_no[\'k' + key + '\']--;">&times;</a>'
 + '                </div>'
 + '            </div>'
 + '            <input type="hidden" name="inp_' + key + '_count_number[]" value="' + new_counter_numnber + '">'
