@@ -7,22 +7,22 @@ class ShoppingCart
     const TABLE             = DB_TBL_PAYMENT;
     const SERVICE_TABLE     = DB_TBL_PAYMENT_SERVICES;
     const REPORT_BASE_URL   = '/reports/rwservlet';
-    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kv_www_all.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_p=';
-    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kv_www_hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
+    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kv_www_all.rep&destype=Cache&Desformat=pdf&cmdkey=api_kmda_site&id_p=';
+    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kv_www_hist.rep&destype=Cache&Desformat=pdf&cmdkey=api_kmda_site&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank']
-            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank'];
+            ? ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank', 'oschadbank_visa']
+            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank', 'oschadbank_visa'];
     }
 
     public static function get_API_URL($key)
     {
         $urls = [];
 
-        $urls['KASS_STATUS'] = '/reports/rwservlet?report=/gerc_api/api_status_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
-        $urls['KASS_OPEN']   = '/reports/rwservlet?report=/gerc_api/api_open_kass.rep&cmdkey=rep&destype=cache&Desformat=xml&login=';
+        $urls['KASS_STATUS'] = '/reports/rwservlet?report=/gerc_api/api_status_kass.rep&cmdkey=api_kmda_site&destype=cache&Desformat=xml&login=';
+        $urls['KASS_OPEN']   = '/reports/rwservlet?report=/gerc_api/api_open_kass.rep&cmdkey=api_kmda_site&destype=cache&Desformat=xml&login=';
 
         return $urls[$key];
     }
@@ -40,33 +40,35 @@ class ShoppingCart
         switch ($processing) {
             case 'visa':
             case 'mastercard':
-                $login    = 'CKS_SITE_COM_RB';
-                $password = '592F95260CBC0CAC0A5A71A4C3753497AD32D310';
+                $login    = 'SITE_KMDA_AVAL';
+                $password = '48EBD535EE1410CD00C1E08000F038E6E9292DB4';
                 break;
 
             case 'tas':
-                $login    = 'cks_site_com';
-                $password = '0168F38DC7806216FB81C0CEAEF044713A1397BE';
+                $login    = 'SITE_KMDA_TAS';
+                $password = '1B842ABA1CC93A92E761CA10090AEFAD6944A5DF';
                 break;
 
             case 'oschad_mycard':
-                $login    = 'CKS_SITE_COM_OB';
-                $password = strtoupper(sha1('cks_site_com_ob123'));
+                $login    = 'SITE_KMDA_FRAME_OSCH_MK';
+                $password = 'CC6646BED4E2678DE0D9096FD60DB740558C4BA1';
                 break;
 
             case 'oschadbank':
-                $login    = 'cks_site_com_ob2';
-                $password = strtoupper(sha1('cks_site_com_ob2123'));
+                // мастеркард, все карты (ощад)
+                $login    = 'SITE_KMDA_FRAME_OSCH_OK';
+                $password = 'AA8E43FDE9355977EEDEA5ED8C6FD9D0F16AA759';
+                break;
+
+            case 'oschadbank_visa':
+                // виза, все карты (ощад)
+                $login    = 'SITE_KMDA_FRAME_OSCH_OK_V';
+                $password = '41F709BF4EF9C050177EFD54D139135575FA2482';
                 break;
 
             case 'oschad':
-                $login    = 'cks_site_com_ob3';
-                $password = strtoupper(sha1('cks_site_com_ob3123'));
-                break;
-
-            case 'masterpass':
-                $login    = 'MASTERPASS_CKSCOMUA';
-                $password = 'CC8FE019D808CE541C40518049042AFB069BCA98';
+                $login    = 'SITE_KMDA_FRAME_OSCH_KK';
+                $password = '7D1A60E155B7FEC339565EB686CE3D305C60B1F5';
                 break;
         }
     }
@@ -143,12 +145,13 @@ class ShoppingCart
         // пример правила: ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5]
         
         $rules = [
-            'visa'          => ['percent' => 2, 'min' => 2],
-            'tas'           => ['percent' => 2, 'min' => 2],
-            'mastercard'    => ['percent' => 2, 'min' => 2],
-            'oschad'        => ['percent' => 0, 'min' => 0],
-            'oschad_mycard' => ['percent' => 0, 'min' => 0],
-            'oschadbank'    => ['percent' => 2, 'min' => 2],
+            'visa'            => ['percent' => 2, 'min' => 2],
+            'tas'             => ['percent' => 2, 'min' => 2],
+            'mastercard'      => ['percent' => 2, 'min' => 2],
+            'oschad'          => ['percent' => 0, 'min' => 0],
+            'oschad_mycard'   => ['percent' => 0, 'min' => 0],
+            'oschadbank'      => ['percent' => 2, 'min' => 2],
+            'oschadbank_visa' => ['percent' => 2, 'min' => 2],
         ];
 
         if ($pay_system) {
@@ -361,7 +364,7 @@ class ShoppingCart
                 $url .= '?report='       . rawurlencode($report);
                 $url .= '&destype='      . rawurlencode('Cache');
                 $url .= '&Desformat='    . rawurlencode('xml');
-                $url .= '&cmdkey='       . rawurlencode('rep');
+                $url .= '&cmdkey='       . rawurlencode('api_kmda_site');
 
                 $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
                 $url .= '&p1='           . rawurlencode($actual_upc_data['MerchantID']);
@@ -412,6 +415,7 @@ class ShoppingCart
             case 'oschad':
             case 'oschad_mycard':
             case 'oschadbank':
+            case 'oschadbank_visa':
                 $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                 $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
                 $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
@@ -423,7 +427,7 @@ class ShoppingCart
                 $url .= '?report='       . rawurlencode($report);
                 $url .= '&destype='      . rawurlencode('Cache');
                 $url .= '&Desformat='    . rawurlencode('xml');
-                $url .= '&cmdkey='       . rawurlencode('rep');
+                $url .= '&cmdkey='       . rawurlencode('api_kmda_site');
                 $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
                 $url .= '&p1='           . rawurlencode($osc_first->MERCHANT);
                 $url .= '&p2='           . rawurlencode($osc_first->TERMINAL);
@@ -598,7 +602,7 @@ class ShoppingCart
 
         $xml = iconv('UTF-8', 'WINDOWS-1251', $xml);
         $report = '/gerc_api/pnew_gkom.rep';
-        $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode($report) . '&destype=Cache&Desformat=xml&cmdkey=rep';
+        $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode($report) . '&destype=Cache&Desformat=xml&cmdkey=api_kmda_site';
         $url .= '&in_xml=' . rawurlencode($xml);
         $res = Http::fgets($url);
 
@@ -697,6 +701,7 @@ class ShoppingCart
             case 'masterpass':
             case 'oschad':
             case 'oschad_mycard':
+            case 'oschadbank_visa':
             case 'oschadbank':
                 if (microtime(true) - $payment['go_to_payment_time'] > 3600) {
                     $to_update['status'] = 'timeout';
@@ -819,7 +824,9 @@ class ShoppingCart
                 return TasLink::getErrorDescription($trancode);
                 break;
 
+            case 'oschad':
             case 'oschad_mycard':
+            case 'oschadbank_visa':
             case 'oschadbank':
                 return Oschad::getErrorDescription($trancode);
         }
