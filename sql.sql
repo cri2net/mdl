@@ -950,3 +950,7 @@ ALTER TABLE `kmda_users`
 
 -- 2018.01.31
 DROP TABLE kmda_service_centers;
+
+-- 2018.02.12
+ALTER TABLE `kmda_payment` AUTO_INCREMENT=1200000000;
+
