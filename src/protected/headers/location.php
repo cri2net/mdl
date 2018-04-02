@@ -25,6 +25,12 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
         break;
 
     case 'page/cabinet':
+
+        if (!isset($__route_result['values']['subpage']) && !Authorization::isLogin()) {
+            $new_location = BASE_URL . '/post/oauth/openid/';
+            break;
+        }
+
         if (!isset($__route_result['values']['subpage']) && Authorization::isLogin()) {
             $new_location = BASE_URL . '/cabinet/objects/';
         } elseif (isset($__route_result['values']['subpage']) && ($__route_result['values']['subpage'] == 'settings') && !isset($__route_result['values']['section'])) {
