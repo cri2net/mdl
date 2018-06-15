@@ -6,11 +6,11 @@
 */
 class OpenId
 {
-    const AUTHORIZE_URL = 'http://openid.egp.com.ua/authorize';
+    const AUTHORIZE_URL = 'https://openid.egp.com.ua/authorize';
 
-    const TOKEN_URL     = 'http://openid.egp.com.ua/token';
+    const TOKEN_URL     = 'https://openid.egp.com.ua/token';
 
-    const USERINFO_URL  = 'http://openid.egp.com.ua/userinfo';
+    const USERINFO_URL  = 'https://openid.egp.com.ua/userinfo';
 
     public $clientId;
 

@@ -2,7 +2,7 @@
 switch (USER_REAL_IP) {
     case '127.0.0.111':
         define('DB_HOST', 'localhost');
-        define('DB_NAME', 'cks');
+        define('DB_NAME', 'kmda');
         define('DB_USER', 'root');
         define('DB_PASSWORD', 'root');
 

@@ -2,10 +2,10 @@
 $oschad_merchant_settings = [
     'CURRENCY'   => 'UAH',
     'MERCH_NAME' => 'GERC OSCHAD UA',
-    'MERCH_URL'  => 'https://www.oschadnybank.ua/',
+    'MERCH_URL'  => 'https://gerc.ua/kmda/',
     'MERCHANT'   => '41500129',
     'TERMINAL'   => '51500198',
-    'EMAIL'      => 'zvernennya@src.kiev.ua',
+    'EMAIL'      => 'Support.my@kievcity.gov.ua',
     'COUNTRY'    => 'UA',
     'MERCH_GMT'  => '+2',
 ];

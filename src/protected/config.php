@@ -50,8 +50,8 @@ switch (USER_REAL_IP) {
 }
 
 define('EXT_BASE_URL', 'https://cabinet.kyivcity.gov.ua/catalog/payments/gerc/?page=');
-define('EMAIL_FROM', 'no-reply@cks.com.ua');
-define('EMAIL_TO', 'zvernennya@src.com.ua');
+define('EMAIL_FROM', 'websupport@gerc.ua');
+define('EMAIL_TO', 'websupport@gerc.ua');
 define('EMAIL_HOST', '91.200.41.117');
 define('EMAIL_FROM_NAME', 'КМДА');
 define('SITE_DOMAIN', 'cabinet.kyivcity.gov.ua');

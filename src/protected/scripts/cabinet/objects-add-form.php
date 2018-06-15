@@ -47,7 +47,7 @@
 </div>
 <div class="input" id="pin-code" style="display: none">
     <label>Перевірочний код<br/>
-        <input name="pin" class="txt" />
+        <input name="pin" class="txt" type="text" />
     </label>
     <div class="hint-blue">Введіть перевірочний PIN-код, який ми відправили Вам на пошту</div>
 </div>

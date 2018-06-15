@@ -63,13 +63,20 @@
                     <span class="text-label">Карта MasterCard, Maestro</span>
                 </label>
             </div>
-            <div class="paybill-ps-item paybill-ps-item-mastercard paybill-ps-item-oschadbank paybill-ps-item-mastercard_box" style="display: none;">
+            <div class="paybill-ps-item paybill-ps-item-mastercard paybill-ps-item-tas_mc paybill-ps-item-oschadbank paybill-ps-item-mastercard_box" style="display: none;">
                 <div class="paybill-ps-sub-items">
                     <div class="check-box-line">
                         <span id="checkbox_percent_mastercard_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
                         <label onclick="$('#checkbox_percent_mastercard_1').click();">
                             <img alt="mastercard" src="<?= BASE_URL; ?>/assets/images/paysystems/mastercard-logo.png" />
                             <span class="text-label">Інші банки</span>
+                        </label>
+                    </div>
+                    <div class="check-box-line">
+                        <span id="checkbox_percent_mastercard_5" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_mc"></span>
+                        <label onclick="$('#checkbox_percent_mastercard_5').click();">
+                            <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/tas-logo.png" />
+                            <span class="text-label">ТасКомБанк</span>
                         </label>
                     </div>
                     <div class="check-box-line">
@@ -84,13 +91,6 @@
                         if (false) {
                             ?>
                             <div class="check-box-line">
-                                <span id="checkbox_percent_mastercard_3" class="niceCheck radio checked"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" checked="checked" data-paysystem-key="oschad"></span>
-                                <label onclick="$('#checkbox_percent_mastercard_3').click();">
-                                    <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/oschadbank.png" />
-                                    <span class="text-label">Ощадбанк Картка Киянина</span>
-                                </label>
-                            </div>
-                            <div class="check-box-line">
                                 <span id="checkbox_percent_mastercard_4" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschad_mycardSum; ?>" data-paysystem-key="oschad_mycard"></span>
                                 <label onclick="$('#checkbox_percent_mastercard_4').click();">
                                     <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/oschadbank.png" />
@@ -100,14 +100,15 @@
                             <?php
                         }
                     ?>
-                    <div class="check-box-line">
-                        <span id="checkbox_percent_mastercard_5" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
-                        <label onclick="$('#checkbox_percent_mastercard_5').click();">
-                            <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/oschadbank.png" />
-                            <span class="text-label">Ощадбанк (усі картки)</span>
-                        </label>
-                    </div>
                 </div>
+            </div>
+
+            <div class="check-box-line">
+                <span id="checkbox_percent_mastercard_3" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" data-paysystem-key="oschad"></span>
+                <label onclick="$('#checkbox_percent_mastercard_3').click();">
+                    <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/oschadbank.png" />
+                    <span class="text-label">Ощадбанк Картка Киянина</span>
+                </label>
             </div>
             <?php
         ?>

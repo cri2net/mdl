@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "fa25b081256ded6c72d945767524f8be",
     "packages": [
         {
             "name": "cri2net/php-pdo-db",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/cri2net/php-pdo-db.git",
-                "reference": "2767ded054e44ebb84c76c4389fbcb441078de44"
+                "reference": "cd5d333a2b8bb835699c767721193798c9d734ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/2767ded054e44ebb84c76c4389fbcb441078de44.zip",
-                "reference": "2767ded054e44ebb84c76c4389fbcb441078de44",
+                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/cd5d333a2b8bb835699c767721193798c9d734ea.zip",
+                "reference": "cd5d333a2b8bb835699c767721193798c9d734ea",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,8 @@
                 }
             ],
             "description": "PHP Class to work with the database using PDO",
-            "time": "2017-02-01T14:02:49+00:00"
+            "homepage": "https://bitbucket.org/cri2net/php-pdo-db",
+            "time": "2018-02-20T15:08:00+00:00"
         },
         {
             "name": "cri2net/php-singleton",
@@ -302,6 +303,7 @@
                 "xls",
                 "xlsx"
             ],
+            "abandoned": "phpoffice/phpspreadsheet",
             "time": "2015-05-01T07:00:55+00:00"
         }
     ],

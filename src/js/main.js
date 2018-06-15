@@ -177,28 +177,6 @@ function selectService(checkboxId, inputId)
     billPageUpdateTotalSumm();
 };
 
-function selectOneService(checkboxId, inputId)
-{
-    var checkbox = $('#'+checkboxId);
-    var currVal = $('#'+inputId).val().replace(',', '.');
-
-    $('input.bill-summ-input').attr('disabled', 'disabled');
-    $('input.cks-service-checkbox').each(function(i) {
-        if ($(this).attr('id') != checkboxId) {
-            $(this).removeAttr('checked').parent().removeClass('checked');
-        }
-    });
-
-
-    if ($(checkbox).is(':checked')) {
-        $('#'+inputId).removeAttr('disabled');
-    } else {
-        $('#'+inputId).attr('disabled', 'disabled');
-    }
-
-    billPageUpdateTotalSumm();
-};
-
 function getShoppingCartTotal(total, percentSum, cctype)
 {
     console.log(total);
