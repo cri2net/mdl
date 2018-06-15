@@ -31,6 +31,14 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
             break;
         }
 
+        // поодерживаем access-token постоянно актуальным
+        if (isset($__userData)) {
+            if (time() >= $__userData['openid_data']->access_token_expires) {
+                $new_location = BASE_URL . '/post/oauth/openid/';
+                break;
+            }
+        }
+
         if (!isset($__route_result['values']['subpage']) && Authorization::isLogin()) {
             $new_location = BASE_URL . '/cabinet/objects/';
         } elseif (isset($__route_result['values']['subpage']) && ($__route_result['values']['subpage'] == 'settings') && !isset($__route_result['values']['section'])) {

@@ -60,6 +60,7 @@ define('REMEMBER_COOKIE_NAME', '__kmdaudata');
 Authorization::check_login();
 if (Authorization::isLogin()) {
     $__userData = User::getUserById(Authorization::getLoggedUserId());
+    $__userData['openid_data'] = json_decode($__userData['openid_data']);
 }
 
 $router = new Routing(PROTECTED_DIR . '/conf/routing.xml');

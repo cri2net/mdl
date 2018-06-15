@@ -48,46 +48,60 @@ try {
             $stm = PDO_DB::prepare("SELECT * FROM " . User::TABLE . " WHERE openid_id = ? AND deleted = 0 LIMIT 1", [$decoded->sub]);
             $user = $stm->fetch();
 
+            $openid_data = [
+                'decoded'              => $decoded,
+                'userinfo'             => $userinfo,
+                'token'                => $token,
+                'access_token_expires' => $token->expires_in + time(),
+            ];
+
             if ($user !== false) {
 
                 if (!Authorization::isLogin()) {
                     // пользователь не авторизаван. Авторизовываем
                     Authorization::login($user['login'], $user['password'], true, true);
                 }
-                return BASE_URL;
-            }
-
-            if (Authorization::isLogin()) {
-                // Пользователь авторизован. Вероятно, это привязка ещё одного аккаунта
-                return BASE_URL;
+                
+                $user_id = $user['id'];
             } else {
-                // создаём нового пользователя
+                
+                if (Authorization::isLogin()) {
+                    // Пользователь авторизован. Вероятно, это привязка ещё одного аккаунта
+                    $user_id = Authorization::getLoggedUserId();
+                } else {
+                    // создаём нового пользователя
 
-                $password_key = generateCode(16);
-                $password = generateCode(40);
+                    $password_key = generateCode(16);
+                    $password = generateCode(40);
 
-                $data = [
-                    'email'          => @$userinfo->email . '',
-                    'password'       => Authorization::generate_db_password($password, $password_key),
-                    'password_key'   => $password_key,
-                    'verified_email' => (($userinfo->email_verified) ? 1 : 0),
-                    'login'          => '',
-                    'lastname'       => '',
-                    'name'           => @$decoded->name . '',
-                    'fathername'     => '',
-                    'created_at'     => microtime(true),
-                    'mob_phone'      => '',
-                    'auto_reg'       => 1,
-                    'openid_id'      => $decoded->sub,
-                    'openid_data'    => json_encode([$decoded, $userinfo], JSON_UNESCAPED_UNICODE),
-                ];
+                    $data = [
+                        'email'          => @$userinfo->email . '',
+                        'password'       => Authorization::generate_db_password($password, $password_key),
+                        'password_key'   => $password_key,
+                        'verified_email' => (($userinfo->email_verified) ? 1 : 0),
+                        'login'          => '',
+                        'lastname'       => '',
+                        'name'           => @$decoded->name . '',
+                        'fathername'     => '',
+                        'created_at'     => microtime(true),
+                        'mob_phone'      => '',
+                        'auto_reg'       => 1,
+                        'openid_id'      => $decoded->sub,
+                    ];
 
-                $user_id = PDO_DB::insert($data, User::TABLE);
+                    $user_id = PDO_DB::insert($data, User::TABLE);
 
-                if (!Authorization::isLogin()) {
-                    Authorization::login('', $password);
+                    if (!Authorization::isLogin()) {
+                        Authorization::login('', $password);
+                    }
                 }
             }
+
+            PDO_DB::update(
+                ['openid_data' => json_encode($openid_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)],
+                User::TABLE,
+                $user_id
+            );
         }
     }
 

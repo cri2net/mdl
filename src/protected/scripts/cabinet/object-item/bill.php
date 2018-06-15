@@ -139,7 +139,7 @@
                                                         <?php
                                                     }
                                                 ?>
-                                                <?= htmlspecialchars($item['FIO']); ?> (о.р.<?= $item['ABCOUNT']; ?>)
+                                                (о.р.<?= $item['ABCOUNT']; ?>)
                                             </label>
                                         </td>
                                         <td class="border-bottom">
