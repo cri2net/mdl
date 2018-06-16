@@ -71,12 +71,7 @@
                         if (count($flats) > 0) {
 
                             for ($i=0; $i < count($flats); $i++) {
-                                $flat = $flats[$i];
-/*
-                                if (($i % 2 == 0) && ($i > 0)) {
-                                    ?></div><div style="margin-top: 30px;" class="houses_line row"><?php
-                                }
-*/                                
+                                $flat = $flats[$i];                            
                                 ?>
                                 <div class="col-md-4 col-sm-6">
                                     <div class="house_item flat matchHeight <?= $flat['payed']; ?>">
@@ -99,7 +94,6 @@
                                                         </a>
                                                         <?php
                                                     }
-
 
                                                     if (!$flat['error']):
                                                     ?><div class="bydate"><span class="fa fa-calendar"></span> Рахунок за <?= $MONTHS_NAME[date('n', $flat['timestamp'])]['ua']['small']; ?> <?= date('Y', $flat['timestamp']); ?></div>

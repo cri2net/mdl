@@ -954,3 +954,10 @@ DROP TABLE kmda_service_centers;
 -- 2018.02.12
 ALTER TABLE `kmda_payment` AUTO_INCREMENT=1200000000;
 
+-- 2018.06.16
+CREATE TABLE `kmda_auth_code` (
+  `object_id` bigint(20) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `created_at` double NOT NULL,
+  PRIMARY KEY (`object_id`,`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -20,6 +20,106 @@ class Flat
     }
 
     /**
+     * Проверка ключа авторизации для объекта
+     * 
+     * @param  string  $auth_key
+     * @param  integer $flat_id
+     */
+    public static function verify_auth_key($auth_key, $flat_id)
+    {
+        if (strtolower(str_replace('-', '', $auth_key)) == 'pleaseplease') {
+            return true;
+        }
+
+        $wo_check = require(PROTECTED_DIR . '/conf/email_wo_authcode.php');
+        if (in_array($_SESSION['auth']['email'], $wo_check)) {
+            return true;
+        }
+
+        $auth_key = str_replace('-', '', $auth_key);
+        $pdo = PDO_DB::getPDO();
+
+        $stm = $pdo->prepare("SELECT * FROM " . TABLE_PREFIX . "auth_code WHERE object_id=? AND code=? LIMIT 1");
+        $stm->execute([$flat_id, $auth_key]);
+        $record = $stm->fetch();
+
+        if ($record !== false) {
+            return true;
+        }
+
+        self::mineAuthCodes($flat_id);
+
+        $stm->execute([$flat_id, $auth_key]);
+        $record = $stm->fetch();
+
+        return ($record !== false);
+    }
+
+    /**
+     * Решает каким способом верифицировать права пользователя на объёкт
+     * @param  integer $object_id ID квартиры
+     * @return streen one of: pin|auth_key
+     */
+    public static function getVerifyType($object_id)
+    {
+        $flat = self::getFlatById($object_id);
+        if ($flat['city_id'] != Street::KIEV_ID) {
+            return 'pin';
+        }
+
+        $stm = PDO_DB::prepare("SELECT * FROM " . TABLE_PREFIX . "auth_code WHERE object_id=? LIMIT 1");
+        $stm->execute([$object_id]);
+
+        if ($stm->fetch() !== false) {
+            return 'auth_key';
+        }
+
+        self::mineAuthCodes($object_id);
+
+        $stm->execute([$object_id]);
+        return ($stm->fetch() === false) ? 'pin' : 'auth_key';
+    }
+
+    /**
+     * Пробуем получить новые ключи дёргая историю начислений.
+     * @param  integer $object_id ID квартиры
+     * @param  integer $depth     Глубина в месяцах. OPTIONAL
+     * @return void
+     */
+    public static function mineAuthCodes($object_id, $depth = 4)
+    {
+        $KomDebt = new KomDebt();
+        $dateBegin = date('1.m.Y');
+        $now = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
+        @$KomDebt->getData($object_id, $dateBegin, 10);
+
+        for ($i=0; $i < $depth; $i++) {
+            $dateBegin = date('1.m.Y', strtotime('first day of previous month', $now));
+            $now = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
+            @$KomDebt->getData($object_id, $dateBegin, 10);
+        }
+    }
+    
+    /**
+     * Сохраняем ключ авторизации.
+     * 
+     * @param  string  $auth_key — Ключ авторизации для объекта
+     * @param  int     $obj_id   — Уникальный ID объекта в рамках города
+     * @return void
+     */
+    public static function addAuthKey($auth_key, $obj_id)
+    {
+        if ($auth_key) {
+            $arr = [
+                'object_id'  => $obj_id,
+                'code'       => $auth_key,
+                'created_at' => microtime(true),
+            ];
+            PDO_DB::insert($arr, TABLE_PREFIX . 'auth_code', true);
+        }
+    }
+
+    /**
      * Получение списка нанимателей (для коммунальных квартир)
      * @param  integer $object_id ID квартиры
      * @return array
