@@ -4,7 +4,6 @@ $(document).on('ready', function() {
 
     initScrollAnimation();
     initParallax();
-    initMap();
     initSwiper();
     initEvents();
     //theadBg();
@@ -52,13 +51,6 @@ $(document).on('ready', function() {
     });
     $('.spoiler-close').click(function(){
         $(this).parent().parent().find('.spoiler-title').click();
-    });
-
-    $(".maps-route-start").keyup(function (e) {
-        if (e.keyCode == 13) {
-            $('#google-maps-route-start').val($(this).val());
-            calculateAndDisplayRoute();
-        }
     });
 });
 
@@ -209,54 +201,6 @@ function initEvents() {
         $(this).parents(".dropdown").find('button').html($(this).text() + ' <span class="caret"></span>');
         $(this).parents(".dropdown").find('button').val($(this).data('value'));
     });
-
-    $("#service-table .icon-phone").mouseenter(function() {
-
-        $(this).closest('tr').find('.phone-more').fadeIn();
-    }).mouseleave(function() {
-
-        $(this).closest('tr').find('.phone-more').fadeOut();
-    });
-
-    $('#service-table').on('click', '.icon-map', function() {
-
-        $(this).closest('tr').next('.item-map').show().next().hide();
-        initMap($('#map-service-' + $(this).data('id')));
-        // $('.matchHeight').matchHeight();
-        return false;
-    });
-
-    $('#service-table').on('click', '.icon-webcam', function() {
-
-        $(this).closest('tr').next().hide().next('.item-web').show();
-        $('.matchHeight').matchHeight();
-        return false;
-    });
-
-    $('#service-table').on('click', '.close', function() {
-
-        $(this).closest('tr').hide();
-        return false;
-    }); 
-
-    // Спойлер отделения
-    $('#service-table').on('click', '.region-spoiler', function() {
-
-        var rid = $(this).data('rid');
-        $(this).toggleClass('opened');
-        if ($(this).children('.fa').hasClass('fa-plus')) {
-
-            $(this).children('.fa').removeClass('fa-plus').addClass('fa-minus');
-        }
-            else {
-
-            $(this).children('.fa').removeClass('fa-minus').addClass('fa-plus');
-        }
-
-        $('.item-rid-' + rid).toggleClass('item-row-spoiler-visible');
-
-        return false;
-    });    
 }
 
 /* Scroll animation used for landing page */
@@ -311,21 +255,6 @@ function initSwiper() {
         autoplay    : 7000,
         autoplayDisableOnInteraction    : false,
     });
-
-/*
-    $(window).on('resize', function(){
-
-        var ww = $(window).width()
-        if ($('#testimonials-slider').length) {
-
-            if (ww > 1000) { clientsSwiper.params.slidesPerView = 3; }
-            if (ww <= 1000) { clientsSwiper.params.slidesPerView = 2; }
-            if (ww <= 479) { clientsSwiper.params.slidesPerView = 1; }      
-        
-            clientsSwiper.update();         
-        }
-    }).resize();
-*/
 }
 
 /* Navbar is set darker on main page on scroll */
@@ -339,55 +268,6 @@ function checkNavbar() {
 }
 
 var directionsService, directionsDisplay;
-function calculateAndDisplayRoute()
-{
-    if (directionsDisplay != null) {
-        directionsDisplay.setMap(null);
-        directionsDisplay = null;
-    }
-
-    directionsService = new google.maps.DirectionsService;
-    directionsDisplay = new google.maps.DirectionsRenderer;
-    directionsDisplay.setMap(map);
-
-    directionsService.route(
-        {
-            origin: document.getElementById('google-maps-route-start').value,
-            destination: document.getElementById('google-maps-route-end').value,
-            travelMode: 'DRIVING'
-        },
-        function(response, status) {
-            if (status === 'OK') {
-                directionsDisplay.setDirections(response);
-            } else {
-                console.log('Directions request failed due to ' + status);
-            }
-        }
-    );
-}
-
-var map;
-/* Google maps init */
-function initMap(mapEl) {
-
-    mapEl = typeof mapEl !== 'undefined' ? mapEl : $('#map');
-    if (mapEl.length) {
-
-        var uluru = {lat: mapEl.data('lat'), lng: mapEl.data('lng')};
-        map = new google.maps.Map(document.getElementById(mapEl.attr('id')), {
-            zoom: mapEl.data('zoom'),
-            center: uluru,
-            scrollwheel: false,
-            styles: mapStyles
-        });
-
-        var marker = new google.maps.Marker({
-            position: uluru,
-            // icon: base_href + 'assets/images/location-black.png',
-            map: map
-        });
-    }
-}
 
 function initParallax() {
 
