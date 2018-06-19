@@ -75,3 +75,11 @@ require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
 
 $banned_user = ['dashast93@gmail.com', 'kolesnichenkotetyana@gmail.com', 'srt7revenger@ukr.net', 'glibovet@gmail.com', 'tut.tozhe@net.proverki'];
 $prohibided_flats = [987202, 1418852];
+
+define("KMDA_DEV_ENV", true);
+
+if (KMDA_DEV_ENV) {
+    define('KMDA_ORDER_URL', 'http://e-service.egp.com.ua');
+} else {
+    // define('KMDA_ORDER_URL', 'http://my.kyiv.gov.ua');
+}

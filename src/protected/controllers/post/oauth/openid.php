@@ -34,9 +34,14 @@ try {
     $token = $OpenId->getAccessToken($_GET['code']);
     $token = @json_decode($token);
     
+    if (!empty($token->error)) {
+        throw new Exception("{$token->error} | {$token->error_description}");
+    }
+
     if (!empty($token)) {
-    
+
         $decoded = @MyJwt::decode($token->id_token, $OpenId->secret, ['RS256']);
+        
         $headers = [
             "Authorization: Bearer {$token->access_token}",
         ];

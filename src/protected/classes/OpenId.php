@@ -23,6 +23,9 @@ class OpenId
     public $scopes = [
         'openid',
         'email',
+        'offline_access',
+        'orders.create',
+        'orders.status.update',
         // 'address',
         // 'profile',
         // 'phone',

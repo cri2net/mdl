@@ -14,10 +14,6 @@
             <div class="main-page-text">
                 <?= (trim($static_page['text'])) ? $static_page['text'] : '<b>Сторінка в стадії наповнення</b>'; ?>
             </div>
-            <?php
-                require_once(PROTECTED_DIR . '/scripts/children.php');
-                require_once(PROTECTED_DIR . '/scripts/see_also.php');
-            ?>
         </div>
     </content>
 </div>

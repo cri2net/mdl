@@ -11,28 +11,12 @@
 <!--[if lt IE 9]><style> input.txt, textarea.txt, select.txt { border:1px solid #444 !important; }</style><![endif]-->
 <!--[if lt IE 9]><script>var e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (var i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 
-
 <title><?php require_once(PROTECTED_DIR . '/scripts/seo/title.php'); ?></title>
 
 <link href="<?= BASE_URL; ?>/assets/css/bootstrap-grid.css" rel="stylesheet">
 <link href="<?= BASE_URL; ?>/assets/css/font-awesome.css" rel="stylesheet">
-<?php
-    if ($_baseRoute == 'page/index' || $_baseRoute == 'page/services') {
-        ?>
-        <link href="<?= BASE_URL; ?>/assets/css/landing.css?m=<?= (is_readable(ROOT . "/assets/css/landing.css")) ? filemtime(ROOT . "/assets/css/landing.css") : ''; ?>" rel="stylesheet" type="text/css" />
-        <?php
-    }
-?>
-
-<?php
-    if ($_baseRoute != 'page/index' && $_baseRoute != 'page/services') {
-        ?>
-        <link href="<?= BASE_URL; ?>/assets/css/swiper.css" rel="stylesheet">
-        <link href="<?= BASE_URL; ?>/assets/css/cabinet.css?m=<?= (is_readable(ROOT . "/assets/css/landing.css")) ? filemtime(ROOT . "/assets/css/cabinet.css") : ''; ?>" rel="stylesheet">
-        <?php
-    }
-?>
-
+<link href="<?= BASE_URL; ?>/assets/css/swiper.css" rel="stylesheet">
+<link href="<?= BASE_URL; ?>/assets/css/cabinet.css?m=<?= (is_readable(ROOT . "/assets/css/landing.css")) ? filemtime(ROOT . "/assets/css/cabinet.css") : ''; ?>" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Fjalla+One%7COpen+Sans:300,400,600,700" rel="stylesheet">
 <script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/modernizr-2.6.2.min.js"></script>
 <script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/plugins.min.js"></script>

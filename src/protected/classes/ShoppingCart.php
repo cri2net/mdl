@@ -4,11 +4,16 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class ShoppingCart
 {
-    const TABLE             = DB_TBL_PAYMENT;
-    const SERVICE_TABLE     = DB_TBL_PAYMENT_SERVICES;
-    const REPORT_BASE_URL   = '/reports/rwservlet';
-    const PDF_TODAY_URL     = '/reports/rwservlet?report=/ppp/kv_www_all.rep&destype=Cache&Desformat=pdf&cmdkey=api_kmda_site&id_p=';
-    const PDF_NOT_TODAY_URL = '/reports/rwservlet?report=/ppp/kv_www_hist.rep&destype=Cache&Desformat=pdf&cmdkey=api_kmda_site&id_k=';
+    const TABLE                   = DB_TBL_PAYMENT;
+    const SERVICE_TABLE           = DB_TBL_PAYMENT_SERVICES;
+    const REPORT_BASE_URL         = '/reports/rwservlet';
+    const PDF_TODAY_URL           = '/reports/rwservlet?report=/ppp/kv_www_all.rep&destype=Cache&Desformat=pdf&cmdkey=api_kmda_site&id_p=';
+    const PDF_NOT_TODAY_URL       = '/reports/rwservlet?report=/ppp/kv_www_hist.rep&destype=Cache&Desformat=pdf&cmdkey=api_kmda_site&id_k=';
+
+    const PDF_NEW_CURRENT_KOM     = '/reports/rwservlet?report=ppp/kv_www_all_sity_new27.rep&cmdkey=rep&destype=cache&desformat=pdf&id_p=';
+    const PDF_NEW_CURRENT_INSTANT = '/reports/rwservlet?report=ppp/kv_www_singl_sity_new27.rep&cmdkey=rep&destype=cache&desformat=pdf&id_p=';
+    const PDF_NEW_HISTORY_KOM     = '/reports/rwservlet?report=ppp/kv_www_all_Hist_new33.rep&cmdkey=rep&destype=cache&desformat=pdf&id_k=';
+    const PDF_NEW_HISTORY_INSTANT = '/reports/rwservlet?report=ppp/kv_www_Singl_Hist_new33.rep&cmdkey=rep&destype=cache&desformat=pdf&id_k=';
 
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
@@ -310,14 +315,14 @@ class ShoppingCart
             return;
         }
 
-        $pdf1_url = API_URL . self::PDF_TODAY_URL     . $payment['reports_id_pack'];
+        $pdf1_url = API_URL . self::PDF_NEW_CURRENT_KOM . $payment['reports_id_pack'];
         $pdf1 = Http::fgets($pdf1_url);
 
         if ($first) {
             return $pdf1;
         }
 
-        $pdf2_url = API_URL . self::PDF_NOT_TODAY_URL . $payment['reports_id_plat_klient'];
+        $pdf2_url = API_URL . self::PDF_NEW_HISTORY_KOM . $payment['reports_id_plat_klient'];
         $pdf2 = Http::fgets($pdf2_url);
 
         return (strlen($pdf1) > strlen($pdf2)) ? $pdf1 : $pdf2;
@@ -504,6 +509,7 @@ class ShoppingCart
         PDO_DB::update($to_update, self::TABLE, $payment['id']);
         self::logRequestToReports($message_to_log, $payment['id'], true, 'status');
         self::sendFirstPDF($payment['id']);
+        KmdaOrders::setOrderStatus($payment['id']);
         return true;
     }
 
@@ -620,7 +626,6 @@ class ShoppingCart
             true
         );
 
-
         $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
         $xml = simplexml_load_string($xml_string);
 
@@ -652,6 +657,7 @@ class ShoppingCart
         $to_update['send_payment_to_reports'] = 1;
 
         PDO_DB::update($to_update, self::TABLE, $payment['id']);
+        KmdaOrders::createOrder($payment['id']);
         return true;
     }
 

@@ -58,5 +58,5 @@ if ($success) {
 PDO_DB::update($to_update, ShoppingCart::TABLE, $_payment['id']);
 ShoppingCart::send_payment_status_to_reports($_payment['id']);
 
-$response['forwardUrl'] = EXT_BASE_URL . "/payment-status/{$payment_id}/";
+$response['forwardUrl'] = KMDA_ORDER_URL . '/journal/' . $processing_data['openid']->id . '/details';
 echo json_encode($response);

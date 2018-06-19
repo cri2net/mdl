@@ -20,7 +20,7 @@
                         </ul>
                     </div>
                     <?php
-                } else if(defined('NAVBAR_FOR_PAYMENTS')) {
+                } elseif (defined('NAVBAR_FOR_PAYMENTS')) {
                     ?>
                     <div id="navbar-blue">
                         <ul class="nav navbar-nav">
@@ -31,7 +31,7 @@
                         </ul>
                     </div>
                     <?php
-                } else if(defined('NAVBAR_FOR_SETTINGS')) {
+                } elseif (defined('NAVBAR_FOR_SETTINGS')) {
                     ?>
                     <div id="navbar-blue">
                         <ul class="nav navbar-nav">
@@ -41,20 +41,6 @@
                         </ul>
                     </div>
                     <?php
-                } else {
-                    /*
-                    ?>
-                    <div id="navbar-blue" class="navbar-services navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="item-5 <?= strpos($route_path, 'cabinet/objects') > 0 ? 'active' : '' ?>"><a href="<?= BASE_URL ?>/cabinet/objects/">Комунальні<br>послуги</a></li>
-                            <li class="item-6 <?= strpos($route_path, 'cabinet/instant-payments/phone') > 0 ? 'active' : '' ?>"><a href="<?= BASE_URL ?>/cabinet/instant-payments/phone/">Мобільний<br>зв'язок</a></li>
-                            <li class="item-7 <?= strpos($route_path, 'cabinet/instant-payments/volia') > 0 ? 'active' : '' ?>"><a href="<?= BASE_URL ?>/cabinet/instant-payments/volia/">Інтернет та<br> телебачення</a></li>
-                            <li class="item-8 inactive" ><a>Онлайн ігри та<br> сервіси</a></li>
-                            <li class="item-9 <?= strpos($route_path, 'cabinet/instant-payments/cards') > 0 ? 'active' : '' ?>"><a href="<?= BASE_URL ?>/cabinet/instant-payments/cards/">Грошові<br> перекази</a></li>
-                        </ul>
-                    </div>
-                    <?php
-                    */
                 }
             ?>
     </nav>
