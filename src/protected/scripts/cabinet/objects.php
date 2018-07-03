@@ -1,4 +1,5 @@
 <body>
+<div id="all_body_container">
 <?php
     require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
 ?>
@@ -132,12 +133,12 @@
                                                     <?php
                                                 }
                                             ?>
-                                            <span class="align-center"><a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="btn"><span class="fa  fa-check"></span> Перейти до об'єкту</a></span>
+                                            <span class="align-center"><a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="btn"><span class="fa  fa-check"></span> Перейти до об’єкту</a></span>
                                         </div>
                                         <div class="remove-section">
-                                            <p>Вы уверены, что хотите удалить данный объект из вашего кабинета?</p>
-                                            <a href="#" class="btn btn-orange remove-object" data-object-id="<?= $flat['id']; ?>"><span class="fa fa-trash"></span> Удалить</span></a>
-                                            <a href="#" class="btn btn-green-bordered remove-object-cancel"><span class="fa fa-close"></span> Отменить</span></a>
+                                            <p>Ви впевнені, що хочете видали цей об’єкт з аккаунту?</p>
+                                            <a href="#" class="btn btn-orange remove-object" data-object-id="<?= $flat['id']; ?>"><span class="fa fa-trash"></span> Видалили</span></a>
+                                            <a href="#" class="btn btn-green-bordered remove-object-cancel"><span class="fa fa-close"></span> Скасувати</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -146,14 +147,13 @@
                         ?>
                     <?php
                 }
-            ?>
-            <?php
+
                 if ((Authorization::isLogin() && (Flat::getFlatCount() < Flat::getMaxUserFlats()))) {
                     ?>
                     <div class="col-md-4 col-sm-6">
                         <div class="house_item flat house_add matchHeight <?= $flat['payed']; ?>">                
                             <span class="align-center">
-                                <a class="btn btn-green-darker add-new add-new-object" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об'ект</a>
+                                <a class="btn btn-green-darker add-new add-new-object" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
                             </span>
                             <div class="modal fade" id="modal-object-add" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">

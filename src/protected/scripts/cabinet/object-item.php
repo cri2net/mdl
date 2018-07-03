@@ -1,4 +1,5 @@
 <body>
+<div id="all_body_container">
 <?php
 
 define('NAVBAR_FOR_OBJECT_ITEM', true);

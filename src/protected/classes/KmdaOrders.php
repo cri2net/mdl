@@ -5,7 +5,7 @@ use cri2net\php_pdo_db\PDO_DB;
 class KmdaOrders
 {
     const URL = 'http://orders.e-service.egp.com.ua';
-    const DEFAULT_SERVICE_ID = 'c8585a6d-bc43-414e-bcb8-4dda05a4372d';
+    const DEFAULT_SERVICE_ID = 'cc5f9a92-3252-4aab-9ccb-938719964ec3';
 
     public static function createOrder($payment_id)
     {
@@ -54,6 +54,9 @@ class KmdaOrders
 
     public static function getServiceId()
     {
+        if (isset($_SESSION['service_id'])) {
+            return $_SESSION['service_id'];
+        }
         return self::DEFAULT_SERVICE_ID;
     }
 

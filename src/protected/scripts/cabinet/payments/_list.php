@@ -98,7 +98,7 @@
     </table>
 </div>
 
-<div class="pagination">
+<div style="display: none;" class="pagination">
     <ul>
         <li class="found">Знайдено: 30</li>
         <li><a href="#" class="page prev">&lt;</a></li>

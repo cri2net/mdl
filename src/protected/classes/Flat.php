@@ -67,7 +67,8 @@ class Flat
             return 'pin';
         }
 
-        $stm = PDO_DB::prepare("SELECT * FROM " . TABLE_PREFIX . "auth_code WHERE object_id=? LIMIT 1");
+        $time = time() - 86400 * 90;
+        $stm = PDO_DB::prepare("SELECT * FROM " . TABLE_PREFIX . "auth_code WHERE object_id=? AND created_at > $time LIMIT 1");
         $stm->execute([$object_id]);
 
         if ($stm->fetch() !== false) {
@@ -86,10 +87,10 @@ class Flat
      * @param  integer $depth     Глубина в месяцах. OPTIONAL
      * @return void
      */
-    public static function mineAuthCodes($object_id, $depth = 4)
+    public static function mineAuthCodes($object_id, $depth = 18)
     {
         $KomDebt = new KomDebt();
-        $dateBegin = date('1.m.Y');
+        $dateBegin = date('1.m.Y', strtotime('+ 1 month'));
         $now = date_timestamp_get(DateTime::createFromFormat('j.m.Y', $dateBegin));
         @$KomDebt->getData($object_id, $dateBegin, 10);
 

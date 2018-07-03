@@ -22,8 +22,38 @@
 <script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/plugins.min.js"></script>
 <script>
     $(function() { var scroll = new SmoothScroll('a[href*="#"]', {speed: 500})});
-</script>
 
+    function getDocHeight() {
+
+        var iframe_border = 0;
+
+        return $('#all_body_container') + iframe_border;
+
+        if (window.GetDocumentHeight) {
+            return window.GetDocumentHeight() + iframe_border;
+        }
+        var D = document;
+        return Math.max(
+            D.body.scrollHeight, D.documentElement.scrollHeight,
+            D.body.offsetHeight, D.documentElement.offsetHeight,
+            D.body.clientHeight, D.documentElement.clientHeight
+        ) + iframe_border;
+    };
+
+    $(document).ready(function(){
+
+        // $(window).resize(function() {
+        //     window.parent.postMessage(String(getDocHeight()), '<?= KMDA_ORDER_URL; ?>');
+        //     console.log(getDocHeight());
+        // });
+        // $(window).resize();
+
+        setInterval(function(){
+            window.parent.postMessage(String(getDocHeight()), '<?= KMDA_ORDER_URL; ?>');
+            console.log(getDocHeight());
+        }, 1000);
+    });
+</script>
 
 <?php
     if (USER_REAL_IP === '127.0.0.1') {

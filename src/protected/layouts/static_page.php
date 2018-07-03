@@ -3,6 +3,7 @@
     use cri2net\php_pdo_db\PDO_DB;
 ?>
 <body>
+<div id="all_body_container">
 
 <?php require_once(PROTECTED_DIR . '/layouts/navbar_inner.php'); ?>
 <?php require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php'); ?>

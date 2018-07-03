@@ -1,4 +1,5 @@
 <body>
+<div id="all_body_container">
 
 <?php require_once(PROTECTED_DIR . '/layouts/navbar_inner.php'); ?>
 <div class="container">

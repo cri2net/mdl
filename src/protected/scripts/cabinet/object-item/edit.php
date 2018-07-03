@@ -2,12 +2,6 @@
     <h2 class="form-subtitle"><?= htmlspecialchars($object['address'], ENT_QUOTES); ?></h2>
 
     <div class="form-group">
-        <label class="checkbox green">
-            <input name="notify_house" value="1" <?= ($object['notify']) ? 'checked' : ''; ?> type="checkbox" class="check-toggle"><span></span>
-            Отримувати листи з рахунками
-        </label>
-    </div>
-    <div class="form-group">
         <input class="form-txt" placeholder="Нова назва об’єкту" name="object-title" value="<?= htmlspecialchars($object['title'], ENT_QUOTES); ?>" type="text">
     </div>
     <h3 class="form-subtitle delete-object">Видалення об’єкта</h3>
