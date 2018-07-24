@@ -27,7 +27,7 @@
 
         var iframe_border = 0;
 
-        return $('#all_body_container') + iframe_border;
+        return $('#all_body_container').outerHeight() + iframe_border;
 
         if (window.GetDocumentHeight) {
             return window.GetDocumentHeight() + iframe_border;
@@ -40,6 +40,8 @@
         ) + iframe_border;
     };
 
+    window.last_height = false;
+
     $(document).ready(function(){
 
         // $(window).resize(function() {
@@ -49,9 +51,11 @@
         // $(window).resize();
 
         setInterval(function(){
-            window.parent.postMessage(String(getDocHeight()), '<?= KMDA_ORDER_URL; ?>');
-            console.log(getDocHeight());
-        }, 1000);
+            if (window.last_height !== getDocHeight()) {
+                window.parent.postMessage(String(getDocHeight()), '<?= KMDA_ORDER_URL; ?>');
+                window.last_height = getDocHeight();
+            }
+        }, 250);
     });
 </script>
 
