@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa25b081256ded6c72d945767524f8be",
+    "content-hash": "ca1fd2ed00931a7d8d47ecc5604bae57",
     "packages": [
         {
             "name": "cri2net/php-pdo-db",
@@ -305,6 +305,44 @@
             ],
             "abandoned": "phpoffice/phpspreadsheet",
             "time": "2015-05-01T07:00:55+00:00"
+        },
+        {
+            "name": "placebook/framework-basic",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/cri2net/placebook-framework-basic.git",
+                "reference": "d5ac9db5f6f5314bef07051b6325edf8ec9dbcc0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/cri2net/placebook-framework-basic/get/d5ac9db5f6f5314bef07051b6325edf8ec9dbcc0.zip",
+                "reference": "d5ac9db5f6f5314bef07051b6325edf8ec9dbcc0",
+                "shasum": ""
+            },
+            "require": {
+                "cri2net/php-singleton": "^1.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Placebook\\Framework\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Davidovich",
+                    "email": "cri2net@gmail.com"
+                }
+            ],
+            "description": "Basic classes for placebook's framework",
+            "homepage": "https://bitbucket.org/cri2net/placebook-framework-basic",
+            "time": "2017-11-04T13:38:33+00:00"
         }
     ],
     "packages-dev": [],

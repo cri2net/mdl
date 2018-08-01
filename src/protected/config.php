@@ -78,6 +78,7 @@ require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
 
 $banned_user = ['dashast93@gmail.com', 'kolesnichenkotetyana@gmail.com', 'srt7revenger@ukr.net', 'glibovet@gmail.com', 'tut.tozhe@net.proverki'];
 $prohibided_flats = [987202, 1418852];
+Placebook\Framework\Core\SystemConfig::$configPath = PROTECTED_DIR . '/conf/system_config.json';
 
 define("KMDA_DEV_ENV", true);
 

@@ -99,6 +99,8 @@ try {
                     if (!Authorization::isLogin()) {
                         Authorization::login('', $password);
                     }
+
+                    User::importFlatsFromGioc($user_id);
                 }
             }
 
