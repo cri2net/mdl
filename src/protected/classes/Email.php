@@ -15,13 +15,13 @@ class Email
         $this->From          = EMAIL_FROM;
         $this->FromName      = EMAIL_FROM_NAME;
         $this->ReturnPath    = EMAIL_FROM;
-        $this->Hostname      = 'cks.kiev.ua';
+        $this->Hostname      = 'gerc.ua';
         $this->AllowEmpty    = true;
         $this->XMailer       = ' ';
         $this->SMTPKeepAlive = true;
         $this->SMTPDebug = 4;
         $this->Debugoutput = function($str, $level) {
-            error_log($str, 3, PROTECTED_DIR . '/logs/mail.txt');
+            // error_log($str, 3, PROTECTED_DIR . '/logs/mail.txt');
         };
         
 
@@ -31,12 +31,19 @@ class Email
         
         $this->isSMTP();
 
-        $this->Host       = 'mail.cks.kiev.ua';
+        $this->Host       = 'mail.gerc.ua';
         $this->Port       = 25; // The default SMTP server port.
         $this->SMTPSecure = 'tls'; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
         $this->SMTPAuth   = true;
-        $this->Username   = 'no-reply@cks.kiev.ua';
-        $this->Password   = 'krP32%$me';
+        $this->Username   = 'websupport@gerc.ua';
+        $this->Password   = '20ka01et';
+        $this->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            )
+        );
     }
 
     public function __set($name, $value)

@@ -25,38 +25,45 @@ require_once(PROTECTED_DIR . "/conf/lang.php");
 require_once(PROTECTED_DIR . "/lib/func.lib.php");
 require_once(PROTECTED_DIR . "/vendor/autoload.php");
 
+if (!isset($_SERVER['REQUEST_URI'])) {
+    $_SERVER['REQUEST_URI'] = '';
+}
+if (isset($_GET['serviceId']) && !empty($_GET['serviceId'])) {
+    $_SESSION['service_id'] = $_GET['serviceId'];
+}
+
 switch (USER_REAL_IP) {
     case '127.0.0.1':
-        define('COOKIE_DOMAIN', '.cks.dev');
-        define('BASE_URL', 'http://frame.cks.dev');
+        define('COOKIE_DOMAIN', '.kmda.local');
+        define('BASE_URL', 'http://kmda.local');
         break;
     
     default:
         if (!isset($_SERVER['HTTP_HOST']) || !$_SERVER['HTTP_HOST']) {
-            $_SERVER['HTTP_HOST'] = 'www.gerc.ua';
+            $_SERVER['HTTP_HOST'] = 'gerc.ua';
         }
 
         define('COOKIE_DOMAIN', '.gerc.ua');
         if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
         }
-        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST'] . '/cks');
+        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://gerc.ua/kmda');
 
-        $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 4);
+        $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen('/kmda'));
 }
 
-define('EXT_BASE_URL', 'http://cks.kiev.ua/service-cks/?get-page=');
-
-define('EMAIL_FROM', 'no-reply@cks.kiev.ua');
-define('EMAIL_TO', 'zvernennya@src.kiev.ua');
+define('EXT_BASE_URL', 'https://cabinet.kyivcity.gov.ua/catalog/payments/gerc/?page=');
+define('EMAIL_FROM', 'websupport@gerc.ua');
+define('EMAIL_TO', 'websupport@gerc.ua');
 define('EMAIL_HOST', '91.200.41.117');
-define('EMAIL_FROM_NAME', 'КК ЦКС');
-define('SITE_DOMAIN', 'cks.kiev.ua');
-define('REMEMBER_COOKIE_NAME', '__cksudata');
+define('EMAIL_FROM_NAME', 'КМДА');
+define('SITE_DOMAIN', 'cabinet.kyivcity.gov.ua');
+define('REMEMBER_COOKIE_NAME', '__kmdaudata');
 
 Authorization::check_login();
 if (Authorization::isLogin()) {
     $__userData = User::getUserById(Authorization::getLoggedUserId());
+    $__userData['openid_data'] = json_decode($__userData['openid_data']);
 }
 
 $router = new Routing(PROTECTED_DIR . '/conf/routing.xml');
@@ -71,3 +78,12 @@ require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
 
 $banned_user = ['dashast93@gmail.com', 'kolesnichenkotetyana@gmail.com', 'srt7revenger@ukr.net', 'glibovet@gmail.com', 'tut.tozhe@net.proverki'];
 $prohibided_flats = [987202, 1418852];
+Placebook\Framework\Core\SystemConfig::$configPath = PROTECTED_DIR . '/conf/system_config.json';
+
+define("KMDA_DEV_ENV", true);
+
+if (KMDA_DEV_ENV) {
+    define('KMDA_ORDER_URL', 'http://e-service.egp.com.ua');
+} else {
+    // define('KMDA_ORDER_URL', 'http://my.kyiv.gov.ua');
+}

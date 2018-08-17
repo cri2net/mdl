@@ -46,15 +46,23 @@
 </div>
 <div class="input" id="pin-code" style="display: none">
     <label>Перевірочний код<br/>
-        <input name="pin" class="txt" />
+        <input id="add_obj_pin" name="pin" class="txt" type="text" />
     </label>
     <div class="hint-blue">Введіть перевірочний PIN-код, який ми відправили Вам на пошту</div>
+</div>
+<div class="input" id="auth-key" style="display: none">
+    <label>Ключ авторизації <br> <div class="hint-blue"></div>
+        <input style="text-transform: uppercase;" class="txt form-txt-input" type="text" name="auth_key" id="add_obj_auth_key" value="">
+    </label>
+    <div class="hint-blue">
+        Використовуйте ключ авторизації лише з рахунків, які датовані жовтнем 2015 або пізніше.
+    </div>
 </div>
 <?php
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));
 ?>
-<div class="input">
-    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn green bold"><div class="icon-objects"></div>Додати об’єкт</button>
+<div class="input align-center">
+    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue"><span class="fa fa-check"></span>Додати об’єкт</button>
 </div>
 <?php
     if ($disabled) {
@@ -67,6 +75,7 @@
 ?>
 <script type="text/javascript">
     var PIN_SENT = false;
+ 
     $(document).ready(function() {
         $("#add_obj_street").autocomplete({
             source: function(request, response) {
@@ -126,6 +135,12 @@
         $("#add_obj_flat").change(function(){
 
             var flat = $("#add_obj_flat").val();
+            PIN_SENT = false;
+            $('#add_obj_pin').removeAttr('required');
+            $('#add_obj_auth_key').removeAttr('required');
+            $('#auth-key').hide();
+            $('#pin-code').hide();
+
             if ((flat == '') || (flat == '0')) {
                 $('#tenant').html('');
                 $('#tenant_div').css('display', 'none');
@@ -157,9 +172,14 @@
             });
         });
 
+        $.mask.definitions['r'] = '[A-Z,a-z,0-9а-яёА-ЯЁ]';
+        $("#add_obj_auth_key").mask("rrrr-rrrr-rrrr");
+
         $("#add-object-form>form").on('submit', function(){
-            if(PIN_SENT == true)
+
+            if (PIN_SENT == true) {
                 return true;
+            }
 
             $.ajax({
                 url: '<?= BASE_URL ?>/ajax/json/flat-pin/',
@@ -169,23 +189,33 @@
                 },
                 dataType: "json",
                 success: function(response) {
-                    switch(response.result) {
+                    switch (response.result) {
                         case 'ok':
                             
                             PIN_SENT = true;
-                            return false;
+                            
+                            if (response.type == 'auth_key') {
+                                $('#add_obj_pin').removeAttr('required');
+                                $('#add_obj_auth_key').attr('required', 'required');
+                                $('#pin-code').hide();
+                                $('#auth-key').show();
+                            } else {
+                                $('#auth-key').hide();
+                                $('#pin-code').show();
+                                $('#add_obj_pin').attr('required', 'required');
+                                $('#add_obj_auth_key').removeAttr('required');
+                            }
                             break;
+                            
                         case 'error':
                             alert(response.msg);
                             break;
                     }
-                    
                 }
             });
 
             $("#pin-code").slideDown(function(){ $("#pin-code input").attr('required', 'required')});
             return false;
-            
         });
     });
 </script>

@@ -57,15 +57,20 @@ class Http
         echo $content;
     }
 
-    public static function httpGet($url, $checkStatus = true, $follow_location = true)
+    public static function httpGet($url, $checkStatus = true, $follow_location = true, $extra_headers = [])
     {
         $ch = curl_init();
-        $options = array(
+        $options = [
             CURLOPT_URL => $url,
             CURLOPT_HEADER => false,
             CURLOPT_HTTPGET => true,
-            CURLOPT_RETURNTRANSFER => true
-        );
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+        ];
+        if (!empty($extra_headers)) {
+            $options[CURLOPT_HTTPHEADER] = $extra_headers;
+        }
 
         curl_setopt_array($ch, $options);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $follow_location);
@@ -81,18 +86,21 @@ class Http
         return $response;
     }
     
-    public static function httpPost($url, $data, $checkStatus = true)
+    public static function httpPost($url, $data, $checkStatus = true, $extra_headers = [])
     {
         $ch = curl_init();
-        $options = array(
-            CURLOPT_URL => $url,
-            CURLOPT_HEADER => false,
-            CURLOPT_POST => true,
+        $options = [
+            CURLOPT_URL            => $url,
+            CURLOPT_HEADER         => false,
+            CURLOPT_POST           => true,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER=>false,
-            CURLOPT_POSTFIELDS => http_build_query($data),
-            CURLOPT_SSL_VERIFYHOST => false
-        );
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_POSTFIELDS     => http_build_query($data),
+            CURLOPT_SSL_VERIFYHOST => false,
+        ];
+        if (!empty($extra_headers)) {
+            $options[CURLOPT_HTTPHEADER] = $extra_headers;
+        }
         
         curl_setopt_array($ch, $options);
         $response = curl_exec($ch);
@@ -117,10 +125,6 @@ class Http
         if ($httpCode == 666) {
             curl_close($ch);
             throw new Exception(ERROR_SERVICE_TEMPORARY_ERROR);
-        } elseif ($httpCode == 665) {
-            curl_close($ch);
-            $errorMsg = json_decode($response);
-            throw new Exception($errorMsg->record->msg);
         }
     }
 

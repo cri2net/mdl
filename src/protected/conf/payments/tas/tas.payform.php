@@ -1,4 +1,4 @@
-<div id="tas_frame_box">
+<div id="tas_frame_box" style="text-align:center;">
     <div class="error-description" id="tas_frame_error" style="display: none;">
         Шановні клієнти! <br><br>
         Для забезпечення максимально безпечного платежу за допомогою нашого сервісу просимо оновити Ваш браузер до останньої доступної версії.

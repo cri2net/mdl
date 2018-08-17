@@ -1,26 +1,16 @@
 <?php
 try {
-    $phone = '+' . preg_replace('/[^0-9]/', '', $_POST['phone']);
-    $email = stripslashes($_POST['email']);
+    $login = stripslashes($_POST['email']);
     $password = stripslashes($_POST['password']);
 
     $_SESSION['login'] = [
-        'email' => $email,
-        'phone' => $phone,
+        'login' => $login,
     ];
 
     if (in_array($_POST['email'], $banned_user)) {
         throw new Exception('Аккаунт користувача заблоковано');
     }
     
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) || (strlen($email) >= 3)) {
-        $login = $email;
-    } elseif (strlen($phone) > 7) {
-        $login = $phone;
-    } else {
-        throw new Exception(ERROR_LOGIN_FIELDS_EMPTY);
-    }
-
     // на форме не отрисовано, но ставим пока "запомнить меня"
     Authorization::login($login, $password, false, true);
     if (Authorization::isLogin()) {

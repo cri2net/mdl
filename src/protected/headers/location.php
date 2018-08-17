@@ -12,15 +12,33 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
             'kindergarten' => '/cabinet/instant-payments/kindergarten/',
             'phone'        => '/cabinet/instant-payments/phone/',
             'cards'        => '/cabinet/instant-payments/cards/',
+            'index.php'    => '/',
         ];
 
         if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {
             $new_location = BASE_URL . $uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')];
         }
-
     break;
 
+    case 'page/index':
+        $new_location = BASE_URL . '/cabinet/';
+        break;
+
     case 'page/cabinet':
+
+        if (!isset($__route_result['values']['subpage']) && !Authorization::isLogin()) {
+            $new_location = BASE_URL . '/post/oauth/openid/';
+            break;
+        }
+
+        // поодерживаем access-token постоянно актуальным
+        if (isset($__userData)) {
+            if (time() >= $__userData['openid_data']->access_token_expires) {
+                $new_location = BASE_URL . '/post/oauth/openid/';
+                break;
+            }
+        }
+
         if (!isset($__route_result['values']['subpage']) && Authorization::isLogin()) {
             $new_location = BASE_URL . '/cabinet/objects/';
         } elseif (isset($__route_result['values']['subpage']) && ($__route_result['values']['subpage'] == 'settings') && !isset($__route_result['values']['section'])) {

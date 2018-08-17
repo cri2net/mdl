@@ -4,7 +4,7 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class House
 {   
-    const HOUSES_URL = 'https://ppp.gerc.ua:4445/reports/rwservlet?report=/gerc_api/spr_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
+    const HOUSES_URL = '/reports/rwservlet?report=/gerc_api/spr_houses.rep&destype=Cache&Desformat=xml&cmdkey=gsity&street_id=';
     const TABLE = DB_TBL_HOUSES;
     
     public static function cron()
@@ -42,7 +42,7 @@ class House
 
     public static function rebuildStreet($city_id, $street_id)
     {
-        $data = Http::fgets(self::HOUSES_URL . $street_id);
+        $data = Http::fgets(API_URL . self::HOUSES_URL . $street_id);
         $data = iconv('CP1251', 'UTF-8', $data);
         $data = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $data);
         $xml = @simplexml_load_string($data);

@@ -177,30 +177,11 @@ function selectService(checkboxId, inputId)
     billPageUpdateTotalSumm();
 };
 
-function selectOneService(checkboxId, inputId)
-{
-    var checkbox = $('#'+checkboxId);
-    var currVal = $('#'+inputId).val().replace(',', '.');
-
-    $('input.bill-summ-input').attr('disabled', 'disabled');
-    $('input.cks-service-checkbox').each(function(i) {
-        if ($(this).attr('id') != checkboxId) {
-            $(this).removeAttr('checked').parent().removeClass('checked');
-        }
-    });
-
-
-    if ($(checkbox).is(':checked')) {
-        $('#'+inputId).removeAttr('disabled');
-    } else {
-        $('#'+inputId).attr('disabled', 'disabled');
-    }
-
-    billPageUpdateTotalSumm();
-};
-
 function getShoppingCartTotal(total, percentSum, cctype)
 {
+    console.log(total);
+    console.log(percentSum);
+    console.log(cctype);
     var fTotal = parseFloat(total.replace(',', '.'));
     var fPercent = parseFloat(percentSum.replace(',', '.'));
     var total = fTotal + fPercent;
@@ -243,7 +224,14 @@ function getShoppingCartTotal(total, percentSum, cctype)
     }
 
     $('#totalBillSum').html(totalStr + ' грн');
-    $('#comission_sum').html(PercentStr + ' грн');
+    // $('#comission_sum').html(PercentStr + ' грн');
+
+    if (percentSum > 0) {
+        $('#comission_sum').html('<span style="font-size: 14px;" id="comission_sum">2%, але не менше 5грн у розрізі постачальника послуг</span>');
+    } else {
+        $('#comission_sum').html('0,00 грн');
+    }
+
     $('#cctype').val(cctype);
 };
 
@@ -488,55 +476,69 @@ function send_activation_code(element)
     });
 };
 
-function translite(str)
-{
-    var arr = {'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ж':'g', 'з':'z', 'и':'i', 'й':'y', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o', 'п':'p', 'р':'r', 'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'ы':'i', 'э':'e', 'А':'A', 'Б':'B', 'В':'V', 'Г':'G', 'Д':'D', 'Е':'E', 'Ж':'G', 'З':'Z', 'И':'I', 'Й':'Y', 'К':'K', 'Л':'L', 'М':'M', 'Н':'N', 'О':'O', 'П':'P', 'Р':'R', 'С':'S', 'Т':'T', 'У':'U', 'Ф':'F', 'Ы':'I', 'Э':'E', 'ё':'yo', 'х':'h', 'ц':'ts', 'ч':'ch', 'ш':'sh', 'щ':'shch', 'ъ':'', 'ь':'', 'ю':'yu', 'я':'ya', 'Ё':'Yo', 'Х':'H', 'Ц':'Ts', 'Ч':'Ch', 'Ш':'Sh', 'Щ':'Shch', 'Ъ':'', 'Ь':'', 'Ю':'Yu', 'Я':'Ya', 'ь':''};
-    var replacer = function(a){return arr[a]||a};
-    return str.replace(/[А-яёЁ]/g,replacer);
-};
-
-function strtolower(str)
-{
-    var arr = {'A':'a', 'B':'b', 'C':'c', 'D':'d', 'E':'e', 'F':'f', 'G':'g', 'H':'h', 'I':'i', 'J':'j', 'K':'k', 'L':'l', 'M':'m', 'N':'n', 'O':'o', 'P':'p', 'Q':'q', 'R':'r', 'S':'s', 'T':'t', 'U':'u', 'V':'v', 'W':'w', 'X':'x', 'Y':'y', 'Z':'z'};
-    var replacer=function(a){return arr[a]||a};
-    return str.replace(/[A-z]/g,replacer);
-};
-
-function strtoupper(str)
-{
-    var arr = {'a':'A', 'b':'B', 'c':'C', 'd':'D', 'e':'E', 'f':'F', 'g':'G', 'h':'H', 'i':'I', 'j':'J', 'k':'K', 'l':'L', 'm':'M', 'n':'N', 'o':'O', 'p':'P', 'q':'Q', 'r':'R', 's':'S', 't':'T', 'u':'U', 'v':'V', 'w':'W', 'x':'X', 'y':'Y', 'z':'Z'};
-    var replacer=function(a){return arr[a]||a};
-    return str.replace(/[A-z]/g,replacer);
-};
-
 function add_new_counters(key, abcounter, tarif)
 {
+    // максимум пять счётчиков
+    if (new_counter_no['k' + key] >= 5) {
+        return;
+    }
+    
     new_counter_no['k' + key]++;
     var new_counter_numnber = new_counter_no['k' + key];
-    
-    var html = '<div class="counter-data"><br> Показання лічильника №'+ new_counter_numnber +' : <br>' +
-        '<div style="margin-top:5px; margin-bottom:5px;">' +
-            '<label for="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Попередні:</label>' +
-            '<input style="width: 60px;" value="0" id="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
-        '</div>' +
-        '<div style="margin-bottom:5px;">' +
-            '<label for="inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Поточні:</label>' +
-            '<input style="width: 60px;" class="inp_'+ key +'_new_count" type="text" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
-        '</div>' +
-        '<div style="margin-bottom:5px;">' +
-            '<label for="cur_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">поточні на дату сплати:</label>' +
-            '<input style="width: 60px;" type="text" id="cur_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_cur_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);">' +
-        '</div>' +
-        '<div style="margin-bottom:5px;">' +
-            '<label for="num_inp_'+ key +'_new_count_'+ new_counter_numnber +'" style="width:100px; display:inline-block;">Заводський номер:</label>' +
-            '<input style="width: 60px;" type="text" id="num_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_abcounter[]" value="'+ abcounter +'">' +
-        '</div>' +
 
-        '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
-        'До сплати: ( <div style="display:inline-block;" id="newval_counter_'+ key +'_'+ new_counter_numnber +'">поточне&nbsp;значення</div>&nbsp;-&nbsp;<span id="oldval_counter_'+ key +'_'+ new_counter_numnber +'">0</span>)&nbsp;*&nbsp;'+ tarif +'&nbsp;грн' +
-    '</div>';
 
-    $(html).insertBefore('#new_counters_for_' + key);
+    var html = 
+        '<div class="row row-counter item-counter-'+ key +'" id="item-counter-'+ key +'-' + new_counter_numnber + '">'
++ '            <div class="col-md-12">'
++ '                <div class="counter-field">'
++ '                    <label>поточні</label>'
++ '                    <input class="inp_' + key + '_new_count" type="text" id="inp_' + key + '_new_count_' + new_counter_numnber + '" name="inp_' + key + '_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\'' + key + '\', ' + tarif + ', \'' + new_counter_numnber + '\');">'
++ '                </div>'
++ '                <div class="counter-field">'
++ '                    <label>минулі</label>'
++ '                    <input name="inp_' + key + '_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\'' + key + '\', ' + tarif + ', \'' + new_counter_numnber + '\');" id="old_inp_' + key + '_new_count_' + new_counter_numnber + '" value="">'
++ '                </div>'
++ '                <div class="counter-field">'
++ '                    <label>№ лічильника</label>'
++ '                    <input type="text" id="num_inp_' + key + '_new_count_' + new_counter_numnber + '" name="inp_' + key + '_abcounter[]" value="' + abcounter + '">'
++ '                    <a data-id="' + abcounter + '" class="delete counter-delete" onclick="$(\'#item-counter-' + key + '-' + new_counter_numnber + '\').remove(); new_counter_no[\'k' + key + '\']--;">&times;</a>'
++ '                </div>'
++ '            </div>'
++ '            <input type="hidden" name="inp_' + key + '_count_number[]" value="' + new_counter_numnber + '">'
++ '        </div>';
+/*    
+        '<tr id="item-counter-'+ key + '-' + new_counter_numnber +'" data-number="'+ key +'" class="item-counter item-counter-'+ key +'" style="display: table-row;">' +
+            '<td colspan="6">' +
+                '<div class="row">' +
+                    '<div class="col-md-4">' +
+                        '<div class="counter-field">' +
+                            '<input class="inp_'+ key +'_new_count" type="text" id="inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_new_count[]" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');">' +
+                            '<span class="edit"></span>' +
+                        '</div>' +
+                        '<div class="counter-label">поточні</div>' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                        '<div class="counter-field">' +
+                            '<input name="inp_'+ key +'_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="(\''+ key +'\', '+ tarif +', \''+ new_counter_numnber +'\');" id="old_inp_'+ key +'_new_count_'+ new_counter_numnber +'">' +
+                            '<span class="edit"></span>' +
+                        '</div>' +
+                        '<div class="counter-label">минулі</div>' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                        '<div class="counter-field">' +
+                            '<input type="text" id="num_inp_'+ key +'_new_count_'+ new_counter_numnber +'" name="inp_'+ key +'_abcounter[]" value="'+ abcounter +'">' + 
+                            '<a data-id="'+ abcounter +'" class="delete counter-delete" onclick="$(\'#item-counter-'+ key + '-' + new_counter_numnber + '\').remove(); new_counter_no[\'k' + key + '\']--;">&times;</a>' +
+                            // '<a data-id="'+ abcounter +'" class="delete counter-delete" data-toggle="modal" data-target="#modalCounterConfirm">&times;</a>' +
+                        '</div>' +
+                        '<div class="counter-label">№ лічильника</div>' +
+                    '</div>' +
+                '</div>' +
+                '<input type="hidden" name="inp_'+ key +'_count_number[]" value="'+ new_counter_numnber +'">' +
+            '</td>' +
+        '</tr>';
+*/        
+
+    $(html).insertBefore('.counter-container-' + key + ' .row-add-counter');
 };
 
 function tas_frame_load()
@@ -547,59 +549,6 @@ function tas_frame_load()
 };
 
 $(document).ready(function(){
-    (function(){
-
-        $('#reg-password, #reg-password-replica').keyup(function(){
-            function clearGauge() { 
-                gauge.removeClass('weak');
-                gauge.removeClass('medium');
-                gauge.removeClass('strong');
-                gauge.removeClass('secure');
-            }
-
-            var gauge = $('#password-strength-container .gauge');
-            var title = $('#password-strength-container .title');
-            // var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).*$", "g");
-            // var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
-            var enoughRegex = new RegExp("(?=.{6,}).*", "g");
-            var pwd = $(this).val();
-
-            var score = zxcvbn(pwd).score;
-
-            $('#password-strength-container').width($(this).outerWidth());
-
-            if (pwd.length==0) {
-                gauge.hide();
-                title.html('');
-            } else if (false == enoughRegex.test(pwd)) {
-                gauge.hide();
-                title.html('Введіть не менше 6 символів');
-            } else if (score == 4) {
-                clearGauge();
-                gauge.addClass('secure');
-                gauge.show();
-                title.html('Відмінний пароль');
-            } else if (score == 3) {
-                clearGauge();
-                gauge.addClass('strong');
-                gauge.show();
-                title.html('Гарний пароль');
-            } else if (score == 2) {
-                clearGauge();
-                gauge.addClass('medium');
-                gauge.show();
-                title.html('Пароль середньої безпечності');
-            } else {
-                clearGauge();
-                gauge.addClass('weak');
-                gauge.show();
-                title.html('Поганий пароль');
-            }
-
-            return true;
-        });
-
-    })();
 
     // украинизация jquery.ui.datepicker
     $.datepicker.regional['ua'] = {
@@ -618,3 +567,14 @@ $(document).ready(function(){
     };
     $.datepicker.setDefaults($.datepicker.regional['ua']);
 });
+
+
+(function ($) {
+    "use strict";
+
+    $.fn.depdropLocales['ua'] = {
+        loadingText: 'завантаження ...',
+        placeholder: 'Обрати ...',
+        emptyMsg: 'Дані не знайдено'
+    };
+})(window.jQuery);

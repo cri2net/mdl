@@ -5,17 +5,19 @@
     "require": {
         "php": ">=5.4.0",
         "phpmailer/phpmailer": "^5.2.10",
+        "placebook/framework-basic": "^1.2",
         "jbdemonte/barcode": "^2.1",
         "phpoffice/phpexcel": "^1.8",
-        "cri2net/php-pdo-db": "^1.1"
+        "cri2net/php-pdo-db": "^1.1",
+        "firebase/php-jwt": "^5.0"
     },
     "config": {
-        "vendor-dir": "protected/vendor",
-        "optimize-autoloader": true
+        "preferred-install": "dist",
+        "vendor-dir": "protected/vendor"
     },
     "autoload": {
-        "classmap" : [
-            "protected/classes"
-        ]
+        "psr-4": {
+            "": "protected/classes"
+        }
     }
 }

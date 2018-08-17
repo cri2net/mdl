@@ -61,252 +61,321 @@
         $have_error = true;
         $error = $e->getMessage();
     }
-?>
-<form class="filters-form" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/detailbill/" method="get">
-    <div class="filter">
-        <div class="dotted-select-box with-icon">
-            <div class="icon calendar"></div>
-            <select class="dotted-select" name="month">
-                <?php
-                    foreach ($MONTHS_NAME as $key => $month) {
-                        ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']['small']; ?></option> <?php
-                    }
-                ?>
-            </select>
-        </div>
-        <div class="dotted-select-box">
-            <select class="dotted-select" name="year">
-                <?php
-                    foreach ($years as $year) {
-                        ?><option <?= ($_need_year == $year) ? 'selected' : ''; ?>><?= $year; ?></option> <?php
-                    }
-                ?>
-            </select>
-        </div>
-        <div class="dotted-select-box with-icon">
-            <div class="icon services"></div>
-            <select class="dotted-select service-select" name="service">
-                <option value="">пiдприємство</option>
-                <?php
-                    if (!empty($firmData)) {
-                        foreach ($firmData as $key => $firm) {
-                            ?><option value="<?= $key; ?>" <?= ($_need_firm == $key) ? 'selected' : ''; ?>><?= $firm['name']; ?></option> <?php
-                        }
-                    }
-                ?>
-            </select>
-        </div>
-        <button class="btn green bold">Фільтрувати</button>
-    </div>
-</form>
-<?php
-    if ($have_error) {
-        ?><h2 class="big-error-message"><?= $error; ?></h2> <?php
-        return;
-    }
 
     $have_recalc = !empty($recalcData);
 ?>
-<div class="real-full-width-block">
-    <table class="full-width-table datailbill-table no-border">
-        <thead>
-            <tr>
-                <th rowspan="2" class="first">Послуга /<br> одержувач коштів</th>
-                <th rowspan="2" class="td-sum">Заборг. / переплата на <?= date('d.m', date_timestamp_get($prev_month)); ?>, грн</th>
-                <th rowspan="2">Тариф, грн</th>
-                <th rowspan="2">Нараховано за <?= $debtData['previous_month']; ?>, грн *</th>
-                <?php
-                    if ($have_recalc) {
-                        ?>
-                        <th rowspan="2">Перерахунок</th>
-                        <?php
-                    }
-                ?>
-                <th colspan="2" style="text-align:center; border-bottom: solid 1px #00979c;">Субсидія,&nbsp;грн</th>
-                <th rowspan="2">До сплати за <?= $debtData['previous_month']; ?>, грн</th>
-                <th rowspan="2" class="td-sum">Сплачено у <?= $prev_month_when; ?>, грн **</th>
-            </tr>
-            <tr>
-                <th style="font-size: 12px; padding-left: 0;">Розмір</th>
-                <th style="font-size: 12px; padding-right: 0; cursor: help;" title="Обов’язковий платіж">Об.&nbsp;платіж</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                $firm_counter = 0;
 
-                foreach ($debtData['data'] as $key => $firm) {
-                    $firm_counter++;
-                    ?>
-                    <tr class="bank-name">
-                        <td class="first" colspan="<?= ($have_recalc) ? 9 : 8; ?>">
-                            <span class="name-plat">
-                                <?= $debtData['firm'][$key]['name']; ?>, <?= $debtData['firm'][$key]['FIO']; ?>
-                            </span>
-                            <span class="abcount">(о.р. <?= $debtData['firm'][$key]['ABCOUNT']; ?>)</span>
-                            <?php
-                                if (trim($debtData['firm'][$key]['TLF']) != "") {
-                                    ?> (Телефон: <?= $debtData['firm'][$key]['TLF']; ?>) <?php
-                                }
-                            ?>
-                            <br>
-                            <?php
-                                if (!empty($debtData['firm'][$key]['lgoti'])) {
-                                    ?>
-                                    Льготы: <?= $debtData['firm'][$key]['lgoti']['NAIM_LG']; ?>,
-                                    <?= $debtData['firm'][$key]['lgoti']['PROC_LG']; ?>%
-                                    (количество льготников: <?= $debtData['firm'][$key]['lgoti']['KOL_LGOT']; ?>)
-                                    <br>
-                                    <?php
-                                }
-                            ?>
-                            <div class="address"><?= $object['address']; ?></div>
-                        </td>
-                    </tr>
-                    <?php
-                        $counter = 0;
-                        
-                        foreach ($firm as $item) {
-                            $counter++;
-
-                            $no_border = (($counter == count($firm)) && ($firm_counter < count($debtData['data'])));
-                            ?>
-                            <tr class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
-                                <td class="first">
-                                    <span class="name-firme"><?= $item['NAME_PLAT']; ?></span> <br>
-                                </td>
-                                <td>
-                                    <?php
-                                        $summ = floatval(str_replace(",", ".", $item['ISXDOLG']));
-                                        $class = ($summ < 0) ? 'overpay' : (($summ > 0) ? 'dept' : '');
-                                        $summ = explode(',', $item['ISXDOLG']);
-                                    ?>
-                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                </td>
-                                <td><?= $item['TARIF']; ?></td>
-                                <td>
-                                    <?php
-                                        $summ = floatval(str_replace(",", ".", $item['SUMM_MONTH']));
-                                        $class = ($summ > 0) ? 'dept' : '';
-                                        $summ = explode(',', $item['SUMM_MONTH']);
-                                    ?>
-                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                </td>
+        <div class="cabinet-settings object-item object-item-bill">
+            <form class="real-full-width-block" id="object-item-detailbill-form" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/detailbill/" method="get">
+                <div class="row table-caption">
+                    <div class="calendar col-lg-12">
+                        <div class="dropdown">
+                            <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-month" value="1">
+                                <?= $MONTHS_NAME[(int)$_need_month]['ua']['small']; ?>
+                                <span class="caret"></span>
+                            </button>
+                            <input type="hidden" id="detailbill-filter-month" value="<?= strtolower($MONTHS_NAME[(int)$_need_month]['en']); ?>" name="month" />
+                            <!-- <?= ($_need_month == $key) ? 'selected' : ''; ?> -->
+                            <ul class="dropdown-menu" aria-labelledby="select-month">
                                 <?php
-                                    if ($have_recalc) {
+                                    foreach ($MONTHS_NAME as $key => $month) {
                                         ?>
-                                        <td>
-                                            <?php
-                                                if (strstr($item['NAME_PLAT'], 'УТРИМАННЯ')) {
-                                                    
-                                                    $summ = 0;
-                                                    foreach ($recalcData as $tmp_item) {
-                                                        foreach ($tmp_item['list'] as $list_item) {
-                                                            $summ += $list_item['sum'];
-                                                        }
-                                                    }
-
-                                                    // в xml есть поле "Всього по о/рахунку(по періоду)", где дублирутеся общая сумма.
-                                                    // То есть надо на два поделить то, что выше в цикле просуммировано
-                                                    $summ /= 2;
-
-                                                    $summ = explode('.', $summ);
-                                                    ?>
-                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                                    <?php
-                                                } else {
-                                                    echo '—';
-                                                }
-                                            ?>
-                                        </td>
+                                        <li><a onclick="$('#detailbill-filter-month').val('<?= strtolower($month['en']); ?>');" id="detailbill-filter-month-a-<?= strtolower($month['en']); ?>" data-value="<?= strtolower($month['en']); ?>"><?= $month['ua']['small']; ?></a></li>
                                         <?php
                                     }
                                 ?>
-                                <td><?= $item['SUBS']; ?></td>
-                                <td><?= $item['SUMM_OBL_PAY']; ?></td>
-                                <td>
-                                    <?php
-                                        $summ = floatval(str_replace(",", ".", $item['SUMM_DOLG']));
-                                        $class = ($summ < 0) ? 'overpay' : (($summ > 0) ? 'dept' : '');
-                                        $summ = explode(',', $item['SUMM_DOLG']);
-                                    ?>
-                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                </td>
-                                <td><?= $item['OPLAT']; ?></td>
-                            </tr>
-                            <?php
-                        }
-                }
-            ?>
-            <tr class="item-row hints-tr">
-                <td class="first" colspan="8">
-                    <b class="hint-star">*</b> — з врахуванням пільг та перерахунків <br>
-                    <b class="hint-star">**</b> — довідково <br>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <?php
-
-        if (!empty($recalcData)) {
-            ?>
-            <table class="full-width-table datailbill-table no-border">
-                <thead>
-                    <tr>
-                        <th colspan="4" class="first">Деталі перерахунку</th>
-                    </tr>
-                    <tr>
-                        <th class="first">Назва послуги</th>
-                        <th>Початок періоду</th>
-                        <th>Кінець періоду</th>
-                        <th>Сума</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        $counter = 0;
-                        $recalc_total_summ = 0;
-                        
-                        foreach ($recalcData as $item) {
-
-                            for ($i=0; $i < count($item['list']); $i++) {
-
-                                $counter++;
-                                $recalc_total_summ += $item['list'][$i]['sum'];
-
-                                $no_border = (($counter == count($recalcData)) && ($firm_counter < count($debtData['data'])));
-                                $summ = explode('.', $item['list'][$i]['sum']);
-                                $is_bold = (count($item['list']) - 1 == $i);
+                            </ul>
+                            <script>
+                                $(document).ready(function(){
+                                    $('#detailbill-filter-month-a-<?= $_need_month; ?>').click();
+                                });
+                            </script>
+                        </div>
+                        <div class="dropdown">
+                            <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-year" value="<?= $_need_year; ?>">
+                                <?= $_need_year; ?>
+                                <span class="caret"></span>
+                            </button>
+                            <input type="hidden" id="detailbill-filter-year" value="<?= $_need_year; ?>" name="year" />
+                            <ul class="dropdown-menu" aria-labelledby="select-month">
+                                <?php
+                                    foreach ($years as $year) {
+                                        ?>
+                                        <!-- <?= ($_need_year == $year) ? 'selected' : ''; ?> -->
+                                        <li><a onclick="$('#detailbill-filter-year').val('<?= $year; ?>');" id="detailbill-filter-year-a-<?= $year; ?>" data-value="<?= $year; ?>"><?= $year; ?></a></li>
+                                        <?php
+                                    }
                                 ?>
-                                <tr style="<?= ($is_bold) ? 'border-bottom-width: 3px; border-bottom-style: solid;' : ''; ?>" class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
-                                    <td class="first" style="<?= ($is_bold) ? 'font-weight: bold;' : ''; ?>"><?= $item['list'][$i]['NAME']; ?></td>
-                                    <td><?= $item['DBEGIN']; ?></td>
-                                    <td><?= $item['DEND']; ?></td>
-                                    <td>
-                                        <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                    </td>
-                                </tr>
+                            </ul>
+                            <script>
+                                $(document).ready(function(){
+                                    $('#detailbill-filter-year-a-<?= $_need_year; ?>').click();
+                                });
+                            </script>
+                        </div>
+                        <div class="dropdown">
+                            <input type="hidden" id="detailbill-filter-service" value="<?= $_need_firm; ?>" name="service" />
+                            <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-company">
+                                <?php
+                                    $have_firme = false;
+
+                                    if (!empty($firmData)) {
+                                        foreach ($firmData as $key => $firm) {
+                                            
+                                            if ($_need_firm == $key) {
+                                                $have_firme = true;
+                                                echo $firm['name'];
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    if (!$have_firme) {
+                                        echo 'Оберіть компанію';
+                                    }
+                                ?>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="select-company">
+                                <li><a id="detailbill-filter-sevice-a-0" onclick="$('#detailbill-filter-service').val('0');" data-value="0">Оберіть компанію</a></li>
+                                <?php
+                                    if (!empty($firmData)) {
+                                        foreach ($firmData as $key => $firm) {
+                                            ?>
+                                            <li><a id="detailbill-filter-sevice-a-<?= $key; ?>" data-value="<?= $key; ?>" onclick="$('#detailbill-filter-service').val('<?= $key; ?>');" <?= ($_need_firm == $key) ? 'selected' : ''; ?>><?= $firm['name']; ?></a></li>
+                                            <?php
+                                        }
+                                    }
+                                ?>
+                            </ul>
+                            <script>
+                                $(document).ready(function(){
+                                    $('#detailbill-filter-sevice-a-<?= $_need_firm; ?>').click();
+                                });
+                            </script>
+                        </div>                        
+                        <a onclick="$('#object-item-detailbill-form').submit();" class="btn btn-xs"><span class="fa  fa-calendar"></span> Показати</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="table-responsive border-top">
+                    <table class="full-width-table datailbill-table no-border" id="data-table">
+                        <thead>
+                            <tr class="head-gray">
+                                <th class="th-header">Назва послуги /<br>одержувач коштів</th>
+                                <th>Заборгованість/<br>переплата<br>на <?= date('d.m', date_timestamp_get($prev_month)); ?>, грн</th>
+                                <th>Тариф,<br> грн</th>
+                                <th>Нараховано за<br> <?= $debtData['previous_month']; ?>, грн*</th>
+                                <?php
+                                    if ($have_recalc) {
+                                        ?>
+                                        <th rowspan="2">Перерахунок</th>
+                                        <?php
+                                    }
+                                ?>
+                                <th>Субсидія, грн<br>  розмір | об. платіж</th>
+                                <th>Сплачено у<br> <?= $prev_month_when; ?>, грн**</th>
+                            </tr>                         
+                        </thead>
+                        <?php
+                            if (!$have_error) {
+                                ?>
+                                <tbody>
+                                    <?php
+
+                                    foreach ($debtData['data'] as $key => $firm) {
+                                        ?>
+                                        <tr class="head-green-2">
+                                            <th colspan="<?= ($have_recalc) ? 7 : 6; ?>">
+                                                <strong><?= $debtData['firm'][$key]['name']; ?>,
+                                                <?= $debtData['firm'][$key]['FIO']; ?>
+                                                (о.р. <?= $debtData['firm'][$key]['ABCOUNT']; ?>)
+                                                <?php
+
+                                                    if (trim($debtData['firm'][$key]['TLF']) != "") {
+                                                        ?> (Телефон: <?= $debtData['firm'][$key]['TLF']; ?>) <?php
+                                                    }
+
+                                                    if (!empty($debtData['firm'][$key]['lgoti'])) {
+                                                        ?>
+                                                        Пільги: <?= $debtData['firm'][$key]['lgoti']['NAIM_LG']; ?>,
+                                                        <?= $debtData['firm'][$key]['lgoti']['PROC_LG']; ?>%
+                                                        (кількість пільговиків: <?= $debtData['firm'][$key]['lgoti']['KOL_LGOT']; ?>)
+                                                        <br>
+                                                        <?php
+                                                    }
+                                                ?></strong>
+                                                <?= $object['address']; ?>
+                                            </th>
+                                        </tr>
+                                        <?php
+                                        
+                                        $row = 0;
+                                        foreach ($firm as $item) {
+
+                                            $row++;
+                                            if ($row == sizeof($firm)) $tr_class = ' item-last'; else $tr_class = '';
+                                            ?>
+                                            <tr class="item-row <?php echo $tr_class; ?>">
+                                                <td class="border-bottom header">
+                                                    <strong class="green"><?= $item['NAME_PLAT']; ?></strong>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        $summ = floatval(str_replace(",", ".", $item['ISXDOLG']));
+                                                        $class = ($summ < 0) ? 'overpay' : (($summ > 0) ? 'dept' : '');
+                                                        $summ = explode(',', $item['ISXDOLG']);
+                                                    ?>
+                                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        $summ = explode(',', $item['TARIF']);
+                                                    ?>
+                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        $summ = floatval(str_replace(",", ".", $item['SUMM_MONTH']));
+                                                        $class = ($summ > 0) ? 'dept' : '';
+                                                        $summ = explode(',', $item['SUMM_MONTH']);
+                                                    ?>
+                                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                </td>
+                                                <?php
+                                                    if ($have_recalc) {
+                                                        ?>
+                                                        <td class="border-bottom">
+                                                            <?php
+                                                                if (strstr($item['NAME_PLAT'], 'УТРИМАННЯ')) {
+                                                                    
+                                                                    $summ = 0;
+                                                                    foreach ($recalcData as $tmp_item) {
+                                                                        foreach ($tmp_item['list'] as $list_item) {
+                                                                            $summ += $list_item['sum'];
+                                                                        }
+                                                                    }
+
+                                                                    // в xml есть поле "Всього по о/рахунку(по періоду)", где дублирутеся общая сумма.
+                                                                    // То есть надо на два поделить то, что выше в цикле просуммировано
+                                                                    $summ /= 2;
+
+                                                                    $summ = explode('.', $summ);
+                                                                    ?>
+                                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                                    <?php
+                                                                } else {
+                                                                    echo '—';
+                                                                }
+                                                            ?>
+                                                        </td>
+                                                        <?php
+                                                    }
+                                                ?>
+                                                <td>
+                                                    <?php
+                                                        $summ = explode(',', $item['SUBS']);
+                                                    ?>
+                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                    <span>&nbsp;</span>
+                                                    <?php
+                                                        $summ = explode(',', $item['SUMM_OBL_PAY']);
+                                                    ?>
+                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>                             
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        $summ = explode(',', $item['OPLAT']);
+                                                    ?>
+                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                </td>                                
+                                            </tr>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </tbody>
                                 <?php
                             }
-                        }
+                        ?>
+                    </table>
+                </div>
+                <div class="hints">
+                            <b class="hint-star">*</b> — з врахуванням пільг та перерахунків <br>
+                            <b class="hint-star">**</b> — довідково <br>
+                </div>
+                
+                    <?php
 
-                        if (count($recalcData) > 1) {
-                            
-                            $recalc_total_summ /= 2;
-                            $summ = explode('.', $recalc_total_summ);
+                        if (!empty($recalcData)) {
                             ?>
-                            <tr style="border-bottom-width: 3px; border-bottom-style: solid;" class="item-row odd">
-                                <td colspan="3" class="first" style="font-weight: bold;">Всього за всі періоди</td>
-                                <td>
-                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                </td>
-                            </tr>
+                            <div class="table-responsive" style="margin-top: 40px;">
+                                <table class="full-width-table datailbill-table no-border">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4" class="first">Деталі перерахунку</th>
+                                        </tr>
+                                        <tr class="head-gray-2">
+                                            <th class="first">Назва послуги</th>
+                                            <th>Початок періоду</th>
+                                            <th>Кінець періоду</th>
+                                            <th>Сума</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            $counter = 0;
+                                            $recalc_total_summ = 0;
+                                            
+                                            foreach ($recalcData as $item) {
+
+                                                for ($i=0; $i < count($item['list']); $i++) {
+
+                                                    $counter++;
+                                                    $recalc_total_summ += $item['list'][$i]['sum'];
+
+                                                    $no_border = (($counter == count($recalcData)) && ($firm_counter < count($debtData['data'])));
+                                                    $summ = explode('.', $item['list'][$i]['sum']);
+                                                    $is_bold = (count($item['list']) - 1 == $i);
+                                                    ?>
+                                                    <tr style="<?= ($is_bold) ? 'border-bottom-width: 3px;' : ''; ?>" class="item-row <?= ($no_border) ? 'no-border' : ''; ?> <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
+                                                        <td class="first" style="<?= ($is_bold) ? 'font-weight: bold;' : ''; ?>"><?= $item['list'][$i]['NAME']; ?></td>
+                                                        <td><?= $item['DBEGIN']; ?></td>
+                                                        <td><?= $item['DEND']; ?></td>
+                                                        <td>
+                                                            <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+
+                                            if (count($recalcData) > 1) {
+                                                
+                                                $recalc_total_summ /= 2;
+                                                $summ = explode('.', $recalc_total_summ);
+                                                ?>
+                                                <tr style="border-bottom-width: 3px;" class="item-row odd">
+                                                    <td colspan="3" class="first" style="font-weight: bold;">Всього за всі періоди</td>
+                                                    <td>
+                                                        <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                             <?php
                         }
                     ?>
-                </tbody>
-            </table>
-            <?php
-        }
-    ?>
-</div>
+                </div>
+            </form>
+        </div>
+        <?php
+            if ($have_error) {
+                ?><h2 class="big-error-message"><?= $error; ?></h2> <?php
+            }
+        ?>

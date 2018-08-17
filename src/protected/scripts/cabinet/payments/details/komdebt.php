@@ -1,5 +1,5 @@
 <div class="real-full-width-block">
-    <table class="full-width-table datailbill-table no-border">
+    <table class="full-width-table datailbill-table table-pay-details no-border">
         <thead>
             <tr>
                 <th class="first" colspan="5">Деталі платежу № <?= $payment['id']; ?></th>
@@ -7,11 +7,11 @@
         </thead>
         <tbody>
             <tr class="item-row even">
-                <td colspan="1" class="first">Тип платежу</td>
+                <td colspan="1" class="first"><strong>Тип платежу</strong></td>
                 <td colspan="4" class="">Комунальні послуги</td>
             </tr>
             <tr class="item-row odd">
-                <td colspan="1" class="first">Статус</td>
+                <td colspan="1" class="first"><strong>Статус</strong></td>
                 <td colspan="4" class="">
                     <?php
                         switch ($payment['status']) {
@@ -50,7 +50,7 @@
                 }
             ?>
             <tr class="item-row even">
-                <td colspan="1" class="first">Дата та час</td>
+                <td colspan="1" class="first"><strong>Дата та час</strong></td>
                 <td colspan="4" class="">
                     <?php
                         $time = ($payment['go_to_payment_time']) ? $payment['go_to_payment_time'] : $payment['timestamp'];
@@ -60,7 +60,7 @@
                 </td>
             </tr>
             <tr class="item-row odd">
-                <td colspan="1" class="first">Сума</td>
+                <td colspan="1" class="first"><strong>Сума</strong></td>
                 <td colspan="4" class="">
                     <?php
                         $summ = explode('.', number_format($payment['summ_plat'], 2));
@@ -72,7 +72,7 @@
                 </td>
             </tr>
             <tr class="item-row even">
-                <td colspan="1" class="first">Комісія</td>
+                <td colspan="1" class="first"><strong>Комісія</strong></td>
                 <td colspan="4">
                     <?php
                         $summ = explode('.', number_format($payment['summ_komis'], 2));
@@ -84,15 +84,17 @@
                 </td>
             </tr>
             <tr class="item-row odd">
-                <td colspan="1" class="first">Усього</td>
+                <td colspan="1" class="first"><strong>Усього</strong></td>
                 <td colspan="4">
-                    <?php
-                        $summ = explode('.', number_format($payment['summ_total'], 2));
-                    ?>
-                    <span class="item-summ">
-                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                    <span  class=" green">
+                        <?php
+                            $summ = explode('.', number_format($payment['summ_total'], 2));
+                        ?>
+                        <span class="item-summ">
+                            <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                        </span>
+                        грн
                     </span>
-                    грн
                 </td>
             </tr>
         </tbody>
@@ -103,10 +105,10 @@
         </thead>
         <tbody>
             <tr class="bank-name title">
-                <td class="first" colspan="2">Назва послуги та підприємства</td>
-                <td>Особовий рахунок</td>
-                <td>Сума, грн</td>
-                <td>Період</td>
+                <th class="first" colspan="2">Назва послуги та підприємства</th>
+                <th>Особовий рахунок</th>
+                <th>Сума, грн</th>
+                <th>Період</th>
             </tr>
             <?php
                 $counter = 0;
@@ -129,7 +131,7 @@
                     ?>
                     <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
                         <td class="first" colspan="2">
-                            <span><?= $item['data']->name_plat; ?></span>
+                            <strong class="green"><?= $item['data']->name_plat; ?></strong>
                             <br>
                             <?= $item['data']->firm_name; ?>
                         </td>
@@ -159,15 +161,15 @@
                     <th class="first" colspan="5">Показання лічильників</th>
                 </tr>
             </thead>
-            <thead>
+            <tbody>
                 <tr class="bank-name title">
-                    <td class="first">Послуга</td>
-                    <td>№ ліч.</td>
-                    <td>Поп. пок., м&sup3;/КвтЧ</td>
-                    <td>Пот. пок., м&sup3;/КвтЧ</td>
-                    <td>Різниця, м&sup3;/КвтЧ</td>
+                    <th class="first">Послуга</th>
+                    <th>№ ліч.</th>
+                    <th>Поп. пок., м&sup3;/КвтЧ</th>
+                    <th>Пот. пок., м&sup3;/КвтЧ</th>
+                    <th>Різниця, м&sup3;/КвтЧ</th>
                 </tr>
-            </thead>
+            </tbody>
             <tbody>
                 <?php
                     $counter = 0;
@@ -187,11 +189,11 @@
                             ?>
                             <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
                                 <td class="first">
-                                    <span><?= $item['data']->name_plat; ?></span>
+                                    <strong class="green"><?= $item['data']->name_plat; ?></strong>
                                     <br>
                                     <?= $item['data']->firm_name; ?>
                                 </td>
-                                <td><span class="item-summ"><?= htmlspecialchars($counter_item->abcounter); ?></span></td>
+                                <td><span class="item"><?= htmlspecialchars($counter_item->abcounter); ?></span></td>
                                 <td>
                                     <?php
                                         $summ = explode('.', number_format($counter_item->old_value, 2));
@@ -233,7 +235,7 @@
 <?php
     if ($payment['status'] == 'success') {
         ?>
-        <a class="btn green big" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/CKS-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
+        <a class="btn green big" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/KMDA-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
         <?php
     } elseif ($payment['status'] != 'new') {
         ?>

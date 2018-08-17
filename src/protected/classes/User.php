@@ -1,24 +1,11 @@
 <?php
 
 use cri2net\php_pdo_db\PDO_DB;
+use Placebook\Framework\Core\Api;
 
 class User
 {
     const TABLE = DB_TBL_USERS;
-
-    /**
-     * Получаем список всех пользователей
-     * @param  integer $limit - Кол-во пользователей, используется только для отладки скрипта. OPTIONAL
-     * @return array
-     */
-        
-    public static function getUsersList($limit = 0) {
-        $pdo = PDO_DB::getPDO();
-        $stm = $pdo->prepare("SELECT * FROM " . self::TABLE . " LIMIT 100");
-        $stm->execute();
-
-        return $stm->fetchAll();
-    }
 
     public static function getUserIdByEmail($email)
     {
@@ -130,7 +117,7 @@ class User
         ];
 
         $user_id = PDO_DB::insert($data, self::TABLE);
-        self::sendRegLetter($user_id, $password, 'registration');
+        self::sendRegLetter($user_id, $data['password'], 'registration');
         return $user_id;
     }
 
@@ -190,5 +177,50 @@ class User
                 'verify_link' => $verify_link,
             ]
         );
+    }
+
+    public static function importFlatsFromGioc($user_id)
+    {
+        $user = PDO_DB::row_by_id(self::TABLE, $user_id);
+
+        if (!$user || !$user['email']) {
+            return;
+        }
+
+        try {
+
+            $conf = require(PROTECTED_DIR . '/conf/gioc.php');
+            
+            $args = [
+                'user_email' => $user['email'],
+            ];
+            $args = Api::encodeArguments($args);
+
+            $response = Api::rawRequest(
+                "{ giocUserFlats($args) { id, user_id, city_id, street_id, house_id, flat_id, timestamp, notify, title, auth_key } }",
+                [],
+                $conf['api_url'],
+                $conf['api_token']
+            );
+            $items = $response->data->giocUserFlats;
+
+            foreach ($items as $item) {
+                
+                $arr = [
+                    'user_id'    => $user['id'],
+                    'city_id'    => $item->city_id,
+                    'street_id'  => $item->street_id,
+                    'house_id'   => $item->house_id,
+                    'flat_id'    => $item->flat_id,
+                    'created_at' => microtime(true),
+                    'notify'     => $item->notify,
+                    'title'      => $item->title,
+                    'auth_key'   => $item->auth_key,
+                ];
+                PDO_DB::insert($arr, TABLE_PREFIX . 'user_flats');
+            }
+
+        } catch (Exception $e) {
+        }
     }
 }

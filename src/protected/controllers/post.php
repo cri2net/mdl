@@ -1,5 +1,5 @@
 <?php
-$uri = substr($_SERVER['REQUEST_URI'], 5); // Отрезаем /post
+$uri = substr($route_path, 5); // Отрезаем /post
 $uri = str_replace('.', '', $uri); // очень недостаточная мера безопасности
 $uri = trim($uri, '/'); // Обрезаем слеши в конце и начале
 

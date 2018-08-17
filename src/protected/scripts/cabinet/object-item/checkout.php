@@ -38,7 +38,13 @@
         return;
     }
 ?>
-<h2 id="wait-please" style="width:270px;" class="big-success-message">Перенаправлення</h2>
+<div class="container">
+    <content>
+        <div class="text">
+            <h2 id="wait-please" style="width:270px;" class="big-success-message">Перенаправлення</h2>
+        </div>
+    </content>
+</div>
 <form id="paybill-autosubmit-form" target="<?= $payment_form_target; ?>" action="<?= $payment_form_action; ?>" method="post">
     <?php
         if (file_exists($file . ".payform.php")) {

@@ -1,6 +1,6 @@
 <?php
     $breadcrumbs = [
-        ['title' => 'ЦКС', 'link' => '/']
+        ['title' => 'КМДА', 'link' => '/']
     ];
 
     switch ($__route_result['controller'] . "/" . $__route_result['action']) {
@@ -9,20 +9,8 @@
 
             switch ($__route_result['values']['subpage']) {
 
-                case 'registration':
-                    $breadcrumbs[] = ['title' => 'Реєстрація'];
-                    break;
-
                 case 'verify-email':
                     $breadcrumbs[] = ['title' => 'Підтвердження електронної пошти'];
-                    break;
-
-                case 'login':
-                    $breadcrumbs[] = ['title' => 'Вхід'];
-                    break;
-
-                case 'restore':
-                    $breadcrumbs[] = ['title' => 'Відновлення доступу'];
                     break;
 
                 case 'objects':
@@ -57,7 +45,6 @@
                     }
                     break;
 
-
                 case 'instant-payments':
                     $breadcrumbs[] = ['title' => 'Миттєві платежі', 'link' => '/cabinet/instant-payments/'];
 
@@ -67,7 +54,6 @@
                             'kindergarten'   => 'Дитячий садок',
                             'cards'          => 'Перекази з карти на карту',
                             'phone'          => 'Сплата за телефон та інтернет',
-                            'cks'            => 'Сплата послуг ЦКС',
                             'budget'         => 'Платежі до бюджету',
                             'requisites'     => 'Платежі за реквізитами',
                             'volia'          => 'Воля',
@@ -113,24 +99,34 @@
             $breadcrumbs[] = ['title' => 'Статус транзакції'];
             break;
 
+        case 'static_page/index':
+            $link = '/';
+            for ($i=0; $i < count($__static_pages_array); $i++) {
+                $link .= $__static_pages_array[$i]['key'] . '/';
+                $breadcrumbs[] = ['title' => $__static_pages_array[$i]['breadcrumb'], 'link' => $link];
+            }
+            break;
+            
         case 'error/404':
             $breadcrumbs[] = ['title' => 'Помилка 404'];
             break;
     }
 ?>
-<breadcrumbs itemscope itemtype="http://schema.org/BreadcrumbList">
-    <?php
-        for ($i=0; $i < count($breadcrumbs); $i++) {
-            if ($i < count($breadcrumbs) - 1) {
-                ?>
-                <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                    <a itemprop="item" href="<?= EXT_BASE_URL . $breadcrumbs[$i]['link']; ?>" target="_top"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
-                    <meta itemprop="position" content="<?= $i + 1; ?>" />
-                </span>&nbsp;&rarr;&nbsp;
-                <?php
-            } else {
-                ?><span class="current"><?= $breadcrumbs[$i]['title']; ?></span><?php
+<div class="container">
+    <breadcrumbs itemscope itemtype="http://schema.org/BreadcrumbList">
+        <?php
+            for ($i=0; $i < count($breadcrumbs); $i++) {
+                if ($i < count($breadcrumbs) - 1) {
+                    ?>
+                    <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemprop="item" href="<?= BASE_URL . $breadcrumbs[$i]['link']; ?>" target="_top"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
+                        <meta itemprop="position" content="<?= $i + 1; ?>" />
+                    </span>
+                    <?php
+                } else {
+                    ?><span class="current"><?= $breadcrumbs[$i]['title']; ?></span><?php
+                }
             }
-        }
-    ?>
-</breadcrumbs>
+        ?>
+    </breadcrumbs>
+</div>

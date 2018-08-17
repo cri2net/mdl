@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <system>
-        <route match="index" controller="page" action="cabinet" />
+        <route match="index" controller="page" action="index" />
         <route match="forbidden" controller="error" action="403" />
         <route match="not_found" controller="error" action="404" />
     </system>

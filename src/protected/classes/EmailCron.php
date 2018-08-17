@@ -111,10 +111,7 @@ class EmailCron
 
                     $online_version = BASE_URL . '/invoice/?uid=' . $curr_user['id'] . '&f=' . $row['id'] . '&hash2=' . $hash2;
                     $url = $online_version . '&email_mode=1';
-                    $url = str_replace('https://', 'http://', $url);
-                    error_log("Online mail: " . $url);
                     $content = Http::HttpGet($url, false, false);
-                    error_log("Content of mail:\r\n" . $content);
 
                     if (strlen($content) > 250) {
                         $address = Flat::getAddressString($row['flat_id']);

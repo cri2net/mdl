@@ -23,10 +23,6 @@ try {
     Flat::renameUserFlat($flatData['id'], trim(stripslashes($_POST['object-title'])));
     PDO_DB::update($update, Flat::USER_FLATS_TABLE, $flatData['id']);
 
-
-    $_SESSION['object-item']['status'] = true;
-    $_SESSION['object-item']['text'] = 'Дані збережено';
-
 } catch (Exception $e) {
     $_SESSION['object-item']['status'] = false;
     $_SESSION['object-item']['error']['text'] = $e->getMessage();

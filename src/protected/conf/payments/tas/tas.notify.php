@@ -2,6 +2,10 @@
 
 use cri2net\php_pdo_db\PDO_DB;
 
+if (empty($HTTP_RAW_POST_DATA) && !empty($_POST['HTTP_RAW_POST_DATA'])) {
+    $HTTP_RAW_POST_DATA = $_POST['HTTP_RAW_POST_DATA'];
+}
+
 $date = date('d-m-Y H:i:s');
 $mess = "$date\r\nHTTP_RAW_POST_DATA: ".var_export(@$HTTP_RAW_POST_DATA, true)."\r\n\r\n\r\n";
 
@@ -54,5 +58,5 @@ if ($success) {
 PDO_DB::update($to_update, ShoppingCart::TABLE, $_payment['id']);
 ShoppingCart::send_payment_status_to_reports($_payment['id']);
 
-$response['forwardUrl'] = BASE_URL . "/payment-status/{$payment_id}/";
+$response['forwardUrl'] = KMDA_ORDER_URL . '/journal/' . $processing_data['openid']->id . '/details';
 echo json_encode($response);

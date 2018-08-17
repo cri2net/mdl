@@ -6,14 +6,10 @@
         return;
     }
 ?>
-<div class="check-box-line" style="margin-top: 20px;">
-    <span class="niceCheck checked" id="payments_only_success"><input type="checkbox" checked="checked"></span>
-    <label style="position: relative; top:-3px; left:10px;" onclick="$('#payments_only_success').click();">
-        Тільки успішні платежі
-    </label>
-</div>
-<div class="real-full-width-block">
-    <table class="full-width-table datailbill-table no-border">
+<label class="checkbox green" id="payments_only_success"><input name="service[<?= $key ?>]" type="checkbox" class="check-toggle" checked ><span>Тільки успішні платежі</span></label>
+
+<div class="real-full-width-block table-responsive border-top">
+    <table class="full-width-table datailbill-table">
         <thead>
             <tr>
                 <th class="first">Номер</th>
@@ -32,14 +28,14 @@
                     $time = ($item['go_to_payment_time']) ? $item['go_to_payment_time'] : $item['timestamp'];
                     ?>
                     <tr style="<?= ($item['status'] == 'success') ? '' : 'display: none;'; ?>" class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?> item-payment-status item-payment-status-<?= $item['status']; ?>">
-                        <td class="first">
+                        <td class="first border-bottom">
                             <a href="<?= BASE_URL; ?>/cabinet/payments/details/<?= $item['id']; ?>/"><?= $item['id']; ?></a>
                         </td>
-                        <td>
+                        <td class="border-bottom" >
                             <span class="date-day"><?= getUkraineDate('j m Y', $time); ?></span><br>
                             <span class="date-time"><?= date('H:i:s', $time); ?></span>
                         </td>
-                        <td>
+                        <td class="border-bottom" >
                             <?php
                                 switch ($item['type']) {
                                     case 'komdebt':
@@ -54,10 +50,6 @@
                                         echo 'Дитячі садки (харчування)';
                                         break;
 
-                                    case 'cks':
-                                        echo 'Послуги ЦКС';
-                                        break;
-
                                     case 'budget':
                                         echo 'До бюджету';
                                         break;
@@ -68,7 +60,7 @@
                                 }
                             ?>
                         </td>
-                        <td>
+                        <td class="border-bottom">
                             <?php
                                 $summ = explode('.', number_format($item['summ_total'], 2));
                             ?>
@@ -76,7 +68,7 @@
                                 <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
                             </span>
                         </td>
-                        <td>
+                        <td class="border-bottom">
                             <?php
                                 switch ($item['status']) {
                                     case 'new':
@@ -105,6 +97,49 @@
         </tbody>
     </table>
 </div>
+
+<div style="display: none;" class="pagination">
+    <ul>
+        <li class="found">Знайдено: 30</li>
+        <li><a href="#" class="page prev">&lt;</a></li>
+        <li><a href="#" class="page current">1</a></li>
+        <li><a href="#" class="page">2</a></li>
+        <li><a href="#" class="page">3</a></li>
+        <li><a href="#" class="page">4</a></li>
+        <li><a href="#" class="page">5</a></li>
+        <li><a href="#" class="page next">&gt;</a></li>
+        <li class="pp">
+            <div class="dropdown">
+                <button class="select-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="select-per-page" value="1">
+                    25 / на сторинці
+                    <span class="caret"></span>
+                </button>
+                <input type="hidden" id="per-page" value="25" name="per-page" />
+                <ul class="dropdown-menu" aria-labelledby="select-per-page">
+                    <?php
+                        foreach (array(
+                                25 => '25 / на сторинці',
+                                50 => '50 / на сторинці',
+                                100 => '100 / на сторинці'
+                            ) as $pk => $pp) {
+                            ?>
+                            <li><a onclick="" id="pp-<?php echo $pk; ?>" data-value=""><?php echo $pp; ?></a></li>
+                            <?php
+                        }
+                    ?>
+                </ul>      
+                <script>
+                /*
+                    $(document).ready(function(){
+                        $('#pp-50').click();
+                    });
+                */                        
+                </script>                    
+            </div>          
+        </li>
+    </ul>
+</div>
+
 <script>
 $(document).ready(function(){
     $(".niceCheck").click(function() {

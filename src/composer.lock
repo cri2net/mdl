@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f4adab340e74284dad3ba1ce0fdd4df",
+    "content-hash": "ca1fd2ed00931a7d8d47ecc5604bae57",
     "packages": [
         {
             "name": "cri2net/php-pdo-db",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/cri2net/php-pdo-db.git",
-                "reference": "2767ded054e44ebb84c76c4389fbcb441078de44"
+                "reference": "cd5d333a2b8bb835699c767721193798c9d734ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/2767ded054e44ebb84c76c4389fbcb441078de44.zip",
-                "reference": "2767ded054e44ebb84c76c4389fbcb441078de44",
+                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/cd5d333a2b8bb835699c767721193798c9d734ea.zip",
+                "reference": "cd5d333a2b8bb835699c767721193798c9d734ea",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,8 @@
                 }
             ],
             "description": "PHP Class to work with the database using PDO",
-            "time": "2017-02-01T14:02:49+00:00"
+            "homepage": "https://bitbucket.org/cri2net/php-pdo-db",
+            "time": "2018-02-20T15:08:00+00:00"
         },
         {
             "name": "cri2net/php-singleton",
@@ -78,6 +79,52 @@
             ],
             "description": "PHP Trait Singleton",
             "time": "2016-01-30T00:37:39+00:00"
+        },
+        {
+            "name": "firebase/php-jwt",
+            "version": "v5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
+                "reference": "9984a4d3a32ae7673d6971ea00bae9d0a1abba0e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": " 4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2017-06-27T22:17:23+00:00"
         },
         {
             "name": "jbdemonte/barcode",
@@ -126,24 +173,41 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v5.2.22",
+            "version": "v5.2.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "b18cb98131bd83103ccb26a888fdfe3177b8a663"
+                "reference": "70362997bda4376378be7d92d81e2200550923f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/b18cb98131bd83103ccb26a888fdfe3177b8a663",
-                "reference": "b18cb98131bd83103ccb26a888fdfe3177b8a663",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/70362997bda4376378be7d92d81e2200550923f7",
+                "reference": "70362997bda4376378be7d92d81e2200550923f7",
                 "shasum": ""
             },
             "require": {
+                "ext-ctype": "*",
                 "php": ">=5.0.0"
             },
             "require-dev": {
-                "phpdocumentor/phpdocumentor": "*",
-                "phpunit/phpunit": "4.7.*"
+                "doctrine/annotations": "1.2.*",
+                "jms/serializer": "0.16.*",
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "4.8.*",
+                "symfony/debug": "2.8.*",
+                "symfony/filesystem": "2.8.*",
+                "symfony/translation": "2.8.*",
+                "symfony/yaml": "2.8.*",
+                "zendframework/zend-cache": "2.5.1",
+                "zendframework/zend-config": "2.5.1",
+                "zendframework/zend-eventmanager": "2.5.1",
+                "zendframework/zend-filter": "2.5.1",
+                "zendframework/zend-i18n": "2.5.1",
+                "zendframework/zend-json": "2.5.1",
+                "zendframework/zend-math": "2.5.1",
+                "zendframework/zend-serializer": "2.5.*",
+                "zendframework/zend-servicemanager": "2.5.*",
+                "zendframework/zend-stdlib": "2.5.1"
             },
             "suggest": {
                 "league/oauth2-google": "Needed for Google XOAUTH2 authentication"
@@ -182,7 +246,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2017-01-09T09:33:47+00:00"
+            "time": "2017-11-04T09:26:05+00:00"
         },
         {
             "name": "phpoffice/phpexcel",
@@ -239,7 +303,46 @@
                 "xls",
                 "xlsx"
             ],
+            "abandoned": "phpoffice/phpspreadsheet",
             "time": "2015-05-01T07:00:55+00:00"
+        },
+        {
+            "name": "placebook/framework-basic",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/cri2net/placebook-framework-basic.git",
+                "reference": "d5ac9db5f6f5314bef07051b6325edf8ec9dbcc0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/cri2net/placebook-framework-basic/get/d5ac9db5f6f5314bef07051b6325edf8ec9dbcc0.zip",
+                "reference": "d5ac9db5f6f5314bef07051b6325edf8ec9dbcc0",
+                "shasum": ""
+            },
+            "require": {
+                "cri2net/php-singleton": "^1.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Placebook\\Framework\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Davidovich",
+                    "email": "cri2net@gmail.com"
+                }
+            ],
+            "description": "Basic classes for placebook's framework",
+            "homepage": "https://bitbucket.org/cri2net/placebook-framework-basic",
+            "time": "2017-11-04T13:38:33+00:00"
         }
     ],
     "packages-dev": [],

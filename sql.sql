@@ -822,3 +822,142 @@ ALTER TABLE `cks_payment`
 
 ALTER TABLE `cks_payment`
   CHANGE `type` `type` ENUM('gai','kinders','komdebt','cks','budget','direct') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt'  NOT NULL;
+
+-- 2017.04.25
+CREATE TABLE IF NOT EXISTS `cks_news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `is_actual` tinyint(1) NOT NULL DEFAULT '1',
+  `title` varchar(1000) NOT NULL,
+  `created_at` double NOT NULL,
+  `updated_at` double NOT NULL,
+  `announce` text NOT NULL,
+  `text` mediumtext,
+  `views` int(11) NOT NULL DEFAULT '0' COMMENT 'count views',
+  `seo_title` varchar(500) DEFAULT NULL,
+  `seo_description` varchar(500) DEFAULT NULL,
+  `seo_keywords` varchar(500) DEFAULT NULL,
+  `old_site_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_active` (`is_actual`),
+  KEY `created_at` (`created_at`),
+  KEY `is_actual_2` (`is_actual`,`title`(50))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2017.05.05
+CREATE TABLE IF NOT EXISTS `cks_news_images` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `news_id` int(11) NOT NULL,
+  `is_main` tinyint(1) NOT NULL,
+  `pos` int(11) NOT NULL,
+  `filename` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2017.10.09
+CREATE TABLE IF NOT EXISTS `cks_feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `to` int(11) NOT NULL DEFAULT '0',
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL,
+  `surname` varchar(255) NOT NULL,
+  `fathername` varchar(255) NOT NULL,
+  `timestamp` double NOT NULL,
+  `ip` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `text` text NOT NULL,
+  `status` enum('new','spam','deleted','processed') NOT NULL DEFAULT 'new',
+  `answer` text,
+  `answer_time` double DEFAULT NULL,
+  `answer_need_send` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'for cron task',
+  `answerer` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2017.11.09
+ALTER TABLE `cks_flats`
+  CHANGE `street_id` `street_id` BIGINT(20) NOT NULL,
+  CHANGE `house_id` `house_id` BIGINT(20) NOT NULL,
+  CHANGE `object_id` `object_id` BIGINT(20) NOT NULL;
+
+ALTER TABLE `cks_houses`
+  CHANGE `street_id` `street_id` BIGINT(20) NOT NULL,
+  CHANGE `house_id` `house_id` BIGINT(20) NOT NULL;
+
+ALTER TABLE `cks_streets`
+  CHANGE `street_id` `street_id` BIGINT(20) NOT NULL;
+
+
+-- 2017.11.19
+CREATE TABLE IF NOT EXISTS `cks_flats_pin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_flat` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `created_at` double NOT NULL,
+  `pin` varchar(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2017.12.07
+ALTER TABLE `cks_payment`
+  CHANGE `flat_id` `flat_id` BIGINT(20) NULL   COMMENT 'for komdebt';
+
+ALTER TABLE `cks_flats_pin`
+  CHANGE `id_flat` `id_flat` BIGINT(20) NOT NULL;
+
+ALTER TABLE `cks_user_flats`
+  CHANGE `flat_id` `flat_id` BIGINT(20) NOT NULL;
+
+-- 2018.01.09
+RENAME TABLE `cks_cities` TO `kmda_cities`;
+RENAME TABLE `cks_dict_companies` TO `kmda_dict_companies`;
+RENAME TABLE `cks_dict_feedback_themes` TO `kmda_dict_feedback_themes`;
+RENAME TABLE `cks_dict_regions` TO `kmda_dict_regions`;
+RENAME TABLE `cks_email_cron_part` TO `kmda_email_cron_part`;
+RENAME TABLE `cks_email_cron` TO `kmda_email_cron`;
+RENAME TABLE `cks_feedback` TO `kmda_feedback`;
+RENAME TABLE `cks_flats_pin` TO `kmda_flats_pin`;
+RENAME TABLE `cks_flats` TO `kmda_flats`;
+RENAME TABLE `cks_houses` TO `kmda_houses`;
+RENAME TABLE `cks_news_images` TO `kmda_news_images`;
+RENAME TABLE `cks_news` TO `kmda_news`;
+RENAME TABLE `cks_page_views_user_agents` TO `kmda_page_views_user_agents`;
+RENAME TABLE `cks_page_views` TO `kmda_page_views`;
+RENAME TABLE `cks_pages_links` TO `kmda_pages_links`;
+RENAME TABLE `cks_pages` TO `kmda_pages`;
+RENAME TABLE `cks_payment_services` TO `kmda_payment_services`;
+RENAME TABLE `cks_payment` TO `kmda_payment`;
+RENAME TABLE `cks_service_centers` TO `kmda_service_centers`;
+RENAME TABLE `cks_streets` TO `kmda_streets`;
+RENAME TABLE `cks_text` TO `kmda_text`;
+RENAME TABLE `cks_useful_links` TO `kmda_useful_links`;
+RENAME TABLE `cks_user_codes` TO `kmda_user_codes`;
+RENAME TABLE `cks_user_flats` TO `kmda_user_flats`;
+RENAME TABLE `cks_users` TO `kmda_users`;
+
+-- 2018.01.12
+DROP TABLE `kmda_news`;
+DROP TABLE `kmda_news_images`;
+DROP TABLE `kmda_feedback`;
+
+-- 2018.01.19
+ALTER TABLE `kmda_users`
+  ADD COLUMN `openid_id` INT(11) NULL AFTER `max_objects`,
+  ADD COLUMN `openid_data` TEXT NULL AFTER `openid_id`, 
+  ADD INDEX (`openid_id`, `deleted`);
+
+-- 2018.01.31
+DROP TABLE kmda_service_centers;
+
+-- 2018.02.12
+ALTER TABLE `kmda_payment` AUTO_INCREMENT=1200000000;
+
+-- 2018.06.16
+CREATE TABLE `kmda_auth_code` (
+  `object_id` bigint(20) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `created_at` double NOT NULL,
+  PRIMARY KEY (`object_id`,`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
