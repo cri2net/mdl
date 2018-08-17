@@ -101,7 +101,7 @@
                                                     <?php endif;
                                                 ?>
                                             </div>
-                                            <a href="#" data-object-id="<?= $flat['id']; ?>" class="remove remove-object-check">&times;</a>
+                                            <a data-object-id="<?= $flat['id']; ?>" class="remove remove-object-check">&times;</a>
                                             <?php
                                                 if ($flat['error']) {
                                                     ?>
