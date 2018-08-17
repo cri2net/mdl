@@ -34,6 +34,7 @@
         </route>
 
         <route match="checkout" controller="page" action="checkout" />
+        <route match="redirect-to-journal" controller="redirect-to-journal" action="main" />
         
         <route match="invoice" controller="invoice" action="" />
         <route match="barcode" controller="barcode" action="">
