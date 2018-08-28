@@ -33,6 +33,20 @@ class KmdaOrders
 
         $response = self::send(json_encode($data, JSON_UNESCAPED_UNICODE), $url, $token);
 
+        $message_to_log = var_export(
+            [
+                'date'        => date('Y-m-d H:i:s'),
+                'timestamp'   => microtime(true),
+                'url'         => $url,
+                'token'       => $token,
+                'data'        => json_encode($data, JSON_UNESCAPED_UNICODE),
+                'response'    => $response,
+            ],
+            true
+        );
+
+        self::logResponse($message_to_log, $payment_id);
+
         if ($response) {
 
             $decoded = json_decode($response);
@@ -50,6 +64,18 @@ class KmdaOrders
                 $payment_id
             );
         }
+    }
+
+    public static function logResponse($message, $payment_id)
+    {
+        $dir = PROTECTED_DIR . "/logs/kmda-orders/" . date('Y/m/d/');
+
+        if (!file_exists($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        $file = $dir . "$payment_id---" . microtime(true) . '.txt';
+        error_log($message . "\r\n\r\n", 3, $file);
     }
 
     public static function getServiceId()
@@ -154,6 +180,7 @@ class KmdaOrders
     {
         $headers = [
             'Content-Type: application/json',
+            'X-Result-Include: yes',
             'Authorization: Bearer ' . $token,
         ];
         foreach ($extra_headers as $extra_header) {

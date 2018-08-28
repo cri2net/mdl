@@ -24,10 +24,6 @@
                     ?>
                     <div id="navbar-blue">
                         <ul class="nav navbar-nav">
-                            <?php/*
-                                require(PROTECTED_DIR . '/scripts/navbar_only_payments.php');
-                                */
-                            ?>
                         </ul>
                     </div>
                     <?php
