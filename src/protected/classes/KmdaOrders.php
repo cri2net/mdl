@@ -4,7 +4,7 @@ use cri2net\php_pdo_db\PDO_DB;
 
 class KmdaOrders
 {
-    const URL = 'http://orders.e-service.egp.com.ua';
+    const URL = 'https://my2.kyivcity.gov.ua/orders-gateway';
     const DEFAULT_SERVICE_ID = 'cc5f9a92-3252-4aab-9ccb-938719964ec3';
 
     public static function createOrder($payment_id)
