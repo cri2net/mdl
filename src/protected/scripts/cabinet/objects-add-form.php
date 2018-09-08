@@ -75,7 +75,7 @@
 ?>
 <script type="text/javascript">
     var PIN_SENT = false;
- 
+
     $(document).ready(function() {
         $("#add_obj_street").autocomplete({
             source: function(request, response) {
@@ -137,7 +137,6 @@
             var flat = $("#add_obj_flat").val();
             PIN_SENT = false;
             $('#add_obj_pin').removeAttr('required');
-            $('#add_obj_auth_key').removeAttr('required');
             $('#auth-key').hide();
             $('#pin-code').hide();
 
@@ -193,20 +192,18 @@
                         case 'ok':
                             
                             PIN_SENT = true;
-                            
+
                             if (response.type == 'auth_key') {
                                 $('#add_obj_pin').removeAttr('required');
-                                $('#add_obj_auth_key').attr('required', 'required');
                                 $('#pin-code').hide();
                                 $('#auth-key').show();
                             } else {
                                 $('#auth-key').hide();
                                 $('#pin-code').show();
                                 $('#add_obj_pin').attr('required', 'required');
-                                $('#add_obj_auth_key').removeAttr('required');
                             }
                             break;
-                            
+
                         case 'error':
                             alert(response.msg);
                             break;
@@ -214,7 +211,7 @@
                 }
             });
 
-            $("#pin-code").slideDown(function(){ $("#pin-code input").attr('required', 'required')});
+            $("#pin-code").slideDown();
             return false;
         });
     });
