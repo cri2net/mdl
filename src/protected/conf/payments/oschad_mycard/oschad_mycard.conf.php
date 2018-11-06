@@ -1,7 +1,7 @@
 <?php
 $oschad_merchant_settings = [
     'CURRENCY'   => 'UAH',
-    'MERCH_NAME' => 'CKS',
+    'MERCH_NAME' => 'kievcity.gov.ua',
     'MERCH_URL'  => 'https://gerc.ua/kmda/',
     'MERCHANT'   => '20904509',
     'TERMINAL'   => '20907449',

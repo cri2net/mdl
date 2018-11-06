@@ -45,8 +45,9 @@ try {
         $headers = [
             "Authorization: Bearer {$token->access_token}",
         ];
-        $userinfo = Http::httpGet(OpenId::USERINFO_URL, false, true, $headers);
-        $userinfo = json_decode($userinfo);
+
+        $userinfo = $OpenId->getInfoFromEmr($decoded->sub, $token->access_token);
+        $userinfo = @json_decode($userinfo);
 
         if (!empty($decoded)) {
 
@@ -80,10 +81,10 @@ try {
                     $password = generateCode(40);
 
                     $data = [
-                        'email'          => @$userinfo->email . '',
+                        'email'          => @$userinfo->data->profile->emails[0]->email . '',
                         'password'       => Authorization::generate_db_password($password, $password_key),
                         'password_key'   => $password_key,
-                        'verified_email' => (($userinfo->email_verified) ? 1 : 0),
+                        'verified_email' => ((@$userinfo->data->profile->emails[0]->confirmed) ? 1 : 0),
                         'login'          => '',
                         'lastname'       => '',
                         'name'           => @$decoded->name . '',
