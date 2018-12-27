@@ -47,7 +47,7 @@ switch (USER_REAL_IP) {
         if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
         }
-        define('BASE_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://www.gerc.ua/kmda');
+        define('BASE_URL', 'https://www.gerc.ua/kmda');
 
         $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen('/kmda'));
 }
@@ -85,5 +85,5 @@ define("KMDA_DEV_ENV", false);
 if (KMDA_DEV_ENV) {
     define('KMDA_ORDER_URL', 'http://e-service.egp.com.ua');
 } else {
-    define('KMDA_ORDER_URL', 'https://my2.kyivcity.gov.ua');
+    define('KMDA_ORDER_URL', 'https://my.kyivcity.gov.ua');
 }
