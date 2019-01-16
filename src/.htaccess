@@ -1,26 +1,7 @@
 AddDefaultCharset UTF-8
 
-SetEnvIfNoCase User-Agent "^MJ12bot" bad_bot
-SetEnvIfNoCase User-Agent "^meanpathbot" bad_bot
-SetEnvIfNoCase User-Agent "^archive.org_bot" bad_bot
-SetEnvIfNoCase User-Agent "^Riddler" bad_bot
-
-Order Allow,Deny
-Allow from all
-Deny from env=bad_bot 
-
-
 Options -Indexes
 Options +FollowSymLinks
-
-<IfModule mod_php5.c>
-  php_value magic_quotes_gpc                0
-  php_value register_globals                0
-  php_value session.auto_start              0
-  php_value mbstring.http_input             pass
-  php_value mbstring.http_output            pass
-  php_value mbstring.encoding_translation   0
-</IfModule>
 
 <IfModule mod_expires.c>
   ExpiresActive On
@@ -32,8 +13,6 @@ Options +FollowSymLinks
 
 <IfModule mod_rewrite.c>
   RewriteEngine on
-  RewriteCond %{HTTP_HOST} ^www.cks.com.ua$ [NC]
-  RewriteRule ^(.*)$ http://cks.com.ua/$1 [L,R=301]
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

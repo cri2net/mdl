@@ -127,9 +127,12 @@ class Authorization
         return md5($userData['password'] . $userData['password_key'] . $userData['id']);
     }
     
-    public static function get_auth_hash2($user_id, $hash1)
+    public static function get_auth_hash2($user_id, $hash1 = null)
     {
         $user_id = (int)$user_id;
+        if ($hash1 == null) {
+            $hash1 = self::get_auth_hash1($user_id);
+        }
 
         // если это текущий авторизованный пользователь, незачем делать запрос в базу
         if (isset($_SESSION['auth']['id']) && (intval($_SESSION['auth']['id']) === $user_id)) {

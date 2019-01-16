@@ -9,6 +9,17 @@ class Http
         } else {
             header("HTTP/1.1 307 Temporary Redirect");
         }
+
+        if (Authorization::isLogin()) {
+
+            if (strcasecmp(substr($location, 0, strlen(BASE_URL)), BASE_URL) === 0) {
+
+                $user_id = Authorization::getLoggedUserId();
+                $location .= (strpos($location, '?') === false) ? '?' : '&';
+                $location .= 'uid=' . $user_id . '&hash2=' . Authorization::get_auth_hash2($user_id);
+            }
+        }
+
         header("Location: $location");
         if ($exit) {
             exit();

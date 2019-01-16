@@ -113,12 +113,12 @@
     }
 ?>
 <div class="container">
-    <breadcrumbs itemscope itemtype="http://schema.org/BreadcrumbList">
+    <breadcrumbs itemscope itemtype="https://schema.org/BreadcrumbList">
         <?php
             for ($i=0; $i < count($breadcrumbs); $i++) {
                 if ($i < count($breadcrumbs) - 1) {
                     ?>
-                    <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                         <a itemprop="item" href="<?= BASE_URL . $breadcrumbs[$i]['link']; ?>" target="_top"><span itemprop="name"><?= $breadcrumbs[$i]['title']; ?></span></a>
                         <meta itemprop="position" content="<?= $i + 1; ?>" />
                     </span>

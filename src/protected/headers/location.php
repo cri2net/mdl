@@ -4,22 +4,6 @@ use cri2net\php_pdo_db\PDO_DB;
 
 switch ($__route_result['controller'] . "/" . $__route_result['action']) {
     
-    case 'error/404':
-        $uri_assoc_arr = [
-            // сахар для URI (типа как синтаксический)
-            'gai'          => '/cabinet/instant-payments/dai/',
-            'dai'          => '/cabinet/instant-payments/dai/',
-            'kindergarten' => '/cabinet/instant-payments/kindergarten/',
-            'phone'        => '/cabinet/instant-payments/phone/',
-            'cards'        => '/cabinet/instant-payments/cards/',
-            'index.php'    => '/',
-        ];
-
-        if (isset($uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')])) {
-            $new_location = BASE_URL . $uri_assoc_arr[trim($_SERVER['REQUEST_URI'], '/')];
-        }
-    break;
-
     case 'page/index':
         $new_location = BASE_URL . '/cabinet/';
         break;

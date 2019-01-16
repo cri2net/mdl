@@ -6,6 +6,7 @@ if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
 define('USER_REAL_IP', $__INT_IP);
 define('HTTP_USER_AGENT', (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : ((isset($GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'])) ? $GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'] : ''));
 
+header('P3P: CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
 session_name('site_session');
 session_start();
 
@@ -72,10 +73,6 @@ $route_path = (strpos($_SERVER['REQUEST_URI'], '?') !== false)
     : $_SERVER['REQUEST_URI'];
 $__route_result = $router->get($route_path);
 
-require_once(PROTECTED_DIR . "/headers/location.php");
-require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
-// require_once(PROTECTED_DIR."/headers/content-security-policy.php");
-
 $banned_user = ['dashast93@gmail.com', 'kolesnichenkotetyana@gmail.com', 'srt7revenger@ukr.net', 'glibovet@gmail.com', 'tut.tozhe@net.proverki'];
 $prohibided_flats = [987202, 1418852];
 Placebook\Framework\Core\SystemConfig::$configPath = PROTECTED_DIR . '/conf/system_config.json';
@@ -87,3 +84,7 @@ if (KMDA_DEV_ENV) {
 } else {
     define('KMDA_ORDER_URL', 'https://my.kyivcity.gov.ua');
 }
+
+require_once(PROTECTED_DIR . "/headers/x-frame-options.php");
+require_once(PROTECTED_DIR . "/headers/location.php");
+// require_once(PROTECTED_DIR."/headers/content-security-policy.php");

@@ -25,9 +25,9 @@ if (!isset($_GET['code'])) {
 
     // State is invalid, possible CSRF attack in progress
     
-    $OpenId->unsetState();
-    unset($_SESSION['_openid_state']);
-    throw new Exception('Invalid state');
+    // $OpenId->unsetState();
+    // unset($_SESSION['_openid_state']);
+    // throw new Exception('Invalid state');
 }
 
 try {
