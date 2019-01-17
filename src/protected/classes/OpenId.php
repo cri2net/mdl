@@ -6,11 +6,11 @@
 */
 class OpenId
 {
-    const AUTHORIZE_URL = 'https://id2.kyivcity.gov.ua/authorize';
+    const AUTHORIZE_URL = 'https://id.kyivcity.gov.ua/authorize';
 
-    const TOKEN_URL     = 'https://id2.kyivcity.gov.ua/token';
+    const TOKEN_URL     = 'https://id.kyivcity.gov.ua/token';
 
-    const USERINFO_URL  = 'https://id2.kyivcity.gov.ua/userinfo';
+    const USERINFO_URL  = 'https://id.kyivcity.gov.ua/userinfo';
 
     const EMR_QUERY_URL = 'https://emr-query.kyivcity.gov.ua/profile/query/api/v1/query';
 
