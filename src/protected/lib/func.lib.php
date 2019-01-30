@@ -2,7 +2,7 @@
 
 use cri2net\php_pdo_db\PDO_DB;
 
-function generateCode($length = 8, $possible = '012346789abcdefghijkmnopqrtvwxyz')
+function generateCode($length = 8, $possible = '0123456789abcdefghijkmnopqrtvwxyz')
 {
     $string = '';
     $maxlength = strlen($possible);

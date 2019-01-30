@@ -1,4 +1,6 @@
 <?php
+use cri2net\php_pdo_db\PDO_DB;
+
 $__INT_IP = (isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER["REMOTE_ADDR"] : '';
 if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
     $__INT_IP = (isset($_SERVER["HTTP_X_REAL_IP"])) ? $_SERVER["HTTP_X_REAL_IP"] : $_SERVER["HTTP_X_FORWARDED_FOR"];
@@ -52,6 +54,14 @@ switch (USER_REAL_IP) {
 
         $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen('/kmda'));
 }
+
+PDO_DB::initSettings([
+    'host'     => DB_HOST,
+    'user'     => DB_USER,
+    'password' => DB_PASSWORD,
+    'name'     => DB_NAME,
+    'type'     => 'mysql',
+]);
 
 define('EXT_BASE_URL', 'https://cabinet.kyivcity.gov.ua/catalog/payments/gerc/?page=');
 define('EMAIL_FROM', 'websupport@gerc.ua');
