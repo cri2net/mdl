@@ -174,7 +174,16 @@
                 }
             ?>
             </div>
-        </div>        
+        </div>
+
+        <div class="row" style="text-align: center;">
+            <div class="title links-title">Ми приймаємо до сплати</div>
+            <div class="sidebar-slides" style="margin-bottom: 25px;">
+                <img style="width: 90px; margin-top: 15px; margin-right: 10px;" src="<?= BASE_URL; ?>/assets/pic/ps/visa.png" alt="">
+                <img style="width: 90px; margin-top: 15px; margin-right: 10px;" src="<?= BASE_URL; ?>/assets/pic/ps/mastercard.png" alt="">
+                <img style="width: 90px; margin-top: 15px;" src="<?= BASE_URL; ?>/assets/pic/ps/prostir.png" alt="">
+            </div>
+        </div>
     </content>
 </div>
 

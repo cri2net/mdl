@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "cri2net/php-pdo-db",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/cri2net/php-pdo-db.git",
-                "reference": "e7d30157e642ee7c4117c8828cc9d5a68ab4b259"
+                "reference": "c473267b58033d82cd0b4f6bcfc7cf8679b773f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/e7d30157e642ee7c4117c8828cc9d5a68ab4b259.zip",
-                "reference": "e7d30157e642ee7c4117c8828cc9d5a68ab4b259",
+                "url": "https://bitbucket.org/cri2net/php-pdo-db/get/c473267b58033d82cd0b4f6bcfc7cf8679b773f7.zip",
+                "reference": "c473267b58033d82cd0b4f6bcfc7cf8679b773f7",
                 "shasum": ""
             },
             "require": {
@@ -42,7 +42,7 @@
             ],
             "description": "PHP Class to work with the database using PDO",
             "homepage": "https://bitbucket.org/cri2net/php-pdo-db",
-            "time": "2019-01-20T13:26:54+00:00"
+            "time": "2019-01-30T17:41:32+00:00"
         },
         {
             "name": "cri2net/php-singleton",
