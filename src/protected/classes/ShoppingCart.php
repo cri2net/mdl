@@ -18,8 +18,8 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank', 'oschadbank_visa']
-            : ['tas', 'visa', 'mastercard', 'oschad', 'oschad_mycard', 'oschadbank', 'oschadbank_visa'];
+            ? ['tas', 'psp', 'oschad', 'oschadbank']
+            : ['tas', 'psp', 'oschad', 'oschadbank'];
     }
 
     public static function get_API_URL($key)
@@ -43,32 +43,15 @@ class ShoppingCart
     public static function pppGetCashierByProcessing($processing, &$login, &$password)
     {
         switch ($processing) {
-            case 'visa':
-            case 'mastercard':
-                $login    = 'SITE_KMDA_AVAL';
-                $password = '48EBD535EE1410CD00C1E08000F038E6E9292DB4';
-                break;
-
             case 'tas':
                 $login    = 'SITE_KMDA_TAS';
                 $password = '1B842ABA1CC93A92E761CA10090AEFAD6944A5DF';
-                break;
-
-            case 'oschad_mycard':
-                $login    = 'SITE_KMDA_FRAME_OSCH_MK';
-                $password = 'CC6646BED4E2678DE0D9096FD60DB740558C4BA1';
                 break;
 
             case 'oschadbank':
                 // мастеркард, все карты (ощад)
                 $login    = 'SITE_KMDA_FRAME_OSCH_OK';
                 $password = 'AA8E43FDE9355977EEDEA5ED8C6FD9D0F16AA759';
-                break;
-
-            case 'oschadbank_visa':
-                // виза, все карты (ощад)
-                $login    = 'SITE_KMDA_FRAME_OSCH_OK_V';
-                $password = '41F709BF4EF9C050177EFD54D139135575FA2482';
                 break;
 
             case 'oschad':
@@ -150,13 +133,10 @@ class ShoppingCart
         // пример правила: ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5]
         
         $rules = [
-            'visa'            => ['percent' => 2, 'min' => 2],
-            'tas'             => ['percent' => 2, 'min' => 2],
-            'mastercard'      => ['percent' => 2, 'min' => 2],
-            'oschad'          => ['percent' => 0, 'min' => 0],
-            'oschad_mycard'   => ['percent' => 0, 'min' => 0],
-            'oschadbank'      => ['percent' => 2, 'min' => 2],
-            'oschadbank_visa' => ['percent' => 2, 'min' => 2],
+            'tas'        => ['percent' => 2, 'min' => 5],
+            'psp'        => ['percent' => 2, 'min' => 5],
+            'oschad'     => ['percent' => 0, 'min' => 0],
+            'oschadbank' => ['percent' => 2, 'min' => 5],
         ];
 
         if ($pay_system) {
@@ -346,14 +326,6 @@ class ShoppingCart
         self::pppGetCashierByProcessing($payment['processing'], $login, $password);
 
         switch ($payment['type']) {
-            case 'gai':
-            case 'kinders':
-            case 'direct':
-            case 'budget':
-                $report = ($payment['status'] == 'success') ? '/gerc_api/api_prov.rep' : '/gerc_api/api_pacq50.rep';
-                break;
-
-            case 'cks':
             case 'komdebt':
                 $report = ($payment['status'] == 'success') ? '/gerc_api/prov_gkom.rep' : '/gerc_api/pacq50_gkom.rep';
                 break;
@@ -361,9 +333,6 @@ class ShoppingCart
 
         switch ($payment['processing']) {
 
-            case '_test_upc':
-            case 'mastercard':
-            case 'visa':
             case 'tas':
                 $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                 $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
@@ -423,9 +392,7 @@ class ShoppingCart
                 break;
 
             case 'oschad':
-            case 'oschad_mycard':
             case 'oschadbank':
-            case 'oschadbank_visa':
                 $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
                 $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
                 $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
@@ -565,7 +532,7 @@ class ShoppingCart
         $xml .= "<summ_comis>". ($payment['summ_komis'] * 100) ."</summ_comis>";
         $xml .= "<idsiteuser>{$payment['user_id']}</idsiteuser>";
         $xml .= "<uniqid>". md5(uniqid(rand(), 1)) ."</uniqid>";
-
+        
         $xml .= "<plat_list>";
 
         for ($i=0; $i < count($services); $i++) {
@@ -721,109 +688,16 @@ class ShoppingCart
                 break;
 
             case '':
-            case 'masterpass':
             case 'oschad':
-            case 'oschad_mycard':
-            case 'oschadbank_visa':
             case 'oschadbank':
                 if (microtime(true) - $payment['go_to_payment_time'] > 3600) {
                     $to_update['status'] = 'timeout';
                 }
                 break;
 
-            case 'visa':
-            case 'mastercard':
-
-                $url = UPC::CHECK_STATUS_URL;
-                $result = false;
-
-                if (isset($payment['processing_data']['first']->upc_merchantid)) {
-                    $postdata = [
-                        'MerchantID'   => $payment['processing_data']['first']->upc_merchantid,
-                        'TerminalID'   => $payment['processing_data']['first']->upc_terminalid,
-                        'OrderID'      => $payment['processing_data']['first']->upc_orderid,
-                        'Currency'     => $payment['processing_data']['first']->upc_currency,
-                        'TotalAmount'  => $payment['processing_data']['first']->upc_totalamount,
-                        'PurchaseTime' => $payment['processing_data']['first']->upc_purchasetime
-                    ];
-                    $result = Http::HttpPost($url, $postdata);
-
-                    if (!isset($payment['processing_data']['cron_check_status'])) {
-                        $payment['processing_data']['cron_check_status'] = [];
-                    }
-
-                    if ($result && stristr($result, '403 Forbidden')) {
-                        $result = false;
-                    } else {
-                        $payment['processing_data']['cron_check_status'][] = [
-                            'timestamp' => microtime(true),
-                            'raw_data' => $result,
-                            'request' => $postdata
-                        ];
-                    }
-
-                    $to_update['processing_data'] = json_encode($payment['processing_data'], JSON_UNESCAPED_UNICODE);
-                }
-
-                if (!$result) {
-                    if (time() - $payment['timestamp'] >= 1800) {
-                        $to_update['status'] = 'timeout';
-                    }
-                    break;
-                }
-
-                $lines = explode("\n", $result);
-                $params = [];
-
-                for ($i=0; $i < count($lines); $i++) {
-                    $vars = explode('=', $lines[$i]);
-
-                    $var = trim($vars[0]);
-                    if (strlen($var) > 0) {
-                        $params[$var] = trim($vars[1]);
-                    }
-                }
-
-                if (in_array($params['TranCode'], ['000', '410'])) {
-                    $to_update['status'] = 'success';
-
-                    // в дальнейшем эти данные будут использоваться для отправки статуса на reports
-                    $date = date('d-m-Y H:i:s');
-
-                    $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
-                    $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
-                    $payment['processing_data']['dates'][] = $date;
-                    $payment['processing_data']['requests'][$date] = ['_is_from_cron_check_status' => true];
-
-                    foreach ($params as $key => $value) {
-                        $payment['processing_data']['requests'][$date][$key] = $value;
-                    }
-                    $to_update['processing_data'] = json_encode($payment['processing_data'], JSON_UNESCAPED_UNICODE);
-
-                } elseif (in_array($params['TranCode'], ['105', '116', '111', '108', '101', '130', '290', '291', '401', '402', '403', '404', '405', '406', '407', '411', '412', '420', '421', '430', '431', '501', '502', '503', '504'])) {
-                    $decline = true;
-                } elseif (in_array($params['TranCode'], ['408', '409', '601'])) {
-                    // логи в БД занимают слишком много места. Не логируем запросы статусов на транзакции, которые не завершены.
-                    if (time() - $payment['go_to_payment_time'] >= 3600 * 3) {
-                        $to_update['status'] = 'timeout';
-                    } else {
-                        unset($to_update);
-                    }
-                } else {
-                    if (time() - $payment['go_to_payment_time'] >= 1800) {
-                        $to_update['status'] = 'timeout';
-                    }
-                }
-
-                if ($decline) {
-                    $to_update['status'] = 'error';
-                }
-                break;
-
             default:
                 return false;
         }
-
 
         if ($to_update) {
             if (isset($to_update['status']) && ($to_update['status'] == 'timeout')) {
@@ -837,19 +711,11 @@ class ShoppingCart
     public static function getErrorDescription($processing, $trancode)
     {
         switch ($processing) {
-            case '_test_upc':
-            case 'mastercard':
-            case 'visa':
-                return UPC::get_upc_error($trancode);
-                break;
-
             case 'tas':
                 return TasLink::getErrorDescription($trancode);
                 break;
 
             case 'oschad':
-            case 'oschad_mycard':
-            case 'oschadbank_visa':
             case 'oschadbank':
                 return Oschad::getErrorDescription($trancode);
         }

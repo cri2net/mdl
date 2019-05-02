@@ -41,22 +41,6 @@
                                     case 'komdebt':
                                         echo 'Комунальні послуги';
                                         break;
-
-                                    case 'gai':
-                                        echo 'Штрафи за порушення ПДР';
-                                        break;
-
-                                    case 'kinders':
-                                        echo 'Дитячі садки (харчування)';
-                                        break;
-
-                                    case 'budget':
-                                        echo 'До бюджету';
-                                        break;
-
-                                    case 'direct':
-                                        echo 'Платежі за реквізитами';
-                                        break;
                                 }
                             ?>
                         </td>

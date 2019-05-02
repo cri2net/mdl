@@ -966,3 +966,9 @@ CREATE TABLE `kmda_auth_code` (
 ALTER TABLE `kmda_payment`
   CHANGE `processing` `processing` ENUM('mastercard','visa','webmoney','tas','oschad','oschad_mycard','oschadbank','marfin','psp') CHARSET utf8 COLLATE utf8_general_ci NULL;
 
+-- 2019.05.02
+ALTER TABLE `kmda_payment`
+  CHANGE `processing` `processing` ENUM('tas','oschad','oschadbank','psp') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+ALTER TABLE `kmda_payment`
+  CHANGE `type` `type` ENUM('komdebt') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt' NOT NULL;

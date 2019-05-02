@@ -53,24 +53,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
                 }
                 break;
 
-            case 'instant-payments':
-                $seo_str = 'Миттєві платежі';
-
-                if (isset($__route_result['values']['section'])) {
-                    $sections = [
-                        'dai'            => 'Штрафи за порушення ПДР',
-                        'kindergarten'   => 'Дитячий садок',
-                        'cards'          => 'Перекази з карти на карту',
-                        'phone'          => 'Сплата за телефон та інтернет',
-                        'budget'         => 'Платежі до бюджету',
-                        'requisites'     => 'Платежі за реквізитами',
-                        'volia'          => 'Воля',
-                        'secret-service' => 'Державна служба охорони',
-                    ];
-                    $seo_str = $sections[$__route_result['values']['section']];
-                }
-                break;
-
             case 'payments':
                 $seo_str = 'Мої платежі';
 
@@ -78,7 +60,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
                     $sections = [
                         'history' => 'Історія платежів',
                         'komdebt' => 'ЖКГ платежі',
-                        'instant' => 'Миттєві платежі',
                         'details' => 'Деталі платежу № ',
                     ];
 
