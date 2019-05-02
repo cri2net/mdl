@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca1fd2ed00931a7d8d47ecc5604bae57",
+    "content-hash": "80d734eb1e387efc87c99d1ae528546f",
     "packages": [
         {
             "name": "cri2net/php-pdo-db",
@@ -313,21 +313,21 @@
         },
         {
             "name": "placebook/framework-basic",
-            "version": "1.3.2",
+            "version": "1.3.5",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/cri2net/placebook-framework-basic.git",
-                "reference": "c78fcf0bfaeb734b9a59f86b9afa4e303e8ad5bd"
+                "reference": "f3c59e7e8d7541f8b9946cd2f10a96ab68f28391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/cri2net/placebook-framework-basic/get/c78fcf0bfaeb734b9a59f86b9afa4e303e8ad5bd.zip",
-                "reference": "c78fcf0bfaeb734b9a59f86b9afa4e303e8ad5bd",
+                "url": "https://bitbucket.org/cri2net/placebook-framework-basic/get/f3c59e7e8d7541f8b9946cd2f10a96ab68f28391.zip",
+                "reference": "f3c59e7e8d7541f8b9946cd2f10a96ab68f28391",
                 "shasum": ""
             },
             "require": {
                 "cri2net/php-singleton": "^1.0",
-                "php": ">=5.4.0",
+                "php": "^5.4|^7.0",
                 "psr/log": "^1.0"
             },
             "type": "library",
@@ -348,7 +348,7 @@
             ],
             "description": "Basic classes for placebook's framework",
             "homepage": "https://bitbucket.org/cri2net/placebook-framework-basic",
-            "time": "2018-11-23T20:14:43+00:00"
+            "time": "2019-04-29T20:42:04+00:00"
         },
         {
             "name": "psr/log",
@@ -405,7 +405,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": "^5.4|^7.0"
     },
     "platform-dev": []
 }

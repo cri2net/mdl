@@ -21,6 +21,16 @@
         $$name = ShoppingCart::getPercentSum($total_sum, $tmp);
     }
 
+    if (isset($_SESSION['psp_id']['p' . $payment_id])) {
+        $psp_id = $_SESSION['psp_id']['p' . $payment_id];
+    } else {
+
+        $psp_id = Psp::sendPaymentToGate($payment_id);
+        if (!empty($psp_id)) {
+            $_SESSION['psp_id']['p' . $payment_id] = $psp_id;
+        }
+    }
+
     if (!empty($error)) {
         ?>
         <div class="container">
@@ -41,70 +51,13 @@
 <div class="form-subtitle subtitle-bg-green">Оберіть, будь ласка, спосіб сплати:</div>
 <form class="form-block full-width" action="<?= BASE_URL; ?>/post/cabinet/object-item/checkout/" method="post">
     <div class="paysystems">
-        <?php
-
-            if (in_array('oschadbank_visa', $pay_systems)) {
-                ?>
-                <div class="check-box-line">
-                    <span id="checkbox_percent_visa" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbank_visaSum; ?>" data-paysystem-key="oschadbank_visa"></span>
-                    <label onclick="$('#checkbox_percent_visa').click();">
-                        <img alt="visa" src="<?= BASE_URL; ?>/assets/images/paysystems/visa-logo.png" />
-                        <span class="text-label">Карта Visa, Visa Electron</span>
-                    </label>
-                </div>
-                <?php
-            }
-
-            ?>
-            <div class="check-box-line">
-                <span id="checkbox_percent_mastercard" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="mastercard_box"></span>
-                <label onclick="$('#checkbox_percent_mastercard').click();">
-                    <img alt="mastercard" src="<?= BASE_URL; ?>/assets/images/paysystems/mastercard-logo.png" />
-                    <span class="text-label">Карта MasterCard, Maestro</span>
-                </label>
-            </div>
-            <div class="paybill-ps-item paybill-ps-item-mastercard paybill-ps-item-tas_mc paybill-ps-item-oschadbank paybill-ps-item-mastercard_box" style="display: none;">
-                <div class="paybill-ps-sub-items">
-                    <div class="check-box-line">
-                        <span id="checkbox_percent_mastercard_1" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschadbankSum; ?>" data-paysystem-key="oschadbank"></span>
-                        <label onclick="$('#checkbox_percent_mastercard_1').click();">
-                            <img alt="mastercard" src="<?= BASE_URL; ?>/assets/images/paysystems/mastercard-logo.png" />
-                            <span class="text-label">Інші банки</span>
-                        </label>
-                    </div>
-                    <div class="check-box-line">
-                        <span id="checkbox_percent_mastercard_5" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $tasSum; ?>" data-paysystem-key="tas_mc"></span>
-                        <label onclick="$('#checkbox_percent_mastercard_5').click();">
-                            <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/tas-logo.png" />
-                            <span class="text-label">ТасКомБанк</span>
-                        </label>
-                    </div>
-                    <?php
-                        // if ($object['city_id'] == Street::KIEV_ID) {
-                        if (false) {
-                            ?>
-                            <div class="check-box-line">
-                                <span id="checkbox_percent_mastercard_4" class="niceCheck radio"><span class="dotted-line"></span><input type="radio" name="percent" data-paysystem-sum="<?= $oschad_mycardSum; ?>" data-paysystem-key="oschad_mycard"></span>
-                                <label onclick="$('#checkbox_percent_mastercard_4').click();">
-                                    <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/oschadbank.png" />
-                                    <span class="text-label">Ощадбанк Моя Картка</span>
-                                </label>
-                            </div>
-                            <?php
-                        }
-                    ?>
-                </div>
-            </div>
-
-            <div class="check-box-line">
-                <span id="checkbox_percent_mastercard_3" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" data-paysystem-key="oschad"></span>
-                <label onclick="$('#checkbox_percent_mastercard_3').click();">
-                    <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/oschadbank.png" />
-                    <span class="text-label">Ощадбанк Картка Киянина</span>
-                </label>
-            </div>
-            <?php
-        ?>
+        <div class="check-box-line">
+            <span id="checkbox_percent_mastercard_3" class="niceCheck radio"><input type="radio" name="percent" data-paysystem-sum="<?= $oschadSum; ?>" data-paysystem-key="oschad"></span>
+            <label onclick="$('#checkbox_percent_mastercard_3').click();">
+                <img alt="" style="height: 32px;" src="<?= BASE_URL; ?>/assets/images/paysystems/oschadbank.png" />
+                <span class="text-label">Ощадбанк Картка Киянина</span>
+            </label>
+        </div>
     </div>
 
     <div class="input">
@@ -124,32 +77,35 @@
         <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
         <input type="hidden" value="1" name="checkout_submited">
     </div>
+
+    <?php
+        if (!empty($psp_id)) {
+            ?>
+            <span style="color: #01b671; font-size: 22px;">
+                <br>
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Інші способи</span>
+                <br><br>
+            </span>
+            <iframe style="min-width: 760px; width: 100%; min-height: 600px;" src="https://fc.gerc.ua:8443/api/card.php?site_id=<?= Psp::SITE_ID; ?>&oper_id=<?= $psp_id; ?>" frameborder="0"></iframe>
+            <br><br>
+            <?php
+        }
+    ?>
 </form>
 </div>
 </content>
 </div>
-<script type="text/javascript">
+<script>
     $(document).ready(function(){
-        getShoppingCartTotal('<?= $total_sum; ?>', '<?= $tasSum; ?>', 'tas_visa');
       
         $(".niceCheck").click(function() {
             changeCheck($(this), 'check-group');
         });
         
-        $('#checkbox_percent_visa').click();
-
-        $("#checkbox_percent_mastercard").click(function() {
-            $('#checkbox_percent_mastercard_1').click();
-        });
-        $("#checkbox_percent_oschad").click(function() {
-            $('#checkbox_percent_oschad_1').click();
-        });
-
         $("input[name=percent]").change(function() {
             var checked_el = $("input[name=percent]:checked");
             var ps_key = $(checked_el).attr('data-paysystem-key');
             var ps_sum = $(checked_el).attr('data-paysystem-sum');
-            console.log(checked_el);
             getShoppingCartTotal('<?= $total_sum; ?>', ps_sum, ps_key);
         });
     });

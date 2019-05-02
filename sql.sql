@@ -961,3 +961,8 @@ CREATE TABLE `kmda_auth_code` (
   `created_at` double NOT NULL,
   PRIMARY KEY (`object_id`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2019.04.24
+ALTER TABLE `kmda_payment`
+  CHANGE `processing` `processing` ENUM('mastercard','visa','webmoney','tas','oschad','oschad_mycard','oschadbank','marfin','psp') CHARSET utf8 COLLATE utf8_general_ci NULL;
+

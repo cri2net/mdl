@@ -335,6 +335,11 @@ class ShoppingCart
             return;
         }
 
+        if (in_array($payment['processing'], ['psp'])) {
+            PDO_DB::update(['send_payment_status_to_reports' => 1], self::TABLE, $payment['id']);
+            return;
+        }
+
         $url = API_URL . self::REPORT_BASE_URL;
         $to_update = [];
 
@@ -542,11 +547,11 @@ class ShoppingCart
         return $success;
     }
 
-    public static function send_payment_to_reports($payment_id)
+    public static function getPaymentXml($payment_id)
     {
         $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
         if ($payment === null) {
-            return;
+            return '';
         }
 
         self::pppGetCashierByProcessing($payment['processing'], $login, $password);
@@ -605,8 +610,20 @@ class ShoppingCart
 
         $xml .= "</plat_list>";
         $xml .= "</rowset>";
+        $xml = str_replace('<counters></counters>', '', $xml);
 
         $xml = iconv('UTF-8', 'WINDOWS-1251', $xml);
+
+        return $xml;
+    }
+
+    public static function send_payment_to_reports($payment_id)
+    {
+        $xml = self::getPaymentXml($payment_id);
+        if (empty($xml)) {
+            return;
+        }
+
         $report = '/gerc_api/pnew_gkom.rep';
         $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode($report) . '&destype=Cache&Desformat=xml&cmdkey=api_kmda_site';
         $url .= '&in_xml=' . rawurlencode($xml);
@@ -843,7 +860,7 @@ class ShoppingCart
     public static function cron()
     {
         $pdo = PDO_DB::getPDO();
-        $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status<>'new' AND status<>'timeout' AND send_payment_status_to_reports=0 ORDER BY id ASC");
+        $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status NOT IN ('new', 'timeout') AND processing NOT IN ('psp') AND send_payment_status_to_reports=0 ORDER BY id ASC");
 
         while ($row = $stm->fetch()) {
             self::send_payment_status_to_reports($row['id']);
