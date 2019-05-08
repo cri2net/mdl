@@ -250,16 +250,16 @@
         },
         {
             "name": "placebook/framework-basic",
-            "version": "1.3.5",
+            "version": "1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/cri2net/placebook-framework-basic.git",
-                "reference": "f3c59e7e8d7541f8b9946cd2f10a96ab68f28391"
+                "reference": "db45af8b39ba3815990e2f99cff39b6813677c62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/cri2net/placebook-framework-basic/get/f3c59e7e8d7541f8b9946cd2f10a96ab68f28391.zip",
-                "reference": "f3c59e7e8d7541f8b9946cd2f10a96ab68f28391",
+                "url": "https://bitbucket.org/cri2net/placebook-framework-basic/get/db45af8b39ba3815990e2f99cff39b6813677c62.zip",
+                "reference": "db45af8b39ba3815990e2f99cff39b6813677c62",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +285,7 @@
             ],
             "description": "Basic classes for placebook's framework",
             "homepage": "https://bitbucket.org/cri2net/placebook-framework-basic",
-            "time": "2019-04-29T20:42:04+00:00"
+            "time": "2019-05-06T22:38:23+00:00"
         },
         {
             "name": "psr/log",

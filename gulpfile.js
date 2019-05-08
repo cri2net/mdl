@@ -1,13 +1,10 @@
 var gulp      = require('gulp'),
     uglify    = require('gulp-uglify'),
-    gutil     = require('gulp-util'),
-    clean     = require('gulp-clean'),
     connect   = require('gulp-connect'),
     livereload   = require('gulp-livereload'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),    
-    less      = require('gulp-less'),
-    minifyCss = require('gulp-minify-css');
+    less      = require('gulp-less');
 
 var WEBPAGES_MASK = [
     './src/**/.htaccess',
@@ -32,7 +29,6 @@ var PUBLIC_CLEANUP_MASK = ['./public/**/{*.*,.*,*}'];
 var CSS_MASK = ['./src/{js,css}/**/*.css'];
 
 
-
 /* TASK: Moving PHP & HTML files to public directory */
 gulp.task('webpages', function(){
     gulp.src(WEBPAGES_MASK)
@@ -49,12 +45,13 @@ gulp.task('webpages', function(){
 gulp.task('less', wrapPipe(function(success, error) {
     return gulp.src('./src/less/*.less')
     .pipe(
-        less({compress: false})
-        .on('error', error)
-        .on('error', gutil.beep)
+        less({
+            compress: true,
+            javascriptEnabled: true
+        })
     )
-     .pipe(gulp.dest('./public/assets/css'))
-     .pipe(livereload());
+    .pipe(gulp.dest('./public/assets/css'))
+    .pipe(livereload());
 }));
 
 /* TASK: Compile LESS files in single CSS */
@@ -63,7 +60,6 @@ gulp.task('bootstrap', wrapPipe(function(success, error) {
     .pipe(
         less({compress: false})
         .on('error', error)
-        .on('error', gutil.beep)
     )
      .pipe(gulp.dest('./public/assets/css'))
      .pipe(connect.reload());
@@ -80,7 +76,6 @@ gulp.task('css', function(){
 /* TASK: Moving JS files to public/css directory */
 gulp.task('css', function(){
     gulp.src('./src/css/*.css')
-/*        .pipe(minifyCss({compatibility: 'ie8'}) .on('error', gutil.log))*/
         .pipe(gulp.dest('./public/assets/css/'))
         .pipe(connect.reload())
 });
@@ -89,13 +84,9 @@ gulp.task('css', function(){
 gulp.task('js', function(){
     try {
         gulp.src(['./src/js/**/*.js', '!./src/js/**/scripts.js'])
-            .pipe(uglify({
-                preserveComments:'license'
-            }))
+            .pipe(uglify())
             .pipe(gulp.dest('./public/assets/js/'))
             .pipe(connect.reload())
-            .on('error', gutil.log)
-            .on('error', gutil.beep)
     } catch (e) {
        console.error('error: ' + e.message);
        console.error(e.stack);
@@ -127,8 +118,6 @@ gulp.task('js_script', function(){
         gulp.src(['./src/js/**/scripts.js', './src/js/main.js', './src/js/modernizr-2.6.2.min.js'])
             .pipe(gulp.dest('./public/assets/js/'))
             .pipe(connect.reload())
-            .on('error', gutil.log)
-            .on('error', gutil.beep)
     } catch (e) {
        console.error('error: ' + e.message);
        console.error(e.stack);
@@ -170,13 +159,6 @@ gulp.task('watch', function(){
     gulp.watch('./src/css/*.css', ['css']);
     gulp.watch(JS_MASK, ['js_script']);
 });
-
-gulp.task('cleanup', function(){
-// ищу, почему все падает    
-//    gulp.src(PUBLIC_CLEANUP_MASK, { read:false })
-//        .pipe(clean());
-});
-
 
 /**
  * Wrap gulp streams into fail-safe function for better error reporting
