@@ -19,7 +19,7 @@ class ShoppingCart
     {
         return ($get_all_supported_paysystems)
             ? ['tas', 'psp', 'oschad', 'oschadbank']
-            : ['tas', 'psp', 'oschad', 'oschadbank'];
+            : ['oschad', 'psp'];
     }
 
     public static function get_API_URL($key)

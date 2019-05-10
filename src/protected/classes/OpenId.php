@@ -115,7 +115,7 @@ class OpenId
         $url = self::AUTHORIZE_URL;
         $url .= '?response_type=code';
         $url .= '&client_id=' . $this->clientId;
-        $url .= '&scope=' . implode('%20', $this->scopes);
+        // $url .= '&scope=' . implode('%20', $this->scopes);
         $url .= '&redirect_uri=' . $this->redirect_uri;
         $url .= '&state=' . $this->getState();
         $url .= '&nonce=' . generateCode(15);

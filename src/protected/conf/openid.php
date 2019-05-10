@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'clientId'                  => '42663293-6dee-43b6-b8e0-14aa165408e4',
+    'clientId'                  => 'prod-openid-gerc',
     'secret'                    => 'OxhMjoM_c8CKe9dwyC_rXMnXnb8SS6kOW_0vXexCDVX3ctIhS47exr9xpo-rQJMBZnMjeH0sYSQc_nHxtvZKCA',
     'redirect-url'              => BASE_URL . '/post/oauth/openid/',
     'Client-Configuration-URL'  => 'https://openid.egp.com.ua/register/50191360-0d29-4bbb-bf0e-6337792e2f81',
