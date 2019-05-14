@@ -43,9 +43,11 @@ try {
         ShoppingCart::sendFirstPDF($payment_id);
     }
 
+    $processing_data = @json_decode($payment['processing_data'], true);
+
     $data = [
         'status' => true,
-        'link'   => BASE_URL . '/cabinet/payments/details/' . $payment_id . '/',
+        'link'   => BASE_URL . '/redirect-to-journal/?id=' . $processing_data['openid']['id'],
     ];
     $Encryptor = new Encryptor(Psp::PSP_PRIVATE_KEY, Psp::PSP_PUBLIC_KEY);
     $response = [

@@ -17,6 +17,7 @@ class Psp
 
     public static function sendPaymentToGate($payment_id, $payment_type = 'komdebt', $ext_fields = [])
     {
+        @KmdaOrders::createOrder($payment_id);
         $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);
         
         if ($payment === null) {

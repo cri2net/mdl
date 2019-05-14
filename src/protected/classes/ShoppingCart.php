@@ -641,7 +641,6 @@ class ShoppingCart
         $to_update['send_payment_to_reports'] = 1;
 
         PDO_DB::update($to_update, self::TABLE, $payment['id']);
-        KmdaOrders::createOrder($payment['id']);
         return true;
     }
 
