@@ -242,19 +242,34 @@ function checkForInt(evt)
     return (charCode < 32 || (charCode >= 48 && charCode <= 57))
 };
 
-function checkForDouble(input)
+function checkForDouble(input, after_comma, before_comma)
 {
-    // даёт возможность вставить одну точку или одну запятую и одну цифру дробной части
+    // даёт возможность вставить одну точку или одну запятую и after_comma цифер дробной части
+    // и before_comma до запятой (по умолчанию без ограничений)
+    
+    after_comma = after_comma || 2;
+    before_comma = before_comma || -1;
+
     var val = $(input).val();
     var goodval = val.replace(/[^\d,.]*/g, '')
           .replace(/([,.])[,.]+/g, '$1')
-          .replace(/^([^\d]*(\d+([.,]\d{0,1})?)).*$/g, '$1');
+          .replace(/^([^\d]*(\d+([.,]\d{0,})?)).*$/g, '$1');
+
+    var arr = goodval.split(',').join('.').split('.');
+    if (before_comma != -1) {
+        arr[0] = arr[0].substr(0, before_comma);
+    }
+    if (arr.length > 1) {
+        arr[1] = arr[1].substr(0, after_comma);
+    }
+    goodval = arr.join('.');
 
     if (goodval != val) {
         $(input).val(goodval).change();
     }
     $(input).change();
 };
+
 
 function recount_counter_summ(key, tarif, counter_no) {
     var summ;

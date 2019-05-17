@@ -591,6 +591,7 @@ class ShoppingCart
             return;
         }
 
+        $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
         $report = '/gerc_api/pnew_gkom.rep';
         $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode($report) . '&destype=Cache&Desformat=xml&cmdkey=api_kmda_site';
         $url .= '&in_xml=' . rawurlencode($xml);
