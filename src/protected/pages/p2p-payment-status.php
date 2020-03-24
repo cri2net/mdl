@@ -9,18 +9,12 @@
 
     try {
         $success = true;
-        $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $__route_result['values']['payment_id']);
+        $_payment = PDO_DB::row_by_id(TABLE_PREFIX . 'payment', $__route_result['values']['payment_id']);
         if (($_payment === null) || ($_payment['user_id'] != Authorization::getLoggedUserId())) {
             throw new Exception(ERROR_TRANSACTION_FOUND);
         }
 
         if ($_payment['status'] === 'error') {
-
-            $error_desc = ShoppingCart::getErrorDescription($_payment['processing'], $_payment['trancode']);
-
-            if (!empty($error_desc)) {
-                throw new Exception($error_desc);
-            }
 
             throw new Exception(ERROR_TRANSACTION_NOT_SUCCESS);
         }
@@ -45,18 +39,17 @@
                     <h2 class="big-success-message">Транзакція пройшла успішно.</h2>
                     <div class="main-page-text">
                         <?php
-                            if ($_payment['type'] == 'komdebt') {
+                            if ($_payment['type'] == 'p2p') {
                                 ?>
                                 <p>
-                                    Дякуємо за сплату комунальних послуг! <br>
-                                    Зміни стосовно Вашої успішної оплати буде включено у рахунок за наступний календарний місяць.
+                                    Дякуємо що скористалися нашим сервісом переказу з карти на карту! <br>
                                 </p>
                                 <?php
                             }
                         ?>
                         <p>
-                            На Вашу електронну скриньку також було надіслано лист з підтвердженням оплати.<br>
-                            Повторно підтвердження платежу можна завантажити в особистому кабінеті. <br>
+                            На Вашу електронну скриньку також було надіслано лист з підтвердженням транзакції.<br>
+                            Повторно підтвердження транзакції можна завантажити в особистому кабінеті. <br>
                             <a href="<?= BASE_URL; ?>/static/pdf/payment/<?= $_payment['id']; ?>/KMDA-Invoice-<?= $_payment['id']; ?>.pdf">
                                 <button class="btn btn-blue btn-md">&darr; Завантажити квитанцію</button> <br>
                             </a>

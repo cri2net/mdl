@@ -40,7 +40,7 @@ class Authorization
         // personal-account дал только sha1 паролей своих пользователей.
         // так что, при успешной авторизации, мы меняем им хеш пароля на наш.
         // отличительная черта таких пользователей - пустое поле password_key
-        
+
         $column = self::getLoginColumn($login);
         $table = User::TABLE;
 
@@ -122,11 +122,11 @@ class Authorization
         } else {
             $userData = PDO_DB::row_by_id(User::TABLE, $user_id);
         }
-        
+
         // получается, что если человек сменил пароль, то все такие ссылки перестают работать. Жёстко, но секьюрно.
         return md5($userData['password'] . $userData['password_key'] . $userData['id']);
     }
-    
+
     public static function get_auth_hash2($user_id, $hash1 = null)
     {
         $user_id = (int)$user_id;
@@ -143,7 +143,7 @@ class Authorization
 
         return md5($hash1 . $userData['password_key'] . sha1($user_id . $userData['password'] . $hash1));
     }
-    
+
     public static function check_cookie()
     {
         if (isset($_COOKIE[REMEMBER_COOKIE_NAME])) {
@@ -167,7 +167,7 @@ class Authorization
             }
         }
     }
-    
+
     public static function getLoggedUserId()
     {
         if (self::isLogin()) {
@@ -180,7 +180,7 @@ class Authorization
     {
         return (!empty($_SESSION['auth']['id']));
     }
-    
+
     public static function logout()
     {
         unset($_SESSION['auth'], $_SESSION['auth_data']);
@@ -202,7 +202,7 @@ class Authorization
         $code = generateCode(40);
         $user_id = (int)$user_id;
         $user = User::getUserById($user_id);
-        
+
         // выключаем все предыдущие запросы
         $pdo = PDO_DB::getPDO();
         $stm = $pdo->prepare("UPDATE " . self::USER_CODES_TABLE . " SET is_active=0 WHERE user_id=? AND is_active=1 AND type=?");

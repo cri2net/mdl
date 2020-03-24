@@ -23,6 +23,9 @@
         <route match="payment-status" controller="error" action="404">
             <route match="{payment_id|num}" controller="page" action="payment-status" />
         </route>
+        <route match="p2p-payment-status" controller="error" action="404">
+            <route match="{payment_id|num}" controller="page" action="payment-status" />
+        </route>
         <route match="static" controller="error" action="404">
             <route match="pdf" controller="error" action="404">
                 <route match="{type}" controller="error" action="404">
@@ -34,6 +37,9 @@
         </route>
 
         <route match="checkout" controller="page" action="checkout" />
+        <route match="p2p" controller="p2p" action="" />
+        <route match="p2p-confirm" controller="p2p-confirm" action="" />
+        <route match="p2p-redirect" controller="p2p-redirect" action="" />
         <route match="redirect-to-journal" controller="redirect-to-journal" action="main" />
         
         <route match="invoice" controller="invoice" action="" />

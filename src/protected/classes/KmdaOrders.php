@@ -6,6 +6,7 @@ class KmdaOrders
 {
     const URL = 'https://my.kyivcity.gov.ua/orders-gateway';
     const DEFAULT_SERVICE_ID = 'cc5f9a92-3252-4aab-9ccb-938719964ec3';
+    const P2P_SERVICE_ID = 'f0b34f35-f415-49d0-b76a-813ebb81d1f3';
 
     public static function createOrder($payment_id)
     {
@@ -14,7 +15,11 @@ class KmdaOrders
         $user['openid_data'] = json_decode($user['openid_data']);
         $token = $user['openid_data']->token->access_token;
 
-        $url = self::URL . '/api/services/' . self::getServiceId() . '/orders';
+        if ($payment['type'] == 'p2p') {
+            $url = 'https://orders.e-service.egp.com.ua/api/services/' . self::getServiceId($payment['type']) . '/orders';
+        } else {
+            $url = self::URL . '/api/services/' . self::getServiceId($payment['type']) . '/orders';
+        }
 
         $data = [
             'statusDate'  => date(DateTime::ISO8601),
@@ -78,12 +83,20 @@ class KmdaOrders
         error_log($message . "\r\n\r\n", 3, $file);
     }
 
-    public static function getServiceId()
+    public static function getServiceId($type = 'komdebt')
     {
         if (isset($_SESSION['service_id'])) {
             return $_SESSION['service_id'];
         }
-        return self::DEFAULT_SERVICE_ID;
+
+        switch ($type) {
+            case 'p2p':
+                return self::P2P_SERVICE_ID;
+            
+            case 'komdebt':
+            default:
+                return self::DEFAULT_SERVICE_ID;
+        }
     }
 
     /**

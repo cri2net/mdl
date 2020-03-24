@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <content>
         <?php
-            
+
             require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
 
             if (isset($_SESSION['objects-auth']['status']) && !$_SESSION['objects-auth']['status']) {
@@ -21,21 +21,21 @@
                 $user_id = Authorization::getLoggedUserId();
                 $flats = Flat::getUserFlats($user_id);
                 $debt = new KomDebt();
-                
+
                 for ($i=0; $i < count($flats); $i++) {
 
                     try {
                         $debtData = $debt->getData($flats[$i]['flat_id'], null, 0);
                         $dateBegin = date('1.m.Y', $debtData['timestamp']);
                         $flats[$i]['timestamp'] = $debtData['timestamp'];
-                        
+
                         // Оплаты за месяц надо запрашивать, передавая dbegin на 1 число след. след. месяца от dbegin оплат
                         // Чтобы было: начисления за ноябрь, dbegin = 1.10, а оплаты dbegin оплат = 1.12
                         $oplat_timestamp = strtotime('first day of next month', $debtData['timestamp']);
                         $oplat_timestamp = strtotime('first day of next month', $oplat_timestamp);
 
                         $flats[$i]['debt_sum'] = $debtData['full_dept'];
-                        
+
                         $flats[$i]['on_this_month'] = $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small'];
                         $flats[$i]['date'] = $debtData['date'];
 
@@ -72,7 +72,7 @@
                         if (count($flats) > 0) {
 
                             for ($i=0; $i < count($flats); $i++) {
-                                $flat = $flats[$i];                            
+                                $flat = $flats[$i];
                                 ?>
                                 <div class="col-md-4 col-sm-6">
                                     <div class="house_item flat matchHeight <?= $flat['payed']; ?>">
@@ -112,7 +112,7 @@
                                                 } else {
                                                     ?>
                                                     <div class="values">
-                                                        
+
                                                         <div class="value-line row">
                                                             <div class="value-title value-title-orange col-lg-8 col-md-7 col-ms-6">Сума до сплати</div>
                                                             <div class="align-right col-lg-4 col-md-5 col-ms-6 pull-right">
@@ -151,7 +151,7 @@
                 if ((Authorization::isLogin() && (Flat::getFlatCount() < Flat::getMaxUserFlats()))) {
                     ?>
                     <div class="col-md-4 col-sm-6">
-                        <div class="house_item flat house_add matchHeight <?= $flat['payed']; ?>">                
+                        <div class="house_item flat house_add matchHeight <?= $flat['payed']; ?>">
                             <span class="align-center">
                                 <a class="btn btn-green-darker add-new add-new-object" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
                             </span>

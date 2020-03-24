@@ -119,4 +119,9 @@ try {
     throw $e;
 }
 
-return BASE_URL;
+
+if (!empty($_SESSION['REDIRECT_AFTER_OAUTH'])) {
+    return BASE_URL . $_SESSION['REDIRECT_AFTER_OAUTH'];
+}
+
+return BASE_URL . '/';

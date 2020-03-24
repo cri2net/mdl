@@ -972,3 +972,7 @@ ALTER TABLE `kmda_payment`
 
 ALTER TABLE `kmda_payment`
   CHANGE `type` `type` ENUM('komdebt') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt' NOT NULL;
+
+-- 2020.03.05
+ALTER TABLE `kmda_payment`
+  CHANGE `type` `type` ENUM('komdebt','p2p') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt' NOT NULL;
