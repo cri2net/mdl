@@ -1,15 +1,14 @@
 {
   "name": "gerc-kmda",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "kmda frame",
   "main": "index.php",
   "dependencies": {},
   "devDependencies": {
-    "gulp": "^3.9.0",
+    "gulp": "^4.0",
     "gulp-concat": "^2.6.1",
-    "gulp-connect": "^2.2.0",
+    "gulp-connect": "^5.7",
     "gulp-less": "^4.0",
-    "gulp-livereload": "^3.8.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^3.0"
   },

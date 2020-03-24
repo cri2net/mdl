@@ -1,6 +1,7 @@
 node_modules/
 public/
 backup/
+package-lock.json
 *.sublime-project
 *.sublime-workspace
 src/protected/vendor/
