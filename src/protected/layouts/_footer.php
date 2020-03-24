@@ -1,4 +1,5 @@
         <script>
+            var MAX_AMOUNT = '<?= MAX_AMOUNT; ?>';
             var BASE_URL = '<?= BASE_URL; ?>';
 
             $(document).ready(function(){

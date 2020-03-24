@@ -31,6 +31,9 @@ try {
     if ($form_data['sum'] <= 0) {
         throw new Exception('Сума платежу не може бути менше або дорівнювати нулю');
     }
+    if ($form_data['sum'] > MAX_AMOUNT) {
+        throw new Exception(EXCESS_PAYMENT_AMOUNT);
+    }
 
     $response['result'] = KmdaP2P::createPayment(
         $form_data['card_no'],

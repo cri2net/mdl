@@ -41,9 +41,11 @@ function recalc2()
 function fetchTotalSumm(total)
 {
     total = toFloat(total);
-    if (total <= 0) {
+    if ((total <= 0) || total > MAX_AMOUNT) {
+        $('#pay_button_error').html('Сума платежу повинна бути від 0,01 до ' + MAX_AMOUNT +',00 гривень');
         $('#pay_button').attr('disabled', 'disabled');
     } else {
+        $('#pay_button_error').html('');
         $('#pay_button').removeAttr('disabled');
     }
     if (is_int(total)) {
@@ -145,22 +147,8 @@ function billPageUpdateTotalSumm()
             }
         }
     });
-    total = toFloat(total);
 
-    if (total <= 0) {
-        $('#pay_button').attr('disabled', 'disabled');
-    } else {
-        $('#pay_button').removeAttr('disabled');
-    }
-
-    if (is_int(total)) {
-        total += ',00';
-    }
-
-    var strTotal = new String(total);
-    strTotal = strTotal.replace('.', ',');
-    
-    $('#total_debt').html(strTotal);
+    fetchTotalSumm(total);
 };
 
 function selectService(checkboxId, inputId)

@@ -57,3 +57,4 @@ define('ERROR_TRANSACTION_FOUND', 'Транзакція не знайдена.')
 define('ERROR_TRANSACTION_NEW', 'Транзакція має статус «нова» (ще не оплачена).');
 define('ERROR_TRANSACTION_NOT_SUCCESS', 'Транзакція не оплачена.');
 define('ERROR_USER_NOT_LOGGED_IN', 'Користувач повинен бути авторизований');
+define("EXCESS_PAYMENT_AMOUNT", 'Сума платежу не може перевищувати '. MAX_AMOUNT .' гривень');

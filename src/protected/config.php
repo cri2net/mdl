@@ -22,6 +22,8 @@ if (!file_exists(ROOT . "/protected/conf/db.conf.php")) {
     die('Please create file /protected/conf/db.conf.php as copy of /protected/conf/db.conf.sample.php');
 }
 
+define('MAX_AMOUNT', 14500);
+
 require_once(PROTECTED_DIR . "/conf/db.conf.php");
 require_once(PROTECTED_DIR . "/conf/errors.php");
 require_once(PROTECTED_DIR . "/conf/lang.php");

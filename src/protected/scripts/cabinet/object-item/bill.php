@@ -291,6 +291,9 @@
                             <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
                             <button class="btn" id="pay_button"><span class="fa fa-check"></span> Сплатити</button>
                         </div>
+                        <div class="col-lg-12">
+                            <div style="padding-top: 30px;" id="pay_button_error" class="error-description"></div>
+                        </div>
                     </div>
 
                     <table class="full-width-table datailbill-table no-border hints-table">
