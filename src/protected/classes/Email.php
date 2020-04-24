@@ -31,7 +31,7 @@ class Email
         
         $this->isSMTP();
 
-        $this->Host       = 'mail.gerc.ua';
+        $this->Host       = '192.168.180.70';
         $this->Port       = 25; // The default SMTP server port.
         $this->SMTPSecure = 'tls'; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
         $this->SMTPAuth   = true;
@@ -147,9 +147,6 @@ class Email
         }
         if (defined('BASE_URL') && !isset($data['base_url'])) {
             $data['base_url'] = BASE_URL;
-        }
-        if (defined('EXT_BASE_URL') && !isset($data['ext_base_url'])) {
-            $data['ext_base_url'] = EXT_BASE_URL;
         }
         if (defined('EMAIL_FROM') && !isset($data['email_from'])) {
             $data['email_from'] = EMAIL_FROM;

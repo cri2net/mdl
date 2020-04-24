@@ -18,18 +18,8 @@ class ShoppingCart
     public static function getActivePaySystems($get_all_supported_paysystems = false)
     {
         return ($get_all_supported_paysystems)
-            ? ['tas', 'psp', 'oschad', 'oschadbank']
-            : ['oschad', 'psp'];
-    }
-
-    public static function get_API_URL($key)
-    {
-        $urls = [];
-
-        $urls['KASS_STATUS'] = '/reports/rwservlet?report=/gerc_api/api_status_kass.rep&cmdkey=api_kmda_site&destype=cache&Desformat=xml&login=';
-        $urls['KASS_OPEN']   = '/reports/rwservlet?report=/gerc_api/api_open_kass.rep&cmdkey=api_kmda_site&destype=cache&Desformat=xml&login=';
-
-        return $urls[$key];
+            ? ['psp', 'psp-2']
+            : ['psp', 'psp-2'];
     }
 
     /**
@@ -40,75 +30,14 @@ class ShoppingCart
      * 
      * @return void
      */
-    public static function pppGetCashierByProcessing($processing, &$login, &$password)
+    public static function pppGetCashier($processing, &$login, &$password)
     {
         switch ($processing) {
             case 'tas':
                 $login    = 'SITE_KMDA_TAS';
                 $password = '1B842ABA1CC93A92E761CA10090AEFAD6944A5DF';
                 break;
-
-            case 'oschadbank':
-                // мастеркард, все карты (ощад)
-                $login    = 'SITE_KMDA_FRAME_OSCH_OK';
-                $password = 'AA8E43FDE9355977EEDEA5ED8C6FD9D0F16AA759';
-                break;
-
-            case 'oschad':
-                $login    = 'SITE_KMDA_FRAME_OSCH_KK';
-                $password = '7D1A60E155B7FEC339565EB686CE3D305C60B1F5';
-                break;
         }
-    }
-
-    /**
-     * Метод проверяет открыта ли касса в оракле
-     * @param  string $processing
-     * @return boolean
-     */
-    public static function pppCheckOpenKass($processing)
-    {
-        self::pppGetCashierByProcessing($processing, $login, $password);
-
-        $url = API_URL . self::get_API_URL('KASS_STATUS');
-        $url .= rawurlencode($login);
-        $url .= '&pwd=' . rawurlencode($password);
-
-        $xml_string = Http::fgets($url);
-        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
-        $xml = simplexml_load_string($xml_string);
-
-        if (($xml === null) || ($xml === false)) {
-            return false;
-        }
-
-        $row = $xml->ROW;
-
-        if ($row->ERR.'' && ($row->ERR.'' != '0')) {
-            throw new Exception("Ошибка при выполнении запроса $row->ERR");
-            return;
-        }
-
-        $status = $row->STATUS_KASS.'';
-        return ($status == '1');
-    }
-
-    /**
-     * Метод пробует открыть кассу в оракле
-     * @param  integer $processing
-     * @param  integer $shift   Смена кассы: 0 = дневная, 1 = вечерняя. OPTIONAL
-     * @return void
-     */
-    public static function pppOpenKass($processing, $shift = 0)
-    {
-        self::pppGetCashierByProcessing($processing, $login, $password);
-
-        $url = API_URL . self::get_API_URL('KASS_OPEN');
-        $url .= rawurlencode($login);
-        $url .= '&pwd=' . rawurlencode($password);
-        $url .= '&smena=' . $shift;
-
-        $xml_string = Http::fgets($url);
     }
     
     public static function logRequestToReports($message, $payment_id, $success = true, $type = 'new', $folder = 'reports_new')
@@ -308,183 +237,6 @@ class ShoppingCart
         return (strlen($pdf1) > strlen($pdf2)) ? $pdf1 : $pdf2;
     }
 
-    public static function send_payment_status_to_reports($payment_id)
-    {
-        $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
-        if (($payment === null) || $payment['send_payment_status_to_reports'] || ($payment['status'] == 'new') || ($payment['status'] == 'timeout')) {
-            return;
-        }
-
-        if (in_array($payment['processing'], ['psp'])) {
-            PDO_DB::update(['send_payment_status_to_reports' => 1], self::TABLE, $payment['id']);
-            return;
-        }
-
-        $url = API_URL . self::REPORT_BASE_URL;
-        $to_update = [];
-
-        self::pppGetCashierByProcessing($payment['processing'], $login, $password);
-
-        switch ($payment['type']) {
-            case 'komdebt':
-                $report = ($payment['status'] == 'success') ? '/gerc_api/prov_gkom.rep' : '/gerc_api/pacq50_gkom.rep';
-                break;
-        }
-
-        switch ($payment['processing']) {
-
-            case 'tas':
-                $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
-                $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
-                $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
-                $actual_date = $payment['processing_data']['dates'][count($payment['processing_data']['dates']) - 1];
-                $actual_upc_data = (array)$payment['processing_data']['requests'][$actual_date];
-
-                $url .= '?report='       . rawurlencode($report);
-                $url .= '&destype='      . rawurlencode('Cache');
-                $url .= '&Desformat='    . rawurlencode('xml');
-                $url .= '&cmdkey='       . rawurlencode('api_kmda_site');
-
-                $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
-                $url .= '&p1='           . rawurlencode($actual_upc_data['MerchantID']);
-
-                if ($payment['processing'] == 'tas') {
-                    $paytime = DateTime::createFromFormat('d-m-Y H:i:s', $actual_upc_data['TIME']);
-                    $paytime = ($paytime === false) ? microtime(true) : date_timestamp_get($paytime);
-
-                   $url .= '&p2='        . rawurlencode($payment['processing_data']['first']->termname);
-                   $url .= '&p3='        . rawurlencode($payment['summ_total'] * 100);
-                   $url .= '&p4='        . rawurlencode('980');
-                   $url .= '&p5='        . rawurlencode(strftime("%y%m%d%H%M%S", $paytime));
-                   $url .= '&p6='        . rawurlencode($actual_upc_data['TRANID']);
-                } else {
-                    $url .= '&p2='       . rawurlencode($actual_upc_data['TerminalID']);
-                    $url .= '&p3='       . rawurlencode($actual_upc_data['TotalAmount']);
-                    $url .= '&p4='       . rawurlencode($actual_upc_data['Currency']);
-                    $url .= '&p5='       . rawurlencode($actual_upc_data['PurchaseTime']);
-                    $url .= '&p6='       . rawurlencode($actual_upc_data['OrderID']);
-                }
-
-                $url .= '&p7='           . rawurlencode($actual_upc_data['XID']);
-                $url .= '&p8='           . rawurlencode($actual_upc_data['SD']);
-
-                if ($payment['processing'] == 'tas') {
-                   $url .= '&p9='        . rawurlencode($actual_upc_data['APPROVAL']);
-                } else {
-                    $url .= '&p9='       . rawurlencode($actual_upc_data['ApprovalCode']);
-                }
-
-                $url .= '&p10='          . rawurlencode($actual_upc_data['Rrn']);
-
-                if ($payment['processing'] == 'tas') {
-                    $url .= '&p11='       . rawurlencode($actual_upc_data['PAN']);
-                    $url .= '&p12='       . rawurlencode($actual_upc_data['RESPCODE']);
-                    $url .= '&p13='       . rawurlencode($actual_upc_data['SIGN']);
-                    $to_update['trancode'] = $actual_upc_data['RESPCODE'];
-                } else {
-                    $url .= '&p11='      . rawurlencode($actual_upc_data['ProxyPan']);
-                    $url .= '&p12='      . rawurlencode($actual_upc_data['TranCode']);
-                    $url .= '&p13='      . rawurlencode($actual_upc_data['Signature']);
-                    $to_update['trancode'] = $actual_upc_data['TranCode'];
-                }
-
-                $url .= '&p14=0';
-                break;
-
-            case 'oschad':
-            case 'oschadbank':
-                $payment['processing_data'] = (array)(json_decode($payment['processing_data']));
-                $payment['processing_data']['dates'] = (array)$payment['processing_data']['dates'];
-                $payment['processing_data']['requests'] = (array)$payment['processing_data']['requests'];
-                $actual_date = $payment['processing_data']['dates'][count($payment['processing_data']['dates']) - 1];
-                $actual_osc_data = (array)$payment['processing_data']['requests'][$actual_date];
-                $osc_first = $payment['processing_data']['first'];
-                $url = API_URL . self::REPORT_BASE_URL;
-
-                $url .= '?report='       . rawurlencode($report);
-                $url .= '&destype='      . rawurlencode('Cache');
-                $url .= '&Desformat='    . rawurlencode('xml');
-                $url .= '&cmdkey='       . rawurlencode('api_kmda_site');
-                $url .= '&idplatklient=' . rawurlencode($payment['reports_id_plat_klient']);
-                $url .= '&p1='           . rawurlencode($osc_first->MERCHANT);
-                $url .= '&p2='           . rawurlencode($osc_first->TERMINAL);
-                $url .= '&p3='           . rawurlencode($actual_osc_data['Amount']*100);
-                $url .= '&p4='           . rawurlencode('980');
-                $url .= '&p5='           . rawurlencode($osc_first->TIMESTAMP);
-                $url .= '&p6='           . rawurlencode($actual_osc_data['Order']);
-                $url .= '&p7=';
-                $url .= '&p8=';
-                $url .= '&p9='           . rawurlencode($actual_osc_data['AuthCode']);
-                $url .= '&p10='          . rawurlencode($actual_osc_data['RRN']);
-                $url .= '&p11=';
-                $url .= '&p12='          . rawurlencode($actual_osc_data['RC']);
-                $url .= '&p13='          . rawurlencode($osc_first->P_SIGN);
-                $url .= '&p14=0';
-                $to_update['trancode'] = $actual_osc_data['RC'];
-                break;
-
-            default:
-                throw new Exception("Unknow payment processing in send_payment_status_to_reports()");
-                return false;
-        }
-
-        $url .= '&login=' . $login;
-        $url .= '&pwd=' . $password;
-
-        $res = Http::fgets($url);
-
-        $date = date('Y-m-d H:i:s');
-        $xml_string = iconv('CP1251', 'UTF-8', $res);
-
-        $message_to_log = var_export(
-            [
-                'date' => date('Y-m-d H:i:s'),
-                'timestamp' => microtime(true),
-                'reports_url' => $url,
-                'answer' => $xml_string,
-            ],
-            true
-        );
-
-        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
-        $xml = simplexml_load_string($xml_string);
-
-        if (($xml === null) || ($xml === false)) {
-            self::logRequestToReports($message_to_log, $payment['id'], false, 'status');
-            return false;
-        }
-
-        $row_elem = $xml->ROW;
-        
-        if (isset($xml->ROWSET->ROW)) {
-            $row_elem = $xml->ROWSET->ROW;
-        }
-
-        // ERR = 7: Status of payment already sent
-        // ERR = 9: Status of payment not 20 (NEW)
-        if ($row_elem->ERR.'' && ($row_elem->ERR.'' != '7') && ($row_elem->ERR.'' != '9')) {
-            self::logRequestToReports($message_to_log, $payment['id'], false, 'status');
-            if ($row_elem->ERR.'' == '4') {
-                $to_update['send_payment_status_to_reports'] = 1;
-            }
-
-            PDO_DB::update($to_update, self::TABLE, $payment['id']);
-            // throw new Exception("id: {$payment['id']}, " . self::get_create_payment_error($row_elem->ERR.''));
-            return false;
-        }
-
-        $to_update['acq']                            = ($row_elem->ACQ.'')            ? $row_elem->ACQ.''            : $payment['acq'];
-        $to_update['reports_id_pack']                = ($row_elem->ID_PACK.'')        ? $row_elem->ID_PACK.''        : $payment['reports_id_pack'];
-        $to_update['reports_id_plat_klient']         = ($row_elem->ID_PLAT_KLIENT.'') ? $row_elem->ID_PLAT_KLIENT.'' : $payment['reports_id_plat_klient'];
-        $to_update['send_payment_status_to_reports'] = 1;
-
-        PDO_DB::update($to_update, self::TABLE, $payment['id']);
-        self::logRequestToReports($message_to_log, $payment['id'], true, 'status');
-        self::sendFirstPDF($payment['id']);
-        KmdaOrders::setOrderStatus($payment['id']);
-        return true;
-    }
-
     public static function sendFirstPDF($payment_id)
     {
         $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
@@ -521,7 +273,7 @@ class ShoppingCart
             return '';
         }
 
-        self::pppGetCashierByProcessing($payment['processing'], $login, $password);
+        self::pppGetCashier($payment['processing'], $login, $password);
 
         $services = PDO_DB::table_list(self::SERVICE_TABLE, "payment_id='{$payment['id']}'", 'id ASC', $payment['count_services'] . '');
 
@@ -680,58 +432,21 @@ class ShoppingCart
         $payment['processing_data'] = (array)(@json_decode($payment['processing_data']));
         $to_update = [];
 
-        switch ($payment['processing']) {
-            case 'tas':
-                $type = ($payment['type'] == 'komdebt') ? 'komdebt' : 'budget';
-                $taslink = new TasLink($type);
-                $taslink->checkStatus($payment['id']);
-                break;
-
-            case '':
-            case 'oschad':
-            case 'oschadbank':
-                if (microtime(true) - $payment['go_to_payment_time'] > 3600) {
-                    $to_update['status'] = 'timeout';
-                }
-                break;
-
-            default:
-                return false;
-        }
-
         if ($to_update) {
             if (isset($to_update['status']) && ($to_update['status'] == 'timeout')) {
                 $to_update['send_payment_status_to_reports'] = 1;
             }
             PDO_DB::update($to_update, self::TABLE, $payment['id']);
-            self::send_payment_status_to_reports($payment['id']);
         }
     }
 
     public static function getErrorDescription($processing, $trancode)
     {
-        switch ($processing) {
-            case 'tas':
-                return TasLink::getErrorDescription($trancode);
-                break;
-
-            case 'oschad':
-            case 'oschadbank':
-                return Oschad::getErrorDescription($trancode);
-        }
-
         return '';
     }
 
     public static function cron()
     {
-        $pdo = PDO_DB::getPDO();
-        $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status NOT IN ('new', 'timeout') AND processing NOT IN ('psp') AND send_payment_status_to_reports=0 ORDER BY id ASC");
-
-        while ($row = $stm->fetch()) {
-            self::send_payment_status_to_reports($row['id']);
-        }
-
         // проверяем статусы транзакций
         $time = time() - 300;
         $stm = $pdo->query("SELECT id FROM " . self::TABLE . " WHERE status='new' AND go_to_payment_time<$time AND go_to_payment_time IS NOT NULL");

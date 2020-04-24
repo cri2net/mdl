@@ -47,7 +47,7 @@ try {
 
     $data = [
         'status' => true,
-        'link'   => BASE_URL . '/redirect-to-journal/?id=' . $processing_data['openid']['id'],
+        'link'   => BASE_URL . '/cabinet/payments/details/' . $payment_id . '/',
     ];
     $Encryptor = new Encryptor(Psp::PSP_PRIVATE_KEY, Psp::PSP_PUBLIC_KEY);
     $response = [

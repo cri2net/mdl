@@ -2,29 +2,7 @@
 
 switch ($__route_result['controller'] . "/" . $__route_result['action']) {
 
-    case 'page/index':
-        $new_location = BASE_URL . '/cabinet/';
-        break;
-
-    case 'p2p/':
     case 'page/cabinet':
-
-        if (!isset($__route_result['values']['subpage']) && !Authorization::isLogin()) {
-            $new_location = BASE_URL . '/post/oauth/openid/';
-            break;
-        }
-
-        // поодерживаем access-token постоянно актуальным
-        if (isset($__userData)) {
-            if (time() >= $__userData['openid_data']->access_token_expires) {
-                $new_location = BASE_URL . '/post/oauth/openid/';
-                break;
-            }
-        }
-
-        if ($__route_result['controller'] == 'p2p') {
-            break;
-        }
 
         if (!isset($__route_result['values']['subpage']) && Authorization::isLogin()) {
             $new_location = BASE_URL . '/cabinet/objects/';
@@ -51,6 +29,5 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
 }
 
 if (isset($new_location) && $new_location) {
-
     Http::redirect($new_location);
 }

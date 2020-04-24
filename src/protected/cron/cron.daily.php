@@ -7,4 +7,5 @@ ini_set('max_execution_time', 0);
 ini_set('memory_limit', -1);
 
 Street::cron();
-Authorization::cron();
+House::cron();
+Flat::cron();

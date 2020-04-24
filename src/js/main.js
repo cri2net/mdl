@@ -544,13 +544,6 @@ function add_new_counters(key, abcounter, tarif)
     $(html).insertBefore('.counter-container-' + key + ' .row-add-counter');
 };
 
-function tas_frame_load()
-{
-    $('#tas_frame_error').css('display', 'none');
-    $('#tas_frame').css('display', '');
-    clearTimeout(tas_timeout_id);
-};
-
 $(document).ready(function(){
 
     // украинизация jquery.ui.datepicker

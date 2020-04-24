@@ -3,32 +3,18 @@
 $(document).on('ready', function() { 
 
     initScrollAnimation();
-    initSwiper();
     initEvents();
 
     $(function() { $('.matchHeight').matchHeight(); }); 
 
-   
-    $("a[rel^='prettyPhoto']").prettyPhoto({
-        showTitle: false,
-        deeplinking: false,
-        slideshow: false,
-        animation_speed: 0,
-        theme: 'facebook',
-        show_title:false,
-        overlay_gallery:false,
-        social_tools: ''
-    });
     $('a').each(function() {
         var a = new RegExp('/' + window.location.host + '/');
         if (!a.test(this.href) && this.href.length && (this.href != '#')) {
-            if ($(this).attr('rel') !== 'prettyPhoto') {
-                $(this).click(function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    window.open(this.href, '_blank');
-                });
-            }
+            $(this).click(function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                window.open(this.href, '_blank');
+            });
         }
     });
 });
@@ -178,21 +164,6 @@ function initScrollAnimation() {
         distance : '0px',
         afterReveal: function (domEl) { $(domEl).css('transition', 'all .3s ease'); }
     }
-}
-
-/* Swiper slider initialization */
-function initSwiper() {
-
-    var newsSwiper = new Swiper('.news-slider', {
-        direction   : 'horizontal',
-
-        speed       : 1000,
-        nextButton  : '.arrow-right',
-        prevButton  : '.arrow-left',
-    
-        autoplay    : 7000,
-        autoplayDisableOnInteraction    : false,
-    });
 }
 
 /* Navbar is set darker on main page on scroll */

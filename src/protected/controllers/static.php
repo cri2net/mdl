@@ -24,7 +24,7 @@ try {
 
             $filename = (isset($__route_result['values']['filename']))
                 ? basename($__route_result['values']['filename'])
-                : "KMDA-Invoice-{$payment['id']}.pdf";
+                : "MDL-Invoice-{$payment['id']}.pdf";
 
             header('Content-Description: File Transfer');
             header('Content-Type: application/pdf');

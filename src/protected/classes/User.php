@@ -1,7 +1,6 @@
 <?php
 
 use cri2net\php_pdo_db\PDO_DB;
-use Placebook\Framework\Core\Api;
 
 class User
 {
@@ -159,7 +158,7 @@ class User
 
         $subject = 'Реєстрація на ' . strtoupper(SITE_DOMAIN);
         $verify_code = Authorization::generateUserCode($user['id'], 'verify_email');
-        $verify_link = EXT_BASE_URL . '/cabinet/verify-email/' . $verify_code . '/';
+        $verify_link = BASE_URL . '/cabinet/verify-email/' . $verify_code . '/';
 
         PDO_DB::query("UPDATE " . self::TABLE . " SET send_reg_letter=1 WHERE id='$user_id' LIMIT 1");
         $email = new Email();
@@ -177,50 +176,5 @@ class User
                 'verify_link' => $verify_link,
             ]
         );
-    }
-
-    public static function importFlatsFromGioc($user_id)
-    {
-        $user = PDO_DB::row_by_id(self::TABLE, $user_id);
-
-        if (!$user || !$user['email']) {
-            return;
-        }
-
-        try {
-
-            $conf = require(PROTECTED_DIR . '/conf/gioc.php');
-            
-            $args = [
-                'user_email' => $user['email'],
-            ];
-            $args = Api::encodeArguments($args);
-
-            $response = Api::rawRequest(
-                "{ giocUserFlats($args) { id, user_id, city_id, street_id, house_id, flat_id, timestamp, notify, title, auth_key } }",
-                [],
-                $conf['api_url'],
-                $conf['api_token']
-            );
-            $items = $response->data->giocUserFlats;
-
-            foreach ($items as $item) {
-                
-                $arr = [
-                    'user_id'    => $user['id'],
-                    'city_id'    => $item->city_id,
-                    'street_id'  => $item->street_id,
-                    'house_id'   => $item->house_id,
-                    'flat_id'    => $item->flat_id,
-                    'created_at' => microtime(true),
-                    'notify'     => $item->notify,
-                    'title'      => $item->title,
-                    'auth_key'   => $item->auth_key,
-                ];
-                PDO_DB::insert($arr, TABLE_PREFIX . 'user_flats');
-            }
-
-        } catch (Exception $e) {
-        }
     }
 }

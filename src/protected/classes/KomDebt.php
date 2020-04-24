@@ -194,11 +194,6 @@ class KomDebt
                     $list[$tmp_key] = trim($row->$tmp_key . '');
                 }
 
-                $auth_key = (isset($row->OUT_KEY)) ? ($row->OUT_KEY . '') : null;
-                if ($auth_key) {
-                    Flat::addAuthKey($auth_key, $obj_id);
-                }
-
                 $list['FIO'] = str_replace('ФИО НЕ УКАЗАНО', 'ПІБ НЕ ВКАЗАНО', $list['FIO']);
 
                 $list['firm_name']    = str_replace('"', '&quot;', (string)$row->NAME_FIRME);
@@ -487,11 +482,6 @@ class KomDebt
         
         foreach ($xml->xpath("//ROW") as $row) {
 
-            $auth_key = (isset($row->OUT_KEY)) ? ($row->OUT_KEY . '') : null;
-            if ($auth_key) {
-                Flat::addAuthKey($auth_key, $obj_id);
-            }
-
             if (!array_key_exists((string)$row->CODE_FIRME, $data['firm'])) {
                 $data['firm'][(string)$row->CODE_FIRME]['name'] = (string)$row->NAME_FIRME;
                 $have_data = true;
@@ -557,11 +547,6 @@ class KomDebt
         $arr_keys = ['ISXDOLG', 'OPLAT', 'SUBS', 'TARIF', 'SUMM_MONTH', 'SUMM_DOLG', 'SUMM_OBL_PAY'];
 
         foreach ($xml->xpath("//ROW") as $row) {
-
-            $auth_key = (isset($row->OUT_KEY)) ? ($row->OUT_KEY . '') : null;
-            if ($auth_key) {
-                Flat::addAuthKey($auth_key, $obj_id);
-            }
             
             if ($firmName && (string)$row->CODE_FIRME != $firmName) {
                 continue;

@@ -8,10 +8,6 @@ try {
     }
     
     $flatData = Flat::getUserFlatById($_POST['flat_id']);
-
-    if (($_POST['cctype'] == 'tas_mc') || ($_POST['cctype'] == 'tas_visa')) {
-        $_POST['cctype'] = 'tas';
-    }
     $pay_system = $_POST['cctype'];
 
     $user_id = Authorization::getLoggedUserId();
@@ -47,14 +43,6 @@ try {
     // Иначе могут быть проблемы, например, отправка ложного запроса о проверке статуса на процессинг.
     $cdata = ['go_to_payment_time' => microtime(true)];
     PDO_DB::updateWithWhere($cdata, ShoppingCart::TABLE, "id='{$_payment['id']}' AND user_id='$user_id'");
-    
-    if ($pay_system == 'tas') {
-        $TasLink = new TasLink('komdebt');
-        $_payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $_payment['id']); // в БД теперь правильная комиссия, которую вернул reports
-        $tas_session_id = $TasLink->initSession($_payment['id']);
-        $TasLink->makePayment($_payment['summ_plat'], $_payment['summ_komis']);
-        return BASE_URL . '/cabinet/objects/'. $flatData['id'] .'/processing/';
-    }
 
 } catch (Exception $e) {
     $_SESSION['object-item']['status'] = false;

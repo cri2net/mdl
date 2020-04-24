@@ -6,7 +6,6 @@
     define('NAVBAR_FOR_SETTINGS', true);
     $current_section = $__route_result['values']['section'];
 ?>
-<body>
 <div id="all_body_container">
 <?php
     require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');

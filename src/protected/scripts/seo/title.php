@@ -3,16 +3,8 @@ $_lSEO = 'TITLES';
 
 switch ($__route_result['controller'] . "/" . $__route_result['action']) {
 
-    case 'static_page/index':
-        if ($static_page['seo_title']) {
-            $seo_str = @$static_page['seo_title'];
-        } else {
-            $seo_str = @$static_page['h1'];
-        }
-        break;
-
     case 'error/404':
-        $seo_str = "КМДА — Помилка 404";
+        $seo_str = "МДЛ — Помилка 404";
         break;
     
     case 'page/cabinet':
@@ -92,9 +84,9 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
 }
 
 if ($seo_str == '') {
-    $seo_str = 'КМДА';
+    $seo_str = 'МДЛ';
 } else {
-    $seo_str .= ' | КМДА';
+    $seo_str .= ' | МДЛ';
 }
 
 echo htmlspecialchars($seo_str, ENT_QUOTES);

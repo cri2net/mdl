@@ -28,7 +28,7 @@
         if ($_payment['status'] === 'new') {
             throw new Exception(ERROR_TRANSACTION_NEW);
         }
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         $error = $e->getMessage();
         $success = false;
     }
@@ -57,7 +57,7 @@
                         <p>
                             На Вашу електронну скриньку також було надіслано лист з підтвердженням оплати.<br>
                             Повторно підтвердження платежу можна завантажити в особистому кабінеті. <br>
-                            <a href="<?= BASE_URL; ?>/static/pdf/payment/<?= $_payment['id']; ?>/KMDA-Invoice-<?= $_payment['id']; ?>.pdf">
+                            <a href="<?= BASE_URL; ?>/static/pdf/payment/<?= $_payment['id']; ?>/MDL-Invoice-<?= $_payment['id']; ?>.pdf">
                                 <button class="btn btn-blue btn-md">&darr; Завантажити квитанцію</button> <br>
                             </a>
                         </p>

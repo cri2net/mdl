@@ -976,3 +976,43 @@ ALTER TABLE `kmda_payment`
 -- 2020.03.05
 ALTER TABLE `kmda_payment`
   CHANGE `type` `type` ENUM('komdebt','p2p') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt' NOT NULL;
+
+
+
+-- ---------------
+-- END OF KMDA ---
+-- ---------------
+
+-- 2020.04.24
+
+DROP TABLE kmda_auth_code;
+DROP TABLE kmda_dict_companies;
+DROP TABLE kmda_dict_feedback_themes;
+DROP TABLE kmda_dict_regions;
+DROP TABLE kmda_email_cron;
+DROP TABLE kmda_email_cron_part;
+DROP TABLE kmda_page_views;
+DROP TABLE kmda_page_views_user_agents;
+DROP TABLE kmda_pages;
+DROP TABLE kmda_pages_links;
+DROP TABLE kmda_useful_links;
+
+RENAME TABLE `kmda_cities` TO `mdl_cities`;
+RENAME TABLE `kmda_flats` TO `mdl_flats`;
+RENAME TABLE `kmda_flats_pin` TO `mdl_flats_pin`;
+RENAME TABLE `kmda_houses` TO `mdl_houses`;
+RENAME TABLE `kmda_payment` TO `mdl_payment`;
+RENAME TABLE `kmda_payment_services` TO `mdl_payment_services`;
+RENAME TABLE `kmda_streets` TO `mdl_streets`;
+RENAME TABLE `kmda_text` TO `mdl_text`;
+RENAME TABLE `kmda_user_codes` TO `mdl_user_codes`;
+RENAME TABLE `kmda_user_flats` TO `mdl_user_flats`;
+RENAME TABLE `kmda_users` TO `mdl_users`;
+
+ALTER TABLE `mdl_user_flats`
+  DROP COLUMN `auth_key`;
+
+ALTER TABLE `mdl_users`
+  DROP COLUMN `openid_id`, 
+  DROP COLUMN `openid_data`, 
+  DROP INDEX `openid_id`;

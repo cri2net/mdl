@@ -1,4 +1,5 @@
 <?php
+
 use cri2net\php_pdo_db\PDO_DB;
 
 switch ($__route_result['action']) {
@@ -7,15 +8,6 @@ switch ($__route_result['action']) {
         break;
     
     case '404':
-	    // сначала надо проверить, действительно ли мы не знаем этой страницы
-	    $static_page = StaticPage::getByURI(null, $__static_pages_array);
-	    if ($static_page && $static_page['is_active']) {
-	        $__route_result['controller'] = 'static_page';
-	        $__route_result['action'] = 'index';
-	        require_once(PROTECTED_DIR . '/controllers/static_page.php');
-	        return;
-	    }
-
         header("HTTP/1.1 404 Not Found");
         require_once(PROTECTED_DIR . '/layouts/_header.php');
         require_once(PROTECTED_DIR . '/layouts/errors/404.php');

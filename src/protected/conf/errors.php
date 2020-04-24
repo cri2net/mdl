@@ -19,7 +19,6 @@ define('ERROR_FIELD_EMPTY_ERROR_MSG', 'Поле «{FIELD}» не повинно 
 define('ERROR_FIELD_MAX_ERROR_MSG', ' не може бути більше, ніж ');
 define('ERROR_FIELD_MIN_ERROR_MSG', ' не може бути менше, ніж ');
 define('ERROR_FIELD_SPESIAL_CHARS_ERROR_MSG', ' поле не може містити спеціальні символи.');
-define('ERROR_FLAT_INVALID_AUTH_KEY', 'Ключ авторизації не є дійсний');
 define('ERROR_FLAT_PIN', 'Невірно введений перевірочний код');
 define('ERROR_GET_CARD', 'Помилка при отриманні картки');
 define('ERROR_GET_FLAT', 'Помилка при отриманні квартири.');

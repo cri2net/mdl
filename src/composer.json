@@ -1,14 +1,11 @@
 {
-    "name": "forward-service/kmda-frame",
+    "name": "forward-service/mdl",
     "description": "",
     "type": "project",
     "require": {
-        "php": "^5.4|^7.0",
+        "php": "^5.6|^7.0",
         "phpmailer/phpmailer": "^5.2.10",
-        "placebook/framework-basic": "^1.2",
-        "jbdemonte/barcode": "^2.1",
-        "cri2net/php-pdo-db": "^1.1",
-        "firebase/php-jwt": "^5.0"
+        "cri2net/php-pdo-db": "^1.1"
     },
     "config": {
         "preferred-install": "dist",
