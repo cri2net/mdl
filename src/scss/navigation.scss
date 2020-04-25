@@ -1,0 +1,46 @@
+@import "variables";
+
+.navigation {
+    background-color: #fff;
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+        width: 90%;
+
+        @media (min-width: $mediumWidth) {
+            width: $contentMediumWidth;
+        }
+    }
+
+    &__list {
+        display: none;
+
+        @media (min-width: $mediumWidth) {
+            display: flex;
+            justify-content: space-between;
+            width: $contentMediumWidth - ($contentMediumWidth / 5) * 2;
+
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+    }
+
+    &__link {
+        display: block;
+        color: $linkColor;
+        text-decoration: none;
+        padding: 10px 5px;
+
+        transition: 0.3s color ease-in-out;
+        outline: none;
+
+        &:hover,
+        &:focus {
+            color: $linkHoverColor;
+        }
+    }
+}

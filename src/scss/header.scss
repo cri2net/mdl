@@ -1,0 +1,71 @@
+@import "variables";
+
+.header {
+    background-image: linear-gradient(180deg,#061d47 0%,#133a7f 100%);
+
+    &__container {
+        text-align: center;
+
+        @media (min-width: $smallWidth) {
+            padding: 10px 0;
+        }
+
+        @media (min-width: $mediumWidth) {
+            display: flex;
+            justify-content: space-between;
+
+            text-align: left;
+        }
+
+        @media (min-width: $largeWidth) {
+            width: $contentExtraWidth;
+            margin: 0 auto;
+        }
+    }
+
+    &__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        color: #fff;
+    }
+
+    &__contact-info {
+        display: none;
+
+        @media (min-width: $smallWidth) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            width: $contentSmallWidth;
+            margin: 0 auto;
+        }
+    }
+
+    &__socials {
+        width: $contentMobileWidth;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 0 auto;
+
+        padding: 10px 0;
+    }
+
+    &__link {
+        color: #fff;
+
+        text-decoration: none;
+    }
+
+    &__address {
+        font-style: normal;
+    }
+}
+
+//стили для хэдера, который уже был, он с php кодом, потому не трогал его
+.strange_header {
+    display: none;
+}

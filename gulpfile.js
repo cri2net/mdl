@@ -2,8 +2,8 @@ var gulp    = require('gulp'),
     uglify  = require('gulp-uglify'),
     connect = require('gulp-connect'),
     concat  = require('gulp-concat'),
-    rename  = require('gulp-rename'),    
-    less    = require('gulp-less');
+    rename  = require('gulp-rename'),
+    sass = require('gulp-sass');
 
 var WEBPAGES_MASK = [
     './src/**/.htaccess',
@@ -35,21 +35,15 @@ gulp.task('webpages', function(){
         })
 });
 
-/* TASK: Compile LESS files in single CSS */
-gulp.task('less', wrapPipe(function(success, error) {
-    return gulp.src('./src/less/*.less')
-        .pipe(
-            less({
-                compress: true,
-                javascriptEnabled: true
-            })
-        )
+sass.compiler = require('node-sass');
+
+gulp.task('sass', function () {
+    return gulp.src('./src/scss/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./public/assets/css'))
         .pipe(connect.reload())
-        .on('error', function(err) {
-            console.error(err);
-        })
-}));
+});
+
 
 /* TASK: Moving JS files to public/css directory */
 gulp.task('css', function(){
@@ -114,7 +108,7 @@ gulp.task('fonts', function(){
 gulp.task('connect', function (callback) {
     connect.server({
         root: ['public'],
-        host: 'localhost',
+        host: '127.0.0.1',
         port: 8013,
         livereload: true
     });
@@ -124,7 +118,7 @@ gulp.task('connect', function (callback) {
 /* TASK: Watching changes in all-source & images */
 gulp.task('watch', function(callback){
     gulp.watch(WEBPAGES_MASK, gulp.series('webpages'));
-    gulp.watch(['./src/less/**/*.less'], gulp.series('less'));
+    gulp.watch('./src/scss/**/*.scss', gulp.series('sass'));
     gulp.watch(IMAGES_MASK, gulp.series('images'));
     gulp.watch('./src/css/*.css', gulp.series('css'));
     gulp.watch(JS_MASK, gulp.series('js_script'));
@@ -157,4 +151,4 @@ function wrapPipe(taskFn) {
 }
 
 /* DEFAULT TASK, running needed tasks */
-gulp.task('default',  gulp.parallel('css', 'less', 'webpages', 'js_script', 'js_all', 'images', 'fonts', 'watch'));
+gulp.task('default',  gulp.parallel('css', 'connect', 'sass', 'webpages', 'js_script', 'js_all', 'images', 'fonts', 'watch'));
