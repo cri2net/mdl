@@ -9,6 +9,18 @@
 
             switch ($__route_result['values']['subpage']) {
 
+                case 'login':
+                    $breadcrumbs[] = ['title' => 'Вхід'];
+                    break;
+
+                case 'registration':
+                    $breadcrumbs[] = ['title' => 'Зареєструватися'];
+                    break;
+
+                case 'restore':
+                    $breadcrumbs[] = ['title' => 'Відновлення доступу'];
+                    break;
+
                 case 'verify-email':
                     $breadcrumbs[] = ['title' => 'Підтвердження електронної пошти'];
                     break;

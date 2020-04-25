@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2771c4b84b9556dd541103db7458a763",
+    "content-hash": "ffe570acd55b93da05a1be1bf76ee8b4",
     "packages": [
         {
             "name": "cri2net/php-pdo-db",
@@ -178,7 +178,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.6|^7.0"
+        "php": "^7.0"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
