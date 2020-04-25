@@ -50,13 +50,17 @@ switch (USER_REAL_IP) {
         // define('SITE_DOMAIN', 'cabinet.kyivcity.gov.ua');
 }
 
-PDO_DB::initSettings([
+$tmp = [
     'host'     => DB_HOST,
     'user'     => DB_USER,
     'password' => DB_PASSWORD,
     'name'     => DB_NAME,
-    'type'     => 'mysql',
-]);
+];
+if (defined('DB_PORT')) {
+    $tmp['port'] = DB_PORT;
+}
+
+PDO_DB::initSettings($tmp);
 
 define('EMAIL_FROM', 'websupport@gerc.ua');
 define('EMAIL_HOST', '91.200.41.117');

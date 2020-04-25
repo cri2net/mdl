@@ -15,10 +15,10 @@
 
 <link href="<?= BASE_URL; ?>/assets/css/bootstrap-grid.css" rel="stylesheet">
 <link href="<?= BASE_URL; ?>/assets/css/font-awesome.css" rel="stylesheet">
-<link href="<?= BASE_URL; ?>/assets/css/cabinet.css?m=<?= (is_readable(ROOT . "/assets/css/landing.css")) ? filemtime(ROOT . "/assets/css/cabinet.css") : ''; ?>" rel="stylesheet">
+<link href="<?= BASE_URL; ?>/assets/css/cabinet.css?m=<?= (is_readable(ROOT . "/assets/css/cabinet.css")) ? filemtime(ROOT . "/assets/css/cabinet.css") : ''; ?>" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Fjalla+One%7COpen+Sans:300,400,600,700" rel="stylesheet">
-<script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/modernizr-2.6.2.min.js"></script>
-<script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/plugins.min.js"></script>
+<script src="<?= BASE_URL; ?>/assets/js/modernizr-2.6.2.min.js"></script>
+<script src="<?= BASE_URL; ?>/assets/js/plugins.min.js"></script>
 <script>
     $(function() { var scroll = new SmoothScroll('a[href*="#"]', {speed: 500})});
 </script>

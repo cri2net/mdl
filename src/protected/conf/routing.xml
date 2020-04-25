@@ -36,7 +36,6 @@
         <route match="checkout" controller="page" action="checkout" />
 
         <route match="cabinet" controller="page" action="cabinet">
-            <route match="help" controller="error" action="404" />
             <route match="{subpage}" controller="page" action="cabinet">
                 <route match="{id|num}" controller="page" action="cabinet">
                     <!-- for example, /cabinet/objects/115/bill/ -->

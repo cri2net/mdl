@@ -73,12 +73,3 @@ $DAYS_OF_WEEK = [
         6 => ['short' => 'sa', 'full' => 'Saturday',  'is_holiday' => true],
     ]
 ];
-
-$SERVICES = [
-    'electro'   => 'Електромонтажні роботи',
-    'montage'   => 'Монтажні роботи',
-    'santeh'    => 'Сантехнічні роботи',
-    'remont'    => 'Ремонті роботи',
-    'cleaning'  => 'Прибирання',
-    'other'     => 'Інші послуги',
-];
