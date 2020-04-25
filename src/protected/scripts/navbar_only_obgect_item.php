@@ -10,7 +10,7 @@ $sections = [
 ];
 
 $subsections = [
-    'bill'        => ['paybill', 'checkout', 'processing'],
+    'bill'        => ['paybill'],
     'detailbill'  => [],
     'historybill' => [],
     'edit'        => [],

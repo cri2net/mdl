@@ -4,7 +4,6 @@ use cri2net\php_pdo_db\PDO_DB;
 
 try {
     $mess = date('d-m-Y H:i:s')."\r\n";
-    $mess .= "HTTP_RAW_POST_DATA: ".var_export(@$HTTP_RAW_POST_DATA, true)."\r\n";
     $mess .= "POST: ".var_export(@$_POST, true)."\r\n\r\n\r\n\r\n";
 
     $dir = PROTECTED_DIR . '/logs/paysystems/psp/' . date('Y/');
@@ -21,13 +20,11 @@ try {
 
     $payment_id = $data['order_id'];
     $arr = [
-        'status'                         => (in_array($data['status'], ['success', '1', 'true', true, 1]) ? 'success' : 'error'),
-        'reports_id_plat_klient'         => $data['payment_id'],
-        'reports_id_pack'                => $data['id_pack'],
-        'processing'                     => 'psp',
-        'send_payment_to_reports'        => 1,
-        'go_to_payment_time'             => microtime(true),
-        'send_payment_status_to_reports' => 1,
+        'status'                 => (in_array($data['status'], ['success', '1', 'true', true, 1]) ? 'success' : 'error'),
+        'reports_id_plat_klient' => $data['payment_id'],
+        'reports_id_pack'        => $data['id_pack'],
+        'processing'             => 'psp',
+        'go_to_payment_time'     => microtime(true),
     ];
 
     $payment = PDO_DB::row_by_id(ShoppingCart::TABLE, $payment_id);

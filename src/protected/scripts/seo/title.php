@@ -36,8 +36,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
                                 'historybill' => 'Довідка про платежі',
                                 'edit'        => 'Редагувати об’єкт',
                                 'paybill'     => 'Спосіб сплати',
-                                'checkout'    => 'Перенаправлення',
-                                'processing'  => 'Сплата',
                             ];
                             $seo_str = $sections[$__route_result['values']['section']];
                         }

@@ -33,8 +33,6 @@
             </route>
         </route>
 
-        <route match="checkout" controller="page" action="checkout" />
-
         <route match="cabinet" controller="page" action="cabinet">
             <route match="{subpage}" controller="page" action="cabinet">
                 <route match="{id|num}" controller="page" action="cabinet">

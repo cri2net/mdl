@@ -336,92 +336,6 @@ class ShoppingCart
         return $xml;
     }
 
-    public static function send_payment_to_reports($payment_id)
-    {
-        $xml = self::getPaymentXml($payment_id);
-        if (empty($xml)) {
-            return;
-        }
-
-        $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
-        $report = '/gerc_api/pnew_gkom.rep';
-        $url = API_URL . self::REPORT_BASE_URL . '?report=' . rawurlencode($report) . '&destype=Cache&Desformat=xml&cmdkey=api_kmda_site';
-        $url .= '&in_xml=' . rawurlencode($xml);
-        $res = Http::fgets($url);
-
-        $date = date('Y-m-d H:i:s');
-        $xml_string = iconv('CP1251', 'UTF-8', $res);
-        $to_update = [];
-
-        $message_to_log = var_export(
-            [
-                'date' => date('Y-m-d H:i:s'),
-                'timestamp' => microtime(true),
-                'reports_url' => $url,
-                'answer' => $xml_string,
-            ],
-            true
-        );
-
-        $xml_string = str_ireplace('<?xml version="1.0" encoding="WINDOWS-1251"?>', '<?xml version="1.0" encoding="utf-8"?>', $xml_string);
-        $xml = simplexml_load_string($xml_string);
-
-        if (($xml === null) || ($xml === false) || !isset($xml->ROW)) {
-            self::logRequestToReports($message_to_log, $payment['id'], false);
-            throw new Exception(ERROR_CREATE_PAYMENT_XML);
-            return false;
-        }
-
-        if ($xml->ROW->ERR.'') {
-            self::logRequestToReports($message_to_log, $payment['id'], false);
-            throw new Exception(self::get_create_payment_error($xml->ROW->ERR.''));
-            return false;
-        }
-
-        self::logRequestToReports($message_to_log, $payment['id']);
-
-        $to_update['acq']                     = $xml->ROW->ACQ.'';
-
-        // reports игнорирует комиссию, которую расчитал сайт. Но правильная комиссия его.
-        // Они должны совпадать, но перезаменяем значение в БД на всякий случай
-
-        $to_update['summ_komis']              = floatval($xml->ROW->SUMM_KOMIS.'') / 100;
-        $to_update['summ_plat']               = floatval($xml->ROW->SUMM_PLAT.'')  / 100;
-        $to_update['summ_total']              = floatval($xml->ROW->SUMM_TOTAL.'') / 100;
-
-        $to_update['reports_id_pack']         = $xml->ROW->ID_PACK.'';
-        $to_update['reports_id_plat_klient']  = $xml->ROW->ID_PLAT_KLIENT.'';
-        $to_update['send_payment_to_reports'] = 1;
-
-        PDO_DB::update($to_update, self::TABLE, $payment['id']);
-        return true;
-    }
-
-    public static function get_create_payment_error($error_code)
-    {
-        $error_code = trim($error_code);
-
-        switch ($error_code) {
-            case '':
-            case '0':
-                return '';
-
-            case '1' : return 'Касовий день закритий';
-            case '2' : return 'Стан фіксації (блокування) платежу. Вносити зміни не можна.';
-            case '4' : return 'Немає платежу';
-            case '5' : return 'Немає реквізиту';
-            case '6' : return 'Сума платежа дорівнює 0';
-            case '7' : return 'Платіж з таким id_plat_klient вже був проведений';
-            case '8' : return 'Обов’язкові реквізити платежу не заповнені';
-            case '9' : return 'Статус платежу не 20';
-            case '10': return 'Помилка XML формату';
-
-            case '100':
-            default:
-                return 'Невідома помилка ' . $error_code;
-        }
-    }
-
     public static function check_payments_status($payment_id)
     {
         $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
@@ -432,12 +346,7 @@ class ShoppingCart
         $payment['processing_data'] = (array)(@json_decode($payment['processing_data']));
         $to_update = [];
 
-        if ($to_update) {
-            if (isset($to_update['status']) && ($to_update['status'] == 'timeout')) {
-                $to_update['send_payment_status_to_reports'] = 1;
-            }
-            PDO_DB::update($to_update, self::TABLE, $payment['id']);
-        }
+        PDO_DB::update($to_update, self::TABLE, $payment['id']);
     }
 
     public static function getErrorDescription($processing, $trancode)

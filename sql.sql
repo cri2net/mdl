@@ -1016,3 +1016,17 @@ ALTER TABLE `mdl_users`
   DROP COLUMN `openid_id`, 
   DROP COLUMN `openid_data`, 
   DROP INDEX `openid_id`;
+
+-- 2020.04.25
+ALTER TABLE `mdl_payment`
+  CHANGE `type` `type` ENUM('komdebt') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'komdebt' NOT NULL,
+  CHANGE `processing` `processing` ENUM('psp','psp-2') CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+ALTER TABLE `mdl_payment`
+  DROP COLUMN `send_payment_to_reports`,
+  DROP COLUMN `send_payment_status_to_reports`,
+  DROP INDEX `for_cron_1`,
+  DROP INDEX `for_cron_2`;
+
+ALTER TABLE `mdl_users`
+  DROP COLUMN `birth_date`;
