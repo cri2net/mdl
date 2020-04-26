@@ -3,7 +3,7 @@
         <ul class="footer__list footer__list--outer">
             <li class="footer__item">
                 <a href="#" class="footer__image-link">
-                    <img src="http://mdl.local/assets/pic/mdl_logo_white.png"
+                    <img src="<?= BASE_URL; ?>/assets/pic/mdl_logo_white.png"
                          alt="Місто для людей"
                          class="footer__img">
                 </a>
@@ -52,13 +52,13 @@
                 Ми приймаємо до сплати
             </p>
             <div class="footer__payment footer__payment--outer">
-                <img src="http://mdl.local/assets/pic/ps/visa.png"
+                <img src="<?= BASE_URL; ?>/assets/pic/ps/visa.png"
                      alt="Visa"
                      class="footer__payment-img footer__payment-img--visa">
-                <img src="http://mdl.local/assets/pic/ps/mastercard.png"
+                <img src="<?= BASE_URL; ?>/assets/pic/ps/mastercard.png"
                      alt="Master Card"
                      class="footer__payment-img footer__payment-img--master">
-                <img src="http://mdl.local/assets/pic/ps/prostir.png"
+                <img src="<?= BASE_URL; ?>/assets/pic/ps/prostir.png"
                      alt="Простір"
                      class="footer__payment-img footer__payment-img--prostir">
             </div>
@@ -67,7 +67,7 @@
             <li class="footer__socials-item">
                 <a href="#" class="footer__socials-link">
                     <span class="visually-hidden">Facebook</span>
-                    <img src="http://mdl.local/assets/pic/facebook.svg"
+                    <img src="<?= BASE_URL; ?>/assets/pic/facebook.svg"
                          alt="Facebook"
                          class="footer__socials-img"
                          width="25"
@@ -77,7 +77,7 @@
             <li class="footer__socials-item">
                 <a href="#" class="footer__socials-link">
                     <span class="visually-hidden">Youtube</span>
-                    <img src="http://mdl.local/assets/pic/youtube.svg"
+                    <img src="<?= BASE_URL; ?>/assets/pic/youtube.svg"
                          alt="Youtube"
                          class="footer__socials-img"
                          width="25"
@@ -88,7 +88,7 @@
             <li class="footer__socials-item">
                 <a href="#" class="footer__socials-link">
                     <span class="visually-hidden">Instagram</span>
-                    <img src="http://mdl.local/assets/pic/instagram.svg"
+                    <img src="<?= BASE_URL; ?>/assets/pic/instagram.svg"
                          alt="Instagram"
                          class="footer__socials-img"
                          width="25"

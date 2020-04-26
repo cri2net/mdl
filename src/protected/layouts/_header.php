@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" sizes="16x16" href="<?= BASE_URL ?>/assets/images/favicon.png" >
 <link rel="stylesheet" href="<?= BASE_URL; ?>/assets/css/main.css">
-<script src="http://mdl.local/assets/js/cabinet.js"></script>
 <!--[if lt IE 9]><style> input.txt, textarea.txt, select.txt { border:1px solid #444 !important; }</style><![endif]-->
 <!--[if lt IE 9]><script>const e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (let i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 
@@ -53,7 +52,7 @@
                     <li class="header__socials-item">
                         <a href="#" class="header__socials-img-link">
                             <span class="visually-hidden">Facebook</span>
-                            <img src="http://mdl.local/assets/pic/facebook.svg"
+                            <img src="<?= BASE_URL; ?>/assets/pic/facebook.svg"
                                  alt="Facebook"
                                  width="22"
                                  height="18">
@@ -62,7 +61,7 @@
                     <li class="header__socials-item">
                         <a href="#" class="header__socials-img-link">
                             <span class="visually-hidden">Youtube</span>
-                            <img src="http://mdl.local/assets/pic/youtube.svg"
+                            <img src="<?= BASE_URL; ?>/assets/pic/youtube.svg"
                                  alt="Youtube"
                                  width="21"
                                  height="18">
@@ -71,7 +70,7 @@
                     <li class="header__socials-item">
                         <a href="#" class="header__socials-img-link">
                             <span class="visually-hidden">Instagram</span>
-                            <img src="http://mdl.local/assets/pic/instagram.svg"
+                            <img src="<?= BASE_URL; ?>/assets/pic/instagram.svg"
                                  alt="Instagram"
                                  width="16"
                                  height="18">

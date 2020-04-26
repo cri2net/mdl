@@ -47,10 +47,10 @@
         <a href="#" class="navigation__img-link">
             <picture>
                 <source type="image/webp"
-                        srcset="http://mdl.local/assets/pic/mdl_logo_optimize.webp">
+                        srcset="<?= BASE_URL; ?>/assets/pic/mdl_logo_optimize.webp">
                 <source type="image/png"
-                        srcset="http://mdl.local/assets/pic/mdl_logo_optimize.png">
-                <img src="http://mdl.local/assets/pic/mdl_logo_optimize.png"
+                        srcset="<?= BASE_URL; ?>/assets/pic/mdl_logo_optimize.png">
+                <img src="<?= BASE_URL; ?>/assets/pic/mdl_logo_optimize.png"
                      alt="Місто для людей"
                      class="navigation__img">
             </picture>
