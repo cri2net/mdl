@@ -35,6 +35,8 @@
         text-decoration: none;
         padding: 10px 5px;
 
+        font-family: 'Helvetica Bold', sans-serif;
+
         transition: 0.3s color ease-in-out;
         outline: none;
 
@@ -42,5 +44,10 @@
         &:focus {
             color: $linkHoverColor;
         }
+    }
+
+    &__img {
+        width: 76px;
+        height: 90px;
     }
 }

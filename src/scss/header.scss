@@ -2,12 +2,13 @@
 
 .header {
     background-image: linear-gradient(180deg,#061d47 0%,#133a7f 100%);
+    font-size: $headerFontSize;
 
     &__container {
         text-align: center;
 
         @media (min-width: $smallWidth) {
-            padding: 10px 0;
+            padding: 20px 0;
         }
 
         @media (min-width: $mediumWidth) {
@@ -42,6 +43,10 @@
             width: $contentSmallWidth;
             margin: 0 auto;
         }
+
+        @media (min-width: $largeWidth) {
+            margin: 0;
+        }
     }
 
     &__socials {
@@ -52,6 +57,15 @@
         margin: 0 auto;
 
         padding: 10px 0;
+
+        @media (min-width: $mediumWidth) {
+            width: 150px;
+            padding: 0;
+        }
+
+        @media (min-width: $largeWidth) {
+            margin: 0;
+        }
     }
 
     &__link {

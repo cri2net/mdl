@@ -45,10 +45,14 @@
 <nav class="header__navigation navigation">
     <div class="navigation__container">
         <a href="#" class="navigation__img-link">
-            <picture class="navigation__img">
-                <source type="image/webp" srcset="image.webp">
-                <source type="image/jpeg" srcset="image.jpg">
-                <img src="#" alt="Місто для людей">
+            <picture>
+                <source type="image/webp"
+                        srcset="http://mdl.local/assets/pic/mdl_logo_optimize.webp">
+                <source type="image/png"
+                        srcset="http://mdl.local/assets/pic/mdl_logo_optimize.png">
+                <img src="http://mdl.local/assets/pic/mdl_logo_optimize.png"
+                     alt="Місто для людей"
+                     class="navigation__img">
             </picture>
         </a>
         <ul class="navigation__list">

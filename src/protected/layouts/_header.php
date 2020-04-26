@@ -49,19 +49,28 @@
                 <li class="header__socials-item">
                     <a href="#" class="header__socials-img-link">
                         <span class="visually-hidden">Facebook</span>
-                        <img src="./src/pic/facebook.svg" alt="Facebook">
+                        <img src="http://mdl.local/assets/pic/facebook.svg"
+                             alt="Facebook"
+                             width="22"
+                             height="18">
                     </a>
                 </li>
                 <li class="header__socials-item">
                     <a href="#" class="header__socials-img-link">
                         <span class="visually-hidden">Youtube</span>
-                        <img src="./src/pic/youtube.svg" alt="Youtube">
+                        <img src="http://mdl.local/assets/pic/youtube.svg"
+                             alt="Youtube"
+                             width="21"
+                             height="18">
                     </a>
                 </li>
                 <li class="header__socials-item">
                     <a href="#" class="header__socials-img-link">
                         <span class="visually-hidden">Instagram</span>
-                        <img src="./src/pic/instagram.svg" alt="Instagram">
+                        <img src="http://mdl.local/assets/pic/instagram.svg"
+                             alt="Instagram"
+                             width="16"
+                             height="18">
                     </a>
                 </li>
             </ul>

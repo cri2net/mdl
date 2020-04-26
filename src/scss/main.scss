@@ -1,8 +1,16 @@
 @import "variables";
-@import "header";
-@import "navigation";
-@import "visually-hidden";
+@import "fonts";
+
+html {
+    font-family: 'Helvetica', sans-serif;
+    font-size: $baseFontSize;
+}
 
 body {
     margin: 0;
 }
+
+@import "header";
+@import "navigation";
+@import "footer";
+@import "visually-hidden";

@@ -17,7 +17,7 @@ var WEBPAGES_MASK = [
     '!./src/protected/vendor/**/{tests,Tests,test,docs,examples}/**/*.*'
 ];
 
-var IMAGES_MASK = ['./src/{pic,images}/**/{*.png,*.jpg,*.jpeg,*.gif,*.ico}', '!./src/{pic,images}/**/__*.*'];
+var IMAGES_MASK = ['./src/{pic,images}/**/{*.png,*.jpg,*.jpeg,*.gif,*.ico,*.webp}', '!./src/{pic,images}/**/__*.*'];
 var CSS_ENCODED_IMAGES_MASK = ['./src/{pic,images}/__*.*'];
 var FONTS_MASK = ['./src/**/*.{ttf,svg,woff,woff2,eot,otf}'];
 var JS_MASK = ['./src/{js,css}/**/*.js'];
@@ -88,7 +88,6 @@ gulp.task('js_script', function(){
                 console.error(err);
             })
 });
-
 
 /* TASK: Moving images (only external, not CSS-encoded) to public/images directory */
 gulp.task('images', function(){
