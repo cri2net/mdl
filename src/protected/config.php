@@ -64,7 +64,7 @@ PDO_DB::initSettings($tmp);
 
 define('EMAIL_FROM', 'websupport@gerc.ua');
 define('EMAIL_HOST', '91.200.41.117');
-define('EMAIL_FROM_NAME', 'КМДА');
+define('EMAIL_FROM_NAME', 'Місто для людей');
 define('REMEMBER_COOKIE_NAME', '__mdludata');
 
 Authorization::check_login();

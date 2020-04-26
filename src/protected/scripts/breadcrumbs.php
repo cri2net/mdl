@@ -1,6 +1,6 @@
 <?php
     $breadcrumbs = [
-        ['title' => 'КМДА', 'link' => '/']
+        ['title' => 'МДЛ', 'link' => '/']
     ];
 
     switch ($__route_result['controller'] . "/" . $__route_result['action']) {

@@ -69,7 +69,7 @@
             </tr>
             <tr>
                 <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px; padding-left:11px;">
-                    <span style="font-weight:bold; line-height:18px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:14px;">КМДА <br></span>
+                    <span style="font-weight:bold; line-height:18px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:14px;">МДЛ <br></span>
                     {{year}} © <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="https://cabinet.kyivcity.gov.ua" target="_blank">{{SITE_DOMAIN}}</a>
                 </td>
                 <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px" align="right">
