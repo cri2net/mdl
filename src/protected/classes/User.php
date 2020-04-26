@@ -162,7 +162,6 @@ class User
 
         PDO_DB::query("UPDATE " . self::TABLE . " SET send_reg_letter=1 WHERE id='$user_id' LIMIT 1");
         $email = new Email();
-        $email->changeMXToQuick();
 
         return $email->send(
             [$user['email'], "{$user['name']} {$user['fathername']}"],

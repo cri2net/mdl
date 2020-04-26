@@ -1,4 +1,5 @@
 <?php
+
 try {
     $email = stripslashes($_POST['email']);
     $phone = '+' . preg_replace('/[^0-9]/', '', $_POST['phone']);
@@ -18,7 +19,6 @@ try {
     }
 
     $mail = new Email();
-    $mail->changeMXToQuick();
 
     if ($user !== null) {
         // пользователь найден.

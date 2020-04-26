@@ -8,9 +8,8 @@ try {
     $verify_link = BASE_URL . '/cabinet/verify-email/' . $verify_code . '/';
     
     $email = new Email();
-    $email->changeMXToQuick();
 
-    return $email->send(
+    $email->send(
         [$__userData['email'], "{$__userData['name']} {$__userData['fathername']}"],
         'Підтвердження електронної пошти',
         '',

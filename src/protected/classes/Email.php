@@ -31,7 +31,7 @@ class Email
         
         $this->isSMTP();
 
-        $this->Host       = '192.168.180.70';
+        $this->Host       = 'mail2.gerc.ua';
         $this->Port       = 25; // The default SMTP server port.
         $this->SMTPSecure = 'tls'; // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' or 'tls'
         $this->SMTPAuth   = true;
@@ -65,10 +65,6 @@ class Email
         if (is_callable([$this->PHPMailer, $name])) {
             return call_user_func_array([$this->PHPMailer, $name], $arguments);
         }
-    }
-
-    public function changeMXToQuick()
-    {
     }
 
     public function call_phpmailer_send()

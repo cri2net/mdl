@@ -121,7 +121,7 @@
 
                 width: 16px;
                 height: 16px;
-                background-image: url(<?= BASE_URL; ?>/assets/pic/phone_icon_opt.png);
+                background-image: url(../pic/phone_icon_opt.png);
             }
         }
 
@@ -139,7 +139,7 @@
 
                 width: 16px;
                 height: 16px;
-                background-image: url(<?= BASE_URL; ?>/assets/pic/mail_icon_opt.png);
+                background-image: url(../pic/mail_icon_opt.png);
             }
         }
     }
@@ -246,7 +246,7 @@
 
             width: 16px;
             height: 16px;
-            background-image: url(<?= BASE_URL; ?>/assets/pic/place_icon_opt.png);
+            background-image: url(../pic/place_icon_opt.png);
         }
     }
 }

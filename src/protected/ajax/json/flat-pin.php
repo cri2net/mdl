@@ -20,7 +20,6 @@ try {
     PDO_DB::insert($data, TABLE_PREFIX . "flats_pin");
 
     $email = new Email();
-    $email->changeMXToQuick();
     $email->send(
         [$__userData['email'], "{$__userData['name']} {$__userData['fathername']}"],
         'Перевірочний код',
