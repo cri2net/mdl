@@ -77,6 +77,33 @@
                 </a>
             </li>
         </ul>
+        <div class="menu">
+            <span class="menu-global menu-top"></span>
+            <span class="menu-global menu-middle"></span>
+            <span class="menu-global menu-bottom"></span>
+        </div>
+        <ul class="navigation__mobile-list">
+            <li class="navigation__mobile-item">
+                <a href="#" class="navigation__link navigation__mobile-link">
+                    Мої об'єкти
+                </a>
+            </li>
+            <li class="navigation__mobile-item">
+                <a href="" class="navigation__link navigation__mobile-link">
+                    Мої платежі
+                </a>
+            </li>
+            <li class="navigation__mobile-item">
+                <a href="#" class="navigation__link navigation__mobile-link">
+                    Налаштування
+                </a>
+            </li>
+            <li class="navigation__mobile-item">
+                <a href="#" class="navigation__link navigation__mobile-link">
+                    Вихід
+                </a>
+            </li>
+        </ul>
         <a href="#" class="navigation__link">
             Назад до МДЛ
         </a>

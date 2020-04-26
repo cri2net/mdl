@@ -1,0 +1,33 @@
+@import "variables";
+
+breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px 25px;
+
+    & a {
+        position: relative;
+
+        margin-right: 20px;
+        text-decoration: none;
+        color: $linkColor;
+
+        transition: 0.3s color ease-in-out;
+
+        &:hover {
+            color: $linkHoverColor;
+        }
+
+        &::after {
+            content: "/";
+            position: relative;
+            left: 10px;
+
+            color: #dbdbdb;
+        }
+    }
+
+    & .current {
+        color: #dbdbdb;
+    }
+}

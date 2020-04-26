@@ -4,11 +4,12 @@
     background-color: #fff;
 
     &__container {
+        width: 90%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin: 0 auto;
-        width: 90%;
+        padding: 15px 0;
 
         @media (min-width: $mediumWidth) {
             width: $contentMediumWidth;
@@ -18,14 +19,18 @@
     &__list {
         display: none;
 
-        @media (min-width: $mediumWidth) {
+        @media (min-width: $smallWidth) {
+            width: 400px;
             display: flex;
             justify-content: space-between;
-            width: $contentMediumWidth - ($contentMediumWidth / 5) * 2;
 
-            margin: 0;
+            margin: 0 auto;
             padding: 0;
             list-style: none;
+        }
+
+        @media (min-width: $mediumWidth) {
+            width: $contentMediumWidth - ($contentMediumWidth / 5) * 2;
         }
     }
 
@@ -49,5 +54,15 @@
     &__img {
         width: 76px;
         height: 90px;
+    }
+
+    &__mobile-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        @media (min-width: $smallWidth) {
+            display: none;
+        }
     }
 }

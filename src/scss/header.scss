@@ -1,8 +1,11 @@
 @import "variables";
 
 .header {
-    background-image: linear-gradient(180deg,#061d47 0%,#133a7f 100%);
     font-size: $headerFontSize;
+
+    &__wrapper {
+        background-image: linear-gradient(180deg, #061d47 0%, #133a7f 100%);
+    }
 
     &__container {
         text-align: center;
@@ -41,6 +44,10 @@
             align-items: center;
 
             width: $contentSmallWidth;
+            margin: 0 auto 20px auto;
+        }
+
+        @media (min-width: $mediumWidth) {
             margin: 0 auto;
         }
 
@@ -72,6 +79,54 @@
         color: #fff;
 
         text-decoration: none;
+
+        &--phone {
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: -20%;
+                transform: translate(20%, -50%) rotate(-90deg);
+
+                width: 16px;
+                height: 16px;
+                background-image: url(http://mdl.local/assets/pic/phone_icon_opt.png);
+            }
+        }
+
+        &--mail {
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: -25%;
+                transform: translate(25%, -50%);
+
+                width: 16px;
+                height: 16px;
+                background-image: url(http://mdl.local/assets/pic/mail_icon_opt.png);
+            }
+        }
+
+        &--address {
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: -20%;
+                transform: translate(20%, -50%);
+
+                width: 16px;
+                height: 16px;
+                background-image: url(http://mdl.local/assets/pic/place_icon_opt.png);
+            }
+        }
     }
 
     &__address {
