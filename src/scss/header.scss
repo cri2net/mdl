@@ -93,6 +93,12 @@
                 width: 16px;
                 height: 16px;
                 background-image: url(../pic/phone_icon_opt.png);
+
+                transition: 0.2s transform ease-in-out;
+            }
+
+            &:hover::before {
+                transform: translate(20%, -50%) rotate(-90deg) scale(1.1);
             }
         }
 
@@ -109,6 +115,12 @@
                 width: 16px;
                 height: 16px;
                 background-image: url(../pic/mail_icon_opt.png);
+
+                transition: 0.2s transform ease-in-out;
+            }
+
+            &:hover::before {
+                transform: translate(25%, -50%) scale(1.1);
             }
         }
 

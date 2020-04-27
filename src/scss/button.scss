@@ -1,0 +1,16 @@
+@import "variables";
+
+.button {
+    width: 100%;
+    display: block;
+
+    border: none;
+
+    &__socials {
+        transition: 0.3s transform ease-in-out;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+}

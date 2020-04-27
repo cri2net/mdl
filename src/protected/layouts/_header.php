@@ -50,7 +50,7 @@
 
                 <ul class="header__list header__socials">
                     <li class="header__socials-item">
-                        <a href="#" class="header__socials-img-link">
+                        <a href="#" class="button button__socials">
                             <span class="visually-hidden">Facebook</span>
                             <img src="<?= BASE_URL; ?>/assets/pic/facebook.svg"
                                  alt="Facebook"
@@ -59,7 +59,7 @@
                         </a>
                     </li>
                     <li class="header__socials-item">
-                        <a href="#" class="header__socials-img-link">
+                        <a href="#" class="button button__socials">
                             <span class="visually-hidden">Youtube</span>
                             <img src="<?= BASE_URL; ?>/assets/pic/youtube.svg"
                                  alt="Youtube"
@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li class="header__socials-item">
-                        <a href="#" class="header__socials-img-link">
+                        <a href="#" class="button button__socials">
                             <span class="visually-hidden">Instagram</span>
                             <img src="<?= BASE_URL; ?>/assets/pic/instagram.svg"
                                  alt="Instagram"

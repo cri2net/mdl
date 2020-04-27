@@ -35,6 +35,7 @@
     }
 
     &__link {
+        position: relative;
         display: block;
         color: $linkColor;
         text-decoration: none;
@@ -48,6 +49,31 @@
         &:hover,
         &:focus {
             color: $linkHoverColor;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+
+            border-radius: 2px;
+            background-color: $linkHoverColor;
+
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+            transform: translateY(10px);
+        }
+
+        &:hover::after,
+        &:focus::after,
+        &:active::after {
+            transform: translateY(0);
+            opacity: 1;
+            color: #000;
         }
     }
 
