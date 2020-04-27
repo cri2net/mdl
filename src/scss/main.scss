@@ -2,7 +2,7 @@
 @import "fonts";
 
 html {
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Blogger Sans Medium', sans-serif;
     font-size: $baseFontSize;
 }
 
@@ -14,5 +14,6 @@ body {
 @import "navigation";
 @import "button";
 @import "breadcrumbs";
+@import "form";
 @import "footer";
 @import "visually-hidden";

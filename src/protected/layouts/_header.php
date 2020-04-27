@@ -29,19 +29,19 @@
         <div class="header__wrapper">
             <div class="header__container">
                 <ul class="header__list header__contact-info">
-                    <li class="header__item">
+                    <li class="header__list-item">
                         <a href="tel:+380443334101"
                            class="header__link header__link--phone">
                             +38 (044) 333 41 01
                         </a>
                     </li>
-                    <li class="header__item">
+                    <li class="header__list-item">
                         <a href="mailto:office@mdl.com.ua"
                            class="header__link header__link--mail">
                             office@mdl.com.ua
                         </a>
                     </li>
-                    <li class="header__item">
+                    <li class="header__list-item">
                         <address class="header__address header__link--address">
                             Київ, вул. Болсуновська, 6
                         </address>
@@ -52,7 +52,7 @@
                     <li class="header__socials-item">
                         <a href="#" class="button button__socials">
                             <span class="visually-hidden">Facebook</span>
-                            <img src="<?= BASE_URL; ?>/assets/pic/facebook.svg"
+                            <img src="<?= BASE_URL; ?>/assets/pic/facebook-f-brands.svg"
                                  alt="Facebook"
                                  width="22"
                                  height="18">
@@ -61,7 +61,7 @@
                     <li class="header__socials-item">
                         <a href="#" class="button button__socials">
                             <span class="visually-hidden">Youtube</span>
-                            <img src="<?= BASE_URL; ?>/assets/pic/youtube.svg"
+                            <img src="<?= BASE_URL; ?>/assets/pic/youtube-brands.svg"
                                  alt="Youtube"
                                  width="21"
                                  height="18">
@@ -70,7 +70,7 @@
                     <li class="header__socials-item">
                         <a href="#" class="button button__socials">
                             <span class="visually-hidden">Instagram</span>
-                            <img src="<?= BASE_URL; ?>/assets/pic/instagram.svg"
+                            <img src="<?= BASE_URL; ?>/assets/pic/instagram-brands.svg"
                                  alt="Instagram"
                                  width="16"
                                  height="18">

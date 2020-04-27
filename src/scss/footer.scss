@@ -91,18 +91,23 @@
     &__title {
         margin: 0 0 10px;
 
-        font-family: 'Helvetica Bold', sans-serif;
+        font-family: 'Blogger Sans Medium', sans-serif;
         font-size: $h3FontSize;
     }
 
     &__text {
         margin: 0;
 
+        font-family: 'Blogger Sans Light', sans-serif;
+        font-size: 17px;
         line-height: 30px;
         color: rgba(#fff, 0.79);
     }
 
     &__link {
+        font-family: 'Blogger Sans Light', sans-serif;
+        font-size: 17px;
+
         color: rgba(#fff, 0.79);
         text-decoration: none;
         line-height: 27px;
@@ -117,17 +122,17 @@
                 position: absolute;
                 top: 50%;
                 left: -12%;
-                transform: translate(12%, -50%) rotate(-90deg);
+                transform: translate(12%, -50%);
 
                 width: 16px;
                 height: 16px;
-                background-image: url(../pic/phone_icon_opt.png);
+                background-image: url(../pic/phone-solid.svg);
 
                 transition: 0.2s transform ease-in-out;
             }
 
             &:hover::before {
-                transform: translate(12%, -50%) rotate(-90deg) scale(1.1);
+                transform: translate(12%, -50%) scale(1.1);
             }
         }
 
@@ -145,7 +150,7 @@
 
                 width: 16px;
                 height: 16px;
-                background-image: url(../pic/mail_icon_opt.png);
+                background-image: url(../pic/envelope-solid.svg);
 
                 transition: 0.3s transform ease-in-out;
             }
@@ -171,8 +176,19 @@
         }
     }
 
+    &__socials-img {
+        opacity: 45%;
+
+        &:hover {
+            opacity: 100%;
+        }
+    }
+
     &__info {
         margin: 0;
+
+        font-family: 'Blogger Sans Light', sans-serif;
+        font-size: 17px;
         text-align: center;
 
         @media (min-width: $footerBreakpointMedium) {
@@ -210,11 +226,12 @@
         margin: 0 auto;
 
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
 
-        background-color:#fff;
-        border-radius: 15px;
+        @media (min-width: $footerBreakpointMedium) {
+            justify-content: flex-start;
+        }
 
         &--outer {
             margin-bottom: 20px;
@@ -226,20 +243,19 @@
     }
 
     &__payment-img {
-        width: 90px;
-        padding: 10px 0;
+        margin: 0 10px;
 
         &--visa {
-            padding: 10px 5px;
-            height: 29px;
-        }
-
-        &--master {
-            height: 55px;
+            width: 45px;
+            height: 18px;
         }
 
         &--prostir {
-            height: 41px;
+            height: 22px;
+            padding: 2px 0;
+
+            background-color:#fff;
+            border-radius: 5px;
         }
     }
 
@@ -247,6 +263,8 @@
         position: relative;
         transform: translateX(20px);
 
+        font-family: 'Blogger Sans Light', sans-serif;
+        font-size: 17px;
         font-style: normal;
 
         &::before {
@@ -258,7 +276,8 @@
 
             width: 16px;
             height: 16px;
-            background-image: url(../pic/place_icon_opt.png);
+            background-image: url(../pic/map-marker-alt-solid.svg);
+            background-repeat: no-repeat;
         }
     }
 }

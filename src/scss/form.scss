@@ -1,0 +1,83 @@
+@import "variables";
+
+.form {
+    max-width: $smallWidth;
+    box-sizing: border-box;
+
+    margin: 0 auto;
+
+    &__input {
+        width: 90%;
+        box-sizing: border-box;
+        padding: 10px;
+
+        border: none;
+        border-bottom: 1px solid $linkColor;
+        outline: none;
+
+        font-family: 'Helvetica', sans-serif;
+        font-size: $baseFontSize;
+
+        transition: 0.2s ease-in-out;
+
+        &:focus {
+            border-bottom: 1px solid $linkHoverColor;
+        }
+    }
+
+    &__group {
+        display: flex;
+        justify-content: center;
+
+        &--outer {
+            margin-bottom: 40px;
+        }
+    }
+
+    &__registration {
+        position: relative;
+
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.56);
+        padding: 45px 30px;
+
+        &--outer {
+            margin: 30px auto;
+        }
+    }
+
+    &__close-link {
+        position: absolute;
+        left: 93%;
+        top: 4%;
+
+        transform: translate(-4%, -93%);
+
+        text-decoration: none;
+        outline: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+
+            background-image: url(../pic/close.svg);
+            background-size: cover;
+        }
+    }
+
+    &__link {
+        text-decoration: none;
+        color: $linkColor;
+
+        transition: 0.3s color ease-in-out;
+
+        outline: none;
+
+        &:hover,
+        &:focus {
+            color: $linkHoverColor;
+        }
+    }
+}

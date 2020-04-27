@@ -3,6 +3,10 @@
 .button {
     width: 100%;
     display: block;
+    padding: 0;
+
+    font-family: 'Blogger Sans Medium', sans-serif;
+    font-size: 18px;
 
     border: none;
 
@@ -11,6 +15,27 @@
 
         &:hover {
             transform: scale(1.2);
+        }
+    }
+
+    &__form {
+        width: 50%;
+        height: 49px;
+        margin: 0 auto 30px auto;
+
+        color: $linkColor;
+        border-radius: 30px;
+        background-color: $buttonColorYellow;
+
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+
+        outline: none;
+
+        &:hover,
+        &:focus {
+            color: $buttonColorYellow;
+            background-color: $linkColor;
         }
     }
 }

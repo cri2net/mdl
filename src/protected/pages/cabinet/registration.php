@@ -13,10 +13,13 @@
     $_reg_lastname = htmlspecialchars($_reg_lastname, ENT_QUOTES);
     $_reg_email = htmlspecialchars($_reg_email, ENT_QUOTES);
 ?>
-<div class="container">
+<section class="container registration">
     <content>
-        <form method="post" action="<?= BASE_URL; ?>/post/cabinet/registration/">
-            <a href="<?= BASE_URL; ?>/cabinet/login/" class="close">&times;</a>
+        <form method="post"
+              action="<?= BASE_URL; ?>/post/cabinet/registration/"
+              class="registration__form form form__registration form__registration--outer">
+            <a href="<?= BASE_URL; ?>/cabinet/login/"
+               class="close form__close-link"></a>
 
             <?php
                 if (isset($_SESSION['registration']['status'])) {
@@ -30,30 +33,64 @@
                     <?php
                 }
             ?>
-            <div class="form-group">
-                <input autofocus required="required" placeholder="Прізвище" name="lastname" value="<?= $_reg_lastname; ?>" type="text">
+            <div class="form-group form__group form__group--outer">
+                <input autofocus
+                       required="required"
+                       placeholder="Прізвище"
+                       name="lastname"
+                       value="<?= $_reg_lastname; ?>"
+                       type="text"
+                       class="form__input">
             </div>
-            <div class="form-group">
-                <input required="required" placeholder="Ім’я" name="name" value="<?= $_reg_name; ?>" type="text">
+            <div class="form-group form__group form__group--outer">
+                <input required="required"
+                       placeholder="Ім’я"
+                       name="name"
+                       value="<?= $_reg_name; ?>"
+                       type="text" class="form__input">
             </div>
-            <div class="form-group">
-                <input placeholder="По батькові" name="fathername" value="<?= $_reg_fathername; ?>" type="text">
+            <div class="form-group form__group form__group--outer">
+                <input placeholder="По батькові"
+                       name="fathername"
+                       value="<?= $_reg_fathername; ?>"
+                       type="text"
+                       class="form__input">
             </div>
-            <div class="form-group">
-                <input required="required" placeholder="Електронна пошта" name="email" value="<?= $_reg_email; ?>" type="email">
+            <div class="form-group form__group form__group--outer">
+                <input required="required"
+                       placeholder="Електронна пошта"
+                       name="email"
+                       value="<?= $_reg_email; ?>"
+                       type="email"
+                       class="form__input">
             </div>
-            <div class="form-group">
-                <input required="required" placeholder="Телефон" name="phone" id="reg-phone" value="<?= $_reg_phone; ?>" type="text">
+            <div class="form-group form__group form__group--outer">
+                <input required="required"
+                       placeholder="Телефон"
+                       name="phone"
+                       id="reg-phone"
+                       value="<?= $_reg_phone; ?>"
+                       type="text" class="form__input">
             </div>
-            <div class="form-group">
-                <input required="required" placeholder="Ваш пароль" name="password" value="" type="password">
+            <div class="form-group form__group form__group--outer">
+                <input required="required"
+                       placeholder="Ваш пароль"
+                       name="password"
+                       value=""
+                       type="password"
+                       class="form__input">
             </div>
-            <div class="form-group">
-                <button>Зареєструватися</button>
+            <div class="form-group form__group">
+                <button class="button button__form button__form--registration">
+                    Зареєструватися
+                </button>
             </div>
-            <div class="form-group">
-                <a href="<?= BASE_URL; ?>/cabinet/login/">У мене вже є аккаунт</a>
+            <div class="form-group form__group">
+                <a href="<?= BASE_URL; ?>/cabinet/login/"
+                   class="form__link form__link--login">
+                    У мене вже є аккаунт
+                </a>
             </div>
         </form>
     </content>
-</div>
+</section>

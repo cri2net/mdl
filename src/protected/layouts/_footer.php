@@ -52,10 +52,10 @@
                 Ми приймаємо до сплати
             </p>
             <div class="footer__payment footer__payment--outer">
-                <img src="<?= BASE_URL; ?>/assets/pic/ps/visa.png"
+                <img src="<?= BASE_URL; ?>/assets/pic/visa.png"
                      alt="Visa"
                      class="footer__payment-img footer__payment-img--visa">
-                <img src="<?= BASE_URL; ?>/assets/pic/ps/mastercard.png"
+                <img src="<?= BASE_URL; ?>/assets/pic/mc_symbol_opt.png"
                      alt="Master Card"
                      class="footer__payment-img footer__payment-img--master">
                 <img src="<?= BASE_URL; ?>/assets/pic/ps/prostir.png"
@@ -67,7 +67,7 @@
             <li class="footer__socials-item">
                 <a href="#" class="button button__socials">
                     <span class="visually-hidden">Facebook</span>
-                    <img src="<?= BASE_URL; ?>/assets/pic/facebook.svg"
+                    <img src="<?= BASE_URL; ?>/assets/pic/facebook-f-brands.svg"
                          alt="Facebook"
                          class="footer__socials-img"
                          width="25"
@@ -77,7 +77,7 @@
             <li class="footer__socials-item">
                 <a href="#" class="button button__socials">
                     <span class="visually-hidden">Youtube</span>
-                    <img src="<?= BASE_URL; ?>/assets/pic/youtube.svg"
+                    <img src="<?= BASE_URL; ?>/assets/pic/youtube-brands.svg"
                          alt="Youtube"
                          class="footer__socials-img"
                          width="25"
@@ -88,7 +88,7 @@
             <li class="footer__socials-item">
                 <a href="#" class="button button__socials">
                     <span class="visually-hidden">Instagram</span>
-                    <img src="<?= BASE_URL; ?>/assets/pic/instagram.svg"
+                    <img src="<?= BASE_URL; ?>/assets/pic/instagram-brands.svg"
                          alt="Instagram"
                          class="footer__socials-img"
                          width="25"

@@ -4,25 +4,36 @@
     font-size: $headerFontSize;
 
     &__wrapper {
+        height: 87px;
+        display: flex;
+        align-items: center;
         background-image: linear-gradient(180deg, #061d47 0%, #133a7f 100%);
+
+        @media (min-width: $mediumWidth) {
+            height: 57px;
+        }
     }
 
     &__container {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+
         text-align: center;
 
         @media (min-width: $smallWidth) {
-            padding: 20px 0;
+            max-width: $smallWidth;
+            padding: 10px 0;
         }
 
         @media (min-width: $mediumWidth) {
-            display: flex;
-            justify-content: space-between;
+            max-width: $mediumWidth;
 
             text-align: left;
         }
 
         @media (min-width: $largeWidth) {
-            width: $contentExtraWidth;
+            max-width: $largeWidth;
             margin: 0 auto;
         }
     }
@@ -33,52 +44,63 @@
         list-style: none;
 
         color: #fff;
+        letter-spacing: .3px;
+
+        @media (min-width: $mediumWidth) {
+            width: 966px;
+        }
+    }
+
+    &__list-item {
+        margin: 0 25px;
     }
 
     &__contact-info {
         display: none;
 
+        font-family: 'Blogger Sans', sans-serif;
+        font-size: $headerFontSize;
+
         @media (min-width: $smallWidth) {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-
-            width: $contentSmallWidth;
-            margin: 0 auto 20px auto;
         }
 
         @media (min-width: $mediumWidth) {
-            margin: 0 auto;
-        }
-
-        @media (min-width: $largeWidth) {
             margin: 0;
         }
     }
 
     &__socials {
-        width: $contentMobileWidth;
         display: flex;
-        justify-content: space-around;
         align-items: center;
         margin: 0 auto;
 
         padding: 10px 0;
 
         @media (min-width: $mediumWidth) {
-            width: 150px;
+            width: 148px;
+            justify-content: space-around;
             padding: 0;
-        }
-
-        @media (min-width: $largeWidth) {
             margin: 0;
         }
+    }
+
+    &__socials-item {
+        margin: 0 10px;
     }
 
     &__link {
         color: #fff;
 
         text-decoration: none;
+        font-size: 12px;
+
+        outline: none;
+
+        @media (min-width: $mediumWidth) {
+            font-size: 14px;
+        }
 
         &--phone {
             position: relative;
@@ -87,18 +109,19 @@
                 content: "";
                 position: absolute;
                 top: 50%;
-                left: -20%;
-                transform: translate(20%, -50%) rotate(-90deg);
+                left: -23%;
+                transform: translate(23%, -50%);
 
                 width: 16px;
                 height: 16px;
-                background-image: url(../pic/phone_icon_opt.png);
+                background-image: url(../pic/phone-solid.svg);
 
                 transition: 0.2s transform ease-in-out;
             }
 
-            &:hover::before {
-                transform: translate(20%, -50%) rotate(-90deg) scale(1.1);
+            &:hover::before,
+            &:focus::before {
+                transform: translate(23%, -50%) scale(1.1);
             }
         }
 
@@ -114,12 +137,13 @@
 
                 width: 16px;
                 height: 16px;
-                background-image: url(../pic/mail_icon_opt.png);
+                background-image: url(../pic/envelope-solid.svg);
 
                 transition: 0.2s transform ease-in-out;
             }
 
-            &:hover::before {
+            &:hover::before,
+            &:focus::before {
                 transform: translate(25%, -50%) scale(1.1);
             }
         }
@@ -131,12 +155,13 @@
                 content: "";
                 position: absolute;
                 top: 50%;
-                left: -20%;
-                transform: translate(20%, -50%);
+                left: -15%;
+                transform: translate(15%, -50%);
 
                 width: 16px;
                 height: 16px;
-                background-image: url(../pic/place_icon_opt.png);
+                background-image: url(../pic/map-marker-alt-solid.svg);
+                background-repeat: no-repeat;
             }
         }
     }

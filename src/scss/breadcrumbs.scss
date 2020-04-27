@@ -6,6 +6,8 @@ breadcrumbs {
     flex-wrap: wrap;
     padding: 15px 0 0 10px;
 
+    font-size: 14px;
+
     @media (min-width: $mediumWidth) {
         width: $contentMediumWidth;
         margin: 0 auto;
