@@ -3,9 +3,9 @@
 
     $cities = PDO_DB::table_list(DB_TBL_CITIES, '', 'pos ASC');
 ?>
-<div class="input">
-    <label>Виберіть місто *: <br>
-        <select class="txt" name="city" id="select_city_id">
+<div class="input form__group form__group--outer">
+    <label class="form__label">Виберіть місто *: <br>
+        <select class="txt form__input form__input--select" name="city" id="select_city_id">
             <?php
                 foreach ($cities as $city) {
                     ?>
@@ -16,45 +16,45 @@
         </select>
     </label>
 </div>
-<div class="input">
-    <label>Виберіть вулицю: <br>
-        <input required="required" autofocus="autofocus" class="txt form-txt-input" type="text" name="street" id="add_obj_street" value="">
+<div class="input form__group form__group--outer form__selector">
+    <label class="form__label">Виберіть вулицю: <br>
+        <input required="required" autofocus="autofocus" class="txt form-txt-input form__input form__input--select form__input--outer" type="text" name="street" id="add_obj_street" value="">
     </label>
     <div class="hint-blue">
         Введіть перші літери вулиці та обов’язково виберіть її зі списку
     </div>
 </div>
-<div class="input house-input">
-    <label>Номер будинку <br>
-        <select class="txt" name="house" disabled="disabled" id="add_obj_house">
+<div class="input house-input form__group form__group--outer">
+    <label class="form__label">Номер будинку <br>
+        <select class="txt form__input form__input--select" name="house" disabled="disabled" id="add_obj_house">
             <option>-- виберіть --</option>
         </select>
     </label>
 </div>
-<div class="input">
-    <label>Номер квартири <br>
-        <select class="txt" name="flat" disabled="disabled" id="add_obj_flat">
+<div class="input form__group form__group--outer">
+    <label class="form__label">Номер квартири <br>
+        <select class="txt form__input form__input--select" name="flat" disabled="disabled" id="add_obj_flat">
             <option>-- виберіть --</option>
         </select>
     </label>
 </div>
-<div class="input" id="tenant_div" style="display: none;">
-    <label>Наймач <br>
-        <select class="txt" style="width: 350px;" name="tenant" id="tenant">
+<div class="input form__group form__group--outer" id="tenant_div" style="display: none;">
+    <label class="form__label">Наймач <br>
+        <select class="txt form__input form__input--select" style="width: 350px;" name="tenant" id="tenant">
         </select>
     </label>
 </div>
-<div class="input" id="pin-code" style="display: none">
-    <label>Перевірочний код<br/>
-        <input id="add_obj_pin" name="pin" class="txt" type="text" required="required" />
+<div class="input form__group form__group--outer" id="pin-code" style="display: none">
+    <label class="form__label">Перевірочний код<br/>
+        <input id="add_obj_pin" name="pin" class="txt form__input form__input--select" type="text" required="required" />
     </label>
     <div class="hint-blue">Введіть перевірочний PIN-код, який ми відправили Вам на пошту</div>
 </div>
 <?php
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));
 ?>
-<div class="input align-center">
-    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue"><span class="fa fa-check"></span>Додати об’єкт</button>
+<div class="input align-center form__group">
+    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue button button__form"><span class="fa fa-check"></span>Додати об’єкт</button>
 </div>
 <?php
     if ($disabled) {

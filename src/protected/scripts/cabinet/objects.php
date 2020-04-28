@@ -153,7 +153,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="house_item flat house_add matchHeight <?= $flat['payed']; ?>">
                             <span class="align-center">
-                                <a class="btn btn-green-darker add-new add-new-object" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
+                                <a class="btn btn-green-darker add-new add-new-object button button__form button__form--register" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
                             </span>
                             <div class="modal fade" id="modal-object-add" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
@@ -161,7 +161,7 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                                         <div id="add-object-form" class="add-object-form" style="display:none;">
-                                            <form class="form-block" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
+                                            <form class="form-block form form__login form__login--outer" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
                                                 <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
                                             </form>
                                         </div>
