@@ -4,10 +4,12 @@
 ?>
 <div class="container">
     <content>
-        <form method="post" action="<?= BASE_URL; ?>/post/cabinet/login/">
+        <form method="post"
+              action="<?= BASE_URL; ?>/post/cabinet/login/"
+              class="form form__login form__login--outer">
             <?php
                 if (defined('SHOW_NEED_AUTH_MESSAGE') && SHOW_NEED_AUTH_MESSAGE) {
-                    ?><div class="alert alert-warning" >Для доступу до сторінки необхідно увійти до системи</div> <?php
+                    ?><div class="alert alert-warning form__warning form__warning--outer">Для доступу до сторінки необхідно увійти до системи</div> <?php
                 }
 
                 if (isset($_SESSION['login']['status']) && !$_SESSION['login']['status']) {
@@ -21,19 +23,36 @@
                 $login = htmlspecialchars($login, ENT_QUOTES);
 
                 ?>
-                <div class="form-group">
-                    <input autofocus placeholder="Введіть телефон або пошту" name="email" value="<?= $login; ?>" type="text">
+                <div class="form__group form__group--outer">
+                    <input autofocus
+                           placeholder="Введіть телефон або пошту"
+                           name="email"
+                           value="<?= $login; ?>"
+                           type="text"
+                           class="form__input">
                 </div>
-                <div class="form-group">
-                    <input placeholder="Ваш пароль" name="password" value="" type="password">
+                <div class="form__group form__group--outer">
+                    <input placeholder="Ваш пароль"
+                           name="password"
+                           value=""
+                           type="password"
+                           class="form__input">
                 </div>
-                <div class="form-group">
-                    <button>Вхід</button>
-                    <a href="<?= BASE_URL; ?>/cabinet/restore/">Забули пароль?</a>
+                <div class="form__group form__group--login">
+                    <button class="button button__form button__form--outer">
+                        Вхід
+                    </button>
+                    <a href="<?= BASE_URL; ?>/cabinet/restore/"
+                       class="form__link form__link--login">
+                        Забули пароль?
+                    </a>
                 </div>
                 <?php
             ?>
         </form>
-        <a href="<?= BASE_URL; ?>/cabinet/registration/">Зареєструватися у системі</a>
+        <a href="<?= BASE_URL; ?>/cabinet/registration/"
+           class="button button__form button__form--register button__form--register--outer">
+            Зареєструватися у системі
+        </a>
     </content>
 </div>

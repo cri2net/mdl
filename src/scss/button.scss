@@ -21,7 +21,7 @@
     &__form {
         width: 50%;
         height: 49px;
-        margin: 0 auto 30px auto;
+        margin: 0;
 
         color: $linkColor;
         border-radius: 30px;
@@ -36,6 +36,40 @@
         &:focus {
             color: $buttonColorYellow;
             background-color: $linkColor;
+        }
+
+        &--registration {
+            width: 90%;
+
+            @media (min-width: $smallWidth) {
+                width: 50%;
+            }
+        }
+
+        &--outer {
+            margin-bottom: 30px;
+        }
+
+        &--register {
+            width: 250px;
+            margin: 0 auto;
+
+            background-color: transparent;
+            color: $linkHoverColor;
+
+            text-decoration: none;
+            text-align: center;
+            line-height: 49px;
+
+            &:hover,
+            &:focus {
+                background-color: $linkHoverColor;
+                color: #fff;
+            }
+
+            &--outer {
+                margin-bottom: 40px;
+            }
         }
     }
 }

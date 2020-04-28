@@ -12,7 +12,9 @@
                 return;
             }
         ?>
-        <form method="post" action="<?= BASE_URL; ?>/post/cabinet/restore/">
+        <form method="post"
+              action="<?= BASE_URL; ?>/post/cabinet/restore/"
+              class="form form__login form__login--outer">
             <?php    
                 if (isset($_SESSION['restore']['status']) && !$_SESSION['restore']['status']) {
                     ?>
@@ -36,22 +38,37 @@
                     : ((isset($_SESSION['login']['email'])) ? $_SESSION['login']['email'] : '');
                 $_email = htmlspecialchars($_email, ENT_QUOTES);
             ?>
-            <div class="form-group">
-                <label><span>Електронна пошта / логін </span> <br>
-                    <input type="text" name="email" value="<?= $_email; ?>">
+            <div class="form-group form__group form__group--outer">
+                <label class="form__label"><span>Електронна пошта / логін </span> <br>
+                    <input type="text"
+                           name="email"
+                           value="<?= $_email; ?>"
+                           class="form__input">
                 </label>
             </div>
-            <div class="bracket">або</div>
-            <div class="form-group">
-                <label>Телефон <br>
-                    <input placeholder="+380" type="text" name="phone" value="<?= $_phone; ?>">
+            <div class="bracket form__group form__group--bracket">або</div>
+            <div class="form-group form__group form__group--outer">
+                <label class="form__label">Телефон <br>
+                    <input placeholder="+380"
+                           type="text"
+                           name="phone"
+                           value="<?= $_phone; ?>"
+                           class="form__input">
                 </label>
             </div>
-            <div class="form-group">
-                <button>Далі</button>
+            <div class="form-group form__group">
+                <button class="button button__form">
+                    Далі
+                </button>
             </div>
         </form>
-        <a href="<?= BASE_URL; ?>/cabinet/registration/">Зареєструватися у системі</a>
-        <a href="<?= BASE_URL; ?>/cabinet/">Увiйти до системи</a>
+        <a href="<?= BASE_URL; ?>/cabinet/registration/"
+           class="button button__form button__form--register button__form--register--outer">
+            Зареєструватися у системі
+        </a>
+        <a href="<?= BASE_URL; ?>/cabinet/"
+           class="button button__form button__form--register button__form--register--outer">
+            Увiйти до системи
+        </a>
     </content>
 </div>

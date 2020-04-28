@@ -81,7 +81,7 @@
                        class="form__input">
             </div>
             <div class="form-group form__group">
-                <button class="button button__form button__form--registration">
+                <button class="button button__form button__form--outer button__form--registration">
                     Зареєструватися
                 </button>
             </div>
