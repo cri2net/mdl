@@ -15,13 +15,6 @@ class ShoppingCart
     const PDF_NEW_HISTORY_KOM     = '/reports/rwservlet?report=ppp/kv_www_all_Hist_new33.rep&cmdkey=rep&destype=cache&desformat=pdf&id_k=';
     const PDF_NEW_HISTORY_INSTANT = '/reports/rwservlet?report=ppp/kv_www_Singl_Hist_new33.rep&cmdkey=rep&destype=cache&desformat=pdf&id_k=';
 
-    public static function getActivePaySystems($get_all_supported_paysystems = false)
-    {
-        return ($get_all_supported_paysystems)
-            ? ['psp', 'psp-2']
-            : ['psp', 'psp-2'];
-    }
-
     /**
      * Получаем логин и хеш пароля кассира
      * @param  string $processing Ключ процессинга
@@ -38,55 +31,6 @@ class ShoppingCart
                 $password = '1B842ABA1CC93A92E761CA10090AEFAD6944A5DF';
                 break;
         }
-    }
-    
-    public static function logRequestToReports($message, $payment_id, $success = true, $type = 'new', $folder = 'reports_new')
-    {
-        $dir = PROTECTED_DIR . "/logs/$folder/$type/" . date('Y/m/d/');
-
-        if (!file_exists($dir)) {
-            mkdir($dir, 0777, true);
-        }
-
-        $file = $dir . "$payment_id---" . microtime(true) . '.txt';
-        error_log($message . "\r\n\r\n", 3, $file);
-
-        if (!$success) {
-            $file = PROTECTED_DIR . "/logs/$folder/$type/with_error.txt";
-            error_log("payment_id = $payment_id\r\n" . $message . "\r\n\r\n", 3, $file);
-        }
-    }
-
-    public static function getPercentRule($pay_system = null)
-    {
-        // пример правила: ['percent' => 2, 'min' => 2, 'big_after' => 1000, 'big_percent' => 3.5]
-        
-        $rules = [
-            'tas'        => ['percent' => 2, 'min' => 5],
-            'psp'        => ['percent' => 2, 'min' => 5],
-            'oschad'     => ['percent' => 0, 'min' => 0],
-            'oschadbank' => ['percent' => 2, 'min' => 5],
-        ];
-
-        if ($pay_system) {
-            $rules = $rules[$pay_system];
-        }
-
-        return $rules;
-    }
-
-    public static function getPercent($sum)
-    {
-        $sum = (double)(str_replace(",", ".", $sum));
-        $rules = self::getPercentRule();
-
-        foreach ($rules as $key => $value) {
-            if (isset($rules['big_after']) && (isset($rules['big_after']) <= $sum)) {
-                $rules[$key]['percent'] = $rules[$key]['big_percent'];
-            }
-        }
-
-        return $rules;
     }
 
     public static function getTotalDebtSum($data)
@@ -126,7 +70,6 @@ class ShoppingCart
 
         $payment_data = [
             'user_id'           => $user_id,
-            'acq'               => '',
             'timestamp'         => $timestamp,
             'type'              => 'komdebt',
             'flat_id'           => $data['flat_id'],

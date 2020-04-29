@@ -9,13 +9,12 @@
 
     $payment_id = $_SESSION['paybill']['payment_id'];
     $total_sum = $_SESSION['paybill']['total_sum'];
-    $pay_systems = ShoppingCart::getActivePaySystems();
 
     if (isset($_SESSION['psp_id']['p' . $payment_id])) {
         $psp_id = $_SESSION['psp_id']['p' . $payment_id];
     } else {
 
-        $psp_id = Psp::sendPaymentToGate($payment_id);
+        $psp_id = Psp2::sendPaymentToGate($payment_id);
         if (!empty($psp_id)) {
             $_SESSION['psp_id']['p' . $payment_id] = $psp_id;
         }
@@ -35,23 +34,14 @@
         return;
     }
 ?>
-<div class="container" >
-<content>
-<div class="portlet" >
-<div class="form-subtitle subtitle-bg-green">Оберіть, будь ласка, спосіб сплати:</div>
 
-<div class="input">
-    <div class="pay-item" style="float: none;">Сплата комунальних послуг (<b>Код: <?= $payment_id; ?></b>)</div>
-    <span class="total-sum"><?= $total_sum; ?> грн</span>
-</div>
+<div>Сплата комунальних послуг (<b>Код: <?= $payment_id; ?></b>)</div>
+<span><?= $total_sum; ?> грн</span>
 <?php
     if (!empty($psp_id)) {
         ?>
-        <iframe style="min-width: 760px; width: 100%; min-height: 600px;" src="https://fc.gerc.ua:8443/api/card.php?site_id=<?= Psp::SITE_ID; ?>&oper_id=<?= $psp_id; ?>" frameborder="0"></iframe>
+        <iframe style="min-width: 760px; width: 100%; min-height: 600px;" src="https://fc.gerc.ua:8443/payframe/index.php?common=show&site_id=<?= Psp2::SITE_ID; ?>&oper_id=<?= $psp_id; ?>" frameborder="0"></iframe>
         <br><br>
         <?php
     }
 ?>
-</div>
-</content>
-</div>
