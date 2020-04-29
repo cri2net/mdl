@@ -91,6 +91,7 @@ class Email
 
 
         $message = self::fetch($message, $data);
+        $message = $this->loadStaticAttach($message);
 
         $this->Subject = $subject;
         $this->Body    = $message;
@@ -226,5 +227,31 @@ class Email
         }
 
         return false;
+    }
+
+    private function loadStaticAttach($message)
+    {
+        preg_match_all("/(src|background)=[\"'](.*)[\"']/Ui", $message, $images);
+        if (isset($images[2])) {
+            foreach ($images[2] as $imgindex => $url)
+                if (preg_match('#^[A-z]+://#', $url)) {
+                    $need_replace = false;
+                    $cid = md5($url);
+                    $filename = PHPMailer::mb_pathinfo($url, PATHINFO_BASENAME);
+                    $img = @file_get_contents($url);
+                    
+                    if ($img !== false) {
+                        if ($this->PHPMailer->addStringEmbeddedImage($img, $cid, $filename, 'base64', 'application/octet-stream', 'inline')) {
+                            $need_replace = true;
+                        }
+                        if ($need_replace) {
+                            $message = preg_replace("/".$images[1][$imgindex]."=[\"']".preg_quote($url, '/')."[\"']/Ui", $images[1][$imgindex]."=\"cid:".$cid."\"", $message);
+                            $this->inline_attachments[$cid] = array('url' => $url, 'content' => base64_encode($img), 'filename'=> $filename, 'type' => PHPMailer::_mime_types(PHPMailer::mb_pathinfo($url, PATHINFO_EXTENSION)));
+                        }
+                    }
+                }
+        }
+
+        return $message;
     }
 }

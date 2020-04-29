@@ -1,82 +1,87 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="uk">
-<head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
-<!--[if (gte mso 9)|(IE)]>
-<style type="text/css">
-    table {border-collapse: collapse;}
-</style>
-<![endif]-->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&subset=latin,cyrillic">
-</head>
-<body style="margin:0; padding:0; min-width:730px; width:100%; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px;">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&subset=latin,cyrillic">
-<style>
-    @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic&subset=latin,cyrillic);
+<!DOCTYPE html>
+<html lang="en-US">
 
-    @font-face {
-        font-family: 'Ubuntu';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Ubuntu'), url(https://fonts.gstatic.com/s/ubuntu/v7/qwCYE106NwHxtQIaygqBug.ttf) format('truetype');
-    }
-    @font-face {
-        font-family: 'Ubuntu';
-        font-style: normal;
-        font-weight: 700;
-        src: local('Ubuntu Bold'), local('Ubuntu-Bold'), url(https://fonts.gstatic.com/s/ubuntu/v7/4z2U46_RRLOfkoHsWJG3v6CWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
-    }
-    @font-face {
-        font-family: 'Ubuntu';
-        font-style: italic;
-        font-weight: 400;
-        src: local('Ubuntu Italic'), local('Ubuntu-Italic'), url(https://fonts.gstatic.com/s/ubuntu/v7/hBxMw5gGdaT2CoPdCGcAqPesZW2xOQ-xsNqO47m55DA.ttf) format('truetype');
-    }
-</style>
-<table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td>
-    <table width="100%" style="background-color:#eeeeee;" cellspacing="0" cellpadding="10" border="0"><tbody>
-        <tr>
-            <td height="34" style="vertical-align:top; padding-top:6px; padding-right:0px; padding-bottom:0px; padding-left:20px;" align="left"><strong><a style="text-decoration:none; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia; color:#004444; font-size:14px;" href="tel:+380443668027">(044) 366 80 27</a></strong></td>
-            <td height="34" style="vertical-align:top; padding-top:6px; padding-right:20px; padding-bottom:0px; padding-left:0px;" align="right"><a target="_blank" style="color:#01b671; font-size:14px; line-height:14px; font-weight:bold; font-family:Ubuntu, Arial, Times, Georgia;" href="https://cabinet.kyivcity.gov.ua/">cabinet.kyivcity.gov.ua</a></td>
-        </tr>
-    </tbody></table>
-    <table width="100%" cellspacing="0" cellpadding="0" border="0">
-        <tbody><tr><td style="padding:0px; line-height:23px;" height="23">&nbsp;</td></tr></tbody>
-    </table>
-    <table width="100%" cellspacing="0" cellpadding="0" border="0">
-        <tbody><tr><td style="padding:20px; line-height:1.4em">
-            {{MAIN_CONTENT}}
-        </td></tr></tbody>
-    </table>
-    <table width="100%" cellspacing="0" cellpadding="0" border="0">
-        <tbody><tr><td style="padding:0px; line-height:23px;" height="23">&nbsp;</td></tr></tbody>
-    </table>
-    <table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td style="padding-top:20px; padding-left:18px; padding-right:18px; padding-bottom:0px;" bgcolor="#01b671">
-        <table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody>
-            <tr>
-                <td width="151" style="padding:0px; padding-bottom:18px;"></td>
-                <td valign="top" align="right" style="vertical-align:top;"><table width="100%" cellspacing="0" cellpadding="0" border="0">
-                    <tbody><tr>
-                        <td>&nbsp;</td>
-                        <td width="93" align="left" style="color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;">
-                            <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:18px;" href="tel:+380443668027">(044)&nbsp;366&nbsp;80&nbsp;27</a> <br>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="date=no" />
+    <title>МДЛ</title>
+</head>
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="margin: 0; padding: 0; font-family: Arial, sans-serif; line-height: 1.3em;">
+    <table class="wrapper" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="font-family: Arial, sans-serif; line-height: 1.3em; color: #666666; font-size: 14px; background-color: #e8e8e8; width: 100%; margin: 0; padding: 50px 0 50px 0; -webkit-text-size-adjust: none;">
+        <tr style="font-family: Arial, sans-serif; line-height: 1.3em;">
+            <td class="wrapper-td" align="center" valign="top" style="font-family: Arial, sans-serif; line-height: 1.3em; padding: 0 20px 20px;">
+                <table class="main-body" border="0" cellpadding="0" cellspacing="0" style="font-family: Arial, sans-serif; line-height: 1.3em; color: #666666; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.03); overflow: hidden; background-color: #ffffff; border: 1px solid #d1d1d1; width: 550px; border-radius: 5px;">
+                    <tr style="font-family: Arial, sans-serif; line-height:  1.3em;">
+                        <td align="center" valign="top" style="font-family: Arial,  sans-serif; line-height: 1.3em;">
+                            <!-- Header -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-family: Arial, sans-serif; line-height: 1.3em; color: #666666;">
+                                <tr style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                                    <td class="template_header" style="font-family: Arial; line-height: 1.3em; background-color: #12387c; color: #deeaf8; border-bottom: 1px solid #2070c7; font-weight: bold; vertical-align: middle; text-align: left; padding: 16px 18px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+                                        <a href="{{base_url}}/" border="0" style="font-style: none; text-decoration: none; font-weight: normal; font-size: 13px; margin: 0 0 0 12px; color: #deeaf8;">
+                                            <img src="{{base_url}}/assets/pic/email-logo.png">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- End Header -->
                         </td>
-                    </tr></tbody>
-                </table></td>
-            </tr>
-            <tr>
-                <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px; padding-left:11px;">
-                    <span style="font-weight:bold; line-height:18px; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:14px;">МДЛ <br></span>
-                    {{year}} © <a style="text-decoration:none; color:#ffffff; font-family:Ubuntu, Arial, Times, Georgia; font-size:12px; line-height:15px;" href="https://cabinet.kyivcity.gov.ua" target="_blank">{{SITE_DOMAIN}}</a>
-                </td>
-                <td valign="bottom" style="vertical-align:bottom; padding-bottom:30px" align="right">
-                </td>
-            </tr>
-        </tbody></table>
-    </td></tr></tbody></table>
-</td></tr></tbody></table>
+                    </tr>
+                    <tr style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                        <td align="left" valign="top" style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                            <!-- Body -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_body" style="font-family: Arial, sans-serif; line-height: 1.3em; color: #666666;">
+                                <tr style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                                    <td valign="top" class="body_content" style="font-family: Arial, sans-serif; line-height: 1.3em; color: #666666; background-color: #ffffff;">
+                                        <!-- Content -->
+                                        <table border="0" cellspacing="0" width="100%" style="font-family: Arial, sans-serif; line-height: 1.3em; color: #666666;">
+                                            <tr style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                                                <td valign="top" class="body_content_inner" style="font-family: Arial; line-height: 1.3em; text-align: left; padding-left: 55px; padding-right: 55px; padding-top: 45px; padding-bottom: 45px;">
+                                                    {{MAIN_CONTENT}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!-- End Content -->
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- End Body -->
+                        </td>
+                    </tr>
+                    <tr style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                        <td align="center" valign="top" style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                            <!-- Footer -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Arial, sans-serif; line-height: 1.3em; color: #666666;">
+                                <tr style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                                    <td width="100%" align="center" class="footer_container" style="font-family: Arial,sans-serif; line-height: 1.3em; font-size: 12px; text-align: center; padding: 12px 22.5px 16px; border-top: 1px solid #ededed; color: #4b4b4b; background-color: #fafafa;">
+                                        <table align="center" cellpadding="0" cellspacing="0" border="0" width="auto" style="font-family: Arial, sans-serif; line-height: 1.3em; color: #666666;">
+                                            <tr style="font-family: Arial, sans-serif; line-height: 1.3em;">
+                                                <td align="center" class="footer_container_inner bottom-nav" style="font-family: Arial,sans-serif; line-height: 1.3em; font-size: 12px; color: #4b4b4b;">
+                                                    <p style="margin: .6em 0; font-size: 18px;"><a style="text-decoration:none;" href="{{base_url}}/"><span style="color: #4b4b4b; font-family: Arial, sans-serif">{{site_domain}}</span></a></p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- End Footer -->
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <style type="text/css">
+        @media screen and ( max-width: 860px) {
+            .main-body {
+                width: 100% !important;
+            }
+            .nav-text-block {
+                padding-left: 6px !important;
+                padding-right: 6px !important;
+            }
+        }
+    </style>
 </body>
 </html>
