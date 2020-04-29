@@ -36,7 +36,7 @@
         font-family: 'Helvetica', sans-serif;
         font-size: $baseFontSize;
 
-        transition: 0.2s ease-in-out;
+        transition: 0.3s border ease-in-out;
 
         &:focus {
             border-bottom: 1px solid $linkHoverColor;
@@ -48,6 +48,22 @@
 
         &--select {
             width: 100%;
+        }
+    }
+
+    &__textarea {
+        font-family: 'Blogger Sans', sans-serif;
+        font-size: 14px;
+
+        padding: 10px;
+        border: 2px solid $linkColor;
+        resize: none;
+        outline: none;
+
+        transition: 0.3s border ease-in-out;
+
+        &:focus {
+            border: 2px solid $linkHoverColor;
         }
     }
 
@@ -66,6 +82,11 @@
 
         &--select {
             justify-content: space-between;
+        }
+
+        &--delete-profile {
+            align-items: center;
+            flex-direction: column;
         }
     }
 
@@ -128,10 +149,15 @@
         &--select {
             width: 50%;
         }
+
+        &--delete-profile {
+            display: block;
+            margin-bottom: 15px;
+        }
     }
 
     &__title {
-        margin-bottom: 15px;
+        margin: 0 auto 15px;
 
         font-family: 'Blogger Sans Bold', sans-serif;
         font-size: 20px;
@@ -231,4 +257,9 @@
 
 .modal {
     outline: none;
+}
+
+.hint {
+    display: inline-flex;
+    margin-bottom: 15px;
 }

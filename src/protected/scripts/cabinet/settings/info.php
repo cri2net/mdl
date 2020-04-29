@@ -29,14 +29,14 @@
     </label>
 </div>
 
-<div class="form-subtitle form__title">Зміна логіну</div>
+<h3 class="form-subtitle form__title">Зміна логіну</h3>
 <div class="input form__group form__group--outer">
     <label class="form__label">Логін: <br>
         <input autocomplete="off" type="text" class="form__input form__input--select" name="login" value="<?= htmlspecialchars($__userData['login'], ENT_QUOTES); ?>">
     </label>
 </div>
 
-<div class="form-subtitle form__title">Зміна паролю</div>
+<h3 class="form-subtitle form__title">Зміна паролю</h3>
 <div class="input  form__group form__group--outer">
     <label class="form__label">Дійсний пароль <br>
         <input style="display:block;" type="password" class="form__input form__input--select" name="password">
@@ -49,7 +49,7 @@
     </label>
 </div>
 
-<div class="form-subtitle delete-profile form__title">Видалення профілю</div>
+<h3 class="form-subtitle delete-profile form__title">Видалення профілю</h3>
 <div class="check-box-line form__group form__group--outer">
     <span class="niceCheck" id="confirm_delete_profile"><input class="" onclick="$('#confirm_delete_profile').click();" type="checkbox"></span>
     <label onclick="$('#confirm_delete_profile').click();">
