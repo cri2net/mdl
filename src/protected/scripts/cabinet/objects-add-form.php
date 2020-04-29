@@ -44,17 +44,17 @@
         </select>
     </label>
 </div>
-<div class="input form__group form__group--outer" id="pin-code" style="display: none">
-    <label class="form__label">Перевірочний код<br/>
+<div class="input form__group form__group--select form__group--outer" id="pin-code" style="display: none">
+    <label class="form__label form__label--select">Перевірочний код<br/>
         <input id="add_obj_pin" name="pin" class="txt form__input form__input--select" type="text" required="required" />
     </label>
-    <div class="hint-blue">Введіть перевірочний PIN-код, який ми відправили Вам на пошту</div>
+    <div class="hint-blue hint-blue__form">Введіть перевірочний PIN-код, який ми відправили Вам на пошту</div>
 </div>
 <?php
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));
 ?>
 <div class="input align-center form__group">
-    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue button button__form">Додати об’єкт</button>
+    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue button button__form button__form--registration">Додати об’єкт</button>
 </div>
 <?php
     if ($disabled) {

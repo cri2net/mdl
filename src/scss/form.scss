@@ -8,6 +8,10 @@
 
     margin: 0 auto;
 
+    &--outer {
+        margin: 30px auto;
+    }
+
     &__login {
         max-width: 500px;
         padding: 45px 30px;
@@ -58,6 +62,10 @@
         &--login {
             flex-direction: column;
             align-items: center;
+        }
+
+        &--select {
+            justify-content: space-between;
         }
     }
 
@@ -116,6 +124,18 @@
 
     &__label {
         width: 100%;
+
+        &--select {
+            width: 50%;
+        }
+    }
+
+    &__title {
+        margin-bottom: 15px;
+
+        font-family: 'Blogger Sans Bold', sans-serif;
+        font-size: 20px;
+        text-align: center;
     }
 }
 
@@ -166,6 +186,15 @@
     *border-bottom-width: 2px;
 }
 
+.ui-menu-item {
+    &:hover,
+    &:focus {
+        background-color: #ddd;
+        color: #fff;
+        cursor: pointer;
+    }
+}
+
 .ui-menu-item > a.ui-corner-all {
     display: block;
     padding: 3px 15px;
@@ -194,6 +223,10 @@
 .hint-blue {
     color: $linkHoverColor;
     font-size: 14px;
+
+    &__form {
+        width: 45%;
+    }
 }
 
 .modal {

@@ -30,7 +30,7 @@
                 }
             ?>
 
-            <form onsubmit="registration_form_submit();" class="form-cabinet-settings form-cabinet-settings-<?= $current_section; ?>" method="post" action="<?= BASE_URL; ?>/post/cabinet/settings/<?= $current_section; ?>/">
+            <form onsubmit="registration_form_submit();" class="form form--outer form-cabinet-settings form-cabinet-settings-<?= $current_section; ?>" method="post" action="<?= BASE_URL; ?>/post/cabinet/settings/<?= $current_section; ?>/">
                 <?php
                     $file = PROTECTED_DIR . "/scripts/cabinet/settings/$current_section.php";
                     if (file_exists($file)) {
