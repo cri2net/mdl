@@ -9,13 +9,7 @@
 
     $payment_id = $_SESSION['paybill']['payment_id'];
     $total_sum = $_SESSION['paybill']['total_sum'];
-    $totalBillSum = $_SESSION['paybill']['totalBillSum'];
     $pay_systems = ShoppingCart::getActivePaySystems();
-
-    foreach ($pay_systems as $tmp) {
-        $name = $tmp . 'Sum';
-        $$name = ShoppingCart::getPercentSum($total_sum, $tmp);
-    }
 
     if (isset($_SESSION['psp_id']['p' . $payment_id])) {
         $psp_id = $_SESSION['psp_id']['p' . $payment_id];

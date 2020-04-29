@@ -89,18 +89,6 @@ class ShoppingCart
         return $rules;
     }
 
-    public static function getPercentSum($sum, $type)
-    {
-        $sum = (double)(str_replace(",", ".", $sum));
-        $rules = self::getPercent($sum);
-
-        if (isset($rules[$type])) {
-            return sprintf('%.2f', max(round($sum * $rules[$type]['percent'] / 100, 2), $rules[$type]['min']));
-        }
-
-        throw new Exception("UNKNOW TYPE $type");
-    }
-
     public static function getTotalDebtSum($data)
     {
         $sum = 0;
@@ -196,7 +184,7 @@ class ShoppingCart
                 'dend'       => $serviceDataTmp[7],
                 'fio'        => $serviceDataTmp[8],
                 'date_d'     => $data[$item.'_date_d'],
-                'id_pat'     => $data[$item.'_id_pat'],
+                'id_plat'     => $data[$item.'_id_plat'],
                 'name_plat'  => $data[$item.'_name_plat'],
                 'firm_name'  => $data[$item.'_firm_name'],
                 'code_firme' => $data[$item.'_code_firme'],
@@ -295,7 +283,7 @@ class ShoppingCart
             $xml .= "<plat_code>{$data['platcode']}</plat_code>";
             $xml .= "<abcount>{$data['abcount']}</abcount>";
             $xml .= "<id_firme>{$data['id_firme']}</id_firme>";
-            $xml .= "<id_plat>{$data['id_pat']}</id_plat>";
+            $xml .= "<id_plat>{$data['id_plat']}</id_plat>";
             $xml .= "<summ_plat>". ($services[$i]['sum'] * 100) ."</summ_plat>";
 
             list($year, $month, $day) = explode('-', $data['dbegin']);

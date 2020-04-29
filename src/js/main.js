@@ -165,64 +165,6 @@ function selectService(checkboxId, inputId)
     billPageUpdateTotalSumm();
 };
 
-function getShoppingCartTotal(total, percentSum, cctype)
-{
-    console.log(total);
-    console.log(percentSum);
-    console.log(cctype);
-    var fTotal = parseFloat(total.replace(',', '.'));
-    var fPercent = parseFloat(percentSum.replace(',', '.'));
-    var total = fTotal + fPercent;
-    total = toFloat(total);
-    fPercent = toFloat(fPercent);
-    
-    var totalStr = new String(total);
-    totalStr = totalStr.replace('.', ',')
-    var indx = totalStr.lastIndexOf(',');
-
-    if (indx != -1) {
-        var sub = totalStr.substring(indx+1, totalStr.length);
-        if (sub.length < 2) {
-            totalStr = totalStr + '0';
-        }
-    } else {
-        totalStr = totalStr + ',00';
-    }
-
-    var PercentStr = new String(fPercent);
-    PercentStr = PercentStr.replace('.', ',')
-    var indx = PercentStr.lastIndexOf(',');
-
-    if (indx != -1){
-        var sub = PercentStr.substring(indx+1, PercentStr.length);
-        if (sub.length < 2){
-            PercentStr = PercentStr + '0';
-        }
-    } else {
-        PercentStr = PercentStr + ',00';
-    }
-
-    if (!$('.paybill-ps-item-' + cctype).is(':visible')) {
-        $('.paybill-ps-item').slideUp(300);
-        $('.paybill-ps-item-' + cctype).slideDown(400);
-    }
-    if (!$('.paybill-ps-item-hide-' + cctype).is(':visible')) {
-        $('.paybill-ps-item-hide').slideUp(300);
-        $('.paybill-ps-item-hide-' + cctype).slideDown(400);
-    }
-
-    $('#totalBillSum').html(totalStr + ' грн');
-    // $('#comission_sum').html(PercentStr + ' грн');
-
-    if (percentSum > 0) {
-        $('#comission_sum').html('<span style="font-size: 14px;" id="comission_sum">2%, але не менше 5грн у розрізі постачальника послуг</span>');
-    } else {
-        $('#comission_sum').html('0,00 грн');
-    }
-
-    $('#cctype').val(cctype);
-};
-
 function checkForInt(evt)
 {
     var charCode = (evt.which != null) ? evt.which : event.keyCode

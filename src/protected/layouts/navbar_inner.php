@@ -1,3 +1,22 @@
+<?php
+    if (Authorization::isLogin()) {
+
+        $navs = [
+            '/cabinet/objects/'     => 'Мої об’єкти',
+            '/cabinet/payments/'    => 'Мої платежі',
+            '/cabinet/settings/'    => 'Налаштування',
+            '/post/cabinet/logout/' => 'Вихід',
+        ];
+    } else {
+
+        $navs = [
+            '/cabinet/login/'        => 'Вхід',
+            '/cabinet/registration/' => 'Зареєструватися',
+            '/cabinet/restore/'      => 'Відновлення доступу',
+        ];
+    }
+?>
+
 <nav class="header__navigation navigation">
     <div class="navigation__container">
         <a href="#" class="navigation__img-link">
@@ -11,27 +30,19 @@
                      class="navigation__img">
             </picture>
         </a>
+
         <ul class="navigation__list">
-            <li class="navigation__item">
-                <a href="#" class="navigation__link">
-                    Мої об'єкти
-                </a>
-            </li>
-            <li class="navigation__item">
-                <a href="" class="navigation__link">
-                    Мої платежі
-                </a>
-            </li>
-            <li class="navigation__item">
-                <a href="#" class="navigation__link">
-                    Налаштування
-                </a>
-            </li>
-            <li class="navigation__item">
-                <a href="#" class="navigation__link">
-                    Вихід
-                </a>
-            </li>
+            <?php
+                foreach ($navs as $url => $title) {
+                    ?>
+                    <li class="navigation__item">
+                        <a href="<?= BASE_URL . $url; ?>" class="navigation__link">
+                            <?= $title; ?>
+                        </a>
+                    </li>
+                    <?php
+                }
+            ?>
         </ul>
         <div class="menu">
             <span class="menu-global menu-top"></span>
@@ -39,31 +50,36 @@
             <span class="menu-global menu-bottom"></span>
         </div>
         <ul class="navigation__mobile-list">
-            <li class="navigation__mobile-item">
-                <a href="#" class="navigation__link navigation__mobile-link">
-                    Мої об'єкти
-                </a>
-            </li>
-            <li class="navigation__mobile-item">
-                <a href="" class="navigation__link navigation__mobile-link">
-                    Мої платежі
-                </a>
-            </li>
-            <li class="navigation__mobile-item">
-                <a href="#" class="navigation__link navigation__mobile-link">
-                    Налаштування
-                </a>
-            </li>
-            <li class="navigation__mobile-item">
-                <a href="#" class="navigation__link navigation__mobile-link">
-                    Вихід
-                </a>
-            </li>
+            <?php
+                foreach ($navs as $url => $title) {
+                    ?>
+                    <li class="navigation__mobile-item">
+                        <a href="<?= BASE_URL . $url; ?>" class="navigation__link navigation__mobile-link">
+                            <?= $title; ?>
+                        </a>
+                    </li>
+                    <?php
+                }
+            ?>
         </ul>
-        <a href="#" class="navigation__link">
+        <a href="https://mdl.com.ua/" class="navigation__link">
             Назад до МДЛ
         </a>
     </div>
+
+    <?php
+        if (defined('NAVBAR_FOR_OBJECT_ITEM')) {
+            ?>
+            <div id="navbar-blue">
+                <ul class="nav navbar-nav">
+                    <?php
+                        require(PROTECTED_DIR . '/scripts/navbar_only_obgect_item.php');
+                    ?>
+                </ul>
+            </div>
+            <?php
+        }
+    ?>
 </nav>
 
 </header>

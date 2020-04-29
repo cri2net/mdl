@@ -61,7 +61,6 @@
                     if (isset($__route_result['values']['section'])) {
                         $sections = [
                             'history' => 'Історія платежів',
-                            'komdebt' => 'ЖКГ платежі',
                             'details' => 'Деталі платежу № ',
                         ];
 
@@ -76,9 +75,8 @@
                 case 'settings':
                     $breadcrumbs[] = ['title' => 'Налаштування профілю', 'link' => '/cabinet/settings/'];
                     $sections = [
-                        'info' => 'Персональні дані',
-                        'notifications' => 'Налаштування повідомлень',
-                        'rule' => 'Управління профілем',
+                        'info'           => 'Персональні дані',
+                        'delete_profile' => 'Видалити профіль',
                     ];
                     $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                     break;

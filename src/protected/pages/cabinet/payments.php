@@ -6,17 +6,14 @@
 
     define('NAVBAR_FOR_PAYMENTS', true);
     $current_section = $__route_result['values']['section'];
-?>
-<div id="all_body_container">
-<?php
-//    require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
+
+    require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
+    require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
 ?>
 <div class="container-fluid">
     <content>
         <div class="cabinet-settings cabinet-payments">
             <?php
-
-                require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
 
                 if (isset($_SESSION['cabinet-settings']['status']) && !$_SESSION['cabinet-settings']['status']) {
                     ?>

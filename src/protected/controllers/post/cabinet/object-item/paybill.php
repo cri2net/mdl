@@ -18,23 +18,13 @@ try {
     $percent = ShoppingCart::getPercent($total_sum);
     $pay_systems = ShoppingCart::getActivePaySystems();
     
-    for ($i=0; $i < count($pay_systems); $i++) {
-        $var = $pay_systems[$i] . 'Sum';
-        $$var = str_replace(".", ",", ShoppingCart::getPercentSum($total_sum, $pay_systems[$i]));
-    }
-
-    $totalBillSum = $total_sum + ShoppingCart::getPercentSum($total_sum, $pay_systems[0]);
-    $totalBillSum = sprintf('%.2f', $totalBillSum);
-
     $_POST['flat_id'] = $flatData['flat_id'];
     $_POST['city_id'] = $flatData['city_id'];
     $payment_id = ShoppingCart::add($_POST, Authorization::getLoggedUserId());
     
-    $totalBillSum = str_replace(".", ",", $totalBillSum);
     $total_sum = str_replace(".", ",", $total_sum);
 
     $_SESSION['paybill']['total_sum'] = $total_sum;
-    $_SESSION['paybill']['totalBillSum'] = $totalBillSum;
     $_SESSION['paybill']['payment_id'] = $payment_id;
     $_SESSION['paybill-post-flag'] = 1;
 

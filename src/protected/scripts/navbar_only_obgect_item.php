@@ -18,12 +18,6 @@ $subsections = [
 
 $i = 0;
 
-?>
-<!-- <li class="item item-objects">
-    <a href="<?= BASE_URL; ?>/cabinet/objects/">&larr; Об’єкти</a>
-</li> -->
-<?php
-
 foreach ($sections as $key => $value) {
     
     $current = (($current_section == $key) || in_array($current_section, $subsections[$key]));

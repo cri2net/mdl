@@ -1,14 +1,10 @@
-<body>
-<div id="all_body_container">
 <?php
+    require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
     require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
 ?>
 <div class="container-fluid">
     <content>
         <?php
-
-            require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
-
             if (isset($_SESSION['objects-auth']['status']) && !$_SESSION['objects-auth']['status']) {
                 ?>
                 <h3 class="error"><?= $_SESSION['objects-auth']['error']['text']; ?></h3>
@@ -158,8 +154,6 @@
                             <div class="modal fade" id="modal-object-add" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
                                         <div id="add-object-form" class="add-object-form" style="display:none;">
                                             <form class="form-block form form__login form__login--outer" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
                                                 <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
@@ -173,15 +167,6 @@
                     <?php
                 }
             ?>
-            </div>
-        </div>
-
-        <div class="row" style="text-align: center;">
-            <div class="title links-title">Ми приймаємо до сплати</div>
-            <div class="sidebar-slides" style="margin-bottom: 25px;">
-                <img style="width: 90px; margin-top: 15px; margin-right: 10px;" src="<?= BASE_URL; ?>/assets/pic/ps/visa.png" alt="">
-                <img style="width: 90px; margin-top: 15px; margin-right: 10px;" src="<?= BASE_URL; ?>/assets/pic/ps/mastercard.png" alt="">
-                <img style="width: 90px; margin-top: 15px;" src="<?= BASE_URL; ?>/assets/pic/ps/prostir.png" alt="">
             </div>
         </div>
     </content>

@@ -54,7 +54,7 @@
     $disabled = (Authorization::isLogin() && (Flat::getFlatCount() >= Flat::getMaxUserFlats()));
 ?>
 <div class="input align-center form__group">
-    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue button button__form"><span class="fa fa-check"></span>Додати об’єкт</button>
+    <button <?= ($disabled) ? 'disabled' : ''; ?> class="btn btn-blue button button__form">Додати об’єкт</button>
 </div>
 <?php
     if ($disabled) {
@@ -65,7 +65,7 @@
         <?php
     }
 ?>
-<script type="text/javascript">
+<script>
     var PIN_SENT = false;
 
     $(document).ready(function() {
@@ -128,6 +128,7 @@
 
             var flat = $("#add_obj_flat").val();
             PIN_SENT = false;
+            $('#add_obj_pin').removeAttr('required');
             $('#pin-code').hide();
 
             if ((flat == '') || (flat == '0')) {
@@ -161,9 +162,6 @@
             });
         });
 
-        $.mask.definitions['r'] = '[A-Z,a-z,0-9а-яёА-ЯЁ]';
-        $("#add_obj_auth_key").mask("rrrr-rrrr-rrrr");
-
         $("#add-object-form>form").on('submit', function(){
 
             if (PIN_SENT == true) {
@@ -184,6 +182,7 @@
                             PIN_SENT = true;
 
                             $('#pin-code').show();
+                            $('#add_obj_pin').attr('required', 'required');
                             break;
 
                         case 'error':

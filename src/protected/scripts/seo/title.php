@@ -49,7 +49,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
                 if (isset($__route_result['values']['section'])) {
                     $sections = [
                         'history' => 'Історія платежів',
-                        'komdebt' => 'ЖКГ платежі',
                         'details' => 'Деталі платежу № ',
                     ];
 
@@ -64,9 +63,8 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
             case 'settings':
                 $seo_str = 'Налаштування профілю';
                 $sections = [
-                    'info' => 'Персональні дані',
-                    'notifications' => 'Налаштування повідомлень',
-                    'rule' => 'Управління профілем',
+                    'info'           => 'Персональні дані',
+                    'delete_profile' => 'Видалити профіль',
                 ];
                 $seo_str = $sections[$__route_result['values']['section']];
                 break;

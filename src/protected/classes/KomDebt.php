@@ -204,10 +204,10 @@ class KomDebt
                 $list['DEND_XML']     = date("Y-m-d", strtotime((string)$row->DEND));
                 $list['ISXDOLG']      = ($row->ISXDOLG.'')      / 100;
                 $list['OPLAT']        = ($row->OPLAT.'')        / 100;
-                $list['SUMM_OBL_PAY'] = ($row->SUMM_OBL_PAY.'') / 100;
+                $list['SUMM_OBL_PAY'] = (empty($row->SUMM_OBL_PAY)) ? 0 : ($row->SUMM_OBL_PAY.'') / 100;
                 
                 $list['OPLAT']      = str_replace(".", ",", sprintf('%.2f', $list['OPLAT']));
-                $list['SUMM_PLAT']  = $list['SUMM_PLAT'] / 100;
+                $list['SUMM_PLAT']  = (empty($list['SUMM_PLAT'])) ? 0 : $list['SUMM_PLAT'] / 100;
                 $data['total_pay'] += $list['SUMM_PLAT'];
 
                 $SUMM_MONTH = ((float)$row->SUMM_MONTH)/100;

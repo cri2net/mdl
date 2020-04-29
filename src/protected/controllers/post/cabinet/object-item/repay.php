@@ -27,16 +27,7 @@ try {
     $percent = ShoppingCart::getPercent($total_sum);
     $pay_systems = ShoppingCart::getActivePaySystems();
     
-    for ($i=0; $i < count($pay_systems); $i++) {
-        $var = $pay_systems[$i] . 'Sum';
-        $$var = str_replace(".", ",", ShoppingCart::getPercentSum($total_sum, $pay_systems[$i]));
-    }
-
-    $totalBillSum = $total_sum + ShoppingCart::getPercentSum($total_sum, $pay_systems[0]);
-    $totalBillSum = sprintf('%.2f', $totalBillSum);
-
     $real_servises = PDO_DB::table_list(ShoppingCart::SERVICE_TABLE, "payment_id='{$original_payment['id']}'", "id ASC", $original_payment['count_services']);
-
     if (count($real_servises) == 0) {
         throw new Exception(ERROR_EMPTY_KOMDEBT_PAYMENT);
     }
@@ -66,11 +57,9 @@ try {
         PDO_DB::insert($real_servise, ShoppingCart::SERVICE_TABLE);
     }
         
-    $totalBillSum = str_replace(".", ",", $totalBillSum);
     $total_sum = str_replace(".", ",", $total_sum);
 
     $_SESSION['paybill']['total_sum'] = $total_sum;
-    $_SESSION['paybill']['totalBillSum'] = $totalBillSum;
     $_SESSION['paybill']['payment_id'] = $payment_id;
     $_SESSION['paybill-post-flag'] = 1;
 
