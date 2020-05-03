@@ -1,0 +1,10 @@
+.object {
+    max-width: 800px;
+
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+
+    margin: 0 auto;
+}

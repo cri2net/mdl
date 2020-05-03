@@ -2,7 +2,7 @@
     require_once(PROTECTED_DIR . '/layouts/navbar_inner.php');
     require_once(PROTECTED_DIR . '/scripts/breadcrumbs.php');
 ?>
-<div class="container-fluid">
+<div class="object">
     <content>
         <?php
             if (isset($_SESSION['objects-auth']['status']) && !$_SESSION['objects-auth']['status']) {
@@ -60,7 +60,7 @@
                 return;
             }
         ?>
-        <div class="cabinet-objects">
+        <div class="object__cabinet">
             <?php
                 ?>
                 <div class="houses_line row">
@@ -70,11 +70,11 @@
                             for ($i=0; $i < count($flats); $i++) {
                                 $flat = $flats[$i];
                                 ?>
-                                <div class="col-md-4 col-sm-6">
-                                    <div class="house_item flat matchHeight <?= $flat['payed']; ?>">
-                                        <div class="info-section">
+                                <div class="card card--outer">
+                                    <div class="card__container house_item flat matchHeight <?= $flat['payed']; ?>">
+                                        <div class="info-section card__wrapper">
                                             <div class="payed-icon"></div>
-                                            <div class="title">
+                                            <div class="card__title">
                                                 <?php
                                                     if ($flat['title']) {
                                                         ?>
@@ -86,18 +86,18 @@
                                                             ? $street_name = '<span title="'. $flat['street_name_full'] .'">' . $flat['street_name'] . '</span>'
                                                             : $flat['street_name'];
                                                         ?>
-                                                        <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="address">
+                                                        <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="card__address">
                                                             <?= $flat['detail_address']['city']; ?>, <br> <?= $street_name; ?>, <?= $flat['detail_address']['house']; ?> кв. <?= $flat['detail_address']['flat']; ?>
                                                         </a>
                                                         <?php
                                                     }
 
                                                     if (!$flat['error']):
-                                                    ?><div class="bydate"><span class="fa fa-calendar"></span> Рахунок за <?= $MONTHS_NAME[date('n', $flat['timestamp'])]['ua']['small']; ?> <?= date('Y', $flat['timestamp']); ?></div>
+                                                    ?><div class="bydate card__bill"><span class="fa fa-calendar"></span> Рахунок за <?= $MONTHS_NAME[date('n', $flat['timestamp'])]['ua']['small']; ?> <?= date('Y', $flat['timestamp']); ?></div>
                                                     <?php endif;
                                                 ?>
                                             </div>
-                                            <a data-object-id="<?= $flat['id']; ?>" class="remove remove-object-check">&times;</a>
+                                            <a data-object-id="<?= $flat['id']; ?>" class="remove remove-object-check card__delete">&times;</a>
                                             <?php
                                                 if ($flat['error']) {
                                                     ?>
@@ -107,20 +107,20 @@
                                                     <?php
                                                 } else {
                                                     ?>
-                                                    <div class="values">
+                                                    <div class="values card__values">
 
-                                                        <div class="value-line row">
+                                                        <div class="card__line row">
                                                             <div class="value-title value-title-orange col-lg-8 col-md-7 col-ms-6">Сума до сплати</div>
                                                             <div class="align-right col-lg-4 col-md-5 col-ms-6 pull-right">
-                                                                <div class="value">
+                                                                <div class="value card__value">
                                                                     <?= $flat['debt_sum_str']; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="value-line row">
+                                                        <div class="card__line row">
                                                             <div class="value-title value-title-green col-lg-8 col-md-8 col-ms-6">Сплачено за <?= $flat['on_this_month']; ?></div>
                                                             <div class="align-right col-lg-4 col-md-4 col-ms-6 pull-right">
-                                                                <div class="value">
+                                                                <div class="value card__value">
                                                                     <?= $flat['oplat_this_month_str']; ?>
                                                                 </div>
                                                             </div>
@@ -129,12 +129,12 @@
                                                     <?php
                                                 }
                                             ?>
-                                            <span class="align-center"><a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="btn"><span class="fa  fa-check"></span> Перейти до об’єкту</a></span>
+                                            <span class="align-center"><a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="btn button button__form button__form--card"><span class="fa  fa-check"></span> Перейти до об’єкту</a></span>
                                         </div>
-                                        <div class="remove-section">
-                                            <p>Ви впевнені, що хочете видали цей об’єкт з аккаунту?</p>
-                                            <a href="#" class="btn btn-orange remove-object" data-object-id="<?= $flat['id']; ?>"><span class="fa fa-trash"></span> Видалили</span></a>
-                                            <a href="#" class="btn btn-green-bordered remove-object-cancel"><span class="fa fa-close"></span> Скасувати</span></a>
+                                        <div class="remove-section card__remove">
+                                            <p class="card__remove-text">Ви впевнені, що хочете видали цей об’єкт з аккаунту?</p>
+                                            <a href="#" class="btn btn-orange remove-object button button__form button__form--remove button__form--registration" data-object-id="<?= $flat['id']; ?>"><span class="fa fa-trash"></span> Видалили</span></a>
+                                            <a href="#" class="btn btn-green-bordered remove-object-cancel button button__form button__form--remove button__form--registration"><span class="fa fa-close"></span> Скасувати</span></a>
                                         </div>
                                     </div>
                                 </div>

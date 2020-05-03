@@ -1,0 +1,117 @@
+@import "variables";
+
+.card {
+    position: relative;
+    max-width: 300px;
+    height: 420px;
+    box-sizing: border-box;
+
+    background-color: transparent;
+    background-image: linear-gradient(130deg,#061d47 0%,#133a7f 100%);
+
+    border-radius: 15px;
+
+    @media (min-width: $smallWidth) {
+        max-width: 360px;
+    }
+
+    &--outer {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    &:hover {
+        .card__container {
+            background-color: $linkHoverColor;
+        }
+    }
+
+    &__container {
+        padding: 20px;
+        height: 380px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        color: #fff;
+
+        transition: all 0.3s ease-in-out;
+        border-radius: 15px;
+
+        @media (min-width: $smallWidth) {
+            max-width: 320px;
+        }
+    }
+
+    &__wrapper {
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    &__title {
+        margin-bottom: 40px;
+    }
+
+    &__address {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+
+        font-size: 20px;
+
+        transition: color 0.3s ease-in-out;
+
+        margin-bottom: 20px;
+
+        &:hover {
+            color: $linkColor;
+        }
+    }
+
+    &__bill {
+        text-align: center;
+        font-size: 17px;
+    }
+
+    &__line {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    &__values {
+        margin-bottom: 20px;
+    }
+
+    &__value {
+        font-size: 18px;
+    }
+
+    &__remove-text {
+        width: 300px;
+        box-sizing: border-box;
+
+        margin: 0 0 20px;
+        padding: 0 10px;
+
+        text-align: center;
+    }
+
+    &__remove {
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    &__delete {
+        position: absolute;
+        top: 2%;
+        right: 6%;
+        font-size: 30px;
+
+        cursor: default;
+    }
+}
