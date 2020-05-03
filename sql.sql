@@ -1030,3 +1030,9 @@ ALTER TABLE `mdl_payment`
 
 ALTER TABLE `mdl_users`
   DROP COLUMN `birth_date`;
+
+-- 2020.04.29
+ALTER TABLE `mdl_payment`
+  DROP COLUMN `acq`,
+  CHANGE `processing` `processing` ENUM('psp2') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'psp2' NOT NULL,
+  CHANGE `status` `status` ENUM('new','success','error','reverse','timeout','pending') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'new' NOT NULL;

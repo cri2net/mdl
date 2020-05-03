@@ -45,9 +45,9 @@ switch (USER_REAL_IP) {
         break;
     
     default:
-        // define('COOKIE_DOMAIN', '.mdl.local');
-        // define('BASE_URL', 'http://mdl.local');
-        // define('SITE_DOMAIN', 'cabinet.kyivcity.gov.ua');
+        define('COOKIE_DOMAIN', '');
+        define('BASE_URL', 'https://my.mdl.com.ua');
+        define('SITE_DOMAIN', 'my.mdl.com.ua');
 }
 
 $tmp = [

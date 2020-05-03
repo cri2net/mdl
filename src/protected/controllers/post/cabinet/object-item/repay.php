@@ -24,9 +24,6 @@ try {
         throw new Exception(ERROR_INVALID_ZERO_PAYMENT);
     }
 
-    $percent = ShoppingCart::getPercent($total_sum);
-    $pay_systems = ShoppingCart::getActivePaySystems();
-    
     $real_servises = PDO_DB::table_list(ShoppingCart::SERVICE_TABLE, "payment_id='{$original_payment['id']}'", "id ASC", $original_payment['count_services']);
     if (count($real_servises) == 0) {
         throw new Exception(ERROR_EMPTY_KOMDEBT_PAYMENT);
@@ -35,18 +32,17 @@ try {
     $timestamp = microtime(true);
 
     $payment_data = [
-        'user_id' => Authorization::getLoggedUserId(),
-        'acq' => '',
-        'timestamp' => $timestamp,
-        'type' => 'komdebt',
-        'flat_id' => $flatData['flat_id'],
-        'city_id' => $flatData['city_id'],
-        'count_services' => count($real_servises),
-        'summ_plat' => $total_sum,
-        'summ_komis' => '',
-        'summ_total' => '',
-        'ip' => USER_REAL_IP,
-        'user_agent_string' => HTTP_USER_AGENT
+        'user_id'           => Authorization::getLoggedUserId(),
+        'timestamp'         => $timestamp,
+        'type'              => 'komdebt',
+        'flat_id'           => $flatData['flat_id'],
+        'city_id'           => $flatData['city_id'],
+        'count_services'    => count($real_servises),
+        'summ_plat'         => $total_sum,
+        'summ_komis'        => '',
+        'summ_total'        => '',
+        'ip'                => USER_REAL_IP,
+        'user_agent_string' => HTTP_USER_AGENT,
     ];
 
     $payment_id = PDO_DB::insert($payment_data, ShoppingCart::TABLE);

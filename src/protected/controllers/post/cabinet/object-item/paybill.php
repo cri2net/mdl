@@ -15,9 +15,6 @@ try {
         throw new Exception(ERROR_INVALID_ZERO_PAYMENT);
     }
 
-    $percent = ShoppingCart::getPercent($total_sum);
-    $pay_systems = ShoppingCart::getActivePaySystems();
-    
     $_POST['flat_id'] = $flatData['flat_id'];
     $_POST['city_id'] = $flatData['city_id'];
     $payment_id = ShoppingCart::add($_POST, Authorization::getLoggedUserId());
