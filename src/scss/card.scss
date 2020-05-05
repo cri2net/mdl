@@ -2,7 +2,7 @@
 
 .card {
     position: relative;
-    max-width: 300px;
+    width: 300px;
     height: 420px;
     box-sizing: border-box;
 
@@ -12,7 +12,7 @@
     border-radius: 15px;
 
     @media (min-width: $smallWidth) {
-        max-width: 360px;
+        width: 360px;
     }
 
     &--outer {
@@ -36,11 +36,12 @@
 
         color: #fff;
 
-        transition: all 0.3s ease-in-out;
         border-radius: 15px;
 
+        transition: background-color 0.3s ease-in-out;
+
         @media (min-width: $smallWidth) {
-            max-width: 320px;
+            width: 320px;
         }
     }
 
@@ -101,7 +102,7 @@
     }
 
     &__remove {
-        display: flex;
+        display: none;
         justify-content: space-evenly;
         flex-wrap: wrap;
     }

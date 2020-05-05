@@ -63,7 +63,7 @@
         <div class="object__cabinet">
             <?php
                 ?>
-                <div class="houses_line row">
+                <div class="object__inner-cabinet">
                     <?php
                         if (count($flats) > 0) {
 
