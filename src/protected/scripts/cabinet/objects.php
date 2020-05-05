@@ -146,7 +146,7 @@
 
                 if ((Authorization::isLogin() && (Flat::getFlatCount() < Flat::getMaxUserFlats()))) {
                     ?>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 card__button">
                         <div class="house_item flat house_add matchHeight <?= $flat['payed']; ?>">
                             <span class="align-center">
                                 <a class="btn btn-green-darker add-new add-new-object button button__form button__form--register" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
