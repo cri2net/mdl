@@ -28,22 +28,25 @@ function initEvents() {
     }); 
 
     // Управление удалением объекта
-    $('.remove-object').on('click', function() {
+    $('.remove-object').on('click', function(e) {
 
+        e.preventDefault();
         $('#remove_object_id').val($(this).data('object-id')).parent().submit();
         return false;
     });
 
-    $('.remove-object-check').on('click', function() {
+    $('.remove-object-check').on('click', function(e) {
 
-        $(this).parent().parent().find('.info-section').fadeOut();
-        $(this).parent().parent().find('.remove-section').fadeIn();
+        e.preventDefault();
+        $(this).parent().parent().find('.info-section').fadeOut(0);
+        $(this).parent().parent().find('.remove-section').css("display", "flex").fadeIn(400);
     });
 
-    $('.remove-object-cancel').on('click', function() {
+    $('.remove-object-cancel').on('click', function(e) {
 
-        $(this).parent().parent().find('.info-section').fadeIn();
-        $(this).parent().parent().find('.remove-section').fadeOut();
+        e.preventDefault();
+        $(this).parent().parent().find('.info-section').fadeIn(400);
+        $(this).parent().parent().find('.remove-section').fadeOut(0);
     });     
 
     // Выбираем все галочки в таблице

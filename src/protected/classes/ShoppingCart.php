@@ -7,8 +7,8 @@ class ShoppingCart
     const TABLE                   = DB_TBL_PAYMENT;
     const SERVICE_TABLE           = DB_TBL_PAYMENT_SERVICES;
     const REPORT_BASE_URL         = '/reports/rwservlet';
-    const PDF_TODAY_URL           = '/reports/rwservlet?report=/ppp/kv_www_all.rep&destype=Cache&Desformat=pdf&cmdkey=api_kmda_site&id_p=';
-    const PDF_NOT_TODAY_URL       = '/reports/rwservlet?report=/ppp/kv_www_hist.rep&destype=Cache&Desformat=pdf&cmdkey=api_kmda_site&id_k=';
+    const PDF_TODAY_URL           = '/reports/rwservlet?report=/ppp/kv_www_all.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_p=';
+    const PDF_NOT_TODAY_URL       = '/reports/rwservlet?report=/ppp/kv_www_hist.rep&destype=Cache&Desformat=pdf&cmdkey=rep&id_k=';
 
     const PDF_NEW_CURRENT_KOM     = '/reports/rwservlet?report=ppp/kv_www_all_sity_new27.rep&cmdkey=rep&destype=cache&desformat=pdf&id_p=';
     const PDF_NEW_CURRENT_INSTANT = '/reports/rwservlet?report=ppp/kv_www_singl_sity_new27.rep&cmdkey=rep&destype=cache&desformat=pdf&id_p=';
@@ -152,6 +152,10 @@ class ShoppingCart
     {
         $payment = PDO_DB::row_by_id(self::TABLE, $payment_id);
         if (($payment === null) || ($payment['status'] != 'success')) {
+            return;
+        }
+
+        if (empty($payment['reports_id_plat_klient'])) {
             return;
         }
 

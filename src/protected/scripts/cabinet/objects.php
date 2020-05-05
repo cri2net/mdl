@@ -78,7 +78,7 @@
                                                 <?php
                                                     if ($flat['title']) {
                                                         ?>
-                                                        <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="header <?php /* edit */ ?>"><?= htmlspecialchars($flat['title']); ?></a>
+                                                        <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $flat['id']; ?>/" class="header"><?= htmlspecialchars($flat['title']); ?></a>
                                                         <div class="address"><?= $flat['address']; ?></div>
                                                         <?php
                                                     } else {
@@ -93,7 +93,7 @@
                                                     }
 
                                                     if (!$flat['error']):
-                                                    ?><div class="bydate card__bill"><span class="fa fa-calendar"></span> Рахунок за <?= $MONTHS_NAME[date('n', $flat['timestamp'])]['ua']['small']; ?> <?= date('Y', $flat['timestamp']); ?></div>
+                                                    ?><div class="bydate card__bill">Рахунок за <?= $MONTHS_NAME[date('n', $flat['timestamp'])]['ua']['small']; ?> <?= date('Y', $flat['timestamp']); ?></div>
                                                     <?php endif;
                                                 ?>
                                             </div>
