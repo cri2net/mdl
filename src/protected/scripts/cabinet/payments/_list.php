@@ -71,6 +71,10 @@
                                     case 'reverse':
                                         echo 'Cторнований';
                                         break;
+
+                                    case 'pending':
+                                        echo 'В обробцi';
+                                        break;
                                 }
                             ?>
                         </td>

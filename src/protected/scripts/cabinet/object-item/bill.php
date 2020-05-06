@@ -49,8 +49,8 @@
     var new_counter_no = {};
 </script>
 
-<div class="cabinet-settings object-item object-item-bill">
-    <form class="real-full-width-block" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
+<div class="cabinet-settings object-item object-item-bill bill">
+    <form class="form form__bill real-full-width-block" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
         <div class="row table-caption">
             <div class="col-md-6 cal matchHeight">
                 <div>
@@ -71,7 +71,6 @@
                 </strong></span>
             </div>
         </div>
-        <div class="clearfix"></div>
         <div class="table-responsive border-top">
             <table class="full-width-table datailbill-table no-border" id="data-table">
                 <thead>

@@ -81,6 +81,13 @@
             line-height: 49px;
         }
 
+        &--bill {
+            min-width: 290px;
+            max-width: 600px;
+
+            margin-bottom: 30px;
+        }
+
         &--remove {
             width: 40%;
             text-decoration: none;

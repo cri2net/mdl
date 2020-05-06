@@ -1,16 +1,16 @@
-<div class="real-full-width-block">
-    <table class="full-width-table datailbill-table table-pay-details no-border">
+<div class="bill-details--outer">
+    <table class="bill-details">
         <thead>
             <tr>
-                <th class="first" colspan="5">Деталі платежу № <?= $payment['id']; ?></th>
+                <th class="bill-details__head" colspan="5">Деталі платежу № <?= $payment['id']; ?></th>
             </tr>
         </thead>
-        <tbody>
-            <tr class="item-row even">
+        <tbody class="bill-details__body bill-details__body--outer">
+            <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Тип платежу</strong></td>
                 <td colspan="4" class="">Комунальні послуги</td>
             </tr>
-            <tr class="item-row odd">
+            <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Статус</strong></td>
                 <td colspan="4" class="">
                     <?php
@@ -31,25 +31,16 @@
                             case 'reverse':
                                 echo 'Cторнований';
                                 break;
+
+                            case 'pending':
+                                echo 'В обробцi';
+                                break;
                         }
                     ?>
                 </td>
             </tr>
-            <?php
-                if ($payment['status'] == 'error') {
-                    $error_desc = ShoppingCart::getErrorDescription($payment['processing'], $payment['trancode']);
-                    
-                    if (!empty($error_desc)) {
-                        ?>
-                        <tr class="item-row odd">
-                            <td class="first">Код, опис помилки</td>
-                            <td colspan="4"><?= $payment['trancode']; ?>, <?= $error_desc; ?></td>
-                        </tr>
-                        <?php
-                    }
-                }
-            ?>
-            <tr class="item-row even">
+
+            <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Дата та час</strong></td>
                 <td colspan="4" class="">
                     <?php
@@ -59,7 +50,7 @@
                     <span class="date-time"><?= getUkraineDate('H:i:s', $time); ?></span>
                 </td>
             </tr>
-            <tr class="item-row odd">
+            <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Сума</strong></td>
                 <td colspan="4" class="">
                     <?php
@@ -71,7 +62,7 @@
                     грн
                 </td>
             </tr>
-            <tr class="item-row even">
+            <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Комісія</strong></td>
                 <td colspan="4">
                     <?php
@@ -83,7 +74,7 @@
                     грн
                 </td>
             </tr>
-            <tr class="item-row odd">
+            <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Усього</strong></td>
                 <td colspan="4">
                     <span  class=" green">
@@ -100,16 +91,10 @@
         </tbody>
         <thead>
             <tr>
-                <th class="first" colspan="5">Склад платежу</th>
+                <th class="bill-details__head" colspan="5">Склад платежу</th>
             </tr>
         </thead>
-        <tbody>
-            <tr class="bank-name title">
-                <th class="first" colspan="2">Назва послуги та підприємства</th>
-                <th>Особовий рахунок</th>
-                <th>Сума, грн</th>
-                <th>Період</th>
-            </tr>
+        <tbody class="bill-details__body">
             <?php
                 $counter = 0;
                 $services_with_counters = [];
@@ -129,26 +114,40 @@
                     $from_date = DateTime::createFromFormat('Y-m-d', $item['data']->dbegin);
                     $to_date = DateTime::createFromFormat('Y-m-d', $item['data']->dend);
                     ?>
-                    <tr class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?>">
-                        <td class="first" colspan="2">
-                            <strong class="green"><?= $item['data']->name_plat; ?></strong>
-                            <br>
-                            <?= $item['data']->firm_name; ?>
-                        </td>
-                        <td><?= $item['data']->abcount; ?></td>
-                        <td>
-                            <?php
-                                $summ = explode('.', number_format($item['sum'], 2));
-                            ?>
-                            <span class="item-summ">
-                                <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                            </span>
-                        </td>
-                        <td style="white-space:nowrap">
-                            <span class="date-day"><?= getUkraineDate('j m Y', $from_date->getTimestamp()); ?></span> —
-                            <span class="date-day"><?= getUkraineDate('j m Y', $to_date->getTimestamp()); ?></span>
-                        </td>
-                    </tr>
+
+                        <tr class="bill-details__row">
+                            <th class="bill-details__cell">Назва послуги та підприємства</th>
+                            <td class="bill-details__cell bill-details__cell--right">
+                                <strong class="green"><?= $item['data']->name_plat; ?></strong>
+                                <br>
+                                <?= $item['data']->firm_name; ?>
+                            </td>
+                        </tr>
+
+                        <tr class="bill-details__row">
+                            <th>Особовий рахунок</th>
+                            <td><?= $item['data']->abcount; ?></td>
+                        </tr>
+
+                        <tr class="bill-details__row">
+                            <th>Сума, грн</th>
+                            <td>
+                                <?php
+                                    $summ = explode('.', number_format($item['sum'], 2));
+                                ?>
+                                <span class="item-summ">
+                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="bill-details__row">
+                            <th>Період</th>
+                            <td>
+                                <span class="date-day"><?= getUkraineDate('j m Y', $from_date->getTimestamp()); ?></span> —
+                                <span class="date-day"><?= getUkraineDate('j m Y', $to_date->getTimestamp()); ?></span>
+                            </td>
+                        </tr>
                     <?php
                 }
             ?>
@@ -235,7 +234,7 @@
 <?php
     if ($payment['status'] == 'success') {
         ?>
-        <a class="btn green big" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/MDL-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
+        <a class="btn green big button button__form button__form--card button__form--bill" href="<?= BASE_URL; ?>/static/pdf/payment/<?= $payment['id']; ?>/MDL-Invoice-<?= $payment['id']; ?>.pdf">&darr; Завантажити квитанцію</a>
         <?php
     } elseif ($payment['status'] != 'new') {
         ?>

@@ -163,6 +163,11 @@
         font-size: 20px;
         text-align: center;
     }
+
+    &__bill {
+        max-width: 70%;
+        width: 70%;
+    }
 }
 
 .alert-danger {
