@@ -70,8 +70,8 @@
     <?php
         if (defined('NAVBAR_FOR_OBJECT_ITEM')) {
             ?>
-            <div id="navbar-blue">
-                <ul class="nav navbar-nav">
+            <div class="inner-nav" id="navbar-blue">
+                <ul class="inner-nav__list">
                     <?php
                         require(PROTECTED_DIR . '/scripts/navbar_only_obgect_item.php');
                     ?>

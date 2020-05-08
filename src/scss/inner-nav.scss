@@ -1,0 +1,96 @@
+@import "variables";
+
+.inner-nav {
+    &__list {
+        margin: 0 auto;
+        padding: 0;
+        list-style: none;
+
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        text-align: center;
+        background-color: $buttonColorYellow;
+
+        @media (min-width: $smallWidth) {
+            width: 90%;
+            flex-direction: row;
+
+            text-align: left;
+
+            border-radius: 20px;
+        }
+
+        @media (min-width: $largeWidth) {
+            width: 60%;
+        }
+    }
+
+    &__item {
+        background-color: transparent;
+        box-sizing: border-box;
+
+        transition: 0.3s ease-in-out;
+
+        text-align: center;
+
+        @media (min-width: $smallWidth) {
+            width: 25%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &:first-child {
+            @media (min-width: $smallWidth) {
+                border-radius: 20px 0 0 20px;
+            }
+        }
+
+        &:last-child {
+            @media (min-width: $smallWidth) {
+                border-radius: 0 20px 20px 0;
+            }
+        }
+
+        &--active {
+            background-color: $mainColorBlue;
+        }
+
+        &:hover {
+            background-color: $mainColorBlue;
+
+            .inner-nav__link {
+                color: #fff;
+            }
+        }
+    }
+
+    &__link {
+        display: inline-block;
+        text-decoration: none;
+        color: $linkColor;
+        padding: 20px;
+
+        font-size: 16px;
+
+        transition: color 0.3s ease-in-out;
+
+        @media (min-width: $largeWidth) {
+            font-size: $baseFontSize;
+        }
+
+        &:hover {
+            color: #fff;
+        }
+
+        &--active {
+            color: #fff;
+            padding: 20px;
+            pointer-events: none;
+        }
+    }
+}

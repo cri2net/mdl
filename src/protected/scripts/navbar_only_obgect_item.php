@@ -24,14 +24,14 @@ foreach ($sections as $key => $value) {
 
     if ($current) {
         ?>
-        <li class="item-<?= ++$i; ?> active">
-            <a><?= $value; ?></a>
+        <li class="item-<?= ++$i; ?> active inner-nav__item inner-nav__item--active">
+            <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/<?= $key; ?>/" class="inner-nav__link inner-nav__link--active"><?= $value; ?></a>
         </li>
         <?php
     } else {
         ?>
-        <li class="item-<?= ++$i; ?>">
-            <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/<?= $key; ?>/"><?= $value; ?></a>
+        <li class="item-<?= ++$i; ?> inner-nav__item">
+            <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/<?= $key; ?>/" class="inner-nav__link"><?= $value; ?></a>
         </li>
         <?php
     }
