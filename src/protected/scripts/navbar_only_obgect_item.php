@@ -22,17 +22,9 @@ foreach ($sections as $key => $value) {
     
     $current = (($current_section == $key) || in_array($current_section, $subsections[$key]));
 
-    if ($current) {
-        ?>
-        <li class="item-<?= ++$i; ?> active inner-nav__item inner-nav__item--active">
-            <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/<?= $key; ?>/" class="inner-nav__link inner-nav__link--active"><?= $value; ?></a>
-        </li>
-        <?php
-    } else {
-        ?>
-        <li class="item-<?= ++$i; ?> inner-nav__item">
-            <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/<?= $key; ?>/" class="inner-nav__link"><?= $value; ?></a>
-        </li>
-        <?php
-    }
+    ?>
+    <li class="item-<?= ++$i; ?> inner-nav__item <?= ($current) ? 'inner-nav__item--active' : ''; ?>">
+        <a href="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/<?= $key; ?>/" class="inner-nav__link <?= ($current) ? 'inner-nav__link--active' : ''; ?>"><?= $value; ?></a>
+    </li>
+    <?php
 }
