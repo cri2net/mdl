@@ -47,7 +47,7 @@
                                     'detailbill'  => 'Історія нарахувань',
                                     'historybill' => 'Довідка про платежі',
                                     'edit'        => 'Редагувати об’єкт',
-                                    'paybill'     => 'Спосіб сплати',
+                                    'paybill'     => 'Сплата',
                                 ];
                                 $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                             }

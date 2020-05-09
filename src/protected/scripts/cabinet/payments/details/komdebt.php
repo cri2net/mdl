@@ -8,41 +8,16 @@
         <tbody class="bill-details__body bill-details__body--outer">
             <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Тип платежу</strong></td>
-                <td colspan="4" class="">Комунальні послуги</td>
+                <td colspan="4">Комунальні послуги</td>
             </tr>
             <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Статус</strong></td>
-                <td colspan="4" class="">
-                    <?php
-                        switch ($payment['status']) {
-                            case 'new':
-                            case 'timeout':
-                                echo 'Новий (не оплачений)';
-                                break;
-
-                            case 'success':
-                                echo 'Успішний';
-                                break;
-
-                            case 'error':
-                                echo 'Помилка';
-                                break;
-
-                            case 'reverse':
-                                echo 'Cторнований';
-                                break;
-
-                            case 'pending':
-                                echo 'В обробцi';
-                                break;
-                        }
-                    ?>
-                </td>
+                <td colspan="4"><?= $payment_statuses[$payment['status']]; ?></td>
             </tr>
 
             <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Дата та час</strong></td>
-                <td colspan="4" class="">
+                <td colspan="4">
                     <?php
                         $time = ($payment['go_to_payment_time']) ? $payment['go_to_payment_time'] : $payment['timestamp'];
                     ?>
@@ -52,7 +27,7 @@
             </tr>
             <tr class="bill-details__row">
                 <td colspan="1" class="first"><strong>Сума</strong></td>
-                <td colspan="4" class="">
+                <td colspan="4">
                     <?php
                         $summ = explode('.', number_format($payment['summ_plat'], 2));
                     ?>

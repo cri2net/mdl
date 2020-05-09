@@ -35,13 +35,20 @@
     }
 ?>
 
-<div>Сплата комунальних послуг (<b>Код: <?= $payment_id; ?></b>)</div>
-<span><?= $total_sum; ?> грн</span>
-<?php
-    if (!empty($psp_id)) {
-        ?>
-        <iframe style="min-width: 760px; width: 100%; min-height: 600px;" src="https://fc.gerc.ua:8443/payframe/index.php?common=show&site_id=<?= Psp2::SITE_ID; ?>&oper_id=<?= $psp_id; ?>" frameborder="0"></iframe>
-        <br><br>
-        <?php
-    }
-?>
+<div class="object">
+    <content>
+        <div class="object__cabinet">
+            <div class="object__inner-cabinet">
+                <h1 style="margin-top: 30px; margin-bottom: 35px;">Сплата комунальних послуг #<?= $payment_id; ?> (<?= $total_sum; ?> грн)</h1>
+                <?php
+                    if (!empty($psp_id)) {
+                        ?>
+                        <iframe id="psp_iframe" style="width: 100%; height:500px;" src="https://fc.gerc.ua:8443/payframe/index.php?common=show&site_id=<?= Psp2::SITE_ID; ?>&oper_id=<?= $psp_id; ?>" frameborder="0"></iframe>
+                        <br><br>
+                        <?php
+                    }
+                ?>
+            </div>
+        </div>
+    </content>
+</div>

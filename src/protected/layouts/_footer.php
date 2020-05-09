@@ -2,7 +2,7 @@
     <section class="footer__top">
         <ul class="footer__list footer__list--outer">
             <li class="footer__item">
-                <a href="#" class="footer__image-link">
+                <a href="<?= BASE_URL; ?>/" class="footer__image-link">
                     <img src="<?= BASE_URL; ?>/assets/pic/mdl_logo_white.png"
                          alt="Місто для людей"
                          class="footer__img">

@@ -6,6 +6,10 @@ try {
     $_SESSION['login'] = [
         'login' => $login,
     ];
+
+    if (empty($login)) {
+        throw new Exception(ERROR_LOGIN_ERROR_MSG);
+    }
     
     // на форме не отрисовано, но ставим пока "запомнить меня"
     Authorization::login($login, $password, false, true);

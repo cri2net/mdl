@@ -3,7 +3,7 @@ var gulp    = require('gulp'),
     connect = require('gulp-connect'),
     concat  = require('gulp-concat'),
     rename  = require('gulp-rename'),
-    sass = require('gulp-sass');
+    sass    = require('gulp-sass');
 
 var WEBPAGES_MASK = [
     './src/**/.htaccess',

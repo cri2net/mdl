@@ -52,32 +52,7 @@
                                 <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
                             </span>
                         </td>
-                        <td class="border-bottom">
-                            <?php
-                                switch ($item['status']) {
-                                    case 'new':
-                                    case 'timeout':
-                                        echo 'Новий (не оплачений)';
-                                        break;
-
-                                    case 'success':
-                                        echo 'Успішний';
-                                        break;
-
-                                    case 'error':
-                                        echo 'Помилка';
-                                        break;
-
-                                    case 'reverse':
-                                        echo 'Cторнований';
-                                        break;
-
-                                    case 'pending':
-                                        echo 'В обробцi';
-                                        break;
-                                }
-                            ?>
-                        </td>
+                        <td class="border-bottom"><?= $payment_statuses[$payment['status']]; ?></td>
                     </tr>
                     <?php
                 }

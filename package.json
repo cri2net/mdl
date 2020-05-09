@@ -1,7 +1,7 @@
 {
-  "name": "gerc-kmda",
+  "name": "gerc-mdl",
   "version": "1.0.0",
-  "description": "kmda frame",
+  "description": "mdl cabinet",
   "main": "index.php",
   "dependencies": {},
   "devDependencies": {
@@ -11,7 +11,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.1.0",
     "gulp-uglify": "^3.0",
-    "node-sass": "^4.14.0"
+    "node-sass": "^4.14.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

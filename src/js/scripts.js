@@ -1,5 +1,16 @@
 "use strict";
 
+window.addEventListener("message", receiveMessage);
+
+function receiveMessage(event)
+{
+    if (event.origin === 'https://fc.gerc.ua') {
+        if (event.data.type == "resize") {
+            document.getElementById('psp_iframe').style.height = String(event.data.height) + 'px';
+        }
+    }
+}
+
 $(document).on('ready', function() { 
 
     initEvents();

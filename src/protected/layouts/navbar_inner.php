@@ -19,7 +19,7 @@
 
 <nav class="header__navigation navigation">
     <div class="navigation__container">
-        <a href="#" class="navigation__img-link">
+        <a href="<?= BASE_URL; ?>/" class="navigation__img-link">
             <picture>
                 <source type="image/webp"
                         srcset="<?= BASE_URL; ?>/assets/pic/mdl_logo_optimize.webp">
