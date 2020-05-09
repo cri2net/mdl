@@ -80,7 +80,7 @@ gulp.task('js_all', function() {
 
 /* TASK: Moving JS files to public/js directory */
 gulp.task('js_script', function(){
-    return gulp.src(['./src/js/**/scripts.js', './src/js/main.js', './src/js/modernizr-2.6.2.min.js'])
+    return gulp.src(['./src/js/**/scripts.js', './src/js/main.js'])
             .pipe(uglify())
             .pipe(gulp.dest('./public/assets/js/'))
             .pipe(connect.reload())

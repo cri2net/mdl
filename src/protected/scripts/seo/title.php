@@ -71,10 +71,6 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
         }
         break;
 
-    case 'page/payment-status':
-        $seo_str = 'Статус транзакції';
-        break;
-
     default:
         $seo_str = '';
 }

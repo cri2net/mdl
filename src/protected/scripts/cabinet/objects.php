@@ -141,21 +141,13 @@
                     if ((Authorization::isLogin() && (Flat::getFlatCount() < Flat::getMaxUserFlats()))) {
                         ?>
                         <div class="col-md-4 col-sm-6 card__button">
-                            <div class="house_item flat house_add matchHeight <?= $flat['payed']; ?>">
-                                <span class="align-center">
-                                    <a class="btn btn-green-darker add-new add-new-object button button__form button__form--register" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
-                                </span>
-                                <div class="modal fade" id="modal-object-add" tabindex="-1" role="dialog">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div id="add-object-form" class="add-object-form" style="display:none;">
-                                                <form class="form-block form form__login form__login--outer" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
-                                                    <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <span class="align-center">
+                                <a class="btn btn-green-darker add-new add-new-object button button__form button__form--register" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
+                            </span>
+                            <div id="add-object-form" class="add-object-form" style="display:none;">
+                                <form class="form-block form form__login form__login--outer" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">
+                                    <?php require_once(PROTECTED_DIR . '/scripts/cabinet/objects-add-form.php'); ?>
+                                </form>
                             </div>
                         </div>
                         <?php

@@ -20,9 +20,6 @@
                 </route>
             </route>
         </route>
-        <route match="payment-status" controller="error" action="404">
-            <route match="{payment_id|num}" controller="page" action="payment-status" />
-        </route>
         <route match="static" controller="error" action="404">
             <route match="pdf" controller="error" action="404">
                 <route match="{type}" controller="error" action="404">

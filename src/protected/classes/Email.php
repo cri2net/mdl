@@ -8,7 +8,11 @@ class Email
 
     public function __construct()
     {
-        $this->PHPMailer = new PHPMailer();
+        if (class_exists('\PHPMailer')) {
+            $this->PHPMailer = new \PHPMailer();
+        } else {
+            $this->PHPMailer = new \PHPMailer\PHPMailer\PHPMailer();
+        }
 
         $this->CharSet       = 'UTF-8';
         $this->ContentType   = "text/html";
@@ -237,7 +241,7 @@ class Email
                 if (preg_match('#^[A-z]+://#', $url)) {
                     $need_replace = false;
                     $cid = md5($url);
-                    $filename = PHPMailer::mb_pathinfo($url, PATHINFO_BASENAME);
+                    $filename = $this->PHPMailer->mb_pathinfo($url, PATHINFO_BASENAME);
                     $img = @file_get_contents($url);
                     
                     if ($img !== false) {
@@ -246,7 +250,7 @@ class Email
                         }
                         if ($need_replace) {
                             $message = preg_replace("/".$images[1][$imgindex]."=[\"']".preg_quote($url, '/')."[\"']/Ui", $images[1][$imgindex]."=\"cid:".$cid."\"", $message);
-                            $this->inline_attachments[$cid] = array('url' => $url, 'content' => base64_encode($img), 'filename'=> $filename, 'type' => PHPMailer::_mime_types(PHPMailer::mb_pathinfo($url, PATHINFO_EXTENSION)));
+                            $this->inline_attachments[$cid] = array('url' => $url, 'content' => base64_encode($img), 'filename'=> $filename, 'type' => $this->PHPMailer->_mime_types($this->PHPMailer->mb_pathinfo($url, PATHINFO_EXTENSION)));
                         }
                     }
                 }

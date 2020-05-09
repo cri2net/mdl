@@ -32,12 +32,6 @@ $(document).on('ready', function() {
 /* All keyboard and mouse events */
 function initEvents() {
 
-    $('.add-new-object').on('click', function() {
-
-        $('#modal-object-add').modal('show');
-        return false;
-    }); 
-
     // Управление удалением объекта
     $('.remove-object').on('click', function(e) {
 
@@ -82,14 +76,6 @@ function initEvents() {
         $e.preventDefault();
         var id = $(this).data('id');
         $('#counter-delete-confirm').data('id', id);
-    });
-
-    // Эмулируем выпадающий список с помощью bootstrap dropdown
-    $(".dropdown-menu li a").click(function($e){
-
-        $e.preventDefault();
-        $(this).parents(".dropdown").find('button').html($(this).text() + ' <span class="caret"></span>');
-        $(this).parents(".dropdown").find('button').val($(this).data('value'));
     });
 }
 

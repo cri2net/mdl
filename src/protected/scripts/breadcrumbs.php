@@ -81,11 +81,6 @@
                     $breadcrumbs[] = ['title' => $sections[$__route_result['values']['section']]];
                     break;
             }
-
-            break;
-
-        case 'page/payment-status':
-            $breadcrumbs[] = ['title' => 'Статус транзакції'];
             break;
 
         case 'error/404':

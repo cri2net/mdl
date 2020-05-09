@@ -13,7 +13,6 @@
 <!--[if lt IE 9]><script>const e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (let i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->
 
 <title><?php require_once(PROTECTED_DIR . '/scripts/seo/title.php'); ?></title>
-<!--<script src="<?= BASE_URL; ?>/assets/js/modernizr-2.6.2.min.js"></script>-->
 <script src="<?= BASE_URL; ?>/assets/js/plugins.min.js"></script>
 
 <?php
