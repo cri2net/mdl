@@ -1,3 +1,5 @@
+@import "variables";
+
 .object {
     max-width: 800px;
     margin: 0 auto;
@@ -7,5 +9,9 @@
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
+
+        @media (min-width: $largeWidth) {
+            justify-content: space-between;
+        }
     }
 }
