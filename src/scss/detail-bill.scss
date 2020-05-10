@@ -1,0 +1,62 @@
+@import "variables";
+
+.detail-bill {
+    width: 80%;
+    margin: 0 auto;
+
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1em;
+
+    border-radius: 0.5em;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+
+    @media (min-width: $largeWidth) {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    &__cell {
+        width: 80%;
+        margin-bottom: 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+        @media (min-width: $largeWidth) {
+            width: auto;
+            height: 200px;
+            max-width: 300px;
+            margin: 0;
+        }
+    }
+
+    &__text {
+        text-align: center;
+        margin: 0;
+    }
+
+    &__cell-head {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 10px 1em;
+        background-color: $buttonColorYellow;
+        border-radius: 10px;
+
+        @media (min-width: $largeWidth) {
+            width: auto;
+        }
+    }
+
+    &__select {
+        border: none;
+    }
+}

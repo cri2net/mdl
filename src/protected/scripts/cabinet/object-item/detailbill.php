@@ -83,7 +83,7 @@
 
                 <div class="dotted-select-box with-icon">
                     <div class="icon services"></div>
-                    <select class="dotted-select service-select" name="service">
+                    <select class="dotted-select service-select form__input--select form__input" name="service">
                         <option value="">пiдприємство</option>
                         <?php
                             if (!empty($firmData)) {
@@ -105,48 +105,15 @@
         } else {
             ?>
             <div class="table-responsive border-top">
-                <table class="full-width-table datailbill-table no-border">
-                    <thead>
-                        <tr class="head-gray">
-                            <th class="th-header">Назва послуги /<br>одержувач коштів</th>
-                            <th>Заборгованість/<br>переплата<br>на <?= date('d.m', date_timestamp_get($prev_month)); ?>, грн</th>
-                            <th>Тариф,<br> грн</th>
-                            <th>Нараховано за<br> <?= $debtData['previous_month']; ?>, грн*</th>
-                            <th>Субсидія, грн<br>  розмір | об. платіж</th>
-                            <th>Сплачено у<br> <?= $prev_month_when; ?>, грн**</th>
-                        </tr>
-                    </thead>
+                <div class="full-width-table datailbill-table no-border">
                     <?php
                         if (!$have_error) {
                             ?>
-                            <tbody>
+                            <div>
                                 <?php
 
                                 foreach ($debtData['data'] as $key => $firm) {
                                     ?>
-                                    <tr class="head-green-2">
-                                        <th colspan="6">
-                                            <strong><?= $debtData['firm'][$key]['name']; ?>,
-                                            <?= $debtData['firm'][$key]['FIO']; ?>
-                                            (о.р. <?= $debtData['firm'][$key]['ABCOUNT']; ?>)
-                                            <?php
-
-                                                if (trim($debtData['firm'][$key]['TLF']) != "") {
-                                                    ?> (Телефон: <?= $debtData['firm'][$key]['TLF']; ?>) <?php
-                                                }
-
-                                                if (!empty($debtData['firm'][$key]['lgoti'])) {
-                                                    ?>
-                                                    Пільги: <?= $debtData['firm'][$key]['lgoti']['NAIM_LG']; ?>,
-                                                    <?= $debtData['firm'][$key]['lgoti']['PROC_LG']; ?>%
-                                                    (кількість пільговиків: <?= $debtData['firm'][$key]['lgoti']['KOL_LGOT']; ?>)
-                                                    <br>
-                                                    <?php
-                                                }
-                                            ?></strong>
-                                            <?= $object['address']; ?>
-                                        </th>
-                                    </tr>
                                     <?php
                                     
                                     $row = 0;
@@ -154,59 +121,87 @@
 
                                         $row++;
                                         ?>
-                                        <tr class="item-row">
-                                            <td class="border-bottom header">
-                                                <strong class="green"><?= $item['NAME_PLAT']; ?></strong>
-                                            </td>
-                                            <td>
+                                        <div class="detail-bill">
+                                            <div class="detail-bill__cell">
+                                                <p class="detail-bill__text detail-bill__cell-head">Назва послуги / одержувач коштів</p>
+                                                <p class="detail-bill__text">
+                                                    <strong><?= $debtData['firm'][$key]['name']; ?>,
+                                                        <?= $debtData['firm'][$key]['FIO']; ?>
+                                                        (о.р. <?= $debtData['firm'][$key]['ABCOUNT']; ?>)
+                                                        <?php
+
+                                                if (trim($debtData['firm'][$key]['TLF']) != "") {
+                                                    ?> (Телефон: <?= $debtData['firm'][$key]['TLF']; ?>) <?php
+                                                }
+
+                                                if (!empty($debtData['firm'][$key]['lgoti'])) {
+                                                    ?>
+                                                        Пільги: <?= $debtData['firm'][$key]['lgoti']['NAIM_LG']; ?>,
+                                                        <?= $debtData['firm'][$key]['lgoti']['PROC_LG']; ?>%
+                                                        (кількість пільговиків: <?= $debtData['firm'][$key]['lgoti']['KOL_LGOT']; ?>)
+                                                        <?php
+                                                }
+                                            ?></strong>
+                                                    <?= $object['address']; ?>
+                                                    <strong class="green"><?= $item['NAME_PLAT']; ?></strong>
+                                                </p>
+                                            </div>
+                                            <div class="detail-bill__cell">
+                                                <p class="detail-bill__text detail-bill__cell-head">Заборгованість/<br>переплата на <?= date('d.m', date_timestamp_get($prev_month)); ?>, грн</p>
                                                 <?php
                                                     $summ = floatval(str_replace(",", ".", $item['ISXDOLG']));
                                                     $class = ($summ < 0) ? 'overpay' : (($summ > 0) ? 'dept' : '');
                                                     $summ = explode(',', $item['ISXDOLG']);
                                                 ?>
                                                 <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                            </td>
-                                            <td>
+                                            </div>
+                                            <div class="detail-bill__cell">
+                                                <p class="detail-bill__text detail-bill__cell-head">Тариф, грн</p>
                                                 <?php
                                                     $summ = explode(',', $item['TARIF']);
                                                 ?>
                                                 <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                            </td>
-                                            <td>
+                                            </div>
+                                            <div class="detail-bill__cell">
+                                                <p class="detail-bill__text detail-bill__cell-head">Нараховано за <br><?= $debtData['previous_month']; ?>, грн*</p>
                                                 <?php
                                                     $summ = floatval(str_replace(",", ".", $item['SUMM_MONTH']));
                                                     $class = ($summ > 0) ? 'dept' : '';
                                                     $summ = explode(',', $item['SUMM_MONTH']);
                                                 ?>
                                                 <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                    $summ = explode(',', $item['SUBS']);
-                                                ?>
-                                                <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                                <span>&nbsp;</span>
-                                                <?php
-                                                    $summ = explode(',', $item['SUMM_OBL_PAY']);
-                                                ?>
-                                                <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                            </td>
-                                            <td>
+                                            </div>
+                                            <div class="detail-bill__cell"->
+                                                <p class="detail-bill__text detail-bill__cell-head">Субсидія, грн  розмір |<br> об. платіж</p>
+                                                <p class="detail-bill__text">
+                                                    <?php
+                                                        $summ = explode(',', $item['SUBS']);
+                                                    ?>
+                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                    <span>&nbsp;</span>
+                                                    <?php
+                                                        $summ = explode(',', $item['SUMM_OBL_PAY']);
+                                                    ?>
+                                                    <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                </p>
+                                            </div>
+                                            <div class="detail-bill__cell">
+                                                <p class="detail-bill__text detail-bill__cell-head">Сплачено у <br><?= $prev_month_when; ?>, грн**</p>
                                                 <?php
                                                     $summ = explode(',', $item['OPLAT']);
                                                 ?>
                                                 <span class="item-summ"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </div>
                                         <?php
                                     }
                                 }
                                 ?>
-                            </tbody>
+                            </div>
                             <?php
                         }
                     ?>
-                </table>
+                </div>
             </div>
             <div class="hints">
                 <b class="hint-star">*</b> — з врахуванням пільг та перерахунків <br>
