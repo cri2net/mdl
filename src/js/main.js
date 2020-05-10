@@ -154,7 +154,7 @@ function selectService(checkboxId, inputId)
         $('#'+inputId).attr('disabled', 'disabled');
     }
 
-    let all = ($('input.bill-checkbox:not(:checked)').length == 0);
+    var all = ($('input.bill-checkbox:not(:checked)').length == 0);
     $('#check_all_services-elem').prop('checked', all);
 
     billPageUpdateTotalSumm();
