@@ -51,7 +51,7 @@
 
 <div class="cabinet-settings object-item object-item-bill bill">
     <form class="form form__bill real-full-width-block" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
-        <div class="row table-caption">
+        <div class="bill-table__caption">
             <div class="col-md-6 cal matchHeight">
                 <div>
                     <span class="fa fa-calendar"></span>
@@ -72,22 +72,17 @@
             </div>
         </div>
         <div class="table-responsive border-top">
-            <table class="full-width-table datailbill-table no-border" id="data-table">
-                <thead>
-                    <tr class="head-gray">
-                        <th class="align-center th-checkbox">
+            <div class="full-width-table datailbill-table no-border bill-table" id="data-table">
+                <div class="bill-table">
+                    <div class="head-gray bill-table__head bill-table__row">
+                        <div class="align-center th-checkbox">
                             <label class="checkbox no-label gray">
                                 <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox"><span></span>
                             </label>
-                        </th>
-                        <th class="th-header">Назва послуги /<br>одержувач коштів</th>
-                        <th>Заборгованість&nbsp;/<br>переплата, грн</th>
-                        <th>Нараховано&nbsp;за<br><?= $MONTHS_NAME[$debtMonth]['ua']['small']; ?>, грн*</th>
-                        <th style="white-space:nowrap;">Сплачено у<br><?= $MONTHS_WHEN[date('n', $next_month)]['ua']; ?> **</th>
-                        <th style="white-space:nowrap; max-width: 166px;">До сплати,<br>грн ***</th>
-                    </tr>
-                </thead>
-                <tbody>
+                        </div>
+                    </div>
+                </div>
+                <div class="bill-table bill-table--outer">
                     <?php
                         $row_counter = 0;
 
@@ -95,12 +90,13 @@
                             $row_counter++;
                             ?>
 
-                            <tr class="item-row" data-number="<?= $key; ?>">
-                                <td class="align-center">
+                            <div class="item-row bill-table__row" data-number="<?= $key; ?>">
+                                <div class="align-center">
                                     <label class="checkbox no-label green"><input checked="checked" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" name="items[]" type="checkbox" class="check-toggle"><span></span></label>
-                                </td>
-                                <td class="border-bottom">
-                                    <label class="header">
+                                </div>
+                                <div  class="bill-table__cell">
+                                    <div class="bill-table__cell-head">Назва послуги /<br>одержувач коштів</div>
+                                    <label class="bill-table__cell-body header">
                                         <strong class="green"><?= $item['name_plat']; ?><br></strong>
                                         <?= $item['firm_name']; ?><br>
                                         <?php
@@ -113,61 +109,72 @@
                                         ?>
                                         (о.р.<?= $item['ABCOUNT']; ?>)
                                     </label>
-                                </td>
-                                <td class="border-bottom">
-                                    <?php
-                                        if ($item['debt'] == '-') {
-                                            echo '—';
-                                        } else {
-                                            $summ = explode(',', $item['debt']);
-                                            ?>
-                                            <span class="item-summ">
-                                                <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                            </span>
-                                            <?php
-                                        }
-                                    ?>
-                                </td>
-                                <td class="border-bottom">
-                                    <?php
-                                        if ($item['SUMM_MONTH'] == '-') {
-                                            echo '—';
-                                        } else {
-                                            $summ = explode(',', $item['SUMM_MONTH']);
-                                            ?>
-                                            <span class="item-summ">
-                                                <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                            </span>
-                                            <?php
-                                        }
-
-                                        if ($have_recalc && strstr($item['name_plat'], 'УТРИМАННЯ')) {
-
-                                            $summ = 0;
-                                            foreach ($recalcData as $tmp_item) {
-                                                foreach ($tmp_item['list'] as $list_item) {
-                                                    $summ += $list_item['sum'];
-                                                }
+                                </div>
+                                <div class="bill-table__cell">
+                                    <div class="bill-table__cell-head">Заборгованість&nbsp;/<br>переплата, грн</div>
+                                    <div class="bill-table__cell-body border-bottom">
+                                        <?php
+                                            if ($item['debt'] == '-') {
+                                                echo '—';
+                                            } else {
+                                                $summ = explode(',', $item['debt']);
+                                                ?>
+                                                <span class="item-summ">
+                                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                                </span>
+                                                <?php
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="bill-table__cell">
+                                    <div class="bill-table__cell-head">Нараховано&nbsp;за<br><?= $MONTHS_NAME[$debtMonth]['ua']['small']; ?>, грн*</div>
+                                    <div class="bill-table__cell-body border-bottom">
+                                        <?php
+                                            if ($item['SUMM_MONTH'] == '-') {
+                                                echo '—';
+                                            } else {
+                                                $summ = explode(',', $item['SUMM_MONTH']);
+                                                ?>
+                                                <span class="item-summ">
+                                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                                </span>
+                                                <?php
                                             }
 
-                                            // в xml есть поле "Всього по о/рахунку(по періоду)", где дублирутеся общая сумма.
-                                            // То есть надо на два поделить то, что выше в цикле просуммировано
-                                            $summ /= 2;
-                                            ?>
-                                            <span style="font-size: 28px; font-style: italic; color: #00b86c; font-family: Times; cursor: help;" title="Перерахунок <?= $summ; ?> грн">&nbsp;i</span>
-                                            <?php
-                                        }
-                                    ?>
-                                </td>
-                                <td class="border-bottom">
-                                    <?php
-                                        $summ = explode(',', $item['SUMM_PLAT']);
-                                    ?>
-                                    <span class="item-summ">
-                                        <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                                    </span>
-                                </td>
-                                <td class="border-bottom">
+                                            if ($have_recalc && strstr($item['name_plat'], 'УТРИМАННЯ')) {
+
+                                                $summ = 0;
+                                                foreach ($recalcData as $tmp_item) {
+                                                    foreach ($tmp_item['list'] as $list_item) {
+                                                        $summ += $list_item['sum'];
+                                                    }
+                                                }
+
+                                                // в xml есть поле "Всього по о/рахунку(по періоду)", где дублирутеся общая сумма.
+                                                // То есть надо на два поделить то, что выше в цикле просуммировано
+                                                $summ /= 2;
+                                                ?>
+                                                <span style="font-size: 28px; font-style: italic; color: #00b86c; font-family: Times; cursor: help;" title="Перерахунок <?= $summ; ?> грн">&nbsp;i</span>
+                                                <?php
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="bill-table__cell">
+                                    <div class="bill-table__cell-head">Сплачено у<br><?= $MONTHS_WHEN[date('n', $next_month)]['ua']; ?> **</div>
+                                    <div class="bill-table__cell-body border-bottom">
+                                        <?php
+                                            $summ = explode(',', $item['SUMM_PLAT']);
+                                        ?>
+                                        <span class="item-summ">
+                                            <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="bill-table__cell">
+                                    <div class="bill-table__cell-head">До сплати,<br>грн ***</div>
+                                    <div class="bill-table__cell-body border-bottom">
                                     <?php
                                         $attrs = '';
                                         if ($item['SUMM_OBL_PAY'] > 0) {
@@ -186,24 +193,24 @@
                                         $tmp_value .= '_'. $item['DEND_XML'];
                                         $tmp_value .= '_'. $item['FIO'];
                                     ?>
-                                    <input <?= $attrs; ?> class="bill-summ-input txt form-txt-input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc(); return checkForDouble(this)" id="inp_<?= $key; ?>">
+                                    <input <?= $attrs; ?> class="bill-summ-input txt form-txt-input bill-table__input" type="text" name="inp_<?= $key; ?>_sum" size="20" value="<?= $item['to_pay']; ?>" onblur="bill_input_blur(this);" onfocus="bill_input_focus(this);" onchange="recalc();" onkeyup="recalc(); return checkForDouble(this)" id="inp_<?= $key; ?>">
                                     <input type="hidden" name="inp_<?= $key; ?>_data" value="<?= $tmp_value; ?>">
                                     <input type="hidden" name="inp_<?= $key; ?>_name_plat" value="<?= htmlspecialchars($item['name_plat'], ENT_QUOTES); ?>">
                                     <input type="hidden" name="inp_<?= $key; ?>_firm_name" value="<?= htmlspecialchars($item['firm_name'], ENT_QUOTES); ?>">
                                     <input type="hidden" name="inp_<?= $key; ?>_code_firme" value="<?= htmlspecialchars($item['CODE_FIRME'], ENT_QUOTES); ?>">
                                     <input type="hidden" name="inp_<?= $key; ?>_date_d" value="<?= htmlspecialchars($item['DATE_D'], ENT_QUOTES); ?>">
                                     <input type="hidden" name="inp_<?= $key; ?>_id_plat" value="<?= htmlspecialchars($item['ID_PLAT'], ENT_QUOTES); ?>">
-                                </td>
-                            </tr>
+                                    </div>
+                                </div>
                             <?php
                                 if ($item['counter'] != 0) {
 
                                     foreach ($item['counterData']['counters'] as $counter) {
                                         
                                         ?>
-                                        <tr class="item-counter">
-                                            <td></td>
-                                            <td colspan="6">
+                                        <div class="item-counter">
+                                            <div></div>
+                                            <div colspan="6">
                                                 <div class="counter-container counter-container-<?= $key; ?>">
                                                     <div class="row row-counter item-counter-<?= $key; ?>"  id="item-counter-<?= $key; ?>-<?= $counter['COUNTER_NO']; ?>" data-number="<?= $key; ?>">
                                                         <div class="col-md-12">
@@ -230,8 +237,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </div>
                                         <?php
                                     }
                                 }
@@ -239,18 +246,18 @@
                             <?php
                         }
                     ?>
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>                    
-            <div class="tfoot row total-summ">
-                <div class="col-lg-12">
+            <div class="tfoot row total-summ bill-table__sum">
+                <div class="bill-table__sum-text">
                     Всього: <span id="total_debt"><?= $debtData['full_dept']; ?></span> &#8372;
                 </div>
-                <div class="col-lg-12">
+                <div>
                     <input type="hidden" name="dbegin" value="<?= $dateBegin; ?>">
                     <input type="hidden" name="dend" value="<?= $dateEnd; ?>">
                     <input type="hidden" name="flat_id" value="<?= $flat_id; ?>">
-                    <button class="btn" id="pay_button"><span class="fa fa-check"></span> Сплатити</button>
+                    <button class="btn button button__form button__form--bill-table" id="pay_button"><span class="fa fa-check"></span> Сплатити</button>
                 </div>
                 <div class="col-lg-12">
                     <div style="padding-top: 30px;" id="pay_button_error" class="error-description"></div>
