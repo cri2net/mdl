@@ -64,7 +64,7 @@ gulp.task('js', function(){
 });
 
 var jsFiles = [
-        './src/js/vendors/jquery.min.js',
+        './src/js/vendors/jquery.1.12.4.min.js',
         './src/js/vendors/jquery-ui.1.10.4.min.js',
         './src/js/vendors/*.js'],
     jsDest = './public/assets/js/';
