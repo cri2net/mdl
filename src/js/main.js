@@ -111,21 +111,13 @@ function checkAllServices(checkbox)
     var total = 0;
     if ($(checkbox).is(':checked')) {
         totalFlag = 1;
-        $('input:checkbox').each(function(i){
-            if (i > 0){
-                $(this).attr('checked', 'checked');
-            }
-        });
+        $('input.bill-checkbox').prop('checked', true);
         $('input.bill-summ-input').each(function(i){
             $(this).removeAttr('disabled');
         });
         $('#pay_button').removeAttr('disabled');
     } else {
-        $('input:checkbox').each(function(i){
-            if (i > 0) {
-                $(this).removeAttr('checked');
-            }
-        });
+        $('input.bill-checkbox').prop('checked', false);
         $('input.bill-summ-input').each(function(i){
             $(this).attr('disabled', 'disabled');
         });
@@ -161,6 +153,9 @@ function selectService(checkboxId, inputId)
     } else {
         $('#'+inputId).attr('disabled', 'disabled');
     }
+
+    let all = ($('input.bill-checkbox:not(:checked)').length == 0);
+    $('#check_all_services-elem').prop('checked', all);
 
     billPageUpdateTotalSumm();
 };
@@ -301,16 +296,6 @@ function registration_form_submit()
     return true;
 };
 
-function registration_ckeck_empty_fileld_password(element)
-{
-    var val = removeSpaces($(element).val());
-    if (val.length == 0) {
-        $(element).parent().parent().parent().find('.error-text').css('display', 'block');
-    } else {
-        $(element).parent().parent().parent().find('.error-text').css('display', 'none');
-    }
-};
-
 function registration_ckeck_empty_fileld(element)
 {
     var val = removeSpaces($(element).val());
@@ -374,20 +359,6 @@ function check_delete_profile()
     return ($('#confirm_delete_profile input').is(':checked'));
 };
 
-function wait_ok_message_timeout(message, elem, counter, interval)
-{
-    var original_message = message;
-    counter++;
-    if (counter == 4) {
-        counter = 0;
-    }
-    for (var i = 0; i < counter; i++) {
-        message += '.';
-    }
-    $(elem).html(message);
-    setTimeout(function(){wait_ok_message_timeout(original_message, elem, counter, interval);}, interval);
-};
-
 function isNumberKey(evt)
 {
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -406,19 +377,6 @@ function isNumberKeyPlusDot(evt)
         return true;
     }
     return false;
-};
-
-function send_activation_code(element)
-{
-    $(element).fadeOut(400);
-    setTimeout(function(){ $('#verify-email_send').fadeIn(400); }, 400);
-    
-    $.ajax({
-        dataType: 'json',
-        data: {},
-        type: 'POST',
-        url : BASE_URL + '/ajax/json/send_activation_code'
-    });
 };
 
 function add_new_counters(key, abcounter, tarif)
@@ -505,14 +463,3 @@ $(document).ready(function(){
     };
     $.datepicker.setDefaults($.datepicker.regional['ua']);
 });
-
-
-(function ($) {
-    "use strict";
-
-    $.fn.depdropLocales['ua'] = {
-        loadingText: 'завантаження ...',
-        placeholder: 'Обрати ...',
-        emptyMsg: 'Дані не знайдено'
-    };
-})(window.jQuery);
