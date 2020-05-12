@@ -65,15 +65,15 @@
 <div class="cabinet-settings object-item object-item-bill">
     <form class="real-full-width-block" id="object-item-detailbill-form" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/detailbill/">
         <div class="row table-caption">
-            <div class="calendar col-lg-12">
-                <select name="month">
+            <div class="calendar col-lg-12 form__input-container">
+                <select name="month" class="form__input--history form__input form__input--history--outer">
                     <?php
                         foreach ($MONTHS_NAME as $key => $month) {
                             ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']['small']; ?></option> <?php
                         }
                     ?>
                 </select>
-                <select class="dotted-select" name="year">
+                <select class="dotted-select form__input--history form__input form__input--history--outer" name="year">
                     <?php
                         foreach ($years as $year) {
                             ?><option <?= ($_need_year == $year) ? 'selected' : ''; ?>><?= $year; ?></option> <?php
@@ -81,9 +81,9 @@
                     ?>
                 </select>
 
-                <div class="dotted-select-box with-icon">
-                    <div class="icon services"></div>
-                    <select class="dotted-select service-select form__input--select form__input" name="service">
+                <div class="dotted-select-box with-icon form__input--history form__input--history--outer">
+                    <div class="icon services form__input--history"></div>
+                    <select class="dotted-select service-select form__input--history form__input form__input--inner-history" name="service">
                         <option value="">пiдприємство</option>
                         <?php
                             if (!empty($firmData)) {
@@ -95,7 +95,7 @@
                     </select>
                 </div>
                                 
-                <a onclick="$('#object-item-detailbill-form').submit();" class="btn btn-xs"><span class="fa  fa-calendar"></span> Показати</a>
+                <a onclick="$('#object-item-detailbill-form').submit();" class="btn btn-xs button button__form button__form--register"><span class="fa  fa-calendar"></span> Показати</a>
             </div>
         </div>
     </form>
@@ -121,7 +121,7 @@
 
                                         $row++;
                                         ?>
-                                        <div class="detail-bill">
+                                        <div class="detail-bill detail-bill--outer">
                                             <div class="detail-bill__cell">
                                                 <p class="detail-bill__text detail-bill__cell-head">Назва послуги / одержувач коштів</p>
                                                 <p class="detail-bill__text">
@@ -203,7 +203,7 @@
                     ?>
                 </div>
             </div>
-            <div class="hints">
+            <div class="hints detail-bill__hints detail-bill__hints--outer">
                 <b class="hint-star">*</b> — з врахуванням пільг та перерахунків <br>
                 <b class="hint-star">**</b> — довідково <br>
             </div>

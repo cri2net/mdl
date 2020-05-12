@@ -22,6 +22,10 @@
         justify-content: space-around;
     }
 
+    &--outer {
+        margin-bottom: 30px;
+    }
+
     &__cell {
         width: 80%;
         margin-bottom: 20px;
@@ -58,5 +62,15 @@
 
     &__select {
         border: none;
+    }
+
+    &__hints {
+        padding-left: 20px;
+        width: 80%;
+        margin: 0 auto;
+
+        &--outer {
+            margin-bottom: 30px;
+        }
     }
 }

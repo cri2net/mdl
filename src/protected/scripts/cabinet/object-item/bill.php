@@ -87,7 +87,7 @@
                             $row_counter++;
                             ?>
 
-                            <div class="item-row bill-table__row" data-number="<?= $key; ?>">
+                            <div class="item-row bill-table__row bill-table__row--outer" data-number="<?= $key; ?>">
                                 <div class="align-center">
                                     <input checked="checked" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" name="items[]" type="checkbox" class="bill-checkbox">
                                 </div>
