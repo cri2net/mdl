@@ -2,7 +2,7 @@
     <table class="bill-details">
         <thead>
             <tr>
-                <th class="bill-details__head" colspan="5">Деталі платежу № <?= $payment['id']; ?></th>
+                <th class="bill-details__head" colspan="5">Деталі платежу #<?= $payment['id']; ?></th>
             </tr>
         </thead>
         <tbody class="bill-details__body bill-details__body--outer">

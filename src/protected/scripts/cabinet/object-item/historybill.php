@@ -50,14 +50,14 @@
     <form id="object-item-historybill-form" class="real-full-width-block" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/historybill/">
         <div class="row table-caption">
             <div class="calendar col-lg-12">
-                <select name="month" class="form__input--history form__input form__input--history--outer form__input--inner-history">
+                <select name="month" class="form__input--history form__input form__input--capitalize form__input--history--outer form__input--inner-history">
                     <?php
                         foreach ($MONTHS_NAME as $key => $month) {
                             ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']['small']; ?></option> <?php
                         }
                     ?>
                 </select>
-                <select class="dotted-select form__input--history form__input form__input--history--outer form__input--inner-history" name="year">
+                <select class="dotted-select form__input--history form__input form__input--capitalize form__input--history--outer form__input--inner-history" name="year">
                     <?php
                         foreach ($years as $year) {
                             ?><option <?= ($_need_year == $year) ? 'selected' : ''; ?>><?= $year; ?></option> <?php
@@ -75,15 +75,6 @@
             ?>
             <div class="table-responsive border-top">
                 <div class="full-width-table datailbill-table no-border">
-                    <div>
-                        <div class="head-gray">
-                            <div>Номер<br>операції</div>
-
-
-
-
-                        </div>
-                    </div>
                     <?php
                         if (!$have_error) {
                             ?>
@@ -91,6 +82,7 @@
                                 <?php
                                     $stm_find_payment = PDO_DB::prepare("SELECT id FROM " . TABLE_PREFIX . "payment WHERE reports_id_plat_klient = ? AND user_id = ? LIMIT 1");
                                     $id_p_k_to_id = [];
+                                    $have_own_payments = false;
 
                                     foreach ($debtData['bank'] as $key => $bank) {
                                         foreach ($bank['data'] as $item) {
@@ -101,23 +93,54 @@
                                                     $id_p_k_to_id[$item['ID_PLAT_KLIENT']] = $stm_find_payment->fetchColumn();
                                                 }
                                                 $tmp_payment = $id_p_k_to_id[$item['ID_PLAT_KLIENT']];
+
+                                                if ($tmp_payment !== false) {
+                                                    $have_own_payments = true;
+                                                    break 2;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    foreach ($debtData['bank'] as $key => $bank) {
+                                        foreach ($bank['data'] as $item) {
+
+                                            if ($have_own_payments) {
+                                                if (!empty($item['ID_PLAT_KLIENT'])) {
+                                                    if (!isset($id_p_k_to_id[$item['ID_PLAT_KLIENT']])) {
+                                                        $stm_find_payment->execute([$item['ID_PLAT_KLIENT'], Authorization::getLoggedUserId()]);
+                                                        $id_p_k_to_id[$item['ID_PLAT_KLIENT']] = $stm_find_payment->fetchColumn();
+                                                    }
+                                                    $tmp_payment = $id_p_k_to_id[$item['ID_PLAT_KLIENT']];
+                                                }
                                             }
 
                                             $pdate = DateTime::createFromFormat('d.m.y H:i:s', $item['PDATE']);
                                             ?>
                                             <div class="detail-bill detail-bill--history detail-bill--outer">
-                                                <div class="align-center">
-                                                    <?php
-                                                        if ($tmp_payment !== false) {
-                                                            ?>
-                                                            <a href="<?= BASE_URL; ?>/cabinet/payments/details/<?= $tmp_payment; ?>/">
-                                                                #<?= $tmp_payment; ?>
-                                                            </a>
-                                                            <?php
-                                                        }
-                                                    ?>
-                                                </div>
-                                                <div class="border-bottom detail-bill__cell">
+
+                                                <?php
+                                                    if ($have_own_payments) {
+                                                        ?>
+                                                        <div class="detail-bill__cell">
+                                                            <p class="detail-bill__text detail-bill__cell-head">Номер<br>операції</p>
+                                                            <p class="detail-bill__text">
+                                                                <?php
+                                                                    if ($tmp_payment !== false) {
+                                                                        ?>
+                                                                        <a href="<?= BASE_URL; ?>/cabinet/payments/details/<?= $tmp_payment; ?>/">
+                                                                            #<?= $tmp_payment; ?>
+                                                                        </a>
+                                                                        <?php
+                                                                    }
+                                                                ?>
+                                                            </p>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                ?>
+
+                                                <div class="detail-bill__cell">
                                                     <p class="detail-bill__text detail-bill__cell-head">Назва послуги /<br>одержувач коштів</p>
                                                     <p class="detail-bill__text">
                                                         <strong class="green"><?= $item['NAME_PLAT']; ?></strong> <br>

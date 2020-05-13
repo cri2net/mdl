@@ -50,11 +50,13 @@
             width: 100%;
         }
 
+        &--capitalize {
+            text-transform: capitalize;
+        }
+
         &--history {
             width: 90%;
             margin: 0 auto;
-
-            text-transform: capitalize;
 
             @media (min-width: $smallWidth) {
                 width: 50%;

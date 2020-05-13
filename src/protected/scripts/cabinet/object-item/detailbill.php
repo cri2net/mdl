@@ -66,14 +66,14 @@
     <form class="real-full-width-block" id="object-item-detailbill-form" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/detailbill/">
         <div class="row table-caption">
             <div class="calendar col-lg-12 form__input-container">
-                <select name="month" class="form__input--history form__input form__input--history--outer">
+                <select name="month" class="form__input--history form__input form__input--capitalize form__input--history--outer">
                     <?php
                         foreach ($MONTHS_NAME as $key => $month) {
                             ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']['small']; ?></option> <?php
                         }
                     ?>
                 </select>
-                <select class="dotted-select form__input--history form__input form__input--history--outer" name="year">
+                <select class="dotted-select form__input--history form__input form__input--capitalize form__input--history--outer" name="year">
                     <?php
                         foreach ($years as $year) {
                             ?><option <?= ($_need_year == $year) ? 'selected' : ''; ?>><?= $year; ?></option> <?php
@@ -81,10 +81,10 @@
                     ?>
                 </select>
 
-                <div class="dotted-select-box with-icon form__input--history form__input--history--outer">
+                <div class="form__input--history form__input--history--outer">
                     <div class="icon services form__input--history"></div>
-                    <select class="dotted-select service-select form__input--history form__input form__input--inner-history" name="service">
-                        <option value="">пiдприємство</option>
+                    <select class="dotted-select service-select form__input--history form__input form__input--capitalize form__input--inner-history" name="service">
+                        <option value="">Пiдприємство</option>
                         <?php
                             if (!empty($firmData)) {
                                 foreach ($firmData as $key => $firm) {

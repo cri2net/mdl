@@ -48,7 +48,7 @@
 
     &__cell-head {
         padding: 10px 1em;
-        background-color: $buttonColorYellow;
+        background-color: rgba($buttonColorYellow, 0.4);
         border-radius: 10px;
         text-align: center;
     }

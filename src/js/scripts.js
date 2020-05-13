@@ -15,8 +15,6 @@ $(document).on('ready', function() {
 
     initEvents();
 
-    $(function() { $('.matchHeight').matchHeight(); }); 
-
     $('a').each(function() {
         var a = new RegExp('/' + window.location.host + '/');
         if (!a.test(this.href) && this.href.length && (this.href != '#')) {

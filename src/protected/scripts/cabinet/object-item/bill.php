@@ -49,13 +49,12 @@
 <div class="cabinet-settings object-item object-item-bill bill">
     <form class="form form__bill real-full-width-block" action="<?= BASE_URL; ?>/post/cabinet/object-item/paybill/" method="post">
         <div class="bill-table__caption">
-            <div class="col-md-6 cal matchHeight">
+            <div class="col-md-6">
                 <div>
-                    <span class="fa fa-calendar"></span>
                     Рахунок за <?= $MONTHS_NAME[date('n', $debtData['timestamp'])]['ua']['small']; ?> <?= date('Y', $debtData['timestamp']); ?> р.  
                 </div>
             </div>
-            <div class="col-md-6 right matchHeight">
+            <div class="col-md-6 right">
                 <strong><span class="green"><?= $object['address']; ?></span><br>
                 <span>Загальна площа: <b><?= $debtData['PL_OB']; ?> м<sup>2</sup></b>, опалювальна: <b><?= $debtData['PL_POL']; ?> м<sup>2</sup></b>, проживаючих: <b><?= $debtData['PEOPLE']; ?></b>
                 <?php

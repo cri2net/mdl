@@ -49,7 +49,7 @@ switch ($__route_result['controller'] . "/" . $__route_result['action']) {
                 if (isset($__route_result['values']['section'])) {
                     $sections = [
                         'history' => 'Історія платежів',
-                        'details' => 'Деталі платежу № ',
+                        'details' => 'Деталі платежу #',
                     ];
 
                     if ($__route_result['values']['section'] == 'details') {

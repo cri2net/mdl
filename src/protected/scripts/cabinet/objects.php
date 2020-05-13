@@ -68,7 +68,7 @@
                         $flat = $flats[$i];
                         ?>
                         <div class="card card--outer">
-                            <div class="card__container house_item flat matchHeight <?= $flat['payed']; ?>">
+                            <div class="card__container house_item flat <?= $flat['payed']; ?>">
                                 <div class="info-section card__wrapper">
                                     <div class="card__title">
                                         <?php
