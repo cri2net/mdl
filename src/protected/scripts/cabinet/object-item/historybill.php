@@ -46,25 +46,25 @@
         $error = $e->getMessage();
     }
 ?>
-<div class="cabinet-settings object-item object-item-bill">
+<div class="cabinet-settings object-item object-item-bill form__input--history form__input--history--outer">
     <form id="object-item-historybill-form" class="real-full-width-block" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/historybill/">
         <div class="row table-caption">
             <div class="calendar col-lg-12">
-                <select name="month">
+                <select name="month" class="form__input--history form__input form__input--history--outer form__input--inner-history">
                     <?php
                         foreach ($MONTHS_NAME as $key => $month) {
                             ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']['small']; ?></option> <?php
                         }
                     ?>
                 </select>
-                <select class="dotted-select" name="year">
+                <select class="dotted-select form__input--history form__input form__input--history--outer form__input--inner-history" name="year">
                     <?php
                         foreach ($years as $year) {
                             ?><option <?= ($_need_year == $year) ? 'selected' : ''; ?>><?= $year; ?></option> <?php
                         }
                     ?>
                 </select>
-                <a onclick="$('#object-item-historybill-form').submit();" class="btn btn-xs"><span class="fa  fa-calendar"></span> Показати</a>             
+                <a onclick="$('#object-item-historybill-form').submit();" class="btn btn-xs button button__form button__form--register"><span class="fa  fa-calendar"></span> Показати</a>
             </div>
         </div>
     </form>
@@ -74,20 +74,20 @@
         } else {
             ?>
             <div class="table-responsive border-top">
-                <table class="full-width-table datailbill-table no-border">
-                    <thead>
-                        <tr class="head-gray">
-                            <th>Номер<br>операції</th>
-                            <th class="th-header">Назва послуги /<br>одержувач коштів</th>
-                            <th>Дата<br> cплати</th>
-                            <th>Період<br> сплати</th>
-                            <th>Сума, грн</th>
-                        </tr>
-                    </thead>
+                <div class="full-width-table datailbill-table no-border">
+                    <div>
+                        <div class="head-gray">
+                            <div>Номер<br>операції</div>
+
+
+
+
+                        </div>
+                    </div>
                     <?php
                         if (!$have_error) {
                             ?>
-                            <tbody>
+                            <div>
                                 <?php
                                     $stm_find_payment = PDO_DB::prepare("SELECT id FROM " . TABLE_PREFIX . "payment WHERE reports_id_plat_klient = ? AND user_id = ? LIMIT 1");
                                     $id_p_k_to_id = [];
@@ -105,8 +105,8 @@
 
                                             $pdate = DateTime::createFromFormat('d.m.y H:i:s', $item['PDATE']);
                                             ?>
-                                            <tr class="item-row">
-                                                <td class="align-center">
+                                            <div class="detail-bill detail-bill--history detail-bill--outer">
+                                                <div class="align-center">
                                                     <?php
                                                         if ($tmp_payment !== false) {
                                                             ?>
@@ -116,47 +116,57 @@
                                                             <?php
                                                         }
                                                     ?>
-                                                </td>
-                                                <td class="border-bottom">
-                                                    <label class="header header-big">
+                                                </div>
+                                                <div class="border-bottom detail-bill__cell">
+                                                    <p class="detail-bill__text detail-bill__cell-head">Назва послуги /<br>одержувач коштів</p>
+                                                    <p class="detail-bill__text">
                                                         <strong class="green"><?= $item['NAME_PLAT']; ?></strong> <br>
                                                         <?= $item['NAME_FIRME']; ?>
                                                         (о.р. <?= $item['ABCOUNT']; ?>) <br>
-                                                    </label>
-                                                </td>
-                                                <td class="border-bottom">
-                                                    <span class="date-day"><?= $pdate->format('d/m/y'); ?></span><br>
-                                                    <span class="date-time"><?= $pdate->format('H:i:s'); ?></span>
-                                                </td>
-                                                <td class="border-bottom">
-                                                    <?php
-                                                        if (!$item['DBEGIN'] || !$item['DEND']) {
-                                                            echo '—';
-                                                        } else {
-                                                            ?>
-                                                            з <?= $item['DBEGIN']; ?><br>
-                                                            по <?= $item['DEND']; ?>
-                                                            <?php
-                                                        }
-                                                    ?>
-                                                </td>
-                                                <td class="border-bottom">
-                                                    <?php
-                                                        $summ = floatval(str_replace(",", ".", $item['SUMM']));
-                                                        $summ = explode(',', $item['SUMM']);
-                                                    ?>
-                                                    <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
-                                                </td>
-                                            </tr>
+                                                    </p>
+                                                </div>
+                                                <div class="detail-bill__cell">
+                                                    <p class="detail-bill__text detail-bill__cell-head">Дата<br> cплати</p>
+                                                    <p class="detail-bill__text">
+                                                        <span class="date-day"><?= $pdate->format('d/m/y'); ?></span><br>
+                                                        <span class="date-time"><?= $pdate->format('H:i:s'); ?></span>
+                                                    </p>
+                                                </div>
+                                                <div class="detail-bill__cell">
+                                                    <p class="detail-bill__text detail-bill__cell-head">Період<br> сплати</p>
+                                                    <p class="detail-bill__text">
+                                                        <?php
+                                                            if (!$item['DBEGIN'] || !$item['DEND']) {
+                                                                echo '—';
+                                                            } else {
+                                                                ?>
+                                                                з <?= $item['DBEGIN']; ?><br>
+                                                                по <?= $item['DEND']; ?>
+                                                                <?php
+                                                            }
+                                                        ?>
+                                                    </p>
+                                                </div>
+                                                <div class="detail-bill__cell">
+                                                    <p class="detail-bill__text detail-bill__cell-head">Сума,<br> грн</p>
+                                                    <p class="detail-bill__text">
+                                                        <?php
+                                                            $summ = floatval(str_replace(",", ".", $item['SUMM']));
+                                                            $summ = explode(',', $item['SUMM']);
+                                                        ?>
+                                                        <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
+                                                    </p>
+                                                </div>
+                                            </div>
                                             <?php
                                         }
                                     }
                                 ?>
-                            </tbody>
+                            </div>
                             <?php
                         }
                     ?>
-                </table>
+                </div>
             </div>
             <?php
         }

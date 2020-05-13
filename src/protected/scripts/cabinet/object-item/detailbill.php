@@ -123,7 +123,7 @@
                                         ?>
                                         <div class="detail-bill detail-bill--outer">
                                             <div class="detail-bill__cell">
-                                                <p class="detail-bill__text detail-bill__cell-head">Назва послуги / одержувач коштів</p>
+                                                <p class="detail-bill__text detail-bill__cell-head">Назва послуги /<br> одержувач коштів</p>
                                                 <p class="detail-bill__text">
                                                     <strong><?= $debtData['firm'][$key]['name']; ?>,
                                                         <?= $debtData['firm'][$key]['FIO']; ?>
@@ -156,7 +156,7 @@
                                                 <span class="item-summ <?= $class; ?>"><?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span></span>
                                             </div>
                                             <div class="detail-bill__cell">
-                                                <p class="detail-bill__text detail-bill__cell-head">Тариф, грн</p>
+                                                <p class="detail-bill__text detail-bill__cell-head">Тариф,<br> грн</p>
                                                 <?php
                                                     $summ = explode(',', $item['TARIF']);
                                                 ?>
