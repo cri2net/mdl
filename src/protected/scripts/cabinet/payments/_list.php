@@ -6,20 +6,11 @@
         return;
     }
 ?>
-<label class="checkbox green" id="payments_only_success"><input name="service[<?= $key ?>]" type="checkbox" class="check-toggle" checked ><span>Тільки успішні платежі</span></label>
+<label class="checkbox green list__checkbox" id="payments_only_success"><input name="service[<?= $key ?>]" type="checkbox" class="check-toggle" checked ><span>Тільки успішні платежі</span></label>
 
 <div class="real-full-width-block table-responsive border-top">
-    <table class="full-width-table datailbill-table">
-        <thead>
-            <tr>
-                <th class="first">Номер</th>
-                <th>Дата створення</th>
-                <th>Тип</th>
-                <th class="td-sum">Сума, грн</th>
-                <th class="td-last">Статус</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="full-width-table datailbill-table">
+        <div>
             <?php
                 $counter = 0;
                 
@@ -27,38 +18,56 @@
                     $counter++;
                     $time = ($item['go_to_payment_time']) ? $item['go_to_payment_time'] : $item['timestamp'];
                     ?>
-                    <tr style="<?= ($item['status'] == 'success') ? '' : 'display: none;'; ?>" class="item-row <?= ($counter % 2 == 0) ? 'even' : 'odd'; ?> item-payment-status item-payment-status-<?= $item['status']; ?>">
-                        <td class="first border-bottom">
-                            <a href="<?= BASE_URL; ?>/cabinet/payments/details/<?= $item['id']; ?>/"><?= $item['id']; ?></a>
-                        </td>
-                        <td class="border-bottom" >
-                            <span class="date-day"><?= getUkraineDate('j m Y', $time); ?></span><br>
-                            <span class="date-time"><?= date('H:i:s', $time); ?></span>
-                        </td>
-                        <td class="border-bottom" >
-                            <?php
-                                switch ($item['type']) {
-                                    case 'komdebt':
-                                        echo 'Комунальні послуги';
-                                        break;
-                                }
-                            ?>
-                        </td>
-                        <td class="border-bottom">
-                            <?php
-                                $summ = explode('.', number_format($item['summ_total'], 2));
-                            ?>
-                            <span class="item-summ">
-                                <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
-                            </span>
-                        </td>
-                        <td class="border-bottom"><?= $payment_statuses[$payment['status']]; ?></td>
-                    </tr>
+                    <div class="detail-bill detail-bill--outer item-payment-status item-payment-status-<?= $item['status']; ?>">
+                        <div class="list__bill">
+                            <p class="list__bill-header">Номер</p>
+                            <p class="first border-bottom">
+                                <a href="<?= BASE_URL; ?>/cabinet/payments/details/<?= $item['id']; ?>/" class="list__bill-link"><?= $item['id']; ?></a>
+                            </p>
+                        </div>
+                        <div class="list__bill">
+                            <p class="list__bill-header">Дата створення</p>
+                            <p class="border-bottom" >
+                                <span class="date-day"><?= getUkraineDate('j m Y', $time); ?></span><br>
+                                <span class="date-time"><?= date('H:i:s', $time); ?></span>
+                            </p>
+                        </div>
+                        <div class="list__bill">
+                            <p class="list__bill-header">Тип</p>
+                            <p>
+                                <?php
+                                    switch ($item['type']) {
+                                        case 'komdebt':
+                                            echo 'Комунальні послуги';
+                                            break;
+                                    }
+                                ?>
+                            </p>
+                        </div>
+                        <div class="list__bill list__bill--sum">
+                            <p class="list__bill-header">Сума, грн</p>
+                            <p>
+                                <?php
+                                    $summ = explode('.', number_format($item['summ_total'], 2));
+                                ?>
+
+                                <span class="item-summ">
+                                    <?= $summ[0]; ?><span class="small">,<?= $summ[1]; ?></span>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="list__bill">
+                            <p class="list__bill-header">Статус</p>
+                            <p>
+                                <?= $payment_statuses[$item['status']]; ?>
+                            </p>
+                        </div>
+                    </div>
                     <?php
                 }
             ?>
-        </tbody>
-    </table>
+        </div>
+    </div>
 </div>
 
 <script>

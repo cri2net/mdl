@@ -10,6 +10,14 @@ body {
     margin: 0;
 }
 
+.big-error-message {
+    width: 300px;
+    margin: 40px auto;
+
+    text-align: center;
+    color: #d63447;
+}
+
 @import "header";
 @import "navigation";
 @import "button";
@@ -21,5 +29,6 @@ body {
 @import "bill";
 @import "bill-table";
 @import "detail-bill";
+@import "list";
 @import "footer";
 @import "visually-hidden";

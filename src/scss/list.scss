@@ -1,0 +1,45 @@
+@import "variables";
+
+.list {
+    &__checkbox {
+        display: block;
+        margin: 30px 0;
+
+        text-align: center;
+    }
+
+    &__bill {
+        text-align: center;
+
+        @media (min-width: $billBreakpointWidth) {
+            width: 200px;
+        }
+
+        &--sum {
+            text-align: center;
+
+            @media (min-width: $billBreakpointWidth) {
+                width: 150px;
+
+                text-align: right;
+            }
+        }
+    }
+
+    &__bill-link {
+        text-decoration: none;
+        color: $linkColor;
+
+        font-size: 18px;
+
+        transition: 0.3s color ease-in-out;
+
+        &:hover {
+            color: $linkHoverColor;
+        }
+    }
+
+    &__bill-header {
+        font-size: 19px;
+    }
+}
