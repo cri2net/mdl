@@ -20,10 +20,18 @@ try {
     }
 
     $flat = Flat::addFlat($_POST['flat'], $_POST['tenant']);
-
     if (!$flat) {
         throw new Exception(ERROR_NOT_FIND_FLAT);
     }
+
+    $email = new Email();
+    $email->send(
+        [$__userData['email'], "{$__userData['name']} {$__userData['fathername']}"],
+        Flat::getAddressString($_POST['flat']),
+        '',
+        'flat-add-warning'
+    );
+
 } catch (Exception $e) {
     $_SESSION['objects-auth']['status'] = false;
     $_SESSION['objects-auth']['error']['text'] = $e->getMessage();

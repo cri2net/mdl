@@ -250,7 +250,6 @@ class Email
                         }
                         if ($need_replace) {
                             $message = preg_replace("/".$images[1][$imgindex]."=[\"']".preg_quote($url, '/')."[\"']/Ui", $images[1][$imgindex]."=\"cid:".$cid."\"", $message);
-                            $this->inline_attachments[$cid] = array('url' => $url, 'content' => base64_encode($img), 'filename'=> $filename, 'type' => $this->PHPMailer->_mime_types($this->PHPMailer->mb_pathinfo($url, PATHINFO_EXTENSION)));
                         }
                     }
                 }
