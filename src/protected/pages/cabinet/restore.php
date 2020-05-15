@@ -15,13 +15,9 @@
         <form method="post"
               action="<?= BASE_URL; ?>/post/cabinet/restore/"
               class="form form__login form__login--outer">
-            <?php    
-                if (isset($_SESSION['restore']['status']) && !$_SESSION['restore']['status']) {
-                    ?>
-                    <div class="alert alert-danger"><?= $_SESSION['restore']['error']['text']; ?></div>
-                    <?php
-                    unset($_SESSION['restore']['status']);
-                } elseif (isset($_SESSION['restore']['status'])) {
+            <?php
+
+                if (isset($_SESSION['restore']['status']) && $_SESSION['restore']['status']) {
                     ?>
                     <div class="alert alert-success">Цей крок пройдено</div> <br>
                     <?= $_SESSION['restore']['success_text']; ?>
@@ -31,6 +27,13 @@
                     }
                     unset($_SESSION['restore']['status']);
                 } else {
+
+                    if (isset($_SESSION['restore']['status']) && !$_SESSION['restore']['status']) {
+                        ?>
+                        <div class="alert alert-danger"><?= $_SESSION['restore']['error']['text']; ?></div>
+                        <?php
+                        unset($_SESSION['restore']['status']);
+                    }
 
                     $_email = (isset($_SESSION['restore']['email']))
                         ? $_SESSION['restore']['email']
@@ -51,6 +54,7 @@
                         <label class="form__label">Телефон <br>
                             <input placeholder="+380"
                                    type="text"
+                                   id="reg-phone"
                                    name="phone"
                                    value="<?= $_phone; ?>"
                                    class="form__input">
@@ -75,3 +79,8 @@
         </a>
     </content>
 </div>
+<script>
+    $(function($){
+        $("#reg-phone").mask("+389(99)999-99-99", {autoclear: false}).val('<?= htmlspecialchars($_reg_phone, ENT_QUOTES); ?>');
+    });
+</script>

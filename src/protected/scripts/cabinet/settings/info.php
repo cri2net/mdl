@@ -29,13 +29,6 @@
     </label>
 </div>
 
-<h3 class="form-subtitle form__title">Зміна логіну</h3>
-<div class="input form__group form__group--outer">
-    <label class="form__label">Логін: <br>
-        <input autocomplete="off" type="text" class="form__input form__input--select" name="login" value="<?= htmlspecialchars($__userData['login'], ENT_QUOTES); ?>">
-    </label>
-</div>
-
 <h3 class="form-subtitle form__title">Зміна паролю</h3>
 <div class="input  form__group form__group--outer">
     <label class="form__label">Дійсний пароль <br>

@@ -14,7 +14,7 @@
 
                 if (isset($_SESSION['login']['status']) && !$_SESSION['login']['status']) {
                     ?>
-                    <div class="alert alert-danger" ><?= $_SESSION['login']['error']['text']; ?></div>
+                    <div class="alert alert-warning form__warning form__warning--outer"><?= $_SESSION['login']['error']['text']; ?></div>
                     <?php
                     unset($_SESSION['login']['status']);
                 }

@@ -37,6 +37,10 @@ try {
         throw new Exception(ERROR_EMAIL_ALREADY_EXIST);
     }
 
+    if (strlen($_SESSION['registration']['phone']) != 13) {
+        throw new Exception(ERROR_INCORRECT_PHONE_FORMAT_ERROR_MSG);
+    }
+
     // уникальность телефона
     if (User::getUserIdByPhone($_SESSION['registration']['phone']) != null) {
         $_SESSION['registration']['error']['field'] = 'phone';

@@ -1036,3 +1036,15 @@ ALTER TABLE `mdl_payment`
   DROP COLUMN `acq`,
   CHANGE `processing` `processing` ENUM('psp2') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'psp2' NOT NULL,
   CHANGE `status` `status` ENUM('new','success','error','reverse','timeout','pending') CHARSET utf8 COLLATE utf8_general_ci DEFAULT 'new' NOT NULL;
+
+ALTER TABLE `mdl_users`
+  DROP COLUMN `login`,
+  DROP INDEX `email_2`,
+  DROP INDEX `deleted_2`,
+  DROP INDEX `deleted_3`,
+  DROP INDEX `notify_email`,
+  ADD  INDEX `notify_email` (`notify_email`, `broken_email`),
+  DROP INDEX `deleted`,
+  ADD INDEX (`deleted_processed`),
+  ADD INDEX (`deleted`),
+  ADD INDEX (`mob_phone`);

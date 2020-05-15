@@ -1,12 +1,12 @@
 <?php
     if (empty($payments)) {
         ?>
-        <div class="big-warning-message">Немає платежів для відображення</div>
+        <div class="big-error-message">Немає платежів для відображення</div>
         <?php
         return;
     }
 ?>
-<label class="checkbox green list__checkbox" id="payments_only_success"><input name="service[<?= $key ?>]" type="checkbox" class="check-toggle" checked ><span>Тільки успішні платежі</span></label>
+<label class="checkbox green list__checkbox" id="payments_only_success"><input type="checkbox" class="check-toggle" checked ><span>Тільки успішні платежі</span></label>
 
 <div class="real-full-width-block table-responsive border-top">
     <div class="full-width-table datailbill-table">
@@ -18,7 +18,7 @@
                     $counter++;
                     $time = ($item['go_to_payment_time']) ? $item['go_to_payment_time'] : $item['timestamp'];
                     ?>
-                    <div class="detail-bill detail-bill--outer item-payment-status item-payment-status-<?= $item['status']; ?>">
+                    <div style="<?= ($item['status'] == 'success') ? '' : 'display: none;'; ?>" class="detail-bill detail-bill--outer item-payment-status item-payment-status-<?= $item['status']; ?>">
                         <div class="list__bill">
                             <p class="list__bill-header">Номер</p>
                             <p class="first border-bottom">

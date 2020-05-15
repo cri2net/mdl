@@ -33,36 +33,6 @@ function getNumericPostfix($n, $form1, $form2, $form5)
     return $form5;
 }
 
-function arrayToXml($array)
-{
-    $xml = '';
-    foreach ($array as $key=>$value) {
-        if (is_array($value)) {
-            $xml .= "<" . $key . ">\n";
-            $xml .= arrayToXml($value);
-            $xml .= "</" . $key . ">\n";
-        } else {
-            $value = str_replace("&", '\&', htmlspecialchars($value));
-            $xml .= "<" . $key . ">";
-            $xml .= $value . "";
-            $xml .= "</" . $key . ">\n";
-        }
-    }
-    
-    return $xml;
- }
-
-function toXML($array, $success = 'true')
-{
-    $xml = '';
-    $xml .= '<?xml version="1.0" encoding="UTF-8"?>'."\n";
-    $xml .= '<records success="'.$success.'">'."\n" ;
-    $xml .= arrayToXml($array);
-    $xml .= '</records>'."\n";
-     
-    return $xml;
-}
-
 function translitIt($str)
 {
     $tr = array(

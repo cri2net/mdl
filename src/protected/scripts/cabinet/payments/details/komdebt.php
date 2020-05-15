@@ -66,7 +66,7 @@
         </tbody>
         <thead>
             <tr>
-                <th class="bill-details__head" colspan="5">Склад платежу</th>
+                <th class="bill-details__head" colspan="5">Послуги</th>
             </tr>
         </thead>
         <tbody class="bill-details__body">

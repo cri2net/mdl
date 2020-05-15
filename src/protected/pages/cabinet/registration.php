@@ -94,3 +94,8 @@
         </form>
     </content>
 </section>
+<script>
+    $(function($){
+        $("#reg-phone").mask("+389(99)999-99-99", {autoclear: false}).val('<?= htmlspecialchars($_reg_phone, ENT_QUOTES); ?>');
+    });
+</script>

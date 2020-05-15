@@ -28,10 +28,7 @@ class Authorization
         if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
             return 'email';
         }
-        if (strpos($login, '+') === 0) {
-            return 'mob_phone';
-        }
-        return 'login';
+        return 'mob_phone';
     }
 
     public static function login($login, $password, $is_hash = false, $remember = false)

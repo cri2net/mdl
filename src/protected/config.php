@@ -33,9 +33,6 @@ require_once(PROTECTED_DIR . "/vendor/autoload.php");
 if (!isset($_SERVER['REQUEST_URI'])) {
     $_SERVER['REQUEST_URI'] = '';
 }
-if (isset($_GET['serviceId']) && !empty($_GET['serviceId'])) {
-    $_SESSION['service_id'] = $_GET['serviceId'];
-}
 
 switch (USER_REAL_IP) {
     case '127.0.0.1':

@@ -7,9 +7,6 @@
             $years[] = $i;
         }
 
-        $_need_firm = !empty($_GET['service']) ? intval($_GET['service']) : 0;
-        $filter = ($_need_firm > 0);
-
         if (isset($_GET['month'])) {
             foreach ($MONTHS_NAME as $key => $value) {
                 if (strtolower($value['en']) == strtolower($_GET['month'])) {
@@ -44,8 +41,7 @@
             $_need_year = date('Y', strtotime('first day of previous month', $real_timestamp));
         }
         
-        $debtData = $debt->getUniqueFirm($plat_code, $_need_firm, $dateBegin, $filter);
-
+        $debtData = $debt->getUniqueFirm($plat_code, false, $dateBegin);
         if (empty($debtData['data'])) {
             throw new Exception(ERROR_EMPTY_BILL);
         }
@@ -61,7 +57,6 @@
         $error = $e->getMessage();
     }
 ?>
-
 <div class="cabinet-settings object-item object-item-bill">
     <form class="real-full-width-block" id="object-item-detailbill-form" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/detailbill/">
         <div class="row table-caption">
@@ -80,21 +75,6 @@
                         }
                     ?>
                 </select>
-
-                <div class="form__input--history form__input--history--outer">
-                    <div class="icon services form__input--history"></div>
-                    <select class="dotted-select service-select form__input--history form__input form__input--capitalize form__input--inner-history" name="service">
-                        <option value="">Пiдприємство</option>
-                        <?php
-                            if (!empty($firmData)) {
-                                foreach ($firmData as $key => $firm) {
-                                    ?><option value="<?= $key; ?>" <?= ($_need_firm == $key) ? 'selected' : ''; ?>><?= $firm['name']; ?></option> <?php
-                                }
-                            }
-                        ?>
-                    </select>
-                </div>
-                                
                 <a onclick="$('#object-item-detailbill-form').submit();" class="btn btn-xs button button__form button__form--register"><span class="fa  fa-calendar"></span> Показати</a>
             </div>
         </div>

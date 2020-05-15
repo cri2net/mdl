@@ -25,6 +25,10 @@ try {
         }
     }
 
+    if (strlen($_POST['mob_phone']) != 13) {
+        throw new Exception(ERROR_INCORRECT_PHONE_FORMAT_ERROR_MSG);
+    }
+
     // корректность email
     if (!filter_var($update['email'], FILTER_VALIDATE_EMAIL)) {
         throw new Exception(ERROR_INCORRECT_EMAIL_ERROR_MSG);
@@ -63,23 +67,7 @@ try {
 
     $password = stripslashes($_POST['password']);
     $new_password = stripslashes($_POST['new_password']);
-    $login = strtolower(stripslashes($_POST['login']));
 
-    if (strcasecmp($login, $__userData['login']) !== 0) {
-        if (strlen($login) < 3) {
-            throw new Exception(ERROR_LOGIN_TOO_SHORT);
-        } elseif (!preg_match("/^[a-z]{1}([a-z0-9._-]+)$/i", $login)) {
-            throw new Exception(ERROR_LOGIN_NOT_VALID_FORMAT);
-        } elseif (User::getUserByLogin($login) !== null) {
-            throw new Exception(ERROR_LOGIN_ALREADY_EXIST);
-        }
-
-        PDO_DB::update(['login' => $login], User::TABLE, $__userData['id']);
-        if ($_SESSION['auth_data']['column'] == 'login') {
-            $_SESSION['auth_data']['login'] = $login;
-        }
-    }
-    
     if (strlen($new_password) > 0) {
         
         // длина пароля
@@ -106,8 +94,6 @@ try {
         // Возможно, для этого надо отдельную функцию писать
         Authorization::login($__userData['email'], $new_password);
     }
-
-
 
     $_SESSION['cabinet-settings']['status'] = true;
     $_SESSION['cabinet-settings']['text'] = 'Зміни збережено';

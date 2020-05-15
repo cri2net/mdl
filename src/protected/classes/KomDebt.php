@@ -455,7 +455,7 @@ class KomDebt
         return  $data['firm'];
     }
     
-    public function getUniqueFirm($obj_id, $firmName = null, $dateBegin = null, $is_filter = false)
+    public function getUniqueFirm($obj_id, $firmName = null, $dateBegin = null)
     {
         $data = [];
         $xmlString = $this->getXML($this->debt_URL, $obj_id, $dateBegin);

@@ -10,12 +10,20 @@ body {
     margin: 0;
 }
 
+.big-success-message {
+    width: 300px;
+    margin: 40px auto;
+
+    text-align: center;
+    color: #34a547;
+}
+
 .big-error-message {
     width: 300px;
     margin: 40px auto;
 
     text-align: center;
-    color: #d63447;
+    color: #dd2c00;
 }
 
 @import "header";

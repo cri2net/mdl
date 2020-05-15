@@ -98,12 +98,11 @@
         </ul>
     </section>
 </footer>
-        <script>
-            var MAX_AMOUNT = '<?= MAX_AMOUNT; ?>';
-            var BASE_URL = '<?= BASE_URL; ?>';
-        </script>
-        <script src="<?= BASE_URL; ?>/assets/js/scripts.js"></script>
-        <script src="<?= BASE_URL; ?>/assets/js/main.js"></script>
-    </div>
+<script>
+    var MAX_AMOUNT = '<?= MAX_AMOUNT; ?>';
+    var BASE_URL = '<?= BASE_URL; ?>';
+</script>
+<script src="<?= BASE_URL; ?>/assets/js/scripts.js"></script>
+<script src="<?= BASE_URL; ?>/assets/js/main.js"></script>
 </body>
 </html>

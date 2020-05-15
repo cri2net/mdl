@@ -84,11 +84,6 @@ class User
         return $user;
     }
 
-    public static function getUserByLogin($login)
-    {
-        return self::getUserByColumn('login', $login);
-    }
-
     public static function getUserByPhone($phone)
     {
         return self::getUserByColumn('mob_phone', $phone);
@@ -107,7 +102,6 @@ class User
             'email'        => $data['email'],
             'password'     => Authorization::generate_db_password($data['password'], $password_key),
             'password_key' => $password_key,
-            'login'        => '',
             'lastname'     => $data['lastname'],
             'name'         => $data['name'],
             'fathername'   => $data['fathername'],
@@ -129,7 +123,6 @@ class User
             'email'        => $email,
             'password'     => Authorization::generate_db_password($password, $password_key),
             'password_key' => $password_key,
-            'login'        => '',
             'lastname'     => $lastname,
             'name'         => $name,
             'fathername'   => $fathername . '',

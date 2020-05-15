@@ -10,10 +10,8 @@ try {
 
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $user = User::getUserByEmail($email);
-    } elseif (strlen($phone) > 7) {
+    } elseif (strlen($phone) > 10) {
         $user = User::getUserByPhone($phone);
-    } elseif (strlen($email) >= 3) {
-        $user = User::getUserByLogin($email);
     } else {
         throw new Exception(ERROR_RESTORE_FIELDS_EMPTY);
     }
