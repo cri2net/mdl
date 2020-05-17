@@ -35,8 +35,8 @@
             <?php
                 foreach ($navs as $url => $title) {
                     ?>
-                    <li class="navigation__item <?= strpos($route_path, $url) > 0 ? 'class="navigation__item--active"' : '' ?>">
-                        <a href="<?= BASE_URL . $url; ?>" class="navigation__link <?= strpos($route_path, $url) > 0 ? 'class="navigation__item--active"' : '' ?>">
+                    <li class="navigation__item <?= strpos($route_path, $url) !== false ? 'navigation__item--active' : '' ?>">
+                        <a href="<?= BASE_URL . $url; ?>" class="navigation__link <?= strpos($route_path, $url) !== false ? 'navigation__item--active' : '' ?>">
                             <?= $title; ?>
                         </a>
                     </li>
@@ -53,8 +53,8 @@
             <?php
                 foreach ($navs as $url => $title) {
                     ?>
-                    <li class="navigation__mobile-item">
-                        <a href="<?= BASE_URL . $url; ?>" class="navigation__link navigation__mobile-link">
+                    <li class="navigation__mobile-item <?= strpos($route_path, $url) !== false ? 'navigation__item--active' : '' ?>">
+                        <a href="<?= BASE_URL . $url; ?>" class="navigation__link navigation__mobile-link <?= strpos($route_path, $url) !== false ? 'navigation__item--active' : '' ?>">
                             <?= $title; ?>
                         </a>
                     </li>
