@@ -73,4 +73,8 @@ label:hover:before {
 .checkbox__container {
     width: 90%;
     margin: 0 auto;
+
+    &--list {
+        width: 15%;
+    }
 }
