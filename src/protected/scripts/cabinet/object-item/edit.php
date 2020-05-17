@@ -9,7 +9,7 @@
 
     <h3 class="form__title">Видалення об’єкта</h3>
     <div class="check-box-line form__group form__group--outer">
-        <input id="delete_object" name="delete_object" value="1" onclick="$('#delete_object').click();" type="checkbox">
+        <input id="delete_object" name="delete_object" value="1" type="checkbox">
         <label for="delete_object">
             Видалити об’єкт з профілю
         </label>
