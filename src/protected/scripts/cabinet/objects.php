@@ -142,7 +142,7 @@
                         ?>
                         <div class="col-md-4 col-sm-6 card__button">
                             <span class="align-center">
-                                <a class="btn btn-green-darker add-new add-new-object button button__form button__form--register" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
+                                <a class="btn btn-green-darker add-new add-new-object button button__objects button__objects--outer button__form button__form--card" onclick="$('#add-object-form').slideToggle(300);"><span class="fa fa-plus"></span>Додати об’єкт</a>
                             </span>
                             <div id="add-object-form" class="add-object-form" style="display:none;">
                                 <form class="form-block form form__login form__login--outer" method="post" action="<?= BASE_URL; ?>/post/cabinet/objects/">

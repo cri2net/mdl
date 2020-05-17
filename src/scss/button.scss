@@ -100,4 +100,12 @@
             width: 100%;
         }
     }
+
+    &__objects {
+        width: 100%;
+
+        &--outer {
+            margin-bottom: 30px;
+        }
+    }
 }
