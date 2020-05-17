@@ -51,7 +51,7 @@
             ?>
         </form>
         <a href="<?= BASE_URL; ?>/cabinet/registration/"
-           class="button __fobuttonrm button__form--register button__form--register--outer">
+           class="button button__form button__form--register button__form--register--outer">
             Зареєструватися у системі
         </a>
     </content>
