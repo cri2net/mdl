@@ -38,7 +38,7 @@ class Http
             }
             $content = $data;
         } else {
-            $content = gzencode(trim(preg_replace('/\s+/', ' ', $data)), 9);
+            $content = gzencode($data, 9);
         }
 
         if (!$echo) {

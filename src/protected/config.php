@@ -7,7 +7,6 @@ if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
     $__INT_IP = (isset($_SERVER["HTTP_X_REAL_IP"])) ? $_SERVER["HTTP_X_REAL_IP"] : $_SERVER["HTTP_X_FORWARDED_FOR"];
 }
 define('USER_REAL_IP', $__INT_IP);
-define('HTTP_USER_AGENT', (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : ((isset($GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'])) ? $GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'] : ''));
 
 session_name('mdl_site_session');
 session_start();
@@ -29,6 +28,9 @@ require_once(PROTECTED_DIR . "/conf/errors.php");
 require_once(PROTECTED_DIR . "/conf/lang.php");
 require_once(PROTECTED_DIR . "/lib/func.lib.php");
 require_once(PROTECTED_DIR . "/vendor/autoload.php");
+
+$me = UserAgent::detect();
+define('HTTP_USER_AGENT', $me->user_agent);
 
 if (!isset($_SERVER['REQUEST_URI'])) {
     $_SERVER['REQUEST_URI'] = '';

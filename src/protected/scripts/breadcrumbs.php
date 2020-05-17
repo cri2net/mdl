@@ -7,7 +7,7 @@
         case 'page/cabinet':
             $breadcrumbs[] = ['title' => 'Особистий кабінет', 'link' => '/cabinet/'];
 
-            switch ($__route_result['values']['subpage']) {
+            switch (@$__route_result['values']['subpage']) {
 
                 case 'login':
                     $breadcrumbs[] = ['title' => 'Вхід'];
