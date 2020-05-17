@@ -44,8 +44,8 @@
 
 <h3 class="form-subtitle delete-profile form__title">Видалення профілю</h3>
 <div class="check-box-line form__group form__group--outer">
-    <span class="niceCheck" id="confirm_delete_profile"><input class="" onclick="$('#confirm_delete_profile').click();" type="checkbox"></span>
-    <label onclick="$('#confirm_delete_profile').click();">
+    <input id="confirm_delete_profile" type="checkbox">
+    <label for="confirm_delete_profile">
         Я розумію наслідки видалення профілю
     </label>
 </div>
@@ -56,12 +56,6 @@
 </div>
 
 <script>
-    $(document).ready(function(){
-        $(".niceCheck").click(function() {
-            changeCheck($(this), 'check-group');
-        });
-    });
-
     $(function($){
         $("#reg-phone").mask("+389(99)999-99-99", {autoclear: false}).val('<?= htmlspecialchars($__userData['mob_phone'], ENT_QUOTES); ?>');
     });

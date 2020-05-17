@@ -72,9 +72,6 @@
 
 <script>
 $(document).ready(function(){
-    $(".niceCheck").click(function() {
-        changeCheck($(this), 'check-group');
-    });
     $("#payments_only_success input").change(function() {
         var checked = ($("#payments_only_success input").is(':checked'));
         if (checked) {

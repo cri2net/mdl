@@ -306,54 +306,6 @@ function registration_ckeck_empty_fileld(element)
     }
 };
 
-function changeCheck(element, group_class)
-{
-    var element = element,
-        input = element.find("input").eq(0);
-    
-    if ($(element).hasClass('radio')) {
-       
-        $(element).removeClass("checked");
-        input.attr("checked", false);
-
-        var radio_name = $(input).attr('name');
-        var elems = $('input[name=' + radio_name +']:checked');
-        if (elems.length) {
-            $(elems[0]).attr("checked", false).parent().removeClass('checked');
-        }
-
-        $(element).addClass("checked");
-        input.attr("checked", true);
-
-        $(input).change();
-
-        return;
-    }
-
-    if (!input.attr("checked")) {
-        $(element).addClass("checked");
-        $(input).attr("checked", true).change();
-    } else {
-        $(element).removeClass("checked");
-        $(input).attr("checked", false).change();
-    }
-
-    if ($(element).hasClass(group_class)) {
-        var elems = $('.'+ group_class +'.checked');
-        if (elems.length) {
-            $('.'+ group_class +'-rule').addClass('checked').find("input").attr("checked", true);
-        } else {
-            $('.'+ group_class +'-rule').removeClass('checked').find("input").attr("checked", false);
-        }
-    } else if ($(element).hasClass(group_class +'-rule')) {
-        if ($(element).hasClass('checked')) {
-            $('.' + group_class).addClass('checked').find("input").attr("checked", true).change();
-        } else {
-            $('.' + group_class).removeClass('checked').find("input").attr("checked", false).change();
-        }
-    }
-};
-
 function check_delete_profile()
 {
     return ($('#confirm_delete_profile input').is(':checked'));

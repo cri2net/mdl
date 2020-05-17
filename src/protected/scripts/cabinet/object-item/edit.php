@@ -9,8 +9,8 @@
 
     <h3 class="form__title">Видалення об’єкта</h3>
     <div class="check-box-line form__group form__group--outer">
-        <span class="niceCheck" id="delete_object"><input name="delete_object" value="1" class="" onclick="$('#delete_object').click();" type="checkbox"></span>
-        <label onclick="$('#delete_object').click();">
+        <input id="delete_object" name="delete_object" value="1" onclick="$('#delete_object').click();" type="checkbox">
+        <label for="delete_object">
             Видалити об’єкт з профілю
         </label>
     </div>
@@ -20,10 +20,3 @@
         <button class="btn btn-blue btn-md button button__form button__form--registration">Зберегти</button>
     </div>
 </form>
-<script>
-    $(document).ready(function(){
-        $(".niceCheck").click(function() {
-            changeCheck($(this), 'check-group');
-        });
-    });
-</script>
