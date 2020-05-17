@@ -63,3 +63,14 @@
 label:hover:before {
     border: 2px solid #4778d9;
 }
+
+.checkbox {
+    &__label {
+        height: 40px;
+    }
+}
+
+.checkbox__container {
+    width: 90%;
+    margin: 0 auto;
+}

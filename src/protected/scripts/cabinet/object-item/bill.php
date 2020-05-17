@@ -67,15 +67,12 @@
                 </strong></span>
             </div>
         </div>
+
         <div class="table-responsive border-top">
             <div class="full-width-table datailbill-table no-border bill-table" id="data-table">
-                <div class="bill-table">
-                    <div class="head-gray bill-table__head bill-table__row">
-                        <div class="align-center th-checkbox">
-                            <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox">
-                            <label for="check_all_services-elem" class="checkbox no-label gray"></label>
-                        </div>
-                    </div>
+                <div class="align-center th-checkbox checkbox__container">
+                    <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox">
+                    <label for="check_all_services-elem" class="checkbox no-label gray">Обрати всі</label>
                 </div>
                 <div class="bill-table bill-table--outer">
                     <?php
@@ -84,7 +81,7 @@
                             ?>
                             <div class="item-row bill-table__row bill-table__row--outer" data-number="<?= $key; ?>">
                                 <input checked="checked" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" name="items[]" type="checkbox" class="bill-checkbox">
-                                <label for="bill_checkbox_<?= $key; ?>" class="align-center">
+                                <label for="bill_checkbox_<?= $key; ?>" class="align-center checkbox__label">
                                 </label>
                                 <div class="bill-table__cell">
                                     <div class="bill-table__cell-head">Назва послуги /<br>одержувач коштів</div>
