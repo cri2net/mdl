@@ -60,7 +60,7 @@
 <div class="cabinet-settings object-item object-item-bill">
     <form class="real-full-width-block" id="object-item-detailbill-form" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/detailbill/">
         <div class="row table-caption">
-            <div class="calendar col-lg-12 form__input-container">
+            <div class="calendar col-lg-12 form__input-container form__input-container--outer form__input-container--bill">
                 <select name="month" class="form__input--history form__input form__input--capitalize form__input--history--outer">
                     <?php
                         foreach ($MONTHS_NAME as $key => $month) {
@@ -75,7 +75,7 @@
                         }
                     ?>
                 </select>
-                <a onclick="$('#object-item-detailbill-form').submit();" class="btn btn-xs button button__form button__form--register"><span class="fa  fa-calendar"></span> Показати</a>
+                <a onclick="$('#object-item-detailbill-form').submit();" class="btn btn-xs button button__form button__form--register button__form--register--outer-none"><span class="fa  fa-calendar"></span> Показати</a>
             </div>
         </div>
     </form>

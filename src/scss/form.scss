@@ -59,7 +59,7 @@
             margin: 0 auto;
 
             @media (min-width: $smallWidth) {
-                width: 50%;
+                width: 20%;
             }
 
             &--outer {
@@ -78,6 +78,19 @@
         width: 90%;
         display: flex;
         flex-direction: column;
+
+        &--bill {
+            @media (min-width: $mediumWidth) {
+                width: 50%;
+                margin: 0 auto;
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        &--outer {
+            margin: 30px auto;
+        }
     }
 
     &__textarea {
