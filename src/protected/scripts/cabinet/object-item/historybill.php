@@ -46,25 +46,25 @@
         $error = $e->getMessage();
     }
 ?>
-<div class="cabinet-settings object-item object-item-bill form__input--history form__input--history--outer">
+<div class="cabinet-settings object-item object-item-bill form__input--history--outer">
     <form id="object-item-historybill-form" class="real-full-width-block" action="<?= BASE_URL; ?>/cabinet/objects/<?= $object['id']; ?>/historybill/">
         <div class="row table-caption">
-            <div class="calendar col-lg-12">
-                <select name="month" class="form__input--history form__input form__input--capitalize form__input--history--outer form__input--inner-history">
+            <div class="calendar col-lg-12 form__input-container form__input-container--outer form__input-container--bill">
+                <select name="month" class="form__input--history form__input form__input--capitalize form__input--history--outer">
                     <?php
                         foreach ($MONTHS_NAME as $key => $month) {
                             ?><option value="<?= strtolower($month['en']); ?>" <?= ($_need_month == $key) ? 'selected' : ''; ?>><?= $month['ua']['small']; ?></option> <?php
                         }
                     ?>
                 </select>
-                <select class="dotted-select form__input--history form__input form__input--capitalize form__input--history--outer form__input--inner-history" name="year">
+                <select class="dotted-select form__input--history form__input form__input--capitalize form__input--history--outer" name="year">
                     <?php
                         foreach ($years as $year) {
                             ?><option <?= ($_need_year == $year) ? 'selected' : ''; ?>><?= $year; ?></option> <?php
                         }
                     ?>
                 </select>
-                <a onclick="$('#object-item-historybill-form').submit();" class="btn btn-xs button button__form button__form--register"><span class="fa  fa-calendar"></span> Показати</a>
+                <a onclick="$('#object-item-historybill-form').submit();" class="btn btn-xs button button__form button__form--register button__form--register--outer-none"><span class="fa  fa-calendar"></span> Показати</a>
             </div>
         </div>
     </form>

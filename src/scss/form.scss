@@ -93,6 +93,13 @@
         }
     }
 
+    &__input-up-container {
+        @media (min-width: $mediumWidth) {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+
     &__textarea {
         font-family: 'Blogger Sans', sans-serif;
         font-size: 14px;

@@ -72,9 +72,8 @@
                 <div class="bill-table">
                     <div class="head-gray bill-table__head bill-table__row">
                         <div class="align-center th-checkbox">
-                            <label class="checkbox no-label gray">
-                                <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox">
-                            </label>
+                            <input onchange="checkAllServices($('#check_all_services-elem'));" checked="checked" id="check_all_services-elem" type="checkbox">
+                            <label for="check_all_services-elem" class="checkbox no-label gray"></label>
                         </div>
                     </div>
                 </div>
@@ -84,9 +83,9 @@
                         foreach ($debtData['list'] as $key => $item) {
                             ?>
                             <div class="item-row bill-table__row bill-table__row--outer" data-number="<?= $key; ?>">
-                                <div class="align-center">
-                                    <input checked="checked" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" name="items[]" type="checkbox" class="bill-checkbox">
-                                </div>
+                                <input checked="checked" id="bill_checkbox_<?= $key; ?>" value="inp_<?= $key; ?>" onchange="selectService('bill_checkbox_<?= $key; ?>', 'inp_<?= $key; ?>');" name="items[]" type="checkbox" class="bill-checkbox">
+                                <label for="bill_checkbox_<?= $key; ?>" class="align-center">
+                                </label>
                                 <div class="bill-table__cell">
                                     <div class="bill-table__cell-head">Назва послуги /<br>одержувач коштів</div>
                                     <label class="bill-table__cell-body header">
