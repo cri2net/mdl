@@ -64,7 +64,7 @@ class Psp2
         $data = [
             'site_id'      => $site_id,
             'order_id'     => $payment_id,
-            'amount'       => $payment['summ_plat'] * 100,
+            'amount'       => round($payment['summ_plat'] * 100),
             'payment_type' => $type2id[$payment_type],
             'backref'      => BASE_URL . '/cabinet/payments/details/'. $payment['id'] .'/',
             'notify'       => BASE_URL . '/payments-notify/psp2/',
