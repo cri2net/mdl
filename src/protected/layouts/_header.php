@@ -49,7 +49,7 @@
 
                 <ul class="header__list header__socials">
                     <li class="header__socials-item">
-                        <a href="#" class="button button__socials">
+                        <a href="https://www.facebook.com/mdl.ua.official/" class="button button__socials">
                             <span class="visually-hidden">Facebook</span>
                             <img src="<?= BASE_URL; ?>/assets/pic/facebook-f-brands.svg"
                                  alt="Facebook"
@@ -57,7 +57,7 @@
                                  height="18">
                         </a>
                     </li>
-                    <li class="header__socials-item">
+                    <!-- <li class="header__socials-item">
                         <a href="#" class="button button__socials">
                             <span class="visually-hidden">Youtube</span>
                             <img src="<?= BASE_URL; ?>/assets/pic/youtube-brands.svg"
@@ -65,9 +65,9 @@
                                  width="21"
                                  height="18">
                         </a>
-                    </li>
+                    </li> -->
                     <li class="header__socials-item">
-                        <a href="#" class="button button__socials">
+                        <a href="https://www.instagram.com/mdlua_official/" class="button button__socials">
                             <span class="visually-hidden">Instagram</span>
                             <img src="<?= BASE_URL; ?>/assets/pic/instagram-brands.svg"
                                  alt="Instagram"

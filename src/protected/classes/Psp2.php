@@ -72,10 +72,9 @@ class Psp2
 
         if ($payment_type == 'komdebt') {
             $data['payment_data'] = ShoppingCart::getPaymentXml($payment_id);
-        } else {
-            foreach ($ext_fields as $key => $value) {
-                $data[$key] = $value;
-            }
+        }
+        foreach ($ext_fields as $key => $value) {
+            $data[$key] = $value;
         }
 
         $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

@@ -10,6 +10,7 @@ define('USER_REAL_IP', $__INT_IP);
 
 session_name('mdl_site_session');
 session_start();
+@ini_set('display_errors', 0);
 
 date_default_timezone_set("Europe/Kiev");
 define('ROOT', dirname(preg_replace('/\\\\/', '/', __DIR__ . '../')));

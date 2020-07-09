@@ -6,7 +6,7 @@ function receiveMessage(event)
 {
     if ((event.origin === 'https://fc.gerc.ua') || (event.origin === 'https://fc.gerc.ua:8443')) {
         if (event.data.type == "resize") {
-            document.getElementById('psp_iframe').style.height = String(event.data.height) + 'px';
+            document.getElementById('psp_iframe').style.height = String(event.data.height + 100) + 'px';
         }
     }
 }

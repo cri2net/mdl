@@ -14,7 +14,13 @@
         $psp_id = $_SESSION['psp_id']['p' . $payment_id];
     } else {
 
-        $psp_id = Psp2::sendPaymentToGate($payment_id);
+        $userphone = preg_replace('/[^0-9]/', '', $__userData['mob_phone']);
+        $ext_fields = [
+            'user_id'  => (int)$__userData['id'],
+            'phone_no' => $userphone,
+        ];
+
+        $psp_id = Psp2::sendPaymentToGate($payment_id, 'komdebt', $ext_fields);
         if (!empty($psp_id)) {
             $_SESSION['psp_id']['p' . $payment_id] = $psp_id;
         }
@@ -43,7 +49,7 @@
                 <?php
                     if (!empty($psp_id)) {
                         ?>
-                        <iframe id="psp_iframe" style="width: 100%; height:500px;" src="https://fc.gerc.ua:8443/payframe/index.php?common=show&site_id=<?= Psp2::SITE_ID; ?>&oper_id=<?= $psp_id; ?>" frameborder="0"></iframe>
+                        <iframe id="psp_iframe" style="width: 100%; height:500px; margin-bottom: 40px;" src="https://fc.gerc.ua:8443/payframe/index.php?common=show&site_id=<?= Psp2::SITE_ID; ?>&oper_id=<?= $psp_id; ?>" frameborder="0"></iframe>
                         <br><br>
                         <?php
                     }
