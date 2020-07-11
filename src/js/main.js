@@ -363,7 +363,7 @@ function add_new_counters(key, abcounter, tarif)
     '    </div>' +
     '    <div class="bill-table__cell" style="height: 90px;">' +
     '        <div class="bill-table__cell-body border-bottom">' +
-    '            <button style="padding-left: 20px; padding-right: 20px;" class="btn button button__form button__form--bill-table" data-id="' + abcounter + '" class="delete counter-delete" onclick="$(\'#item-counter-' + key + '-' + new_counter_number + '\').remove(); new_counter_no.k' + key + '--; return false;">&times; видалити</button>' +
+    '            <button style="padding-left: 20px; padding-right: 20px; min-width: 185px;" class="btn button button__form button__form--bill-table" data-id="' + abcounter + '" class="delete counter-delete" onclick="$(\'#item-counter-' + key + '-' + new_counter_number + '\').remove(); new_counter_no.k' + key + '--; return false;">&times; видалити</button>' +
     '        </div>' +
     '    </div>' +
     '    <input type="hidden" name="inp_' + key + '_count_number[]" value="' + new_counter_number + '">' +

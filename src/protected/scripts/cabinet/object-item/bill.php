@@ -209,7 +209,7 @@
 
                                                 <div class="bill-table__cell" style="height: 90px;">
                                                     <div>
-                                                        <button style="padding-left: 20px; padding-right: 20px;" class="btn button button__form button__form--bill-table" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>); return false;"><span class="fa fa-plus"></span> додати лічильник</button>
+                                                        <button style="padding-left: 20px; padding-right: 20px; min-width: 185px;" class="btn button button__form button__form--bill-table" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>); return false;"><span class="fa fa-plus"></span> додати лічильник</button>
                                                         <script> new_counter_no.k<?= $key; ?> = <?= count($item['counterData']['counters']); ?>; </script>
                                                     </div>
                                                 </div>
