@@ -179,31 +179,48 @@
                             <?php
                                 if ($item['counter'] != 0) {
 
-                                    foreach ($item['counterData']['counters'] as $counter) {
-                                        ?>
-                                        <div class="item-row bill-table__row bill-table__row--outer" style=" margin-top: -30px;" data-number="<?= $key; ?>">
-                                            <div class="bill-table__cell" style="height: 90px;">
-                                                <div class="bill-table__cell-head">№ лічильника</div>
-                                                <label class="bill-table__cell-body header">
-                                                    <input class="form-txt-input bill-table__input" type="text" id="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
-                                                </label>
-                                            </div>
-                                            <div class="bill-table__cell" style="height: 90px;">
-                                                <div class="bill-table__cell-head">минулі</div>
-                                                <div class="bill-table__cell-body border-bottom">
-                                                    <input class="form-txt-input bill-table__input" name="inp_<?= $key; ?>_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');" id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" value="<?= $counter['OLD_VALUE']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="bill-table__cell" style="height: 90px;">
-                                                <div class="bill-table__cell-head">поточні</div>
-                                                <div class="bill-table__cell-body border-bottom">
-                                                    <input class="inp_<?= $key; ?>_new_count form-txt-input bill-table__input" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
-                                        </div>
+                                    ?>
+                                    <div class="counter-container-<?= $key; ?>">
                                         <?php
-                                    }
+
+                                        foreach ($item['counterData']['counters'] as $counter) {
+
+                                            $counter['ABCOUNTER'] = trim($counter['ABCOUNTER']);
+                                            ?>
+                                            <div class="item-row bill-table__row bill-table__row--outer" style=" margin-top: -30px;">
+                                                <div class="bill-table__cell" style="height: 90px;">
+                                                    <div class="bill-table__cell-head">№ лічильника</div>
+                                                    <label class="bill-table__cell-body header">
+                                                        <input class="form-txt-input bill-table__input" type="text" id="num_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_abcounter[]" value="<?= $counter['ABCOUNTER']; ?>">
+                                                    </label>
+                                                </div>
+                                                <div class="bill-table__cell" style="height: 90px;">
+                                                    <div class="bill-table__cell-head">минулі</div>
+                                                    <div class="bill-table__cell-body border-bottom">
+                                                        <input class="form-txt-input bill-table__input" name="inp_<?= $key; ?>_old_count[]" type="text" maxlength="10" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');" id="old_inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" value="<?= $counter['OLD_VALUE']; ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="bill-table__cell" style="height: 90px;">
+                                                    <div class="bill-table__cell-head">поточні</div>
+                                                    <div class="bill-table__cell-body border-bottom">
+                                                        <input class="inp_<?= $key; ?>_new_count form-txt-input bill-table__input" type="text" id="inp_<?= $key; ?>_new_count_<?= $counter['COUNTER_NO']; ?>" name="inp_<?= $key; ?>_new_count[]" maxlength="10" value="" onkeyup="checkForDouble(this);" onchange="recount_counter_summ('<?= $key; ?>', <?= $item['counterData']['real_tarif']; ?>, '<?= $counter['COUNTER_NO']; ?>');">
+                                                    </div>
+                                                </div>
+
+                                                <div class="bill-table__cell" style="height: 90px;">
+                                                    <div>
+                                                        <button style="padding-left: 20px; padding-right: 20px;" class="btn button button__form button__form--bill-table" onclick="add_new_counters('<?= $key; ?>', '<?= $counter['ABCOUNTER']; ?>', <?= $item['counterData']['real_tarif']; ?>); return false;"><span class="fa fa-plus"></span> додати лічильник</button>
+                                                        <script> new_counter_no.k<?= $key; ?> = <?= count($item['counterData']['counters']); ?>; </script>
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden" name="inp_<?= $key; ?>_count_number[]" value="<?= $counter['COUNTER_NO']; ?>">
+                                            </div>
+                                            <?php
+                                        }
+                                    ?>
+                                    </div>
+                                    <?php
                                 }
                             ?>
                             <?php
