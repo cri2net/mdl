@@ -35,7 +35,7 @@ class Street
         $limit = ($limit > 0) ? "LIMIT $limit" : '';
         $table = self::TABLE;
         $city_id = $pdo->quote($city_id);
-        $q = $pdo->quote(trim($q) . '%');
+        $q = $pdo->quote('%' . trim($q) . '%');
         
         $res = $pdo->query("SELECT * FROM $table WHERE city_id=$city_id AND name_ru LIKE $q ORDER BY name_ru ASC $limit");
         return $res->fetchAll();

@@ -22,7 +22,7 @@
                         $time = ($payment['go_to_payment_time']) ? $payment['go_to_payment_time'] : $payment['timestamp'];
                     ?>
                     <span class="date-day"><?= getUkraineDate('j m Y', $time); ?></span>
-                    <span class="date-time"><?= getUkraineDate('H:i:s', $time); ?></span>
+                    <span class="date-time"><?= getUkraineDate(' H:i:s', $time); ?></span>
                 </td>
             </tr>
             <tr class="bill-details__row">

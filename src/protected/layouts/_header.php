@@ -7,7 +7,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/png" sizes="16x16" href="<?= BASE_URL ?>/assets/images/favicon.png" >
+<link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_URL ?>/assets/pic/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="<?= BASE_URL ?>/assets/pic/favicon-192x192.png">
+<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="<?= BASE_URL ?>/assets/pic/favicon-180x180.png">
+
 <link rel="stylesheet" href="<?= BASE_URL; ?>/assets/css/main.css">
 <!--[if lt IE 9]><style> input.txt, textarea.txt, select.txt { border:1px solid #444 !important; }</style><![endif]-->
 <!--[if lt IE 9]><script>const e = ("breadcrumbs,slider,slide,submenu,heading,info,sidebar,menu,header,footer,news,content").split(','); for (let i = 0; i < e.length; i++) {document.createElement(e[i]);}</script><![endif]-->

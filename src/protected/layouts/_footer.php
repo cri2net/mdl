@@ -65,7 +65,7 @@
         </div>
         <ul class="footer__socials">
             <li class="footer__socials-item">
-                <a href="#" class="button button__socials">
+                <a href="https://www.facebook.com/mdl.ua.official/" target="_blank" rel="noreferrer noopener" class="button button__socials">
                     <span class="visually-hidden">Facebook</span>
                     <img src="<?= BASE_URL; ?>/assets/pic/facebook-f-brands.svg"
                          alt="Facebook"
@@ -75,18 +75,7 @@
                 </a>
             </li>
             <li class="footer__socials-item">
-                <a href="#" class="button button__socials">
-                    <span class="visually-hidden">Youtube</span>
-                    <img src="<?= BASE_URL; ?>/assets/pic/youtube-brands.svg"
-                         alt="Youtube"
-                         class="footer__socials-img"
-                         width="25"
-                         height="22">
-                </a>
-                </a>
-            </li>
-            <li class="footer__socials-item">
-                <a href="#" class="button button__socials">
+                <a href="https://www.instagram.com/mdlua_official/" target="_blank" rel="noreferrer noopener" class="button button__socials">
                     <span class="visually-hidden">Instagram</span>
                     <img src="<?= BASE_URL; ?>/assets/pic/instagram-brands.svg"
                          alt="Instagram"

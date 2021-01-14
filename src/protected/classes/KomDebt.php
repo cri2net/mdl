@@ -3,7 +3,7 @@
 class KomDebt
 {
     protected $cache = [];
-    protected $komplat_URL = '/reports/rwservlet?report=/site/g_komoplat.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
+    protected $komplat_URL = '/reports/rwservlet?report=/site/g_komoplat_un&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
     protected $debt_URL    = '/reports/rwservlet?report=/site/g_komdebt.rep&cmdkey=gsity&destype=Cache&Desformat=xml&id_obj=';
 
     private $months;
